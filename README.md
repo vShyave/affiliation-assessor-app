@@ -74,3 +74,6 @@ python3 -m http.server
 ```
 
 You can preview your form on http://localhost:8005/preview?xform=http://localhost:8000/sample.xml
+
+### 5. For integrating your backend
+Customize the [submission url](https://github.com/Samagra-Development/enketo/blob/main/enketo-express/public/js/src/module/connection.js#L150) with your hosted backend. 
