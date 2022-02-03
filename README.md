@@ -1,3 +1,22 @@
+## About :open_book:
+
+Enketo has been used all around the world for a wide range of uses from needs assessments in humanitarian aid, to raising historical awareness, to clinical research, to election monitoring.
+
+## Features :dart:
+
+- [x] Can connect to your custom backend
+- [ ] Have the edit api in case user wants to edit submitted response
+- [ ] Api for the customize change in XML of form
+- [x] Have beautiful themes and widgets
+- [x] Are printer-friendly
+- [x] Can use very powerful skip and validation logic
+- [x] Run on any device, mobile or desktop, as long as it has a fairly modern browser
+
+## Use Case :dart:
+
+![Screencast from 03-02-22 05_31_50 PM IST](https://user-images.githubusercontent.com/56133783/152341126-ac03baa3-258c-473a-956a-d0973682234a.gif)
+
+
 ## Requirements :scroll:
 
 1. Your machine should have [Yarn](https://classic.yarnpkg.com/en/docs/install/#windows-stable) or [Npm](https://docs.npmjs.com/downloading-and-installing-node-js-and-npm), [Docker](https://docs.docker.com/get-docker/), [Python](https://www.python.org/downloads/) installed.
