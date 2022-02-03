@@ -12,7 +12,7 @@ Enketo has been used all around the world for a wide range of uses from needs as
 - [x] Can use very powerful skip and validation logic
 - [x] Run on any device, mobile or desktop, as long as it has a fairly modern browser
 
-## Use Case :dart:
+## Use Case :rocket:
 
 ![Screencast from 03-02-22 05_31_50 PM IST](https://user-images.githubusercontent.com/56133783/152341126-ac03baa3-258c-473a-956a-d0973682234a.gif)
 
