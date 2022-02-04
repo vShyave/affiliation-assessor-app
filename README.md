@@ -96,3 +96,7 @@ You can preview your form on http://localhost:8005/preview?xform=http://localhos
 
 ### 5. For integrating your backend
 Customize the [submission url](https://github.com/Samagra-Development/enketo/blob/main/enketo-express/public/js/src/module/connection.js#L150) with your hosted backend. 
+
+## Future Enhancements :rocket:
+
+- Encrypting query parameters on rendering the enketo form. 
