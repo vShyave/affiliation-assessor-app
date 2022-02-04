@@ -99,5 +99,5 @@ Customize the [submission url](https://github.com/Samagra-Development/enketo/blo
 
 ## Future Enhancements :rocket:
 
-- Encrypting query parameters on rendering the enketo form.
+- [Encrypting query parameters on rendering the enketo form. ](https://github.com/Samagra-Development/enketo/issues/1)
 - Writing a API for changing an XML form directly from it.
