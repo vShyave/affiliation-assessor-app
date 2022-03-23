@@ -312,7 +312,7 @@ class Geopicker extends Widget {
      * Adds the DOM elements
      */
     _addDomElements() {
-        const map = `<div class="map-canvas-wrapper"><div class=map-canvas id="map${this.mapId}"></div></div>`;
+        const map = ``;
         const points = '<div class="points"><button type="button" class="addpoint">+</button></div>';
         const kml = `
             <a href="#" class="toggle-input-type-btn">
@@ -333,30 +333,31 @@ class Geopicker extends Widget {
             `<div class="geopicker widget">
                 <div class="search-bar hide-search no-map no-detect">
                     <button type="button" class="hide-map-btn btn btn-default"><span class="icon icon-arrow-left"> </span></button>
-                    <button name="geodetect" type="button" class="btn btn-default" title="detect current location" data-placement="top"><span class="icon icon-crosshairs"> </span></button>
-                    <div class="input-group">
+                    <button name="geodetect" type="button" class="btn btn-default" title="detect current location" data-placement="top">
+                     <span class="icon icon-crosshairs"> Record Location</span></button>
+                     <!--<div class="input-group">
                         <input class="geo ignore" name="search" type="text" placeholder="${t( 'geopicker.searchPlaceholder' )}" data-i18n="geopicker.searchPlaceholder" disabled="disabled"/>
                         <button type="button" class="btn btn-default search-btn"><i class="icon icon-search"> </i></button>
-                    </div>
+                    </div>-->
                 </div>
                 <div class="geo-inputs">
                     <label class="geo lat">
                         <span data-i18n="geopicker.latitude">${t( 'geopicker.latitude' )}</span>
-                        <input class="ignore" name="lat" type="number" step="0.000001" min="-90" max="90"/>
+                        <input class="ignore" name="lat" type="number" step="0.000001" min="-90" max="90" disabled/>
                     </label>
                     <label class="geo long">
                         <span data-i18n="geopicker.longitude">${t( 'geopicker.longitude' )}</span>
-                        <input class="ignore" name="long" type="number" step="0.000001" min="-180" max="180"/>
+                        <input class="ignore" name="long" type="number" step="0.000001" min="-180" max="180" disabled/>
                     </label>
-                    <label class="geo alt">
+                    <!--<label class="geo alt">
                         <span data-i18n="geopicker.altitude">${t( 'geopicker.altitude' )}</span>
                         <input class="ignore" name="alt" type="number" step="0.1" />
                     </label>
                     <label class="geo acc">
                         <span data-i18n="geopicker.accuracy">${t( 'geopicker.accuracy' )}</span>
                         <input class="ignore" name="acc" type="number" step="0.1" />
-                    </label>
-                    <button type="button" class="btn-icon-only btn-remove" aria-label="remove"><span class="icon icon-trash"> </span></button>
+                    </label>-->
+                    <!--<button type="button" class="btn-icon-only btn-remove" aria-label="remove"><span class="icon icon-trash"> </span></button>-->
                 </div>
             </div>`
         );
@@ -1161,9 +1162,7 @@ class Geopicker extends Widget {
         ev = ( typeof ev !== 'undefined' ) ? ev : 'change';
 
         this.$lat.val( lat || '' );
-        this.$lng.val( lng || '' );
-        this.$alt.val( alt || '' );
-        this.$acc.val( acc || '' ).trigger( ev );
+        this.$lng.val( lng || '' ).trigger( ev );
     }
 
     /**
@@ -1336,7 +1335,7 @@ class Geopicker extends Widget {
         $( this.element )
             .next( '.widget' )
             .removeClass( 'readonly' )
-            .find( 'input, select, textarea' ).prop( 'disabled', false )
+            .find( 'input, select, textarea' ).prop( 'disabled', true )
             .end()
             .find( '.btn:not(.show-map-btn):not(.hide-map-btn), .btn-icon-only, .addpoint' ).prop( 'disabled', false );
 

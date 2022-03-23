@@ -20,6 +20,7 @@ $media-margin: 10px;
         word-wrap: break-word;
         color: $brand-primary-color;
         text-align: center;
+        display: none;
     }
 
     >h4 {
@@ -63,6 +64,7 @@ $media-margin: 10px;
     }
 
     .question-label {
+        color: #008080;
         word-break: break-word;
         display: inline-block; // to ensure that comment icons are displayed next to multi-line labels and not below
     }

@@ -1,5 +1,5 @@
 import pkg from '../../package.json';
-import { Form } from 'samagra-x-enketo-core';
+import { Form } from 'enketo-core';
 
 describe( 'Build checks: ', () => {
     it( 'Transformer matches Core', () => {

@@ -55,7 +55,7 @@ module.exports = grunt => {
         },
         watch: {
             sass: {
-                files: [ '../samagra-x-enketo-core/**/*.scss', 'app/views/styles/**/*.scss', 'widget/**/*.scss', '!app/views/styles/component/_system_variables.scss' ],
+                files: [ '../enketo-core/**/*.scss', 'app/views/styles/**/*.scss', 'widget/**/*.scss', '!app/views/styles/component/_system_variables.scss' ],
                 tasks: [ 'shell:clean-css', 'sass' ],
                 options: {
                     spawn: false,

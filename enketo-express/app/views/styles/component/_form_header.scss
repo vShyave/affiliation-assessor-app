@@ -1,4 +1,4 @@
-$offline-color: #d15200;
+$offline-color: #008080;
 
 .form-header {
     display: flex;
@@ -64,6 +64,7 @@ $offline-color: #d15200;
     }
 
     &__button--homescreen {
+        display: none;
         position: fixed;
         top: 1px;
         right: 0;
@@ -256,7 +257,7 @@ $offline-color: #d15200;
 
     .offline-enabled {
         // this vertical-aligns to the top, overruling the align-items rule on .form-header
-        align-self: flex-start; // this negates a padding set on the form-header in samagra-x-enketo-core _response.scss
+        align-self: flex-start; // this negates a padding set on the form-header in enketo-core _response.scss
         margin-left: -16px;
 
         .queue-length {
