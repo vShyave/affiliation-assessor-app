@@ -1,4 +1,4 @@
-$offline-color: #d15200;
+$offline-color: #008080;
 
 .form-header {
     display: flex;
@@ -64,6 +64,7 @@ $offline-color: #d15200;
     }
 
     &__button--homescreen {
+        display: none;
         position: fixed;
         top: 1px;
         right: 0;

@@ -287,12 +287,14 @@ function _loadRecord( instanceId, confirmed ) {
  *
  * @param {Survey} survey
  */
-function _submitRecord( survey ) {
+    function _submitRecord( survey ) {
+    console.log('settingssettingssettings', settings);
     const redirect = settings.type === 'single' || settings.type === 'edit' || settings.type === 'view';
     let beforeMsg;
     let authLink;
     let level;
     let msg = '';
+    let isValid;
     const include = { irrelevant: false };
 
     console.log("FORM", form);
@@ -329,8 +331,11 @@ function _submitRecord( survey ) {
         } )
         .then( record => connection.uploadRecord( survey, record ) )
         .then( result => {
+            console.log('call after upload', result)
             result = result || {};
             level = 'success';
+
+            isValid = result.isValid;
 
             if ( result.failedFiles && result.failedFiles.length > 0 ) {
                 msg = `${t( 'alert.submissionerror.fnfmsg', {
@@ -343,7 +348,7 @@ function _submitRecord( survey ) {
         .then( () => {
             // this event is used in communicating back to iframe parent window
             document.dispatchEvent( events.SubmissionSuccess() );
-
+            console.log('redirect', redirect)
             if ( redirect ) {
                 if ( !settings.multipleAllowed ) {
                     const now = new Date();
@@ -371,6 +376,8 @@ function _submitRecord( survey ) {
                 setTimeout( () => {
                     location.href = decodeURIComponent( settings.returnUrl || settings.defaultReturnUrl );
                 }, 1200 );
+            } else if (!isValid) {
+                gui.alert( "Trainee doesn't exists!", t( 'alert.submissionerror.heading' ) );
             } else {
                 msg = ( msg.length > 0 ) ? msg : t( 'alert.submissionsuccess.msg' );
                 gui.alert( msg, t( 'alert.submissionsuccess.heading' ), level );
@@ -380,7 +387,7 @@ function _submitRecord( survey ) {
         .catch( result => {
             let message;
             result = result || {};
-            console.error( 'submission failed', result );
+
             if ( result.status === 401 ) {
                 message = t( 'alert.submissionerror.authrequiredmsg', {
                     here: authLink,

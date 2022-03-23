@@ -1,0 +1,41 @@
+<?xml version="1.0"?>
+<h:html xmlns="http://www.w3.org/2002/xforms" xmlns:ev="http://www.w3.org/2001/xml-events"
+        xmlns:h="http://www.w3.org/1999/xhtml" xmlns:jr="http://openrosa.org/javarosa"
+        xmlns:odk="http://www.opendatakit.org/xforms" xmlns:orx="http://openrosa.org/xforms"
+        xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <h:head>
+        <h:title>DST Trainee Attendance</h:title>
+        <model odk:xforms-version="1.0.0">
+            <instance>
+                <data id="DST-Attendance-1" version="1">
+                    <did/>
+                    <validation>
+                        <reg_no/>
+                        <dob/>
+                    </validation>
+                    <meta>
+                        <instanceID/>
+                    </meta>
+                </data>
+            </instance>
+            <bind nodeset="/data/did" type="string"/>
+            <bind constraint="regex(., '^[a-zA-Z0-9]{15}$')"
+                  jr:constraintMsg="अपना registeration number चैक कीजिये. Registeration number 15 डिजिट का होना चाहिए"
+                  nodeset="/data/validation/reg_no" required="true()" type="string"/>
+            <bind jr:constraintMsg="Date of Birth does not match with the registration number
+(आपका date of birth आपके registration number से मैच नहीं करता है, कृपया दौबारा प्रयास करे।)"
+                  nodeset="/data/validation/dob" required="true()" type="date"/>
+            <bind jr:preload="uid" nodeset="/data/meta/instanceID" readonly="true()" type="string"/>
+        </model>
+    </h:head>
+    <h:body class="pages">
+        <group appearance="field-list" ref="/data/validation">
+            <input ref="/data/validation/reg_no">
+                <label>Please enter your ITI registration number</label>
+            </input>
+            <input ref="/data/validation/dob">
+                <label>Please enter your date of birth</label>
+            </input>
+        </group>
+    </h:body>
+</h:html>

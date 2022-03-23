@@ -333,7 +333,8 @@ class Geopicker extends Widget {
             `<div class="geopicker widget">
                 <div class="search-bar hide-search no-map no-detect">
                     <button type="button" class="hide-map-btn btn btn-default"><span class="icon icon-arrow-left"> </span></button>
-                    <button name="geodetect" type="button" class="btn btn-default" title="detect current location" data-placement="top"><span class="icon icon-crosshairs"> </span></button>
+                    <button name="geodetect" type="button" class="btn btn-default" title="detect current location" data-placement="top">
+                     <span class="icon icon-crosshairs"> Record Location</span></button>
                      <!--<div class="input-group">
                         <input class="geo ignore" name="search" type="text" placeholder="${t( 'geopicker.searchPlaceholder' )}" data-i18n="geopicker.searchPlaceholder" disabled="disabled"/>
                         <button type="button" class="btn btn-default search-btn"><i class="icon icon-search"> </i></button>
@@ -1161,9 +1162,7 @@ class Geopicker extends Widget {
         ev = ( typeof ev !== 'undefined' ) ? ev : 'change';
 
         this.$lat.val( lat || '' );
-        this.$lng.val( lng || '' );
-        this.$alt.val( alt || '' );
-        this.$acc.val( acc || '' ).trigger( ev );
+        this.$lng.val( lng || '' ).trigger( ev );
     }
 
     /**

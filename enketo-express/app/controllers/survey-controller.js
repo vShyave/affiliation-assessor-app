@@ -199,9 +199,9 @@ function _renderWebform(req, res, next, options) {
     console.log(JSON.stringify(options));
     console.log(JSON.stringify(req.query));
     options.formId = req?.query?.id;
-    options.backendToken = req?.query?.token;
+    // options.backendToken = req?.query?.token;
 
-    res.cookie("backendToken", req?.query?.token, cookieOptions);
+    // res.cookie("backendToken", req?.query?.token, cookieOptions);
     res.cookie("enketoFormId", req?.query?.id, cookieOptions);
     res.cookie("__enketo_meta_deviceid", deviceId, cookieOptions).render(
         "surveys/webform",

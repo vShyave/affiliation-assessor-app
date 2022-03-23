@@ -1,0 +1,31 @@
+<?xml version="1.0"?>
+<h:html xmlns="http://www.w3.org/2002/xforms" xmlns:ev="http://www.w3.org/2001/xml-events"
+        xmlns:h="http://www.w3.org/1999/xhtml" xmlns:jr="http://openrosa.org/javarosa"
+        xmlns:odk="http://www.opendatakit.org/xforms" xmlns:orx="http://openrosa.org/xforms"
+        xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <h:head>
+        <h:title>Image POC</h:title>
+        <model odk:xforms-version="1.0.0">
+            <instance>
+                <data id="image-poc" version="1">
+                    <selfie/>
+                    <note_end/>
+                    <meta>
+                        <instanceID/>
+                    </meta>
+                </data>
+            </instance>
+            <bind nodeset="/data/selfie" orx:max-pixels="1024" required="true()" type="binary"/>
+            <bind nodeset="/data/note_end" readonly="true()" type="string"/>
+            <bind jr:preload="uid" nodeset="/data/meta/instanceID" readonly="true()" type="string"/>
+        </model>
+    </h:head>
+    <h:body>
+        <upload appearance="new" mediatype="image/*" ref="/data/selfie">
+            <label>Please take a selfie in the Industry premises for submitting attendance.</label>
+        </upload>
+        <input ref="/data/note_end">
+            <label>You have sucessfully marked the attendance.</label>
+        </input>
+    </h:body>
+</h:html>

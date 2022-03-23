@@ -63,12 +63,12 @@
         }
 
         &__jump-nav {
-            @include display-flex;
+            // @include display-flex;
 
-            @include flex-direction(row);
+            // @include flex-direction(row);
 
-            @include flex-wrap(nowrap);
-
+            // @include flex-wrap(nowrap);
+            display: none;
             .first-page,
             .last-page {
                 //width: 50%;
