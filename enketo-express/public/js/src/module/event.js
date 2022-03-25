@@ -1,4 +1,4 @@
-import events from 'enketo-core/src/js/event';
+import events from 'dst-enketo-core/src/js/event';
 
 events.QueueSubmissionSuccess = function( detail ) {
     return new CustomEvent( 'queuesubmissionsuccess', { detail, bubbles: true } );

@@ -1,6 +1,6 @@
 import Papa from 'papaparse';
 const dataUriCache = {};
-import { dataUriToBlobSync } from 'enketo-core/src/js/utils';
+import { dataUriToBlobSync } from 'dst-enketo-core/src/js/utils';
 
 //var hasArrayBufferView = new Blob( [ new Uint8Array( 100 ) ] ).size == 100;
 

@@ -1,5 +1,5 @@
 import pkg from '../../package.json';
-import { Form } from 'enketo-core';
+import { Form } from 'dst-enketo-core';
 
 describe( 'Build checks: ', () => {
     it( 'Transformer matches Core', () => {

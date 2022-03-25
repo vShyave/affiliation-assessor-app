@@ -72,7 +72,7 @@ module.exports = {
         'app/lib/communicator/**/*.js',
         'app/controllers/**/*.js',
         'app/models/**/*.js',
-        'node_modules/enketo-core/src/**/*.js'
+        'node_modules/dst-enketo-core/src/**/*.js'
     ],
     // An array of globs that describe where to look for source files
     // relative to the location of the configuration file

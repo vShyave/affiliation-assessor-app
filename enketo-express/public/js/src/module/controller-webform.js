@@ -5,8 +5,8 @@
 import gui from './gui';
 import connection from './connection';
 import settings from './settings';
-import { Form } from 'enketo-core';
-import downloadUtils from 'enketo-core/src/js/download-utils';
+import { Form } from 'dst-enketo-core';
+import downloadUtils from 'dst-enketo-core/src/js/download-utils';
 import events from './event';
 import fileManager from './file-manager';
 import { t, localize, getCurrentUiLanguage, getBrowserLanguage } from './translator';
