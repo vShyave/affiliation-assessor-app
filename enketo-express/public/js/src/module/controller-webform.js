@@ -5,8 +5,8 @@
 import gui from './gui';
 import connection from './connection';
 import settings from './settings';
-import { Form } from 'enketo-core';
-import downloadUtils from 'enketo-core/src/js/download-utils';
+import { Form } from 'dst-enketo-core';
+import downloadUtils from 'dst-enketo-core/src/js/download-utils';
 import events from './event';
 import fileManager from './file-manager';
 import { t, localize, getCurrentUiLanguage, getBrowserLanguage } from './translator';
@@ -295,6 +295,9 @@ function _loadRecord( instanceId, confirmed ) {
     let level;
     let msg = '';
     let isValid;
+    let isIndustry;
+    let prefilledSubmissionId = '';
+    let isAttendanceFill;
     const include = { irrelevant: false };
 
     console.log("FORM", form);
@@ -336,7 +339,10 @@ function _loadRecord( instanceId, confirmed ) {
             level = 'success';
 
             isValid = result.isValid;
-
+            isIndustry = result.isIndustry
+            prefilledSubmissionId = result.prefilledSubmissionId
+            isAttendanceFill = result.isAttendanceFill
+           console.log('isValid', isValid, isIndustry, prefilledSubmissionId, isAttendanceFill);
             if ( result.failedFiles && result.failedFiles.length > 0 ) {
                 msg = `${t( 'alert.submissionerror.fnfmsg', {
                     failedFiles: result.failedFiles.join( ', ' ),
@@ -376,8 +382,16 @@ function _loadRecord( instanceId, confirmed ) {
                 setTimeout( () => {
                     location.href = decodeURIComponent( settings.returnUrl || settings.defaultReturnUrl );
                 }, 1200 );
-            } else if (!isValid) {
+            } else if (!isValid && isValid !== undefined) {
                 gui.alert( "Trainee doesn't exists!", t( 'alert.submissionerror.heading' ) );
+            } else if (!isIndustry && isIndustry !== undefined) {
+                if(prefilledSubmissionId === 'preFilled') {
+                    gui.alert( "Attendance not submit!", t( 'alert.submissionerror.heading' ) );
+                }
+            } else if (isAttendanceFill) {
+                if(prefilledSubmissionId === 'preFilled') {
+                    gui.alert( "Already you submit your attendance for the day!", t( 'alert.submissionerror.heading' ) );
+                }
             } else {
                 msg = ( msg.length > 0 ) ? msg : t( 'alert.submissionsuccess.msg' );
                 gui.alert( msg, t( 'alert.submissionsuccess.heading' ), level );
