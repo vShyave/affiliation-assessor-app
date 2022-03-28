@@ -2,10 +2,10 @@
  * Deals with the main GUI elements (but not the survey form)
  */
 
-import support from 'enketo-core/src/js/support';
+import support from 'dst-enketo-core/src/js/support';
 
 import settings from './settings';
-import * as printHelper from 'enketo-core/src/js/print';
+import * as printHelper from 'dst-enketo-core/src/js/print';
 import { init as initTranslator, t } from './translator';
 import sniffer from './sniffer';
 import events from './event';

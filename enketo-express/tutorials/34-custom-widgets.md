@@ -2,7 +2,7 @@ Since version 1.53.0 it is possible to add your own widgets without forking Enke
 
 ### 1. Create your widget in its own repo
 
-See [this guidance](https://enketo.github.io/enketo-core/tutorial-40-widgets.html) for creating Enketo widgets. The simplest widget has just 1 file, either: a `[NAME].js` or `[NAME].scss` file. If it has both (a common situation), make sure they have the same filename.
+See [this guidance](https://enketo.github.io/dst-enketo-core/tutorial-40-widgets.html) for creating Enketo widgets. The simplest widget has just 1 file, either: a `[NAME].js` or `[NAME].scss` file. If it has both (a common situation), make sure they have the same filename.
 
 An example of a custom KoBoToolbox widget is [here](https://github.com/kobotoolbox/enketo-image-customization-widget).
 

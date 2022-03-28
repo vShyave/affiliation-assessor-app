@@ -2265,7 +2265,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 - Support for pulldata function in XForms that contain a reference to the external data in the model.
 
 ##### Fixed
-- Form initialization issue in Android (enketo-core 4.0.2)
+- Form initialization issue in Android (dst-enketo-core 4.0.2)
 
 [1.15.0] - 2015-08-28
 ------------------------

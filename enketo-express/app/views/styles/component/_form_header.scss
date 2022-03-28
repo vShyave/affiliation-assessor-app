@@ -257,7 +257,7 @@ $offline-color: #008080;
 
     .offline-enabled {
         // this vertical-aligns to the top, overruling the align-items rule on .form-header
-        align-self: flex-start; // this negates a padding set on the form-header in enketo-core _response.scss
+        align-self: flex-start; // this negates a padding set on the form-header in dst-enketo-core _response.scss
         margin-left: -16px;
 
         .queue-length {

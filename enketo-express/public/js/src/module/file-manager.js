@@ -1,5 +1,5 @@
 /*
- * Replaces file-manager in enketo-core.
+ * Replaces file-manager in dst-enketo-core.
  */
 
 import store from './store';
@@ -7,7 +7,7 @@ import store from './store';
 import settings from './settings';
 import connection from './connection';
 import utils from './utils';
-import { getFilename } from 'enketo-core/src/js/utils';
+import { getFilename } from 'dst-enketo-core/src/js/utils';
 import { t } from './translator';
 const URL_RE = /[a-zA-Z0-9+-.]+?:\/\//;
 let instanceAttachments;

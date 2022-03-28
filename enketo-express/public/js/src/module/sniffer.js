@@ -1,5 +1,5 @@
 const ua = navigator.userAgent;
-import { os } from 'enketo-core/src/js/sniffer';
+import { os } from 'dst-enketo-core/src/js/sniffer';
 
 export default {
     browser: {
