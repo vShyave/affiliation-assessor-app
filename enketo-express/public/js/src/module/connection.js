@@ -107,6 +107,24 @@ function _uploadRecord( record ) {
         formData.dob = dob[0].textContent
     }
 
+    // Add aatendance
+    // Get form data
+    let attendanceStatus = false;
+    let parserString = new DOMParser();
+    let document = parserString.parseFromString(record.xml, 'text/xml');
+    let attendanceFormId = document.getElementById('DST-Attendance');
+    if(attendanceFormId !== null) {
+        let attendance = doc.getElementsByTagName("attendance_status");
+        console.log('attendanceStatus-------', attendance[0].textContent);
+        if(attendance[0].textContent === 'Present') {
+            attendanceStatus = true;
+        } else {
+            attendanceStatus = false;
+        }
+    }
+
+
+
     /** @type { Promise<UploadBatchResult[]> } */
     let resultsPromise = Promise.resolve( [] );
 
@@ -117,7 +135,7 @@ function _uploadRecord( record ) {
     // a serious issue with ODK Aggregate (https://github.com/kobotoolbox/enketo-express/issues/400)
     return batches.reduce( ( prevPromise, batch ) => {
         return prevPromise.then( results => {
-            return _uploadBatch( batch, formData ).then( result => {
+            return _uploadBatch( batch, formData, attendanceStatus ).then( result => {
                 console.log('upload after call', result)
                 results.push( result );
 
@@ -147,12 +165,13 @@ const uploadRecord = ( survey, record ) => (
  * @return { Promise<UploadBatchResult> }      [description]
  */
 
-function _uploadBatch( recordBatch, formData ) {
+function _uploadBatch( recordBatch, formData, attendanceStatus ) {
     // Submission URL is dynamic, because settings.submissionParameter only gets populated after loading form from
     // cache in offline mode.
    // const xmlResponse = parser.parseFromString(form.getDataStr( include ), 'text/xml' );
     const submissionUrl = `http://167.71.236.219:5001/api/rest/getTraineeByEnrlAndDob`
     const controller = new AbortController();
+    let traineeData = {}
 
     function getMeta(metaName) {
         return document.querySelector(`meta[name=${metaName}]`).content;
@@ -180,15 +199,18 @@ function _uploadBatch( recordBatch, formData ) {
                 console.log('ressss', resData)
                 if(resData.trainee.length > 0) {
                     console.log('call if')
+                    traineeData = resData.trainee[0];
                     const message = JSON.stringify({
                         message: resData.trainee[0],
                         date: Date.now(),
                         channel: 'enketo'
                     });
+                    localStorage.setItem("industryId", resData.trainee[0].industry);
+                    localStorage.setItem("traineeId", resData.trainee[0].id);
                     window.parent.postMessage(message, '*');
                 }
 
-
+                console.log('traineeData-----', traineeData);
                 /** @type { UploadBatchResult } */
                 let result = {
                     status: response.status,
@@ -223,7 +245,111 @@ function _uploadBatch( recordBatch, formData ) {
                 throw error;
             } );
     } else {
-        return true;
+        console.log('traineeData---1-11111111111', parseInt(localStorage.getItem("traineeId")));
+        const prefilledSubmissionId = getMeta("formId");
+        // Get current month & year
+        const d = new Date();
+        const currentMonthYearData = {
+            month: d.getMonth() + 1,
+            year: d.getFullYear(),
+            industry_id: parseInt(localStorage.getItem("industryId"))
+        }
+        console.log('currentMonthYearData', JSON.stringify(currentMonthYearData));
+        const attendanceApiUrl = `http://167.71.236.219:5001/api/rest/getIndustryScheduleByMonthAndYear`
+        return fetch( attendanceApiUrl, {
+            method: 'POST',
+            cache: 'no-cache',
+            headers: {
+                'x-hasura-admin-secret':'2OWslm5aAjlTARU',
+                'Content-Type':'application/json',
+            },
+            signal: controller.signal,
+            body: JSON.stringify(currentMonthYearData)
+        } )
+            .then( async response => {
+                const resData = await response.json();
+                console.log('ressss', resData)
+
+                /** @type { UploadBatchResult } */
+                let result = {
+                    status: response.status,
+                    failedFiles: ( recordBatch.failedFiles ) ? recordBatch.failedFiles : undefined,
+                    isIndustry: resData.schedule.length !== 0 ? resData.schedule[0].is_industry : false,
+                    prefilledSubmissionId
+                };
+
+                // Attendance submit
+                if(result.isIndustry && prefilledSubmissionId === 'preFilled') {
+                    // Check attendance for the day
+                    const date = new Date();
+                    const attendanceValidationData = {
+                        industry_id: parseInt(localStorage.getItem("industryId")),
+                        trainee_id: parseInt(localStorage.getItem("traineeId")),
+                        date: date.getFullYear() + "-" + ("0" + (date.getMonth()+1)).slice(-2) + "-" + ("0"+date.getDate()).slice(-2)
+
+                    }
+                    const attendanceValidationUrl = `http://167.71.236.219:5001/api/rest/getAttendanceByTraineeAndIndustryAndDate`
+                    const attendanceValidationRes = await fetch( attendanceValidationUrl, {
+                        method: 'POST',
+                        cache: 'no-cache',
+                        headers: {
+                            'x-hasura-admin-secret':'2OWslm5aAjlTARU',
+                            'Content-Type':'application/json',
+                        },
+                        signal: controller.signal,
+                        body: JSON.stringify(attendanceValidationData)
+                    });
+                    const attendanceValidationResData = await attendanceValidationRes.json();
+                    result.isAttendanceFill = attendanceValidationResData.attendance.length !== 0;
+                    if(attendanceValidationResData.attendance.length === 0) {
+                        // Attendance submit
+                        const attendanceData = {
+                            industry_id: parseInt(localStorage.getItem("industryId")),
+                            trainee_id: parseInt(localStorage.getItem("traineeId")),
+                            date: new Date(),
+                            is_present: attendanceStatus
+                        }
+                        const attendanceUrl = `http://167.71.236.219:5001/api/rest/addAttendance`
+                        const attendanceRes = await fetch( attendanceUrl, {
+                            method: 'POST',
+                            cache: 'no-cache',
+                            headers: {
+                                'x-hasura-admin-secret':'2OWslm5aAjlTARU',
+                                'Content-Type':'application/json',
+                            },
+                            signal: controller.signal,
+                            body: JSON.stringify(attendanceData)
+                        });
+                        console.log('attendanceRes', await attendanceRes.json());
+                    }
+                }
+
+                if ( response.status === 400 ){
+                    // 400 is a generic error. Any message returned by the server is probably more useful.
+                    // Other more specific statusCodes will get hardcoded and translated messages.
+                    return response.text()
+                        .then( text => {
+                            const xmlResponse = parser.parseFromString( text, 'text/xml' );
+                            if ( xmlResponse ){
+                                const messageEl = xmlResponse.querySelector( 'OpenRosaResponse > message' );
+                                if ( messageEl ) {
+                                    result.message = messageEl.textContent;
+                                }
+                            }
+                            throw result;
+                        } );
+                } else if ( response.status !== 201  && response.status !== 202 ){
+                    return result;
+                } else {
+                    return result;
+                }
+            } )
+            .catch( error => {
+                if ( error.name === 'AbortError' && typeof error.status === 'undefined' ){
+                    error.status = 408;
+                }
+                throw error;
+            } );
     }
 }
 
