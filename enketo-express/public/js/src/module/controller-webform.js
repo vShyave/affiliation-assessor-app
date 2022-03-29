@@ -297,7 +297,6 @@ function _loadRecord( instanceId, confirmed ) {
     let isValid;
     let isIndustry;
     let prefilledSubmissionId = '';
-    let isAttendanceFill;
     const include = { irrelevant: false };
 
     console.log("FORM", form);
@@ -341,8 +340,7 @@ function _loadRecord( instanceId, confirmed ) {
             isValid = result.isValid;
             isIndustry = result.isIndustry
             prefilledSubmissionId = result.prefilledSubmissionId
-            isAttendanceFill = result.isAttendanceFill
-           console.log('isValid', isValid, isIndustry, prefilledSubmissionId, isAttendanceFill);
+           console.log('isValid', isValid, isIndustry, prefilledSubmissionId);
             if ( result.failedFiles && result.failedFiles.length > 0 ) {
                 msg = `${t( 'alert.submissionerror.fnfmsg', {
                     failedFiles: result.failedFiles.join( ', ' ),
@@ -383,22 +381,22 @@ function _loadRecord( instanceId, confirmed ) {
                     location.href = decodeURIComponent( settings.returnUrl || settings.defaultReturnUrl );
                 }, 1200 );
             } else if (!isValid && isValid !== undefined) {
+                console.log('Trainee');
                 gui.alert( "Trainee doesn't exists!", t( 'alert.submissionerror.heading' ) );
             } else if (!isIndustry && isIndustry !== undefined) {
+                console.log('Attendance');
                 if(prefilledSubmissionId === 'preFilled') {
                     gui.alert( "Attendance not submit!", t( 'alert.submissionerror.heading' ) );
                 }
-            } else if (isAttendanceFill) {
-                if(prefilledSubmissionId === 'preFilled') {
-                    gui.alert( "Already you submit your attendance for the day!", t( 'alert.submissionerror.heading' ) );
-                }
             } else {
+                console.log('else');
                 msg = ( msg.length > 0 ) ? msg : t( 'alert.submissionsuccess.msg' );
                 gui.alert( msg, t( 'alert.submissionsuccess.heading' ), level );
                 _resetForm( survey );
             }
         } )
         .catch( result => {
+            console.log('resulttttt catchccc', result);
             let message;
             result = result || {};
 

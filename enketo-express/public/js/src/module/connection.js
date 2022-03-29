@@ -116,13 +116,17 @@ function _uploadRecord( record ) {
     let parserString = new DOMParser();
     let document = parserString.parseFromString(record.xml, 'text/xml');
     let attendanceFormId = document.getElementById('DST-Attendance');
+    console.log('attendanceFormId', attendanceFormId);
     if(attendanceFormId !== null) {
         let attendance = doc.getElementsByTagName("attendance_status");
-        console.log('attendanceStatus-------', attendance[0].textContent);
-        if(attendance[0].textContent === 'Present') {
-            attendanceStatus = true;
-        } else {
-            attendanceStatus = false;
+        console.log('attendance', attendance.length);
+        if(attendance.length !== 0) {
+            console.log('attendanceStatus-------', attendance[0].textContent);
+            if(attendance[0].textContent === 'Present') {
+                attendanceStatus = true;
+            } else {
+                attendanceStatus = false;
+            }
         }
     }
 
@@ -285,48 +289,25 @@ function _uploadBatch( recordBatch, formData, attendanceStatus ) {
 
                 // Attendance submit
                 if(result.isIndustry && prefilledSubmissionId === 'preFilled') {
-                    // Check attendance for the day
-                    const date = new Date();
-                    const attendanceValidationData = {
+                    // Attendance submit
+                    const attendanceData = {
                         industry_id: parseInt(localStorage.getItem("industryId")),
                         trainee_id: parseInt(localStorage.getItem("traineeId")),
-                        date: date.getFullYear() + "-" + ("0" + (date.getMonth()+1)).slice(-2) + "-" + ("0"+date.getDate()).slice(-2)
-
+                        date: new Date(),
+                        is_present: attendanceStatus
                     }
-                    const attendanceValidationUrl = `${HASURA_URL}/api/rest/getAttendanceByTraineeAndIndustryAndDate`
-                    const attendanceValidationRes = await fetch( attendanceValidationUrl, {
+                    const attendanceUrl = `${HASURA_URL}/api/rest/addAttendance`
+                    const attendanceRes = await fetch(attendanceUrl, {
                         method: 'POST',
                         cache: 'no-cache',
                         headers: {
                             'Authorization': `Bearer ${HASURA_ADMIN_SECRET}`,
-                            'Content-Type':'application/json',
+                            'Content-Type': 'application/json',
                         },
                         signal: controller.signal,
-                        body: JSON.stringify(attendanceValidationData)
+                        body: JSON.stringify(attendanceData)
                     });
-                    const attendanceValidationResData = await attendanceValidationRes.json();
-                    result.isAttendanceFill = attendanceValidationResData.attendance.length !== 0;
-                    if(attendanceValidationResData.attendance.length === 0) {
-                        // Attendance submit
-                        const attendanceData = {
-                            industry_id: parseInt(localStorage.getItem("industryId")),
-                            trainee_id: parseInt(localStorage.getItem("traineeId")),
-                            date: new Date(),
-                            is_present: attendanceStatus
-                        }
-                        const attendanceUrl = `${HASURA_URL}/api/rest/addAttendance`
-                        const attendanceRes = await fetch( attendanceUrl, {
-                            method: 'POST',
-                            cache: 'no-cache',
-                            headers: {
-                                'Authorization':`Bearer ${HASURA_ADMIN_SECRET}`,
-                                'Content-Type':'application/json',
-                            },
-                            signal: controller.signal,
-                            body: JSON.stringify(attendanceData)
-                        });
-                        console.log('attendanceRes', await attendanceRes.json());
-                    }
+                    console.log('attendanceRes', await attendanceRes.json());
                 }
 
                 if ( response.status === 400 ){
