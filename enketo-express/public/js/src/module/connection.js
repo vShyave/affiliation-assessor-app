@@ -66,6 +66,10 @@ const MAX_SIZE_URL = ( settings.enketoId ) ? `${settings.basePath}/submission/ma
 const ABSOLUTE_MAX_SIZE = 100 * 1000 * 1000;
 const HASURA_URL = settings.hasuraEndPoint;
 const HASURA_ADMIN_SECRET = settings.hasuraAdminSecret;
+const HEADERS = {
+    'Authorization':`Bearer ${HASURA_ADMIN_SECRET}`,
+    'Content-Type':'application/json',
+}
 
 
 /**
@@ -196,10 +200,7 @@ function _uploadBatch( recordBatch, formData, attendanceStatus ) {
         return fetch( submissionUrl, {
             method: 'POST',
             cache: 'no-cache',
-            headers: {
-                'Authorization':`Bearer ${HASURA_ADMIN_SECRET}`,
-                'Content-Type':'application/json',
-            },
+            headers: HEADERS,
             signal: controller.signal,
             body: JSON.stringify(formData)
         } )
@@ -268,10 +269,7 @@ function _uploadBatch( recordBatch, formData, attendanceStatus ) {
         return fetch( attendanceApiUrl, {
             method: 'POST',
             cache: 'no-cache',
-            headers: {
-                'Authorization':`Bearer ${HASURA_ADMIN_SECRET}`,
-                'Content-Type':'application/json',
-            },
+            headers: HEADERS,
             signal: controller.signal,
             body: JSON.stringify(currentMonthYearData)
         } )
@@ -300,10 +298,7 @@ function _uploadBatch( recordBatch, formData, attendanceStatus ) {
                     const attendanceRes = await fetch(attendanceUrl, {
                         method: 'POST',
                         cache: 'no-cache',
-                        headers: {
-                            'Authorization': `Bearer ${HASURA_ADMIN_SECRET}`,
-                            'Content-Type': 'application/json',
-                        },
+                        headers: HEADERS,
                         signal: controller.signal,
                         body: JSON.stringify(attendanceData)
                     });
