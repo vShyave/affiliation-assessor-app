@@ -386,7 +386,7 @@ function _loadRecord( instanceId, confirmed ) {
             } else if (!isIndustry && isIndustry !== undefined) {
                 console.log('Attendance');
                 if(prefilledSubmissionId === 'preFilled') {
-                    gui.alert( "Attendance not submit!", t( 'alert.submissionerror.heading' ) );
+                    gui.alert( "Trainee schedule doesn't match with the mapped industry schedule.", t( 'alert.submissionerror.heading' ) );
                 }
             } else {
                 console.log('else');
