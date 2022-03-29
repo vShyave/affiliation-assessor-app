@@ -24,6 +24,8 @@ settingsMap.forEach( obj => {
 
 //add default login Url
 settings.loginUrl = config[ 'basePath' ] + DEFAULT_LOGIN_URL;
+settings.hasuraEndPoint = config [ 'hasuraEndPoint' ];
+settings.hasuraAdminSecret = config [ 'hasuraAdminSecret' ];
 
 // add default return Url
 settings.defaultReturnUrl = config[ 'basePath' ] + DEFAULT_THANKS_URL;
