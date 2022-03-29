@@ -64,6 +64,9 @@ const INSTANCE_URL = ( settings.enketoId ) ? `${settings.basePath}/submission/${
 const MAX_SIZE_URL = ( settings.enketoId ) ? `${settings.basePath}/submission/max-size/${settings.enketoId}` :
     `${settings.basePath}/submission/max-size/?xformUrl=${encodeURIComponent( settings.xformUrl )}`;
 const ABSOLUTE_MAX_SIZE = 100 * 1000 * 1000;
+const HASURA_URL = settings.hasuraEndPoint;
+const HASURA_ADMIN_SECRET = settings.hasuraAdminSecret;
+
 
 /**
  /**
@@ -113,13 +116,17 @@ function _uploadRecord( record ) {
     let parserString = new DOMParser();
     let document = parserString.parseFromString(record.xml, 'text/xml');
     let attendanceFormId = document.getElementById('DST-Attendance');
+    console.log('attendanceFormId', attendanceFormId);
     if(attendanceFormId !== null) {
         let attendance = doc.getElementsByTagName("attendance_status");
-        console.log('attendanceStatus-------', attendance[0].textContent);
-        if(attendance[0].textContent === 'Present') {
-            attendanceStatus = true;
-        } else {
-            attendanceStatus = false;
+        console.log('attendance', attendance.length);
+        if(attendance.length !== 0) {
+            console.log('attendanceStatus-------', attendance[0].textContent);
+            if(attendance[0].textContent === 'Present') {
+                attendanceStatus = true;
+            } else {
+                attendanceStatus = false;
+            }
         }
     }
 
@@ -169,7 +176,7 @@ function _uploadBatch( recordBatch, formData, attendanceStatus ) {
     // Submission URL is dynamic, because settings.submissionParameter only gets populated after loading form from
     // cache in offline mode.
    // const xmlResponse = parser.parseFromString(form.getDataStr( include ), 'text/xml' );
-    const submissionUrl = `http://167.71.236.219:5001/api/rest/getTraineeByEnrlAndDob`
+    const submissionUrl = `${HASURA_URL}/api/rest/getTraineeByEnrlAndDob`
     const controller = new AbortController();
     let traineeData = {}
 
@@ -177,6 +184,7 @@ function _uploadBatch( recordBatch, formData, attendanceStatus ) {
         return document.querySelector(`meta[name=${metaName}]`).content;
     }
     const submissionId = getMeta("formId");
+    console.log('submissionId', submissionId)
 
     setTimeout( () => {
         controller.abort();
@@ -184,11 +192,12 @@ function _uploadBatch( recordBatch, formData, attendanceStatus ) {
     console.log('formData', formData)
 
     if(submissionId === "enrollment") {
+        console.log('call if submit button')
         return fetch( submissionUrl, {
             method: 'POST',
             cache: 'no-cache',
             headers: {
-                'x-hasura-admin-secret':'2OWslm5aAjlTARU',
+                'Authorization':`Bearer ${HASURA_ADMIN_SECRET}`,
                 'Content-Type':'application/json',
             },
             signal: controller.signal,
@@ -255,12 +264,12 @@ function _uploadBatch( recordBatch, formData, attendanceStatus ) {
             industry_id: parseInt(localStorage.getItem("industryId"))
         }
         console.log('currentMonthYearData', JSON.stringify(currentMonthYearData));
-        const attendanceApiUrl = `http://167.71.236.219:5001/api/rest/getIndustryScheduleByMonthAndYear`
+        const attendanceApiUrl = `${HASURA_URL}/api/rest/getIndustryScheduleByMonthAndYear`
         return fetch( attendanceApiUrl, {
             method: 'POST',
             cache: 'no-cache',
             headers: {
-                'x-hasura-admin-secret':'2OWslm5aAjlTARU',
+                'Authorization':`Bearer ${HASURA_ADMIN_SECRET}`,
                 'Content-Type':'application/json',
             },
             signal: controller.signal,
@@ -280,48 +289,25 @@ function _uploadBatch( recordBatch, formData, attendanceStatus ) {
 
                 // Attendance submit
                 if(result.isIndustry && prefilledSubmissionId === 'preFilled') {
-                    // Check attendance for the day
-                    const date = new Date();
-                    const attendanceValidationData = {
+                    // Attendance submit
+                    const attendanceData = {
                         industry_id: parseInt(localStorage.getItem("industryId")),
                         trainee_id: parseInt(localStorage.getItem("traineeId")),
-                        date: date.getFullYear() + "-" + ("0" + (date.getMonth()+1)).slice(-2) + "-" + ("0"+date.getDate()).slice(-2)
-
+                        date: new Date(),
+                        is_present: attendanceStatus
                     }
-                    const attendanceValidationUrl = `http://167.71.236.219:5001/api/rest/getAttendanceByTraineeAndIndustryAndDate`
-                    const attendanceValidationRes = await fetch( attendanceValidationUrl, {
+                    const attendanceUrl = `${HASURA_URL}/api/rest/addAttendance`
+                    const attendanceRes = await fetch(attendanceUrl, {
                         method: 'POST',
                         cache: 'no-cache',
                         headers: {
-                            'x-hasura-admin-secret':'2OWslm5aAjlTARU',
-                            'Content-Type':'application/json',
+                            'Authorization': `Bearer ${HASURA_ADMIN_SECRET}`,
+                            'Content-Type': 'application/json',
                         },
                         signal: controller.signal,
-                        body: JSON.stringify(attendanceValidationData)
+                        body: JSON.stringify(attendanceData)
                     });
-                    const attendanceValidationResData = await attendanceValidationRes.json();
-                    result.isAttendanceFill = attendanceValidationResData.attendance.length !== 0;
-                    if(attendanceValidationResData.attendance.length === 0) {
-                        // Attendance submit
-                        const attendanceData = {
-                            industry_id: parseInt(localStorage.getItem("industryId")),
-                            trainee_id: parseInt(localStorage.getItem("traineeId")),
-                            date: new Date(),
-                            is_present: attendanceStatus
-                        }
-                        const attendanceUrl = `http://167.71.236.219:5001/api/rest/addAttendance`
-                        const attendanceRes = await fetch( attendanceUrl, {
-                            method: 'POST',
-                            cache: 'no-cache',
-                            headers: {
-                                'x-hasura-admin-secret':'2OWslm5aAjlTARU',
-                                'Content-Type':'application/json',
-                            },
-                            signal: controller.signal,
-                            body: JSON.stringify(attendanceData)
-                        });
-                        console.log('attendanceRes', await attendanceRes.json());
-                    }
+                    console.log('attendanceRes', await attendanceRes.json());
                 }
 
                 if ( response.status === 400 ){
