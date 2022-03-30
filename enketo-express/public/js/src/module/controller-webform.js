@@ -297,6 +297,7 @@ function _loadRecord( instanceId, confirmed ) {
     let isValid;
     let isIndustry;
     let prefilledSubmissionId = '';
+    let isAttendanceSubmit;
     const include = { irrelevant: false };
 
     console.log("FORM", form);
@@ -340,6 +341,7 @@ function _loadRecord( instanceId, confirmed ) {
             isValid = result.isValid;
             isIndustry = result.isIndustry
             prefilledSubmissionId = result.prefilledSubmissionId
+            isAttendanceSubmit = result.isAttendanceSubmit
            console.log('isValid', isValid, isIndustry, prefilledSubmissionId);
             if ( result.failedFiles && result.failedFiles.length > 0 ) {
                 msg = `${t( 'alert.submissionerror.fnfmsg', {
@@ -388,6 +390,8 @@ function _loadRecord( instanceId, confirmed ) {
                 if(prefilledSubmissionId === 'preFilled') {
                     gui.alert( "Trainee schedule doesn't match with the mapped industry schedule.", t( 'alert.submissionerror.heading' ) );
                 }
+            } else if (isAttendanceSubmit) {
+                gui.alert( "You’ve already marked your attendance for the day.", t( 'alert.submissionerror.heading' ) );
             } else {
                 console.log('else');
                 msg = ( msg.length > 0 ) ? msg : t( 'alert.submissionsuccess.msg' );

@@ -302,7 +302,9 @@ function _uploadBatch( recordBatch, formData, attendanceStatus ) {
                         signal: controller.signal,
                         body: JSON.stringify(attendanceData)
                     });
-                    console.log('attendanceRes', await attendanceRes.json());
+                    const attendanceResponse =  await attendanceRes.json();
+                    result.isAttendanceSubmit = (attendanceResponse.hasOwnProperty('code') && attendanceResponse.code === "constraint-violation")
+                    console.log('attendanceRes', attendanceResponse);
                 }
 
                 if ( response.status === 400 ){
