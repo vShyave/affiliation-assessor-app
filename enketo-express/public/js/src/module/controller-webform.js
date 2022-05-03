@@ -298,6 +298,7 @@ function _loadRecord( instanceId, confirmed ) {
     let isIndustry;
     let prefilledSubmissionId = '';
     let isAttendanceSubmit;
+    let isDetailCorrect;
     const include = { irrelevant: false };
 
     console.log("FORM", form);
@@ -334,7 +335,6 @@ function _loadRecord( instanceId, confirmed ) {
         } )
         .then( record => connection.uploadRecord( survey, record ) )
         .then( result => {
-            console.log('call after upload', result)
             result = result || {};
             level = 'success';
 
@@ -342,7 +342,7 @@ function _loadRecord( instanceId, confirmed ) {
             isIndustry = result.isIndustry
             prefilledSubmissionId = result.prefilledSubmissionId
             isAttendanceSubmit = result.isAttendanceSubmit
-           console.log('isValid', isValid, isIndustry, prefilledSubmissionId);
+            isDetailCorrect = result.traineeDetailStatus
             if ( result.failedFiles && result.failedFiles.length > 0 ) {
                 msg = `${t( 'alert.submissionerror.fnfmsg', {
                     failedFiles: result.failedFiles.join( ', ' ),
@@ -354,7 +354,6 @@ function _loadRecord( instanceId, confirmed ) {
         .then( () => {
             // this event is used in communicating back to iframe parent window
             document.dispatchEvent( events.SubmissionSuccess() );
-            console.log('redirect', redirect)
             if ( redirect ) {
                 if ( !settings.multipleAllowed ) {
                     const now = new Date();
@@ -383,24 +382,27 @@ function _loadRecord( instanceId, confirmed ) {
                     location.href = decodeURIComponent( settings.returnUrl || settings.defaultReturnUrl );
                 }, 1200 );
             } else if (!isValid && isValid !== undefined) {
-                console.log('Trainee');
                 gui.alert( "Trainee doesn't exists!", t( 'alert.submissionerror.heading' ) );
             } else if (!isIndustry && isIndustry !== undefined) {
-                console.log('Attendance');
                 if(prefilledSubmissionId === 'preFilled') {
                     gui.alert( "Trainee schedule doesn't match with the mapped industry schedule.", t( 'alert.submissionerror.heading' ) );
                 }
+            } else if(isDetailCorrect) {
+                gui.alert( "", t( 'alert.submissionerror.heading' ) );
             } else if (isAttendanceSubmit) {
-                gui.alert( "You’ve already marked your attendance for the day.", t( 'alert.submissionerror.heading' ) );
+                gui.alert( "Your details are incorrect! Please enter valid detail.", t( 'alert.submissionerror.heading' ) );
+                const message = JSON.stringify({
+                    isEnrl: true,
+                    channel: 'traineeDetail'
+                });
+                window.parent.postMessage(message, '*');
             } else {
-                console.log('else');
                 msg = ( msg.length > 0 ) ? msg : t( 'alert.submissionsuccess.msg' );
                 gui.alert( msg, t( 'alert.submissionsuccess.heading' ), level );
                 _resetForm( survey );
             }
         } )
         .catch( result => {
-            console.log('resulttttt catchccc', result);
             let message;
             result = result || {};
 

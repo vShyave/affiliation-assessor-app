@@ -101,7 +101,6 @@ function _uploadRecord( record ) {
     } catch ( e ) {
         return Promise.reject( e );
     }
-    console.log('batches', record)
     // Get form data
     let formData = {};
     let parser = new DOMParser();
@@ -117,15 +116,21 @@ function _uploadRecord( record ) {
     // Add aatendance
     // Get form data
     let attendanceStatus = false;
+    let traineeDetailStatus = false;
     let parserString = new DOMParser();
     let document = parserString.parseFromString(record.xml, 'text/xml');
     let attendanceFormId = document.getElementById('DST-Attendance');
-    console.log('attendanceFormId', attendanceFormId);
     if(attendanceFormId !== null) {
+        let detailsStatus = doc.getElementsByTagName("details");
+        if(detailsStatus.length !== 0) {
+            if (detailsStatus[0].textContent === 'No') {
+                traineeDetailStatus = false
+            } else {
+                traineeDetailStatus = true
+            }
+        }
         let attendance = doc.getElementsByTagName("attendance_status");
-        console.log('attendance', attendance.length);
         if(attendance.length !== 0) {
-            console.log('attendanceStatus-------', attendance[0].textContent);
             if(attendance[0].textContent === 'Present') {
                 attendanceStatus = true;
             } else {
@@ -146,8 +151,7 @@ function _uploadRecord( record ) {
     // a serious issue with ODK Aggregate (https://github.com/kobotoolbox/enketo-express/issues/400)
     return batches.reduce( ( prevPromise, batch ) => {
         return prevPromise.then( results => {
-            return _uploadBatch( batch, formData, attendanceStatus ).then( result => {
-                console.log('upload after call', result)
+            return _uploadBatch( batch, formData, attendanceStatus, traineeDetailStatus ).then( result => {
                 results.push( result );
 
                 return results;
@@ -176,7 +180,7 @@ const uploadRecord = ( survey, record ) => (
  * @return { Promise<UploadBatchResult> }      [description]
  */
 
-function _uploadBatch( recordBatch, formData, attendanceStatus ) {
+function _uploadBatch( recordBatch, formData, attendanceStatus, traineeDetailStatus ) {
     // Submission URL is dynamic, because settings.submissionParameter only gets populated after loading form from
     // cache in offline mode.
    // const xmlResponse = parser.parseFromString(form.getDataStr( include ), 'text/xml' );
@@ -188,15 +192,12 @@ function _uploadBatch( recordBatch, formData, attendanceStatus ) {
         return document.querySelector(`meta[name=${metaName}]`).content;
     }
     const submissionId = getMeta("formId");
-    console.log('submissionId', submissionId)
 
     setTimeout( () => {
         controller.abort();
     }, settings.timeout );
-    console.log('formData', formData)
 
     if(submissionId === "enrollment") {
-        console.log('call if submit button')
         return fetch( submissionUrl, {
             method: 'POST',
             cache: 'no-cache',
@@ -206,9 +207,7 @@ function _uploadBatch( recordBatch, formData, attendanceStatus ) {
         } )
             .then( async response => {
                 const resData = await response.json();
-                console.log('ressss', resData)
                 if(resData.trainee.length > 0) {
-                    console.log('call if')
                     traineeData = resData.trainee[0];
                     const message = JSON.stringify({
                         message: resData.trainee[0],
@@ -220,7 +219,6 @@ function _uploadBatch( recordBatch, formData, attendanceStatus ) {
                     window.parent.postMessage(message, '*');
                 }
 
-                console.log('traineeData-----', traineeData);
                 /** @type { UploadBatchResult } */
                 let result = {
                     status: response.status,
@@ -242,7 +240,6 @@ function _uploadBatch( recordBatch, formData, attendanceStatus ) {
                             throw result;
                         } );
                 } else if ( response.status !== 201  && response.status !== 202 ){
-                    console.log('call else if')
                     return result;
                 } else {
                     return result;
@@ -255,7 +252,6 @@ function _uploadBatch( recordBatch, formData, attendanceStatus ) {
                 throw error;
             } );
     } else {
-        console.log('traineeData---1-11111111111', parseInt(localStorage.getItem("traineeId")));
         const prefilledSubmissionId = getMeta("formId");
         // Get current month & year
         const d = new Date();
@@ -264,7 +260,6 @@ function _uploadBatch( recordBatch, formData, attendanceStatus ) {
             year: d.getFullYear(),
             industry_id: parseInt(localStorage.getItem("industryId"))
         }
-        console.log('currentMonthYearData', JSON.stringify(currentMonthYearData));
         const attendanceApiUrl = `${HASURA_URL}/api/rest/getIndustryScheduleByMonthAndYear`
         return fetch( attendanceApiUrl, {
             method: 'POST',
@@ -275,14 +270,14 @@ function _uploadBatch( recordBatch, formData, attendanceStatus ) {
         } )
             .then( async response => {
                 const resData = await response.json();
-                console.log('ressss', resData)
 
                 /** @type { UploadBatchResult } */
                 let result = {
                     status: response.status,
                     failedFiles: ( recordBatch.failedFiles ) ? recordBatch.failedFiles : undefined,
                     isIndustry: resData.schedule.length !== 0 ? resData.schedule[0].is_industry : false,
-                    prefilledSubmissionId
+                    prefilledSubmissionId,
+                    traineeDetailStatus
                 };
 
                 // Attendance submit
@@ -304,7 +299,6 @@ function _uploadBatch( recordBatch, formData, attendanceStatus ) {
                     });
                     const attendanceResponse =  await attendanceRes.json();
                     result.isAttendanceSubmit = (attendanceResponse.hasOwnProperty('code') && attendanceResponse.code === "constraint-violation")
-                    console.log('attendanceRes', attendanceResponse);
                 }
 
                 if ( response.status === 400 ){
@@ -403,7 +397,6 @@ function _prepareFormDataArray( record ) {
     if ( submissionFiles.length > 0 ) {
         batches = _divideIntoBatches( sizes, maxSize );
     }
-    console.log('batches',batches)
     console.log( `splitting record into ${batches.length} batches to reduce submission size `, batches );
 
     batches.forEach( batch => {
