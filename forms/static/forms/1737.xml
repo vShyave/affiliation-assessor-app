@@ -1,0 +1,1640 @@
+<?xml version="1.0"?>
+<h:html xmlns="http://www.w3.org/2002/xforms" xmlns:ev="http://www.w3.org/2001/xml-events" xmlns:h="http://www.w3.org/1999/xhtml" xmlns:jr="http://openrosa.org/javarosa" xmlns:odk="http://www.opendatakit.org/xforms" xmlns:orx="http://openrosa.org/xforms" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <h:head>
+        <h:title>Assessment Configuration Form</h:title>
+        <model odk:xforms-version="1.0.0">
+            <instance>
+                <data xmlns="http://www.w3.org/2002/xforms" xmlns:jr="http://openrosa.org/javarosa" id="external" version="1"><assessment_details><assessment_category>3</assessment_category>
+                        <assessment_name>5</assessment_name>
+                    </assessment_details>
+                    <deadline><academic_year>2021-2022</academic_year>
+                        <applicable_district>bilaspur chamba hamirpur kangra kinnaur kullu lahaul_and_spiti mandi sirmaur shimla solan una</applicable_district>
+                        <applicable_session>S W</applicable_session>
+                        <date_deadline>2022-01-13</date_deadline>
+                        <time_deadline>17:39:00.000+05:30</time_deadline>
+                    </deadline>
+                    <grade_subject_selection><my_repeat jr:template=""><eval_params_grades>1</eval_params_grades>
+                            <eval_params_subjects>5 6 88</eval_params_subjects>
+                        </my_repeat>
+                        <my_repeat><eval_params_grades>1</eval_params_grades>
+                            <eval_params_subjects>5 6 88</eval_params_subjects>
+                        </my_repeat>
+                    </grade_subject_selection>
+                    <eval_params><eval_params_value>marks</eval_params_value>
+                        <grade_label />
+                        <overall_total_marks>100</overall_total_marks>
+                        <overall_pass_percentage>35</overall_pass_percentage>
+                        <coms><assessment_component_group jr:template=""><component_details>1</component_details>
+                                <component_total_marks>50</component_total_marks>
+                                <component_pass_percentage>35</component_pass_percentage>
+                            </assessment_component_group>
+                            <assessment_component_group><component_details>1</component_details>
+                                <component_total_marks>50</component_total_marks>
+                                <component_pass_percentage>35</component_pass_percentage>
+                            </assessment_component_group>
+                        </coms>
+                        <subject_custom>yes</subject_custom>
+                        <my_repeat1 jr:template=""><tallest>2</tallest>
+                            <eval_params_subjects1>89</eval_params_subjects1>
+                            <assessment_component_group1 jr:template=""><component_details1>3</component_details1>
+                                <component_total_marks1>50</component_total_marks1>
+                                <component_pass_percentage1>35</component_pass_percentage1>
+                            </assessment_component_group1>
+                        </my_repeat1>
+                        <my_repeat1><tallest>2</tallest>
+                            <eval_params_subjects1>89</eval_params_subjects1>
+                            <assessment_component_group1><component_details1>3</component_details1>
+                                <component_total_marks1>50</component_total_marks1>
+                                <component_pass_percentage1>35</component_pass_percentage1>
+                            </assessment_component_group1>
+                        </my_repeat1>
+                    </eval_params>
+                    <au_config1><aulist>lo</aulist>
+                        <auagg>1</auagg>
+                        <lo_bundle>6</lo_bundle>
+                        <unit_bundle />
+                        <question_bundle />
+                    </au_config1>
+                    <sms_group><sms_enabled>yes</sms_enabled>
+                        <sms_temp>21</sms_temp>
+                    </sms_group>
+                    <enable_ass_group><is_assessment_enabled>yes</is_assessment_enabled>
+                    </enable_ass_group>
+                    <meta><instanceID>uuid:cc638730-107a-44e0-8757-e0774176147a</instanceID>
+                    </meta>
+                </data>
+            
+            </instance>
+            <instance id="district">
+                <root>
+                    <item>
+                        <label>Bilaspur</label>
+                        <name>bilaspur</name>
+                    </item>
+                    <item>
+                        <label>Chamba</label>
+                        <name>chamba</name>
+                    </item>
+                    <item>
+                        <label>Hamirpur</label>
+                        <name>hamirpur</name>
+                    </item>
+                    <item>
+                        <label>Kangra</label>
+                        <name>kangra</name>
+                    </item>
+                    <item>
+                        <label>Kinnaur</label>
+                        <name>kinnaur</name>
+                    </item>
+                    <item>
+                        <label>Kullu</label>
+                        <name>kullu</name>
+                    </item>
+                    <item>
+                        <label>Lahaul &amp; Spiti</label>
+                        <name>lahaul_and_spiti</name>
+                    </item>
+                    <item>
+                        <label>Mandi</label>
+                        <name>mandi</name>
+                    </item>
+                    <item>
+                        <label>Sirmaur</label>
+                        <name>sirmaur</name>
+                    </item>
+                    <item>
+                        <label>Shimla</label>
+                        <name>shimla</name>
+                    </item>
+                    <item>
+                        <label>Solan</label>
+                        <name>solan</name>
+                    </item>
+                    <item>
+                        <label>Una</label>
+                        <name>una</name>
+                    </item>
+                </root>
+            </instance>
+            <instance id="session">
+                <root>
+                    <item>
+                        <label>Summer</label>
+                        <name>S</name>
+                    </item>
+                    <item>
+                        <label>Winter</label>
+                        <name>W</name>
+                    </item>
+                </root>
+            </instance>
+            <instance id="boollist">
+                <root>
+                    <item>
+                        <label>Yes</label>
+                        <name>yes</name>
+                    </item>
+                    <item>
+                        <label>No</label>
+                        <name>no</name>
+                    </item>
+                </root>
+            </instance>
+            <instance id="au_list">
+                <root>
+                    <item>
+                        <label>LO</label>
+                        <name>lo</name>
+                    </item>
+                    <item>
+                        <label>Question</label>
+                        <name>question</name>
+                    </item>
+                    <item>
+                        <label>Unit</label>
+                        <name>unit</name>
+                    </item>
+                    <item>
+                        <label>None</label>
+                        <name>none</name>
+                    </item>
+                </root>
+            </instance>
+            <instance id="au_aggregation">
+                <root>
+                    <item>
+                        <au_list>lo</au_list>
+                        <label>Total Students Passing - TSP</label>
+                        <name>1</name>
+                    </item>
+                    <item>
+                        <au_list>lo</au_list>
+                        <label>Boolean (Pass/Fail)</label>
+                        <name>2</name>
+                    </item>
+                    <item>
+                        <au_list>unit</au_list>
+                        <label>Boolean (Pass/Fail) - Cutoff</label>
+                        <name>3</name>
+                    </item>
+                    <item>
+                        <au_list>unit</au_list>
+                        <label>Total Students Passing - TSP</label>
+                        <name>4</name>
+                    </item>
+                    <item>
+                        <au_list>question</au_list>
+                        <label>Boolean (Pass/Fail) - Cutoff</label>
+                        <name>5</name>
+                    </item>
+                    <item>
+                        <au_list>question</au_list>
+                        <label>Total Students Passing - TSP</label>
+                        <name>6</name>
+                    </item>
+                    <item>
+                        <au_list>question</au_list>
+                        <label>Boolean (Pass/Fail) - Cutoff</label>
+                        <name>7</name>
+                    </item>
+                    <item>
+                        <au_list>question</au_list>
+                        <label>Marks</label>
+                        <name>8</name>
+                    </item>
+                </root>
+            </instance>
+            <instance id="assessment_category">
+                <root>
+                    <item>
+                        <label>AE: ANNUAL EXAMINATION</label>
+                        <name>10</name>
+                    </item>
+                    <item>
+                        <label>BA: BASELINE ASSESSMENT</label>
+                        <name>8</name>
+                    </item>
+                    <item>
+                        <label>BE: BOARD EXAM</label>
+                        <name>6</name>
+                    </item>
+                    <item>
+                        <label>EA: ENDLINE ASSESSMENT</label>
+                        <name>9</name>
+                    </item>
+                    <item>
+                        <label>FA: FORMATIVE ASSESSMENT</label>
+                        <name>1</name>
+                    </item>
+                    <item>
+                        <label>PB: PRE-BOARD EXAM</label>
+                        <name>7</name>
+                    </item>
+                    <item>
+                        <label>SA: SUMMATIVE ASSESSMENT</label>
+                        <name>3</name>
+                    </item>
+                    <item>
+                        <label>TA: TERM ASSESSMENT</label>
+                        <name>5</name>
+                    </item>
+                </root>
+            </instance>
+            <instance id="assessment_name">
+                <root>
+                    <item>
+                        <assessment_category>8</assessment_category>
+                        <label>Baseline Test (2-5) BLT (2-5)</label>
+                        <name>12</name>
+                    </item>
+                    <item>
+                        <assessment_category>8</assessment_category>
+                        <label>Baseline Test (7) BLT (7)</label>
+                        <name>22</name>
+                    </item>
+                    <item>
+                        <assessment_category>8</assessment_category>
+                        <label>Baseline Test (8) BLT (8)</label>
+                        <name>23</name>
+                    </item>
+                    <item>
+                        <assessment_category>8</assessment_category>
+                        <label>Baseline Test (6) BLT (6)</label>
+                        <name>21</name>
+                    </item>
+                    <item>
+                        <assessment_category>6</assessment_category>
+                        <label>BE-BOARD EXAM GRADE 3</label>
+                        <name>14</name>
+                    </item>
+                    <item>
+                        <assessment_category>6</assessment_category>
+                        <label>BE-BOARD EXAM GRADE 5</label>
+                        <name>15</name>
+                    </item>
+                    <item>
+                        <assessment_category>6</assessment_category>
+                        <label>BE-BOARD EXAM GRADE 8</label>
+                        <name>11</name>
+                    </item>
+                    <item>
+                        <assessment_category>9</assessment_category>
+                        <label>ELT-ENDLINE TEST</label>
+                        <name>13</name>
+                    </item>
+                    <item>
+                        <assessment_category>10</assessment_category>
+                        <label>FE-FINAL EXAM</label>
+                        <name>9</name>
+                    </item>
+                    <item>
+                        <assessment_category>1</assessment_category>
+                        <label>FA-1-FORMATIVE ASSESSMENT 1 (1-2)</label>
+                        <name>1</name>
+                    </item>
+                    <item>
+                        <assessment_category>1</assessment_category>
+                        <label>FA-1-FORMATIVE ASSESSMENT 1 (3-8)</label>
+                        <name>16</name>
+                    </item>
+                    <item>
+                        <assessment_category>1</assessment_category>
+                        <label>FA-2-FORMATIVE ASSESSMENT 2 (1-2)</label>
+                        <name>2</name>
+                    </item>
+                    <item>
+                        <assessment_category>1</assessment_category>
+                        <label>FA-2-FORMATIVE ASSESSMENT 2 (3-8)</label>
+                        <name>20</name>
+                    </item>
+                    <item>
+                        <assessment_category>1</assessment_category>
+                        <label>FA-3-FORMATIVE ASSESSMENT 3 (1-2)</label>
+                        <name>3</name>
+                    </item>
+                    <item>
+                        <assessment_category>1</assessment_category>
+                        <label>FA-3-FORMATIVE ASSESSMENT 3 (3-8)</label>
+                        <name>19</name>
+                    </item>
+                    <item>
+                        <assessment_category>1</assessment_category>
+                        <label>FA-4-FORMATIVE ASSESSMENT 4 (1-2)</label>
+                        <name>4</name>
+                    </item>
+                    <item>
+                        <assessment_category>1</assessment_category>
+                        <label>FA-4-FORMATIVE ASSESSMENT 4 (3-8)</label>
+                        <name>18</name>
+                    </item>
+                    <item>
+                        <assessment_category>7</assessment_category>
+                        <label>PB-PRE-BOARD EXAM</label>
+                        <name>10</name>
+                    </item>
+                    <item>
+                        <assessment_category>3</assessment_category>
+                        <label>SA-1-SUMMATIVE ASSESSMENT 1 (1-2)</label>
+                        <name>5</name>
+                    </item>
+                    <item>
+                        <assessment_category>3</assessment_category>
+                        <label>SA-1-SUMMATIVE ASSESSMENT 1 (3-8)</label>
+                        <name>17</name>
+                    </item>
+                    <item>
+                        <assessment_category>3</assessment_category>
+                        <label>SA-2-SUMMATIVE ASSESSMENT 2</label>
+                        <name>6</name>
+                    </item>
+                    <item>
+                        <assessment_category>5</assessment_category>
+                        <label>T-1-TERM 1 EXAM</label>
+                        <name>7</name>
+                    </item>
+                    <item>
+                        <assessment_category>5</assessment_category>
+                        <label>T-2-TERM 2 EXAM</label>
+                        <name>8</name>
+                    </item>
+                </root>
+            </instance>
+            <instance id="sms_template">
+                <root>
+                    <item>
+                        <label>Hello</label>
+                        <name>21</name>
+                    </item>
+                    <item>
+                        <label>How are you</label>
+                        <name>12</name>
+                    </item>
+                    <item>
+                        <label>SMS</label>
+                        <name>121</name>
+                    </item>
+                </root>
+            </instance>
+            <instance id="lo_bundle">
+                <root>
+                    <item>
+                        <label>Grade 8 LO</label>
+                        <name>5</name>
+                    </item>
+                    <item>
+                        <label>Test G12 Bundle</label>
+                        <name>4</name>
+                    </item>
+                    <item>
+                        <label>Formative 1 to 2</label>
+                        <name>6</name>
+                    </item>
+                    <item>
+                        <label>Formative 3 to 8</label>
+                        <name>7</name>
+                    </item>
+                    <item>
+                        <label>Baseline 2 to 5</label>
+                        <name>8</name>
+                    </item>
+                    <item>
+                        <label>Baseline 6</label>
+                        <name>9</name>
+                    </item>
+                    <item>
+                        <label>Baseline 7</label>
+                        <name>10</name>
+                    </item>
+                    <item>
+                        <label>Baseline 8</label>
+                        <name>11</name>
+                    </item>
+                    <item>
+                        <label>Term 2</label>
+                        <name>12</name>
+                    </item>
+                    <item>
+                        <label>FA-1 LO Bundle</label>
+                        <name>3</name>
+                    </item>
+                </root>
+            </instance>
+            <instance id="unit_bundle">
+                <root>
+                    <item>
+                        <label>Term 2 Units</label>
+                        <name>2</name>
+                    </item>
+                    <item>
+                        <label>Unit Bundle 1</label>
+                        <name>1</name>
+                    </item>
+                </root>
+            </instance>
+            <instance id="question_bundle">
+                <root>
+                    <item>
+                        <label>Question Bundle 10</label>
+                        <name>10</name>
+                    </item>
+                </root>
+            </instance>
+            <instance id="evalparams">
+                <root>
+                    <item>
+                        <label>Grade</label>
+                        <name>grade</name>
+                    </item>
+                    <item>
+                        <label>Marks</label>
+                        <name>marks</name>
+                    </item>
+                    <item>
+                        <label>Percentage</label>
+                        <name>percent</name>
+                    </item>
+                    <item>
+                        <label>None</label>
+                        <name>none</name>
+                    </item>
+                </root>
+            </instance>
+            <instance id="grade_number">
+                <root>
+                    <item>
+                        <label>1</label>
+                        <name>1</name>
+                    </item>
+                    <item>
+                        <label>2</label>
+                        <name>2</name>
+                    </item>
+                    <item>
+                        <label>3</label>
+                        <name>3</name>
+                    </item>
+                    <item>
+                        <label>4</label>
+                        <name>4</name>
+                    </item>
+                    <item>
+                        <label>5</label>
+                        <name>5</name>
+                    </item>
+                    <item>
+                        <label>6</label>
+                        <name>6</name>
+                    </item>
+                    <item>
+                        <label>7</label>
+                        <name>7</name>
+                    </item>
+                    <item>
+                        <label>8</label>
+                        <name>8</name>
+                    </item>
+                    <item>
+                        <label>9</label>
+                        <name>9</name>
+                    </item>
+                    <item>
+                        <label>10</label>
+                        <name>10</name>
+                    </item>
+                    <item>
+                        <label>11</label>
+                        <name>11</name>
+                    </item>
+                    <item>
+                        <label>12</label>
+                        <name>12</name>
+                    </item>
+                </root>
+            </instance>
+            <instance id="subject">
+                <root>
+                    <item>
+                        <grade_number>11</grade_number>
+                        <label>Vocational Subjects - 11</label>
+                        <name>35</name>
+                    </item>
+                    <item>
+                        <grade_number>2</grade_number>
+                        <label>English - 2</label>
+                        <name>38</name>
+                    </item>
+                    <item>
+                        <grade_number>6</grade_number>
+                        <label>English - 6</label>
+                        <name>39</name>
+                    </item>
+                    <item>
+                        <grade_number>6</grade_number>
+                        <label>Hindi - 6</label>
+                        <name>41</name>
+                    </item>
+                    <item>
+                        <grade_number>6</grade_number>
+                        <label>Science - 6</label>
+                        <name>43</name>
+                    </item>
+                    <item>
+                        <grade_number>6</grade_number>
+                        <label>Social Science - 6</label>
+                        <name>44</name>
+                    </item>
+                    <item>
+                        <grade_number>7</grade_number>
+                        <label>Social Science - 7</label>
+                        <name>45</name>
+                    </item>
+                    <item>
+                        <grade_number>8</grade_number>
+                        <label>Social Science - 8</label>
+                        <name>46</name>
+                    </item>
+                    <item>
+                        <grade_number>9</grade_number>
+                        <label>Social Science - 9</label>
+                        <name>47</name>
+                    </item>
+                    <item>
+                        <grade_number>10</grade_number>
+                        <label>Social Science - 10</label>
+                        <name>48</name>
+                    </item>
+                    <item>
+                        <grade_number>10</grade_number>
+                        <label>Science - 10</label>
+                        <name>49</name>
+                    </item>
+                    <item>
+                        <grade_number>9</grade_number>
+                        <label>Science - 9</label>
+                        <name>50</name>
+                    </item>
+                    <item>
+                        <grade_number>8</grade_number>
+                        <label>Science - 8</label>
+                        <name>51</name>
+                    </item>
+                    <item>
+                        <grade_number>7</grade_number>
+                        <label>Science - 7</label>
+                        <name>52</name>
+                    </item>
+                    <item>
+                        <grade_number>10</grade_number>
+                        <label>English - 10</label>
+                        <name>57</name>
+                    </item>
+                    <item>
+                        <grade_number>9</grade_number>
+                        <label>English - 9</label>
+                        <name>58</name>
+                    </item>
+                    <item>
+                        <grade_number>8</grade_number>
+                        <label>English - 8</label>
+                        <name>59</name>
+                    </item>
+                    <item>
+                        <grade_number>7</grade_number>
+                        <label>English - 7</label>
+                        <name>60</name>
+                    </item>
+                    <item>
+                        <grade_number>7</grade_number>
+                        <label>Hindi - 7</label>
+                        <name>61</name>
+                    </item>
+                    <item>
+                        <grade_number>8</grade_number>
+                        <label>Hindi - 8</label>
+                        <name>62</name>
+                    </item>
+                    <item>
+                        <grade_number>9</grade_number>
+                        <label>Hindi - 9</label>
+                        <name>63</name>
+                    </item>
+                    <item>
+                        <grade_number>10</grade_number>
+                        <label>Hindi - 10</label>
+                        <name>64</name>
+                    </item>
+                    <item>
+                        <grade_number>11</grade_number>
+                        <label>Philosophy - 11</label>
+                        <name>34</name>
+                    </item>
+                    <item>
+                        <grade_number>11</grade_number>
+                        <label>English - 11</label>
+                        <name>2</name>
+                    </item>
+                    <item>
+                        <grade_number>11</grade_number>
+                        <label>Political Science - 11</label>
+                        <name>15</name>
+                    </item>
+                    <item>
+                        <grade_number>11</grade_number>
+                        <label>Geography - 11</label>
+                        <name>21</name>
+                    </item>
+                    <item>
+                        <grade_number>11</grade_number>
+                        <label>Accountancy - 11</label>
+                        <name>22</name>
+                    </item>
+                    <item>
+                        <grade_number>11</grade_number>
+                        <label>Business Studies - 11</label>
+                        <name>20</name>
+                    </item>
+                    <item>
+                        <grade_number>11</grade_number>
+                        <label>Economics - 11</label>
+                        <name>16</name>
+                    </item>
+                    <item>
+                        <grade_number>11</grade_number>
+                        <label>Physics - 11</label>
+                        <name>17</name>
+                    </item>
+                    <item>
+                        <grade_number>11</grade_number>
+                        <label>Hindi - 11</label>
+                        <name>1</name>
+                    </item>
+                    <item>
+                        <grade_number>11</grade_number>
+                        <label>Chemistry - 11</label>
+                        <name>18</name>
+                    </item>
+                    <item>
+                        <grade_number>11</grade_number>
+                        <label>Biology - 11</label>
+                        <name>19</name>
+                    </item>
+                    <item>
+                        <grade_number>11</grade_number>
+                        <label>History - 11</label>
+                        <name>23</name>
+                    </item>
+                    <item>
+                        <grade_number>11</grade_number>
+                        <label>Physical Education - 11</label>
+                        <name>24</name>
+                    </item>
+                    <item>
+                        <grade_number>11</grade_number>
+                        <label>Music - 11</label>
+                        <name>25</name>
+                    </item>
+                    <item>
+                        <grade_number>11</grade_number>
+                        <label>Psychology - 11</label>
+                        <name>33</name>
+                    </item>
+                    <item>
+                        <grade_number>11</grade_number>
+                        <label>Sanskrit - 11</label>
+                        <name>30</name>
+                    </item>
+                    <item>
+                        <grade_number>11</grade_number>
+                        <label>Home Science - 11</label>
+                        <name>27</name>
+                    </item>
+                    <item>
+                        <grade_number>11</grade_number>
+                        <label>Sociology - 11</label>
+                        <name>26</name>
+                    </item>
+                    <item>
+                        <grade_number>12</grade_number>
+                        <label>English - 12</label>
+                        <name>66</name>
+                    </item>
+                    <item>
+                        <grade_number>12</grade_number>
+                        <label>Physics - 12</label>
+                        <name>67</name>
+                    </item>
+                    <item>
+                        <grade_number>12</grade_number>
+                        <label>Chemistry - 12</label>
+                        <name>68</name>
+                    </item>
+                    <item>
+                        <grade_number>12</grade_number>
+                        <label>Biology - 12</label>
+                        <name>70</name>
+                    </item>
+                    <item>
+                        <grade_number>12</grade_number>
+                        <label>Physical Education - 12</label>
+                        <name>71</name>
+                    </item>
+                    <item>
+                        <grade_number>12</grade_number>
+                        <label>Music - 12</label>
+                        <name>73</name>
+                    </item>
+                    <item>
+                        <grade_number>12</grade_number>
+                        <label>Sociology - 12</label>
+                        <name>74</name>
+                    </item>
+                    <item>
+                        <grade_number>12</grade_number>
+                        <label>Home Science - 12</label>
+                        <name>75</name>
+                    </item>
+                    <item>
+                        <grade_number>12</grade_number>
+                        <label>Sanskrit - 12</label>
+                        <name>76</name>
+                    </item>
+                    <item>
+                        <grade_number>12</grade_number>
+                        <label>History - 12</label>
+                        <name>77</name>
+                    </item>
+                    <item>
+                        <grade_number>12</grade_number>
+                        <label>Political Science - 12</label>
+                        <name>78</name>
+                    </item>
+                    <item>
+                        <grade_number>12</grade_number>
+                        <label>Hindi - 12</label>
+                        <name>79</name>
+                    </item>
+                    <item>
+                        <grade_number>12</grade_number>
+                        <label>Geography - 12</label>
+                        <name>81</name>
+                    </item>
+                    <item>
+                        <grade_number>12</grade_number>
+                        <label>Psychology - 12</label>
+                        <name>82</name>
+                    </item>
+                    <item>
+                        <grade_number>12</grade_number>
+                        <label>Philosophy - 12</label>
+                        <name>83</name>
+                    </item>
+                    <item>
+                        <grade_number>12</grade_number>
+                        <label>Vocational Subjects - 12</label>
+                        <name>84</name>
+                    </item>
+                    <item>
+                        <grade_number>12</grade_number>
+                        <label>Business Studies - 12</label>
+                        <name>85</name>
+                    </item>
+                    <item>
+                        <grade_number>12</grade_number>
+                        <label>Accountancy - 12</label>
+                        <name>86</name>
+                    </item>
+                    <item>
+                        <grade_number>12</grade_number>
+                        <label>Economics - 12</label>
+                        <name>87</name>
+                    </item>
+                    <item>
+                        <grade_number>1</grade_number>
+                        <label>Hindi - 1</label>
+                        <name>5</name>
+                    </item>
+                    <item>
+                        <grade_number>1</grade_number>
+                        <label>English - 1</label>
+                        <name>6</name>
+                    </item>
+                    <item>
+                        <grade_number>2</grade_number>
+                        <label>Hindi - 2</label>
+                        <name>4</name>
+                    </item>
+                    <item>
+                        <grade_number>5</grade_number>
+                        <label>English - 5</label>
+                        <name>93</name>
+                    </item>
+                    <item>
+                        <grade_number>4</grade_number>
+                        <label>English - 4</label>
+                        <name>94</name>
+                    </item>
+                    <item>
+                        <grade_number>3</grade_number>
+                        <label>English - 3</label>
+                        <name>95</name>
+                    </item>
+                    <item>
+                        <grade_number>3</grade_number>
+                        <label>Hindi - 3</label>
+                        <name>99</name>
+                    </item>
+                    <item>
+                        <grade_number>4</grade_number>
+                        <label>Hindi - 4</label>
+                        <name>100</name>
+                    </item>
+                    <item>
+                        <grade_number>5</grade_number>
+                        <label>Hindi - 5</label>
+                        <name>101</name>
+                    </item>
+                    <item>
+                        <grade_number>6</grade_number>
+                        <label>Mathematics - 6</label>
+                        <name>42</name>
+                    </item>
+                    <item>
+                        <grade_number>7</grade_number>
+                        <label>Mathematics - 7</label>
+                        <name>53</name>
+                    </item>
+                    <item>
+                        <grade_number>8</grade_number>
+                        <label>Mathematics - 8</label>
+                        <name>54</name>
+                    </item>
+                    <item>
+                        <grade_number>9</grade_number>
+                        <label>Mathematics - 9</label>
+                        <name>55</name>
+                    </item>
+                    <item>
+                        <grade_number>10</grade_number>
+                        <label>Mathematics - 10</label>
+                        <name>56</name>
+                    </item>
+                    <item>
+                        <grade_number>11</grade_number>
+                        <label>Mathematics - 11</label>
+                        <name>3</name>
+                    </item>
+                    <item>
+                        <grade_number>12</grade_number>
+                        <label>Mathematics - 12</label>
+                        <name>69</name>
+                    </item>
+                    <item>
+                        <grade_number>1</grade_number>
+                        <label>Mathematics - 1</label>
+                        <name>88</name>
+                    </item>
+                    <item>
+                        <grade_number>2</grade_number>
+                        <label>Mathematics - 2</label>
+                        <name>89</name>
+                    </item>
+                    <item>
+                        <grade_number>3</grade_number>
+                        <label>Mathematics - 3</label>
+                        <name>90</name>
+                    </item>
+                    <item>
+                        <grade_number>11</grade_number>
+                        <label>Computer Science - 11</label>
+                        <name>14</name>
+                    </item>
+                    <item>
+                        <grade_number>12</grade_number>
+                        <label>Computer Science - 12</label>
+                        <name>72</name>
+                    </item>
+                    <item>
+                        <grade_number>4</grade_number>
+                        <label>Mathematics - 4</label>
+                        <name>91</name>
+                    </item>
+                    <item>
+                        <grade_number>5</grade_number>
+                        <label>Mathematics - 5</label>
+                        <name>92</name>
+                    </item>
+                    <item>
+                        <grade_number>11</grade_number>
+                        <label>Public Administration - 11</label>
+                        <name>32</name>
+                    </item>
+                    <item>
+                        <grade_number>12</grade_number>
+                        <label>Public Administration - 12</label>
+                        <name>80</name>
+                    </item>
+                    <item>
+                        <grade_number>3</grade_number>
+                        <label>Environmental Studies - 3</label>
+                        <name>96</name>
+                    </item>
+                    <item>
+                        <grade_number>4</grade_number>
+                        <label>Environmental Studies - 4</label>
+                        <name>97</name>
+                    </item>
+                    <item>
+                        <grade_number>5</grade_number>
+                        <label>Environmental Studies - 5</label>
+                        <name>98</name>
+                    </item>
+                    <item>
+                        <grade_number>6</grade_number>
+                        <label>Sanskrit - 6</label>
+                        <name>111</name>
+                    </item>
+                    <item>
+                        <grade_number>7</grade_number>
+                        <label>Sanskrit - 7</label>
+                        <name>112</name>
+                    </item>
+                    <item>
+                        <grade_number>8</grade_number>
+                        <label>Sanskrit - 8</label>
+                        <name>113</name>
+                    </item>
+                    <item>
+                        <grade_number>6</grade_number>
+                        <label>Home Science - 6</label>
+                        <name>114</name>
+                    </item>
+                    <item>
+                        <grade_number>7</grade_number>
+                        <label>Home Science - 7</label>
+                        <name>115</name>
+                    </item>
+                    <item>
+                        <grade_number>8</grade_number>
+                        <label>Home Science - 8</label>
+                        <name>116</name>
+                    </item>
+                    <item>
+                        <grade_number>6</grade_number>
+                        <label>Drawing - 6</label>
+                        <name>117</name>
+                    </item>
+                    <item>
+                        <grade_number>7</grade_number>
+                        <label>Drawing - 7</label>
+                        <name>118</name>
+                    </item>
+                    <item>
+                        <grade_number>8</grade_number>
+                        <label>Drawing - 8</label>
+                        <name>119</name>
+                    </item>
+                    <item>
+                        <grade_number>6</grade_number>
+                        <label>Music - 6</label>
+                        <name>120</name>
+                    </item>
+                    <item>
+                        <grade_number>7</grade_number>
+                        <label>Music - 7</label>
+                        <name>121</name>
+                    </item>
+                    <item>
+                        <grade_number>8</grade_number>
+                        <label>Music - 8</label>
+                        <name>122</name>
+                    </item>
+                    <item>
+                        <grade_number>9</grade_number>
+                        <label>Punjabi - 9</label>
+                        <name>123</name>
+                    </item>
+                    <item>
+                        <grade_number>10</grade_number>
+                        <label>Punjabi - 10</label>
+                        <name>124</name>
+                    </item>
+                    <item>
+                        <grade_number>9</grade_number>
+                        <label>Sanskrit - 9</label>
+                        <name>125</name>
+                    </item>
+                    <item>
+                        <grade_number>10</grade_number>
+                        <label>Sanskrit - 10</label>
+                        <name>126</name>
+                    </item>
+                    <item>
+                        <grade_number>9</grade_number>
+                        <label>Urdu - 9</label>
+                        <name>127</name>
+                    </item>
+                    <item>
+                        <grade_number>10</grade_number>
+                        <label>Urdu - 10</label>
+                        <name>128</name>
+                    </item>
+                    <item>
+                        <grade_number>9</grade_number>
+                        <label>Drawing - 9</label>
+                        <name>129</name>
+                    </item>
+                    <item>
+                        <grade_number>10</grade_number>
+                        <label>Drawing - 10</label>
+                        <name>130</name>
+                    </item>
+                    <item>
+                        <grade_number>9</grade_number>
+                        <label>Home Science - 9</label>
+                        <name>131</name>
+                    </item>
+                    <item>
+                        <grade_number>10</grade_number>
+                        <label>Home Science - 10</label>
+                        <name>132</name>
+                    </item>
+                    <item>
+                        <grade_number>9</grade_number>
+                        <label>Music - 9</label>
+                        <name>133</name>
+                    </item>
+                    <item>
+                        <grade_number>10</grade_number>
+                        <label>Music - 10</label>
+                        <name>134</name>
+                    </item>
+                </root>
+            </instance>
+            <instance id="yesno">
+                <root>
+                    <item>
+                        <label>Yes</label>
+                        <name>yes</name>
+                    </item>
+                    <item>
+                        <label>No</label>
+                        <name>no</name>
+                    </item>
+                </root>
+            </instance>
+            <instance id="grademap">
+                <root>
+                    <item>
+                        <label>{ "A": "A", "B": "B", "C": "C", "D": "D", "E": "E", "Z": "Absent" }</label>
+                        <name>3</name>
+                    </item>
+                    <item>
+                        <label>{ "A": "1", "B": "2", "C": "3", "D": "4", "E": "5", "Z": "Absent" }</label>
+                        <name>2</name>
+                    </item>
+                    <item>
+                        <label>{ "A": "Low", "B": "Medium", "C": "High", "Z": "Absent" }</label>
+                        <name>4</name>
+                    </item>
+                </root>
+            </instance>
+            <instance id="component_name">
+                <root>
+                    <item>
+                        <label>Internal Assessments</label>
+                        <name>5</name>
+                    </item>
+                    <item>
+                        <label>Oral Examination</label>
+                        <name>4</name>
+                    </item>
+                    <item>
+                        <label>Practical Exam</label>
+                        <name>3</name>
+                    </item>
+                    <item>
+                        <label>Theory</label>
+                        <name>1</name>
+                    </item>
+                    <item>
+                        <label>Viva</label>
+                        <name>2</name>
+                    </item>
+                </root>
+            </instance>
+            <instance id="subjectcustom">
+                <root>
+                    <item>
+                        <label>Yes</label>
+                        <name>yes</name>
+                    </item>
+                    <item>
+                        <label>No</label>
+                        <name>no</name>
+                    </item>
+                </root>
+            </instance>
+            <bind nodeset="/data/assessment_details/assessment_category" required="true()" type="string" />
+            <bind nodeset="/data/assessment_details/assessment_name" required="true()" type="string" />
+            <bind nodeset="/data/deadline/academic_year" readonly="true()" required="true()" type="string" />
+            <setvalue event="odk-instance-first-load" ref="/data/deadline/academic_year" value="&quot;2021-2022&quot;" />
+            <bind nodeset="/data/deadline/applicable_district" required="true()" type="string" />
+            <bind nodeset="/data/deadline/applicable_session" required="true()" type="string" />
+            <bind nodeset="/data/deadline/date_deadline" required="true()" type="date" />
+            <bind nodeset="/data/deadline/time_deadline" required="true()" type="time" />
+            <bind nodeset="/data/grade_subject_selection/my_repeat" required="true()" />
+            <bind nodeset="/data/grade_subject_selection/my_repeat/eval_params_grades" required="true()" type="string" />
+            <bind nodeset="/data/grade_subject_selection/my_repeat/eval_params_subjects" required="true()" type="string" />
+            <bind nodeset="/data/eval_params/eval_params_value" required="true()" type="string" />
+            <bind nodeset="/data/eval_params/grade_label" relevant=" /data/eval_params/eval_params_value  = 'grade'" type="string" />
+            <bind nodeset="/data/eval_params/overall_total_marks" relevant=" /data/eval_params/eval_params_value  = 'marks'" type="int" />
+            <bind nodeset="/data/eval_params/overall_pass_percentage" relevant=" /data/eval_params/eval_params_value  = 'marks'" type="int" />
+            <bind nodeset="/data/eval_params/coms" relevant=" /data/eval_params/eval_params_value  = 'marks'" />
+            <bind nodeset="/data/eval_params/coms/assessment_component_group/component_details" type="string" />
+            <bind nodeset="/data/eval_params/coms/assessment_component_group/component_total_marks" required="true()" type="int" />
+            <bind nodeset="/data/eval_params/coms/assessment_component_group/component_pass_percentage" required="true()" type="int" />
+            <bind nodeset="/data/eval_params/subject_custom" relevant=" /data/eval_params/eval_params_value  = 'marks'" required="true()" type="string" />
+            <bind nodeset="/data/eval_params/my_repeat1" relevant=" /data/eval_params/subject_custom  = 'yes'" />
+            <bind nodeset="/data/eval_params/my_repeat1/tallest" relevant=" /data/eval_params/subject_custom  = 'yes'" type="string" />
+            <bind nodeset="/data/eval_params/my_repeat1/eval_params_subjects1" relevant=" /data/eval_params/subject_custom  = 'yes'" type="string" />
+            <bind nodeset="/data/eval_params/my_repeat1/assessment_component_group1" relevant=" /data/eval_params/subject_custom  = 'yes'" />
+            <bind nodeset="/data/eval_params/my_repeat1/assessment_component_group1/component_details1" relevant=" /data/eval_params/subject_custom  = 'yes'" type="string" />
+            <bind nodeset="/data/eval_params/my_repeat1/assessment_component_group1/component_total_marks1" relevant=" /data/eval_params/subject_custom  = 'yes'" type="int" />
+            <bind nodeset="/data/eval_params/my_repeat1/assessment_component_group1/component_pass_percentage1" relevant=" /data/eval_params/subject_custom  = 'yes'" type="int" />
+            <bind nodeset="/data/au_config1/aulist" required="true()" type="string" />
+            <bind nodeset="/data/au_config1/auagg" relevant=" /data/au_config1/aulist = 'lo' or  /data/au_config1/aulist = 'question' or  /data/au_config1/aulist = 'unit'" required="true()" type="string" />
+            <bind nodeset="/data/au_config1/lo_bundle" relevant=" /data/au_config1/aulist = 'lo'" required="true()" type="string" />
+            <bind nodeset="/data/au_config1/unit_bundle" relevant=" /data/au_config1/aulist = 'unit'" required="true()" type="string" />
+            <bind nodeset="/data/au_config1/question_bundle" relevant=" /data/au_config1/aulist = 'question'" required="true()" type="string" />
+            <bind nodeset="/data/sms_group/sms_enabled" required="true()" type="string" />
+            <bind nodeset="/data/sms_group/sms_temp" relevant=" /data/sms_group/sms_enabled  = 'yes'" type="string" />
+            <bind nodeset="/data/enable_ass_group/is_assessment_enabled" required="true()" type="string" />
+            <bind jr:preload="uid" nodeset="/data/meta/instanceID" readonly="true()" type="string" />
+        </model>
+    </h:head>
+    <h:body class="pages">
+        <group appearance="field-list" ref="/data/assessment_details">
+            <label>Assessment Details</label>
+            <select1 ref="/data/assessment_details/assessment_category">
+                <label>Select Assessment Category</label>
+                <item>
+                    <label>AE: ANNUAL EXAMINATION</label>
+                    <value>10</value>
+                </item>
+                <item>
+                    <label>BA: BASELINE ASSESSMENT</label>
+                    <value>8</value>
+                </item>
+                <item>
+                    <label>BE: BOARD EXAM</label>
+                    <value>6</value>
+                </item>
+                <item>
+                    <label>EA: ENDLINE ASSESSMENT</label>
+                    <value>9</value>
+                </item>
+                <item>
+                    <label>FA: FORMATIVE ASSESSMENT</label>
+                    <value>1</value>
+                </item>
+                <item>
+                    <label>PB: PRE-BOARD EXAM</label>
+                    <value>7</value>
+                </item>
+                <item>
+                    <label>SA: SUMMATIVE ASSESSMENT</label>
+                    <value>3</value>
+                </item>
+                <item>
+                    <label>TA: TERM ASSESSMENT</label>
+                    <value>5</value>
+                </item>
+            </select1>
+            <select1 ref="/data/assessment_details/assessment_name">
+                <label>Select Assessment Name</label>
+                <itemset nodeset="instance('assessment_name')/root/item[assessment_category= /data/assessment_details/assessment_category ]">
+                    <value ref="name" />
+                    <label ref="label" />
+                </itemset>
+            </select1>
+        </group>
+        <group appearance="field-list" ref="/data/deadline">
+            <label>Deadline Details</label>
+            <input ref="/data/deadline/academic_year">
+                <label>Academic Year</label>
+            </input>
+            <select ref="/data/deadline/applicable_district">
+                <label>Select the relevant districts for which data collection is to be conducted</label>
+                <item>
+                    <label>Bilaspur</label>
+                    <value>bilaspur</value>
+                </item>
+                <item>
+                    <label>Chamba</label>
+                    <value>chamba</value>
+                </item>
+                <item>
+                    <label>Hamirpur</label>
+                    <value>hamirpur</value>
+                </item>
+                <item>
+                    <label>Kangra</label>
+                    <value>kangra</value>
+                </item>
+                <item>
+                    <label>Kinnaur</label>
+                    <value>kinnaur</value>
+                </item>
+                <item>
+                    <label>Kullu</label>
+                    <value>kullu</value>
+                </item>
+                <item>
+                    <label>Lahaul &amp; Spiti</label>
+                    <value>lahaul_and_spiti</value>
+                </item>
+                <item>
+                    <label>Mandi</label>
+                    <value>mandi</value>
+                </item>
+                <item>
+                    <label>Sirmaur</label>
+                    <value>sirmaur</value>
+                </item>
+                <item>
+                    <label>Shimla</label>
+                    <value>shimla</value>
+                </item>
+                <item>
+                    <label>Solan</label>
+                    <value>solan</value>
+                </item>
+                <item>
+                    <label>Una</label>
+                    <value>una</value>
+                </item>
+            </select>
+            <select ref="/data/deadline/applicable_session">
+                <label>Select relevant school sessions</label>
+                <item>
+                    <label>Summer</label>
+                    <value>S</value>
+                </item>
+                <item>
+                    <label>Winter</label>
+                    <value>W</value>
+                </item>
+            </select>
+            <input appearance="none" ref="/data/deadline/date_deadline">
+                <label>Select date for the assessment data collection deadline</label>
+            </input>
+            <input appearance="none" ref="/data/deadline/time_deadline">
+                <label>Select the time for assessment data collection deadline</label>
+            </input>
+        </group>
+        <group appearance="field-list" ref="/data/grade_subject_selection">
+            <label>Grades and Subjects Applicable to the Assessment</label>
+            <group ref="/data/grade_subject_selection/my_repeat">
+                <label>Select relevant grades and subjects</label>
+                <repeat nodeset="/data/grade_subject_selection/my_repeat">
+                    <select1 ref="/data/grade_subject_selection/my_repeat/eval_params_grades">
+                        <label>Grade for which assessment data is to be collected</label>
+                        <item>
+                            <label>1</label>
+                            <value>1</value>
+                        </item>
+                        <item>
+                            <label>2</label>
+                            <value>2</value>
+                        </item>
+                        <item>
+                            <label>3</label>
+                            <value>3</value>
+                        </item>
+                        <item>
+                            <label>4</label>
+                            <value>4</value>
+                        </item>
+                        <item>
+                            <label>5</label>
+                            <value>5</value>
+                        </item>
+                        <item>
+                            <label>6</label>
+                            <value>6</value>
+                        </item>
+                        <item>
+                            <label>7</label>
+                            <value>7</value>
+                        </item>
+                        <item>
+                            <label>8</label>
+                            <value>8</value>
+                        </item>
+                        <item>
+                            <label>9</label>
+                            <value>9</value>
+                        </item>
+                        <item>
+                            <label>10</label>
+                            <value>10</value>
+                        </item>
+                        <item>
+                            <label>11</label>
+                            <value>11</value>
+                        </item>
+                        <item>
+                            <label>12</label>
+                            <value>12</value>
+                        </item>
+                    </select1>
+                    <select ref="/data/grade_subject_selection/my_repeat/eval_params_subjects">
+                        <label>Subjects for which assessment data will be collected</label>
+                        <itemset nodeset="instance('subject')/root/item[grade_number= current()/../eval_params_grades ]">
+                            <value ref="name" />
+                            <label ref="label" />
+                        </itemset>
+                    </select>
+                </repeat>
+            </group>
+        </group>
+        <group appearance="field-list" ref="/data/eval_params">
+            <label>Evaluation Parameters</label>
+            <select1 ref="/data/eval_params/eval_params_value">
+                <label>Select Relevant Evaluation Parameter</label>
+                <item>
+                    <label>Grade</label>
+                    <value>grade</value>
+                </item>
+                <item>
+                    <label>Marks</label>
+                    <value>marks</value>
+                </item>
+                <item>
+                    <label>Percentage</label>
+                    <value>percent</value>
+                </item>
+                <item>
+                    <label>None</label>
+                    <value>none</value>
+                </item>
+            </select1>
+            <select1 ref="/data/eval_params/grade_label">
+                <label>Grade label to be displayed to user</label>
+                <item>
+                    <label>{ "A": "A", "B": "B", "C": "C", "D": "D", "E": "E", "Z": "Absent" }</label>
+                    <value>3</value>
+                </item>
+                <item>
+                    <label>{ "A": "1", "B": "2", "C": "3", "D": "4", "E": "5", "Z": "Absent" }</label>
+                    <value>2</value>
+                </item>
+                <item>
+                    <label>{ "A": "Low", "B": "Medium", "C": "High", "Z": "Absent" }</label>
+                    <value>4</value>
+                </item>
+            </select1>
+            <input ref="/data/eval_params/overall_total_marks">
+                <label>Total Marks of evaluation under any Subject</label>
+            </input>
+            <input ref="/data/eval_params/overall_pass_percentage">
+                <label>Pass Percentage for any subject under assessment</label>
+            </input>
+            <group ref="/data/eval_params/coms">
+                <label>Component Details</label>
+                <group ref="/data/eval_params/coms/assessment_component_group">
+                    <label>Grade and Subject Selection</label>
+                    <repeat nodeset="/data/eval_params/coms/assessment_component_group">
+                        <select1 ref="/data/eval_params/coms/assessment_component_group/component_details">
+                            <label>Select Component</label>
+                            <item>
+                                <label>Internal Assessments</label>
+                                <value>5</value>
+                            </item>
+                            <item>
+                                <label>Oral Examination</label>
+                                <value>4</value>
+                            </item>
+                            <item>
+                                <label>Practical Exam</label>
+                                <value>3</value>
+                            </item>
+                            <item>
+                                <label>Theory</label>
+                                <value>1</value>
+                            </item>
+                            <item>
+                                <label>Viva</label>
+                                <value>2</value>
+                            </item>
+                        </select1>
+                        <input ref="/data/eval_params/coms/assessment_component_group/component_total_marks">
+                            <label>Total Marks for the selected component</label>
+                        </input>
+                        <input ref="/data/eval_params/coms/assessment_component_group/component_pass_percentage">
+                            <label>Pass Percentage for selected component</label>
+                        </input>
+                    </repeat>
+                </group>
+            </group>
+            <select1 ref="/data/eval_params/subject_custom">
+                <label>Do you want the marks distribution to be customised for any subject?</label>
+                <item>
+                    <label>Yes</label>
+                    <value>yes</value>
+                </item>
+                <item>
+                    <label>No</label>
+                    <value>no</value>
+                </item>
+            </select1>
+            <group ref="/data/eval_params/my_repeat1">
+                <label>Customisation</label>
+                <repeat nodeset="/data/eval_params/my_repeat1">
+                    <select1 ref="/data/eval_params/my_repeat1/tallest">
+                        <label>Select grade you want to customise</label>
+                        <itemset nodeset="/data/grade_subject_selection/my_repeat[./eval_params_grades != '']">
+                            <value ref="eval_params_grades" />
+                            <label ref="eval_params_grades" />
+                        </itemset>
+                    </select1>
+                    <select1 ref="/data/eval_params/my_repeat1/eval_params_subjects1">
+                        <label>Customise for which subject</label>
+                        <itemset nodeset="instance('subject')/root/item[grade_number= current()/../tallest ]">
+                            <value ref="name" />
+                            <label ref="label" />
+                        </itemset>
+                    </select1>
+                    <group ref="/data/eval_params/my_repeat1/assessment_component_group1">
+                        <label>Grade and Subject Selection</label>
+                        <repeat nodeset="/data/eval_params/my_repeat1/assessment_component_group1">
+                            <select1 ref="/data/eval_params/my_repeat1/assessment_component_group1/component_details1">
+                                <label>Select Component</label>
+                                <item>
+                                    <label>Internal Assessments</label>
+                                    <value>5</value>
+                                </item>
+                                <item>
+                                    <label>Oral Examination</label>
+                                    <value>4</value>
+                                </item>
+                                <item>
+                                    <label>Practical Exam</label>
+                                    <value>3</value>
+                                </item>
+                                <item>
+                                    <label>Theory</label>
+                                    <value>1</value>
+                                </item>
+                                <item>
+                                    <label>Viva</label>
+                                    <value>2</value>
+                                </item>
+                            </select1>
+                            <input ref="/data/eval_params/my_repeat1/assessment_component_group1/component_total_marks1">
+                                <label>Total Marks for the selected component</label>
+                            </input>
+                            <input ref="/data/eval_params/my_repeat1/assessment_component_group1/component_pass_percentage1">
+                                <label>Pass Percentage for selected component</label>
+                            </input>
+                        </repeat>
+                    </group>
+                </repeat>
+            </group>
+        </group>
+        <group appearance="field-list" ref="/data/au_config1">
+            <label>Assessment Unit Details</label>
+            <select1 ref="/data/au_config1/aulist">
+                <label>What type of assessment unit data you want to be recorded?</label>
+                <item>
+                    <label>LO</label>
+                    <value>lo</value>
+                </item>
+                <item>
+                    <label>Question</label>
+                    <value>question</value>
+                </item>
+                <item>
+                    <label>Unit</label>
+                    <value>unit</value>
+                </item>
+                <item>
+                    <label>None</label>
+                    <value>none</value>
+                </item>
+            </select1>
+            <select1 ref="/data/au_config1/auagg">
+                <label>At what level of aggregation do you want to capture it?</label>
+                <itemset nodeset="instance('au_aggregation')/root/item[au_list= /data/au_config1/aulist ]">
+                    <value ref="name" />
+                    <label ref="label" />
+                </itemset>
+            </select1>
+            <select1 ref="/data/au_config1/lo_bundle">
+                <label>Choose Assessment Units (LO Bundle)</label>
+                <item>
+                    <label>Grade 8 LO</label>
+                    <value>5</value>
+                </item>
+                <item>
+                    <label>Test G12 Bundle</label>
+                    <value>4</value>
+                </item>
+                <item>
+                    <label>Formative 1 to 2</label>
+                    <value>6</value>
+                </item>
+                <item>
+                    <label>Formative 3 to 8</label>
+                    <value>7</value>
+                </item>
+                <item>
+                    <label>Baseline 2 to 5</label>
+                    <value>8</value>
+                </item>
+                <item>
+                    <label>Baseline 6</label>
+                    <value>9</value>
+                </item>
+                <item>
+                    <label>Baseline 7</label>
+                    <value>10</value>
+                </item>
+                <item>
+                    <label>Baseline 8</label>
+                    <value>11</value>
+                </item>
+                <item>
+                    <label>Term 2</label>
+                    <value>12</value>
+                </item>
+                <item>
+                    <label>FA-1 LO Bundle</label>
+                    <value>3</value>
+                </item>
+            </select1>
+            <select1 ref="/data/au_config1/unit_bundle">
+                <label>Choose Assessment Units (Unit Bundle)</label>
+                <item>
+                    <label>Term 2 Units</label>
+                    <value>2</value>
+                </item>
+                <item>
+                    <label>Unit Bundle 1</label>
+                    <value>1</value>
+                </item>
+            </select1>
+            <select1 ref="/data/au_config1/question_bundle">
+                <label>Choose Assessment Units (Question Bundle)</label>
+                <item>
+                    <label>Question Bundle 10</label>
+                    <value>10</value>
+                </item>
+            </select1>
+        </group>
+        <group appearance="field-list" ref="/data/sms_group">
+            <label>SMS Template</label>
+            <select1 ref="/data/sms_group/sms_enabled">
+                <label>Do you want to send the SMS(es) to students' parents after filling of assessment data is completed?</label>
+                <item>
+                    <label>Yes</label>
+                    <value>yes</value>
+                </item>
+                <item>
+                    <label>No</label>
+                    <value>no</value>
+                </item>
+            </select1>
+            <select1 ref="/data/sms_group/sms_temp">
+                <label>Select Relevant SMS template</label>
+                <item>
+                    <label>Hello</label>
+                    <value>21</value>
+                </item>
+                <item>
+                    <label>How are you</label>
+                    <value>12</value>
+                </item>
+                <item>
+                    <label>SMS</label>
+                    <value>121</value>
+                </item>
+            </select1>
+        </group>
+        <group appearance="field-list" ref="/data/enable_ass_group">
+            <label>Enable Assessment</label>
+            <select1 ref="/data/enable_ass_group/is_assessment_enabled">
+                <label>Do you want the assessment data collection drive to be enabled immediately?</label>
+                <item>
+                    <label>Yes</label>
+                    <value>yes</value>
+                </item>
+                <item>
+                    <label>No</label>
+                    <value>no</value>
+                </item>
+            </select1>
+        </group>
+    </h:body>
+</h:html>
