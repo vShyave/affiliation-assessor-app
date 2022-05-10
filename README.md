@@ -20,19 +20,18 @@ Enketo has been used all around the world for a wide range of uses from needs as
 
 ![Screencast from 03-02-22 05_31_50 PM IST](https://user-images.githubusercontent.com/56133783/152341126-ac03baa3-258c-473a-956a-d0973682234a.gif)
 
-
 ## Requirements :scroll:
 
 1. Your machine should have [Yarn](https://classic.yarnpkg.com/en/docs/install/#windows-stable) or [Npm](https://docs.npmjs.com/downloading-and-installing-node-js-and-npm), [Docker](https://docs.docker.com/get-docker/), [Python](https://www.python.org/downloads/) installed.
 
-*Note: Preferable Npm version (6.14.15) and Node version(v14.18.1)*
+_Note: Preferable Npm version (6.14.15) and Node version(v14.18.1)_
 
 2. Check the node and npm version by running following commands.
+
 ```sh
 node -v
 npm -v
 ```
-
 
 ## Installation Steps :walking:
 
@@ -68,6 +67,7 @@ git remote -v
 origin  https://github.com/Your_Username/enketo.git (fetch)
 origin  https://github.com/Your_Username/enketo.git (push)
 ```
+
 ### 4. Run it :checkered_flag:
 
 ```sh
@@ -99,7 +99,8 @@ python3 -m http.server
 You can preview your form on http://localhost:8005/preview?xform=http://localhost:8080/getForm/SOE
 
 ### 5. For integrating your backend
-Customize the [submission url](https://github.com/Samagra-Development/enketo/blob/main/enketo-express/public/js/src/module/connection.js#L150) with your hosted backend. 
+
+Customize the [submission url](https://github.com/Samagra-Development/enketo/blob/main/enketo-express/public/js/src/module/connection.js#L150) with your hosted backend.
 
 ## Future Enhancements :rocket:
 
@@ -107,3 +108,4 @@ Customize the [submission url](https://github.com/Samagra-Development/enketo/blo
 - Writing a API for changing an XML form directly from it.
 - add npm scripts for install
 
+We are trying to an inversion of control here.
