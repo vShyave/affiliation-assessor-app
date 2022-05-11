@@ -13,17 +13,17 @@ const survey = {
 const range = document.createRange();
 
 // Completely disable calculations in Enketo Core
-import calcModule from 'samagra-x-enketo-core/src/js/calculate';
+import calcModule from 'enketo-core/src/js/calculate';
 calcModule.update = () => {
     console.log( 'Calculations disabled.' );
 };
 // Completely disable instanceID and deprecatedID population in Enketo Core
-import { FormModel } from 'samagra-x-enketo-core/src/js/form-model';
+import { FormModel } from 'enketo-core/src/js/form-model';
 FormModel.prototype.setInstanceIdAndDeprecatedId = () => {
     console.log( 'InstanceID and deprecatedID population disabled.' );
 };
 // Completely disable preload items
-import preloadModule from 'samagra-x-enketo-core/src/js/preload';
+import preloadModule from 'enketo-core/src/js/preload';
 preloadModule.init = () => {
     console.log( 'Preloaders disabled.' );
 };
