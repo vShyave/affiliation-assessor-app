@@ -24,7 +24,7 @@ Enketo has been used all around the world for a wide range of uses from needs as
 
 1. Your machine should have [Yarn](https://classic.yarnpkg.com/en/docs/install/#windows-stable) or [Npm](https://docs.npmjs.com/downloading-and-installing-node-js-and-npm), [Docker](https://docs.docker.com/get-docker/), [Python](https://www.python.org/downloads/) installed.
 
-_Note: Preferable Npm version (6.14.15) and Node version(v14.18.1)_
+*Note: Preferable Npm version (6.14.15) and Node version(v14.18.1) and Ubuntu OS version(18.04)**
 
 2. Check the node and npm version by running following commands.
 
