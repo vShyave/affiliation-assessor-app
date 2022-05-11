@@ -109,3 +109,51 @@ Customize the [submission url](https://github.com/Samagra-Development/enketo/blo
 - add npm scripts for install
 
 We are trying to an inversion of control here.
+
+### For Get API
+
+`curl --location --request GET 'http://localhost:3002/form/form2'`
+
+### Form Prefill API
+
+```sh
+curl --location --request POST 'http://localhost:3002/prefill' \
+--header 'Content-Type: application/json' \
+--data-raw '{
+    "prefillSpec": {
+        "pf_name": "`${onFormSuccessData.name}`",
+        "pf_iti": "`${onFormSuccessData.itiByIti.name}`",
+        "pf_trade": "`${onFormSuccessData.tradeName}`",
+        "pf_batch": "`${onFormSuccessData.batch}`",
+        "pf_industry": "`${onFormSuccessData.industryByIndustry.name}`",
+        "ojt_month": "`${onFormSuccessData.industryByIndustry.schedules[0].is_industry === true ? 1 : 0}`"
+    },
+    "onFormSuccessData": {
+        "name": "DEVA",
+        "batch": "2021-2023",
+        "id": 8,
+        "DOB": "2005-03-04",
+        "affiliationType": "NCVT",
+        "registrationNumber": "ICA211021569832",
+        "tradeName": "Electrician",
+        "iti": 7,
+        "industry": 1,
+        "itiByIti": {
+            "id": 7,
+            "name": "GITI Nagina"
+        },
+        "industryByIndustry": {
+            "id": 1,
+            "name": "Kaushal Bhawan",
+            "latitude": 30.695753,
+            "longitude": 76.872025,
+            "schedules": [
+                {
+                    "is_industry": true
+                }
+            ]
+        }
+    },
+    "form": "form2"
+}'
+```

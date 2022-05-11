@@ -6,6 +6,7 @@ import encryptor from './encryptor';
 import settings from './settings';
 import { t } from './translator';
 import utils from './utils';
+import { FormController } from './form-controller';
 import {
     getLastSavedRecord,
     LAST_SAVED_VIRTUAL_ENDPOINT,
@@ -118,7 +119,7 @@ function _uploadRecord( record ) {
     return batches
         .reduce( ( prevPromise, batch ) => {
             return prevPromise.then( ( results ) => {
-                return _uploadBatch( batch ).then( ( result ) => {
+                return _uploadBatch( batch, record ).then( ( result ) => {
                     results.push( result );
 
                     return results;
@@ -142,95 +143,88 @@ const uploadRecord = ( survey, record ) =>
  * Uploads a single batch of a single record.
  *
  * @param { BatchPrepped } recordBatch - formData object to send
+ * @param { EnketoRecord } record - record object
  * @return { Promise<UploadBatchResult> }      [description]
  */
-function _uploadBatch( recordBatch ) {
+async function _uploadBatch( recordBatch, record ) {
     // Submission URL is dynamic, because settings.submissionParameter only gets populated after loading form from
     // cache in offline mode.
-    const submissionUrl = 'http://esamwad.samagra.io/api/v4/form/submit';
     setTimeout( () => {
         controller.abort();
     }, settings.timeout );
 
-    function getCookie( cName ) {
-        const name = cName + '=';
-        const cDecoded = decodeURIComponent( document.cookie ); //to be careful
-        console.log( 'DOCUMENT', document );
-        const cArr = cDecoded.split( '; ' );
-        let res;
-        cArr.forEach( ( val ) => {
-            if ( val.indexOf( name ) === 0 ) res = val.substring( name.length );
-        } );
-
-        return res;
-    }
-
+   
     function getMeta( metaName ) {
         return document.querySelector( `meta[name=${metaName}]` ).content;
     }
+    console.log( 'REC', recordBatch.formData );
 
-    console.log( 'REC', recordBatch );
-    const token = getMeta( 'backendToken' );
-    const enketoFormId = getMeta( 'formId' );
-    console.log( 'TOKEN', token );
-    console.log( 'ID', enketoFormId );
+    const formSpec = getMeta( 'formSpec' );
+    const formController = new FormController( JSON.parse( formSpec ) );
+    const response = await formController.processForm( record.xml );
+    formController.broadcastFormData();
 
-    return fetch( submissionUrl, {
-        method: 'POST',
-        cache: 'no-cache',
-        headers: {
-            Authorization: `Bearer ${token}`,
-            'X-Form-Id': enketoFormId,
-        },
-        signal: controller.signal,
-        body: recordBatch.formData,
-    } )
-        .then( ( response ) => {
-            /** @type { UploadBatchResult } */
-            let result = {
-                status: response.status,
-                failedFiles: recordBatch.failedFiles
-                    ? recordBatch.failedFiles
-                    : undefined,
-            };
+    return {
+        status: response.status,
+        message: response.message,
+    };
 
-            if ( response.status === 400 ) {
-                // 400 is a generic error. Any message returned by the server is probably more useful.
-                // Other more specific statusCodes will get hardcoded and translated messages.
-                return response.text().then( ( text ) => {
-                    const xmlResponse = parser.parseFromString(
-                        text,
-                        'text/xml'
-                    );
-                    if ( xmlResponse ) {
-                        const messageEl = xmlResponse.querySelector(
-                            'OpenRosaResponse > message'
-                        );
-                        if ( messageEl ) {
-                            result.message = messageEl.textContent;
-                        }
-                    }
-                    throw result;
-                } );
-            } else if (
-                response.status !== 201 &&
-                response.status !== 202 &&
-                response.status !== 200
-            ) {
-                throw result;
-            } else {
-                return result;
-            }
-        } )
-        .catch( ( error ) => {
-            if (
-                error.name === 'AbortError' &&
-                typeof error.status === 'undefined'
-            ) {
-                error.status = 408;
-            }
-            throw error;
-        } );
+    // return fetch( submissionUrl, {
+    //     method: 'POST',
+    //     cache: 'no-cache',
+    //     headers: {
+    //         Authorization: `Bearer ${token}`,
+    //         'X-Form-Id': enketoFormId,
+    //     },
+    //     signal: controller.signal,
+    //     body: recordBatch.formData,
+    // } )
+    //     .then( ( response ) => {
+    //         /** @type { UploadBatchResult } */
+    //         let result = {
+    //             status: response.status,
+    //             failedFiles: recordBatch.failedFiles
+    //                 ? recordBatch.failedFiles
+    //                 : undefined,
+    //         };
+
+    //         if ( response.status === 400 ) {
+    //             // 400 is a generic error. Any message returned by the server is probably more useful.
+    //             // Other more specific statusCodes will get hardcoded and translated messages.
+    //             return response.text().then( ( text ) => {
+    //                 const xmlResponse = parser.parseFromString(
+    //                     text,
+    //                     'text/xml'
+    //                 );
+    //                 if ( xmlResponse ) {
+    //                     const messageEl = xmlResponse.querySelector(
+    //                         'OpenRosaResponse > message'
+    //                     );
+    //                     if ( messageEl ) {
+    //                         result.message = messageEl.textContent;
+    //                     }
+    //                 }
+    //                 throw result;
+    //             } );
+    //         } else if (
+    //             response.status !== 201 &&
+    //             response.status !== 202 &&
+    //             response.status !== 200
+    //         ) {
+    //             throw result;
+    //         } else {
+    //             return result;
+    //         }
+    //     } )
+    //     .catch( ( error ) => {
+    //         if (
+    //             error.name === 'AbortError' &&
+    //             typeof error.status === 'undefined'
+    //         ) {
+    //             error.status = 408;
+    //         }
+    //         throw error;
+    //     } );
 }
 
 /**
