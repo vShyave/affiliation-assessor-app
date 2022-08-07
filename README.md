@@ -53,7 +53,7 @@ git clone https://github.com/Your_Username/enketo.git
 Once you have cloned the `enketo` repository in GitHub, move to that folder first using the change directory command.
 
 ```sh
-# This will change directory to a folder FOSSologyUI
+# This will change directory to a folder enketo
 cd enketo
 ```
 
