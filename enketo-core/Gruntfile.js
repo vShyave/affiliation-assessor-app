@@ -58,7 +58,7 @@ module.exports = grunt => {
                 tasks: [ 'css' ],
                 options: {
                     spawn: true,
-                    livereload: 35730,
+                    livereload: 35729,
                 }
             },
             js: {
@@ -66,7 +66,7 @@ module.exports = grunt => {
                 tasks: [ 'shell:build' ],
                 options: {
                     spawn: false,
-                    livereload: 35730
+                    livereload: 35729
                 }
             },
             transforms: {
@@ -74,7 +74,7 @@ module.exports = grunt => {
                 tasks: [ 'transforms' ],
                 options: {
                     spawn: true,
-                    livereload: 35730,
+                    livereload: 35729,
                 },
             },
         },

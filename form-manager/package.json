@@ -27,6 +27,7 @@
     "reflect-metadata": "^0.1.13",
     "rimraf": "^3.0.2",
     "rxjs": "^7.2.0",
+    "webpack": "^5.74.0",
     "xmldom": "^0.6.0"
   },
   "devDependencies": {

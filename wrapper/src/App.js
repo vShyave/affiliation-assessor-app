@@ -4,11 +4,32 @@ import React, {useState, useEffect} from 'react';
 
 import formSpec from "./forms.json";
 
+const oldSpecToNew = (oldFormSpec) => {
+  const newFormSpec = {};
+  newFormSpec.forms = [];
+  oldFormSpec.forEach((form) => {
+    newFormSpec.forms.push({
+      name: form.name,
+      submissionURL: form.submissionURL,
+      nextFormOnSuccess: form.nextFormOnSuccess,
+      nextFormOnFailure: form.nextFormOnFailure,
+      messageOnSuccess: form.messageOnSuccess,
+      messageOnFailure: form.messageOnFailure,
+      onFormSuccessExecute: form.onFormSuccessExecute,
+      onFormFailureExecute: form.onFormFailureExecute,
+      isSuccessExecute: form.isSuccessExecute,
+      isFailureExecute: form.isFailureExecute,
+    });
+  });
+  return newFormSpec;
+}
+
+
 function App() {
 
   const getForm = (form, onFormSuccessData, prefillSpec) => {
     console.error({form, onFormSuccessData, prefillSpec});
-    return encodeURIComponent(`http://localhost:3002/prefill?form=${form}&onFormSuccessData=${encodeURI(JSON.stringify(onFormSuccessData))}&prefillSpec=${encodeURI(JSON.stringify(prefillSpec))}`);
+    return encodeURIComponent(`http://192.168.0.108:3002/prefill?form=${form}&onFormSuccessData=${encodeURI(JSON.stringify(onFormSuccessData))}&prefillSpec=${encodeURI(JSON.stringify(prefillSpec))}`);
   }
 
   const startingForm = formSpec.startingForm;
