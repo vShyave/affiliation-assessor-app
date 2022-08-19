@@ -158,6 +158,11 @@ curl --location --request POST 'http://localhost:3002/prefill' \
 }'
 ```
 
+## Architecture
+
+<!-- Insert LLD Image here -->
+![alt text](./docs/images/LLD.png "Title")
+
 
 ## Wrapper Config
 
