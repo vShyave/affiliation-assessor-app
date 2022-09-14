@@ -9,7 +9,7 @@ type PrefillDto = {
 
 @Controller()
 export class AppController {
-  constructor(private readonly appService: AppService) {}
+  constructor(private readonly appService: AppService) { }
 
   @Get()
   getHello(): string {
@@ -32,6 +32,8 @@ export class AppController {
     @Query('prefillSpec') prefillSpec,
   ): string {
     try {
+      console.log('onFormSuccessData', onFormSuccessData);
+      console.log('prefillSpec', prefillSpec);
       if (onFormSuccessData !== 'undefined') {
         console;
         return this.appService.prefillForm(

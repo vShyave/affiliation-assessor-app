@@ -1,43 +1,32 @@
 import logo from './logo.svg';
 import './App.css';
-import React, {useState, useEffect} from 'react';
+import React, { useState, useEffect } from 'react';
 
-import formSpec from "./forms.json";
-
-const oldSpecToNew = (oldFormSpec) => {
-  const newFormSpec = {};
-  newFormSpec.forms = [];
-  oldFormSpec.forEach((form) => {
-    newFormSpec.forms.push({
-      name: form.name,
-      submissionURL: form.submissionURL,
-      nextFormOnSuccess: form.nextFormOnSuccess,
-      nextFormOnFailure: form.nextFormOnFailure,
-      messageOnSuccess: form.messageOnSuccess,
-      messageOnFailure: form.messageOnFailure,
-      onFormSuccessExecute: form.onFormSuccessExecute,
-      onFormFailureExecute: form.onFormFailureExecute,
-      isSuccessExecute: form.isSuccessExecute,
-      isFailureExecute: form.isFailureExecute,
-    });
-  });
-  return newFormSpec;
-}
-
+import formSpecJSON from "./formsNew.json";
 
 function App() {
 
-  const getForm = (form, onFormSuccessData, prefillSpec) => {
-    console.error({form, onFormSuccessData, prefillSpec});
-    return encodeURIComponent(`http://192.168.0.108:3002/prefill?form=${form}&onFormSuccessData=${encodeURI(JSON.stringify(onFormSuccessData))}&prefillSpec=${encodeURI(JSON.stringify(prefillSpec))}`);
+  const formSpec = formSpecJSON;
+  const [isFirst, setIsFirst] = useState(true);
+  // Encode string method to URI
+  const encodeFunction = (func) => {
+    return encodeURIComponent(JSON.stringify(func));
   }
 
-  const startingForm = formSpec.startingForm;
-  const [form, setForm] = useState(startingForm);
+  const getFormURI = (form, ofsd, prefillSpec) => {
+    console.log(form, ofsd, prefillSpec);
+    return encodeURIComponent(`http://localhost:3002/prefill?form=${form}&onFormSuccessData=${encodeFunction(ofsd)}&prefillSpec=${encodeFunction(prefillSpec)}`);
+  }
+
+  const startingForm = formSpec.start;
+  const [formId, setFormId] = useState(startingForm);
+  const [encodedFormSpec, setEncodedFormSpec] = useState(encodeURI(JSON.stringify(formSpec.forms[formId])));
   const [onFormSuccessData, setOnFormSuccessData] = useState(undefined);
   const [onFormFailureData, setOnFormFailureData] = useState(undefined);
+  const [encodedFormURI, setEncodedFormURI] = useState(getFormURI(formId, formSpec.forms[formId].onSuccess, formSpec.forms[formId].prefill));
 
   useEffect(() => {
+    // Manage onNext
     window.addEventListener('message', function (e) {
       const data = e.data;
       try {
@@ -46,12 +35,15 @@ function App() {
           formData: {},
         }
         */
-        const {nextForm, formData, onFormSuccessData, onFormFailureData} = JSON.parse(data);
-        console.log({nextForm, formData, onFormSuccessData, onFormFailureData});
-        if(nextForm.type === 'form') {
-          setForm(nextForm.id);
-          setOnFormSuccessData(onFormSuccessData);
-        }else {
+        const { nextForm, formData, onSuccessData, onFailureData } = JSON.parse(data);
+        console.log({ nextForm, formData, onSuccessData, onFailureData });
+        if (nextForm.type === 'form') {
+          setFormId(nextForm.id);
+          setOnFormSuccessData(onSuccessData);
+          setOnFormFailureData(onFailureData);
+          setEncodedFormSpec(encodeURI(JSON.stringify(formSpec.forms[formId])));
+          setEncodedFormURI(getFormURI(nextForm.id, onSuccessData, formSpec.forms[nextForm.id].prefill));
+        } else {
           window.location.href = nextForm.url;
         }
       }
@@ -64,11 +56,12 @@ function App() {
 
   return (
     <div className="App">
-        <iframe style={{height: "100vh", width: "100vw"}} 
-          src={
-            `http://localhost:8005/preview?formSpec=${encodeURI(JSON.stringify(formSpec.forms[form]))}&xform=${getForm(form, onFormSuccessData, formSpec.forms[form].prefill)}`
-          }
-        />
+      <iframe title='current-form'
+        style={{ height: "100vh", width: "100vw" }}
+        src={
+          `http://localhost:8005/preview?formSpec=${encodedFormSpec}&xform=${encodedFormURI}`
+        }
+      />
 
     </div>
   );

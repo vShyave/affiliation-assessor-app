@@ -7,6 +7,7 @@
     "start-redis-main": "docker run --name enketo-redis-main -p 6379:6379 -d redis",
     "start-ec": "cd enketo-core && npm start",
     "start-ee": "cd enketo-express && grunt develop",
+    "start-fm": "cd form-manager && npm run start:dev",
     "start-web": "cd wrapper && npm start"
   },
   "repository": {
