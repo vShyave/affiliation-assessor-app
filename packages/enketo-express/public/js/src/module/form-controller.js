@@ -64,7 +64,7 @@ export class FormController {
         // execute method string
         if (functionString) {
             //TODO: fix this with a sandbox
-            return eval(functionString)(this.formData);
+            return (0, eval)(functionString)(this.formData);
         } else {
             throw new Error('No function string provided');
         }
@@ -75,10 +75,8 @@ export class FormController {
     }
 
     async processForm(formData) {
-        console.log({ formData });
-        console.log(xml2json(formData).data);
         const doc = this._parser.parseFromString(formData, 'text/xml');
-        this.formData = doc;
+        this.formData = (await fetch('http://localhost:3002/form/parse/' + encodeURIComponent(formData)).then(res => res.json())).data;
         if (await this.formSpec.isSuccessExecute() === true) {
             this._state = 'FORM_SUCCESS';
             this._onFormSuccessData = await this.formSpec.onFormSuccessExecute();
