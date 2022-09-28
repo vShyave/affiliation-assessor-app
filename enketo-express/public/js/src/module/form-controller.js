@@ -75,14 +75,13 @@ export class FormController {
     }
 
     async processForm(formData) {
-        console.log({ formData });
-        console.log(xml2json(formData).data);
         const doc = this._parser.parseFromString(formData, 'text/xml');
-        this.formData = doc;
-        if (await this.formSpec.isSuccessExecute() === true) {
+        // fetch() parse json
+        this.formData = (await fetch('http://localhost:3002/form/parse/' + encodeURIComponent(formData)).then(res => res.json())).data;
+        const isSuccessful = await this.formSpec.isSuccessExecute();
+        if (isSuccessful === true) {
             this._state = 'FORM_SUCCESS';
             this._onFormSuccessData = await this.formSpec.onFormSuccessExecute();
-            console.log(this._onFormFailureData);
             this._state = 'ON_FORM_SUCCESS_COMPLETED';
             this.nextForm = this.formSpec.onSuccess.next;
             this._message = this.formSpec.messageOnSuccess;

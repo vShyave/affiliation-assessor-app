@@ -21,6 +21,7 @@
   },
   "homepage": "https://github.com/ChakshuGautam/enketo#readme",
   "dependencies": {
+    "xml2json": "^0.12.0",
     "xmldom": "^0.6.0"
   }
 }

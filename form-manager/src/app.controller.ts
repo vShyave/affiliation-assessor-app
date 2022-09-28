@@ -1,6 +1,9 @@
 import { Body, Controller, Get, Param, Post, Query } from '@nestjs/common';
 import { AppService } from './app.service';
 
+// eslint-disable-next-line @typescript-eslint/no-var-requires
+const parser = require('xml2json');
+
 type PrefillDto = {
   form: string;
   onFormSuccessData: any;
@@ -52,5 +55,10 @@ export class AppController {
   @Get('form/:id')
   getForm(@Param('id') id): string {
     return this.appService.getForm(id);
+  }
+
+  @Get('form/parse/:xml')
+  parseXML(@Param('xml') xml): any {
+    return parser.toJson(xml);
   }
 }

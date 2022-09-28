@@ -30,16 +30,21 @@ export class AppService {
       "pf_industry": "${onFormSuccessData.industryByIndustry.name}",
       "ojt_month": "${onFormSuccessData.industryByIndustry.schedules[0].is_industry === true ? 1 : 0}"
     }*/
+    console.log({ prefillSpec });
     for (const key in prefillSpec) {
+      console.log('Finding element: ', key, prefillSpec[key]);
       if (prefillSpec.hasOwnProperty(key)) {
         const element = instance.getElementsByTagName(key)[0];
         if (element) {
-          console.log(prefillSpec[key]);
+          console.log('Found element: ', key, prefillSpec[key]);
           console.log(eval(prefillSpec[key]));
           element.textContent = eval(prefillSpec[key]);
         }
       }
+      console.log('Done');
     }
+    console.log('Test');
+    console.log('Doc', doc.toString());
     return doc.toString();
   }
 }
