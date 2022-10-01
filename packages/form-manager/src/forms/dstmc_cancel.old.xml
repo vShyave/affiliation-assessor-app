@@ -1,39 +1,30 @@
 <?xml version="1.0"?>
-<h:html xmlns="http://www.w3.org/2002/xforms" xmlns:ev="http://www.w3.org/2001/xml-events" xmlns:h="http://www.w3.org/1999/xhtml" xmlns:jr="http://openrosa.org/javarosa" xmlns:odk="http://www.opendatakit.org/xforms" xmlns:orx="http://openrosa.org/xforms" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+<h:html
+        xmlns="http://www.w3.org/2002/xforms"
+        xmlns:ev="http://www.w3.org/2001/xml-events"
+        xmlns:h="http://www.w3.org/1999/xhtml"
+        xmlns:jr="http://openrosa.org/javarosa"
+        xmlns:odk="http://www.opendatakit.org/xforms"
+        xmlns:orx="http://openrosa.org/xforms"
+        xmlns:xsd="http://www.w3.org/2001/XMLSchema">
     <h:head>
-        <h:title>DST MC Updation</h:title>
+        <h:title>DST MC Creation and Updation</h:title>
         <model odk:xforms-version="1.0.0">
             <instance>
-                <data id="DST Updation" version="1">
-                    <Update_existing_DSTMC>
-                        <Update_existing_DSTMC />
-                        <district3 />
-                        <ITI3 />
-                        <dst_trade3 />
-                        <dst_batch3 />
-                        <industry_partner />
-                        <New_Industry />
-                        <New_Industry_Partner />
-                        <ex_file_widget />
-                        <Trainer_Details_industry />
-                        <trainer_name />
-                        <trainer_contact />
-                        <trainer_email />
-                        <Industry_Details_industry1 />
-                        <Indutry_head />
-                        <head_name />
-                        <head_Contact />
-                        <head_email />
-                        <Indutry_supervisor />
-                        <sup_name />
-                        <sup_Contact />
-                        <sup_email />
-                        <Sure_Cancellation />
-                        <action_2 />
-                        <Industry_cancelled />
-                    </Update_existing_DSTMC>
+                <data id="DST-MC Creation and Updation" version="1">
+                    <Cancel_DSTMC>
+                        <Cancel_DSTMC/>
+                        <district2/>
+                        <ITI2/>
+                        <dst_trade2/>
+                        <dst_batch2/>
+                        <industry_partner2/>
+                        <Sure_Cancellation/>
+                        <action_1/>
+                        <Industry_cancelled/>
+                    </Cancel_DSTMC>
                     <meta>
-                        <instanceID />
+                        <instanceID/>
                     </meta>
                 </data>
             </instance>
@@ -9865,42 +9856,26 @@
                     </item>
                 </root>
             </instance>
-            <bind nodeset="/data/Update_existing_DSTMC/Update_existing_DSTMC" readonly="true()" type="string" />
-            <bind nodeset="/data/Update_existing_DSTMC/district3" required="true()" type="string" />
-            <bind nodeset="/data/Update_existing_DSTMC/ITI3" required="true()" type="string" />
-            <bind nodeset="/data/Update_existing_DSTMC/dst_trade3" required="true()" type="string" />
-            <bind nodeset="/data/Update_existing_DSTMC/dst_batch3" required="true()" type="string" />
-            <bind nodeset="/data/Update_existing_DSTMC/industry_partner" required="true()" type="string" />
-            <bind nodeset="/data/Update_existing_DSTMC/New_Industry" readonly="true()" type="string" />
-            <bind nodeset="/data/Update_existing_DSTMC/New_Industry_Partner" required="true()" type="string" />
-            <bind nodeset="/data/Update_existing_DSTMC/ex_file_widget" required="true()" type="binary" />
-            <bind nodeset="/data/Update_existing_DSTMC/Trainer_Details_industry" readonly="true()" type="string" />
-            <bind nodeset="/data/Update_existing_DSTMC/trainer_name" required="true()" type="string" />
-            <bind constraint="regex(., '^[0-9]{10}$')" jr:constraintMsg="Please enter 10 digit phone number" nodeset="/data/Update_existing_DSTMC/trainer_contact" required="true()" type="int" />
-            <bind nodeset="/data/Update_existing_DSTMC/trainer_email" required="true()" type="string" />
-            <bind nodeset="/data/Update_existing_DSTMC/Industry_Details_industry1" readonly="true()" type="string" />
-            <bind nodeset="/data/Update_existing_DSTMC/Indutry_head" readonly="true()" type="string" />
-            <bind nodeset="/data/Update_existing_DSTMC/head_name" required="true()" type="string" />
-            <bind constraint="regex(., '^[0-9]{10}$')" jr:constraintMsg="Please enter 10 digit phone number" nodeset="/data/Update_existing_DSTMC/head_Contact" required="true()" type="int" />
-            <bind nodeset="/data/Update_existing_DSTMC/head_email" required="true()" type="string" />
-            <bind nodeset="/data/Update_existing_DSTMC/Indutry_supervisor" readonly="true()" type="string" />
-            <bind nodeset="/data/Update_existing_DSTMC/sup_name" required="true()" type="string" />
-            <bind constraint="regex(., '^[0-9]{10}$')" jr:constraintMsg="Please enter 10 digit phone number" nodeset="/data/Update_existing_DSTMC/sup_Contact" required="true()" type="int" />
-            <bind nodeset="/data/Update_existing_DSTMC/sup_email" required="true()" type="string" />
-            <bind nodeset="/data/Update_existing_DSTMC/Sure_Cancellation" readonly="true()" type="string" />
-            <bind nodeset="/data/Update_existing_DSTMC/action_2" required="true()" type="string" />
-            <bind nodeset="/data/Update_existing_DSTMC/Industry_cancelled" readonly="true()" type="string" />
-            <bind jr:preload="uid" nodeset="/data/meta/instanceID" readonly="true()" type="string" />
+            <bind nodeset="/data/Cancel_DSTMC/Cancel_DSTMC" readonly="true()" type="string"/>
+            <bind nodeset="/data/Cancel_DSTMC/district2" required="true()" type="string"/>
+            <bind nodeset="/data/Cancel_DSTMC/ITI2" required="true()" type="string"/>
+            <bind nodeset="/data/Cancel_DSTMC/dst_trade2" required="true()" type="string"/>
+            <bind nodeset="/data/Cancel_DSTMC/dst_batch2" required="true()" type="string"/>
+            <bind nodeset="/data/Cancel_DSTMC/industry_partner2" required="true()" type="string"/>
+            <bind nodeset="/data/Cancel_DSTMC/Sure_Cancellation" readonly="true()" type="string"/>
+            <bind nodeset="/data/Cancel_DSTMC/action_1" required="true()" type="string"/>
+            <bind nodeset="/data/Cancel_DSTMC/Industry_cancelled" readonly="true()" type="string"/>
+            <bind jr:preload="uid" nodeset="/data/meta/instanceID" readonly="true()" type="string"/>
         </model>
     </h:head>
     <h:body class="pages">
-        <group appearance="field-list" ref="/data/Update_existing_DSTMC">
-            <label>Update existing DSTMC</label>
-            <input ref="/data/Update_existing_DSTMC/Update_existing_DSTMC">
-                <label>Continue only if your MOU has been updated with an industry partner for an existing DST MC
-For cancelling Industry Partner please go back to main menu and choose - 'Cancel DST MC' option</label>
+        <group appearance="field-list" ref="/data/Cancel_DSTMC">
+            <label>Cancel_DSTMC</label>
+            <input ref="/data/Cancel_DSTMC/Cancel_DSTMC">
+                <label>Continue only if your MOU has been cancelled with an industry partner for a DST MC
+                    For updating or changing Industry Partner please go back to main menu and choose - 'Update exisiting DST MC' option</label>
             </input>
-            <select1 ref="/data/Update_existing_DSTMC/district3">
+            <select1 ref="/data/Cancel_DSTMC/district2">
                 <label>Please select district</label>
                 <item>
                     <label>Ambala</label>
@@ -9991,107 +9966,49 @@ For cancelling Industry Partner please go back to main menu and choose - 'Cancel
                     <value>Yamuna Nagar</value>
                 </item>
             </select1>
-            <select1 ref="/data/Update_existing_DSTMC/ITI3">
+            <select1 ref="/data/Cancel_DSTMC/ITI2">
                 <label>Please select name of your GITI</label>
-                <itemset nodeset="instance('ITI')/root/item[districtfilter =  /data/Update_existing_DSTMC/district3 ]">
-                    <value ref="name" />
-                    <label ref="label" />
+                <itemset nodeset="instance('ITI')/root/item[districtfilter =  /data/Cancel_DSTMC/district2 ]">
+                    <value ref="name"/>
+                    <label ref="label"/>
                 </itemset>
             </select1>
-            <select1 ref="/data/Update_existing_DSTMC/dst_trade3">
+            <select1 ref="/data/Cancel_DSTMC/dst_trade2">
                 <label>Please select the DST trade for which you want to create DST MC</label>
-                <itemset nodeset="instance('dst_trade')/root/item[districtfilter =  /data/Update_existing_DSTMC/district3  and itifilter =  /data/Update_existing_DSTMC/ITI3 ]">
-                    <value ref="name" />
-                    <label ref="label" />
+                <itemset nodeset="instance('dst_trade')/root/item[districtfilter =  /data/Cancel_DSTMC/district2  and itifilter =  /data/Cancel_DSTMC/ITI2 ]">
+                    <value ref="name"/>
+                    <label ref="label"/>
                 </itemset>
             </select1>
-            <select1 ref="/data/Update_existing_DSTMC/dst_batch3">
+            <select1 ref="/data/Cancel_DSTMC/dst_batch2">
                 <label>Please select batch for the selected trade</label>
-                <itemset nodeset="instance('dst_batch')/root/item[districtfilter =  /data/Update_existing_DSTMC/district3  and itifilter =  /data/Update_existing_DSTMC/ITI3  and tradefilter =  /data/Update_existing_DSTMC/dst_trade3 ]">
-                    <value ref="name" />
-                    <label ref="label" />
+                <itemset nodeset="instance('dst_batch')/root/item[districtfilter =  /data/Cancel_DSTMC/district2  and itifilter =  /data/Cancel_DSTMC/ITI2  and tradefilter =  /data/Cancel_DSTMC/dst_trade2 ]">
+                    <value ref="name"/>
+                    <label ref="label"/>
                 </itemset>
             </select1>
-            <select1 ref="/data/Update_existing_DSTMC/industry_partner">
-                <label>Please select the old industry partner</label>
-                <itemset nodeset="instance('industry_partner')/root/item[districtfilter =  /data/Update_existing_DSTMC/district3  and itifilter =  /data/Update_existing_DSTMC/ITI3  and tradefilter =  /data/Update_existing_DSTMC/dst_trade3  and batchfilter= /data/Update_existing_DSTMC/dst_batch3 ]">
-                    <value ref="name" />
-                    <label ref="label" />
+            <select1 ref="/data/Cancel_DSTMC/industry_partner2">
+                <label>Please select the industry for which you want to create the MC</label>
+                <itemset nodeset="instance('industry_partner')/root/item[districtfilter =  /data/Cancel_DSTMC/district2  and itifilter =  /data/Cancel_DSTMC/ITI2  and tradefilter =  /data/Cancel_DSTMC/dst_trade2  and batchfilter= /data/Cancel_DSTMC/dst_batch2 ]">
+                    <value ref="name"/>
+                    <label ref="label"/>
                 </itemset>
             </select1>
-            <input ref="/data/Update_existing_DSTMC/New_Industry">
-                <label>Please enter the name of the new industry partner below</label>
-            </input>
-            <input ref="/data/Update_existing_DSTMC/New_Industry_Partner">
-                <label>Name of new industry</label>
-            </input>
-            <upload appearance="ex:com.example.collectanswersprovider(questionFile='')" mediatype="application/*" ref="/data/Update_existing_DSTMC/ex_file_widget">
-                <label>Please input DST updation proof in PDF format</label>
-            </upload>
-            <input ref="/data/Update_existing_DSTMC/Trainer_Details_industry">
-                <label>Please add details of the trainer for the updated DSTMC</label>
-            </input>
-            <input ref="/data/Update_existing_DSTMC/trainer_name">
-                <label>Full name of Trainer</label>
-            </input>
-            <input ref="/data/Update_existing_DSTMC/trainer_contact">
-                <label>Trainer Ph no</label>
-            </input>
-            <input ref="/data/Update_existing_DSTMC/trainer_email">
-                <label>Trainer email id</label>
-            </input>
-            <input ref="/data/Update_existing_DSTMC/Industry_Details_industry1">
-                <label>
-                    Please fill DST MC Industry details for DST trade
-                    <output value=" /data/Update_existing_DSTMC/dst_trade3 " />
-                    with industry partner-
-                    <output value=" /data/Update_existing_DSTMC/New_Industry_Partner " />
-                    for batch-
-                    <output value=" /data/Update_existing_DSTMC/dst_batch3 " />
-                </label>
-            </input>
-            <input ref="/data/Update_existing_DSTMC/Indutry_head">
-                <label>Industry head details</label>
-            </input>
-            <input ref="/data/Update_existing_DSTMC/head_name">
-                <label>Name of the industry head</label>
-            </input>
-            <input ref="/data/Update_existing_DSTMC/head_Contact">
-                <label>Phone number</label>
-            </input>
-            <input ref="/data/Update_existing_DSTMC/head_email">
-                <label>Email id</label>
-            </input>
-            <input ref="/data/Update_existing_DSTMC/Indutry_supervisor">
-                <label>Industry supervisor details</label>
-            </input>
-            <input ref="/data/Update_existing_DSTMC/sup_name">
-                <label>Name of the industry supervisor</label>
-            </input>
-            <input ref="/data/Update_existing_DSTMC/sup_Contact">
-                <label>Phone number</label>
-            </input>
-            <input ref="/data/Update_existing_DSTMC/sup_email">
-                <label>Email id</label>
-            </input>
-            <input ref="/data/Update_existing_DSTMC/Sure_Cancellation">
+            <input ref="/data/Cancel_DSTMC/Sure_Cancellation">
                 <label>Are you sure you want to cancel DSTMC? - If no, please go back, else, choose yes.</label>
             </input>
-            <select1 ref="/data/Update_existing_DSTMC/action_2">
-                <label>Select</label>
+            <select1 ref="/data/Cancel_DSTMC/action_1">
+                <label>Yes</label>
                 <item>
                     <label>Yes</label>
                     <value>Yes</value>
                 </item>
             </select1>
-            <input ref="/data/Update_existing_DSTMC/Industry_cancelled">
-                <label>
-                    Thank you for updating DSTMC for
-                    <output value=" /data/Update_existing_DSTMC/ITI3 " />
-                    for DST trade
-                    <output value=" /data/Update_existing_DSTMC/dst_trade3 " />
-                    for batch-
-                    <output value=" /data/Update_existing_DSTMC/dst_batch3 " />
+            <input ref="/data/Cancel_DSTMC/Industry_cancelled">
+                <label>Thank you for cancelling DSTMC for
+                    <output value=" /data/Cancel_DSTMC/ITI2 "/> for DST trade
+                    <output value=" /data/Cancel_DSTMC/dst_trade2 "/> for batch-
+                    <output value=" /data/Cancel_DSTMC/dst_batch2 "/>
                 </label>
             </input>
         </group>
