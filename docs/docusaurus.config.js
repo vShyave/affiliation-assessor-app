@@ -10,7 +10,7 @@ const config = {
   tagline: 'Create and Design Workflows with Ease',
   url: 'https://workflow.github.io',
   trailingSlash: false,
-  baseUrl: '/docs/',
+  baseUrl: '/workflow/',
   onBrokenLinks: 'warn',
   onBrokenMarkdownLinks: 'warn',
   favicon: 'img/favicon.ico',
