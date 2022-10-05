@@ -38,14 +38,14 @@ jobs:
       - name: Install Dependencies
         run: cd docs && npm install
       - name: Build
-        run: npm run build
+        run: cd docs && npm run build
       - name: Setup Pages
         uses: actions/configure-pages@v2
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v1
         with:
           # Upload entire repository
-          path: 'build'
+          path: 'docs/build'
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v1
