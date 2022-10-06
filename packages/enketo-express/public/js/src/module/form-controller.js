@@ -1,5 +1,16 @@
 import { xml2json } from './xml2json';
 
+import settings from './settings';
+
+// import { config } from '../../../../app/models/config-model';
+
+// const config = require( '../../../../app/models/config-model' ).server;
+// console.log(config)
+
+// const config = {
+//     'formManagerBaseURI': 'http://localhost:3002/'
+// };
+
 export class FormController {
 
     /* formSpec = {
@@ -94,7 +105,7 @@ export class FormController {
         var newFile = new File([data], data.name, { type: data.type });
         console.log(newFile);
         fd.append('file', newFile, data.name);
-        const response = await fetch('http://localhost:3002/form/uploadFile', {
+        const response = await fetch(settings.formManagerBaseURI + '/form/uploadFile', {
             method: 'POST',
             body: fd
         }).then(s => {
@@ -126,7 +137,7 @@ export class FormController {
 
     async processForm(formData, formFiles) {
         const doc = this._parser.parseFromString(formData, 'text/xml');
-        this.formData = (await fetch('http://localhost:3002/form/parse/' + encodeURIComponent(formData)).then(res => res.json())).data;
+        this.formData = (await fetch(settings.formManagerBaseURI + '/form/parse/' + encodeURIComponent(formData)).then(res => res.json())).data;
         for (let i = 0; i < formFiles.length; i++) {
             const file = formFiles[i];
             const fileURL = await this.uploadFile(file);
