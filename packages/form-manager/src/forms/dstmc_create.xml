@@ -1,11 +1,7 @@
 <?xml version="1.0"?>
-<h:html
-        xmlns="http://www.w3.org/2002/xforms"
-        xmlns:ev="http://www.w3.org/2001/xml-events"
-        xmlns:h="http://www.w3.org/1999/xhtml"
-        xmlns:jr="http://openrosa.org/javarosa"
-        xmlns:odk="http://www.opendatakit.org/xforms"
-        xmlns:orx="http://openrosa.org/xforms"
+<h:html xmlns="http://www.w3.org/2002/xforms" xmlns:ev="http://www.w3.org/2001/xml-events"
+        xmlns:h="http://www.w3.org/1999/xhtml" xmlns:jr="http://openrosa.org/javarosa"
+        xmlns:odk="http://www.opendatakit.org/xforms" xmlns:orx="http://openrosa.org/xforms"
         xmlns:xsd="http://www.w3.org/2001/XMLSchema">
     <h:head>
         <h:title>DST MC Creation</h:title>
@@ -13,8 +9,8 @@
             <instance>
                 <data id="DST-MC Creation" version="1">
                     <Create_DSTMC>
-                        <district1>District</district1>
-                        <ITI1>ITI</ITI1>
+                        <district1/>
+                        <ITI1/>
                         <dst_trade1/>
                         <dst_batch1/>
                         <note2/>
@@ -6456,8 +6452,12 @@
                         <batchfilter>2021-23</batchfilter>
                         <districtfilter>Ambala</districtfilter>
                         <itifilter>GITI Bharanpur</itifilter>
-                        <label>M/s Grace Scientific Corporation, 299, HSIIDC, Sector-2, Industrial Area, Saha, Ambala-133104</label>
-                        <name>M/s Grace Scientific Corporation, 299, HSIIDC, Sector-2, Industrial Area, Saha, Ambala-133104</name>
+                        <label>M/s Grace Scientific Corporation, 299, HSIIDC, Sector-2, Industrial Area, Saha,
+                            Ambala-133104
+                        </label>
+                        <name>M/s Grace Scientific Corporation, 299, HSIIDC, Sector-2, Industrial Area, Saha,
+                            Ambala-133104
+                        </name>
                         <tradefilter>Fitter</tradefilter>
                     </item>
                     <item>
@@ -7960,8 +7960,8 @@
                         <batchfilter>2022-23</batchfilter>
                         <districtfilter>Karnal</districtfilter>
                         <itifilter>GITI Karnal</itifilter>
-                        <label>M/s Piara Singh  &amp; Sons Karnal</label>
-                        <name>M/s Piara Singh  &amp; Sons Karnal</name>
+                        <label>M/s Piara Singh &amp; Sons Karnal</label>
+                        <name>M/s Piara Singh &amp; Sons Karnal</name>
                         <tradefilter>Welder</tradefilter>
                     </item>
                     <item>
@@ -8944,32 +8944,32 @@
                         <batchfilter>2022-24</batchfilter>
                         <districtfilter>Rohtak</districtfilter>
                         <itifilter>GITI Hassangarh</itifilter>
-                        <label>M/s SnPc Machines  Pvt. Ltd., Sonipat</label>
-                        <name>M/s SnPc Machines  Pvt. Ltd., Sonipat</name>
+                        <label>M/s SnPc Machines Pvt. Ltd., Sonipat</label>
+                        <name>M/s SnPc Machines Pvt. Ltd., Sonipat</name>
                         <tradefilter>Electrician</tradefilter>
                     </item>
                     <item>
                         <batchfilter>2022-24</batchfilter>
                         <districtfilter>Rohtak</districtfilter>
                         <itifilter>GITI Hassangarh</itifilter>
-                        <label>M/s SnPc Machines  Pvt. Ltd., Sonipat</label>
-                        <name>M/s SnPc Machines  Pvt. Ltd., Sonipat</name>
+                        <label>M/s SnPc Machines Pvt. Ltd., Sonipat</label>
+                        <name>M/s SnPc Machines Pvt. Ltd., Sonipat</name>
                         <tradefilter>Wireman</tradefilter>
                     </item>
                     <item>
                         <batchfilter>2022-24</batchfilter>
                         <districtfilter>Rohtak</districtfilter>
                         <itifilter>GITI Hassangarh</itifilter>
-                        <label>M/s SnPc Machines  Pvt. Ltd., Sonipat</label>
-                        <name>M/s SnPc Machines  Pvt. Ltd., Sonipat</name>
+                        <label>M/s SnPc Machines Pvt. Ltd., Sonipat</label>
+                        <name>M/s SnPc Machines Pvt. Ltd., Sonipat</name>
                         <tradefilter>Painter (General)</tradefilter>
                     </item>
                     <item>
                         <batchfilter>2022-23</batchfilter>
                         <districtfilter>Rohtak</districtfilter>
                         <itifilter>GITI Hassangarh</itifilter>
-                        <label>M/s SnPc Machines  Pvt. Ltd., Sonipat</label>
-                        <name>M/s SnPc Machines  Pvt. Ltd., Sonipat</name>
+                        <label>M/s SnPc Machines Pvt. Ltd., Sonipat</label>
+                        <name>M/s SnPc Machines Pvt. Ltd., Sonipat</name>
                         <tradefilter>Welder</tradefilter>
                     </item>
                     <item>
@@ -9008,8 +9008,8 @@
                         <batchfilter>2022-23</batchfilter>
                         <districtfilter>Rohtak</districtfilter>
                         <itifilter>GITI Hassangarh</itifilter>
-                        <label>M/s Shubham Interiors,  Rohtak</label>
-                        <name>M/s Shubham Interiors,  Rohtak</name>
+                        <label>M/s Shubham Interiors, Rohtak</label>
+                        <name>M/s Shubham Interiors, Rohtak</name>
                         <tradefilter>Carpenter</tradefilter>
                     </item>
                     <item>
@@ -9870,31 +9870,38 @@
                     </item>
                 </root>
             </instance>
-            <bind nodeset="/data/Create_DSTMC/district1" required="true()" type="string"/>
-            <bind nodeset="/data/Create_DSTMC/ITI1" required="true()" type="string"/>
+            <bind nodeset="/data/Create_DSTMC/district1" readonly="true()" required="true()" type="string"/>
+            <bind nodeset="/data/Create_DSTMC/ITI1" readonly="true()" required="true()" type="string"/>
             <bind nodeset="/data/Create_DSTMC/dst_trade1" required="true()" type="string"/>
             <bind nodeset="/data/Create_DSTMC/dst_batch1" required="true()" type="string"/>
             <bind nodeset="/data/Create_DSTMC/note2" readonly="true()" type="string"/>
-            <bind constraint=".&gt;0" jr:constraintMsg="Invalid Input" nodeset="/data/Create_DSTMC/MC_number" required="true()" type="int"/>
-            <bind calculate=" /data/Create_DSTMC/MC_number " nodeset="/data/Create_DSTMC/MC_Information_count" readonly="true()" type="string"/>
-            <bind nodeset="/data/Create_DSTMC/MC_Information/Trainer_Details_industry1" readonly="true()" type="string"/>
+            <bind constraint=".&gt;0" jr:constraintMsg="Invalid Input" nodeset="/data/Create_DSTMC/MC_number"
+                  required="true()" type="int"/>
+            <bind calculate=" /data/Create_DSTMC/MC_number " nodeset="/data/Create_DSTMC/MC_Information_count"
+                  readonly="true()" type="string"/>
+            <bind nodeset="/data/Create_DSTMC/MC_Information/Trainer_Details_industry1" readonly="true()"
+                  type="string"/>
             <bind nodeset="/data/Create_DSTMC/MC_Information/industry_partner1" required="true()" type="string"/>
             <bind nodeset="/data/Create_DSTMC/MC_Information/trainer_name" required="true()" type="string"/>
-            <bind constraint="regex(., '^[0-9]{10}$')" jr:constraintMsg="Please enter 10 digit phone number" nodeset="/data/Create_DSTMC/MC_Information/trainer_contact" required="true()" type="int"/>
+            <bind constraint="regex(., '^[0-9]{10}$')" jr:constraintMsg="Please enter 10 digit phone number"
+                  nodeset="/data/Create_DSTMC/MC_Information/trainer_contact" required="true()" type="int"/>
             <bind nodeset="/data/Create_DSTMC/MC_Information/trainer_email" required="true()" type="string"/>
-            <bind nodeset="/data/Create_DSTMC/MC_Information/Industry_Details_industry1" readonly="true()" type="string"/>
+            <bind nodeset="/data/Create_DSTMC/MC_Information/Industry_Details_industry1" readonly="true()"
+                  type="string"/>
             <bind nodeset="/data/Create_DSTMC/MC_Information/Indutry_head" readonly="true()" type="string"/>
             <bind nodeset="/data/Create_DSTMC/MC_Information/head_name" required="true()" type="string"/>
-            <bind constraint="regex(., '^[0-9]{10}$')" jr:constraintMsg="Please enter 10 digit phone number" nodeset="/data/Create_DSTMC/MC_Information/head_Contact" required="true()" type="int"/>
+            <bind constraint="regex(., '^[0-9]{10}$')" jr:constraintMsg="Please enter 10 digit phone number"
+                  nodeset="/data/Create_DSTMC/MC_Information/head_Contact" required="true()" type="int"/>
             <bind nodeset="/data/Create_DSTMC/MC_Information/head_email" required="true()" type="string"/>
             <bind nodeset="/data/Create_DSTMC/MC_Information/Indutry_supervisor" readonly="true()" type="string"/>
             <bind nodeset="/data/Create_DSTMC/MC_Information/sup_name" required="true()" type="string"/>
-            <bind constraint="regex(., '^[0-9]{10}$')" jr:constraintMsg="Please enter 10 digit phone number" nodeset="/data/Create_DSTMC/MC_Information/sup_Contact" required="true()" type="int"/>
+            <bind constraint="regex(., '^[0-9]{10}$')" jr:constraintMsg="Please enter 10 digit phone number"
+                  nodeset="/data/Create_DSTMC/MC_Information/sup_Contact" required="true()" type="int"/>
             <bind nodeset="/data/Create_DSTMC/MC_Information/sup_email" required="true()" type="string"/>
             <bind jr:preload="uid" nodeset="/data/meta/instanceID" readonly="true()" type="string"/>
         </model>
     </h:head>
-    <h:body>
+    <h:body class="pages">
         <group appearance="field-list" ref="/data/Create_DSTMC">
             <select1 ref="/data/Create_DSTMC/district1">
                 <label>Please select district</label>
@@ -9996,36 +10003,43 @@
             </select1>
             <select1 ref="/data/Create_DSTMC/dst_trade1">
                 <label>Please select the DST trade for which you want to create DST MC</label>
-                <itemset nodeset="instance('dst_trade')/root/item[districtfilter =  /data/Create_DSTMC/district1  and itifilter =  /data/Create_DSTMC/ITI1 ]">
+                <itemset
+                        nodeset="instance('dst_trade')/root/item[districtfilter =  /data/Create_DSTMC/district1  and itifilter =  /data/Create_DSTMC/ITI1 ]">
                     <value ref="name"/>
                     <label ref="label"/>
                 </itemset>
             </select1>
             <select1 ref="/data/Create_DSTMC/dst_batch1">
                 <label>Please select batch for the selected trade</label>
-                <itemset nodeset="instance('dst_batch')/root/item[districtfilter =  /data/Create_DSTMC/district1  and itifilter =  /data/Create_DSTMC/ITI1  and tradefilter =  /data/Create_DSTMC/dst_trade1 ]">
+                <itemset
+                        nodeset="instance('dst_batch')/root/item[districtfilter =  /data/Create_DSTMC/district1  and itifilter =  /data/Create_DSTMC/ITI1  and tradefilter =  /data/Create_DSTMC/dst_trade1 ]">
                     <value ref="name"/>
                     <label ref="label"/>
                 </itemset>
             </select1>
             <input ref="/data/Create_DSTMC/note2">
-                <label>Please choose how many industries you have partnered with for this DST Unit. You need to create one DST MC per industry partner.</label>
+                <label>Please choose how many industries you have partnered with for this DST Unit. You need to create
+                    one DST MC per industry partner.
+                </label>
             </input>
             <input ref="/data/Create_DSTMC/MC_number">
                 <label>How many industries have you partnered with for this DST Unit?</label>
             </input>
             <group ref="/data/Create_DSTMC/MC_Information">
                 <label>MC Information</label>
-                <repeat jr:count=" /data/Create_DSTMC/MC_Information_count " nodeset="/data/Create_DSTMC/MC_Information">
+                <repeat jr:count=" /data/Create_DSTMC/MC_Information_count "
+                        nodeset="/data/Create_DSTMC/MC_Information">
                     <input ref="/data/Create_DSTMC/MC_Information/Trainer_Details_industry1">
                         <label>Please fill DST MC trainer details for DST trade
-                            <output value=" /data/Create_DSTMC/dst_trade1 "/> for batch-
+                            <output value=" /data/Create_DSTMC/dst_trade1 "/>
+                            for batch-
                             <output value=" /data/Create_DSTMC/dst_batch1 "/>
                         </label>
                     </input>
                     <select1 ref="/data/Create_DSTMC/MC_Information/industry_partner1">
                         <label>Please select the industry for which you want to create the MC</label>
-                        <itemset nodeset="instance('industry_partner')/root/item[districtfilter =  /data/Create_DSTMC/district1  and itifilter =  /data/Create_DSTMC/ITI1  and tradefilter =  /data/Create_DSTMC/dst_trade1  and batchfilter= /data/Create_DSTMC/dst_batch1 ]">
+                        <itemset
+                                nodeset="instance('industry_partner')/root/item[districtfilter =  /data/Create_DSTMC/district1  and itifilter =  /data/Create_DSTMC/ITI1  and tradefilter =  /data/Create_DSTMC/dst_trade1  and batchfilter= /data/Create_DSTMC/dst_batch1 ]">
                             <value ref="name"/>
                             <label ref="label"/>
                         </itemset>
@@ -10041,8 +10055,10 @@
                     </input>
                     <input ref="/data/Create_DSTMC/MC_Information/Industry_Details_industry1">
                         <label>Please fill DST MC Industry details for DST trade
-                            <output value=" /data/Create_DSTMC/dst_trade1 "/> with industry partner-
-                            <output value=" ../industry_partner1 "/> for batch-
+                            <output value=" /data/Create_DSTMC/dst_trade1 "/>
+                            with industry partner-
+                            <output value=" ../industry_partner1 "/>
+                            for batch-
                             <output value=" /data/Create_DSTMC/dst_batch1 "/>
                         </label>
                     </input>
