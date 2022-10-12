@@ -28,7 +28,7 @@
             <bind jr:preload="uid" nodeset="/data/meta/instanceID" readonly="true()" type="string"/>
         </model>
     </h:head>
-    <h:body class="pages">
+    <h:body>
         <group appearance="field-list" ref="/data/Cancel_DSTMC">
             <label>Cancel_DSTMC</label>
             <input ref="/data/Cancel_DSTMC/Cancel_DSTMC">
