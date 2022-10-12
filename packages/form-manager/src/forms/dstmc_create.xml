@@ -9901,7 +9901,7 @@
             <bind jr:preload="uid" nodeset="/data/meta/instanceID" readonly="true()" type="string"/>
         </model>
     </h:head>
-    <h:body class="pages">
+    <h:body>
         <group appearance="field-list" ref="/data/Create_DSTMC">
             <select1 ref="/data/Create_DSTMC/district1">
                 <label>Please select district</label>
