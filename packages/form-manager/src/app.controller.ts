@@ -57,8 +57,9 @@ export class AppController {
     return this.appService.getForm(id);
   }
 
-  @Get('form/parse/:xml')
-  parseXML(@Param('xml') xml): any {
+  @Post('parse')  
+  parseXML(@Body() xml: any): any {
+    console.log({xml})
     return parser.toJson(xml);
   }
 }

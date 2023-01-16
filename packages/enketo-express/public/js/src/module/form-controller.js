@@ -76,7 +76,14 @@ export class FormController {
 
     async processForm(formData) {
         const doc = this._parser.parseFromString(formData, 'text/xml');
-        this.formData = (await fetch('http://localhost:3002/form/parse/' + encodeURIComponent(formData)).then(res => res.json())).data;
+        // this.formData = (await fetch('http://localhost:3002/form/parse/' + encodeURIComponent(formData)).then(res => res.json())).data;
+        this.formData = (await fetch('https://enketo-manager-ratings-tech.samagra.io/parse', {
+            method: "POST",
+            body: JSON.stringify(formData.toString()),            
+            headers: {
+                "Content-type": "application/json; charset=UTF-8"
+            }
+        }).then(res => res.json())).data;
         if (await this.formSpec.isSuccessExecute() === true) {
             this._state = 'FORM_SUCCESS';
             this._onFormSuccessData = await this.formSpec.onFormSuccessExecute();

@@ -1,0 +1,386 @@
+<?xml version="1.0"?>
+<h:html xmlns="http://www.w3.org/2002/xforms"
+    xmlns:ev="http://www.w3.org/2001/xml-events"
+    xmlns:h="http://www.w3.org/1999/xhtml"
+    xmlns:jr="http://openrosa.org/javarosa"
+    xmlns:odk="http://www.opendatakit.org/xforms"
+    xmlns:orx="http://openrosa.org/xforms"
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <h:head>
+        <h:title>OSCE Checklist 1.8</h:title>
+        <model odk:xforms-version="1.0.0">
+            <instance>
+                <data id="osce1_form" version="1.1">
+                    <osce>
+                        <name>
+                            <generated_table_list_label_3/>
+                            <reserved_name_for_field_list_labels_4/>
+                            <step1/>
+                            <step2/>
+                            <step3/>
+                            <step4/>
+                            <step5/>
+                            <step6/>
+                            <step7/>
+                            <step8/>
+                            <step9/>
+                            <step10/>
+                            <step11/>
+                        </name>
+                    </osce>
+                    <meta>
+                        <instanceID/>
+                    </meta>
+                </data>
+            </instance>
+            <bind nodeset="/data/osce/name/generated_table_list_label_3" readonly="true()" type="string"/>
+            <bind nodeset="/data/osce/name/reserved_name_for_field_list_labels_4" type="string"/>
+            <bind nodeset="/data/osce/name/step1" required="true()" type="string"/>
+            <bind nodeset="/data/osce/name/step2" required="true()" type="string"/>
+            <bind nodeset="/data/osce/name/step3" required="true()" type="string"/>
+            <bind nodeset="/data/osce/name/step4" required="true()" type="string"/>
+            <bind nodeset="/data/osce/name/step5" required="true()" type="string"/>
+            <bind nodeset="/data/osce/name/step6" required="true()" type="string"/>
+            <bind nodeset="/data/osce/name/step7" required="true()" type="string"/>
+            <bind nodeset="/data/osce/name/step8" required="true()" type="string"/>
+            <bind nodeset="/data/osce/name/step9" required="true()" type="string"/>
+            <bind nodeset="/data/osce/name/step10" required="true()" type="string"/>
+            <bind nodeset="/data/osce/name/step11" required="true()" type="string"/>
+            <bind jr:preload="uid" nodeset="/data/meta/instanceID" readonly="true()" type="string"/>
+        </model>
+    </h:head>
+    <h:body class="pages">
+        <group appearance="field-list" ref="/data/osce">
+            <label>OSCE Checklist</label>
+            <group appearance="field-list" ref="/data/osce/name">
+                <input ref="/data/osce/name/generated_table_list_label_3">
+                    <label>Washing Legs</label>
+                </input>
+                <select1 appearance="label" ref="/data/osce/name/reserved_name_for_field_list_labels_4">
+                    <label></label>
+                    <item>
+                        <label>1st</label>
+                        <value>a</value>
+                    </item>
+                    <item>
+                        <label>2nd</label>
+                        <value>b</value>
+                    </item>
+                    <item>
+                        <label>3rd</label>
+                        <value>c</value>
+                    </item>
+                    <item>
+                        <label>4th</label>
+                        <value>d</value>
+                    </item>
+                    <item>
+                        <label>5th</label>
+                        <value>e</value>
+                    </item>
+                    <item>
+                        <label>Not Done</label>
+                        <value>f</value>
+                    </item>
+                </select1>
+                <select1 appearance="list-nolabel" ref="/data/osce/name/step1">
+                    <label>Step A</label>
+                    <item>
+                        <label>1st</label>
+                        <value>a</value>
+                    </item>
+                    <item>
+                        <label>2nd</label>
+                        <value>b</value>
+                    </item>
+                    <item>
+                        <label>3rd</label>
+                        <value>c</value>
+                    </item>
+                    <item>
+                        <label>4th</label>
+                        <value>d</value>
+                    </item>
+                    <item>
+                        <label>5th</label>
+                        <value>e</value>
+                    </item>
+                    <item>
+                        <label>Not Done</label>
+                        <value>f</value>
+                    </item>
+                </select1>
+                <select1 appearance="list-nolabel" ref="/data/osce/name/step2">
+                    <label>Step B</label>
+                    <item>
+                        <label>1st</label>
+                        <value>a</value>
+                    </item>
+                    <item>
+                        <label>2nd</label>
+                        <value>b</value>
+                    </item>
+                    <item>
+                        <label>3rd</label>
+                        <value>c</value>
+                    </item>
+                    <item>
+                        <label>4th</label>
+                        <value>d</value>
+                    </item>
+                    <item>
+                        <label>5th</label>
+                        <value>e</value>
+                    </item>
+                    <item>
+                        <label>Not Done</label>
+                        <value>f</value>
+                    </item>
+                </select1>
+                <select1 appearance="list-nolabel" ref="/data/osce/name/step3">
+                    <label>Step C</label>
+                    <item>
+                        <label>1st</label>
+                        <value>a</value>
+                    </item>
+                    <item>
+                        <label>2nd</label>
+                        <value>b</value>
+                    </item>
+                    <item>
+                        <label>3rd</label>
+                        <value>c</value>
+                    </item>
+                    <item>
+                        <label>4th</label>
+                        <value>d</value>
+                    </item>
+                    <item>
+                        <label>5th</label>
+                        <value>e</value>
+                    </item>
+                    <item>
+                        <label>Not Done</label>
+                        <value>f</value>
+                    </item>
+                </select1>
+                <select1 appearance="list-nolabel" ref="/data/osce/name/step4">
+                    <label>Step D</label>
+                    <item>
+                        <label>1st</label>
+                        <value>a</value>
+                    </item>
+                    <item>
+                        <label>2nd</label>
+                        <value>b</value>
+                    </item>
+                    <item>
+                        <label>3rd</label>
+                        <value>c</value>
+                    </item>
+                    <item>
+                        <label>4th</label>
+                        <value>d</value>
+                    </item>
+                    <item>
+                        <label>5th</label>
+                        <value>e</value>
+                    </item>
+                    <item>
+                        <label>Not Done</label>
+                        <value>f</value>
+                    </item>
+                </select1>
+                <select1 appearance="list-nolabel" ref="/data/osce/name/step5">
+                    <label>Step E</label>
+                    <item>
+                        <label>1st</label>
+                        <value>a</value>
+                    </item>
+                    <item>
+                        <label>2nd</label>
+                        <value>b</value>
+                    </item>
+                    <item>
+                        <label>3rd</label>
+                        <value>c</value>
+                    </item>
+                    <item>
+                        <label>4th</label>
+                        <value>d</value>
+                    </item>
+                    <item>
+                        <label>5th</label>
+                        <value>e</value>
+                    </item>
+                    <item>
+                        <label>Not Done</label>
+                        <value>f</value>
+                    </item>
+                </select1>
+                <select1 appearance="list-nolabel" ref="/data/osce/name/step6">
+                    <label>Step F</label>
+                    <item>
+                        <label>1st</label>
+                        <value>a</value>
+                    </item>
+                    <item>
+                        <label>2nd</label>
+                        <value>b</value>
+                    </item>
+                    <item>
+                        <label>3rd</label>
+                        <value>c</value>
+                    </item>
+                    <item>
+                        <label>4th</label>
+                        <value>d</value>
+                    </item>
+                    <item>
+                        <label>5th</label>
+                        <value>e</value>
+                    </item>
+                    <item>
+                        <label>Not Done</label>
+                        <value>f</value>
+                    </item>
+                </select1>
+                <select1 appearance="list-nolabel" ref="/data/osce/name/step7">
+                    <label>Step G</label>
+                    <item>
+                        <label>1st</label>
+                        <value>a</value>
+                    </item>
+                    <item>
+                        <label>2nd</label>
+                        <value>b</value>
+                    </item>
+                    <item>
+                        <label>3rd</label>
+                        <value>c</value>
+                    </item>
+                    <item>
+                        <label>4th</label>
+                        <value>d</value>
+                    </item>
+                    <item>
+                        <label>5th</label>
+                        <value>e</value>
+                    </item>
+                    <item>
+                        <label>Not Done</label>
+                        <value>f</value>
+                    </item>
+                </select1>
+                <select1 appearance="list-nolabel" ref="/data/osce/name/step8">
+                    <label>Step H</label>
+                    <item>
+                        <label>1st</label>
+                        <value>a</value>
+                    </item>
+                    <item>
+                        <label>2nd</label>
+                        <value>b</value>
+                    </item>
+                    <item>
+                        <label>3rd</label>
+                        <value>c</value>
+                    </item>
+                    <item>
+                        <label>4th</label>
+                        <value>d</value>
+                    </item>
+                    <item>
+                        <label>5th</label>
+                        <value>e</value>
+                    </item>
+                    <item>
+                        <label>Not Done</label>
+                        <value>f</value>
+                    </item>
+                </select1>
+                <select1 appearance="list-nolabel" ref="/data/osce/name/step9">
+                    <label>Step I</label>
+                    <item>
+                        <label>1st</label>
+                        <value>a</value>
+                    </item>
+                    <item>
+                        <label>2nd</label>
+                        <value>b</value>
+                    </item>
+                    <item>
+                        <label>3rd</label>
+                        <value>c</value>
+                    </item>
+                    <item>
+                        <label>4th</label>
+                        <value>d</value>
+                    </item>
+                    <item>
+                        <label>5th</label>
+                        <value>e</value>
+                    </item>
+                    <item>
+                        <label>Not Done</label>
+                        <value>f</value>
+                    </item>
+                </select1>
+                <select1 appearance="list-nolabel" ref="/data/osce/name/step10">
+                    <label>Step J</label>
+                    <item>
+                        <label>1st</label>
+                        <value>a</value>
+                    </item>
+                    <item>
+                        <label>2nd</label>
+                        <value>b</value>
+                    </item>
+                    <item>
+                        <label>3rd</label>
+                        <value>c</value>
+                    </item>
+                    <item>
+                        <label>4th</label>
+                        <value>d</value>
+                    </item>
+                    <item>
+                        <label>5th</label>
+                        <value>e</value>
+                    </item>
+                    <item>
+                        <label>Not Done</label>
+                        <value>f</value>
+                    </item>
+                </select1>
+                <select1 appearance="list-nolabel" ref="/data/osce/name/step11">
+                    <label>Step K</label>
+                    <item>
+                        <label>1st</label>
+                        <value>a</value>
+                    </item>
+                    <item>
+                        <label>2nd</label>
+                        <value>b</value>
+                    </item>
+                    <item>
+                        <label>3rd</label>
+                        <value>c</value>
+                    </item>
+                    <item>
+                        <label>4th</label>
+                        <value>d</value>
+                    </item>
+                    <item>
+                        <label>5th</label>
+                        <value>e</value>
+                    </item>
+                    <item>
+                        <label>Not Done</label>
+                        <value>f</value>
+                    </item>
+                </select1>
+            </group>
+        </group>
+    </h:body>
+</h:html>
