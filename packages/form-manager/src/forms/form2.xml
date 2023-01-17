@@ -1,0 +1,179 @@
+<?xml version="1.0"?>
+<h:html xmlns="http://www.w3.org/2002/xforms"
+    xmlns:ev="http://www.w3.org/2001/xml-events"
+    xmlns:h="http://www.w3.org/1999/xhtml"
+    xmlns:jr="http://openrosa.org/javarosa"
+    xmlns:odk="http://www.opendatakit.org/xforms"
+    xmlns:orx="http://openrosa.org/xforms"
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <h:head>
+        <h:title>DST Trainee Attendance</h:title>
+        <model odk:xforms-version="1.0.0">
+            <instance>
+                <data id="DST-Attendance" version="1">
+                    <group_details>
+                        <name/>
+                        <iti/>
+                        <trade/>
+                        <batch/>
+                        <industry/>
+                        <pf_name/>
+                        <pf_iti/>
+                        <pf_trade/>
+                        <pf_batch/>
+                        <pf_industry/>
+                        <details/>
+                        <go_back/>
+                    </group_details>
+                    <attendance>
+                        <attendance_note/>
+                        <attendance_status/>
+                    </attendance>
+                    <absence_reason>
+                        <absence_rsn/>
+                        <if_other/>
+                    </absence_reason>
+                    <location>
+                        <geopoint/>
+                        <ind_geopoint/>
+                        <location_note/>
+                        <selfie/>
+                        <note_end/>
+                    </location>
+                    <meta>
+                        <instanceID/>
+                    </meta>
+                </data>
+            </instance>
+            <bind nodeset="/data/group_details/name" type="string"/>
+            <bind nodeset="/data/group_details/iti" type="string"/>
+            <bind nodeset="/data/group_details/trade" type="string"/>
+            <bind nodeset="/data/group_details/batch" type="string"/>
+            <bind nodeset="/data/group_details/industry" type="string"/>
+            <bind nodeset="/data/group_details/pf_name" type="string"/>
+            <bind nodeset="/data/group_details/pf_iti" type="string"/>
+            <bind nodeset="/data/group_details/pf_trade" type="string"/>
+            <bind nodeset="/data/group_details/pf_batch" type="string"/>
+            <bind nodeset="/data/group_details/pf_industry" type="string"/>
+            <bind nodeset="/data/group_details/details" required="true()" type="string"/>
+            <bind nodeset="/data/group_details/go_back" readonly="true()" relevant=" /data/group_details/details  = 'No'" type="string"/>
+            <bind nodeset="/data/attendance" relevant=" /data/group_details/details  = 'Yes'"/>
+            <bind nodeset="/data/attendance/attendance_note" readonly="true()" type="string"/>
+            <bind nodeset="/data/attendance/attendance_status" required="true()" type="string"/>
+            <bind nodeset="/data/absence_reason" relevant=" /data/attendance/attendance_status  = 'Absent'"/>
+            <bind nodeset="/data/absence_reason/absence_rsn" required="true()" type="string"/>
+            <bind nodeset="/data/absence_reason/if_other" relevant=" /data/absence_reason/absence_rsn  = '6'" required="true()" type="string"/>
+            <bind nodeset="/data/location" relevant=" /data/attendance/attendance_status  ='Present'"/>
+            <bind constraint="selected-at( /data/location/geopoint , 3) &lt; 100" nodeset="/data/location/geopoint" required="true()" type="geopoint"/>
+            <bind nodeset="/data/location/ind_geopoint" type="string"/>
+            <bind nodeset="/data/location/location_note" readonly="true()" type="string"/>
+            <bind nodeset="/data/location/selfie" orx:max-pixels="1024" required="true()" type="binary"/>
+            <bind nodeset="/data/location/note_end" readonly="true()" type="string"/>
+            <bind jr:preload="uid" nodeset="/data/meta/instanceID" readonly="true()" type="string"/>
+        </model>
+    </h:head>
+    <h:body>
+        <group ref="/data/group_details">
+            <label>Trainee Details</label>
+            <input appearance="field_list" ref="/data/group_details/pf_name">
+                <label>Name:</label>
+            </input>
+            <input appearance="field_list" ref="/data/group_details/pf_iti">
+                <label>ITI:</label>
+            </input>
+            <input appearance="field_list" ref="/data/group_details/pf_trade">
+                <label>Trade:</label>
+            </input>
+            <input appearance="field_list" ref="/data/group_details/pf_batch">
+                <label>Batch:</label>
+            </input>
+            <input appearance="field_list" ref="/data/group_details/pf_industry">
+                <label>Industry:</label>
+            </input>
+            <select1 ref="/data/group_details/details">
+                <label>Are these details correct?</label>
+                <item>
+                    <label>Yes</label>
+                    <value>Yes</value>
+                </item>
+                <item>
+                    <label>No</label>
+                    <value>No</value>
+                </item>
+            </select1>
+            <input ref="/data/group_details/go_back">
+                <label>If your details are incorrect, please try a different registration number or contact your ITI Trainer.
+    (यदि आपकी जानकारी ग़लत है, तो कोई अन्य registration नम्बर डाल कर लॉग इन करें या ITI ट्रेनर से सम्पर्क करें।)</label>
+            </input>
+        </group>
+        <group ref="/data/attendance">
+            <input ref="/data/attendance/attendance_note">
+                <label>Hello Trainee,
+    Please make sure you are in the industry premises while marking attendance using your device. Else, your attendance will not get recorded
+    कृपया सुनिश्चित करें कि आप अपनी attendance इंडस्ट्री परिसर में उपस्थित होने पे ही दर्ज करें । नहीं तो आपकी attendance दर्ज नहीं होगी।</label>
+            </input>
+            <select1 ref="/data/attendance/attendance_status">
+                <label>Mark Attendance</label>
+                <item>
+                    <label>Present</label>
+                    <value>Present</value>
+                </item>
+                <item>
+                    <label>Absent</label>
+                    <value>Absent</value>
+                </item>
+            </select1>
+        </group>
+        <group ref="/data/absence_reason">
+            <select1 ref="/data/absence_reason/absence_rsn">
+                <label>Please select the reason for your absence. कृपया बताईं कि आज आप इंडस्ट्री में उपस्थित क्युँ नहीं हो सके।</label>
+                <item>
+                    <label>Sick leave</label>
+                    <value>1</value>
+                </item>
+                <item>
+                    <label>Transport unavailable</label>
+                    <value>2</value>
+                </item>
+                <item>
+                    <label>Personal emergency</label>
+                    <value>3</value>
+                </item>
+                <item>
+                    <label>Industry is not providing OJT</label>
+                    <value>4</value>
+                </item>
+                <item>
+                    <label>At ITI</label>
+                    <value>5</value>
+                </item>
+                <item>
+                    <label>Other</label>
+                    <value>6</value>
+                </item>
+            </select1>
+            <input ref="/data/absence_reason/if_other">
+                <label>Please enter the reason for your absence. कृपया बताईं कि आज आप इंडस्ट्री में उपस्थित क्युँ नहीं हो सके।</label>
+            </input>
+        </group>
+        <group ref="/data/location">
+            <input accuracyThreshold="500" ref="/data/location/geopoint">
+                <label>Your location</label>
+            </input>
+            <input ref="/data/location/location_note">
+                <label>Your location does not match with the industry's location, please try again when you are in the industry premises.
+    आपका स्थान इंडस्ट्री के स्थान से मेल नहीं खा रहा है, कृपया जब आप इंडस्ट्री परिसर में हों तब पुनः प्रयास करें।</label>
+            </input>
+            <upload appearance="new" mediatype="image/*" ref="/data/location/selfie">
+                <label>Please take a selfie in the Industry premises for submitting attendance.
+    Attendance जमा करने के लिए कृपया इंडस्ट्री परिसर में एक selfie लें।</label>
+            </upload>
+            <input ref="/data/location/note_end">
+                <label>You have sucessfully marked the attendance.
+    All the best for your OJT! Do not forget to fill your OJT Diary at the end of the day.
+    आपने सफलतापूर्वक अपनी attendance जमा कर दी है।
+    आपको OJT के लिए शुभकामनाएँ! दिन के अंत में अपनी OJT डायरी भरना न भूलें।</label>
+            </input>
+        </group>
+    </h:body>
+</h:html>

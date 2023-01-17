@@ -1,0 +1,138 @@
+<?xml version="1.0"?>
+<h:html xmlns="http://www.w3.org/2002/xforms" xmlns:ev="http://www.w3.org/2001/xml-events"
+        xmlns:h="http://www.w3.org/1999/xhtml" xmlns:jr="http://openrosa.org/javarosa"
+        xmlns:odk="http://www.opendatakit.org/xforms" xmlns:orx="http://openrosa.org/xforms"
+        xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <h:head>
+        <h:title>DST MC Updation</h:title>
+        <model odk:xforms-version="1.0.0">
+            <instance>
+                <data id="DST Updation" version="1">
+                    <Update_existing_DSTMC>
+                        <Update_existing_DSTMC/>
+                        <New_Industry/>
+                        <New_Industry_Partner/>
+                        <ex_file_widget/>
+                        <Trainer_Details_industry/>
+                        <trainer_name/>
+                        <trainer_contact/>
+                        <trainer_email/>
+                        <Industry_Details_industry1/>
+                        <Indutry_head/>
+                        <head_name/>
+                        <head_Contact/>
+                        <head_email/>
+                        <Indutry_supervisor/>
+                        <sup_name/>
+                        <sup_Contact/>
+                        <sup_email/>
+                        <Sure_Cancellation/>
+                        <action_2/>
+                        <Industry_cancelled/>
+                    </Update_existing_DSTMC>
+                    <meta>
+                        <instanceID/>
+                    </meta>
+                </data>
+            </instance>
+            <bind nodeset="/data/Update_existing_DSTMC/Update_existing_DSTMC" readonly="true()" type="string"/>
+            <bind nodeset="/data/Update_existing_DSTMC/New_Industry" readonly="true()" type="string"/>
+            <bind nodeset="/data/Update_existing_DSTMC/New_Industry_Partner" required="true()" type="string"/>
+            <bind nodeset="/data/Update_existing_DSTMC/ex_file_widget" required="true()" type="binary"/>
+            <bind nodeset="/data/Update_existing_DSTMC/Trainer_Details_industry" readonly="true()" type="string"/>
+            <bind nodeset="/data/Update_existing_DSTMC/trainer_name" required="true()" type="string"/>
+            <bind constraint="regex(., '^[0-9]{10}$')" jr:constraintMsg="Please enter 10 digit phone number"
+                  nodeset="/data/Update_existing_DSTMC/trainer_contact" required="true()" type="int"/>
+            <bind nodeset="/data/Update_existing_DSTMC/trainer_email" required="true()" type="string"/>
+            <bind nodeset="/data/Update_existing_DSTMC/Industry_Details_industry1" readonly="true()" type="string"/>
+            <bind nodeset="/data/Update_existing_DSTMC/Indutry_head" readonly="true()" type="string"/>
+            <bind nodeset="/data/Update_existing_DSTMC/head_name" required="true()" type="string"/>
+            <bind constraint="regex(., '^[0-9]{10}$')" jr:constraintMsg="Please enter 10 digit phone number"
+                  nodeset="/data/Update_existing_DSTMC/head_Contact" required="true()" type="int"/>
+            <bind nodeset="/data/Update_existing_DSTMC/head_email" required="true()" type="string"/>
+            <bind nodeset="/data/Update_existing_DSTMC/Indutry_supervisor" readonly="true()" type="string"/>
+            <bind nodeset="/data/Update_existing_DSTMC/sup_name" required="true()" type="string"/>
+            <bind constraint="regex(., '^[0-9]{10}$')" jr:constraintMsg="Please enter 10 digit phone number"
+                  nodeset="/data/Update_existing_DSTMC/sup_Contact" required="true()" type="int"/>
+            <bind nodeset="/data/Update_existing_DSTMC/sup_email" required="true()" type="string"/>
+            <bind nodeset="/data/Update_existing_DSTMC/Sure_Cancellation" readonly="true()" type="string"/>
+            <bind nodeset="/data/Update_existing_DSTMC/action_2" required="true()" type="string"/>
+            <bind nodeset="/data/Update_existing_DSTMC/Industry_cancelled" readonly="true()" type="string"/>
+            <bind jr:preload="uid" nodeset="/data/meta/instanceID" readonly="true()" type="string"/>
+        </model>
+    </h:head>
+    <h:body>
+        <group appearance="field-list" ref="/data/Update_existing_DSTMC">
+            <label>Update existing DSTMC</label>
+            <input ref="/data/Update_existing_DSTMC/Update_existing_DSTMC">
+                <label>Continue only if your MOU has been updated with an industry partner for an existing DST MC
+                    For cancelling Industry Partner please go back to main menu and choose - 'Cancel DST MC' option
+                </label>
+            </input>
+            <input ref="/data/Update_existing_DSTMC/New_Industry">
+                <label>Please enter the name of the new industry partner below</label>
+            </input>
+            <input ref="/data/Update_existing_DSTMC/New_Industry_Partner">
+                <label>Name of new industry</label>
+            </input>
+            <upload appearance="ex:com.example.collectanswersprovider(questionFile='')" mediatype="application/*"
+                    ref="/data/Update_existing_DSTMC/ex_file_widget">
+                <label>Please input DST updation proof in PDF format</label>
+            </upload>
+            <input ref="/data/Update_existing_DSTMC/Trainer_Details_industry">
+                <label>Please add details of the trainer for the updated DSTMC</label>
+            </input>
+            <input ref="/data/Update_existing_DSTMC/trainer_name">
+                <label>Full name of Trainer</label>
+            </input>
+            <input ref="/data/Update_existing_DSTMC/trainer_contact">
+                <label>Trainer Ph no</label>
+            </input>
+            <input ref="/data/Update_existing_DSTMC/trainer_email">
+                <label>Trainer email id</label>
+            </input>
+            <input ref="/data/Update_existing_DSTMC/Industry_Details_industry1">
+                <label>Please fill DST MC Industry details for the relevant trade with industry partner for the relevant
+                    batch
+                </label>
+            </input>
+            <input ref="/data/Update_existing_DSTMC/Indutry_head">
+                <label>Industry head details</label>
+            </input>
+            <input ref="/data/Update_existing_DSTMC/head_name">
+                <label>Name of the industry head</label>
+            </input>
+            <input ref="/data/Update_existing_DSTMC/head_Contact">
+                <label>Phone number</label>
+            </input>
+            <input ref="/data/Update_existing_DSTMC/head_email">
+                <label>Email id</label>
+            </input>
+            <input ref="/data/Update_existing_DSTMC/Indutry_supervisor">
+                <label>Industry supervisor details</label>
+            </input>
+            <input ref="/data/Update_existing_DSTMC/sup_name">
+                <label>Name of the industry supervisor</label>
+            </input>
+            <input ref="/data/Update_existing_DSTMC/sup_Contact">
+                <label>Phone number</label>
+            </input>
+            <input ref="/data/Update_existing_DSTMC/sup_email">
+                <label>Email id</label>
+            </input>
+            <input ref="/data/Update_existing_DSTMC/Sure_Cancellation">
+                <label>Are you sure you want to cancel DSTMC? - If no, please go back, else, choose yes.</label>
+            </input>
+            <select1 ref="/data/Update_existing_DSTMC/action_2">
+                <label>Select</label>
+                <item>
+                    <label>Yes</label>
+                    <value>Yes</value>
+                </item>
+            </select1>
+            <input ref="/data/Update_existing_DSTMC/Industry_cancelled">
+                <label>Thank you for updating DSTMC with all required details.</label>
+            </input>
+        </group>
+    </h:body>
+</h:html>

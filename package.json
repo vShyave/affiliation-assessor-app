@@ -1,0 +1,45 @@
+{
+  "name": "enketo",
+  "version": "1.0.0",
+  "description": "Enketo",
+  "scripts": {
+    "start": "npm i && npm run concurrent",
+    "build": "turbo run build",
+    "docker-cleanup": "docker rm -f enketo-redis-main enketo-redis-cache",
+    "enketo-core": "cd packages/enketo-core && npm i && npm start",
+    "enketo-express": "cd packages/enketo-express && docker run --name enketo-redis-main -p 6381:6379 -d redis && docker run --name enketo-redis-cache -p 6382:6379 -d redis && npm i && npm i -g grunt && grunt develop",
+    "form-manager": "cd packages/form-manager && npm i && npm start",
+    "wrapper": "cd apps/wrapper && npm i && npm start",
+    "concurrent-packages": "concurrently \"npm run enketo-core\" \"npm run enketo-express\" \"npm run form-manager\"",
+    "concurrent-applications": "concurrently \"npm run wrapper\"",
+    "concurrent": "npm run docker-cleanup && concurrently \"npm run concurrent-packages\" \"npm run concurrent-applications\"",
+    "start-redis-cache": "docker run --name enketo-redis-cache -p 6380:6379 -d redis",
+    "start-redis-main": "docker run --name enketo-redis-main -p 6379:6379 -d redis",
+    "start-ec": "cd enketo-core && npm start",
+    "start-ee": "cd packages/enketo-express && grunt develop",
+    "start-fm": "cd packages/form-manager && npm run start:dev",
+    "start-web": "cd wrapper && npm start"
+  },
+  "workspaces": [
+    "docs",
+    "apps/*",
+    "packages/*"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ChakshuGautam/enketo.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ChakshuGautam/enketo/issues"
+  },
+  "homepage": "https://github.com/ChakshuGautam/enketo#readme",
+  "dependencies": {
+    "xmldom": "^0.6.0"
+  },
+  "devDependencies": {
+    "concurrently": "^7.4.0",
+    "turbo": "^1.5.3"
+  }
+}
