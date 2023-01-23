@@ -1,0 +1,168 @@
+<?xml version="1.0"?>
+<h:html xmlns="http://www.w3.org/2002/xforms"
+    xmlns:ev="http://www.w3.org/2001/xml-events"
+    xmlns:h="http://www.w3.org/1999/xhtml"
+    xmlns:jr="http://openrosa.org/javarosa"
+    xmlns:odk="http://www.opendatakit.org/xforms"
+    xmlns:orx="http://openrosa.org/xforms"
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <h:head>
+        <h:title>Nursing Form</h:title>
+        <model odk:xforms-version="1.0.0">
+            <instance>
+                <data id="nusing_form" version="1.1">
+                    <part1_4_2>
+                        <lab_obg/>
+                        <comments1/>
+                        <image1/>
+                        <lab_comm/>
+                        <comments2/>
+                        <image2/>
+                        <lab_nutri/>
+                        <comments3/>
+                        <image3/>
+                        <lab_foundation/>
+                        <comments4/>
+                        <image4/>
+                        <lab_pre-clinical/>
+                        <comments5/>
+                        <image5/>
+                        <lab_adv/>
+                        <comments6/>
+                        <image6/>
+                    </part1_4_2>
+                    <meta>
+                        <instanceID/>
+                    </meta>
+                </data>
+            </instance>
+            <bind nodeset="/data/part1_4_2/lab_obg" type="string"/>
+            <bind nodeset="/data/part1_4_2/comments1" type="string"/>
+            <bind nodeset="/data/part1_4_2/image1" type="binary"/>
+            <bind nodeset="/data/part1_4_2/lab_comm" type="string"/>
+            <bind nodeset="/data/part1_4_2/comments2" type="string"/>
+            <bind nodeset="/data/part1_4_2/image2" type="binary"/>
+            <bind nodeset="/data/part1_4_2/lab_nutri" type="string"/>
+            <bind nodeset="/data/part1_4_2/comments3" type="string"/>
+            <bind nodeset="/data/part1_4_2/image3" type="binary"/>
+            <bind nodeset="/data/part1_4_2/lab_foundation" type="string"/>
+            <bind nodeset="/data/part1_4_2/comments4" type="string"/>
+            <bind nodeset="/data/part1_4_2/image4" type="binary"/>
+            <bind nodeset="/data/part1_4_2/lab_pre-clinical" type="string"/>
+            <bind nodeset="/data/part1_4_2/comments5" type="string"/>
+            <bind nodeset="/data/part1_4_2/image5" type="binary"/>
+            <bind nodeset="/data/part1_4_2/lab_adv" type="string"/>
+            <bind nodeset="/data/part1_4_2/comments6" type="string"/>
+            <bind nodeset="/data/part1_4_2/image6" type="binary"/>
+            <bind jr:preload="uid" nodeset="/data/meta/instanceID" readonly="true()" type="string"/>
+        </model>
+    </h:head>
+    <h:body class="pages">
+        <group appearance="field-list" ref="/data/part1_4_2">
+            <label>**Training Infrastructure - Laboratories**
+*Please use this form to provide feedback on the training infrastructure at your assigned institute*</label>
+            <select1 appearance="table-list" ref="/data/part1_4_2/lab_obg">
+                <label>OBG &amp; Pediatric lab/MCH lab</label>
+                <item>
+                    <label>Yes</label>
+                    <value>yes</value>
+                </item>
+                <item>
+                    <label>No</label>
+                    <value>no</value>
+                </item>
+            </select1>
+            <input ref="/data/part1_4_2/comments1">
+                <label>Please provide feedback, if any</label>
+            </input>
+            <upload mediatype="image/*" ref="/data/part1_4_2/image1">
+                <label>Please upload image, if any</label>
+            </upload>
+            <select1 appearance="table-list" ref="/data/part1_4_2/lab_comm">
+                <label>Community Lab</label>
+                <item>
+                    <label>Yes</label>
+                    <value>yes</value>
+                </item>
+                <item>
+                    <label>No</label>
+                    <value>no</value>
+                </item>
+            </select1>
+            <input ref="/data/part1_4_2/comments2">
+                <label>Please provide feedback, if any</label>
+            </input>
+            <upload mediatype="image/*" ref="/data/part1_4_2/image2">
+                <label>Please upload image, if any</label>
+            </upload>
+            <select1 appearance="table-list" ref="/data/part1_4_2/lab_nutri">
+                <label>Nutrition lab</label>
+                <item>
+                    <label>Yes</label>
+                    <value>yes</value>
+                </item>
+                <item>
+                    <label>No</label>
+                    <value>no</value>
+                </item>
+            </select1>
+            <input ref="/data/part1_4_2/comments3">
+                <label>Please provide feedback, if any</label>
+            </input>
+            <upload mediatype="image/*" ref="/data/part1_4_2/image3">
+                <label>Please upload image, if any</label>
+            </upload>
+            <select1 appearance="table-list" ref="/data/part1_4_2/lab_foundation">
+                <label>Foundation lab</label>
+                <item>
+                    <label>Yes</label>
+                    <value>yes</value>
+                </item>
+                <item>
+                    <label>No</label>
+                    <value>no</value>
+                </item>
+            </select1>
+            <input ref="/data/part1_4_2/comments4">
+                <label>Please provide feedback, if any</label>
+            </input>
+            <upload mediatype="image/*" ref="/data/part1_4_2/image4">
+                <label>Please upload image, if any</label>
+            </upload>
+            <select1 appearance="table-list" ref="/data/part1_4_2/lab_pre-clinical">
+                <label>Pre-clinical</label>
+                <item>
+                    <label>Yes</label>
+                    <value>yes</value>
+                </item>
+                <item>
+                    <label>No</label>
+                    <value>no</value>
+                </item>
+            </select1>
+            <input ref="/data/part1_4_2/comments5">
+                <label>Please provide feedback, if any</label>
+            </input>
+            <upload mediatype="image/*" ref="/data/part1_4_2/image5">
+                <label>Please upload image, if any</label>
+            </upload>
+            <select1 appearance="table-list" ref="/data/part1_4_2/lab_adv">
+                <label>Advance Skill lab</label>
+                <item>
+                    <label>Yes</label>
+                    <value>yes</value>
+                </item>
+                <item>
+                    <label>No</label>
+                    <value>no</value>
+                </item>
+            </select1>
+            <input ref="/data/part1_4_2/comments6">
+                <label>Please provide feedback, if any</label>
+            </input>
+            <upload mediatype="image/*" ref="/data/part1_4_2/image6">
+                <label>Please upload image, if any</label>
+            </upload>
+        </group>
+    </h:body>
+</h:html>

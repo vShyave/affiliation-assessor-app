@@ -1,0 +1,768 @@
+<?xml version="1.0"?>
+<h:html xmlns="http://www.w3.org/2002/xforms"
+    xmlns:ev="http://www.w3.org/2001/xml-events"
+    xmlns:h="http://www.w3.org/1999/xhtml"
+    xmlns:jr="http://openrosa.org/javarosa"
+    xmlns:odk="http://www.opendatakit.org/xforms"
+    xmlns:orx="http://openrosa.org/xforms"
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <h:head>
+        <h:title>Nursing Form</h:title>
+        <model odk:xforms-version="1.0.0">
+            <instance>
+                <data id="nusing_form" version="1.1">
+                    <part1_6>
+                        <fac_registered/>
+                        <verify112/>
+                        <why112/>
+                        <fac_present/>
+                        <verify113/>
+                        <why113/>
+                        <fac_bsc/>
+                        <verify114/>
+                        <why114/>
+                        <fac_msc/>
+                        <verify115/>
+                        <why115/>
+                    </part1_6>
+                    <part1_7>
+                        <parent_add/>
+                        <verify116/>
+                        <why116/>
+                        <hosp_geocode/>
+                        <verify117/>
+                        <why117/>
+                        <beds_hosp/>
+                        <verify118/>
+                        <why118/>
+                        <total_ipd/>
+                        <verify119/>
+                        <why119/>
+                        <dept_parent_hosp/>
+                        <verify120/>
+                        <why120/>
+                    </part1_7>
+                    <part1_8>
+                        <nurse_emp/>
+                        <verify121/>
+                        <why121/>
+                        <nurse_gnm/>
+                        <verify122/>
+                        <why122/>
+                        <nurse_bsc/>
+                        <verify123/>
+                        <why123/>
+                        <nurse_msc/>
+                        <verify124/>
+                        <why124/>
+                    </part1_8>
+                    <part1_9>
+                        <f_name1/>
+                        <verify125/>
+                        <why125/>
+                        <f_type1/>
+                        <verify126/>
+                        <why126/>
+                        <f_reg1/>
+                        <verify127/>
+                        <why127/>
+                        <f_name2/>
+                        <verify128/>
+                        <why128/>
+                        <f_type2/>
+                        <verify129/>
+                        <why129/>
+                        <f_reg2/>
+                        <verify130/>
+                        <why130/>
+                        <f_name3/>
+                        <verify131/>
+                        <why131/>
+                        <f_type3/>
+                        <verify132/>
+                        <why132/>
+                        <f_reg3/>
+                        <verify133/>
+                        <why133/>
+                    </part1_9>
+                    <misc>
+                        <doc1/>
+                        <verify175/>
+                        <why175/>
+                        <doc2/>
+                        <verify176/>
+                        <why176/>
+                        <doc3/>
+                        <verify177/>
+                        <why177/>
+                        <doc4/>
+                        <verify178/>
+                        <why178/>
+                        <doc5/>
+                        <verify179/>
+                        <why179/>
+                        <doc6/>
+                        <verify180/>
+                        <why180/>
+                        <doc7/>
+                        <verify181/>
+                        <why181/>
+                    </misc>
+                    <meta>
+                        <instanceID/>
+                    </meta>
+                </data>
+            </instance>
+            <bind nodeset="/data/part1_6/fac_registered" type="int"/>
+            <bind nodeset="/data/part1_6/verify112" type="string"/>
+            <bind nodeset="/data/part1_6/why112" relevant=" /data/part1_6/verify112  = 'no'" type="string"/>
+            <bind nodeset="/data/part1_6/fac_present" type="int"/>
+            <bind nodeset="/data/part1_6/verify113" type="string"/>
+            <bind nodeset="/data/part1_6/why113" relevant=" /data/part1_6/verify113  = 'no'" type="string"/>
+            <bind nodeset="/data/part1_6/fac_bsc" type="int"/>
+            <bind nodeset="/data/part1_6/verify114" type="string"/>
+            <bind nodeset="/data/part1_6/why114" relevant=" /data/part1_6/verify114  = 'no'" type="string"/>
+            <bind nodeset="/data/part1_6/fac_msc" type="int"/>
+            <bind nodeset="/data/part1_6/verify115" type="string"/>
+            <bind nodeset="/data/part1_6/why115" relevant=" /data/part1_6/verify115  = 'no'" type="string"/>
+            <bind nodeset="/data/part1_7/parent_add" type="string"/>
+            <bind nodeset="/data/part1_7/verify116" type="string"/>
+            <bind nodeset="/data/part1_7/why116" relevant=" /data/part1_7/verify116  = 'no'" type="string"/>
+            <bind nodeset="/data/part1_7/hosp_geocode" type="string"/>
+            <bind nodeset="/data/part1_7/verify117" type="string"/>
+            <bind nodeset="/data/part1_7/why117" relevant=" /data/part1_7/verify117  = 'no'" type="string"/>
+            <bind nodeset="/data/part1_7/beds_hosp" type="int"/>
+            <bind nodeset="/data/part1_7/verify118" type="string"/>
+            <bind nodeset="/data/part1_7/why118" relevant=" /data/part1_7/verify118  = 'no'" type="string"/>
+            <bind nodeset="/data/part1_7/total_ipd" type="int"/>
+            <bind nodeset="/data/part1_7/verify119" type="string"/>
+            <bind nodeset="/data/part1_7/why119" relevant=" /data/part1_7/verify119  = 'no'" type="string"/>
+            <bind nodeset="/data/part1_7/dept_parent_hosp" type="string"/>
+            <bind nodeset="/data/part1_7/verify120" type="string"/>
+            <bind nodeset="/data/part1_7/why120" relevant=" /data/part1_7/verify120  = 'no'" type="string"/>
+            <bind nodeset="/data/part1_8/nurse_emp" type="int"/>
+            <bind nodeset="/data/part1_8/verify121" type="string"/>
+            <bind nodeset="/data/part1_8/why121" relevant=" /data/part1_8/verify121  = 'no'" type="string"/>
+            <bind nodeset="/data/part1_8/nurse_gnm" type="int"/>
+            <bind nodeset="/data/part1_8/verify122" type="string"/>
+            <bind nodeset="/data/part1_8/why122" relevant=" /data/part1_8/verify122  = 'no'" type="string"/>
+            <bind nodeset="/data/part1_8/nurse_bsc" type="int"/>
+            <bind nodeset="/data/part1_8/verify123" type="string"/>
+            <bind nodeset="/data/part1_8/why123" relevant=" /data/part1_8/verify123  = 'no'" type="string"/>
+            <bind nodeset="/data/part1_8/nurse_msc" type="int"/>
+            <bind nodeset="/data/part1_8/verify124" type="string"/>
+            <bind nodeset="/data/part1_8/why124" relevant=" /data/part1_8/verify124  = 'no'" type="string"/>
+            <bind nodeset="/data/part1_9/f_name1" type="string"/>
+            <bind nodeset="/data/part1_9/verify125" type="string"/>
+            <bind nodeset="/data/part1_9/why125" relevant=" /data/part1_9/verify125  = 'no'" type="string"/>
+            <bind nodeset="/data/part1_9/f_type1" type="string"/>
+            <bind nodeset="/data/part1_9/verify126" type="string"/>
+            <bind nodeset="/data/part1_9/why126" relevant=" /data/part1_9/verify126  = 'no'" type="string"/>
+            <bind nodeset="/data/part1_9/f_reg1" type="string"/>
+            <bind nodeset="/data/part1_9/verify127" type="string"/>
+            <bind nodeset="/data/part1_9/why127" relevant=" /data/part1_9/verify127  = 'no'" type="string"/>
+            <bind nodeset="/data/part1_9/f_name2" type="string"/>
+            <bind nodeset="/data/part1_9/verify128" type="string"/>
+            <bind nodeset="/data/part1_9/why128" relevant=" /data/part1_9/verify128  = 'no'" type="string"/>
+            <bind nodeset="/data/part1_9/f_type2" type="string"/>
+            <bind nodeset="/data/part1_9/verify129" type="string"/>
+            <bind nodeset="/data/part1_9/why129" relevant=" /data/part1_9/verify129  = 'no'" type="string"/>
+            <bind nodeset="/data/part1_9/f_reg2" type="string"/>
+            <bind nodeset="/data/part1_9/verify130" type="string"/>
+            <bind nodeset="/data/part1_9/why130" relevant=" /data/part1_9/verify130  = 'no'" type="string"/>
+            <bind nodeset="/data/part1_9/f_name3" type="string"/>
+            <bind nodeset="/data/part1_9/verify131" type="string"/>
+            <bind nodeset="/data/part1_9/why131" relevant=" /data/part1_9/verify131  = 'no'" type="string"/>
+            <bind nodeset="/data/part1_9/f_type3" type="string"/>
+            <bind nodeset="/data/part1_9/verify132" type="string"/>
+            <bind nodeset="/data/part1_9/why132" relevant=" /data/part1_9/verify132  = 'no'" type="string"/>
+            <bind nodeset="/data/part1_9/f_reg3" type="string"/>
+            <bind nodeset="/data/part1_9/verify133" type="string"/>
+            <bind nodeset="/data/part1_9/why133" relevant=" /data/part1_9/verify133  = 'no'" type="string"/>
+            <bind nodeset="/data/misc/doc1" type="binary"/>
+            <bind nodeset="/data/misc/verify175" type="string"/>
+            <bind nodeset="/data/misc/why175" relevant=" /data/misc/verify175  = 'no'" type="string"/>
+            <bind nodeset="/data/misc/doc2" type="binary"/>
+            <bind nodeset="/data/misc/verify176" type="string"/>
+            <bind nodeset="/data/misc/why176" relevant=" /data/misc/verify176  = 'no'" type="string"/>
+            <bind nodeset="/data/misc/doc3" type="binary"/>
+            <bind nodeset="/data/misc/verify177" type="string"/>
+            <bind nodeset="/data/misc/why177" relevant=" /data/misc/verify177  = 'no'" type="string"/>
+            <bind nodeset="/data/misc/doc4" type="binary"/>
+            <bind nodeset="/data/misc/verify178" type="string"/>
+            <bind nodeset="/data/misc/why178" relevant=" /data/misc/verify178  = 'no'" type="string"/>
+            <bind nodeset="/data/misc/doc5" type="binary"/>
+            <bind nodeset="/data/misc/verify179" type="string"/>
+            <bind nodeset="/data/misc/why179" relevant=" /data/misc/verify179  = 'no'" type="string"/>
+            <bind nodeset="/data/misc/doc6" type="binary"/>
+            <bind nodeset="/data/misc/verify180" type="string"/>
+            <bind nodeset="/data/misc/why180" relevant=" /data/misc/verify180  = 'no'" type="string"/>
+            <bind nodeset="/data/misc/doc7" type="binary"/>
+            <bind nodeset="/data/misc/verify181" type="string"/>
+            <bind nodeset="/data/misc/why181" relevant=" /data/misc/verify181  = 'no'" type="string"/>
+            <bind jr:preload="uid" nodeset="/data/meta/instanceID" readonly="true()" type="string"/>
+        </model>
+    </h:head>
+    <h:body class="pages">
+        <group appearance="field-list" ref="/data/part1_6">
+            <label>Teaching Faculty</label>
+            <input ref="/data/part1_6/fac_registered">
+                <label>Total number of teaching faculty registered</label>
+            </input>
+            <select1 appearance="table-list" ref="/data/part1_6/verify112">
+                <label>Has this been verified?</label>
+                <item>
+                    <label>Yes</label>
+                    <value>yes</value>
+                </item>
+                <item>
+                    <label>No</label>
+                    <value>no</value>
+                </item>
+            </select1>
+            <input ref="/data/part1_6/why112">
+                <label>If no, please provide the reason</label>
+            </input>
+            <input ref="/data/part1_6/fac_present">
+                <label>Total number of teaching faculty present on day of assessment</label>
+            </input>
+            <select1 appearance="table-list" ref="/data/part1_6/verify113">
+                <label>Has this been verified?</label>
+                <item>
+                    <label>Yes</label>
+                    <value>yes</value>
+                </item>
+                <item>
+                    <label>No</label>
+                    <value>no</value>
+                </item>
+            </select1>
+            <input ref="/data/part1_6/why113">
+                <label>If no, please provide the reason</label>
+            </input>
+            <input ref="/data/part1_6/fac_bsc">
+                <label>Number of teaching faculty with BSc (Nursing) degree only</label>
+            </input>
+            <select1 appearance="table-list" ref="/data/part1_6/verify114">
+                <label>Has this been verified?</label>
+                <item>
+                    <label>Yes</label>
+                    <value>yes</value>
+                </item>
+                <item>
+                    <label>No</label>
+                    <value>no</value>
+                </item>
+            </select1>
+            <input ref="/data/part1_6/why114">
+                <label>If no, please provide the reason</label>
+            </input>
+            <input ref="/data/part1_6/fac_msc">
+                <label>Number of teaching faculty with MSc (Nursing) degree or higher</label>
+            </input>
+            <select1 appearance="table-list" ref="/data/part1_6/verify115">
+                <label>Has this been verified?</label>
+                <item>
+                    <label>Yes</label>
+                    <value>yes</value>
+                </item>
+                <item>
+                    <label>No</label>
+                    <value>no</value>
+                </item>
+            </select1>
+            <input ref="/data/part1_6/why115">
+                <label>If no, please provide the reason</label>
+            </input>
+        </group>
+        <group appearance="field-list" ref="/data/part1_7">
+            <label>Clinical Facilities</label>
+            <input ref="/data/part1_7/parent_add">
+                <label>Complete address of the parent hospital</label>
+            </input>
+            <select1 appearance="table-list" ref="/data/part1_7/verify116">
+                <label>Has this been verified?</label>
+                <item>
+                    <label>Yes</label>
+                    <value>yes</value>
+                </item>
+                <item>
+                    <label>No</label>
+                    <value>no</value>
+                </item>
+            </select1>
+            <input ref="/data/part1_7/why116">
+                <label>If no, please provide the reason</label>
+            </input>
+            <input ref="/data/part1_7/hosp_geocode">
+                <label>Health Facility Registry/Geo-tagging Code of Hospital</label>
+            </input>
+            <select1 appearance="table-list" ref="/data/part1_7/verify117">
+                <label>Has this been verified?</label>
+                <item>
+                    <label>Yes</label>
+                    <value>yes</value>
+                </item>
+                <item>
+                    <label>No</label>
+                    <value>no</value>
+                </item>
+            </select1>
+            <input ref="/data/part1_7/why117">
+                <label>If no, please provide the reason</label>
+            </input>
+            <input ref="/data/part1_7/beds_hosp">
+                <label>Number of beds in parent hospital</label>
+            </input>
+            <select1 appearance="table-list" ref="/data/part1_7/verify118">
+                <label>Has this been verified?</label>
+                <item>
+                    <label>Yes</label>
+                    <value>yes</value>
+                </item>
+                <item>
+                    <label>No</label>
+                    <value>no</value>
+                </item>
+            </select1>
+            <input ref="/data/part1_7/why118">
+                <label>If no, please provide the reason</label>
+            </input>
+            <input ref="/data/part1_7/total_ipd">
+                <label>Total number of IPD patients in parent hospital in 1 month</label>
+            </input>
+            <select1 appearance="table-list" ref="/data/part1_7/verify119">
+                <label>Has this been verified?</label>
+                <item>
+                    <label>Yes</label>
+                    <value>yes</value>
+                </item>
+                <item>
+                    <label>No</label>
+                    <value>no</value>
+                </item>
+            </select1>
+            <input ref="/data/part1_7/why119">
+                <label>If no, please provide the reason</label>
+            </input>
+            <select ref="/data/part1_7/dept_parent_hosp">
+                <label>Departments at the parent hospital</label>
+                <item>
+                    <label>Medical</label>
+                    <value>med</value>
+                </item>
+                <item>
+                    <label>Surgical</label>
+                    <value>sur</value>
+                </item>
+                <item>
+                    <label>Obst. &amp; Gynecology</label>
+                    <value>obst</value>
+                </item>
+                <item>
+                    <label>Pediatrics</label>
+                    <value>ped</value>
+                </item>
+                <item>
+                    <label>Ortho</label>
+                    <value>orthi</value>
+                </item>
+                <item>
+                    <label>Others</label>
+                    <value>others</value>
+                </item>
+                <item>
+                    <label>None</label>
+                    <value>none</value>
+                </item>
+            </select>
+            <select1 appearance="table-list" ref="/data/part1_7/verify120">
+                <label>Has this been verified?</label>
+                <item>
+                    <label>Yes</label>
+                    <value>yes</value>
+                </item>
+                <item>
+                    <label>No</label>
+                    <value>no</value>
+                </item>
+            </select1>
+            <input ref="/data/part1_7/why120">
+                <label>If no, please provide the reason</label>
+            </input>
+        </group>
+        <group appearance="field-list" ref="/data/part1_8">
+            <label>Staff Nurses</label>
+            <input ref="/data/part1_8/nurse_emp">
+                <label>Number of Staff Nurses employed at the parent hospital</label>
+            </input>
+            <select1 appearance="table-list" ref="/data/part1_8/verify121">
+                <label>Has this been verified?</label>
+                <item>
+                    <label>Yes</label>
+                    <value>yes</value>
+                </item>
+                <item>
+                    <label>No</label>
+                    <value>no</value>
+                </item>
+            </select1>
+            <input ref="/data/part1_8/why121">
+                <label>If no, please provide the reason</label>
+            </input>
+            <input ref="/data/part1_8/nurse_gnm">
+                <label>Number of Staff Nurses with GNM diploma only</label>
+            </input>
+            <select1 appearance="table-list" ref="/data/part1_8/verify122">
+                <label>Has this been verified?</label>
+                <item>
+                    <label>Yes</label>
+                    <value>yes</value>
+                </item>
+                <item>
+                    <label>No</label>
+                    <value>no</value>
+                </item>
+            </select1>
+            <input ref="/data/part1_8/why122">
+                <label>If no, please provide the reason</label>
+            </input>
+            <input ref="/data/part1_8/nurse_bsc">
+                <label>Number of Staff Nurses with BSc (N) degree only</label>
+            </input>
+            <select1 appearance="table-list" ref="/data/part1_8/verify123">
+                <label>Has this been verified?</label>
+                <item>
+                    <label>Yes</label>
+                    <value>yes</value>
+                </item>
+                <item>
+                    <label>No</label>
+                    <value>no</value>
+                </item>
+            </select1>
+            <input ref="/data/part1_8/why123">
+                <label>If no, please provide the reason</label>
+            </input>
+            <input ref="/data/part1_8/nurse_msc">
+                <label>Number of Staff Nurses with MSc (N) or higher degree</label>
+            </input>
+            <select1 appearance="table-list" ref="/data/part1_8/verify124">
+                <label>Has this been verified?</label>
+                <item>
+                    <label>Yes</label>
+                    <value>yes</value>
+                </item>
+                <item>
+                    <label>No</label>
+                    <value>no</value>
+                </item>
+            </select1>
+            <input ref="/data/part1_8/why124">
+                <label>If no, please provide the reason</label>
+            </input>
+        </group>
+        <group appearance="field-list" ref="/data/part1_9">
+            <label>Community Health Facilities</label>
+            <input ref="/data/part1_9/f_name1">
+                <label>Facility 1 - Name</label>
+            </input>
+            <select1 appearance="table-list" ref="/data/part1_9/verify125">
+                <label>Has this been verified?</label>
+                <item>
+                    <label>Yes</label>
+                    <value>yes</value>
+                </item>
+                <item>
+                    <label>No</label>
+                    <value>no</value>
+                </item>
+            </select1>
+            <input ref="/data/part1_9/why125">
+                <label>If no, please provide the reason</label>
+            </input>
+            <input ref="/data/part1_9/f_type1">
+                <label>Facility 1 - Type</label>
+            </input>
+            <select1 appearance="table-list" ref="/data/part1_9/verify126">
+                <label>Has this been verified?</label>
+                <item>
+                    <label>Yes</label>
+                    <value>yes</value>
+                </item>
+                <item>
+                    <label>No</label>
+                    <value>no</value>
+                </item>
+            </select1>
+            <input ref="/data/part1_9/why126">
+                <label>If no, please provide the reason</label>
+            </input>
+            <select1 ref="/data/part1_9/f_reg1">
+                <label>Facility 1 - Community visit register available &amp; used</label>
+                <item>
+                    <label>Yes</label>
+                    <value>yes</value>
+                </item>
+                <item>
+                    <label>No</label>
+                    <value>no</value>
+                </item>
+            </select1>
+            <select1 appearance="table-list" ref="/data/part1_9/verify127">
+                <label>Has this been verified?</label>
+                <item>
+                    <label>Yes</label>
+                    <value>yes</value>
+                </item>
+                <item>
+                    <label>No</label>
+                    <value>no</value>
+                </item>
+            </select1>
+            <input ref="/data/part1_9/why127">
+                <label>If no, please provide the reason</label>
+            </input>
+            <input ref="/data/part1_9/f_name2">
+                <label>Facility 1 - Name</label>
+            </input>
+            <select1 appearance="table-list" ref="/data/part1_9/verify128">
+                <label>Has this been verified?</label>
+                <item>
+                    <label>Yes</label>
+                    <value>yes</value>
+                </item>
+                <item>
+                    <label>No</label>
+                    <value>no</value>
+                </item>
+            </select1>
+            <input ref="/data/part1_9/why128">
+                <label>If no, please provide the reason</label>
+            </input>
+            <input ref="/data/part1_9/f_type2">
+                <label>Facility 1 - Type</label>
+            </input>
+            <select1 appearance="table-list" ref="/data/part1_9/verify129">
+                <label>Has this been verified?</label>
+                <item>
+                    <label>Yes</label>
+                    <value>yes</value>
+                </item>
+                <item>
+                    <label>No</label>
+                    <value>no</value>
+                </item>
+            </select1>
+            <input ref="/data/part1_9/why129">
+                <label>If no, please provide the reason</label>
+            </input>
+            <select1 ref="/data/part1_9/f_reg2">
+                <label>Facility 1 - Community visit register available &amp; used</label>
+                <item>
+                    <label>Yes</label>
+                    <value>yes</value>
+                </item>
+                <item>
+                    <label>No</label>
+                    <value>no</value>
+                </item>
+            </select1>
+            <select1 appearance="table-list" ref="/data/part1_9/verify130">
+                <label>Has this been verified?</label>
+                <item>
+                    <label>Yes</label>
+                    <value>yes</value>
+                </item>
+                <item>
+                    <label>No</label>
+                    <value>no</value>
+                </item>
+            </select1>
+            <input ref="/data/part1_9/why130">
+                <label>If no, please provide the reason</label>
+            </input>
+            <input ref="/data/part1_9/f_name3">
+                <label>Facility 1 - Name</label>
+            </input>
+            <select1 appearance="table-list" ref="/data/part1_9/verify131">
+                <label>Has this been verified?</label>
+                <item>
+                    <label>Yes</label>
+                    <value>yes</value>
+                </item>
+                <item>
+                    <label>No</label>
+                    <value>no</value>
+                </item>
+            </select1>
+            <input ref="/data/part1_9/why131">
+                <label>If no, please provide the reason</label>
+            </input>
+            <input ref="/data/part1_9/f_type3">
+                <label>Facility 1 - Type</label>
+            </input>
+            <select1 appearance="table-list" ref="/data/part1_9/verify132">
+                <label>Has this been verified?</label>
+                <item>
+                    <label>Yes</label>
+                    <value>yes</value>
+                </item>
+                <item>
+                    <label>No</label>
+                    <value>no</value>
+                </item>
+            </select1>
+            <input ref="/data/part1_9/why132">
+                <label>If no, please provide the reason</label>
+            </input>
+            <select1 ref="/data/part1_9/f_reg3">
+                <label>Facility 1 - Community visit register available &amp; used</label>
+                <item>
+                    <label>Yes</label>
+                    <value>yes</value>
+                </item>
+                <item>
+                    <label>No</label>
+                    <value>no</value>
+                </item>
+            </select1>
+            <select1 appearance="table-list" ref="/data/part1_9/verify133">
+                <label>Has this been verified?</label>
+                <item>
+                    <label>Yes</label>
+                    <value>yes</value>
+                </item>
+                <item>
+                    <label>No</label>
+                    <value>no</value>
+                </item>
+            </select1>
+            <input ref="/data/part1_9/why133">
+                <label>If no, please provide the reason</label>
+            </input>
+        </group>
+        <group appearance="field-list" ref="/data/misc">
+            <label>List of documents to be uploaded</label>
+            <upload mediatype="image/*" ref="/data/misc/doc1">
+                <label>Registration document of the Trust/Society/Missionary/Company</label>
+            </upload>
+            <select1 appearance="table-list" ref="/data/misc/verify175">
+                <label>Has this been verified?</label>
+                <item>
+                    <label>Yes</label>
+                    <value>yes</value>
+                </item>
+                <item>
+                    <label>No</label>
+                    <value>no</value>
+                </item>
+            </select1>
+            <input ref="/data/misc/why175">
+                <label>If no, please provide the reason</label>
+            </input>
+            <upload mediatype="image/*" ref="/data/misc/doc2">
+                <label>Letter from CMO regarding establishment of hospital / institution</label>
+            </upload>
+            <select1 appearance="table-list" ref="/data/misc/verify176">
+                <label>Has this been verified?</label>
+                <item>
+                    <label>Yes</label>
+                    <value>yes</value>
+                </item>
+                <item>
+                    <label>No</label>
+                    <value>no</value>
+                </item>
+            </select1>
+            <input ref="/data/misc/why176">
+                <label>If no, please provide the reason</label>
+            </input>
+            <upload mediatype="image/*" ref="/data/misc/doc3">
+                <label>Letter for Fire NOC for College and Hostel building (Separate or combined)</label>
+            </upload>
+            <select1 appearance="table-list" ref="/data/misc/verify177">
+                <label>Has this been verified?</label>
+                <item>
+                    <label>Yes</label>
+                    <value>yes</value>
+                </item>
+                <item>
+                    <label>No</label>
+                    <value>no</value>
+                </item>
+            </select1>
+            <input ref="/data/misc/why177">
+                <label>If no, please provide the reason</label>
+            </input>
+            <upload mediatype="image/*" ref="/data/misc/doc4">
+                <label>Documents related to Clinical Facilities including bed capacity / departments (Please combine all documents into one file)</label>
+            </upload>
+            <select1 appearance="table-list" ref="/data/misc/verify178">
+                <label>Has this been verified?</label>
+                <item>
+                    <label>Yes</label>
+                    <value>yes</value>
+                </item>
+                <item>
+                    <label>No</label>
+                    <value>no</value>
+                </item>
+            </select1>
+            <input ref="/data/misc/why178">
+                <label>If no, please provide the reason</label>
+            </input>
+            <upload mediatype="image/*" ref="/data/misc/doc5">
+                <label>MoU with affiliated hospitals (Please combine all documents into one file)</label>
+            </upload>
+            <select1 appearance="table-list" ref="/data/misc/verify179">
+                <label>Has this been verified?</label>
+                <item>
+                    <label>Yes</label>
+                    <value>yes</value>
+                </item>
+                <item>
+                    <label>No</label>
+                    <value>no</value>
+                </item>
+            </select1>
+            <input ref="/data/misc/why179">
+                <label>If no, please provide the reason</label>
+            </input>
+            <upload mediatype="image/*" ref="/data/misc/doc6">
+                <label>Permission letter for visit to Community Health Facilities and facilities (Please combine all documents into one file)</label>
+            </upload>
+            <select1 appearance="table-list" ref="/data/misc/verify180">
+                <label>Has this been verified?</label>
+                <item>
+                    <label>Yes</label>
+                    <value>yes</value>
+                </item>
+                <item>
+                    <label>No</label>
+                    <value>no</value>
+                </item>
+            </select1>
+            <input ref="/data/misc/why180">
+                <label>If no, please provide the reason</label>
+            </input>
+            <upload mediatype="image/*" ref="/data/misc/doc7">
+                <label>MRP, CRP, Academic Planning Register (Please combine all documents into one file)</label>
+            </upload>
+            <select1 appearance="table-list" ref="/data/misc/verify181">
+                <label>Has this been verified?</label>
+                <item>
+                    <label>Yes</label>
+                    <value>yes</value>
+                </item>
+                <item>
+                    <label>No</label>
+                    <value>no</value>
+                </item>
+            </select1>
+            <input ref="/data/misc/why181">
+                <label>If no, please provide the reason</label>
+            </input>
+        </group>
+    </h:body>
+</h:html>

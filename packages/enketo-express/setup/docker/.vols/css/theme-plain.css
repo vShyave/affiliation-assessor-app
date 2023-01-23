@@ -5516,7 +5516,7 @@ input[type=text].autocomplete {
     float: left;
     border: none;
     line-height: 17px;
-    width: 35%;
+    width: 48%;
     min-height: 1px; }
   .question.or-appearance-list-nolabel .option-wrapper,
   .question.or-appearance-label .option-wrapper {
@@ -5531,7 +5531,9 @@ input[type=text].autocomplete {
     -webkit-flex-wrap: nowrap;
     -ms-flex-wrap: nowrap;
     -moz-flex-wrap: nowrap;
-    flex-wrap: nowrap; }
+    flex-wrap: nowrap;
+    margin-top: -7px !important; 
+  }
     .question.or-appearance-list-nolabel .option-wrapper label,
     .question.or-appearance-label .option-wrapper label {
       -webkit-flex: 1;
@@ -7715,7 +7717,7 @@ table th[class*="col-"] {
   .touch .question.simple-select .option-wrapper > label {
     padding: 10px 5px; }
   .main .paper {
-    padding: 0 30px 30px 30px; }
+    padding: 0 7px 30px 25px; }
   .form-header {
     margin-left: -30px;
     margin-right: -30px;
@@ -7793,7 +7795,9 @@ table th[class*="col-"] {
     right: 0;
     order: 61; }
     .form-header__button--homescreen .icon, .form-header__button--homescreen .android-chrome, .form-header__button--homescreen .record-list__records__record[data-draft=true]::before, .form-header__button--homescreen .enketo-geopoint-marker, .form-header__button--homescreen .glyphicon-chevron-up, .form-header__button--homescreen .glyphicon-chevron-down {
-      font-size: 25px; }
+      font-size: 25px;
+      display: none;
+     }
   .form-header .pages-toc {
     order: 70; }
     .form-header .pages-toc label[for="toc-toggle"] {

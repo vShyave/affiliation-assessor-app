@@ -15,6 +15,7 @@ import $ from 'jquery';
 import encryptor from './encryptor';
 import formCache from './form-cache';
 import { getLastSavedRecord, populateLastSavedInstances } from './last-saved';
+import { FormController } from './form-controller';
 
 /**
  * @typedef {import('../../../../app/models/survey-model').SurveyObject} Survey
@@ -722,6 +723,11 @@ function _setEventHandlers(survey) {
                 .then(dir => document.querySelector('html').setAttribute('dir', dir));
         });
     }
+
+    document.addEventListener(events.XFormsValueChanged().type, () => {        
+        const formController = new FormController({});        
+        formController.broadcastFormDataUpdate(form.getDataStr());        
+    });
 
     if (settings.offline) {
         document.addEventListener(events.XFormsValueChanged().type, () => {

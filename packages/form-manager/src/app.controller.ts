@@ -38,7 +38,6 @@ export class AppController {
       console.log('onFormSuccessData', onFormSuccessData);
       console.log('prefillSpec', prefillSpec);
       if (onFormSuccessData !== 'undefined') {
-        console;
         return this.appService.prefillForm(
           form,
           JSON.parse(onFormSuccessData),
@@ -52,14 +51,36 @@ export class AppController {
     }
   }
 
+  @Post('prefillXML')
+  prefillXML(
+    @Query('form') form,
+    @Query('onFormSuccessData') onFormSuccessData,
+    @Body('prefillXML') prefillXML,
+  ): string {    
+    try {
+      if (onFormSuccessData) {
+        return this.appService.prefillFormXML(
+          form,
+          onFormSuccessData,
+          prefillXML,
+        );        
+      } else {
+        return "OK";
+      }
+    } catch (e) {
+      return "OK2";
+    }
+  }
+
   @Get('form/:id')
   getForm(@Param('id') id): string {
     return this.appService.getForm(id);
   }
 
-  @Post('parse')  
+  @Post('parse')
   parseXML(@Body() xml: any): any {
-    console.log({xml})
+    // console.log({ xml })
+    console.log(parser.toJson(xml));
     return parser.toJson(xml);
   }
 }

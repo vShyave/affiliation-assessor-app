@@ -1,0 +1,609 @@
+<?xml version="1.0"?>
+<h:html xmlns="http://www.w3.org/2002/xforms"
+    xmlns:ev="http://www.w3.org/2001/xml-events"
+    xmlns:h="http://www.w3.org/1999/xhtml"
+    xmlns:jr="http://openrosa.org/javarosa"
+    xmlns:odk="http://www.opendatakit.org/xforms"
+    xmlns:orx="http://openrosa.org/xforms"
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <h:head>
+        <h:title>Nursing Form</h:title>
+        <model odk:xforms-version="1.0.0">
+            <instance>
+                <data id="nusing_form" version="1.1">
+                    <part1_1>
+                        <name>Nurse Institute 1</name>
+                        <verify1/>
+                        <why1/>
+                        <dist>Amroha</dist>
+                        <verify2/>
+                        <why2/>
+                        <center_code>342</center_code>
+                        <verify3/>
+                        <why3/>
+                        <address>Lohia park, dumritalaya</address>
+                        <verify4/>
+                        <why4/>
+                        <pincode>223187</pincode>
+                        <verify5/>
+                        <why5/>
+                        <email/>
+                        <verify6/>
+                        <why6/>
+                        <gov_priv/>
+                        <verify8/>
+                        <why8/>
+                        <chair_name/>
+                        <verify9/>
+                        <why9/>
+                        <chair_email/>
+                        <verify10/>
+                        <why10/>
+                        <chair_number/>
+                        <verify11/>
+                        <why11/>
+                        <princial_name/>
+                        <verify12/>
+                        <why12/>
+                        <princial_email/>
+                        <verify13/>
+                        <why13/>
+                        <princial_number/>
+                        <verify14/>
+                        <why14/>
+                    </part1_1>
+                    <part1_2_1>
+                        <type/>
+                        <verify15/>
+                        <why15/>
+                        <org_type_proof/>
+                        <verify16/>
+                        <why16/>
+                        <image16/>
+                        <cmo_letter/>
+                        <verify17/>
+                        <why17/>
+                        <image17/>
+                        <fire_noc/>
+                        <verify18/>
+                        <why18/>
+                        <image18/>
+                    </part1_2_1>
+                    <part1_2_2>
+                        <bio_available/>
+                        <why19/>
+                        <image19/>
+                        <bio_working/>
+                        <verify20/>
+                        <why20/>
+                        <image20/>
+                        <virtual_class/>
+                        <why21/>
+                        <image21/>
+                        <virtual_class_things/>
+                        <image22/>
+                    </part1_2_2>
+                    <meta>
+                        <instanceID/>
+                    </meta>
+                </data>
+            </instance>
+            <bind nodeset="/data/part1_1/name" readonly="true()" type="string"/>
+            <bind nodeset="/data/part1_1/verify1" type="string"/>
+            <bind nodeset="/data/part1_1/why1" relevant=" /data/part1_1/verify1  = 'no'" type="string"/>
+            <bind nodeset="/data/part1_1/dist" readonly="true()" type="string"/>
+            <bind nodeset="/data/part1_1/verify2" type="string"/>
+            <bind nodeset="/data/part1_1/why2" relevant=" /data/part1_1/verify2  = 'no'" type="string"/>
+            <bind constraint=".&lt;9999" nodeset="/data/part1_1/center_code" readonly="true()" type="int"/>
+            <bind nodeset="/data/part1_1/verify3" type="string"/>
+            <bind nodeset="/data/part1_1/why3" relevant=" /data/part1_1/verify3  = 'no'" type="string"/>
+            <bind nodeset="/data/part1_1/address" readonly="true()" type="string"/>
+            <bind nodeset="/data/part1_1/verify4" type="string"/>
+            <bind nodeset="/data/part1_1/why4" relevant=" /data/part1_1/verify4  = 'no'" type="string"/>
+            <bind nodeset="/data/part1_1/pincode" readonly="true()" type="int"/>
+            <bind nodeset="/data/part1_1/verify5" type="string"/>
+            <bind nodeset="/data/part1_1/why5" relevant=" /data/part1_1/verify5  = 'no'" type="string"/>
+            <bind nodeset="/data/part1_1/email" type="string"/>
+            <bind nodeset="/data/part1_1/verify6" type="string"/>
+            <bind nodeset="/data/part1_1/why6" relevant=" /data/part1_1/verify6  = 'no'" type="string"/>
+            <bind nodeset="/data/part1_1/gov_priv" type="string"/>
+            <bind nodeset="/data/part1_1/verify8" type="string"/>
+            <bind nodeset="/data/part1_1/why8" relevant=" /data/part1_1/verify8  = 'no'" type="string"/>
+            <bind nodeset="/data/part1_1/chair_name" type="string"/>
+            <bind nodeset="/data/part1_1/verify9" type="string"/>
+            <bind nodeset="/data/part1_1/why9" relevant=" /data/part1_1/verify9  = 'no'" type="string"/>
+            <bind nodeset="/data/part1_1/chair_email" type="string"/>
+            <bind nodeset="/data/part1_1/verify10" type="string"/>
+            <bind nodeset="/data/part1_1/why10" relevant=" /data/part1_1/verify10  = 'no'" type="string"/>
+            <bind nodeset="/data/part1_1/chair_number" type="string"/>
+            <bind nodeset="/data/part1_1/verify11" type="string"/>
+            <bind nodeset="/data/part1_1/why11" relevant=" /data/part1_1/verify11  = 'no'" type="string"/>
+            <bind nodeset="/data/part1_1/princial_name" type="string"/>
+            <bind nodeset="/data/part1_1/verify12" type="string"/>
+            <bind nodeset="/data/part1_1/why12" relevant=" /data/part1_1/verify12  = 'no'" type="string"/>
+            <bind nodeset="/data/part1_1/princial_email" type="string"/>
+            <bind nodeset="/data/part1_1/verify13" type="string"/>
+            <bind nodeset="/data/part1_1/why13" relevant=" /data/part1_1/verify13  = 'no'" type="string"/>
+            <bind nodeset="/data/part1_1/princial_number" type="string"/>
+            <bind nodeset="/data/part1_1/verify14" type="string"/>
+            <bind nodeset="/data/part1_1/why14" relevant=" /data/part1_1/verify14  = 'no'" type="string"/>
+            <bind nodeset="/data/part1_2_1/type" type="string"/>
+            <bind nodeset="/data/part1_2_1/verify15" type="string"/>
+            <bind nodeset="/data/part1_2_1/why15" relevant=" /data/part1_2_1/verify15  = 'no'" type="string"/>
+            <bind nodeset="/data/part1_2_1/org_type_proof" type="string"/>
+            <bind nodeset="/data/part1_2_1/verify16" type="string"/>
+            <bind nodeset="/data/part1_2_1/why16" relevant=" /data/part1_2_1/verify16  = 'no'" type="string"/>
+            <bind nodeset="/data/part1_2_1/image16" type="binary"/>
+            <bind nodeset="/data/part1_2_1/cmo_letter" type="string"/>
+            <bind nodeset="/data/part1_2_1/verify17" type="string"/>
+            <bind nodeset="/data/part1_2_1/why17" relevant=" /data/part1_2_1/verify17  = 'no'" type="string"/>
+            <bind nodeset="/data/part1_2_1/image17" type="binary"/>
+            <bind nodeset="/data/part1_2_1/fire_noc" type="string"/>
+            <bind nodeset="/data/part1_2_1/verify18" type="string"/>
+            <bind nodeset="/data/part1_2_1/why18" relevant=" /data/part1_2_1/verify18  = 'no'" type="string"/>
+            <bind nodeset="/data/part1_2_1/image18" type="binary"/>
+            <bind nodeset="/data/part1_2_2/bio_available" type="string"/>
+            <bind nodeset="/data/part1_2_2/why19" relevant=" /data/part1_2_2/bio_available  = 'no'" type="string"/>
+            <bind nodeset="/data/part1_2_2/image19" type="binary"/>
+            <bind nodeset="/data/part1_2_2/bio_working" type="string"/>
+            <bind nodeset="/data/part1_2_2/verify20" type="string"/>
+            <bind nodeset="/data/part1_2_2/why20" relevant=" /data/part1_2_2/bio_working  = 'no'" type="string"/>
+            <bind nodeset="/data/part1_2_2/image20" type="binary"/>
+            <bind nodeset="/data/part1_2_2/virtual_class" type="string"/>
+            <bind nodeset="/data/part1_2_2/why21" relevant=" /data/part1_2_2/virtual_class  = 'no'" type="string"/>
+            <bind nodeset="/data/part1_2_2/image21" type="binary"/>
+            <bind nodeset="/data/part1_2_2/virtual_class_things" relevant="selected( /data/part1_2_2/virtual_class , 'Yes')" type="string"/>
+            <bind nodeset="/data/part1_2_2/image22" type="binary"/>
+            <bind jr:preload="uid" nodeset="/data/meta/instanceID" readonly="true()" type="string"/>
+        </model>
+    </h:head>
+    <h:body class="pages">
+        <group appearance="field-list" ref="/data/part1_1">
+            <label>Basic Infrastructure</label>
+            <input ref="/data/part1_1/name">
+                <label>Name of institution</label>
+            </input>
+            <select1 appearance="table-list" ref="/data/part1_1/verify1">
+                <label>Has this been verified?</label>
+                <item>
+                    <label>Yes</label>
+                    <value>yes</value>
+                </item>
+                <item>
+                    <label>No</label>
+                    <value>no</value>
+                </item>
+            </select1>
+            <input ref="/data/part1_1/why1">
+                <label>If no, please provide the reason</label>
+            </input>
+            <input appearance="minimal" ref="/data/part1_1/dist">
+                <label>District</label>
+            </input>
+            <select1 appearance="table-list" ref="/data/part1_1/verify2">
+                <label>Has this been verified?</label>
+                <item>
+                    <label>Yes</label>
+                    <value>yes</value>
+                </item>
+                <item>
+                    <label>No</label>
+                    <value>no</value>
+                </item>
+            </select1>
+            <input ref="/data/part1_1/why2">
+                <label>If no, please provide the reason</label>
+            </input>
+            <input ref="/data/part1_1/center_code">
+                <label>Training Center Code</label>
+            </input>
+            <select1 appearance="table-list" ref="/data/part1_1/verify3">
+                <label>Has this been verified?</label>
+                <item>
+                    <label>Yes</label>
+                    <value>yes</value>
+                </item>
+                <item>
+                    <label>No</label>
+                    <value>no</value>
+                </item>
+            </select1>
+            <input ref="/data/part1_1/why3">
+                <label>If no, please provide the reason</label>
+            </input>
+            <input appearance="multiline" ref="/data/part1_1/address">
+                <label>Full Address</label>
+            </input>
+            <select1 appearance="table-list" ref="/data/part1_1/verify4">
+                <label>Has this been verified?</label>
+                <item>
+                    <label>Yes</label>
+                    <value>yes</value>
+                </item>
+                <item>
+                    <label>No</label>
+                    <value>no</value>
+                </item>
+            </select1>
+            <input ref="/data/part1_1/why4">
+                <label>If no, please provide the reason</label>
+            </input>
+            <input ref="/data/part1_1/pincode">
+                <label>Pincode</label>
+            </input>
+            <select1 appearance="table-list" ref="/data/part1_1/verify5">
+                <label>Has this been verified?</label>
+                <item>
+                    <label>Yes</label>
+                    <value>yes</value>
+                </item>
+                <item>
+                    <label>No</label>
+                    <value>no</value>
+                </item>
+            </select1>
+            <input ref="/data/part1_1/why5">
+                <label>If no, please provide the reason</label>
+            </input>
+            <input ref="/data/part1_1/email">
+                <label>Email id of the institution</label>
+            </input>
+            <select1 appearance="table-list" ref="/data/part1_1/verify6">
+                <label>Has this been verified?</label>
+                <item>
+                    <label>Yes</label>
+                    <value>yes</value>
+                </item>
+                <item>
+                    <label>No</label>
+                    <value>no</value>
+                </item>
+            </select1>
+            <input ref="/data/part1_1/why6">
+                <label>If no, please provide the reason</label>
+            </input>
+            <select1 ref="/data/part1_1/gov_priv">
+                <label>Govt. or Private</label>
+                <item>
+                    <label>Government</label>
+                    <value>a</value>
+                </item>
+                <item>
+                    <label>Private</label>
+                    <value>b</value>
+                </item>
+            </select1>
+            <select1 appearance="table-list" ref="/data/part1_1/verify8">
+                <label>Has this been verified?</label>
+                <item>
+                    <label>Yes</label>
+                    <value>yes</value>
+                </item>
+                <item>
+                    <label>No</label>
+                    <value>no</value>
+                </item>
+            </select1>
+            <input ref="/data/part1_1/why8">
+                <label>If no, please provide the reason</label>
+            </input>
+            <input ref="/data/part1_1/chair_name">
+                <label>Name of Chairperson</label>
+            </input>
+            <select1 appearance="table-list" ref="/data/part1_1/verify9">
+                <label>Has this been verified?</label>
+                <item>
+                    <label>Yes</label>
+                    <value>yes</value>
+                </item>
+                <item>
+                    <label>No</label>
+                    <value>no</value>
+                </item>
+            </select1>
+            <input ref="/data/part1_1/why9">
+                <label>If no, please provide the reason</label>
+            </input>
+            <input ref="/data/part1_1/chair_email">
+                <label>Email id of Chairperson</label>
+            </input>
+            <select1 appearance="table-list" ref="/data/part1_1/verify10">
+                <label>Has this been verified?</label>
+                <item>
+                    <label>Yes</label>
+                    <value>yes</value>
+                </item>
+                <item>
+                    <label>No</label>
+                    <value>no</value>
+                </item>
+            </select1>
+            <input ref="/data/part1_1/why10">
+                <label>If no, please provide the reason</label>
+            </input>
+            <input appearance="numbers" ref="/data/part1_1/chair_number">
+                <label>Contact No of Chairperson</label>
+            </input>
+            <select1 appearance="table-list" ref="/data/part1_1/verify11">
+                <label>Has this been verified?</label>
+                <item>
+                    <label>Yes</label>
+                    <value>yes</value>
+                </item>
+                <item>
+                    <label>No</label>
+                    <value>no</value>
+                </item>
+            </select1>
+            <input ref="/data/part1_1/why11">
+                <label>If no, please provide the reason</label>
+            </input>
+            <input ref="/data/part1_1/princial_name">
+                <label>Name of Principal</label>
+            </input>
+            <select1 appearance="table-list" ref="/data/part1_1/verify12">
+                <label>Has this been verified?</label>
+                <item>
+                    <label>Yes</label>
+                    <value>yes</value>
+                </item>
+                <item>
+                    <label>No</label>
+                    <value>no</value>
+                </item>
+            </select1>
+            <input ref="/data/part1_1/why12">
+                <label>If no, please provide the reason</label>
+            </input>
+            <input ref="/data/part1_1/princial_email">
+                <label>Email Id of principal</label>
+            </input>
+            <select1 appearance="table-list" ref="/data/part1_1/verify13">
+                <label>Has this been verified?</label>
+                <item>
+                    <label>Yes</label>
+                    <value>yes</value>
+                </item>
+                <item>
+                    <label>No</label>
+                    <value>no</value>
+                </item>
+            </select1>
+            <input ref="/data/part1_1/why13">
+                <label>If no, please provide the reason</label>
+            </input>
+            <input appearance="numbers" ref="/data/part1_1/princial_number">
+                <label>Contact No of principal</label>
+            </input>
+            <select1 appearance="table-list" ref="/data/part1_1/verify14">
+                <label>Has this been verified?</label>
+                <item>
+                    <label>Yes</label>
+                    <value>yes</value>
+                </item>
+                <item>
+                    <label>No</label>
+                    <value>no</value>
+                </item>
+            </select1>
+            <input ref="/data/part1_1/why14">
+                <label>If no, please provide the reason</label>
+            </input>
+        </group>
+        <group appearance="field-list" ref="/data/part1_2_1">
+            <label>Administrative control and statutory requirements</label>
+            <select1 ref="/data/part1_2_1/type">
+                <label>Type of organisation</label>
+                <item>
+                    <label>Trust</label>
+                    <value>1</value>
+                </item>
+                <item>
+                    <label>Society</label>
+                    <value>2</value>
+                </item>
+                <item>
+                    <label>Missionary</label>
+                    <value>3</value>
+                </item>
+                <item>
+                    <label>Government</label>
+                    <value>4</value>
+                </item>
+                <item>
+                    <label>Other</label>
+                    <value>5</value>
+                </item>
+            </select1>
+            <select1 appearance="table-list" ref="/data/part1_2_1/verify15">
+                <label>Has this been verified?</label>
+                <item>
+                    <label>Yes</label>
+                    <value>yes</value>
+                </item>
+                <item>
+                    <label>No</label>
+                    <value>no</value>
+                </item>
+            </select1>
+            <input ref="/data/part1_2_1/why15">
+                <label>If no, please provide the reason</label>
+            </input>
+            <select1 ref="/data/part1_2_1/org_type_proof">
+                <label>Proof of type of organization (MoA, Trust Deed, etc.)</label>
+                <item>
+                    <label>Present</label>
+                    <value>a</value>
+                </item>
+                <item>
+                    <label>Not Present</label>
+                    <value>b</value>
+                </item>
+            </select1>
+            <select1 appearance="table-list" ref="/data/part1_2_1/verify16">
+                <label>Has this been verified?</label>
+                <item>
+                    <label>Yes</label>
+                    <value>yes</value>
+                </item>
+                <item>
+                    <label>No</label>
+                    <value>no</value>
+                </item>
+            </select1>
+            <input ref="/data/part1_2_1/why16">
+                <label>If no, please provide the reason</label>
+            </input>
+            <upload mediatype="image/*" ref="/data/part1_2_1/image16">
+                <label>Please upload image, if any</label>
+            </upload>
+            <select1 ref="/data/part1_2_1/cmo_letter">
+                <label>Letter from CMO regarding establishment of hospital</label>
+                <item>
+                    <label>Present</label>
+                    <value>a</value>
+                </item>
+                <item>
+                    <label>Not Present</label>
+                    <value>b</value>
+                </item>
+            </select1>
+            <select1 appearance="table-list" ref="/data/part1_2_1/verify17">
+                <label>Verified?</label>
+                <item>
+                    <label>Yes</label>
+                    <value>yes</value>
+                </item>
+                <item>
+                    <label>No</label>
+                    <value>no</value>
+                </item>
+            </select1>
+            <input ref="/data/part1_2_1/why17">
+                <label>Reason for not verified?</label>
+            </input>
+            <upload mediatype="image/*" ref="/data/part1_2_1/image17">
+                <label>Please upload image, if any</label>
+            </upload>
+            <select1 ref="/data/part1_2_1/fire_noc">
+                <label>Current Fire NOC for college / hostel</label>
+                <item>
+                    <label>Present</label>
+                    <value>a</value>
+                </item>
+                <item>
+                    <label>Not Present</label>
+                    <value>b</value>
+                </item>
+            </select1>
+            <select1 appearance="table-list" ref="/data/part1_2_1/verify18">
+                <label>Verified?</label>
+                <item>
+                    <label>Yes</label>
+                    <value>yes</value>
+                </item>
+                <item>
+                    <label>No</label>
+                    <value>no</value>
+                </item>
+            </select1>
+            <input ref="/data/part1_2_1/why18">
+                <label>Reason for not verified?</label>
+            </input>
+            <upload mediatype="image/*" ref="/data/part1_2_1/image18">
+                <label>Please upload image, if any</label>
+            </upload>
+        </group>
+        <group appearance="field-list" ref="/data/part1_2_2">
+            <label>Academic Assets</label>
+            <select1 ref="/data/part1_2_2/bio_available">
+                <label>Is a biometric system available &amp; in working condition for recording student attendance</label>
+                <item>
+                    <label>Yes</label>
+                    <value>yes</value>
+                </item>
+                <item>
+                    <label>No</label>
+                    <value>no</value>
+                </item>
+            </select1>
+            <input ref="/data/part1_2_2/why19">
+                <label>If no, please provide the reason</label>
+            </input>
+            <upload mediatype="image/*" ref="/data/part1_2_2/image19">
+                <label>Please upload image, if any</label>
+            </upload>
+            <select1 ref="/data/part1_2_2/bio_working">
+                <label>Is a biometric system available &amp; in working condition for recording faculty attendance</label>
+                <item>
+                    <label>Yes</label>
+                    <value>yes</value>
+                </item>
+                <item>
+                    <label>No</label>
+                    <value>no</value>
+                </item>
+            </select1>
+            <select1 appearance="table-list" ref="/data/part1_2_2/verify20">
+                <label>Has this been verified?</label>
+                <item>
+                    <label>Yes</label>
+                    <value>yes</value>
+                </item>
+                <item>
+                    <label>No</label>
+                    <value>no</value>
+                </item>
+            </select1>
+            <input ref="/data/part1_2_2/why20">
+                <label>If no, please provide the reason</label>
+            </input>
+            <upload mediatype="image/*" ref="/data/part1_2_2/image20">
+                <label>Please upload image, if any</label>
+            </upload>
+            <select1 ref="/data/part1_2_2/virtual_class">
+                <label>Is virtual classroom set up available in the institution?</label>
+                <item>
+                    <label>Yes</label>
+                    <value>yes</value>
+                </item>
+                <item>
+                    <label>No</label>
+                    <value>no</value>
+                </item>
+            </select1>
+            <input ref="/data/part1_2_2/why21">
+                <label>If no, please provide the reason</label>
+            </input>
+            <upload mediatype="image/*" ref="/data/part1_2_2/image21">
+                <label>Please upload image, if any</label>
+            </upload>
+            <select ref="/data/part1_2_2/virtual_class_things">
+                <label>If yes to above, which of the following logistics are available in working condition (Select all that apply)</label>
+                <item>
+                    <label>Internet connection (broadband wired or wireless (3G or 4G/LTE) minimum 2 Mbps</label>
+                    <value>1</value>
+                </item>
+                <item>
+                    <label>HD Camera (USB camera)</label>
+                    <value>2</value>
+                </item>
+                <item>
+                    <label>LCD Projector</label>
+                    <value>3</value>
+                </item>
+                <item>
+                    <label>Microphone</label>
+                    <value>4</value>
+                </item>
+                <item>
+                    <label>Speaker</label>
+                    <value>5</value>
+                </item>
+            </select>
+            <upload mediatype="image/*" ref="/data/part1_2_2/image22">
+                <label>Please upload image, if any</label>
+            </upload>
+        </group>
+    </h:body>
+</h:html>

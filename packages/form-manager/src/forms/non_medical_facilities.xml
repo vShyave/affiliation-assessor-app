@@ -1,0 +1,453 @@
+<?xml version="1.0"?>
+<h:html xmlns="http://www.w3.org/2002/xforms"
+    xmlns:ev="http://www.w3.org/2001/xml-events"
+    xmlns:h="http://www.w3.org/1999/xhtml"
+    xmlns:jr="http://openrosa.org/javarosa"
+    xmlns:odk="http://www.opendatakit.org/xforms"
+    xmlns:orx="http://openrosa.org/xforms"
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <h:head>
+        <h:title>Nursing Form</h:title>
+        <model odk:xforms-version="1.0.0">
+            <instance>
+                <data id="nusing_form" version="1.1">
+                    <part1_4_1>
+                        <teaching_block/>
+                        <why86/>
+                        <image1/>
+                        <classrooms/>
+                        <why87/>
+                        <image2/>
+                        <enough_space/>
+                        <why88/>
+                        <image3/>
+                        <principal_office/>
+                        <why89/>
+                        <image4/>
+                        <teaching_fac/>
+                        <why90/>
+                        <image5/>
+                        <staff/>
+                        <why91/>
+                        <image6/>
+                    </part1_4_1>
+                    <part1_4_3>
+                        <library_comp/>
+                        <why98/>
+                        <image7/>
+                        <books/>
+                        <journal/>
+                        <library_seating/>
+                        <util_register/>
+                        <why102/>
+                        <image8/>
+                    </part1_4_3>
+                    <part1_4_4>
+                        <av_available/>
+                        <image9/>
+                        <av_functional/>
+                        <image10/>
+                    </part1_4_4>
+                    <part1_5>
+                        <hostel/>
+                        <why105/>
+                        <image11/>
+                        <beds/>
+                        <image12/>
+                        <seats_dining/>
+                        <image13/>
+                        <water_supply/>
+                        <why108/>
+                        <hot_water_supply/>
+                        <verify109/>
+                        <why109/>
+                        <safe_water_supply/>
+                        <verify110/>
+                        <why110/>
+                        <toilets/>
+                        <verify111/>
+                        <why111/>
+                    </part1_5>
+                    <meta>
+                        <instanceID/>
+                    </meta>
+                </data>
+            </instance>
+            <bind nodeset="/data/part1_4_1/teaching_block" type="string"/>
+            <bind nodeset="/data/part1_4_1/why86" relevant=" /data/part1_4_1/teaching_block  = 'no'" type="string"/>
+            <bind nodeset="/data/part1_4_1/image1" type="binary"/>
+            <bind nodeset="/data/part1_4_1/classrooms" type="int"/>
+            <bind nodeset="/data/part1_4_1/why87" relevant=" /data/part1_4_1/classrooms  = 'no'" type="string"/>
+            <bind nodeset="/data/part1_4_1/image2" type="binary"/>
+            <bind nodeset="/data/part1_4_1/enough_space" type="int"/>
+            <bind nodeset="/data/part1_4_1/why88" relevant=" /data/part1_4_1/enough_space  = 'no'" type="string"/>
+            <bind nodeset="/data/part1_4_1/image3" type="binary"/>
+            <bind nodeset="/data/part1_4_1/principal_office" type="string"/>
+            <bind nodeset="/data/part1_4_1/why89" relevant=" /data/part1_4_1/principal_office  = 'no'" type="string"/>
+            <bind nodeset="/data/part1_4_1/image4" type="binary"/>
+            <bind nodeset="/data/part1_4_1/teaching_fac" type="string"/>
+            <bind nodeset="/data/part1_4_1/why90" relevant=" /data/part1_4_1/teaching_fac  = 'no'" type="string"/>
+            <bind nodeset="/data/part1_4_1/image5" type="binary"/>
+            <bind nodeset="/data/part1_4_1/staff" type="string"/>
+            <bind nodeset="/data/part1_4_1/why91" relevant=" /data/part1_4_1/staff  = 'no'" type="string"/>
+            <bind nodeset="/data/part1_4_1/image6" type="binary"/>
+            <bind nodeset="/data/part1_4_3/library_comp" type="string"/>
+            <bind nodeset="/data/part1_4_3/why98" relevant=" /data/part1_4_3/library_comp  = 'no'" type="string"/>
+            <bind nodeset="/data/part1_4_3/image7" type="binary"/>
+            <bind nodeset="/data/part1_4_3/books" type="int"/>
+            <bind nodeset="/data/part1_4_3/journal" type="int"/>
+            <bind nodeset="/data/part1_4_3/library_seating" type="int"/>
+            <bind nodeset="/data/part1_4_3/util_register" type="string"/>
+            <bind nodeset="/data/part1_4_3/why102" relevant=" /data/part1_4_3/util_register  = 'no'" type="string"/>
+            <bind nodeset="/data/part1_4_3/image8" type="binary"/>
+            <bind nodeset="/data/part1_4_4/av_available" type="string"/>
+            <bind nodeset="/data/part1_4_4/image9" type="binary"/>
+            <bind nodeset="/data/part1_4_4/av_functional" type="string"/>
+            <bind nodeset="/data/part1_4_4/image10" type="binary"/>
+            <bind nodeset="/data/part1_5/hostel" type="string"/>
+            <bind nodeset="/data/part1_5/why105" relevant=" /data/part1_5/hostel  = 'no'" type="string"/>
+            <bind nodeset="/data/part1_5/image11" type="binary"/>
+            <bind nodeset="/data/part1_5/beds" type="int"/>
+            <bind nodeset="/data/part1_5/image12" type="binary"/>
+            <bind nodeset="/data/part1_5/seats_dining" type="int"/>
+            <bind nodeset="/data/part1_5/image13" type="binary"/>
+            <bind nodeset="/data/part1_5/water_supply" type="string"/>
+            <bind nodeset="/data/part1_5/why108" relevant=" /data/part1_5/water_supply  = 'no'" type="string"/>
+            <bind nodeset="/data/part1_5/hot_water_supply" type="string"/>
+            <bind nodeset="/data/part1_5/verify109" type="string"/>
+            <bind nodeset="/data/part1_5/why109" relevant=" /data/part1_5/hot_water_supply  = 'no'" type="string"/>
+            <bind nodeset="/data/part1_5/safe_water_supply" type="string"/>
+            <bind nodeset="/data/part1_5/verify110" type="string"/>
+            <bind nodeset="/data/part1_5/why110" relevant=" /data/part1_5/safe_water_supply  = 'no'" type="binary"/>
+            <bind nodeset="/data/part1_5/toilets" type="int"/>
+            <bind nodeset="/data/part1_5/verify111" type="string"/>
+            <bind nodeset="/data/part1_5/why111" relevant=" /data/part1_5/toilets  = 'no'" type="binary"/>
+            <bind jr:preload="uid" nodeset="/data/meta/instanceID" readonly="true()" type="string"/>
+        </model>
+    </h:head>
+    <h:body class="pages">
+        <group appearance="field-list" ref="/data/part1_4_1">
+            <label>Training Infrastructure - Teaching Block</label>
+            <select1 ref="/data/part1_4_1/teaching_block">
+                <label>Institution has a separate teaching block available</label>
+                <item>
+                    <label>Yes</label>
+                    <value>yes</value>
+                </item>
+                <item>
+                    <label>No</label>
+                    <value>no</value>
+                </item>
+            </select1>
+            <input ref="/data/part1_4_1/why86">
+                <label>If no, please provide the reason</label>
+            </input>
+            <upload mediatype="image/*" ref="/data/part1_4_1/image1">
+                <label>Please upload image, if any</label>
+            </upload>
+            <input ref="/data/part1_4_1/classrooms">
+                <label>Number of Class Room available</label>
+            </input>
+            <input ref="/data/part1_4_1/why87">
+                <label>If no, please provide the reason</label>
+            </input>
+            <upload mediatype="image/*" ref="/data/part1_4_1/image2">
+                <label>Please upload image, if any</label>
+            </upload>
+            <input ref="/data/part1_4_1/enough_space">
+                <label>Total number of seats across all classrooms</label>
+            </input>
+            <input ref="/data/part1_4_1/why88">
+                <label>If no, please provide the reason</label>
+            </input>
+            <upload mediatype="image/*" ref="/data/part1_4_1/image3">
+                <label>Please upload image, if any</label>
+            </upload>
+            <select1 ref="/data/part1_4_1/principal_office">
+                <label>Is there a dedicated space for Principal's Office?</label>
+                <item>
+                    <label>Yes</label>
+                    <value>yes</value>
+                </item>
+                <item>
+                    <label>No</label>
+                    <value>no</value>
+                </item>
+            </select1>
+            <input ref="/data/part1_4_1/why89">
+                <label>If no, please provide the reason</label>
+            </input>
+            <upload mediatype="image/*" ref="/data/part1_4_1/image4">
+                <label>Please upload image, if any</label>
+            </upload>
+            <select1 ref="/data/part1_4_1/teaching_fac">
+                <label>Is there a dedicated space for Teaching Faculty?</label>
+                <item>
+                    <label>Yes</label>
+                    <value>yes</value>
+                </item>
+                <item>
+                    <label>No</label>
+                    <value>no</value>
+                </item>
+            </select1>
+            <input ref="/data/part1_4_1/why90">
+                <label>If no, please provide the reason</label>
+            </input>
+            <upload mediatype="image/*" ref="/data/part1_4_1/image5">
+                <label>Please upload image, if any</label>
+            </upload>
+            <select1 ref="/data/part1_4_1/staff">
+                <label>Is there a dedicated space for Non-teaching staff?</label>
+                <item>
+                    <label>Yes</label>
+                    <value>yes</value>
+                </item>
+                <item>
+                    <label>No</label>
+                    <value>no</value>
+                </item>
+            </select1>
+            <input ref="/data/part1_4_1/why91">
+                <label>If no, please provide the reason</label>
+            </input>
+            <upload mediatype="image/*" ref="/data/part1_4_1/image6">
+                <label>Please upload image, if any</label>
+            </upload>
+        </group>
+        <group appearance="field-list" ref="/data/part1_4_3">
+            <label>Training Infrastructure - Library</label>
+            <select1 ref="/data/part1_4_3/library_comp">
+                <label>Is a computer with internet available in the library</label>
+                <item>
+                    <label>Yes</label>
+                    <value>yes</value>
+                </item>
+                <item>
+                    <label>No</label>
+                    <value>no</value>
+                </item>
+            </select1>
+            <input ref="/data/part1_4_3/why98">
+                <label>If no, please provide the reason</label>
+            </input>
+            <upload mediatype="image/*" ref="/data/part1_4_3/image7">
+                <label>Please upload image, if any</label>
+            </upload>
+            <input ref="/data/part1_4_3/books">
+                <label>No. of books available as per accession register</label>
+            </input>
+            <input ref="/data/part1_4_3/journal">
+                <label>No. of Subscribed Journals</label>
+            </input>
+            <input ref="/data/part1_4_3/library_seating">
+                <label>Number of seats in the library</label>
+            </input>
+            <select1 ref="/data/part1_4_3/util_register">
+                <label>is the utilization register available</label>
+                <item>
+                    <label>Yes</label>
+                    <value>yes</value>
+                </item>
+                <item>
+                    <label>No</label>
+                    <value>no</value>
+                </item>
+            </select1>
+            <input ref="/data/part1_4_3/why102">
+                <label>If no, please provide the reason</label>
+            </input>
+            <upload mediatype="image/*" ref="/data/part1_4_3/image8">
+                <label>Please upload image, if any</label>
+            </upload>
+        </group>
+        <group appearance="field-list" ref="/data/part1_4_4">
+            <label>Training Infrastructure - AV Aids</label>
+            <select ref="/data/part1_4_4/av_available">
+                <label>Following items are available in classrooms</label>
+                <item>
+                    <label>Computer</label>
+                    <value>1</value>
+                </item>
+                <item>
+                    <label>Projector</label>
+                    <value>2</value>
+                </item>
+                <item>
+                    <label>Screen</label>
+                    <value>3</value>
+                </item>
+                <item>
+                    <label>Charts</label>
+                    <value>4</value>
+                </item>
+                <item>
+                    <label>Audio system</label>
+                    <value>5</value>
+                </item>
+                <item>
+                    <label>None</label>
+                    <value>6</value>
+                </item>
+            </select>
+            <upload mediatype="image/*" ref="/data/part1_4_4/image9">
+                <label>Please upload image, if any</label>
+            </upload>
+            <select ref="/data/part1_4_4/av_functional">
+                <label>Following items are functional in classrooms</label>
+                <item>
+                    <label>Computer</label>
+                    <value>1</value>
+                </item>
+                <item>
+                    <label>Projector</label>
+                    <value>2</value>
+                </item>
+                <item>
+                    <label>Screen</label>
+                    <value>3</value>
+                </item>
+                <item>
+                    <label>Charts</label>
+                    <value>4</value>
+                </item>
+                <item>
+                    <label>Audio system</label>
+                    <value>5</value>
+                </item>
+                <item>
+                    <label>None</label>
+                    <value>6</value>
+                </item>
+            </select>
+            <upload mediatype="image/*" ref="/data/part1_4_4/image10">
+                <label>Please upload image, if any</label>
+            </upload>
+        </group>
+        <group appearance="field-list" ref="/data/part1_5">
+            <label>Hostel Facilities</label>
+            <select1 ref="/data/part1_5/hostel">
+                <label>Separate hostels for boys and girls exist</label>
+                <item>
+                    <label>Yes</label>
+                    <value>yes</value>
+                </item>
+                <item>
+                    <label>No</label>
+                    <value>no</value>
+                </item>
+            </select1>
+            <input ref="/data/part1_5/why105">
+                <label>If no, please provide the reason</label>
+            </input>
+            <upload mediatype="image/*" ref="/data/part1_5/image11">
+                <label>Please upload image, if any</label>
+            </upload>
+            <input ref="/data/part1_5/beds">
+                <label>No. of beds for students (combined for all hostel buildings)</label>
+            </input>
+            <upload mediatype="image/*" ref="/data/part1_5/image12">
+                <label>Please upload image, if any</label>
+            </upload>
+            <input ref="/data/part1_5/seats_dining">
+                <label>Number of seats in dining hall</label>
+            </input>
+            <upload mediatype="image/*" ref="/data/part1_5/image13">
+                <label>Please upload image, if any</label>
+            </upload>
+            <select1 ref="/data/part1_5/water_supply">
+                <label>Do the hostels have 24 hours water supply?</label>
+                <item>
+                    <label>Yes</label>
+                    <value>y</value>
+                </item>
+                <item>
+                    <label>No</label>
+                    <value>n</value>
+                </item>
+                <item>
+                    <label>Not Applicable</label>
+                    <value>na</value>
+                </item>
+            </select1>
+            <input ref="/data/part1_5/why108">
+                <label>If no, please provide the reason</label>
+            </input>
+            <select1 ref="/data/part1_5/hot_water_supply">
+                <label>Do the hostels have facility for hot water supply (especially in winter)?</label>
+                <item>
+                    <label>Yes</label>
+                    <value>y</value>
+                </item>
+                <item>
+                    <label>No</label>
+                    <value>n</value>
+                </item>
+                <item>
+                    <label>Not Applicable</label>
+                    <value>na</value>
+                </item>
+            </select1>
+            <select1 appearance="table-list" ref="/data/part1_5/verify109">
+                <label>If no, please provide the reason</label>
+                <item>
+                    <label>Yes</label>
+                    <value>yes</value>
+                </item>
+                <item>
+                    <label>No</label>
+                    <value>no</value>
+                </item>
+            </select1>
+            <input ref="/data/part1_5/why109">
+                <label>Please upload image, if any</label>
+            </input>
+            <select1 ref="/data/part1_5/safe_water_supply">
+                <label>Is safe drinking water facility available in the hostels?</label>
+                <item>
+                    <label>Yes</label>
+                    <value>y</value>
+                </item>
+                <item>
+                    <label>No</label>
+                    <value>n</value>
+                </item>
+                <item>
+                    <label>Not Applicable</label>
+                    <value>na</value>
+                </item>
+            </select1>
+            <select1 appearance="table-list" ref="/data/part1_5/verify110">
+                <label>If no, please provide the reason</label>
+                <item>
+                    <label>Yes</label>
+                    <value>yes</value>
+                </item>
+                <item>
+                    <label>No</label>
+                    <value>no</value>
+                </item>
+            </select1>
+            <upload mediatype="image/*" ref="/data/part1_5/why110">
+                <label>Please upload image, if any</label>
+            </upload>
+            <input ref="/data/part1_5/toilets">
+                <label>No. of functional toilets in hostel (which can be used by the students)</label>
+            </input>
+            <select1 appearance="table-list" ref="/data/part1_5/verify111">
+                <label>If no, please provide the reason</label>
+                <item>
+                    <label>Yes</label>
+                    <value>yes</value>
+                </item>
+                <item>
+                    <label>No</label>
+                    <value>no</value>
+                </item>
+            </select1>
+            <upload mediatype="image/*" ref="/data/part1_5/why111">
+                <label>Please upload image, if any</label>
+            </upload>
+        </group>
+    </h:body>
+</h:html>

@@ -165,6 +165,7 @@ async function _uploadBatch(recordBatch, record) {
     // TODO: submit the form
     formController.broadcastFormData();
 
+    console.log({ response })
     return {
         status: response.status,
         message: response.message,

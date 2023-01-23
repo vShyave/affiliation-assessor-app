@@ -69,7 +69,7 @@ router
  * @param {module:api-controller~ExpressResponse} res - HTTP response
  * @param {Function} next - Express callback
  */
-function offlineWebform(req, res, next) {
+function offlineWebform(req, res, next) {    
     if (!req.app.get("offline enabled")) {
         const error = new Error(
             "Offline functionality has not been enabled for this application."
@@ -188,8 +188,8 @@ function edit(req, res, next) {
  */
 function _renderWebform(req, res, next, options) {
     const deviceId =
-            req.signedCookies["__enketo_meta_deviceid"] ||
-            `${req.hostname}:${utils.randomString(16)}`,
+        req.signedCookies["__enketo_meta_deviceid"] ||
+        `${req.hostname}:${utils.randomString(16)}`,
         cookieOptions = {
             signed: true,
             maxAge: 10 * 365 * 24 * 60 * 60 * 1000,

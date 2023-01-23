@@ -74,16 +74,55 @@ export class FormController {
         return this._state;
     }
 
-    async processForm(formData) {
+
+    findKey(obj, val, keyToFind, currentDotNotation) {
+        if (typeof obj === 'object') {
+            for (const key in obj) {
+                if (obj[key] === val && key === keyToFind) {
+                    return currentDotNotation;
+                } else {
+                    const result = this.findKey(obj[key], val, keyToFind, currentDotNotation + '.' + key);
+                    if (result !== null) return result;
+                }
+            }
+        }
+
+        return null;
+    }
+
+    async uploadFile(data) {
+        const fd = new FormData();
+        var newFile = new File([data], data.name, { type: data.type });
+        console.log(newFile);
+        fd.append('file', newFile, data.name);
+        const response = await fetch('https://enketo-manager-ratings-tech.samagra.io' + '/form/uploadFile', {
+            method: 'POST',
+            body: fd
+        }).then(s => {
+            return s.json();
+        }).catch(e => {
+            console.log(e);
+        });
+
+        return response.fileURL;
+    }
+
+    async processForm(formData, formFiles) {
         const doc = this._parser.parseFromString(formData, 'text/xml');
         // this.formData = (await fetch('http://localhost:3002/form/parse/' + encodeURIComponent(formData)).then(res => res.json())).data;
         this.formData = (await fetch('https://enketo-manager-ratings-tech.samagra.io/parse', {
             method: "POST",
-            body: JSON.stringify(formData.toString()),            
+            body: JSON.stringify(formData.toString()),
             headers: {
                 "Content-type": "application/json; charset=UTF-8"
             }
         }).then(res => res.json())).data;
+        // for (let i = 0; i < formFiles.length; i++) {
+        //     const file = formFiles[i];
+        //     const fileURL = await this.uploadFile(file);
+        //     const kk = this.findKey(this.formData, file.name, '$t', '');
+        //     this.formData = this.set(this.formData, kk.substring(1), fileURL);
+        // }
         if (await this.formSpec.isSuccessExecute() === true) {
             this._state = 'FORM_SUCCESS';
             this._onFormSuccessData = await this.formSpec.onFormSuccessExecute();
@@ -98,7 +137,7 @@ export class FormController {
             this.nextForm = this.formSpec.onFailure.next;
             this._message = this.formSpec.messageOnFailure;
         }
-
+        console.log(this._state);
         return Promise.resolve({
             state: this._state,
             status: this._state.includes('FAILURE') ? 'failure' : 'success',
@@ -116,6 +155,15 @@ export class FormController {
             formData: this.formData,
             onSuccessData: this._onFormSuccessData,
             onFailureData: this._onFormFailureData,
+            state: this._state
+        }), '*');
+    }
+
+    async broadcastFormDataUpdate(xml) {
+        // broadcast form data to parent window
+        window.parent.postMessage(JSON.stringify({
+            formData: xml,
+            formXML: xml,
             state: this._state
         }), '*');
     }

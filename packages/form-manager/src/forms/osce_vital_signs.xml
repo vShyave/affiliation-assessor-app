@@ -1,0 +1,345 @@
+<?xml version="1.0"?>
+<h:html xmlns="http://www.w3.org/2002/xforms"
+    xmlns:ev="http://www.w3.org/2001/xml-events"
+    xmlns:h="http://www.w3.org/1999/xhtml"
+    xmlns:jr="http://openrosa.org/javarosa"
+    xmlns:odk="http://www.opendatakit.org/xforms"
+    xmlns:orx="http://openrosa.org/xforms"
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <h:head>
+        <h:title>OSCE Checklist Vital Signs</h:title>
+        <model odk:xforms-version="1.0.0">
+            <instance>
+                <data id="osce1_form" version="1.1">
+                    <intro>
+                        <generated_table_list_label_2/>
+                        <reserved_name_for_field_list_labels_3/>
+                        <step1/>
+                        <step2/>
+                        <step3/>
+                        <step4/>
+                        <step5/>
+                        <step6/>
+                        <step8/>
+                        <step9/>
+                        <step10/>
+                        <step11/>
+                        <step12/>
+                        <step13/>
+                        <step14/>
+                        <step15/>
+                        <step16/>
+                        <step17/>
+                        <step18/>
+                        <step19/>
+                        <step20/>
+                        <step21/>
+                        <step22/>
+                        <step23/>
+                        <step24/>
+                    </intro>
+                    <meta>
+                        <instanceID/>
+                    </meta>
+                </data>
+            </instance>
+            <bind nodeset="/data/intro/generated_table_list_label_2" readonly="true()" type="string"/>
+            <bind nodeset="/data/intro/reserved_name_for_field_list_labels_3" type="string"/>
+            <bind nodeset="/data/intro/step1" required="true()" type="string"/>
+            <bind nodeset="/data/intro/step2" required="true()" type="string"/>
+            <bind nodeset="/data/intro/step3" required="true()" type="string"/>
+            <bind nodeset="/data/intro/step4" required="true()" type="string"/>
+            <bind nodeset="/data/intro/step5" required="true()" type="string"/>
+            <bind nodeset="/data/intro/step6" required="true()" type="string"/>
+            <bind nodeset="/data/intro/step8" required="true()" type="string"/>
+            <bind nodeset="/data/intro/step9" required="true()" type="string"/>
+            <bind nodeset="/data/intro/step10" required="true()" type="string"/>
+            <bind nodeset="/data/intro/step11" required="true()" type="string"/>
+            <bind nodeset="/data/intro/step12" required="true()" type="string"/>
+            <bind nodeset="/data/intro/step13" required="true()" type="string"/>
+            <bind nodeset="/data/intro/step14" required="true()" type="string"/>
+            <bind nodeset="/data/intro/step15" required="true()" type="string"/>
+            <bind nodeset="/data/intro/step16" required="true()" type="string"/>
+            <bind nodeset="/data/intro/step17" required="true()" type="string"/>
+            <bind nodeset="/data/intro/step18" required="true()" type="string"/>
+            <bind nodeset="/data/intro/step19" required="true()" type="string"/>
+            <bind nodeset="/data/intro/step20" required="true()" type="string"/>
+            <bind nodeset="/data/intro/step21" required="true()" type="string"/>
+            <bind nodeset="/data/intro/step22" required="true()" type="string"/>
+            <bind nodeset="/data/intro/step23" required="true()" type="string"/>
+            <bind nodeset="/data/intro/step24" required="true()" type="string"/>
+            <bind jr:preload="uid" nodeset="/data/meta/instanceID" readonly="true()" type="string"/>
+        </model>
+    </h:head>
+    <h:body class="pages">
+        <group appearance="field-list" ref="/data/intro">
+            <input ref="/data/intro/generated_table_list_label_2">
+                <label>**OSCE CHECKLIST FOR TEMPERATURE/ PULSE/ RESPIRATION**</label>
+            </input>
+            <select1 appearance="label" ref="/data/intro/reserved_name_for_field_list_labels_3">
+                <label></label>
+                <item>
+                    <label>Done</label>
+                    <value>done</value>
+                </item>
+                <item>
+                    <label>Not Done</label>
+                    <value>not</value>
+                </item>
+            </select1>
+            <select1 appearance="list-nolabel" ref="/data/intro/step1">
+                <label>Wash hands</label>
+                <item>
+                    <label>Done</label>
+                    <value>done</value>
+                </item>
+                <item>
+                    <label>Not Done</label>
+                    <value>not</value>
+                </item>
+            </select1>
+            <select1 appearance="list-nolabel" ref="/data/intro/step2">
+                <label>Remove the thermometer from the antiseptic solution and rinse in cold water</label>
+                <item>
+                    <label>Done</label>
+                    <value>done</value>
+                </item>
+                <item>
+                    <label>Not Done</label>
+                    <value>not</value>
+                </item>
+            </select1>
+            <select1 appearance="list-nolabel" ref="/data/intro/step3">
+                <label>Wipe the thermometer from bulb towards a rotating movement , using a clean cotton swab. Discard swab</label>
+                <item>
+                    <label>Done</label>
+                    <value>done</value>
+                </item>
+                <item>
+                    <label>Not Done</label>
+                    <value>not</value>
+                </item>
+            </select1>
+            <select1 appearance="list-nolabel" ref="/data/intro/step4">
+                <label>Read the level of mercury in good light. To read the level of mercury in thermometer , hold thermometer with fingers of right hand, very slowly rotating back and forth until the silver mercury measurement to the nearest line</label>
+                <item>
+                    <label>Done</label>
+                    <value>done</value>
+                </item>
+                <item>
+                    <label>Not Done</label>
+                    <value>not</value>
+                </item>
+            </select1>
+            <select1 appearance="list-nolabel" ref="/data/intro/step5">
+                <label>Shakes the thermometer if mercury level is above 35 degree C or 95 F. Shake it with quick movement of wrist. To shake thermometer, hold it firmly by its stem and move away from the wall, furniture and equipment</label>
+                <item>
+                    <label>Done</label>
+                    <value>done</value>
+                </item>
+                <item>
+                    <label>Not Done</label>
+                    <value>not</value>
+                </item>
+            </select1>
+            <select1 appearance="list-nolabel" ref="/data/intro/step6">
+                <label>Ask the patient to open the mouth and place the thermometer under the tongue, ask the patient to hold the thermometer in place by closing the lips and not biting on thermometer</label>
+                <item>
+                    <label>Done</label>
+                    <value>done</value>
+                </item>
+                <item>
+                    <label>Not Done</label>
+                    <value>not</value>
+                </item>
+            </select1>
+            <select1 appearance="list-nolabel" ref="/data/intro/step8">
+                <label>Before placing the thermometer , dry the axilla</label>
+                <item>
+                    <label>Done</label>
+                    <value>done</value>
+                </item>
+                <item>
+                    <label>Not Done</label>
+                    <value>not</value>
+                </item>
+            </select1>
+            <select1 appearance="list-nolabel" ref="/data/intro/step9">
+                <label>Place the bulb of thermometer in the axilla so that the bulb is in touch with two skin folds of axilla</label>
+                <item>
+                    <label>Done</label>
+                    <value>done</value>
+                </item>
+                <item>
+                    <label>Not Done</label>
+                    <value>not</value>
+                </item>
+            </select1>
+            <select1 appearance="list-nolabel" ref="/data/intro/step10">
+                <label>Keep thermometer in position by placing the arm over chest</label>
+                <item>
+                    <label>Done</label>
+                    <value>done</value>
+                </item>
+                <item>
+                    <label>Not Done</label>
+                    <value>not</value>
+                </item>
+            </select1>
+            <select1 appearance="list-nolabel" ref="/data/intro/step11">
+                <label>Do not allow clothing to come in contact with bulb of thermometer</label>
+                <item>
+                    <label>Done</label>
+                    <value>done</value>
+                </item>
+                <item>
+                    <label>Not Done</label>
+                    <value>not</value>
+                </item>
+            </select1>
+            <select1 appearance="list-nolabel" ref="/data/intro/step12">
+                <label>Have thermometer in place for 2 minutes , in axillary method leave thermometer in position for 5 minutes</label>
+                <item>
+                    <label>Done</label>
+                    <value>done</value>
+                </item>
+                <item>
+                    <label>Not Done</label>
+                    <value>not</value>
+                </item>
+            </select1>
+            <select1 appearance="list-nolabel" ref="/data/intro/step13">
+                <label>Count the pulse and respirations while thermometer is in place</label>
+                <item>
+                    <label>Done</label>
+                    <value>done</value>
+                </item>
+                <item>
+                    <label>Not Done</label>
+                    <value>not</value>
+                </item>
+            </select1>
+            <select1 appearance="list-nolabel" ref="/data/intro/step14">
+                <label>Place patient's hand over his chest with wrist extended and the palm downwards. place the finger tips over pulse point</label>
+                <item>
+                    <label>Done</label>
+                    <value>done</value>
+                </item>
+                <item>
+                    <label>Not Done</label>
+                    <value>not</value>
+                </item>
+            </select1>
+            <select1 appearance="list-nolabel" ref="/data/intro/step15">
+                <label>Holding watch in left hand, start to count the pulse rate with zero then 1,2 etc.</label>
+                <item>
+                    <label>Done</label>
+                    <value>done</value>
+                </item>
+                <item>
+                    <label>Not Done</label>
+                    <value>not</value>
+                </item>
+            </select1>
+            <select1 appearance="list-nolabel" ref="/data/intro/step16">
+                <label>If pulse is regular, count the number of pulsations for half minute and multiply it by two. If pulse is not regular, count for one full minute</label>
+                <item>
+                    <label>Done</label>
+                    <value>done</value>
+                </item>
+                <item>
+                    <label>Not Done</label>
+                    <value>not</value>
+                </item>
+            </select1>
+            <select1 appearance="list-nolabel" ref="/data/intro/step17">
+                <label>Continue palpation of pulse to assess rhythm, volume, tension, and irregularity</label>
+                <item>
+                    <label>Done</label>
+                    <value>done</value>
+                </item>
+                <item>
+                    <label>Not Done</label>
+                    <value>not</value>
+                </item>
+            </select1>
+            <select1 appearance="list-nolabel" ref="/data/intro/step18">
+                <label>With the right hand still on the pulse count respiration by watching the rise and fall of chest , without knowledge of patient</label>
+                <item>
+                    <label>Done</label>
+                    <value>done</value>
+                </item>
+                <item>
+                    <label>Not Done</label>
+                    <value>not</value>
+                </item>
+            </select1>
+            <select1 appearance="list-nolabel" ref="/data/intro/step19">
+                <label>If the respirations are normal, count the number of respirations in the 30 second andmultiply by two. If respiration are abnormal , count the rate for one full minute and note pattern of breathing</label>
+                <item>
+                    <label>Done</label>
+                    <value>done</value>
+                </item>
+                <item>
+                    <label>Not Done</label>
+                    <value>not</value>
+                </item>
+            </select1>
+            <select1 appearance="list-nolabel" ref="/data/intro/step20">
+                <label>Remove the thermometer after two minutes (after 5 minutes in case of axillary method). Wipe the thermometer from stem to bulb with a clean cotton swab, using a rotating movement. Discard the swab</label>
+                <item>
+                    <label>Done</label>
+                    <value>done</value>
+                </item>
+                <item>
+                    <label>Not Done</label>
+                    <value>not</value>
+                </item>
+            </select1>
+            <select1 appearance="list-nolabel" ref="/data/intro/step21">
+                <label>Read level of mercury</label>
+                <item>
+                    <label>Done</label>
+                    <value>done</value>
+                </item>
+                <item>
+                    <label>Not Done</label>
+                    <value>not</value>
+                </item>
+            </select1>
+            <select1 appearance="list-nolabel" ref="/data/intro/step22">
+                <label>Return thermometer to bottle no :2 , shaking it down again</label>
+                <item>
+                    <label>Done</label>
+                    <value>done</value>
+                </item>
+                <item>
+                    <label>Not Done</label>
+                    <value>not</value>
+                </item>
+            </select1>
+            <select1 appearance="list-nolabel" ref="/data/intro/step23">
+                <label>Wash hands</label>
+                <item>
+                    <label>Done</label>
+                    <value>done</value>
+                </item>
+                <item>
+                    <label>Not Done</label>
+                    <value>not</value>
+                </item>
+            </select1>
+            <select1 appearance="list-nolabel" ref="/data/intro/step24">
+                <label>Record the temperature, pulse and respiration.</label>
+                <item>
+                    <label>Done</label>
+                    <value>done</value>
+                </item>
+                <item>
+                    <label>Not Done</label>
+                    <value>not</value>
+                </item>
+            </select1>
+        </group>
+    </h:body>
+</h:html>

@@ -42,4 +42,17 @@ export class AppService {
     }
     return doc.toString();
   }
+
+  prefillFormXML(form: string, onFormSuccessData: any, prefillSpec: any): string {
+    console.log("MAI YAHAN AA GAYA");
+    const formFilePath = join(__dirname, `forms/${form}.xml`);
+    const formString = fs.readFileSync(formFilePath, 'utf8');
+    const doc = this.parser.parseFromString(formString, 'text/xml');
+    console.log({ prefillSpec })
+    const instance = doc.getElementsByTagName('instance')[0];
+    if (instance) {
+      instance.textContent = prefillSpec;
+    }
+    return doc.toString();
+  }
 }
