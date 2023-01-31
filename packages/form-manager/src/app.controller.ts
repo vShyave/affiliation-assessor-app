@@ -56,14 +56,14 @@ export class AppController {
     @Query('form') form,
     @Query('onFormSuccessData') onFormSuccessData,
     @Body('prefillXML') prefillXML,
-  ): string {    
+  ): string {
     try {
       if (onFormSuccessData) {
         return this.appService.prefillFormXML(
           form,
           onFormSuccessData,
           prefillXML,
-        );        
+        );
       } else {
         return "OK";
       }
@@ -82,5 +82,15 @@ export class AppController {
     // console.log({ xml })
     console.log(parser.toJson(xml));
     return parser.toJson(xml);
+  }
+
+  @Get('osceForm/:type/:year/:speciality?')
+  getOsceForm(@Param('type') type, @Param('year') year, @Param('speciality') speciality): any {
+    return this.appService.getOsceForms(type, year, speciality);
+  }
+
+  @Get('osceFormTeachers/:type/:year/:speciality?')
+  getOsceFormTeachers(@Param('type') type, @Param('year') year, @Param('speciality') speciality): any {
+    return this.appService.getOsceForms(type, year, speciality, 2);
   }
 }
