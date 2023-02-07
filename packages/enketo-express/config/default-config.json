@@ -1,6 +1,6 @@
 {
     "app name": "Enketo Smart Paper for KoBoCAT",
-    "port": "8005",
+    "port": "8065",
     "offline enabled": true,
     "id length": 8,
     "linked form and data server": {
@@ -91,12 +91,12 @@
     "redis": {
         "main": {
             "host": "0.0.0.0",
-            "port": "6379",
+            "port": "6381",
             "password": null
         },
         "cache": {
             "host": "0.0.0.0",
-            "port": "6380",
+            "port": "6382",
             "password": null
         }
     },
@@ -109,5 +109,6 @@
     "validate continuously": false,
     "validate page": true,
     "payload limit": "100kb",
-    "text field character limit": 2000
+    "text field character limit": 2000,
+    "formManagerBaseURI": "https://fm.dst.samagra.io"
 }

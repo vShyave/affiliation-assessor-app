@@ -329,7 +329,8 @@ module.exports = {
         validateContinuously: config[ 'validate continuously' ],
         validatePage: config[ 'validate page' ],
         swipePage: config[ 'swipe page' ],
-        textMaxChars: config[ 'text field character limit' ]
+        textMaxChars: config[ 'text field character limit' ],
+        formManagerBaseURI : config['formManagerBaseURI']
     },
     getThemesSupported
 };
