@@ -62,6 +62,8 @@ export class AppController {
         json: postData,
       };
 
+      console.log(options)
+
       return new Promise((resolve, reject) => {
         request(options, function (error, response, body) {
           if (error || !body) {
@@ -178,6 +180,7 @@ export class AppController {
   @Post('form/uploadFile')
   @UseInterceptors(FileInterceptor('file'))
   async uploadFile(@UploadedFile() file: Express.Multer.File) {
+    console.log(file)
     const extension = file.originalname.split('.').pop();
     const fileName = uuidv4() + `.${extension}`;
     const tokenRes = await this.getLoginToken();
@@ -216,6 +219,8 @@ export class AppController {
     const fileURL = `https://cdn.samagra.io/${this.configService.get(
       'MINIO_BUCKET_ID',
     )}/${fileName}`;
+
+    console.log("Uploaded File:", fileURL);
 
     return { fileURL };
   }
