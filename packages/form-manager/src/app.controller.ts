@@ -62,6 +62,8 @@ export class AppController {
         json: postData,
       };
 
+      console.log(options)
+
       return new Promise((resolve, reject) => {
         request(options, function (error, response, body) {
           if (error || !body) {
@@ -151,7 +153,6 @@ export class AppController {
       console.log('onFormSuccessData', onFormSuccessData);
       console.log('prefillSpec', prefillSpec);
       if (onFormSuccessData !== 'undefined') {
-        console;
         return this.appService.prefillForm(
           form,
           JSON.parse(onFormSuccessData),
@@ -165,19 +166,53 @@ export class AppController {
     }
   }
 
+  @Post('prefillXML')
+  prefillXML(
+    @Query('form') form,
+    @Query('onFormSuccessData') onFormSuccessData,
+    @Body('prefillXML') prefillXML,
+  ): string {
+    try {
+      if (onFormSuccessData) {
+        return this.appService.prefillFormXML(
+          form,
+          onFormSuccessData,
+          prefillXML,
+        );
+      } else {
+        return "OK";
+      }
+    } catch (e) {
+      return "OK2";
+    }
+  }
+
   @Get('form/:id')
   getForm(@Param('id') id): string {
     return this.appService.getForm(id);
   }
 
-  @Get('form/parse/:xml')
-  parseXML(@Param('xml') xml): any {
-    return parser.toJson(xml);
+  @Post('parse')
+  parseXML(@Body() xml: any): any {
+    console.log({ xml })
+    // console.log(parser.toJson(xml));
+    return parser.toJson(xml.xml);
+  }
+
+  @Get('osceForm/:type/:year/:speciality?')
+  getOsceForm(@Param('type') type, @Param('year') year, @Param('speciality') speciality): any {
+    return this.appService.getOsceForms(type, year, speciality);
+  }
+
+  @Get('osceFormTeachers/:type/:year/:speciality?')
+  getOsceFormTeachers(@Param('type') type, @Param('year') year, @Param('speciality') speciality): any {
+    return this.appService.getOsceForms(type, year, speciality, 2);
   }
 
   @Post('form/uploadFile')
   @UseInterceptors(FileInterceptor('file'))
   async uploadFile(@UploadedFile() file: Express.Multer.File) {
+    console.log(file)
     const extension = file.originalname.split('.').pop();
     const fileName = uuidv4() + `.${extension}`;
     const tokenRes = await this.getLoginToken();
@@ -216,6 +251,8 @@ export class AppController {
     const fileURL = `https://cdn.samagra.io/${this.configService.get(
       'MINIO_BUCKET_ID',
     )}/${fileName}`;
+
+    console.log("Uploaded File:", fileURL);
 
     return { fileURL };
   }

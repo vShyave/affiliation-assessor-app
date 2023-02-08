@@ -110,5 +110,5 @@
     "validate page": true,
     "payload limit": "100kb",
     "text field character limit": 2000,
-    "formManagerBaseURI": "https://fm.dst.samagra.io"
+    "formManagerBaseURI": "http://localhost:3002"
 }

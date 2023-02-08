@@ -16,6 +16,37 @@ export class AppService {
     return fs.readFileSync(formFilePath, 'utf8');
   }
 
+  getOsceForms(type?: string, year?: string, speciality?: string, noOfForms?: number) {
+    try {
+      if (!type || !year)
+        return "Please provide valid inputs"
+
+      const matchingText = speciality ? `${type}_${year}_${speciality}` : `${type}_${year}`;
+      let matchingFiles = [];
+      // const fileNames = fs.readdirSync(`/Users/amitsharma/Projects/workflow/packages/form-manager/src/forms`);
+      const fileNames = fs.readdirSync(__dirname + "forms");
+
+      fileNames.forEach(file => { if (file.startsWith(matchingText)) matchingFiles.push(file) })
+
+      if (matchingFiles.length) {
+        if (noOfForms) {
+          const names = [];
+          for (let i = 0; i < noOfForms; i++) {
+            let form = matchingFiles[Math.floor(Math.random() * matchingFiles.length)];
+            names.push(form);
+            matchingFiles = matchingFiles.filter(el => el != form);
+          }
+          return names;
+        }
+        return matchingFiles[Math.floor(Math.random() * matchingFiles.length)];
+      }
+      return null;
+    } catch (err) {
+      console.log(err);
+      return err;
+    }
+  }
+
   prefillForm(form: string, onFormSuccessData: any, prefillSpec: any): string {
     // get current directory
     const formFilePath = join(__dirname, `forms/${form}.xml`);
@@ -39,6 +70,19 @@ export class AppService {
           element.textContent = eval(prefillSpec[key]);
         }
       }
+    }
+    return doc.toString();
+  }
+
+  prefillFormXML(form: string, onFormSuccessData: any, prefillSpec: any): string {
+    console.log("MAI YAHAN AA GAYA");
+    const formFilePath = join(__dirname, `forms/${form}.xml`);
+    const formString = fs.readFileSync(formFilePath, 'utf8');
+    const doc = this.parser.parseFromString(formString, 'text/xml');
+    console.log({ prefillSpec })
+    const instance = doc.getElementsByTagName('instance')[0];
+    if (instance) {
+      instance.textContent = prefillSpec;
     }
     return doc.toString();
   }
