@@ -194,7 +194,7 @@ export class AppController {
 
   @Post('parse')
   parseXML(@Body() xml: any): any {
-    console.log({ xml })
+    // console.log({ xml })
     // console.log(parser.toJson(xml));
     return parser.toJson(xml.xml);
   }
