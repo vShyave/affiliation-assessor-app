@@ -7,294 +7,142 @@
     xmlns:orx="http://openrosa.org/xforms"
     xmlns:xsd="http://www.w3.org/2001/XMLSchema">
     <h:head>
-        <h:title>Nursing Form</h:title>
+        <h:title>Nursing Form- Non Medical</h:title>
         <model odk:xforms-version="1.0.0">
             <instance>
-                <data id="nusing_form" version="1.1">
+                <data id="Nursing Form- Non Medical" version="1">
+                    <username/>
+                    <start/>
+                    <end/>
+                    <today/>
+                    <deviceid/>
+                    <subscriberid/>
                     <part1_1>
-                        <name>Nurse Institute 1</name>
-                        <verify1/>
-                        <why1/>
-                        <dist>Amroha</dist>
-                        <verify2/>
-                        <why2/>
-                        <center_code>342</center_code>
-                        <verify3/>
-                        <why3/>
-                        <address>Lohia park, dumritalaya</address>
-                        <verify4/>
-                        <why4/>
-                        <pincode>223187</pincode>
-                        <verify5/>
-                        <why5/>
+                        <nameofIns/>
+                        <dist/>
+                        <center_code/>
+                        <address/>
+                        <pincode/>
                         <email/>
-                        <verify6/>
-                        <why6/>
-                        <geo_code/>
-                        <verify7/>
-                        <why7/>
                         <gov_priv/>
-                        <verify8/>
-                        <why8/>
                         <chair_name/>
-                        <verify9/>
-                        <why9/>
                         <chair_email/>
-                        <verify10/>
-                        <why10/>
                         <chair_number/>
-                        <verify11/>
-                        <why11/>
                         <princial_name/>
-                        <verify12/>
-                        <why12/>
                         <princial_email/>
-                        <verify13/>
-                        <why13/>
                         <princial_number/>
-                        <verify14/>
-                        <why14/>
                     </part1_1>
                     <part1_2_1>
-                        <type/>
-                        <verify15/>
-                        <why15/>
-                        <org_type_proof/>
-                        <verify16/>
-                        <why16/>
-                        <cmo_letter/>
-                        <verify17/>
-                        <why17/>
-                        <fire_noc/>
-                        <verify18/>
-                        <why18/>
+                        <nameofTSMC/>
+                        <part1_2_2>
+                            <part1_2_2a/>
+                            <part1_2_2b/>
+                        </part1_2_2>
+                        <part1_2_3>
+                            <part1_2_3a/>
+                            <part1_2_3b/>
+                        </part1_2_3>
+                        <part1_2_4/>
+                        <part1_2_4g>
+                            <part1_2_4a/>
+                            <part1_2_4b/>
+                            <part1_2_4c/>
+                            <part1_2_4d/>
+                            <part1_2_4e/>
+                        </part1_2_4g>
                     </part1_2_1>
-                    <part1_2_2>
-                        <bio_available/>
-                        <verify19/>
-                        <why19/>
-                        <bio_working/>
-                        <verify20/>
-                        <why20/>
-                        <virtual_class/>
-                        <verify21/>
-                        <why21/>
-                        <virtual_class_things/>
-                        <verify22/>
-                        <why22/>
-                    </part1_2_2>
                     <part1_3>
-                        <anm1.1/>
-                        <verify23/>
-                        <why23/>
-                        <anm1.2/>
-                        <verify24/>
-                        <why24/>
-                        <anm1.3/>
-                        <verify25/>
-                        <why25/>
-                        <anm2.1/>
-                        <verify26/>
-                        <why26/>
-                        <anm2.2/>
-                        <verify27/>
-                        <why27/>
-                        <anm2.3/>
-                        <verify28/>
-                        <why28/>
-                        <gnm1.1/>
-                        <verify29/>
-                        <why29/>
-                        <gnm1.2/>
-                        <verify30/>
-                        <why30/>
-                        <gnm1.3/>
-                        <verify31/>
-                        <why31/>
-                        <gnm2.1/>
-                        <verify32/>
-                        <why32/>
-                        <gnm2.2/>
-                        <verify33/>
-                        <why33/>
-                        <gnm2.3/>
-                        <verify34/>
-                        <why34/>
-                        <gnm3.1/>
-                        <verify35/>
-                        <why35/>
-                        <gnm3.2/>
-                        <verify36/>
-                        <why36/>
-                        <gnm3.3/>
-                        <verify37/>
-                        <why37/>
-                        <pbbsc1.1/>
-                        <verify38/>
-                        <why38/>
-                        <pbbsc1.2/>
-                        <verify39/>
-                        <why39/>
-                        <pbbsc1.3/>
-                        <verify40/>
-                        <why40/>
-                        <pbbsc2.1/>
-                        <verify41/>
-                        <why41/>
-                        <pbbsc2.2/>
-                        <verify42/>
-                        <why42/>
-                        <pbbsc2.3/>
-                        <verify43/>
-                        <why43/>
-                        <bsc1.1/>
-                        <verify44/>
-                        <why44/>
-                        <bsc1.2/>
-                        <verify45/>
-                        <why45/>
-                        <bsc1.3/>
-                        <verify46/>
-                        <why46/>
-                        <bsc2.1/>
-                        <verify47/>
-                        <why47/>
-                        <bsc2.2/>
-                        <verify48/>
-                        <why48/>
-                        <bsc2.3/>
-                        <verify49/>
-                        <why49/>
-                        <bsc3.1/>
-                        <verify50/>
-                        <why50/>
-                        <bsc3.2/>
-                        <verify51/>
-                        <why51/>
-                        <bsc3.3/>
-                        <verify52/>
-                        <why52/>
-                        <bsc4.1/>
-                        <verify53/>
-                        <why53/>
-                        <bsc4.2/>
-                        <verify54/>
-                        <why54/>
-                        <bsc4.3/>
-                        <verify55/>
-                        <why55/>
-                        <msc1/>
-                        <verify56/>
-                        <why56/>
-                        <msc2/>
-                        <verify57/>
-                        <why57/>
-                        <msc3/>
-                        <verify58/>
-                        <why58/>
-                        <msc4/>
-                        <verify59/>
-                        <why59/>
-                        <msc5/>
-                        <verify60/>
-                        <why60/>
-                        <msc6/>
-                        <verify61/>
-                        <why61/>
-                        <msc7/>
-                        <verify62/>
-                        <why62/>
-                        <msc8/>
-                        <verify63/>
-                        <why63/>
-                        <msc9/>
-                        <verify64/>
-                        <why64/>
-                        <msc10/>
-                        <verify65/>
-                        <why65/>
-                        <msc11/>
-                        <verify66/>
-                        <why66/>
-                        <msc12/>
-                        <verify67/>
-                        <why67/>
-                        <msc13/>
-                        <verify68/>
-                        <why68/>
-                        <msc14/>
-                        <verify69/>
-                        <why69/>
-                        <msc15/>
-                        <verify70/>
-                        <why70/>
-                        <msc16/>
-                        <verify71/>
-                        <why71/>
-                        <msc17/>
-                        <verify72/>
-                        <why72/>
-                        <msc18/>
-                        <verify73/>
-                        <why73/>
-                        <msc19/>
-                        <verify74/>
-                        <why74/>
-                        <msc20/>
-                        <verify75/>
-                        <why75/>
-                        <msc21/>
-                        <verify76/>
-                        <why76/>
-                        <msc22/>
-                        <verify77/>
-                        <why77/>
-                        <msc23/>
-                        <verify78/>
-                        <why78/>
-                        <msc24/>
-                        <verify79/>
-                        <why79/>
-                        <msc25/>
-                        <verify80/>
-                        <why80/>
-                        <msc26/>
-                        <verify81/>
-                        <why81/>
-                        <msc27/>
-                        <verify82/>
-                        <why82/>
-                        <msc28/>
-                        <verify83/>
-                        <why83/>
-                        <msc29/>
-                        <verify84/>
-                        <why84/>
-                        <msc30/>
-                        <verify85/>
-                        <why85/>
+                        <p1_3/>
+                        <p1_3.1/>
+                        <part1_3.1>
+                            <anm1.1/>
+                            <anm1.2/>
+                            <anm1.3/>
+                            <anm2.2/>
+                            <anm2.3/>
+                        </part1_3.1>
+                        <p1_3.2/>
+                        <part1_3.2>
+                            <gnm1.1/>
+                            <gnm1.2/>
+                            <gnm1.3/>
+                            <gnm2.2/>
+                            <gnm2.3/>
+                            <gnm3.2/>
+                            <gnm3.3/>
+                        </part1_3.2>
+                        <p1_3.3/>
+                        <part1_3.3>
+                            <pbbsc1.1/>
+                            <pbbsc1.2/>
+                            <pbbsc1.3/>
+                            <pbbsc2.2/>
+                            <pbbsc2.3/>
+                        </part1_3.3>
+                        <p1_3.4/>
+                        <part1_3.4>
+                            <bsc1.1/>
+                            <bsc1.2/>
+                            <bsc1.3/>
+                            <bsc2.2/>
+                            <bsc2.3/>
+                            <bsc3.2/>
+                            <bsc3.3/>
+                            <bsc4.2/>
+                            <bsc4.3/>
+                        </part1_3.4>
+                        <p1_3.5/>
+                        <part1_3.5>
+                            <msc1/>
+                            <msc2/>
+                            <msc3/>
+                            <msc5/>
+                            <msc6/>
+                        </part1_3.5>
+                        <p1_3.6/>
+                        <part1_3.6>
+                            <msc7/>
+                            <msc8/>
+                            <msc9/>
+                            <msc11/>
+                            <msc12/>
+                        </part1_3.6>
+                        <p1_3.7/>
+                        <part1_3.7>
+                            <msc13/>
+                            <msc14/>
+                            <msc15/>
+                            <msc16/>
+                            <msc17/>
+                        </part1_3.7>
+                        <p1_3.8/>
+                        <part1_3.8>
+                            <msc18/>
+                            <msc19/>
+                            <msc20/>
+                            <msc21/>
+                            <msc22/>
+                        </part1_3.8>
+                        <p1_3.9/>
+                        <part1_3.9>
+                            <msc23/>
+                            <msc24/>
+                            <msc25/>
+                            <msc26/>
+                            <msc27/>
+                        </part1_3.9>
                     </part1_3>
-                    <part1_4_1>
-                        <teching_block/>
-                        <verify86/>
-                        <why86/>
-                        <classrooms/>
-                        <verify87/>
-                        <why87/>
-                        <enough_space/>
-                        <verify88/>
-                        <why88/>
-                        <principal_office/>
-                        <verify89/>
-                        <why89/>
-                        <teaching_fac/>
-                        <verify90/>
-                        <why90/>
-                        <staff/>
-                        <verify91/>
-                        <why91/>
-                    </part1_4_1>
-                    <part1_4_3>
+                    <part1_4>
+                        <part1_4.1/>
+                        <part1_4.2/>
+                        <part1_4.2.1/>
+                        <part1_4.3>
+                            <part1_4.3a/>
+                            <part1_4.3b/>
+                            <part1_4.3c/>
+                        </part1_4.3>
+                    </part1_4>
+                    <part1_4_6>
                         <library_comp/>
                         <verify98/>
                         <why98/>
@@ -310,668 +158,261 @@
                         <util_register/>
                         <verify102/>
                         <why102/>
-                    </part1_4_3>
-                    <part1_4_4>
-                        <av_available/>
-                        <verify103/>
-                        <why103/>
-                        <av_functional/>
-                        <verify104/>
-                        <why104/>
-                    </part1_4_4>
+                        <remark103/>
+                    </part1_4_6>
+                    <part1_4_7>
+                        <part1_4_7.1/>
+                        <part1_4_7.1a/>
+                        <part1_4_7.1b/>
+                        <part1_4_7.1c/>
+                        <part1_4_7.2/>
+                        <part1_4_7.2a/>
+                        <part1_4_7.2b/>
+                        <part1_4_7.2c/>
+                        <part1_4_7.3/>
+                        <part1_4_7.3a/>
+                        <part1_4_7.3b/>
+                        <part1_4_7.3c/>
+                        <part1_4_7.4/>
+                        <part1_4_7.4a/>
+                        <part1_4_7.4b/>
+                        <part1_4_7.4c/>
+                        <part1_4_7.5/>
+                        <part1_4_7.5a/>
+                        <part1_4_7.5b/>
+                        <part1_4_7.5c/>
+                    </part1_4_7>
                     <part1_5>
-                        <hostel/>
-                        <verify105/>
-                        <why105/>
-                        <beds/>
-                        <verify106/>
-                        <why106/>
-                        <seats_dining/>
-                        <verify107/>
-                        <why107/>
-                        <water_supply/>
-                        <verify108/>
-                        <why108/>
-                        <hot_water_supply/>
-                        <verify109/>
-                        <why109/>
-                        <safe_water_supply/>
-                        <verify110/>
-                        <why110/>
-                        <toilets/>
-                        <verify111/>
-                        <why111/>
+                        <part1_5.1/>
+                        <part1_5.2/>
+                        <part1_5.3/>
+                        <part1_5.4/>
+                        <part1_5.5/>
+                        <part1_5.6/>
+                        <part1_5.7/>
                     </part1_5>
-                    <part1_6>
-                        <fac_registered/>
-                        <verify112/>
-                        <why112/>
-                        <fac_present/>
-                        <verify113/>
-                        <why113/>
-                        <fac_bsc/>
-                        <verify114/>
-                        <why114/>
-                        <fac_msc/>
-                        <verify115/>
-                        <why115/>
-                    </part1_6>
-                    <part1_7>
-                        <parent_add/>
-                        <verify116/>
-                        <why116/>
-                        <hosp_geocode/>
-                        <verify117/>
-                        <why117/>
-                        <beds_hosp/>
-                        <verify118/>
-                        <why118/>
-                        <total_ipd/>
-                        <verify119/>
-                        <why119/>
-                        <dept_parent_hosp/>
-                        <verify120/>
-                        <why120/>
-                    </part1_7>
-                    <part1_8>
-                        <nurse_emp/>
-                        <verify121/>
-                        <why121/>
-                        <nurse_gnm/>
-                        <verify122/>
-                        <why122/>
-                        <nurse_bsc/>
-                        <verify123/>
-                        <why123/>
-                        <nurse_msc/>
-                        <verify124/>
-                        <why124/>
-                    </part1_8>
-                    <part1_9>
-                        <f_name1/>
-                        <verify125/>
-                        <why125/>
-                        <f_type1/>
-                        <verify126/>
-                        <why126/>
-                        <f_reg1/>
-                        <verify127/>
-                        <why127/>
-                        <f_name2/>
-                        <verify128/>
-                        <why128/>
-                        <f_type2/>
-                        <verify129/>
-                        <why129/>
-                        <f_reg2/>
-                        <verify130/>
-                        <why130/>
-                        <f_name3/>
-                        <verify131/>
-                        <why131/>
-                        <f_type3/>
-                        <verify132/>
-                        <why132/>
-                        <f_reg3/>
-                        <verify133/>
-                        <why133/>
-                    </part1_9>
-                    <misc>
-                        <doc1/>
-                        <verify175/>
-                        <why175/>
-                        <doc2/>
-                        <verify176/>
-                        <why176/>
-                        <doc3/>
-                        <verify177/>
-                        <why177/>
-                        <doc4/>
-                        <verify178/>
-                        <why178/>
-                        <doc5/>
-                        <verify179/>
-                        <why179/>
-                        <doc6/>
-                        <verify180/>
-                        <why180/>
-                        <doc7/>
-                        <verify181/>
-                        <why181/>
-                    </misc>
+                    <part1_10>
+                        <part1_10.1/>
+                        <part1_10.1r/>
+                        <part1_10.2/>
+                        <part1_10.2r/>
+                        <part1_10.3/>
+                        <part1_10.3r/>
+                        <part1_10.4/>
+                        <part1_10.4r/>
+                        <part1_10.5/>
+                        <part1_10.5r/>
+                        <part1_10.6/>
+                        <part1_10.6r/>
+                        <part1_10.7/>
+                        <part1_10.7r/>
+                    </part1_10>
+                    <part2>
+                        <p_4>
+                            <p_4.1/>
+                            <p_4.2/>
+                            <p_4.3/>
+                            <p_4.4/>
+                        </p_4>
+                    </part2>
                     <meta>
                         <instanceID/>
                     </meta>
                 </data>
             </instance>
-            <bind nodeset="/data/part1_1/name" readonly="true()" type="string"/>
-            <bind nodeset="/data/part1_1/verify1" type="string"/>
-            <bind nodeset="/data/part1_1/why1" relevant=" /data/part1_1/verify1  = 'no'" type="string"/>
-            <bind nodeset="/data/part1_1/dist" readonly="true()" type="string"/>
-            <bind nodeset="/data/part1_1/verify2" type="string"/>
-            <bind nodeset="/data/part1_1/why2" relevant=" /data/part1_1/verify2  = 'no'" type="string"/>
-            <bind constraint=".&lt;9999" nodeset="/data/part1_1/center_code" readonly="true()" type="int"/>
-            <bind nodeset="/data/part1_1/verify3" type="string"/>
-            <bind nodeset="/data/part1_1/why3" relevant=" /data/part1_1/verify3  = 'no'" type="string"/>
-            <bind nodeset="/data/part1_1/address" readonly="true()" type="string"/>
-            <bind nodeset="/data/part1_1/verify4" type="string"/>
-            <bind nodeset="/data/part1_1/why4" relevant=" /data/part1_1/verify4  = 'no'" type="string"/>
-            <bind nodeset="/data/part1_1/pincode" readonly="true()" type="int"/>
-            <bind nodeset="/data/part1_1/verify5" type="string"/>
-            <bind nodeset="/data/part1_1/why5" relevant=" /data/part1_1/verify5  = 'no'" type="string"/>
+            <bind jr:preload="property" jr:preloadParams="username" nodeset="/data/username" type="string"/>
+            <bind jr:preload="timestamp" jr:preloadParams="start" nodeset="/data/start" type="dateTime"/>
+            <bind jr:preload="timestamp" jr:preloadParams="end" nodeset="/data/end" type="dateTime"/>
+            <bind jr:preload="date" jr:preloadParams="today" nodeset="/data/today" type="date"/>
+            <bind jr:preload="property" jr:preloadParams="deviceid" nodeset="/data/deviceid" type="string"/>
+            <bind jr:preload="property" jr:preloadParams="subscriberid" nodeset="/data/subscriberid" type="string"/>
+            <bind nodeset="/data/part1_1/nameofIns" type="string"/>
+            <bind nodeset="/data/part1_1/dist" type="string"/>
+            <bind constraint=".&lt;9999" nodeset="/data/part1_1/center_code" type="int"/>
+            <bind nodeset="/data/part1_1/address" type="string"/>
+            <bind nodeset="/data/part1_1/pincode" type="int"/>
             <bind nodeset="/data/part1_1/email" type="string"/>
-            <bind nodeset="/data/part1_1/verify6" type="string"/>
-            <bind nodeset="/data/part1_1/why6" relevant=" /data/part1_1/verify6  = 'no'" type="string"/>
-            <bind nodeset="/data/part1_1/geo_code" type="geopoint"/>
-            <bind nodeset="/data/part1_1/verify7" type="string"/>
-            <bind nodeset="/data/part1_1/why7" relevant=" /data/part1_1/verify7  = 'no'" type="string"/>
             <bind nodeset="/data/part1_1/gov_priv" type="string"/>
-            <bind nodeset="/data/part1_1/verify8" type="string"/>
-            <bind nodeset="/data/part1_1/why8" relevant=" /data/part1_1/verify8  = 'no'" type="string"/>
             <bind nodeset="/data/part1_1/chair_name" type="string"/>
-            <bind nodeset="/data/part1_1/verify9" type="string"/>
-            <bind nodeset="/data/part1_1/why9" relevant=" /data/part1_1/verify9  = 'no'" type="string"/>
             <bind nodeset="/data/part1_1/chair_email" type="string"/>
-            <bind nodeset="/data/part1_1/verify10" type="string"/>
-            <bind nodeset="/data/part1_1/why10" relevant=" /data/part1_1/verify10  = 'no'" type="string"/>
             <bind nodeset="/data/part1_1/chair_number" type="string"/>
-            <bind nodeset="/data/part1_1/verify11" type="string"/>
-            <bind nodeset="/data/part1_1/why11" relevant=" /data/part1_1/verify11  = 'no'" type="string"/>
             <bind nodeset="/data/part1_1/princial_name" type="string"/>
-            <bind nodeset="/data/part1_1/verify12" type="string"/>
-            <bind nodeset="/data/part1_1/why12" relevant=" /data/part1_1/verify12  = 'no'" type="string"/>
             <bind nodeset="/data/part1_1/princial_email" type="string"/>
-            <bind nodeset="/data/part1_1/verify13" type="string"/>
-            <bind nodeset="/data/part1_1/why13" relevant=" /data/part1_1/verify13  = 'no'" type="string"/>
             <bind nodeset="/data/part1_1/princial_number" type="string"/>
-            <bind nodeset="/data/part1_1/verify14" type="string"/>
-            <bind nodeset="/data/part1_1/why14" relevant=" /data/part1_1/verify14  = 'no'" type="string"/>
-            <bind nodeset="/data/part1_2_1/type" type="string"/>
-            <bind nodeset="/data/part1_2_1/verify15" type="string"/>
-            <bind nodeset="/data/part1_2_1/why15" relevant=" /data/part1_2_1/verify15  = 'no'" type="string"/>
-            <bind nodeset="/data/part1_2_1/org_type_proof" type="string"/>
-            <bind nodeset="/data/part1_2_1/verify16" type="string"/>
-            <bind nodeset="/data/part1_2_1/why16" relevant=" /data/part1_2_1/verify16  = 'no'" type="string"/>
-            <bind nodeset="/data/part1_2_1/cmo_letter" type="string"/>
-            <bind nodeset="/data/part1_2_1/verify17" type="string"/>
-            <bind nodeset="/data/part1_2_1/why17" relevant=" /data/part1_2_1/verify17  = 'no'" type="string"/>
-            <bind nodeset="/data/part1_2_1/fire_noc" type="string"/>
-            <bind nodeset="/data/part1_2_1/verify18" type="string"/>
-            <bind nodeset="/data/part1_2_1/why18" relevant=" /data/part1_2_1/verify18  = 'no'" type="string"/>
-            <bind nodeset="/data/part1_2_2/bio_available" type="string"/>
-            <bind nodeset="/data/part1_2_2/verify19" type="string"/>
-            <bind nodeset="/data/part1_2_2/why19" relevant=" /data/part1_2_2/verify19  = 'no'" type="string"/>
-            <bind nodeset="/data/part1_2_2/bio_working" type="string"/>
-            <bind nodeset="/data/part1_2_2/verify20" type="string"/>
-            <bind nodeset="/data/part1_2_2/why20" relevant=" /data/part1_2_2/verify20  = 'no'" type="string"/>
-            <bind nodeset="/data/part1_2_2/virtual_class" type="string"/>
-            <bind nodeset="/data/part1_2_2/verify21" type="string"/>
-            <bind nodeset="/data/part1_2_2/why21" relevant=" /data/part1_2_2/verify21  = 'no'" type="string"/>
-            <bind nodeset="/data/part1_2_2/virtual_class_things" relevant="selected( /data/part1_2_2/virtual_class , 'Yes')" type="string"/>
-            <bind nodeset="/data/part1_2_2/verify22" type="string"/>
-            <bind nodeset="/data/part1_2_2/why22" relevant=" /data/part1_2_2/verify22  = 'no'" type="string"/>
-            <bind nodeset="/data/part1_3/anm1.1" type="int"/>
-            <bind nodeset="/data/part1_3/verify23" type="string"/>
-            <bind nodeset="/data/part1_3/why23" relevant=" /data/part1_3/verify23  = 'no'" type="string"/>
-            <bind nodeset="/data/part1_3/anm1.2" relevant=" /data/part1_3/anm1.1 &gt;0" type="int"/>
-            <bind nodeset="/data/part1_3/verify24" type="string"/>
-            <bind nodeset="/data/part1_3/why24" relevant=" /data/part1_3/verify24  = 'no'" type="string"/>
-            <bind nodeset="/data/part1_3/anm1.3" relevant=" /data/part1_3/anm1.1 &gt;0" type="int"/>
-            <bind nodeset="/data/part1_3/verify25" type="string"/>
-            <bind nodeset="/data/part1_3/why25" relevant=" /data/part1_3/verify25  = 'no'" type="string"/>
-            <bind nodeset="/data/part1_3/anm2.1" type="int"/>
-            <bind nodeset="/data/part1_3/verify26" type="string"/>
-            <bind nodeset="/data/part1_3/why26" relevant=" /data/part1_3/verify26  = 'no'" type="string"/>
-            <bind nodeset="/data/part1_3/anm2.2" relevant=" /data/part1_3/anm2.1 &gt;0" type="int"/>
-            <bind nodeset="/data/part1_3/verify27" type="string"/>
-            <bind nodeset="/data/part1_3/why27" relevant=" /data/part1_3/verify27  = 'no'" type="string"/>
-            <bind nodeset="/data/part1_3/anm2.3" relevant=" /data/part1_3/anm2.1 &gt;0" type="int"/>
-            <bind nodeset="/data/part1_3/verify28" type="string"/>
-            <bind nodeset="/data/part1_3/why28" relevant=" /data/part1_3/verify28  = 'no'" type="string"/>
-            <bind nodeset="/data/part1_3/gnm1.1" type="int"/>
-            <bind nodeset="/data/part1_3/verify29" type="string"/>
-            <bind nodeset="/data/part1_3/why29" relevant=" /data/part1_3/verify29  = 'no'" type="string"/>
-            <bind nodeset="/data/part1_3/gnm1.2" relevant=" /data/part1_3/gnm1.1 &gt;0" type="int"/>
-            <bind nodeset="/data/part1_3/verify30" type="string"/>
-            <bind nodeset="/data/part1_3/why30" relevant=" /data/part1_3/verify30  = 'no'" type="string"/>
-            <bind nodeset="/data/part1_3/gnm1.3" relevant=" /data/part1_3/gnm1.1 &gt;0" type="int"/>
-            <bind nodeset="/data/part1_3/verify31" type="string"/>
-            <bind nodeset="/data/part1_3/why31" relevant=" /data/part1_3/verify31  = 'no'" type="string"/>
-            <bind nodeset="/data/part1_3/gnm2.1" type="int"/>
-            <bind nodeset="/data/part1_3/verify32" type="string"/>
-            <bind nodeset="/data/part1_3/why32" relevant=" /data/part1_3/verify32  = 'no'" type="string"/>
-            <bind nodeset="/data/part1_3/gnm2.2" relevant=" /data/part1_3/gnm2.1 &gt;0" type="int"/>
-            <bind nodeset="/data/part1_3/verify33" type="string"/>
-            <bind nodeset="/data/part1_3/why33" relevant=" /data/part1_3/verify33  = 'no'" type="string"/>
-            <bind nodeset="/data/part1_3/gnm2.3" relevant=" /data/part1_3/gnm2.1 &gt;0" type="int"/>
-            <bind nodeset="/data/part1_3/verify34" type="string"/>
-            <bind nodeset="/data/part1_3/why34" relevant=" /data/part1_3/verify34  = 'no'" type="string"/>
-            <bind nodeset="/data/part1_3/gnm3.1" type="int"/>
-            <bind nodeset="/data/part1_3/verify35" type="string"/>
-            <bind nodeset="/data/part1_3/why35" relevant=" /data/part1_3/verify35  = 'no'" type="string"/>
-            <bind nodeset="/data/part1_3/gnm3.2" relevant=" /data/part1_3/gnm3.1 &gt;0" type="int"/>
-            <bind nodeset="/data/part1_3/verify36" type="string"/>
-            <bind nodeset="/data/part1_3/why36" relevant=" /data/part1_3/verify36  = 'no'" type="string"/>
-            <bind nodeset="/data/part1_3/gnm3.3" relevant=" /data/part1_3/gnm3.1 &gt;0" type="int"/>
-            <bind nodeset="/data/part1_3/verify37" type="string"/>
-            <bind nodeset="/data/part1_3/why37" relevant=" /data/part1_3/verify37  = 'no'" type="string"/>
-            <bind nodeset="/data/part1_3/pbbsc1.1" type="int"/>
-            <bind nodeset="/data/part1_3/verify38" type="string"/>
-            <bind nodeset="/data/part1_3/why38" relevant=" /data/part1_3/verify38  = 'no'" type="string"/>
-            <bind nodeset="/data/part1_3/pbbsc1.2" relevant=" /data/part1_3/pbbsc1.1 &gt;0" type="int"/>
-            <bind nodeset="/data/part1_3/verify39" type="string"/>
-            <bind nodeset="/data/part1_3/why39" relevant=" /data/part1_3/verify39  = 'no'" type="string"/>
-            <bind nodeset="/data/part1_3/pbbsc1.3" relevant=" /data/part1_3/pbbsc1.1 &gt;0" type="int"/>
-            <bind nodeset="/data/part1_3/verify40" type="string"/>
-            <bind nodeset="/data/part1_3/why40" relevant=" /data/part1_3/verify40  = 'no'" type="string"/>
-            <bind nodeset="/data/part1_3/pbbsc2.1" type="int"/>
-            <bind nodeset="/data/part1_3/verify41" type="string"/>
-            <bind nodeset="/data/part1_3/why41" relevant=" /data/part1_3/verify41  = 'no'" type="string"/>
-            <bind nodeset="/data/part1_3/pbbsc2.2" relevant=" /data/part1_3/pbbsc2.1 &gt;0" type="int"/>
-            <bind nodeset="/data/part1_3/verify42" type="string"/>
-            <bind nodeset="/data/part1_3/why42" relevant=" /data/part1_3/verify42  = 'no'" type="string"/>
-            <bind nodeset="/data/part1_3/pbbsc2.3" relevant=" /data/part1_3/pbbsc2.1 &gt;0" type="int"/>
-            <bind nodeset="/data/part1_3/verify43" type="string"/>
-            <bind nodeset="/data/part1_3/why43" relevant=" /data/part1_3/verify43  = 'no'" type="string"/>
-            <bind nodeset="/data/part1_3/bsc1.1" type="int"/>
-            <bind nodeset="/data/part1_3/verify44" type="string"/>
-            <bind nodeset="/data/part1_3/why44" relevant=" /data/part1_3/verify44  = 'no'" type="string"/>
-            <bind nodeset="/data/part1_3/bsc1.2" relevant=" /data/part1_3/bsc1.1 &gt;0" type="int"/>
-            <bind nodeset="/data/part1_3/verify45" type="string"/>
-            <bind nodeset="/data/part1_3/why45" relevant=" /data/part1_3/verify45  = 'no'" type="string"/>
-            <bind nodeset="/data/part1_3/bsc1.3" relevant=" /data/part1_3/bsc1.1 &gt;0" type="int"/>
-            <bind nodeset="/data/part1_3/verify46" type="string"/>
-            <bind nodeset="/data/part1_3/why46" relevant=" /data/part1_3/verify46  = 'no'" type="string"/>
-            <bind nodeset="/data/part1_3/bsc2.1" type="int"/>
-            <bind nodeset="/data/part1_3/verify47" type="string"/>
-            <bind nodeset="/data/part1_3/why47" relevant=" /data/part1_3/verify47  = 'no'" type="string"/>
-            <bind nodeset="/data/part1_3/bsc2.2" relevant=" /data/part1_3/bsc2.1 &gt;0" type="int"/>
-            <bind nodeset="/data/part1_3/verify48" type="string"/>
-            <bind nodeset="/data/part1_3/why48" relevant=" /data/part1_3/verify48  = 'no'" type="string"/>
-            <bind nodeset="/data/part1_3/bsc2.3" relevant=" /data/part1_3/bsc2.1 &gt;0" type="int"/>
-            <bind nodeset="/data/part1_3/verify49" type="string"/>
-            <bind nodeset="/data/part1_3/why49" relevant=" /data/part1_3/verify49  = 'no'" type="string"/>
-            <bind nodeset="/data/part1_3/bsc3.1" type="int"/>
-            <bind nodeset="/data/part1_3/verify50" type="string"/>
-            <bind nodeset="/data/part1_3/why50" relevant=" /data/part1_3/verify50  = 'no'" type="string"/>
-            <bind nodeset="/data/part1_3/bsc3.2" relevant=" /data/part1_3/bsc3.1 &gt;0" type="int"/>
-            <bind nodeset="/data/part1_3/verify51" type="string"/>
-            <bind nodeset="/data/part1_3/why51" relevant=" /data/part1_3/verify51  = 'no'" type="string"/>
-            <bind nodeset="/data/part1_3/bsc3.3" relevant=" /data/part1_3/bsc3.1 &gt;0" type="int"/>
-            <bind nodeset="/data/part1_3/verify52" type="string"/>
-            <bind nodeset="/data/part1_3/why52" relevant=" /data/part1_3/verify52  = 'no'" type="string"/>
-            <bind nodeset="/data/part1_3/bsc4.1" type="int"/>
-            <bind nodeset="/data/part1_3/verify53" type="string"/>
-            <bind nodeset="/data/part1_3/why53" relevant=" /data/part1_3/verify53  = 'no'" type="string"/>
-            <bind nodeset="/data/part1_3/bsc4.2" relevant=" /data/part1_3/bsc4.1 &gt;0" type="int"/>
-            <bind nodeset="/data/part1_3/verify54" type="string"/>
-            <bind nodeset="/data/part1_3/why54" relevant=" /data/part1_3/verify54  = 'no'" type="string"/>
-            <bind nodeset="/data/part1_3/bsc4.3" relevant=" /data/part1_3/bsc4.1 &gt;0" type="int"/>
-            <bind nodeset="/data/part1_3/verify55" type="string"/>
-            <bind nodeset="/data/part1_3/why55" relevant=" /data/part1_3/verify55  = 'no'" type="string"/>
-            <bind nodeset="/data/part1_3/msc1" type="int"/>
-            <bind nodeset="/data/part1_3/verify56" type="string"/>
-            <bind nodeset="/data/part1_3/why56" relevant=" /data/part1_3/verify56  = 'no'" type="string"/>
-            <bind nodeset="/data/part1_3/msc2" relevant=" /data/part1_3/msc1 &gt;0" type="int"/>
-            <bind nodeset="/data/part1_3/verify57" type="string"/>
-            <bind nodeset="/data/part1_3/why57" relevant=" /data/part1_3/verify57  = 'no'" type="string"/>
-            <bind nodeset="/data/part1_3/msc3" relevant=" /data/part1_3/msc1 &gt;0" type="int"/>
-            <bind nodeset="/data/part1_3/verify58" type="string"/>
-            <bind nodeset="/data/part1_3/why58" relevant=" /data/part1_3/verify58  = 'no'" type="string"/>
-            <bind nodeset="/data/part1_3/msc4" type="int"/>
-            <bind nodeset="/data/part1_3/verify59" type="string"/>
-            <bind nodeset="/data/part1_3/why59" relevant=" /data/part1_3/verify59  = 'no'" type="string"/>
-            <bind nodeset="/data/part1_3/msc5" relevant=" /data/part1_3/msc4 &gt;0" type="int"/>
-            <bind nodeset="/data/part1_3/verify60" type="string"/>
-            <bind nodeset="/data/part1_3/why60" relevant=" /data/part1_3/verify60  = 'no'" type="string"/>
-            <bind nodeset="/data/part1_3/msc6" relevant=" /data/part1_3/msc4 &gt;0" type="int"/>
-            <bind nodeset="/data/part1_3/verify61" type="string"/>
-            <bind nodeset="/data/part1_3/why61" relevant=" /data/part1_3/verify61  = 'no'" type="string"/>
-            <bind nodeset="/data/part1_3/msc7" type="int"/>
-            <bind nodeset="/data/part1_3/verify62" type="string"/>
-            <bind nodeset="/data/part1_3/why62" relevant=" /data/part1_3/verify62  = 'no'" type="string"/>
-            <bind nodeset="/data/part1_3/msc8" relevant=" /data/part1_3/msc7 &gt;0" type="int"/>
-            <bind nodeset="/data/part1_3/verify63" type="string"/>
-            <bind nodeset="/data/part1_3/why63" relevant=" /data/part1_3/verify63  = 'no'" type="string"/>
-            <bind nodeset="/data/part1_3/msc9" relevant=" /data/part1_3/msc7 &gt;0" type="int"/>
-            <bind nodeset="/data/part1_3/verify64" type="string"/>
-            <bind nodeset="/data/part1_3/why64" relevant=" /data/part1_3/verify64  = 'no'" type="string"/>
-            <bind nodeset="/data/part1_3/msc10" type="int"/>
-            <bind nodeset="/data/part1_3/verify65" type="string"/>
-            <bind nodeset="/data/part1_3/why65" relevant=" /data/part1_3/verify65  = 'no'" type="string"/>
-            <bind nodeset="/data/part1_3/msc11" relevant=" /data/part1_3/msc10 &gt;0" type="int"/>
-            <bind nodeset="/data/part1_3/verify66" type="string"/>
-            <bind nodeset="/data/part1_3/why66" relevant=" /data/part1_3/verify66  = 'no'" type="string"/>
-            <bind nodeset="/data/part1_3/msc12" relevant=" /data/part1_3/msc10 &gt;0" type="int"/>
-            <bind nodeset="/data/part1_3/verify67" type="string"/>
-            <bind nodeset="/data/part1_3/why67" relevant=" /data/part1_3/verify67  = 'no'" type="string"/>
-            <bind nodeset="/data/part1_3/msc13" type="int"/>
-            <bind nodeset="/data/part1_3/verify68" type="string"/>
-            <bind nodeset="/data/part1_3/why68" relevant=" /data/part1_3/verify68  = 'no'" type="string"/>
-            <bind nodeset="/data/part1_3/msc14" relevant=" /data/part1_3/msc13 &gt;0" type="int"/>
-            <bind nodeset="/data/part1_3/verify69" type="string"/>
-            <bind nodeset="/data/part1_3/why69" relevant=" /data/part1_3/verify69  = 'no'" type="string"/>
-            <bind nodeset="/data/part1_3/msc15" relevant=" /data/part1_3/msc13 &gt;0" type="int"/>
-            <bind nodeset="/data/part1_3/verify70" type="string"/>
-            <bind nodeset="/data/part1_3/why70" relevant=" /data/part1_3/verify70  = 'no'" type="string"/>
-            <bind nodeset="/data/part1_3/msc16" type="int"/>
-            <bind nodeset="/data/part1_3/verify71" type="string"/>
-            <bind nodeset="/data/part1_3/why71" relevant=" /data/part1_3/verify71  = 'no'" type="string"/>
-            <bind nodeset="/data/part1_3/msc17" relevant=" /data/part1_3/msc16 &gt;0" type="int"/>
-            <bind nodeset="/data/part1_3/verify72" type="string"/>
-            <bind nodeset="/data/part1_3/why72" relevant=" /data/part1_3/verify72  = 'no'" type="string"/>
-            <bind nodeset="/data/part1_3/msc18" relevant=" /data/part1_3/msc16 &gt;0" type="int"/>
-            <bind nodeset="/data/part1_3/verify73" type="string"/>
-            <bind nodeset="/data/part1_3/why73" relevant=" /data/part1_3/verify73  = 'no'" type="string"/>
-            <bind nodeset="/data/part1_3/msc19" type="int"/>
-            <bind nodeset="/data/part1_3/verify74" type="string"/>
-            <bind nodeset="/data/part1_3/why74" relevant=" /data/part1_3/verify74  = 'no'" type="string"/>
-            <bind nodeset="/data/part1_3/msc20" relevant=" /data/part1_3/msc19 &gt;0" type="int"/>
-            <bind nodeset="/data/part1_3/verify75" type="string"/>
-            <bind nodeset="/data/part1_3/why75" relevant=" /data/part1_3/verify75  = 'no'" type="string"/>
-            <bind nodeset="/data/part1_3/msc21" relevant=" /data/part1_3/msc19 &gt;0" type="int"/>
-            <bind nodeset="/data/part1_3/verify76" type="string"/>
-            <bind nodeset="/data/part1_3/why76" relevant=" /data/part1_3/verify76  = 'no'" type="string"/>
-            <bind nodeset="/data/part1_3/msc22" type="int"/>
-            <bind nodeset="/data/part1_3/verify77" type="string"/>
-            <bind nodeset="/data/part1_3/why77" relevant=" /data/part1_3/verify77  = 'no'" type="string"/>
-            <bind nodeset="/data/part1_3/msc23" relevant=" /data/part1_3/msc22 &gt;0" type="int"/>
-            <bind nodeset="/data/part1_3/verify78" type="string"/>
-            <bind nodeset="/data/part1_3/why78" relevant=" /data/part1_3/verify78  = 'no'" type="string"/>
-            <bind nodeset="/data/part1_3/msc24" relevant=" /data/part1_3/msc22 &gt;0" type="int"/>
-            <bind nodeset="/data/part1_3/verify79" type="string"/>
-            <bind nodeset="/data/part1_3/why79" relevant=" /data/part1_3/verify79  = 'no'" type="string"/>
-            <bind nodeset="/data/part1_3/msc25" type="int"/>
-            <bind nodeset="/data/part1_3/verify80" type="string"/>
-            <bind nodeset="/data/part1_3/why80" relevant=" /data/part1_3/verify80  = 'no'" type="string"/>
-            <bind nodeset="/data/part1_3/msc26" relevant=" /data/part1_3/msc25 &gt;0" type="int"/>
-            <bind nodeset="/data/part1_3/verify81" type="string"/>
-            <bind nodeset="/data/part1_3/why81" relevant=" /data/part1_3/verify81  = 'no'" type="string"/>
-            <bind nodeset="/data/part1_3/msc27" relevant=" /data/part1_3/msc25 &gt;0" type="int"/>
-            <bind nodeset="/data/part1_3/verify82" type="string"/>
-            <bind nodeset="/data/part1_3/why82" relevant=" /data/part1_3/verify82  = 'no'" type="string"/>
-            <bind nodeset="/data/part1_3/msc28" type="int"/>
-            <bind nodeset="/data/part1_3/verify83" type="string"/>
-            <bind nodeset="/data/part1_3/why83" relevant=" /data/part1_3/verify83  = 'no'" type="string"/>
-            <bind nodeset="/data/part1_3/msc29" relevant=" /data/part1_3/msc28 &gt;0" type="int"/>
-            <bind nodeset="/data/part1_3/verify84" type="string"/>
-            <bind nodeset="/data/part1_3/why84" relevant=" /data/part1_3/verify84  = 'no'" type="string"/>
-            <bind nodeset="/data/part1_3/msc30" relevant=" /data/part1_3/msc28 &gt;0" type="int"/>
-            <bind nodeset="/data/part1_3/verify85" type="string"/>
-            <bind nodeset="/data/part1_3/why85" relevant=" /data/part1_3/verify85  = 'no'" type="string"/>
-            <bind nodeset="/data/part1_4_1/teching_block" type="string"/>
-            <bind nodeset="/data/part1_4_1/verify86" type="string"/>
-            <bind nodeset="/data/part1_4_1/why86" relevant=" /data/part1_4_1/verify86  = 'no'" type="string"/>
-            <bind nodeset="/data/part1_4_1/classrooms" type="int"/>
-            <bind nodeset="/data/part1_4_1/verify87" type="string"/>
-            <bind nodeset="/data/part1_4_1/why87" relevant=" /data/part1_4_1/verify87  = 'no'" type="string"/>
-            <bind nodeset="/data/part1_4_1/enough_space" type="int"/>
-            <bind nodeset="/data/part1_4_1/verify88" type="string"/>
-            <bind nodeset="/data/part1_4_1/why88" relevant=" /data/part1_4_1/verify88  = 'no'" type="string"/>
-            <bind nodeset="/data/part1_4_1/principal_office" type="string"/>
-            <bind nodeset="/data/part1_4_1/verify89" type="string"/>
-            <bind nodeset="/data/part1_4_1/why89" relevant=" /data/part1_4_1/verify89  = 'no'" type="string"/>
-            <bind nodeset="/data/part1_4_1/teaching_fac" type="string"/>
-            <bind nodeset="/data/part1_4_1/verify90" type="string"/>
-            <bind nodeset="/data/part1_4_1/why90" relevant=" /data/part1_4_1/verify90  = 'no'" type="string"/>
-            <bind nodeset="/data/part1_4_1/staff" type="string"/>
-            <bind nodeset="/data/part1_4_1/verify91" type="string"/>
-            <bind nodeset="/data/part1_4_1/why91" relevant=" /data/part1_4_1/verify91  = 'no'" type="string"/>
-            <bind nodeset="/data/part1_4_3/library_comp" type="string"/>
-            <bind nodeset="/data/part1_4_3/verify98" type="string"/>
-            <bind nodeset="/data/part1_4_3/why98" relevant=" /data/part1_4_3/verify98  = 'no'" type="string"/>
-            <bind nodeset="/data/part1_4_3/books" type="int"/>
-            <bind nodeset="/data/part1_4_3/verify99" type="string"/>
-            <bind nodeset="/data/part1_4_3/why99" relevant=" /data/part1_4_3/verify99  = 'no'" type="string"/>
-            <bind nodeset="/data/part1_4_3/journal" type="int"/>
-            <bind nodeset="/data/part1_4_3/verify100" type="string"/>
-            <bind nodeset="/data/part1_4_3/why100" relevant=" /data/part1_4_3/verify100  = 'no'" type="string"/>
-            <bind nodeset="/data/part1_4_3/library_seating" type="int"/>
-            <bind nodeset="/data/part1_4_3/verify101" type="string"/>
-            <bind nodeset="/data/part1_4_3/why101" relevant=" /data/part1_4_3/verify101  = 'no'" type="string"/>
-            <bind nodeset="/data/part1_4_3/util_register" type="string"/>
-            <bind nodeset="/data/part1_4_3/verify102" type="string"/>
-            <bind nodeset="/data/part1_4_3/why102" relevant=" /data/part1_4_3/verify102  = 'no'" type="string"/>
-            <bind nodeset="/data/part1_4_4/av_available" type="string"/>
-            <bind nodeset="/data/part1_4_4/verify103" type="string"/>
-            <bind nodeset="/data/part1_4_4/why103" relevant=" /data/part1_4_4/verify103  = 'no'" type="string"/>
-            <bind nodeset="/data/part1_4_4/av_functional" type="string"/>
-            <bind nodeset="/data/part1_4_4/verify104" type="string"/>
-            <bind nodeset="/data/part1_4_4/why104" relevant=" /data/part1_4_4/verify104  = 'no'" type="string"/>
-            <bind nodeset="/data/part1_5/hostel" type="string"/>
-            <bind nodeset="/data/part1_5/verify105" type="string"/>
-            <bind nodeset="/data/part1_5/why105" relevant=" /data/part1_5/verify105  = 'no'" type="string"/>
-            <bind nodeset="/data/part1_5/beds" type="int"/>
-            <bind nodeset="/data/part1_5/verify106" type="string"/>
-            <bind nodeset="/data/part1_5/why106" relevant=" /data/part1_5/verify106  = 'no'" type="string"/>
-            <bind nodeset="/data/part1_5/seats_dining" type="int"/>
-            <bind nodeset="/data/part1_5/verify107" type="string"/>
-            <bind nodeset="/data/part1_5/why107" relevant=" /data/part1_5/verify107  = 'no'" type="string"/>
-            <bind nodeset="/data/part1_5/water_supply" type="string"/>
-            <bind nodeset="/data/part1_5/verify108" type="string"/>
-            <bind nodeset="/data/part1_5/why108" relevant=" /data/part1_5/verify108  = 'no'" type="string"/>
-            <bind nodeset="/data/part1_5/hot_water_supply" type="string"/>
-            <bind nodeset="/data/part1_5/verify109" type="string"/>
-            <bind nodeset="/data/part1_5/why109" relevant=" /data/part1_5/verify109  = 'no'" type="string"/>
-            <bind nodeset="/data/part1_5/safe_water_supply" type="string"/>
-            <bind nodeset="/data/part1_5/verify110" type="string"/>
-            <bind nodeset="/data/part1_5/why110" relevant=" /data/part1_5/verify110  = 'no'" type="string"/>
-            <bind nodeset="/data/part1_5/toilets" type="int"/>
-            <bind nodeset="/data/part1_5/verify111" type="string"/>
-            <bind nodeset="/data/part1_5/why111" relevant=" /data/part1_5/verify111  = 'no'" type="string"/>
-            <bind nodeset="/data/part1_6/fac_registered" type="int"/>
-            <bind nodeset="/data/part1_6/verify112" type="string"/>
-            <bind nodeset="/data/part1_6/why112" relevant=" /data/part1_6/verify112  = 'no'" type="string"/>
-            <bind nodeset="/data/part1_6/fac_present" type="int"/>
-            <bind nodeset="/data/part1_6/verify113" type="string"/>
-            <bind nodeset="/data/part1_6/why113" relevant=" /data/part1_6/verify113  = 'no'" type="string"/>
-            <bind nodeset="/data/part1_6/fac_bsc" type="int"/>
-            <bind nodeset="/data/part1_6/verify114" type="string"/>
-            <bind nodeset="/data/part1_6/why114" relevant=" /data/part1_6/verify114  = 'no'" type="string"/>
-            <bind nodeset="/data/part1_6/fac_msc" type="int"/>
-            <bind nodeset="/data/part1_6/verify115" type="string"/>
-            <bind nodeset="/data/part1_6/why115" relevant=" /data/part1_6/verify115  = 'no'" type="string"/>
-            <bind nodeset="/data/part1_7/parent_add" type="string"/>
-            <bind nodeset="/data/part1_7/verify116" type="string"/>
-            <bind nodeset="/data/part1_7/why116" relevant=" /data/part1_7/verify116  = 'no'" type="string"/>
-            <bind nodeset="/data/part1_7/hosp_geocode" type="string"/>
-            <bind nodeset="/data/part1_7/verify117" type="string"/>
-            <bind nodeset="/data/part1_7/why117" relevant=" /data/part1_7/verify117  = 'no'" type="string"/>
-            <bind nodeset="/data/part1_7/beds_hosp" type="int"/>
-            <bind nodeset="/data/part1_7/verify118" type="string"/>
-            <bind nodeset="/data/part1_7/why118" relevant=" /data/part1_7/verify118  = 'no'" type="string"/>
-            <bind nodeset="/data/part1_7/total_ipd" type="int"/>
-            <bind nodeset="/data/part1_7/verify119" type="string"/>
-            <bind nodeset="/data/part1_7/why119" relevant=" /data/part1_7/verify119  = 'no'" type="string"/>
-            <bind nodeset="/data/part1_7/dept_parent_hosp" type="string"/>
-            <bind nodeset="/data/part1_7/verify120" type="string"/>
-            <bind nodeset="/data/part1_7/why120" relevant=" /data/part1_7/verify120  = 'no'" type="string"/>
-            <bind nodeset="/data/part1_8/nurse_emp" type="int"/>
-            <bind nodeset="/data/part1_8/verify121" type="string"/>
-            <bind nodeset="/data/part1_8/why121" relevant=" /data/part1_8/verify121  = 'no'" type="string"/>
-            <bind nodeset="/data/part1_8/nurse_gnm" type="int"/>
-            <bind nodeset="/data/part1_8/verify122" type="string"/>
-            <bind nodeset="/data/part1_8/why122" relevant=" /data/part1_8/verify122  = 'no'" type="string"/>
-            <bind nodeset="/data/part1_8/nurse_bsc" type="int"/>
-            <bind nodeset="/data/part1_8/verify123" type="string"/>
-            <bind nodeset="/data/part1_8/why123" relevant=" /data/part1_8/verify123  = 'no'" type="string"/>
-            <bind nodeset="/data/part1_8/nurse_msc" type="int"/>
-            <bind nodeset="/data/part1_8/verify124" type="string"/>
-            <bind nodeset="/data/part1_8/why124" relevant=" /data/part1_8/verify124  = 'no'" type="string"/>
-            <bind nodeset="/data/part1_9/f_name1" type="string"/>
-            <bind nodeset="/data/part1_9/verify125" type="string"/>
-            <bind nodeset="/data/part1_9/why125" relevant=" /data/part1_9/verify125  = 'no'" type="string"/>
-            <bind nodeset="/data/part1_9/f_type1" type="string"/>
-            <bind nodeset="/data/part1_9/verify126" type="string"/>
-            <bind nodeset="/data/part1_9/why126" relevant=" /data/part1_9/verify126  = 'no'" type="string"/>
-            <bind nodeset="/data/part1_9/f_reg1" type="string"/>
-            <bind nodeset="/data/part1_9/verify127" type="string"/>
-            <bind nodeset="/data/part1_9/why127" relevant=" /data/part1_9/verify127  = 'no'" type="string"/>
-            <bind nodeset="/data/part1_9/f_name2" type="string"/>
-            <bind nodeset="/data/part1_9/verify128" type="string"/>
-            <bind nodeset="/data/part1_9/why128" relevant=" /data/part1_9/verify128  = 'no'" type="string"/>
-            <bind nodeset="/data/part1_9/f_type2" type="string"/>
-            <bind nodeset="/data/part1_9/verify129" type="string"/>
-            <bind nodeset="/data/part1_9/why129" relevant=" /data/part1_9/verify129  = 'no'" type="string"/>
-            <bind nodeset="/data/part1_9/f_reg2" type="string"/>
-            <bind nodeset="/data/part1_9/verify130" type="string"/>
-            <bind nodeset="/data/part1_9/why130" relevant=" /data/part1_9/verify130  = 'no'" type="string"/>
-            <bind nodeset="/data/part1_9/f_name3" type="string"/>
-            <bind nodeset="/data/part1_9/verify131" type="string"/>
-            <bind nodeset="/data/part1_9/why131" relevant=" /data/part1_9/verify131  = 'no'" type="string"/>
-            <bind nodeset="/data/part1_9/f_type3" type="string"/>
-            <bind nodeset="/data/part1_9/verify132" type="string"/>
-            <bind nodeset="/data/part1_9/why132" relevant=" /data/part1_9/verify132  = 'no'" type="string"/>
-            <bind nodeset="/data/part1_9/f_reg3" type="string"/>
-            <bind nodeset="/data/part1_9/verify133" type="string"/>
-            <bind nodeset="/data/part1_9/why133" relevant=" /data/part1_9/verify133  = 'no'" type="string"/>
-            <bind nodeset="/data/misc/doc1" type="string"/>
-            <bind nodeset="/data/misc/verify175" type="string"/>
-            <bind nodeset="/data/misc/why175" relevant=" /data/misc/verify175  = 'no'" type="string"/>
-            <bind nodeset="/data/misc/doc2" type="string"/>
-            <bind nodeset="/data/misc/verify176" type="string"/>
-            <bind nodeset="/data/misc/why176" relevant=" /data/misc/verify176  = 'no'" type="string"/>
-            <bind nodeset="/data/misc/doc3" type="string"/>
-            <bind nodeset="/data/misc/verify177" type="string"/>
-            <bind nodeset="/data/misc/why177" relevant=" /data/misc/verify177  = 'no'" type="string"/>
-            <bind nodeset="/data/misc/doc4" type="string"/>
-            <bind nodeset="/data/misc/verify178" type="string"/>
-            <bind nodeset="/data/misc/why178" relevant=" /data/misc/verify178  = 'no'" type="string"/>
-            <bind nodeset="/data/misc/doc5" type="string"/>
-            <bind nodeset="/data/misc/verify179" type="string"/>
-            <bind nodeset="/data/misc/why179" relevant=" /data/misc/verify179  = 'no'" type="string"/>
-            <bind nodeset="/data/misc/doc6" type="string"/>
-            <bind nodeset="/data/misc/verify180" type="string"/>
-            <bind nodeset="/data/misc/why180" relevant=" /data/misc/verify180  = 'no'" type="string"/>
-            <bind nodeset="/data/misc/doc7" type="string"/>
-            <bind nodeset="/data/misc/verify181" type="string"/>
-            <bind nodeset="/data/misc/why181" relevant=" /data/misc/verify181  = 'no'" type="string"/>
+            <bind nodeset="/data/part1_2_1/nameofTSMC" type="string"/>
+            <bind nodeset="/data/part1_2_1/part1_2_2/part1_2_2a" type="string"/>
+            <bind nodeset="/data/part1_2_1/part1_2_2/part1_2_2b" type="string"/>
+            <bind nodeset="/data/part1_2_1/part1_2_3/part1_2_3a" type="string"/>
+            <bind nodeset="/data/part1_2_1/part1_2_3/part1_2_3b" type="string"/>
+            <bind nodeset="/data/part1_2_1/part1_2_4" type="string"/>
+            <bind nodeset="/data/part1_2_1/part1_2_4g" relevant=" /data/part1_2_1/part1_2_4 ='yes'"/>
+            <bind nodeset="/data/part1_2_1/part1_2_4g/part1_2_4a" type="string"/>
+            <bind nodeset="/data/part1_2_1/part1_2_4g/part1_2_4b" type="string"/>
+            <bind nodeset="/data/part1_2_1/part1_2_4g/part1_2_4c" type="string"/>
+            <bind nodeset="/data/part1_2_1/part1_2_4g/part1_2_4d" type="string"/>
+            <bind nodeset="/data/part1_2_1/part1_2_4g/part1_2_4e" type="string"/>
+            <bind nodeset="/data/part1_3/p1_3" type="string"/>
+            <bind nodeset="/data/part1_3/p1_3.1" type="string"/>
+            <bind nodeset="/data/part1_3/part1_3.1" relevant=" /data/part1_3/p1_3.1 ='yes'"/>
+            <bind nodeset="/data/part1_3/part1_3.1/anm1.1" type="int"/>
+            <bind nodeset="/data/part1_3/part1_3.1/anm1.2" type="int"/>
+            <bind nodeset="/data/part1_3/part1_3.1/anm1.3" type="int"/>
+            <bind nodeset="/data/part1_3/part1_3.1/anm2.2" type="int"/>
+            <bind nodeset="/data/part1_3/part1_3.1/anm2.3" type="int"/>
+            <bind nodeset="/data/part1_3/p1_3.2" type="string"/>
+            <bind nodeset="/data/part1_3/part1_3.2" relevant=" /data/part1_3/p1_3.2 ='yes'"/>
+            <bind nodeset="/data/part1_3/part1_3.2/gnm1.1" type="int"/>
+            <bind nodeset="/data/part1_3/part1_3.2/gnm1.2" type="int"/>
+            <bind nodeset="/data/part1_3/part1_3.2/gnm1.3" type="int"/>
+            <bind nodeset="/data/part1_3/part1_3.2/gnm2.2" type="int"/>
+            <bind nodeset="/data/part1_3/part1_3.2/gnm2.3" type="int"/>
+            <bind nodeset="/data/part1_3/part1_3.2/gnm3.2" type="int"/>
+            <bind nodeset="/data/part1_3/part1_3.2/gnm3.3" type="int"/>
+            <bind nodeset="/data/part1_3/p1_3.3" type="string"/>
+            <bind nodeset="/data/part1_3/part1_3.3" relevant=" /data/part1_3/p1_3.3 ='yes'"/>
+            <bind nodeset="/data/part1_3/part1_3.3/pbbsc1.1" type="int"/>
+            <bind nodeset="/data/part1_3/part1_3.3/pbbsc1.2" type="int"/>
+            <bind nodeset="/data/part1_3/part1_3.3/pbbsc1.3" type="int"/>
+            <bind nodeset="/data/part1_3/part1_3.3/pbbsc2.2" type="int"/>
+            <bind nodeset="/data/part1_3/part1_3.3/pbbsc2.3" type="int"/>
+            <bind nodeset="/data/part1_3/p1_3.4" type="string"/>
+            <bind nodeset="/data/part1_3/part1_3.4" relevant=" /data/part1_3/p1_3.4 ='yes'"/>
+            <bind nodeset="/data/part1_3/part1_3.4/bsc1.1" type="int"/>
+            <bind nodeset="/data/part1_3/part1_3.4/bsc1.2" type="int"/>
+            <bind nodeset="/data/part1_3/part1_3.4/bsc1.3" type="int"/>
+            <bind nodeset="/data/part1_3/part1_3.4/bsc2.2" type="int"/>
+            <bind nodeset="/data/part1_3/part1_3.4/bsc2.3" type="int"/>
+            <bind nodeset="/data/part1_3/part1_3.4/bsc3.2" type="int"/>
+            <bind nodeset="/data/part1_3/part1_3.4/bsc3.3" type="int"/>
+            <bind nodeset="/data/part1_3/part1_3.4/bsc4.2" type="int"/>
+            <bind nodeset="/data/part1_3/part1_3.4/bsc4.3" type="int"/>
+            <bind nodeset="/data/part1_3/p1_3.5" type="string"/>
+            <bind nodeset="/data/part1_3/part1_3.5" relevant=" /data/part1_3/p1_3.5 ='yes'"/>
+            <bind nodeset="/data/part1_3/part1_3.5/msc1" type="int"/>
+            <bind nodeset="/data/part1_3/part1_3.5/msc2" type="int"/>
+            <bind nodeset="/data/part1_3/part1_3.5/msc3" type="int"/>
+            <bind nodeset="/data/part1_3/part1_3.5/msc5" type="int"/>
+            <bind nodeset="/data/part1_3/part1_3.5/msc6" type="int"/>
+            <bind nodeset="/data/part1_3/p1_3.6" type="string"/>
+            <bind nodeset="/data/part1_3/part1_3.6" relevant=" /data/part1_3/p1_3.6 ='yes'"/>
+            <bind nodeset="/data/part1_3/part1_3.6/msc7" type="int"/>
+            <bind nodeset="/data/part1_3/part1_3.6/msc8" type="int"/>
+            <bind nodeset="/data/part1_3/part1_3.6/msc9" type="int"/>
+            <bind nodeset="/data/part1_3/part1_3.6/msc11" type="int"/>
+            <bind nodeset="/data/part1_3/part1_3.6/msc12" type="int"/>
+            <bind nodeset="/data/part1_3/p1_3.7" type="string"/>
+            <bind nodeset="/data/part1_3/part1_3.7" relevant=" /data/part1_3/p1_3.7 ='yes'"/>
+            <bind nodeset="/data/part1_3/part1_3.7/msc13" type="int"/>
+            <bind nodeset="/data/part1_3/part1_3.7/msc14" type="int"/>
+            <bind nodeset="/data/part1_3/part1_3.7/msc15" type="int"/>
+            <bind nodeset="/data/part1_3/part1_3.7/msc16" type="int"/>
+            <bind nodeset="/data/part1_3/part1_3.7/msc17" type="int"/>
+            <bind nodeset="/data/part1_3/p1_3.8" type="string"/>
+            <bind nodeset="/data/part1_3/part1_3.8" relevant=" /data/part1_3/p1_3.8 ='yes'"/>
+            <bind nodeset="/data/part1_3/part1_3.8/msc18" type="int"/>
+            <bind nodeset="/data/part1_3/part1_3.8/msc19" type="int"/>
+            <bind nodeset="/data/part1_3/part1_3.8/msc20" type="int"/>
+            <bind nodeset="/data/part1_3/part1_3.8/msc21" type="int"/>
+            <bind nodeset="/data/part1_3/part1_3.8/msc22" type="int"/>
+            <bind nodeset="/data/part1_3/p1_3.9" type="string"/>
+            <bind nodeset="/data/part1_3/part1_3.9" relevant=" /data/part1_3/p1_3.9 ='yes'"/>
+            <bind nodeset="/data/part1_3/part1_3.9/msc23" type="int"/>
+            <bind nodeset="/data/part1_3/part1_3.9/msc24" type="int"/>
+            <bind nodeset="/data/part1_3/part1_3.9/msc25" type="int"/>
+            <bind nodeset="/data/part1_3/part1_3.9/msc26" type="int"/>
+            <bind nodeset="/data/part1_3/part1_3.9/msc27" type="int"/>
+            <bind nodeset="/data/part1_4/part1_4.1" type="string"/>
+            <bind nodeset="/data/part1_4/part1_4.2" type="int"/>
+            <bind nodeset="/data/part1_4/part1_4.2.1" type="string"/>
+            <bind nodeset="/data/part1_4/part1_4.3/part1_4.3a" type="string"/>
+            <bind nodeset="/data/part1_4/part1_4.3/part1_4.3b" type="string"/>
+            <bind nodeset="/data/part1_4/part1_4.3/part1_4.3c" type="string"/>
+            <bind nodeset="/data/part1_4_6/library_comp" type="string"/>
+            <bind nodeset="/data/part1_4_6/verify98" type="string"/>
+            <bind nodeset="/data/part1_4_6/why98" relevant=" /data/part1_4_6/verify98  = 'no'" type="string"/>
+            <bind nodeset="/data/part1_4_6/books" type="int"/>
+            <bind nodeset="/data/part1_4_6/verify99" type="string"/>
+            <bind nodeset="/data/part1_4_6/why99" relevant=" /data/part1_4_6/verify99  = 'no'" type="string"/>
+            <bind nodeset="/data/part1_4_6/journal" type="int"/>
+            <bind nodeset="/data/part1_4_6/verify100" type="string"/>
+            <bind nodeset="/data/part1_4_6/why100" relevant=" /data/part1_4_6/verify100  = 'no'" type="string"/>
+            <bind nodeset="/data/part1_4_6/library_seating" type="int"/>
+            <bind nodeset="/data/part1_4_6/verify101" type="string"/>
+            <bind nodeset="/data/part1_4_6/why101" relevant=" /data/part1_4_6/verify101  = 'no'" type="string"/>
+            <bind nodeset="/data/part1_4_6/util_register" type="string"/>
+            <bind nodeset="/data/part1_4_6/verify102" type="string"/>
+            <bind nodeset="/data/part1_4_6/why102" relevant=" /data/part1_4_6/verify102  = 'no'" type="string"/>
+            <bind nodeset="/data/part1_4_6/remark103" type="string"/>
+            <bind nodeset="/data/part1_4_7/part1_4_7.1" readonly="true()" type="string"/>
+            <bind nodeset="/data/part1_4_7/part1_4_7.1a" type="string"/>
+            <bind nodeset="/data/part1_4_7/part1_4_7.1b" relevant=" /data/part1_4_7/part1_4_7.1a ='yes'" type="string"/>
+            <bind nodeset="/data/part1_4_7/part1_4_7.1c" type="string"/>
+            <bind nodeset="/data/part1_4_7/part1_4_7.2" readonly="true()" type="string"/>
+            <bind nodeset="/data/part1_4_7/part1_4_7.2a" type="string"/>
+            <bind nodeset="/data/part1_4_7/part1_4_7.2b" relevant=" /data/part1_4_7/part1_4_7.2a ='yes'" type="string"/>
+            <bind nodeset="/data/part1_4_7/part1_4_7.2c" type="string"/>
+            <bind nodeset="/data/part1_4_7/part1_4_7.3" readonly="true()" type="string"/>
+            <bind nodeset="/data/part1_4_7/part1_4_7.3a" type="string"/>
+            <bind nodeset="/data/part1_4_7/part1_4_7.3b" relevant=" /data/part1_4_7/part1_4_7.3a ='yes'" type="string"/>
+            <bind nodeset="/data/part1_4_7/part1_4_7.3c" type="string"/>
+            <bind nodeset="/data/part1_4_7/part1_4_7.4" readonly="true()" type="string"/>
+            <bind nodeset="/data/part1_4_7/part1_4_7.4a" type="string"/>
+            <bind nodeset="/data/part1_4_7/part1_4_7.4b" relevant=" /data/part1_4_7/part1_4_7.4a ='yes'" type="string"/>
+            <bind nodeset="/data/part1_4_7/part1_4_7.4c" type="string"/>
+            <bind nodeset="/data/part1_4_7/part1_4_7.5" readonly="true()" type="string"/>
+            <bind nodeset="/data/part1_4_7/part1_4_7.5a" type="string"/>
+            <bind nodeset="/data/part1_4_7/part1_4_7.5b" relevant=" /data/part1_4_7/part1_4_7.5a ='yes'" type="string"/>
+            <bind nodeset="/data/part1_4_7/part1_4_7.5c" type="string"/>
+            <bind nodeset="/data/part1_5/part1_5.1" type="string"/>
+            <bind nodeset="/data/part1_5/part1_5.2" type="int"/>
+            <bind nodeset="/data/part1_5/part1_5.3" type="int"/>
+            <bind nodeset="/data/part1_5/part1_5.4" type="string"/>
+            <bind nodeset="/data/part1_5/part1_5.5" type="string"/>
+            <bind nodeset="/data/part1_5/part1_5.6" type="string"/>
+            <bind nodeset="/data/part1_5/part1_5.7" type="int"/>
+            <bind nodeset="/data/part1_10/part1_10.1" type="string"/>
+            <bind nodeset="/data/part1_10/part1_10.1r" relevant=" /data/part1_10/part1_10.1 ='yes'" type="string"/>
+            <bind nodeset="/data/part1_10/part1_10.2" type="string"/>
+            <bind nodeset="/data/part1_10/part1_10.2r" relevant=" /data/part1_10/part1_10.2 ='yes'" type="string"/>
+            <bind nodeset="/data/part1_10/part1_10.3" type="string"/>
+            <bind nodeset="/data/part1_10/part1_10.3r" relevant=" /data/part1_10/part1_10.3 ='yes'" type="string"/>
+            <bind nodeset="/data/part1_10/part1_10.4" type="string"/>
+            <bind nodeset="/data/part1_10/part1_10.4r" relevant=" /data/part1_10/part1_10.4 ='yes'" type="string"/>
+            <bind nodeset="/data/part1_10/part1_10.5" type="string"/>
+            <bind nodeset="/data/part1_10/part1_10.5r" relevant=" /data/part1_10/part1_10.5 ='yes'" type="string"/>
+            <bind nodeset="/data/part1_10/part1_10.6" type="string"/>
+            <bind nodeset="/data/part1_10/part1_10.6r" relevant=" /data/part1_10/part1_10.6 ='yes'" type="string"/>
+            <bind nodeset="/data/part1_10/part1_10.7" type="string"/>
+            <bind nodeset="/data/part1_10/part1_10.7r" relevant=" /data/part1_10/part1_10.7 ='yes'" type="string"/>
+            <bind nodeset="/data/part2/p_4/p_4.1" type="string"/>
+            <bind nodeset="/data/part2/p_4/p_4.2" type="string"/>
+            <bind nodeset="/data/part2/p_4/p_4.3" type="string"/>
+            <bind nodeset="/data/part2/p_4/p_4.4" type="string"/>
             <bind jr:preload="uid" nodeset="/data/meta/instanceID" readonly="true()" type="string"/>
         </model>
     </h:head>
     <h:body class="pages">
         <group appearance="field-list" ref="/data/part1_1">
             <label>Basic Infrastructure</label>
-            <input ref="/data/part1_1/name">
+            <input ref="/data/part1_1/nameofIns">
                 <label>Name of institution</label>
-            </input>
-            <select1 appearance="table-list" ref="/data/part1_1/verify1">
-                <label>Verified?</label>
-                <item>
-                    <label>Yes</label>
-                    <value>yes</value>
-                </item>
-                <item>
-                    <label>No</label>
-                    <value>no</value>
-                </item>
-            </select1>
-            <input ref="/data/part1_1/why1">
-                <label>Reason for not verified?</label>
             </input>
             <input appearance="minimal" ref="/data/part1_1/dist">
                 <label>District</label>
             </input>
-            <select1 appearance="table-list" ref="/data/part1_1/verify2">
-                <label>Verified?</label>
-                <item>
-                    <label>Yes</label>
-                    <value>yes</value>
-                </item>
-                <item>
-                    <label>No</label>
-                    <value>no</value>
-                </item>
-            </select1>
-            <input ref="/data/part1_1/why2">
-                <label>Reason for not verified?</label>
-            </input>
             <input ref="/data/part1_1/center_code">
                 <label>Training Center Code</label>
-            </input>
-            <select1 appearance="table-list" ref="/data/part1_1/verify3">
-                <label>Verified?</label>
-                <item>
-                    <label>Yes</label>
-                    <value>yes</value>
-                </item>
-                <item>
-                    <label>No</label>
-                    <value>no</value>
-                </item>
-            </select1>
-            <input ref="/data/part1_1/why3">
-                <label>Reason for not verified?</label>
             </input>
             <input appearance="multiline" ref="/data/part1_1/address">
                 <label>Full Address</label>
             </input>
-            <select1 appearance="table-list" ref="/data/part1_1/verify4">
-                <label>Verified?</label>
-                <item>
-                    <label>Yes</label>
-                    <value>yes</value>
-                </item>
-                <item>
-                    <label>No</label>
-                    <value>no</value>
-                </item>
-            </select1>
-            <input ref="/data/part1_1/why4">
-                <label>Reason for not verified?</label>
-            </input>
             <input ref="/data/part1_1/pincode">
                 <label>Pincode</label>
-            </input>
-            <select1 appearance="table-list" ref="/data/part1_1/verify5">
-                <label>Verified?</label>
-                <item>
-                    <label>Yes</label>
-                    <value>yes</value>
-                </item>
-                <item>
-                    <label>No</label>
-                    <value>no</value>
-                </item>
-            </select1>
-            <input ref="/data/part1_1/why5">
-                <label>Reason for not verified?</label>
             </input>
             <input ref="/data/part1_1/email">
                 <label>Email id of the institution</label>
             </input>
-            <select1 appearance="table-list" ref="/data/part1_1/verify6">
-                <label>Verified?</label>
-                <item>
-                    <label>Yes</label>
-                    <value>yes</value>
-                </item>
-                <item>
-                    <label>No</label>
-                    <value>no</value>
-                </item>
-            </select1>
-            <input ref="/data/part1_1/why6">
-                <label>Reason for not verified?</label>
-            </input>
-            <input appearance="none" ref="/data/part1_1/geo_code">
-                <label>Geo tagged code</label>
-            </input>
-            <select1 appearance="table-list" ref="/data/part1_1/verify7">
-                <label>Verified?</label>
-                <item>
-                    <label>Yes</label>
-                    <value>yes</value>
-                </item>
-                <item>
-                    <label>No</label>
-                    <value>no</value>
-                </item>
-            </select1>
-            <input ref="/data/part1_1/why7">
-                <label>Reason for not verified?</label>
-            </input>
-            <select1 ref="/data/part1_1/gov_priv">
+            <select1 appearance="horizontal" ref="/data/part1_1/gov_priv">
                 <label>Govt. or Private</label>
                 <item>
                     <label>Government</label>
@@ -982,292 +423,84 @@
                     <value>b</value>
                 </item>
             </select1>
-            <select1 appearance="table-list" ref="/data/part1_1/verify8">
-                <label>Verified?</label>
-                <item>
-                    <label>Yes</label>
-                    <value>yes</value>
-                </item>
-                <item>
-                    <label>No</label>
-                    <value>no</value>
-                </item>
-            </select1>
-            <input ref="/data/part1_1/why8">
-                <label>Reason for not verified?</label>
-            </input>
             <input ref="/data/part1_1/chair_name">
                 <label>Name of Chairperson</label>
-            </input>
-            <select1 appearance="table-list" ref="/data/part1_1/verify9">
-                <label>Verified?</label>
-                <item>
-                    <label>Yes</label>
-                    <value>yes</value>
-                </item>
-                <item>
-                    <label>No</label>
-                    <value>no</value>
-                </item>
-            </select1>
-            <input ref="/data/part1_1/why9">
-                <label>Reason for not verified?</label>
             </input>
             <input ref="/data/part1_1/chair_email">
                 <label>Email id of Chairperson</label>
             </input>
-            <select1 appearance="table-list" ref="/data/part1_1/verify10">
-                <label>Verified?</label>
-                <item>
-                    <label>Yes</label>
-                    <value>yes</value>
-                </item>
-                <item>
-                    <label>No</label>
-                    <value>no</value>
-                </item>
-            </select1>
-            <input ref="/data/part1_1/why10">
-                <label>Reason for not verified?</label>
-            </input>
             <input appearance="numbers" ref="/data/part1_1/chair_number">
                 <label>Contact No of Chairperson</label>
-            </input>
-            <select1 appearance="table-list" ref="/data/part1_1/verify11">
-                <label>Verified?</label>
-                <item>
-                    <label>Yes</label>
-                    <value>yes</value>
-                </item>
-                <item>
-                    <label>No</label>
-                    <value>no</value>
-                </item>
-            </select1>
-            <input ref="/data/part1_1/why11">
-                <label>Reason for not verified?</label>
             </input>
             <input ref="/data/part1_1/princial_name">
                 <label>Name of Principal</label>
             </input>
-            <select1 appearance="table-list" ref="/data/part1_1/verify12">
-                <label>Verified?</label>
-                <item>
-                    <label>Yes</label>
-                    <value>yes</value>
-                </item>
-                <item>
-                    <label>No</label>
-                    <value>no</value>
-                </item>
-            </select1>
-            <input ref="/data/part1_1/why12">
-                <label>Reason for not verified?</label>
-            </input>
             <input ref="/data/part1_1/princial_email">
                 <label>Email Id of principal</label>
-            </input>
-            <select1 appearance="table-list" ref="/data/part1_1/verify13">
-                <label>Verified?</label>
-                <item>
-                    <label>Yes</label>
-                    <value>yes</value>
-                </item>
-                <item>
-                    <label>No</label>
-                    <value>no</value>
-                </item>
-            </select1>
-            <input ref="/data/part1_1/why13">
-                <label>Reason for not verified?</label>
             </input>
             <input appearance="numbers" ref="/data/part1_1/princial_number">
                 <label>Contact No of principal</label>
             </input>
-            <select1 appearance="table-list" ref="/data/part1_1/verify14">
-                <label>Verified?</label>
-                <item>
-                    <label>Yes</label>
-                    <value>yes</value>
-                </item>
-                <item>
-                    <label>No</label>
-                    <value>no</value>
-                </item>
-            </select1>
-            <input ref="/data/part1_1/why14">
-                <label>Reason for not verified?</label>
-            </input>
         </group>
         <group appearance="field-list" ref="/data/part1_2_1">
             <label>Administrative control and statutory requirements</label>
-            <select1 ref="/data/part1_2_1/type">
-                <label>Type of organisation</label>
-                <item>
-                    <label>Trust</label>
-                    <value>1</value>
-                </item>
-                <item>
-                    <label>Society</label>
-                    <value>2</value>
-                </item>
-                <item>
-                    <label>Missionary</label>
-                    <value>3</value>
-                </item>
-                <item>
-                    <label>Government</label>
-                    <value>4</value>
-                </item>
-                <item>
-                    <label>Other</label>
-                    <value>5</value>
-                </item>
-            </select1>
-            <select1 appearance="table-list" ref="/data/part1_2_1/verify15">
-                <label>Verified?</label>
-                <item>
-                    <label>Yes</label>
-                    <value>yes</value>
-                </item>
-                <item>
-                    <label>No</label>
-                    <value>no</value>
-                </item>
-            </select1>
-            <input ref="/data/part1_2_1/why15">
-                <label>Reason for not verified?</label>
+            <input ref="/data/part1_2_1/nameofTSMC">
+                <label>Name of the Trust/ Society/ Missionary/ Company:</label>
             </input>
-            <select1 ref="/data/part1_2_1/org_type_proof">
-                <label>Proof of type of organization (MoA, Trust Deed, etc.)</label>
-                <item>
-                    <label>Present</label>
-                    <value>a</value>
-                </item>
-                <item>
-                    <label>Not Present</label>
-                    <value>b</value>
-                </item>
-            </select1>
-            <select1 appearance="table-list" ref="/data/part1_2_1/verify16">
-                <label>Verified?</label>
-                <item>
-                    <label>Yes</label>
-                    <value>yes</value>
-                </item>
-                <item>
-                    <label>No</label>
-                    <value>no</value>
-                </item>
-            </select1>
-            <input ref="/data/part1_2_1/why16">
-                <label>Reason for not verified?</label>
-            </input>
-            <select1 ref="/data/part1_2_1/cmo_letter">
-                <label>Letter from CMO regarding establishment of hospital</label>
-                <item>
-                    <label>Present</label>
-                    <value>a</value>
-                </item>
-                <item>
-                    <label>Not Present</label>
-                    <value>b</value>
-                </item>
-            </select1>
-            <select1 appearance="table-list" ref="/data/part1_2_1/verify17">
-                <label>Verified?</label>
-                <item>
-                    <label>Yes</label>
-                    <value>yes</value>
-                </item>
-                <item>
-                    <label>No</label>
-                    <value>no</value>
-                </item>
-            </select1>
-            <input ref="/data/part1_2_1/why17">
-                <label>Reason for not verified?</label>
-            </input>
-            <select1 ref="/data/part1_2_1/fire_noc">
-                <label>Current Fire NOC for college / hostel</label>
-                <item>
-                    <label>Present</label>
-                    <value>a</value>
-                </item>
-                <item>
-                    <label>Not Present</label>
-                    <value>b</value>
-                </item>
-            </select1>
-            <select1 appearance="table-list" ref="/data/part1_2_1/verify18">
-                <label>Verified?</label>
-                <item>
-                    <label>Yes</label>
-                    <value>yes</value>
-                </item>
-                <item>
-                    <label>No</label>
-                    <value>no</value>
-                </item>
-            </select1>
-            <input ref="/data/part1_2_1/why18">
-                <label>Reason for not verified?</label>
-            </input>
-        </group>
-        <group appearance="field-list" ref="/data/part1_2_2">
-            <label>Academic Assets</label>
-            <select1 ref="/data/part1_2_2/bio_available">
-                <label>Is a biometric system available &amp; in working condition for recording student attendance</label>
-                <item>
-                    <label>Yes</label>
-                    <value>yes</value>
-                </item>
-                <item>
-                    <label>No</label>
-                    <value>no</value>
-                </item>
-            </select1>
-            <select1 appearance="table-list" ref="/data/part1_2_2/verify19">
-                <label>Verified?</label>
-                <item>
-                    <label>Yes</label>
-                    <value>yes</value>
-                </item>
-                <item>
-                    <label>No</label>
-                    <value>no</value>
-                </item>
-            </select1>
-            <input ref="/data/part1_2_2/why19">
-                <label>Reason for not verified?</label>
-            </input>
-            <select1 ref="/data/part1_2_2/bio_working">
-                <label>Is a biometric system available &amp; in working condition for recording faculty attendance</label>
-                <item>
-                    <label>Yes</label>
-                    <value>yes</value>
-                </item>
-                <item>
-                    <label>No</label>
-                    <value>no</value>
-                </item>
-            </select1>
-            <select1 appearance="table-list" ref="/data/part1_2_2/verify20">
-                <label>Verified?</label>
-                <item>
-                    <label>Yes</label>
-                    <value>yes</value>
-                </item>
-                <item>
-                    <label>No</label>
-                    <value>no</value>
-                </item>
-            </select1>
-            <input ref="/data/part1_2_2/why20">
-                <label>Reason for not verified?</label>
-            </input>
-            <select1 ref="/data/part1_2_2/virtual_class">
+            <group ref="/data/part1_2_1/part1_2_2">
+                <label>Documents for establishment:</label>
+                <select1 ref="/data/part1_2_1/part1_2_2/part1_2_2a">
+                    <label>Letter from CMO regarding the establishment of hospital</label>
+                    <item>
+                        <label>Yes</label>
+                        <value>yes</value>
+                    </item>
+                    <item>
+                        <label>No</label>
+                        <value>no</value>
+                    </item>
+                </select1>
+                <select1 ref="/data/part1_2_1/part1_2_2/part1_2_2b">
+                    <label>Current Fire NOC for college / hostel 
+building</label>
+                    <item>
+                        <label>Yes</label>
+                        <value>yes</value>
+                    </item>
+                    <item>
+                        <label>No</label>
+                        <value>no</value>
+                    </item>
+                </select1>
+            </group>
+            <group ref="/data/part1_2_1/part1_2_3">
+                <label>Is Biometric system available and in working condition for recording attendance:</label>
+                <select1 ref="/data/part1_2_1/part1_2_3/part1_2_3a">
+                    <label>Faculty</label>
+                    <item>
+                        <label>Yes</label>
+                        <value>yes</value>
+                    </item>
+                    <item>
+                        <label>No</label>
+                        <value>no</value>
+                    </item>
+                </select1>
+                <select1 ref="/data/part1_2_1/part1_2_3/part1_2_3b">
+                    <label>Students</label>
+                    <item>
+                        <label>Yes</label>
+                        <value>yes</value>
+                    </item>
+                    <item>
+                        <label>No</label>
+                        <value>no</value>
+                    </item>
+                </select1>
+            </group>
+            <select1 ref="/data/part1_2_1/part1_2_4">
                 <label>Is virtual classroom set up available in the institution?</label>
+                <hint>If Yes, which of the following logistics are available in working condition:</hint>
                 <item>
                     <label>Yes</label>
                     <value>yes</value>
@@ -1277,65 +510,68 @@
                     <value>no</value>
                 </item>
             </select1>
-            <select1 appearance="table-list" ref="/data/part1_2_2/verify21">
-                <label>Verified?</label>
-                <item>
-                    <label>Yes</label>
-                    <value>yes</value>
-                </item>
-                <item>
-                    <label>No</label>
-                    <value>no</value>
-                </item>
-            </select1>
-            <input ref="/data/part1_2_2/why21">
-                <label>Reason for not verified?</label>
-            </input>
-            <select ref="/data/part1_2_2/virtual_class_things">
-                <label>If yes to above, which of the following logistics are available in working condition (Select all that apply)</label>
-                <item>
+            <group appearance="field-list" ref="/data/part1_2_1/part1_2_4g">
+                <select1 ref="/data/part1_2_1/part1_2_4g/part1_2_4a">
                     <label>Internet connection (broadband wired or wireless (3G or 4G/LTE) minimum 2 Mbps</label>
-                    <value>1</value>
-                </item>
-                <item>
+                    <item>
+                        <label>Yes</label>
+                        <value>yes</value>
+                    </item>
+                    <item>
+                        <label>No</label>
+                        <value>no</value>
+                    </item>
+                </select1>
+                <select1 ref="/data/part1_2_1/part1_2_4g/part1_2_4b">
                     <label>HD Camera (USB camera)</label>
-                    <value>2</value>
-                </item>
-                <item>
+                    <item>
+                        <label>Yes</label>
+                        <value>yes</value>
+                    </item>
+                    <item>
+                        <label>No</label>
+                        <value>no</value>
+                    </item>
+                </select1>
+                <select1 ref="/data/part1_2_1/part1_2_4g/part1_2_4c">
                     <label>LCD Projector</label>
-                    <value>3</value>
-                </item>
-                <item>
+                    <item>
+                        <label>Yes</label>
+                        <value>yes</value>
+                    </item>
+                    <item>
+                        <label>No</label>
+                        <value>no</value>
+                    </item>
+                </select1>
+                <select1 ref="/data/part1_2_1/part1_2_4g/part1_2_4d">
                     <label>Microphone</label>
-                    <value>4</value>
-                </item>
-                <item>
+                    <item>
+                        <label>Yes</label>
+                        <value>yes</value>
+                    </item>
+                    <item>
+                        <label>No</label>
+                        <value>no</value>
+                    </item>
+                </select1>
+                <select1 ref="/data/part1_2_1/part1_2_4g/part1_2_4e">
                     <label>Speaker</label>
-                    <value>5</value>
-                </item>
-            </select>
-            <select1 appearance="table-list" ref="/data/part1_2_2/verify22">
-                <label>Verified?</label>
-                <item>
-                    <label>Yes</label>
-                    <value>yes</value>
-                </item>
-                <item>
-                    <label>No</label>
-                    <value>no</value>
-                </item>
-            </select1>
-            <input ref="/data/part1_2_2/why22">
-                <label>Reason for not verified?</label>
-            </input>
+                    <item>
+                        <label>Yes</label>
+                        <value>yes</value>
+                    </item>
+                    <item>
+                        <label>No</label>
+                        <value>no</value>
+                    </item>
+                </select1>
+            </group>
         </group>
         <group appearance="field-list" ref="/data/part1_3">
-            <label>Students Enrolled in Various Programs</label>
-            <input ref="/data/part1_3/anm1.1">
-                <label>ANM (1st year) - Number of Sanctioned Seats</label>
-            </input>
-            <select1 appearance="table-list" ref="/data/part1_3/verify23">
-                <label>Verified?</label>
+            <label>Number of seats sanctioned per program:</label>
+            <select1 appearance="label" ref="/data/part1_3/p1_3">
+                <label>Courses</label>
                 <item>
                     <label>Yes</label>
                     <value>yes</value>
@@ -1345,14 +581,8 @@
                     <value>no</value>
                 </item>
             </select1>
-            <input ref="/data/part1_3/why23">
-                <label>Reason for not verified?</label>
-            </input>
-            <input ref="/data/part1_3/anm1.2">
-                <label>ANM (1st year) - Students admitted</label>
-            </input>
-            <select1 appearance="table-list" ref="/data/part1_3/verify24">
-                <label>Verified?</label>
+            <select1 appearance="list-nolabel" ref="/data/part1_3/p1_3.1">
+                <label>ANM</label>
                 <item>
                     <label>Yes</label>
                     <value>yes</value>
@@ -1362,14 +592,25 @@
                     <value>no</value>
                 </item>
             </select1>
-            <input ref="/data/part1_3/why24">
-                <label>Reason for not verified?</label>
-            </input>
-            <input ref="/data/part1_3/anm1.3">
-                <label>ANM (1st year) - Students present on day of assessment</label>
-            </input>
-            <select1 appearance="table-list" ref="/data/part1_3/verify25">
-                <label>Verified?</label>
+            <group appearance="field-list" ref="/data/part1_3/part1_3.1">
+                <input ref="/data/part1_3/part1_3.1/anm1.1">
+                    <label>Number of Sanctioned Seats (1st year)</label>
+                </input>
+                <input ref="/data/part1_3/part1_3.1/anm1.2">
+                    <label>Students admitted (1st year)</label>
+                </input>
+                <input ref="/data/part1_3/part1_3.1/anm1.3">
+                    <label>Students present on day of assessment (1st year)</label>
+                </input>
+                <input ref="/data/part1_3/part1_3.1/anm2.2">
+                    <label>Students admitted (2nd year)</label>
+                </input>
+                <input ref="/data/part1_3/part1_3.1/anm2.3">
+                    <label>Students present on day of assessment (2nd year)</label>
+                </input>
+            </group>
+            <select1 appearance="list-nolabel" ref="/data/part1_3/p1_3.2">
+                <label>GNM</label>
                 <item>
                     <label>Yes</label>
                     <value>yes</value>
@@ -1379,14 +620,31 @@
                     <value>no</value>
                 </item>
             </select1>
-            <input ref="/data/part1_3/why25">
-                <label>Reason for not verified?</label>
-            </input>
-            <input ref="/data/part1_3/anm2.1">
-                <label>ANM (2nd year) - Number of Sanctioned Seats</label>
-            </input>
-            <select1 appearance="table-list" ref="/data/part1_3/verify26">
-                <label>Verified?</label>
+            <group appearance="field-list" ref="/data/part1_3/part1_3.2">
+                <input ref="/data/part1_3/part1_3.2/gnm1.1">
+                    <label>Number of Sanctioned Seats (1st year)</label>
+                </input>
+                <input ref="/data/part1_3/part1_3.2/gnm1.2">
+                    <label>Students admitted (1st year)</label>
+                </input>
+                <input ref="/data/part1_3/part1_3.2/gnm1.3">
+                    <label>Students present on day of assessment (1st year)</label>
+                </input>
+                <input ref="/data/part1_3/part1_3.2/gnm2.2">
+                    <label>Students admitted (2nd year)</label>
+                </input>
+                <input ref="/data/part1_3/part1_3.2/gnm2.3">
+                    <label>Students present on day of assessment (2nd year)</label>
+                </input>
+                <input ref="/data/part1_3/part1_3.2/gnm3.2">
+                    <label>Students admitted (3rd year)</label>
+                </input>
+                <input ref="/data/part1_3/part1_3.2/gnm3.3">
+                    <label>Students present on day of assessment (3rd year)</label>
+                </input>
+            </group>
+            <select1 appearance="list-nolabel" ref="/data/part1_3/p1_3.3">
+                <label>Post Basic BSc N</label>
                 <item>
                     <label>Yes</label>
                     <value>yes</value>
@@ -1396,14 +654,25 @@
                     <value>no</value>
                 </item>
             </select1>
-            <input ref="/data/part1_3/why26">
-                <label>Reason for not verified?</label>
-            </input>
-            <input ref="/data/part1_3/anm2.2">
-                <label>ANM (2nd year) - Students admitted</label>
-            </input>
-            <select1 appearance="table-list" ref="/data/part1_3/verify27">
-                <label>Verified?</label>
+            <group appearance="field-list" ref="/data/part1_3/part1_3.3">
+                <input ref="/data/part1_3/part1_3.3/pbbsc1.1">
+                    <label>Number of Sanctioned Seats (1st year)</label>
+                </input>
+                <input ref="/data/part1_3/part1_3.3/pbbsc1.2">
+                    <label>Students admitted (1st year)</label>
+                </input>
+                <input ref="/data/part1_3/part1_3.3/pbbsc1.3">
+                    <label>Students present on day of assessment (1st year)</label>
+                </input>
+                <input ref="/data/part1_3/part1_3.3/pbbsc2.2">
+                    <label>Students admitted (2nd year)</label>
+                </input>
+                <input ref="/data/part1_3/part1_3.3/pbbsc2.3">
+                    <label>Students present on day of assessment (2nd year)</label>
+                </input>
+            </group>
+            <select1 appearance="list-nolabel" ref="/data/part1_3/p1_3.4">
+                <label>BSc N</label>
                 <item>
                     <label>Yes</label>
                     <value>yes</value>
@@ -1413,14 +682,37 @@
                     <value>no</value>
                 </item>
             </select1>
-            <input ref="/data/part1_3/why27">
-                <label>Reason for not verified?</label>
-            </input>
-            <input ref="/data/part1_3/anm2.3">
-                <label>ANM (2nd year) - Students present on day of assessment</label>
-            </input>
-            <select1 appearance="table-list" ref="/data/part1_3/verify28">
-                <label>Verified?</label>
+            <group appearance="field-list" ref="/data/part1_3/part1_3.4">
+                <input ref="/data/part1_3/part1_3.4/bsc1.1">
+                    <label>Number of Sanctioned Seats (1st year)</label>
+                </input>
+                <input ref="/data/part1_3/part1_3.4/bsc1.2">
+                    <label>Students admitted (1st year)</label>
+                </input>
+                <input ref="/data/part1_3/part1_3.4/bsc1.3">
+                    <label>Students present on day of assessment (1st year)</label>
+                </input>
+                <input ref="/data/part1_3/part1_3.4/bsc2.2">
+                    <label>Students admitted (2nd year)</label>
+                </input>
+                <input ref="/data/part1_3/part1_3.4/bsc2.3">
+                    <label>Students present on day of assessment (2nd year)</label>
+                </input>
+                <input ref="/data/part1_3/part1_3.4/bsc3.2">
+                    <label>Students admitted (3rd year)</label>
+                </input>
+                <input ref="/data/part1_3/part1_3.4/bsc3.3">
+                    <label>Students present on day of assessment (3rd year)</label>
+                </input>
+                <input ref="/data/part1_3/part1_3.4/bsc4.2">
+                    <label>Students admitted (4th year)</label>
+                </input>
+                <input ref="/data/part1_3/part1_3.4/bsc4.3">
+                    <label>Students present on day of assessment (4th year)</label>
+                </input>
+            </group>
+            <select1 appearance="list-nolabel" ref="/data/part1_3/p1_3.5">
+                <label>MSc N. Community Health</label>
                 <item>
                     <label>Yes</label>
                     <value>yes</value>
@@ -1430,14 +722,25 @@
                     <value>no</value>
                 </item>
             </select1>
-            <input ref="/data/part1_3/why28">
-                <label>Reason for not verified?</label>
-            </input>
-            <input ref="/data/part1_3/gnm1.1">
-                <label>GNM (1st year) - Number of Sanctioned Seats</label>
-            </input>
-            <select1 appearance="table-list" ref="/data/part1_3/verify29">
-                <label>Verified?</label>
+            <group appearance="field-list" ref="/data/part1_3/part1_3.5">
+                <input ref="/data/part1_3/part1_3.5/msc1">
+                    <label>Number of Sanctioned Seats (1st year)</label>
+                </input>
+                <input ref="/data/part1_3/part1_3.5/msc2">
+                    <label>Students admitted (1st year)</label>
+                </input>
+                <input ref="/data/part1_3/part1_3.5/msc3">
+                    <label>Students present on day of assessment (1st year)</label>
+                </input>
+                <input ref="/data/part1_3/part1_3.5/msc5">
+                    <label>Students admitted (2nd year)</label>
+                </input>
+                <input ref="/data/part1_3/part1_3.5/msc6">
+                    <label>Students present on day of assessment (2nd year)</label>
+                </input>
+            </group>
+            <select1 appearance="list-nolabel" ref="/data/part1_3/p1_3.6">
+                <label>MSc N. Medical Surgical</label>
                 <item>
                     <label>Yes</label>
                     <value>yes</value>
@@ -1447,14 +750,25 @@
                     <value>no</value>
                 </item>
             </select1>
-            <input ref="/data/part1_3/why29">
-                <label>Reason for not verified?</label>
-            </input>
-            <input ref="/data/part1_3/gnm1.2">
-                <label>GNM (1st year) - Students admitted</label>
-            </input>
-            <select1 appearance="table-list" ref="/data/part1_3/verify30">
-                <label>Verified?</label>
+            <group appearance="field-list" ref="/data/part1_3/part1_3.6">
+                <input ref="/data/part1_3/part1_3.6/msc7">
+                    <label>Number of Sanctioned Seats (1st year)</label>
+                </input>
+                <input ref="/data/part1_3/part1_3.6/msc8">
+                    <label>Students admitted (1st year)</label>
+                </input>
+                <input ref="/data/part1_3/part1_3.6/msc9">
+                    <label>Students present on day of assessment (1st year)</label>
+                </input>
+                <input ref="/data/part1_3/part1_3.6/msc11">
+                    <label>Students admitted (2nd year)</label>
+                </input>
+                <input ref="/data/part1_3/part1_3.6/msc12">
+                    <label>Students present on day of assessment (2nd year)</label>
+                </input>
+            </group>
+            <select1 appearance="list-nolabel" ref="/data/part1_3/p1_3.7">
+                <label>MSc N. OBG</label>
                 <item>
                     <label>Yes</label>
                     <value>yes</value>
@@ -1464,14 +778,25 @@
                     <value>no</value>
                 </item>
             </select1>
-            <input ref="/data/part1_3/why30">
-                <label>Reason for not verified?</label>
-            </input>
-            <input ref="/data/part1_3/gnm1.3">
-                <label>GNM (1st year) - Students present on day of assessment</label>
-            </input>
-            <select1 appearance="table-list" ref="/data/part1_3/verify31">
-                <label>Verified?</label>
+            <group appearance="field-list" ref="/data/part1_3/part1_3.7">
+                <input ref="/data/part1_3/part1_3.7/msc13">
+                    <label>Number of Sanctioned Seats (1st year)</label>
+                </input>
+                <input ref="/data/part1_3/part1_3.7/msc14">
+                    <label>Students admitted (1st year)</label>
+                </input>
+                <input ref="/data/part1_3/part1_3.7/msc15">
+                    <label>Students present on day of assessment (1st year)</label>
+                </input>
+                <input ref="/data/part1_3/part1_3.7/msc16">
+                    <label>Students admitted (2nd year)</label>
+                </input>
+                <input ref="/data/part1_3/part1_3.7/msc17">
+                    <label>Students present on day of assessment (2nd year)</label>
+                </input>
+            </group>
+            <select1 appearance="list-nolabel" ref="/data/part1_3/p1_3.8">
+                <label>MSc N. Paediatrics</label>
                 <item>
                     <label>Yes</label>
                     <value>yes</value>
@@ -1481,14 +806,25 @@
                     <value>no</value>
                 </item>
             </select1>
-            <input ref="/data/part1_3/why31">
-                <label>Reason for not verified?</label>
-            </input>
-            <input ref="/data/part1_3/gnm2.1">
-                <label>GNM (2nd year) - Number of Sanctioned Seats</label>
-            </input>
-            <select1 appearance="table-list" ref="/data/part1_3/verify32">
-                <label>Verified?</label>
+            <group appearance="field-list" ref="/data/part1_3/part1_3.8">
+                <input ref="/data/part1_3/part1_3.8/msc18">
+                    <label>Number of Sanctioned Seats (1st year)</label>
+                </input>
+                <input ref="/data/part1_3/part1_3.8/msc19">
+                    <label>Students admitted (1st year)</label>
+                </input>
+                <input ref="/data/part1_3/part1_3.8/msc20">
+                    <label>Students present on day of assessment (1st year)</label>
+                </input>
+                <input ref="/data/part1_3/part1_3.8/msc21">
+                    <label>Students admitted (2nd year)</label>
+                </input>
+                <input ref="/data/part1_3/part1_3.8/msc22">
+                    <label>Students present on day of assessment (2nd year)</label>
+                </input>
+            </group>
+            <select1 appearance="list-nolabel" ref="/data/part1_3/p1_3.9">
+                <label>MSc N. Psychiatric</label>
                 <item>
                     <label>Yes</label>
                     <value>yes</value>
@@ -1498,915 +834,28 @@
                     <value>no</value>
                 </item>
             </select1>
-            <input ref="/data/part1_3/why32">
-                <label>Reason for not verified?</label>
-            </input>
-            <input ref="/data/part1_3/gnm2.2">
-                <label>GNM (2nd year) - Students admitted</label>
-            </input>
-            <select1 appearance="table-list" ref="/data/part1_3/verify33">
-                <label>Verified?</label>
-                <item>
-                    <label>Yes</label>
-                    <value>yes</value>
-                </item>
-                <item>
-                    <label>No</label>
-                    <value>no</value>
-                </item>
-            </select1>
-            <input ref="/data/part1_3/why33">
-                <label>Reason for not verified?</label>
-            </input>
-            <input ref="/data/part1_3/gnm2.3">
-                <label>GNM (2nd year) - Students present on day of assessment</label>
-            </input>
-            <select1 appearance="table-list" ref="/data/part1_3/verify34">
-                <label>Verified?</label>
-                <item>
-                    <label>Yes</label>
-                    <value>yes</value>
-                </item>
-                <item>
-                    <label>No</label>
-                    <value>no</value>
-                </item>
-            </select1>
-            <input ref="/data/part1_3/why34">
-                <label>Reason for not verified?</label>
-            </input>
-            <input ref="/data/part1_3/gnm3.1">
-                <label>GNM (3rd year) - Number of Sanctioned Seats</label>
-            </input>
-            <select1 appearance="table-list" ref="/data/part1_3/verify35">
-                <label>Verified?</label>
-                <item>
-                    <label>Yes</label>
-                    <value>yes</value>
-                </item>
-                <item>
-                    <label>No</label>
-                    <value>no</value>
-                </item>
-            </select1>
-            <input ref="/data/part1_3/why35">
-                <label>Reason for not verified?</label>
-            </input>
-            <input ref="/data/part1_3/gnm3.2">
-                <label>GNM (3rd year) - Students admitted</label>
-            </input>
-            <select1 appearance="table-list" ref="/data/part1_3/verify36">
-                <label>Verified?</label>
-                <item>
-                    <label>Yes</label>
-                    <value>yes</value>
-                </item>
-                <item>
-                    <label>No</label>
-                    <value>no</value>
-                </item>
-            </select1>
-            <input ref="/data/part1_3/why36">
-                <label>Reason for not verified?</label>
-            </input>
-            <input ref="/data/part1_3/gnm3.3">
-                <label>GNM (3rd year) - Students present on day of assessment</label>
-            </input>
-            <select1 appearance="table-list" ref="/data/part1_3/verify37">
-                <label>Verified?</label>
-                <item>
-                    <label>Yes</label>
-                    <value>yes</value>
-                </item>
-                <item>
-                    <label>No</label>
-                    <value>no</value>
-                </item>
-            </select1>
-            <input ref="/data/part1_3/why37">
-                <label>Reason for not verified?</label>
-            </input>
-            <input ref="/data/part1_3/pbbsc1.1">
-                <label>Post Basic BSc N. (1st year) - Number of Sanctioned Seats</label>
-            </input>
-            <select1 appearance="table-list" ref="/data/part1_3/verify38">
-                <label>Verified?</label>
-                <item>
-                    <label>Yes</label>
-                    <value>yes</value>
-                </item>
-                <item>
-                    <label>No</label>
-                    <value>no</value>
-                </item>
-            </select1>
-            <input ref="/data/part1_3/why38">
-                <label>Reason for not verified?</label>
-            </input>
-            <input ref="/data/part1_3/pbbsc1.2">
-                <label>Post Basic BSc N. (1st year) - Students admitted</label>
-            </input>
-            <select1 appearance="table-list" ref="/data/part1_3/verify39">
-                <label>Verified?</label>
-                <item>
-                    <label>Yes</label>
-                    <value>yes</value>
-                </item>
-                <item>
-                    <label>No</label>
-                    <value>no</value>
-                </item>
-            </select1>
-            <input ref="/data/part1_3/why39">
-                <label>Reason for not verified?</label>
-            </input>
-            <input ref="/data/part1_3/pbbsc1.3">
-                <label>Post Basic BSc N. (1st year) - Students present on day of assessment</label>
-            </input>
-            <select1 appearance="table-list" ref="/data/part1_3/verify40">
-                <label>Verified?</label>
-                <item>
-                    <label>Yes</label>
-                    <value>yes</value>
-                </item>
-                <item>
-                    <label>No</label>
-                    <value>no</value>
-                </item>
-            </select1>
-            <input ref="/data/part1_3/why40">
-                <label>Reason for not verified?</label>
-            </input>
-            <input ref="/data/part1_3/pbbsc2.1">
-                <label>Post Basic BSc N. (2nd year) - Number of Sanctioned Seats</label>
-            </input>
-            <select1 appearance="table-list" ref="/data/part1_3/verify41">
-                <label>Verified?</label>
-                <item>
-                    <label>Yes</label>
-                    <value>yes</value>
-                </item>
-                <item>
-                    <label>No</label>
-                    <value>no</value>
-                </item>
-            </select1>
-            <input ref="/data/part1_3/why41">
-                <label>Reason for not verified?</label>
-            </input>
-            <input ref="/data/part1_3/pbbsc2.2">
-                <label>Post Basic BSc N. (2nd year) - Students admitted</label>
-            </input>
-            <select1 appearance="table-list" ref="/data/part1_3/verify42">
-                <label>Verified?</label>
-                <item>
-                    <label>Yes</label>
-                    <value>yes</value>
-                </item>
-                <item>
-                    <label>No</label>
-                    <value>no</value>
-                </item>
-            </select1>
-            <input ref="/data/part1_3/why42">
-                <label>Reason for not verified?</label>
-            </input>
-            <input ref="/data/part1_3/pbbsc2.3">
-                <label>Post Basic BSc N. (2nd year) - Students present on day of assessment</label>
-            </input>
-            <select1 appearance="table-list" ref="/data/part1_3/verify43">
-                <label>Verified?</label>
-                <item>
-                    <label>Yes</label>
-                    <value>yes</value>
-                </item>
-                <item>
-                    <label>No</label>
-                    <value>no</value>
-                </item>
-            </select1>
-            <input ref="/data/part1_3/why43">
-                <label>Reason for not verified?</label>
-            </input>
-            <input ref="/data/part1_3/bsc1.1">
-                <label>BSc N. (1st year) - Number of Sanctioned Seats</label>
-            </input>
-            <select1 appearance="table-list" ref="/data/part1_3/verify44">
-                <label>Verified?</label>
-                <item>
-                    <label>Yes</label>
-                    <value>yes</value>
-                </item>
-                <item>
-                    <label>No</label>
-                    <value>no</value>
-                </item>
-            </select1>
-            <input ref="/data/part1_3/why44">
-                <label>Reason for not verified?</label>
-            </input>
-            <input ref="/data/part1_3/bsc1.2">
-                <label>BSc N. (1st year) - Students admitted</label>
-            </input>
-            <select1 appearance="table-list" ref="/data/part1_3/verify45">
-                <label>Verified?</label>
-                <item>
-                    <label>Yes</label>
-                    <value>yes</value>
-                </item>
-                <item>
-                    <label>No</label>
-                    <value>no</value>
-                </item>
-            </select1>
-            <input ref="/data/part1_3/why45">
-                <label>Reason for not verified?</label>
-            </input>
-            <input ref="/data/part1_3/bsc1.3">
-                <label>BSc N. (1st year) - Students present on day of assessment</label>
-            </input>
-            <select1 appearance="table-list" ref="/data/part1_3/verify46">
-                <label>Verified?</label>
-                <item>
-                    <label>Yes</label>
-                    <value>yes</value>
-                </item>
-                <item>
-                    <label>No</label>
-                    <value>no</value>
-                </item>
-            </select1>
-            <input ref="/data/part1_3/why46">
-                <label>Reason for not verified?</label>
-            </input>
-            <input ref="/data/part1_3/bsc2.1">
-                <label>BSc N. (2nd year) - Number of Sanctioned Seats</label>
-            </input>
-            <select1 appearance="table-list" ref="/data/part1_3/verify47">
-                <label>Verified?</label>
-                <item>
-                    <label>Yes</label>
-                    <value>yes</value>
-                </item>
-                <item>
-                    <label>No</label>
-                    <value>no</value>
-                </item>
-            </select1>
-            <input ref="/data/part1_3/why47">
-                <label>Reason for not verified?</label>
-            </input>
-            <input ref="/data/part1_3/bsc2.2">
-                <label>BSc N. (2nd year) - Students admitted</label>
-            </input>
-            <select1 appearance="table-list" ref="/data/part1_3/verify48">
-                <label>Verified?</label>
-                <item>
-                    <label>Yes</label>
-                    <value>yes</value>
-                </item>
-                <item>
-                    <label>No</label>
-                    <value>no</value>
-                </item>
-            </select1>
-            <input ref="/data/part1_3/why48">
-                <label>Reason for not verified?</label>
-            </input>
-            <input ref="/data/part1_3/bsc2.3">
-                <label>BSc N. (2nd year) - Students present on day of assessment</label>
-            </input>
-            <select1 appearance="table-list" ref="/data/part1_3/verify49">
-                <label>Verified?</label>
-                <item>
-                    <label>Yes</label>
-                    <value>yes</value>
-                </item>
-                <item>
-                    <label>No</label>
-                    <value>no</value>
-                </item>
-            </select1>
-            <input ref="/data/part1_3/why49">
-                <label>Reason for not verified?</label>
-            </input>
-            <input ref="/data/part1_3/bsc3.1">
-                <label>BSc N. (3rd year) - Number of Sanctioned Seats</label>
-            </input>
-            <select1 appearance="table-list" ref="/data/part1_3/verify50">
-                <label>Verified?</label>
-                <item>
-                    <label>Yes</label>
-                    <value>yes</value>
-                </item>
-                <item>
-                    <label>No</label>
-                    <value>no</value>
-                </item>
-            </select1>
-            <input ref="/data/part1_3/why50">
-                <label>Reason for not verified?</label>
-            </input>
-            <input ref="/data/part1_3/bsc3.2">
-                <label>BSc N. (3rd year) - Students admitted</label>
-            </input>
-            <select1 appearance="table-list" ref="/data/part1_3/verify51">
-                <label>Verified?</label>
-                <item>
-                    <label>Yes</label>
-                    <value>yes</value>
-                </item>
-                <item>
-                    <label>No</label>
-                    <value>no</value>
-                </item>
-            </select1>
-            <input ref="/data/part1_3/why51">
-                <label>Reason for not verified?</label>
-            </input>
-            <input ref="/data/part1_3/bsc3.3">
-                <label>BSc N. (3rd year) - Students present on day of assessment</label>
-            </input>
-            <select1 appearance="table-list" ref="/data/part1_3/verify52">
-                <label>Verified?</label>
-                <item>
-                    <label>Yes</label>
-                    <value>yes</value>
-                </item>
-                <item>
-                    <label>No</label>
-                    <value>no</value>
-                </item>
-            </select1>
-            <input ref="/data/part1_3/why52">
-                <label>Reason for not verified?</label>
-            </input>
-            <input ref="/data/part1_3/bsc4.1">
-                <label>BSc N. (4th year) - Number of Sanctioned Seats</label>
-            </input>
-            <select1 appearance="table-list" ref="/data/part1_3/verify53">
-                <label>Verified?</label>
-                <item>
-                    <label>Yes</label>
-                    <value>yes</value>
-                </item>
-                <item>
-                    <label>No</label>
-                    <value>no</value>
-                </item>
-            </select1>
-            <input ref="/data/part1_3/why53">
-                <label>Reason for not verified?</label>
-            </input>
-            <input ref="/data/part1_3/bsc4.2">
-                <label>BSc N. (4th year) - Students admitted</label>
-            </input>
-            <select1 appearance="table-list" ref="/data/part1_3/verify54">
-                <label>Verified?</label>
-                <item>
-                    <label>Yes</label>
-                    <value>yes</value>
-                </item>
-                <item>
-                    <label>No</label>
-                    <value>no</value>
-                </item>
-            </select1>
-            <input ref="/data/part1_3/why54">
-                <label>Reason for not verified?</label>
-            </input>
-            <input ref="/data/part1_3/bsc4.3">
-                <label>BSc N. (4th year) - Students present on day of assessment</label>
-            </input>
-            <select1 appearance="table-list" ref="/data/part1_3/verify55">
-                <label>Verified?</label>
-                <item>
-                    <label>Yes</label>
-                    <value>yes</value>
-                </item>
-                <item>
-                    <label>No</label>
-                    <value>no</value>
-                </item>
-            </select1>
-            <input ref="/data/part1_3/why55">
-                <label>Reason for not verified?</label>
-            </input>
-            <input ref="/data/part1_3/msc1">
-                <label>MSc N. Community Health (1st year) - Number of Sanctioned Seats</label>
-            </input>
-            <select1 appearance="table-list" ref="/data/part1_3/verify56">
-                <label>Verified?</label>
-                <item>
-                    <label>Yes</label>
-                    <value>yes</value>
-                </item>
-                <item>
-                    <label>No</label>
-                    <value>no</value>
-                </item>
-            </select1>
-            <input ref="/data/part1_3/why56">
-                <label>Reason for not verified?</label>
-            </input>
-            <input ref="/data/part1_3/msc2">
-                <label>MSc N. Community Health (1st year) - Students admitted</label>
-            </input>
-            <select1 appearance="table-list" ref="/data/part1_3/verify57">
-                <label>Verified?</label>
-                <item>
-                    <label>Yes</label>
-                    <value>yes</value>
-                </item>
-                <item>
-                    <label>No</label>
-                    <value>no</value>
-                </item>
-            </select1>
-            <input ref="/data/part1_3/why57">
-                <label>Reason for not verified?</label>
-            </input>
-            <input ref="/data/part1_3/msc3">
-                <label>MSc N. Community Health (1st year) - Students present on day of assessment</label>
-            </input>
-            <select1 appearance="table-list" ref="/data/part1_3/verify58">
-                <label>Verified?</label>
-                <item>
-                    <label>Yes</label>
-                    <value>yes</value>
-                </item>
-                <item>
-                    <label>No</label>
-                    <value>no</value>
-                </item>
-            </select1>
-            <input ref="/data/part1_3/why58">
-                <label>Reason for not verified?</label>
-            </input>
-            <input ref="/data/part1_3/msc4">
-                <label>MSc N. Community Health (2nd year) - Number of Sanctioned Seats</label>
-            </input>
-            <select1 appearance="table-list" ref="/data/part1_3/verify59">
-                <label>Verified?</label>
-                <item>
-                    <label>Yes</label>
-                    <value>yes</value>
-                </item>
-                <item>
-                    <label>No</label>
-                    <value>no</value>
-                </item>
-            </select1>
-            <input ref="/data/part1_3/why59">
-                <label>Reason for not verified?</label>
-            </input>
-            <input ref="/data/part1_3/msc5">
-                <label>MSc N. Community Health (2nd year) - Students admitted</label>
-            </input>
-            <select1 appearance="table-list" ref="/data/part1_3/verify60">
-                <label>Verified?</label>
-                <item>
-                    <label>Yes</label>
-                    <value>yes</value>
-                </item>
-                <item>
-                    <label>No</label>
-                    <value>no</value>
-                </item>
-            </select1>
-            <input ref="/data/part1_3/why60">
-                <label>Reason for not verified?</label>
-            </input>
-            <input ref="/data/part1_3/msc6">
-                <label>MSc N. Community Health (2nd year) - Students present on day of assessment</label>
-            </input>
-            <select1 appearance="table-list" ref="/data/part1_3/verify61">
-                <label>Verified?</label>
-                <item>
-                    <label>Yes</label>
-                    <value>yes</value>
-                </item>
-                <item>
-                    <label>No</label>
-                    <value>no</value>
-                </item>
-            </select1>
-            <input ref="/data/part1_3/why61">
-                <label>Reason for not verified?</label>
-            </input>
-            <input ref="/data/part1_3/msc7">
-                <label>MSc N. Medical Surgical (1st year) - Number of Sanctioned Seats</label>
-            </input>
-            <select1 appearance="table-list" ref="/data/part1_3/verify62">
-                <label>Verified?</label>
-                <item>
-                    <label>Yes</label>
-                    <value>yes</value>
-                </item>
-                <item>
-                    <label>No</label>
-                    <value>no</value>
-                </item>
-            </select1>
-            <input ref="/data/part1_3/why62">
-                <label>Reason for not verified?</label>
-            </input>
-            <input ref="/data/part1_3/msc8">
-                <label>MSc N. Medical Surgical (1st year) - Students admitted</label>
-            </input>
-            <select1 appearance="table-list" ref="/data/part1_3/verify63">
-                <label>Verified?</label>
-                <item>
-                    <label>Yes</label>
-                    <value>yes</value>
-                </item>
-                <item>
-                    <label>No</label>
-                    <value>no</value>
-                </item>
-            </select1>
-            <input ref="/data/part1_3/why63">
-                <label>Reason for not verified?</label>
-            </input>
-            <input ref="/data/part1_3/msc9">
-                <label>MSc N. Medical Surgical (1st year) - Students present on day of assessment</label>
-            </input>
-            <select1 appearance="table-list" ref="/data/part1_3/verify64">
-                <label>Verified?</label>
-                <item>
-                    <label>Yes</label>
-                    <value>yes</value>
-                </item>
-                <item>
-                    <label>No</label>
-                    <value>no</value>
-                </item>
-            </select1>
-            <input ref="/data/part1_3/why64">
-                <label>Reason for not verified?</label>
-            </input>
-            <input ref="/data/part1_3/msc10">
-                <label>MSc N. Medical Surgical (2nd year) - Number of Sanctioned Seats</label>
-            </input>
-            <select1 appearance="table-list" ref="/data/part1_3/verify65">
-                <label>Verified?</label>
-                <item>
-                    <label>Yes</label>
-                    <value>yes</value>
-                </item>
-                <item>
-                    <label>No</label>
-                    <value>no</value>
-                </item>
-            </select1>
-            <input ref="/data/part1_3/why65">
-                <label>Reason for not verified?</label>
-            </input>
-            <input ref="/data/part1_3/msc11">
-                <label>MSc N. Medical Surgical (2nd year) - Students admitted</label>
-            </input>
-            <select1 appearance="table-list" ref="/data/part1_3/verify66">
-                <label>Verified?</label>
-                <item>
-                    <label>Yes</label>
-                    <value>yes</value>
-                </item>
-                <item>
-                    <label>No</label>
-                    <value>no</value>
-                </item>
-            </select1>
-            <input ref="/data/part1_3/why66">
-                <label>Reason for not verified?</label>
-            </input>
-            <input ref="/data/part1_3/msc12">
-                <label>MSc N. Medical Surgical (2nd year) - Students present on day of assessment</label>
-            </input>
-            <select1 appearance="table-list" ref="/data/part1_3/verify67">
-                <label>Verified?</label>
-                <item>
-                    <label>Yes</label>
-                    <value>yes</value>
-                </item>
-                <item>
-                    <label>No</label>
-                    <value>no</value>
-                </item>
-            </select1>
-            <input ref="/data/part1_3/why67">
-                <label>Reason for not verified?</label>
-            </input>
-            <input ref="/data/part1_3/msc13">
-                <label>MSc N. OBG (1st year) - Number of Sanctioned Seats</label>
-            </input>
-            <select1 appearance="table-list" ref="/data/part1_3/verify68">
-                <label>Verified?</label>
-                <item>
-                    <label>Yes</label>
-                    <value>yes</value>
-                </item>
-                <item>
-                    <label>No</label>
-                    <value>no</value>
-                </item>
-            </select1>
-            <input ref="/data/part1_3/why68">
-                <label>Reason for not verified?</label>
-            </input>
-            <input ref="/data/part1_3/msc14">
-                <label>MSc N. OBG (1st year) - Students admitted</label>
-            </input>
-            <select1 appearance="table-list" ref="/data/part1_3/verify69">
-                <label>Verified?</label>
-                <item>
-                    <label>Yes</label>
-                    <value>yes</value>
-                </item>
-                <item>
-                    <label>No</label>
-                    <value>no</value>
-                </item>
-            </select1>
-            <input ref="/data/part1_3/why69">
-                <label>Reason for not verified?</label>
-            </input>
-            <input ref="/data/part1_3/msc15">
-                <label>MSc N. OBG (1st year) - Students present on day of assessment</label>
-            </input>
-            <select1 appearance="table-list" ref="/data/part1_3/verify70">
-                <label>Verified?</label>
-                <item>
-                    <label>Yes</label>
-                    <value>yes</value>
-                </item>
-                <item>
-                    <label>No</label>
-                    <value>no</value>
-                </item>
-            </select1>
-            <input ref="/data/part1_3/why70">
-                <label>Reason for not verified?</label>
-            </input>
-            <input ref="/data/part1_3/msc16">
-                <label>MSc N. OBG (2nd year) - Number of Sanctioned Seats</label>
-            </input>
-            <select1 appearance="table-list" ref="/data/part1_3/verify71">
-                <label>Verified?</label>
-                <item>
-                    <label>Yes</label>
-                    <value>yes</value>
-                </item>
-                <item>
-                    <label>No</label>
-                    <value>no</value>
-                </item>
-            </select1>
-            <input ref="/data/part1_3/why71">
-                <label>Reason for not verified?</label>
-            </input>
-            <input ref="/data/part1_3/msc17">
-                <label>MSc N. OBG (2nd year) - Students admitted</label>
-            </input>
-            <select1 appearance="table-list" ref="/data/part1_3/verify72">
-                <label>Verified?</label>
-                <item>
-                    <label>Yes</label>
-                    <value>yes</value>
-                </item>
-                <item>
-                    <label>No</label>
-                    <value>no</value>
-                </item>
-            </select1>
-            <input ref="/data/part1_3/why72">
-                <label>Reason for not verified?</label>
-            </input>
-            <input ref="/data/part1_3/msc18">
-                <label>MSc N. OBG (2nd year) - Students present on day of assessment</label>
-            </input>
-            <select1 appearance="table-list" ref="/data/part1_3/verify73">
-                <label>Verified?</label>
-                <item>
-                    <label>Yes</label>
-                    <value>yes</value>
-                </item>
-                <item>
-                    <label>No</label>
-                    <value>no</value>
-                </item>
-            </select1>
-            <input ref="/data/part1_3/why73">
-                <label>Reason for not verified?</label>
-            </input>
-            <input ref="/data/part1_3/msc19">
-                <label>MSc N. Paediatrics (1st year) - Number of Sanctioned Seats</label>
-            </input>
-            <select1 appearance="table-list" ref="/data/part1_3/verify74">
-                <label>Verified?</label>
-                <item>
-                    <label>Yes</label>
-                    <value>yes</value>
-                </item>
-                <item>
-                    <label>No</label>
-                    <value>no</value>
-                </item>
-            </select1>
-            <input ref="/data/part1_3/why74">
-                <label>Reason for not verified?</label>
-            </input>
-            <input ref="/data/part1_3/msc20">
-                <label>MSc N. Paediatrics (1st year) - Students admitted</label>
-            </input>
-            <select1 appearance="table-list" ref="/data/part1_3/verify75">
-                <label>Verified?</label>
-                <item>
-                    <label>Yes</label>
-                    <value>yes</value>
-                </item>
-                <item>
-                    <label>No</label>
-                    <value>no</value>
-                </item>
-            </select1>
-            <input ref="/data/part1_3/why75">
-                <label>Reason for not verified?</label>
-            </input>
-            <input ref="/data/part1_3/msc21">
-                <label>MSc N. Paediatrics (1st year) - Students present on day of assessment</label>
-            </input>
-            <select1 appearance="table-list" ref="/data/part1_3/verify76">
-                <label>Verified?</label>
-                <item>
-                    <label>Yes</label>
-                    <value>yes</value>
-                </item>
-                <item>
-                    <label>No</label>
-                    <value>no</value>
-                </item>
-            </select1>
-            <input ref="/data/part1_3/why76">
-                <label>Reason for not verified?</label>
-            </input>
-            <input ref="/data/part1_3/msc22">
-                <label>MSc N. Paediatrics (2nd year) - Number of Sanctioned Seats</label>
-            </input>
-            <select1 appearance="table-list" ref="/data/part1_3/verify77">
-                <label>Verified?</label>
-                <item>
-                    <label>Yes</label>
-                    <value>yes</value>
-                </item>
-                <item>
-                    <label>No</label>
-                    <value>no</value>
-                </item>
-            </select1>
-            <input ref="/data/part1_3/why77">
-                <label>Reason for not verified?</label>
-            </input>
-            <input ref="/data/part1_3/msc23">
-                <label>MSc N. Paediatrics (2nd year) - Students admitted</label>
-            </input>
-            <select1 appearance="table-list" ref="/data/part1_3/verify78">
-                <label>Verified?</label>
-                <item>
-                    <label>Yes</label>
-                    <value>yes</value>
-                </item>
-                <item>
-                    <label>No</label>
-                    <value>no</value>
-                </item>
-            </select1>
-            <input ref="/data/part1_3/why78">
-                <label>Reason for not verified?</label>
-            </input>
-            <input ref="/data/part1_3/msc24">
-                <label>MSc N. Paediatrics (2nd year) - Students present on day of assessment</label>
-            </input>
-            <select1 appearance="table-list" ref="/data/part1_3/verify79">
-                <label>Verified?</label>
-                <item>
-                    <label>Yes</label>
-                    <value>yes</value>
-                </item>
-                <item>
-                    <label>No</label>
-                    <value>no</value>
-                </item>
-            </select1>
-            <input ref="/data/part1_3/why79">
-                <label>Reason for not verified?</label>
-            </input>
-            <input ref="/data/part1_3/msc25">
-                <label>MSc N. Psychiatric (1st year) - Number of Sanctioned Seats</label>
-            </input>
-            <select1 appearance="table-list" ref="/data/part1_3/verify80">
-                <label>Verified?</label>
-                <item>
-                    <label>Yes</label>
-                    <value>yes</value>
-                </item>
-                <item>
-                    <label>No</label>
-                    <value>no</value>
-                </item>
-            </select1>
-            <input ref="/data/part1_3/why80">
-                <label>Reason for not verified?</label>
-            </input>
-            <input ref="/data/part1_3/msc26">
-                <label>MSc N. Psychiatric (1st year) - Students admitted</label>
-            </input>
-            <select1 appearance="table-list" ref="/data/part1_3/verify81">
-                <label>Verified?</label>
-                <item>
-                    <label>Yes</label>
-                    <value>yes</value>
-                </item>
-                <item>
-                    <label>No</label>
-                    <value>no</value>
-                </item>
-            </select1>
-            <input ref="/data/part1_3/why81">
-                <label>Reason for not verified?</label>
-            </input>
-            <input ref="/data/part1_3/msc27">
-                <label>MSc N. Psychiatric (1st year) - Students present on day of assessment</label>
-            </input>
-            <select1 appearance="table-list" ref="/data/part1_3/verify82">
-                <label>Verified?</label>
-                <item>
-                    <label>Yes</label>
-                    <value>yes</value>
-                </item>
-                <item>
-                    <label>No</label>
-                    <value>no</value>
-                </item>
-            </select1>
-            <input ref="/data/part1_3/why82">
-                <label>Reason for not verified?</label>
-            </input>
-            <input ref="/data/part1_3/msc28">
-                <label>MSc N. Psychiatric (2nd year) - Number of Sanctioned Seats</label>
-            </input>
-            <select1 appearance="table-list" ref="/data/part1_3/verify83">
-                <label>Verified?</label>
-                <item>
-                    <label>Yes</label>
-                    <value>yes</value>
-                </item>
-                <item>
-                    <label>No</label>
-                    <value>no</value>
-                </item>
-            </select1>
-            <input ref="/data/part1_3/why83">
-                <label>Reason for not verified?</label>
-            </input>
-            <input ref="/data/part1_3/msc29">
-                <label>MSc N. Psychiatric (2nd year) - Students admitted</label>
-            </input>
-            <select1 appearance="table-list" ref="/data/part1_3/verify84">
-                <label>Verified?</label>
-                <item>
-                    <label>Yes</label>
-                    <value>yes</value>
-                </item>
-                <item>
-                    <label>No</label>
-                    <value>no</value>
-                </item>
-            </select1>
-            <input ref="/data/part1_3/why84">
-                <label>Reason for not verified?</label>
-            </input>
-            <input ref="/data/part1_3/msc30">
-                <label>MSc N. Psychiatric (2nd year) - Students present on day of assessment</label>
-            </input>
-            <select1 appearance="table-list" ref="/data/part1_3/verify85">
-                <label>Verified?</label>
-                <item>
-                    <label>Yes</label>
-                    <value>yes</value>
-                </item>
-                <item>
-                    <label>No</label>
-                    <value>no</value>
-                </item>
-            </select1>
-            <input ref="/data/part1_3/why85">
-                <label>Reason for not verified?</label>
-            </input>
+            <group appearance="field-list" ref="/data/part1_3/part1_3.9">
+                <input ref="/data/part1_3/part1_3.9/msc23">
+                    <label>Number of Sanctioned Seats (1st year)</label>
+                </input>
+                <input ref="/data/part1_3/part1_3.9/msc24">
+                    <label>Students admitted (1st year)</label>
+                </input>
+                <input ref="/data/part1_3/part1_3.9/msc25">
+                    <label>Students present on day of assessment (1st year)</label>
+                </input>
+                <input ref="/data/part1_3/part1_3.9/msc26">
+                    <label>Students admitted (2nd year)</label>
+                </input>
+                <input ref="/data/part1_3/part1_3.9/msc27">
+                    <label>Students present on day of assessment (2nd year)</label>
+                </input>
+            </group>
         </group>
-        <group appearance="field-list" ref="/data/part1_4_1">
-            <label>Training Infrastructure - Teaching Block</label>
-            <select1 ref="/data/part1_4_1/teching_block">
-                <label>Institution has a separate teaching block available</label>
+        <group appearance="field-list" ref="/data/part1_4">
+            <label>Training Infrastructure (Teaching Block)</label>
+            <select1 ref="/data/part1_4/part1_4.1">
+                <label>The institution has a separate teaching block available</label>
                 <item>
                     <label>Yes</label>
                     <value>yes</value>
@@ -2416,25 +865,11 @@
                     <value>no</value>
                 </item>
             </select1>
-            <select1 appearance="table-list" ref="/data/part1_4_1/verify86">
-                <label>Verified?</label>
-                <item>
-                    <label>Yes</label>
-                    <value>yes</value>
-                </item>
-                <item>
-                    <label>No</label>
-                    <value>no</value>
-                </item>
-            </select1>
-            <input ref="/data/part1_4_1/why86">
-                <label>Reason for not verified?</label>
+            <input ref="/data/part1_4/part1_4.2">
+                <label>Number of Class Room available in the course</label>
             </input>
-            <input ref="/data/part1_4_1/classrooms">
-                <label>Number of Class Room available</label>
-            </input>
-            <select1 appearance="table-list" ref="/data/part1_4_1/verify87">
-                <label>Verified?</label>
+            <select1 ref="/data/part1_4/part1_4.2.1">
+                <label>If the classroom has sufficient seating capacity as per seats sanctioned</label>
                 <item>
                     <label>Yes</label>
                     <value>yes</value>
@@ -2444,105 +879,46 @@
                     <value>no</value>
                 </item>
             </select1>
-            <input ref="/data/part1_4_1/why87">
-                <label>Reason for not verified?</label>
-            </input>
-            <input ref="/data/part1_4_1/enough_space">
-                <label>Total number of seats across all classrooms</label>
-            </input>
-            <select1 appearance="table-list" ref="/data/part1_4_1/verify88">
-                <label>Verified?</label>
-                <item>
-                    <label>Yes</label>
-                    <value>yes</value>
-                </item>
-                <item>
-                    <label>No</label>
-                    <value>no</value>
-                </item>
-            </select1>
-            <input ref="/data/part1_4_1/why88">
-                <label>Reason for not verified?</label>
-            </input>
-            <select1 ref="/data/part1_4_1/principal_office">
-                <label>Is there a dedicated space for Principal's Office?</label>
-                <item>
-                    <label>Yes</label>
-                    <value>yes</value>
-                </item>
-                <item>
-                    <label>No</label>
-                    <value>no</value>
-                </item>
-            </select1>
-            <select1 appearance="table-list" ref="/data/part1_4_1/verify89">
-                <label>Verified?</label>
-                <item>
-                    <label>Yes</label>
-                    <value>yes</value>
-                </item>
-                <item>
-                    <label>No</label>
-                    <value>no</value>
-                </item>
-            </select1>
-            <input ref="/data/part1_4_1/why89">
-                <label>Reason for not verified?</label>
-            </input>
-            <select1 ref="/data/part1_4_1/teaching_fac">
-                <label>Is there a dedicated space for Teaching Faculty?</label>
-                <item>
-                    <label>Yes</label>
-                    <value>yes</value>
-                </item>
-                <item>
-                    <label>No</label>
-                    <value>no</value>
-                </item>
-            </select1>
-            <select1 appearance="table-list" ref="/data/part1_4_1/verify90">
-                <label>Verified?</label>
-                <item>
-                    <label>Yes</label>
-                    <value>yes</value>
-                </item>
-                <item>
-                    <label>No</label>
-                    <value>no</value>
-                </item>
-            </select1>
-            <input ref="/data/part1_4_1/why90">
-                <label>Reason for not verified?</label>
-            </input>
-            <select1 ref="/data/part1_4_1/staff">
-                <label>Is there a dedicated space for Non-teaching staff?</label>
-                <item>
-                    <label>Yes</label>
-                    <value>yes</value>
-                </item>
-                <item>
-                    <label>No</label>
-                    <value>no</value>
-                </item>
-            </select1>
-            <select1 appearance="table-list" ref="/data/part1_4_1/verify91">
-                <label>Verified?</label>
-                <item>
-                    <label>Yes</label>
-                    <value>yes</value>
-                </item>
-                <item>
-                    <label>No</label>
-                    <value>no</value>
-                </item>
-            </select1>
-            <input ref="/data/part1_4_1/why91">
-                <label>Reason for not verified?</label>
-            </input>
+            <group appearance="field-list" ref="/data/part1_4/part1_4.3">
+                <label>Is there a dedicated space for :</label>
+                <select1 ref="/data/part1_4/part1_4.3/part1_4.3a">
+                    <label>Principal's Office</label>
+                    <item>
+                        <label>Yes</label>
+                        <value>yes</value>
+                    </item>
+                    <item>
+                        <label>No</label>
+                        <value>no</value>
+                    </item>
+                </select1>
+                <select1 ref="/data/part1_4/part1_4.3/part1_4.3b">
+                    <label>Teaching Faculty</label>
+                    <item>
+                        <label>Yes</label>
+                        <value>yes</value>
+                    </item>
+                    <item>
+                        <label>No</label>
+                        <value>no</value>
+                    </item>
+                </select1>
+                <select1 ref="/data/part1_4/part1_4.3/part1_4.3c">
+                    <label>Non-teaching faculty</label>
+                    <item>
+                        <label>Yes</label>
+                        <value>yes</value>
+                    </item>
+                    <item>
+                        <label>No</label>
+                        <value>no</value>
+                    </item>
+                </select1>
+            </group>
         </group>
-        <group appearance="field-list" ref="/data/part1_4_3">
+        <group appearance="field-list" ref="/data/part1_4_6">
             <label>Training Infrastructure - Library</label>
-            <select1 ref="/data/part1_4_3/library_comp">
+            <select1 ref="/data/part1_4_6/library_comp">
                 <label>Is a computer with internet available in the library</label>
                 <item>
                     <label>Yes</label>
@@ -2553,7 +929,7 @@
                     <value>no</value>
                 </item>
             </select1>
-            <select1 appearance="table-list" ref="/data/part1_4_3/verify98">
+            <select1 appearance="table-list" ref="/data/part1_4_6/verify98">
                 <label>Verified?</label>
                 <item>
                     <label>Yes</label>
@@ -2564,13 +940,13 @@
                     <value>no</value>
                 </item>
             </select1>
-            <input ref="/data/part1_4_3/why98">
+            <input ref="/data/part1_4_6/why98">
                 <label>Reason for not verified?</label>
             </input>
-            <input ref="/data/part1_4_3/books">
+            <input ref="/data/part1_4_6/books">
                 <label>No. of books available as per accession register</label>
             </input>
-            <select1 appearance="table-list" ref="/data/part1_4_3/verify99">
+            <select1 appearance="table-list" ref="/data/part1_4_6/verify99">
                 <label>Verified?</label>
                 <item>
                     <label>Yes</label>
@@ -2581,13 +957,13 @@
                     <value>no</value>
                 </item>
             </select1>
-            <input ref="/data/part1_4_3/why99">
+            <input ref="/data/part1_4_6/why99">
                 <label>Reason for not verified?</label>
             </input>
-            <input ref="/data/part1_4_3/journal">
+            <input ref="/data/part1_4_6/journal">
                 <label>No. of Subscribed Journals</label>
             </input>
-            <select1 appearance="table-list" ref="/data/part1_4_3/verify100">
+            <select1 appearance="table-list" ref="/data/part1_4_6/verify100">
                 <label>Verified?</label>
                 <item>
                     <label>Yes</label>
@@ -2598,13 +974,13 @@
                     <value>no</value>
                 </item>
             </select1>
-            <input ref="/data/part1_4_3/why100">
+            <input ref="/data/part1_4_6/why100">
                 <label>Reason for not verified?</label>
             </input>
-            <input ref="/data/part1_4_3/library_seating">
+            <input ref="/data/part1_4_6/library_seating">
                 <label>Number of seats in the library</label>
             </input>
-            <select1 appearance="table-list" ref="/data/part1_4_3/verify101">
+            <select1 appearance="table-list" ref="/data/part1_4_6/verify101">
                 <label>Verified?</label>
                 <item>
                     <label>Yes</label>
@@ -2615,11 +991,11 @@
                     <value>no</value>
                 </item>
             </select1>
-            <input ref="/data/part1_4_3/why101">
+            <input ref="/data/part1_4_6/why101">
                 <label>Reason for not verified?</label>
             </input>
-            <select1 ref="/data/part1_4_3/util_register">
-                <label>is the utilization register available</label>
+            <select1 ref="/data/part1_4_6/util_register">
+                <label>is the utilization register available?</label>
                 <item>
                     <label>Yes</label>
                     <value>yes</value>
@@ -2629,7 +1005,7 @@
                     <value>no</value>
                 </item>
             </select1>
-            <select1 appearance="table-list" ref="/data/part1_4_3/verify102">
+            <select1 appearance="table-list" ref="/data/part1_4_6/verify102">
                 <label>Verified?</label>
                 <item>
                     <label>Yes</label>
@@ -2640,82 +1016,20 @@
                     <value>no</value>
                 </item>
             </select1>
-            <input ref="/data/part1_4_3/why102">
+            <input ref="/data/part1_4_6/why102">
                 <label>Reason for not verified?</label>
+            </input>
+            <input ref="/data/part1_4_6/remark103">
+                <label>Remarks</label>
             </input>
         </group>
-        <group appearance="field-list" ref="/data/part1_4_4">
-            <label>Training Infrastructure - AV Aids</label>
-            <select ref="/data/part1_4_4/av_available">
-                <label>Following items are available in classrooms</label>
-                <item>
-                    <label>Computer</label>
-                    <value>1</value>
-                </item>
-                <item>
-                    <label>Projector</label>
-                    <value>2</value>
-                </item>
-                <item>
-                    <label>Screen</label>
-                    <value>3</value>
-                </item>
-                <item>
-                    <label>Charts</label>
-                    <value>4</value>
-                </item>
-                <item>
-                    <label>Audio system</label>
-                    <value>5</value>
-                </item>
-                <item>
-                    <label>None</label>
-                    <value>6</value>
-                </item>
-            </select>
-            <select1 appearance="table-list" ref="/data/part1_4_4/verify103">
-                <label>Verified?</label>
-                <item>
-                    <label>Yes</label>
-                    <value>yes</value>
-                </item>
-                <item>
-                    <label>No</label>
-                    <value>no</value>
-                </item>
-            </select1>
-            <input ref="/data/part1_4_4/why103">
-                <label>Reason for not verified?</label>
+        <group appearance="field-list" ref="/data/part1_4_7">
+            <label>AV aids</label>
+            <input ref="/data/part1_4_7/part1_4_7.1">
+                <label>&lt;span style='color:Black; font-weight:bold'&gt;Computer&lt;/span&gt;</label>
             </input>
-            <select ref="/data/part1_4_4/av_functional">
-                <label>Following items are functional in classrooms</label>
-                <item>
-                    <label>Computer</label>
-                    <value>1</value>
-                </item>
-                <item>
-                    <label>Projector</label>
-                    <value>2</value>
-                </item>
-                <item>
-                    <label>Screen</label>
-                    <value>3</value>
-                </item>
-                <item>
-                    <label>Charts</label>
-                    <value>4</value>
-                </item>
-                <item>
-                    <label>Audio system</label>
-                    <value>5</value>
-                </item>
-                <item>
-                    <label>None</label>
-                    <value>6</value>
-                </item>
-            </select>
-            <select1 appearance="table-list" ref="/data/part1_4_4/verify104">
-                <label>Verified?</label>
+            <select1 ref="/data/part1_4_7/part1_4_7.1a">
+                <label>Available</label>
                 <item>
                     <label>Yes</label>
                     <value>yes</value>
@@ -2725,14 +1039,137 @@
                     <value>no</value>
                 </item>
             </select1>
-            <input ref="/data/part1_4_4/why104">
-                <label>Reason for not verified?</label>
+            <select1 ref="/data/part1_4_7/part1_4_7.1b">
+                <label>Functional</label>
+                <item>
+                    <label>Yes</label>
+                    <value>yes</value>
+                </item>
+                <item>
+                    <label>No</label>
+                    <value>no</value>
+                </item>
+            </select1>
+            <input ref="/data/part1_4_7/part1_4_7.1c">
+                <label>Remarks</label>
+            </input>
+            <input ref="/data/part1_4_7/part1_4_7.2">
+                <label>&lt;span style='color:Black; font-weight:bold'&gt;Projector&lt;/span&gt;</label>
+            </input>
+            <select1 ref="/data/part1_4_7/part1_4_7.2a">
+                <label>Available</label>
+                <item>
+                    <label>Yes</label>
+                    <value>yes</value>
+                </item>
+                <item>
+                    <label>No</label>
+                    <value>no</value>
+                </item>
+            </select1>
+            <select1 ref="/data/part1_4_7/part1_4_7.2b">
+                <label>Functional</label>
+                <item>
+                    <label>Yes</label>
+                    <value>yes</value>
+                </item>
+                <item>
+                    <label>No</label>
+                    <value>no</value>
+                </item>
+            </select1>
+            <input ref="/data/part1_4_7/part1_4_7.2c">
+                <label>Remarks</label>
+            </input>
+            <input ref="/data/part1_4_7/part1_4_7.3">
+                <label>&lt;span style='color:Black; font-weight:bold'&gt;Screen&lt;/span&gt;</label>
+            </input>
+            <select1 ref="/data/part1_4_7/part1_4_7.3a">
+                <label>Available</label>
+                <item>
+                    <label>Yes</label>
+                    <value>yes</value>
+                </item>
+                <item>
+                    <label>No</label>
+                    <value>no</value>
+                </item>
+            </select1>
+            <select1 ref="/data/part1_4_7/part1_4_7.3b">
+                <label>Functional</label>
+                <item>
+                    <label>Yes</label>
+                    <value>yes</value>
+                </item>
+                <item>
+                    <label>No</label>
+                    <value>no</value>
+                </item>
+            </select1>
+            <input ref="/data/part1_4_7/part1_4_7.3c">
+                <label>Remarks</label>
+            </input>
+            <input ref="/data/part1_4_7/part1_4_7.4">
+                <label>&lt;span style='color:Black; font-weight:bold'&gt;Charts&lt;/span&gt;</label>
+            </input>
+            <select1 ref="/data/part1_4_7/part1_4_7.4a">
+                <label>Available</label>
+                <item>
+                    <label>Yes</label>
+                    <value>yes</value>
+                </item>
+                <item>
+                    <label>No</label>
+                    <value>no</value>
+                </item>
+            </select1>
+            <select1 ref="/data/part1_4_7/part1_4_7.4b">
+                <label>Functional</label>
+                <item>
+                    <label>Yes</label>
+                    <value>yes</value>
+                </item>
+                <item>
+                    <label>No</label>
+                    <value>no</value>
+                </item>
+            </select1>
+            <input ref="/data/part1_4_7/part1_4_7.4c">
+                <label>Remarks</label>
+            </input>
+            <input ref="/data/part1_4_7/part1_4_7.5">
+                <label>&lt;span style='color:Black; font-weight:bold'&gt;Audio System&lt;/span&gt;</label>
+            </input>
+            <select1 ref="/data/part1_4_7/part1_4_7.5a">
+                <label>Available</label>
+                <item>
+                    <label>Yes</label>
+                    <value>yes</value>
+                </item>
+                <item>
+                    <label>No</label>
+                    <value>no</value>
+                </item>
+            </select1>
+            <select1 ref="/data/part1_4_7/part1_4_7.5b">
+                <label>Functional</label>
+                <item>
+                    <label>Yes</label>
+                    <value>yes</value>
+                </item>
+                <item>
+                    <label>No</label>
+                    <value>no</value>
+                </item>
+            </select1>
+            <input ref="/data/part1_4_7/part1_4_7.5c">
+                <label>Remarks</label>
             </input>
         </group>
         <group appearance="field-list" ref="/data/part1_5">
-            <label>Hostel Facilities</label>
-            <select1 ref="/data/part1_5/hostel">
-                <label>Separate hostels for boys and girls exist</label>
+            <label>Hostel Facilities ( Can be shared between courses)</label>
+            <select1 ref="/data/part1_5/part1_5.1">
+                <label>A separate hostel for boys and girls is provided</label>
                 <item>
                     <label>Yes</label>
                     <value>yes</value>
@@ -2742,8 +1179,14 @@
                     <value>no</value>
                 </item>
             </select1>
-            <select1 appearance="table-list" ref="/data/part1_5/verify105">
-                <label>Verified?</label>
+            <input ref="/data/part1_5/part1_5.2">
+                <label>No. of beds for students</label>
+            </input>
+            <input ref="/data/part1_5/part1_5.3">
+                <label>No. of seating arrangement in dining hall</label>
+            </input>
+            <select1 ref="/data/part1_5/part1_5.4">
+                <label>24 hours water supply</label>
                 <item>
                     <label>Yes</label>
                     <value>yes</value>
@@ -2753,14 +1196,8 @@
                     <value>no</value>
                 </item>
             </select1>
-            <input ref="/data/part1_5/why105">
-                <label>Reason for not verified?</label>
-            </input>
-            <input ref="/data/part1_5/beds">
-                <label>No. of beds for students (combined for all hostel buildings)</label>
-            </input>
-            <select1 appearance="table-list" ref="/data/part1_5/verify106">
-                <label>Verified?</label>
+            <select1 ref="/data/part1_5/part1_5.5">
+                <label>Facility for hot water supply</label>
                 <item>
                     <label>Yes</label>
                     <value>yes</value>
@@ -2770,14 +1207,8 @@
                     <value>no</value>
                 </item>
             </select1>
-            <input ref="/data/part1_5/why106">
-                <label>Reason for not verified?</label>
-            </input>
-            <input ref="/data/part1_5/seats_dining">
-                <label>Number of seats in dining hall</label>
-            </input>
-            <select1 appearance="table-list" ref="/data/part1_5/verify107">
-                <label>Verified?</label>
+            <select1 ref="/data/part1_5/part1_5.6">
+                <label>Safe drinking water facility</label>
                 <item>
                     <label>Yes</label>
                     <value>yes</value>
@@ -2787,559 +1218,14 @@
                     <value>no</value>
                 </item>
             </select1>
-            <input ref="/data/part1_5/why107">
-                <label>Reason for not verified?</label>
-            </input>
-            <select1 ref="/data/part1_5/water_supply">
-                <label>Do the hostels have 24 hours water supply?</label>
-                <item>
-                    <label>Yes</label>
-                    <value>y</value>
-                </item>
-                <item>
-                    <label>No</label>
-                    <value>n</value>
-                </item>
-                <item>
-                    <label>Not Applicable</label>
-                    <value>na</value>
-                </item>
-            </select1>
-            <select1 appearance="table-list" ref="/data/part1_5/verify108">
-                <label>Verified?</label>
-                <item>
-                    <label>Yes</label>
-                    <value>yes</value>
-                </item>
-                <item>
-                    <label>No</label>
-                    <value>no</value>
-                </item>
-            </select1>
-            <input ref="/data/part1_5/why108">
-                <label>Reason for not verified?</label>
-            </input>
-            <select1 ref="/data/part1_5/hot_water_supply">
-                <label>Do the hostels have facility for hot water supply (especially in winter)?</label>
-                <item>
-                    <label>Yes</label>
-                    <value>y</value>
-                </item>
-                <item>
-                    <label>No</label>
-                    <value>n</value>
-                </item>
-                <item>
-                    <label>Not Applicable</label>
-                    <value>na</value>
-                </item>
-            </select1>
-            <select1 appearance="table-list" ref="/data/part1_5/verify109">
-                <label>Verified?</label>
-                <item>
-                    <label>Yes</label>
-                    <value>yes</value>
-                </item>
-                <item>
-                    <label>No</label>
-                    <value>no</value>
-                </item>
-            </select1>
-            <input ref="/data/part1_5/why109">
-                <label>Reason for not verified?</label>
-            </input>
-            <select1 ref="/data/part1_5/safe_water_supply">
-                <label>Is safe drinking water facility available in the hostels?</label>
-                <item>
-                    <label>Yes</label>
-                    <value>y</value>
-                </item>
-                <item>
-                    <label>No</label>
-                    <value>n</value>
-                </item>
-                <item>
-                    <label>Not Applicable</label>
-                    <value>na</value>
-                </item>
-            </select1>
-            <select1 appearance="table-list" ref="/data/part1_5/verify110">
-                <label>Verified?</label>
-                <item>
-                    <label>Yes</label>
-                    <value>yes</value>
-                </item>
-                <item>
-                    <label>No</label>
-                    <value>no</value>
-                </item>
-            </select1>
-            <input ref="/data/part1_5/why110">
-                <label>Reason for not verified?</label>
-            </input>
-            <input ref="/data/part1_5/toilets">
-                <label>No. of functional toilets in hostel (which can be used by the students)</label>
-            </input>
-            <select1 appearance="table-list" ref="/data/part1_5/verify111">
-                <label>Verified?</label>
-                <item>
-                    <label>Yes</label>
-                    <value>yes</value>
-                </item>
-                <item>
-                    <label>No</label>
-                    <value>no</value>
-                </item>
-            </select1>
-            <input ref="/data/part1_5/why111">
-                <label>Reason for not verified?</label>
+            <input ref="/data/part1_5/part1_5.7">
+                <label>No. of functional toilets in hostel</label>
             </input>
         </group>
-        <group appearance="field-list" ref="/data/part1_6">
-            <label>Teaching Faculty</label>
-            <input ref="/data/part1_6/fac_registered">
-                <label>Total number of teaching faculty registered</label>
-            </input>
-            <select1 appearance="table-list" ref="/data/part1_6/verify112">
-                <label>Verified?</label>
-                <item>
-                    <label>Yes</label>
-                    <value>yes</value>
-                </item>
-                <item>
-                    <label>No</label>
-                    <value>no</value>
-                </item>
-            </select1>
-            <input ref="/data/part1_6/why112">
-                <label>Reason for not verified?</label>
-            </input>
-            <input ref="/data/part1_6/fac_present">
-                <label>Total number of teaching faculty present on day of assessment</label>
-            </input>
-            <select1 appearance="table-list" ref="/data/part1_6/verify113">
-                <label>Verified?</label>
-                <item>
-                    <label>Yes</label>
-                    <value>yes</value>
-                </item>
-                <item>
-                    <label>No</label>
-                    <value>no</value>
-                </item>
-            </select1>
-            <input ref="/data/part1_6/why113">
-                <label>Reason for not verified?</label>
-            </input>
-            <input ref="/data/part1_6/fac_bsc">
-                <label>Number of teaching faculty with BSc (Nursing) degree only</label>
-            </input>
-            <select1 appearance="table-list" ref="/data/part1_6/verify114">
-                <label>Verified?</label>
-                <item>
-                    <label>Yes</label>
-                    <value>yes</value>
-                </item>
-                <item>
-                    <label>No</label>
-                    <value>no</value>
-                </item>
-            </select1>
-            <input ref="/data/part1_6/why114">
-                <label>Reason for not verified?</label>
-            </input>
-            <input ref="/data/part1_6/fac_msc">
-                <label>Number of teaching faculty with MSc (Nursing) degree or higher</label>
-            </input>
-            <select1 appearance="table-list" ref="/data/part1_6/verify115">
-                <label>Verified?</label>
-                <item>
-                    <label>Yes</label>
-                    <value>yes</value>
-                </item>
-                <item>
-                    <label>No</label>
-                    <value>no</value>
-                </item>
-            </select1>
-            <input ref="/data/part1_6/why115">
-                <label>Reason for not verified?</label>
-            </input>
-        </group>
-        <group appearance="field-list" ref="/data/part1_7">
-            <label>Clinical Facilities</label>
-            <input ref="/data/part1_7/parent_add">
-                <label>Complete address of the parent hospital</label>
-            </input>
-            <select1 appearance="table-list" ref="/data/part1_7/verify116">
-                <label>Verified?</label>
-                <item>
-                    <label>Yes</label>
-                    <value>yes</value>
-                </item>
-                <item>
-                    <label>No</label>
-                    <value>no</value>
-                </item>
-            </select1>
-            <input ref="/data/part1_7/why116">
-                <label>Reason for not verified?</label>
-            </input>
-            <input ref="/data/part1_7/hosp_geocode">
-                <label>Health Facility Registry/Geo-tagging Code of Hospital</label>
-            </input>
-            <select1 appearance="table-list" ref="/data/part1_7/verify117">
-                <label>Verified?</label>
-                <item>
-                    <label>Yes</label>
-                    <value>yes</value>
-                </item>
-                <item>
-                    <label>No</label>
-                    <value>no</value>
-                </item>
-            </select1>
-            <input ref="/data/part1_7/why117">
-                <label>Reason for not verified?</label>
-            </input>
-            <input ref="/data/part1_7/beds_hosp">
-                <label>Number of beds in parent hospital</label>
-            </input>
-            <select1 appearance="table-list" ref="/data/part1_7/verify118">
-                <label>Verified?</label>
-                <item>
-                    <label>Yes</label>
-                    <value>yes</value>
-                </item>
-                <item>
-                    <label>No</label>
-                    <value>no</value>
-                </item>
-            </select1>
-            <input ref="/data/part1_7/why118">
-                <label>Reason for not verified?</label>
-            </input>
-            <input ref="/data/part1_7/total_ipd">
-                <label>Total number of IPD patients in parent hospital in 1 month</label>
-            </input>
-            <select1 appearance="table-list" ref="/data/part1_7/verify119">
-                <label>Verified?</label>
-                <item>
-                    <label>Yes</label>
-                    <value>yes</value>
-                </item>
-                <item>
-                    <label>No</label>
-                    <value>no</value>
-                </item>
-            </select1>
-            <input ref="/data/part1_7/why119">
-                <label>Reason for not verified?</label>
-            </input>
-            <select ref="/data/part1_7/dept_parent_hosp">
-                <label>Departments at the parent hospital</label>
-                <item>
-                    <label>Medical</label>
-                    <value>med</value>
-                </item>
-                <item>
-                    <label>Surgical</label>
-                    <value>sur</value>
-                </item>
-                <item>
-                    <label>Obst. &amp; Gynecology</label>
-                    <value>obst</value>
-                </item>
-                <item>
-                    <label>Pediatrics</label>
-                    <value>ped</value>
-                </item>
-                <item>
-                    <label>Ortho</label>
-                    <value>orthi</value>
-                </item>
-                <item>
-                    <label>Others</label>
-                    <value>others</value>
-                </item>
-                <item>
-                    <label>None</label>
-                    <value>none</value>
-                </item>
-            </select>
-            <select1 appearance="table-list" ref="/data/part1_7/verify120">
-                <label>Verified?</label>
-                <item>
-                    <label>Yes</label>
-                    <value>yes</value>
-                </item>
-                <item>
-                    <label>No</label>
-                    <value>no</value>
-                </item>
-            </select1>
-            <input ref="/data/part1_7/why120">
-                <label>Reason for not verified?</label>
-            </input>
-        </group>
-        <group appearance="field-list" ref="/data/part1_8">
-            <label>Staff Nurses</label>
-            <input ref="/data/part1_8/nurse_emp">
-                <label>Number of Staff Nurses employed at the parent hospital</label>
-            </input>
-            <select1 appearance="table-list" ref="/data/part1_8/verify121">
-                <label>Verified?</label>
-                <item>
-                    <label>Yes</label>
-                    <value>yes</value>
-                </item>
-                <item>
-                    <label>No</label>
-                    <value>no</value>
-                </item>
-            </select1>
-            <input ref="/data/part1_8/why121">
-                <label>Reason for not verified?</label>
-            </input>
-            <input ref="/data/part1_8/nurse_gnm">
-                <label>Number of Staff Nurses with GNM diploma only</label>
-            </input>
-            <select1 appearance="table-list" ref="/data/part1_8/verify122">
-                <label>Verified?</label>
-                <item>
-                    <label>Yes</label>
-                    <value>yes</value>
-                </item>
-                <item>
-                    <label>No</label>
-                    <value>no</value>
-                </item>
-            </select1>
-            <input ref="/data/part1_8/why122">
-                <label>Reason for not verified?</label>
-            </input>
-            <input ref="/data/part1_8/nurse_bsc">
-                <label>Number of Staff Nurses with BSc (N) degree only</label>
-            </input>
-            <select1 appearance="table-list" ref="/data/part1_8/verify123">
-                <label>Verified?</label>
-                <item>
-                    <label>Yes</label>
-                    <value>yes</value>
-                </item>
-                <item>
-                    <label>No</label>
-                    <value>no</value>
-                </item>
-            </select1>
-            <input ref="/data/part1_8/why123">
-                <label>Reason for not verified?</label>
-            </input>
-            <input ref="/data/part1_8/nurse_msc">
-                <label>Number of Staff Nurses with MSc (N) or higher degree</label>
-            </input>
-            <select1 appearance="table-list" ref="/data/part1_8/verify124">
-                <label>Verified?</label>
-                <item>
-                    <label>Yes</label>
-                    <value>yes</value>
-                </item>
-                <item>
-                    <label>No</label>
-                    <value>no</value>
-                </item>
-            </select1>
-            <input ref="/data/part1_8/why124">
-                <label>Reason for not verified?</label>
-            </input>
-        </group>
-        <group appearance="field-list" ref="/data/part1_9">
-            <label>Community Health Facilities</label>
-            <input ref="/data/part1_9/f_name1">
-                <label>Facility 1 - Name</label>
-            </input>
-            <select1 appearance="table-list" ref="/data/part1_9/verify125">
-                <label>Verified?</label>
-                <item>
-                    <label>Yes</label>
-                    <value>yes</value>
-                </item>
-                <item>
-                    <label>No</label>
-                    <value>no</value>
-                </item>
-            </select1>
-            <input ref="/data/part1_9/why125">
-                <label>Reason for not verified?</label>
-            </input>
-            <input ref="/data/part1_9/f_type1">
-                <label>Facility 1 - Type</label>
-            </input>
-            <select1 appearance="table-list" ref="/data/part1_9/verify126">
-                <label>Verified?</label>
-                <item>
-                    <label>Yes</label>
-                    <value>yes</value>
-                </item>
-                <item>
-                    <label>No</label>
-                    <value>no</value>
-                </item>
-            </select1>
-            <input ref="/data/part1_9/why126">
-                <label>Reason for not verified?</label>
-            </input>
-            <select1 ref="/data/part1_9/f_reg1">
-                <label>Facility 1 - Community visit register available &amp; used</label>
-                <item>
-                    <label>Yes</label>
-                    <value>yes</value>
-                </item>
-                <item>
-                    <label>No</label>
-                    <value>no</value>
-                </item>
-            </select1>
-            <select1 appearance="table-list" ref="/data/part1_9/verify127">
-                <label>Verified?</label>
-                <item>
-                    <label>Yes</label>
-                    <value>yes</value>
-                </item>
-                <item>
-                    <label>No</label>
-                    <value>no</value>
-                </item>
-            </select1>
-            <input ref="/data/part1_9/why127">
-                <label>Reason for not verified?</label>
-            </input>
-            <input ref="/data/part1_9/f_name2">
-                <label>Facility 1 - Name</label>
-            </input>
-            <select1 appearance="table-list" ref="/data/part1_9/verify128">
-                <label>Verified?</label>
-                <item>
-                    <label>Yes</label>
-                    <value>yes</value>
-                </item>
-                <item>
-                    <label>No</label>
-                    <value>no</value>
-                </item>
-            </select1>
-            <input ref="/data/part1_9/why128">
-                <label>Reason for not verified?</label>
-            </input>
-            <input ref="/data/part1_9/f_type2">
-                <label>Facility 1 - Type</label>
-            </input>
-            <select1 appearance="table-list" ref="/data/part1_9/verify129">
-                <label>Verified?</label>
-                <item>
-                    <label>Yes</label>
-                    <value>yes</value>
-                </item>
-                <item>
-                    <label>No</label>
-                    <value>no</value>
-                </item>
-            </select1>
-            <input ref="/data/part1_9/why129">
-                <label>Reason for not verified?</label>
-            </input>
-            <select1 ref="/data/part1_9/f_reg2">
-                <label>Facility 1 - Community visit register available &amp; used</label>
-                <item>
-                    <label>Yes</label>
-                    <value>yes</value>
-                </item>
-                <item>
-                    <label>No</label>
-                    <value>no</value>
-                </item>
-            </select1>
-            <select1 appearance="table-list" ref="/data/part1_9/verify130">
-                <label>Verified?</label>
-                <item>
-                    <label>Yes</label>
-                    <value>yes</value>
-                </item>
-                <item>
-                    <label>No</label>
-                    <value>no</value>
-                </item>
-            </select1>
-            <input ref="/data/part1_9/why130">
-                <label>Reason for not verified?</label>
-            </input>
-            <input ref="/data/part1_9/f_name3">
-                <label>Facility 1 - Name</label>
-            </input>
-            <select1 appearance="table-list" ref="/data/part1_9/verify131">
-                <label>Verified?</label>
-                <item>
-                    <label>Yes</label>
-                    <value>yes</value>
-                </item>
-                <item>
-                    <label>No</label>
-                    <value>no</value>
-                </item>
-            </select1>
-            <input ref="/data/part1_9/why131">
-                <label>Reason for not verified?</label>
-            </input>
-            <input ref="/data/part1_9/f_type3">
-                <label>Facility 1 - Type</label>
-            </input>
-            <select1 appearance="table-list" ref="/data/part1_9/verify132">
-                <label>Verified?</label>
-                <item>
-                    <label>Yes</label>
-                    <value>yes</value>
-                </item>
-                <item>
-                    <label>No</label>
-                    <value>no</value>
-                </item>
-            </select1>
-            <input ref="/data/part1_9/why132">
-                <label>Reason for not verified?</label>
-            </input>
-            <select1 ref="/data/part1_9/f_reg3">
-                <label>Facility 1 - Community visit register available &amp; used</label>
-                <item>
-                    <label>Yes</label>
-                    <value>yes</value>
-                </item>
-                <item>
-                    <label>No</label>
-                    <value>no</value>
-                </item>
-            </select1>
-            <select1 appearance="table-list" ref="/data/part1_9/verify133">
-                <label>Verified?</label>
-                <item>
-                    <label>Yes</label>
-                    <value>yes</value>
-                </item>
-                <item>
-                    <label>No</label>
-                    <value>no</value>
-                </item>
-            </select1>
-            <input ref="/data/part1_9/why133">
-                <label>Reason for not verified?</label>
-            </input>
-        </group>
-        <group appearance="field-list" ref="/data/misc">
+        <group appearance="field-list" ref="/data/part1_10">
             <label>List of documents to be uploaded</label>
-            <input ref="/data/misc/doc1">
-                <label>Registration document of the Trust/Society/Missionary/Company</label>
-            </input>
-            <select1 appearance="table-list" ref="/data/misc/verify175">
-                <label>Verified?</label>
+            <select1 ref="/data/part1_10/part1_10.1">
+                <label>Copy of Document of Registration of the Trust/Society/Missionary/Company</label>
                 <item>
                     <label>Yes</label>
                     <value>yes</value>
@@ -3349,14 +1235,11 @@
                     <value>no</value>
                 </item>
             </select1>
-            <input ref="/data/misc/why175">
-                <label>Reason for not verified?</label>
+            <input ref="/data/part1_10/part1_10.1r">
+                <label>Remarks</label>
             </input>
-            <input ref="/data/misc/doc2">
-                <label>Letter from CMO regarding establishment of hospital / institution</label>
-            </input>
-            <select1 appearance="table-list" ref="/data/misc/verify176">
-                <label>Verified?</label>
+            <select1 ref="/data/part1_10/part1_10.2">
+                <label>Copy of Letter from CMO regarding establishment of Institution</label>
                 <item>
                     <label>Yes</label>
                     <value>yes</value>
@@ -3366,14 +1249,12 @@
                     <value>no</value>
                 </item>
             </select1>
-            <input ref="/data/misc/why176">
-                <label>Reason for not verified?</label>
+            <input ref="/data/part1_10/part1_10.2r">
+                <label>Remarks</label>
             </input>
-            <input ref="/data/misc/doc3">
-                <label>Letter for Fire NOC for College and Hostel building (Separate or combined)</label>
-            </input>
-            <select1 appearance="table-list" ref="/data/misc/verify177">
-                <label>Verified?</label>
+            <select1 ref="/data/part1_10/part1_10.3">
+                <label>Copy of letter for Fire NOC for College and Hostel building 
+(Separate or combined)</label>
                 <item>
                     <label>Yes</label>
                     <value>yes</value>
@@ -3383,14 +1264,11 @@
                     <value>no</value>
                 </item>
             </select1>
-            <input ref="/data/misc/why177">
-                <label>Reason for not verified?</label>
+            <input ref="/data/part1_10/part1_10.3r">
+                <label>Remarks</label>
             </input>
-            <input ref="/data/misc/doc4">
-                <label>Documents related to Clinical Facilities including bed capacity / departments (Please combine all documents into one file)</label>
-            </input>
-            <select1 appearance="table-list" ref="/data/misc/verify178">
-                <label>Verified?</label>
+            <select1 ref="/data/part1_10/part1_10.4">
+                <label>Copy of Documents related to Clinical Facilities including bed capacity /Departments (For Part 2)</label>
                 <item>
                     <label>Yes</label>
                     <value>yes</value>
@@ -3400,14 +1278,11 @@
                     <value>no</value>
                 </item>
             </select1>
-            <input ref="/data/misc/why178">
-                <label>Reason for not verified?</label>
+            <input ref="/data/part1_10/part1_10.4r">
+                <label>Remarks</label>
             </input>
-            <input ref="/data/misc/doc5">
-                <label>MoU with affiliated hospitals (Please combine all documents into one file)</label>
-            </input>
-            <select1 appearance="table-list" ref="/data/misc/verify179">
-                <label>Verified?</label>
+            <select1 ref="/data/part1_10/part1_10.5">
+                <label>Copy of MoU of affiliated hospitals</label>
                 <item>
                     <label>Yes</label>
                     <value>yes</value>
@@ -3417,14 +1292,11 @@
                     <value>no</value>
                 </item>
             </select1>
-            <input ref="/data/misc/why179">
-                <label>Reason for not verified?</label>
+            <input ref="/data/part1_10/part1_10.5r">
+                <label>Remarks</label>
             </input>
-            <input ref="/data/misc/doc6">
-                <label>Permission letter for visit to Community Health Facilities and facilities (Please combine all documents into one file)</label>
-            </input>
-            <select1 appearance="table-list" ref="/data/misc/verify180">
-                <label>Verified?</label>
+            <select1 ref="/data/part1_10/part1_10.6">
+                <label>Copy of Letter issued related to permission Community Health Facilities and other visit details</label>
                 <item>
                     <label>Yes</label>
                     <value>yes</value>
@@ -3434,14 +1306,11 @@
                     <value>no</value>
                 </item>
             </select1>
-            <input ref="/data/misc/why180">
-                <label>Reason for not verified?</label>
+            <input ref="/data/part1_10/part1_10.6r">
+                <label>Remarks</label>
             </input>
-            <input ref="/data/misc/doc7">
-                <label>MRP, CRP, Academic Planning Register (Please combine all documents into one file)</label>
-            </input>
-            <select1 appearance="table-list" ref="/data/misc/verify181">
-                <label>Verified?</label>
+            <select1 ref="/data/part1_10/part1_10.7">
+                <label>Copy of MRP, CRP, Academic Planning Register and course wise time table</label>
                 <item>
                     <label>Yes</label>
                     <value>yes</value>
@@ -3451,9 +1320,59 @@
                     <value>no</value>
                 </item>
             </select1>
-            <input ref="/data/misc/why181">
-                <label>Reason for not verified?</label>
+            <input ref="/data/part1_10/part1_10.7r">
+                <label>Remarks</label>
             </input>
+        </group>
+        <group appearance="field-list" ref="/data/part2">
+            <label>Performance Standards of the Institution</label>
+            <group ref="/data/part2/p_4">
+                <label>Visit the Computer lab and physically verify the following</label>
+                <select1 ref="/data/part2/p_4/p_4.1">
+                    <label>There is a functional computer lab with working computers (min 5)</label>
+                    <item>
+                        <label>Yes</label>
+                        <value>yes</value>
+                    </item>
+                    <item>
+                        <label>No</label>
+                        <value>no</value>
+                    </item>
+                </select1>
+                <select1 ref="/data/part2/p_4/p_4.2">
+                    <label>There is reliable internet access</label>
+                    <item>
+                        <label>Yes</label>
+                        <value>yes</value>
+                    </item>
+                    <item>
+                        <label>No</label>
+                        <value>no</value>
+                    </item>
+                </select1>
+                <select1 ref="/data/part2/p_4/p_4.3">
+                    <label>The time table shows regular computer class is arranged for the students</label>
+                    <item>
+                        <label>Yes</label>
+                        <value>yes</value>
+                    </item>
+                    <item>
+                        <label>No</label>
+                        <value>no</value>
+                    </item>
+                </select1>
+                <select1 ref="/data/part2/p_4/p_4.4">
+                    <label>Check with attendance register, whether students are using lab or not</label>
+                    <item>
+                        <label>Yes</label>
+                        <value>yes</value>
+                    </item>
+                    <item>
+                        <label>No</label>
+                        <value>no</value>
+                    </item>
+                </select1>
+            </group>
         </group>
     </h:body>
 </h:html>

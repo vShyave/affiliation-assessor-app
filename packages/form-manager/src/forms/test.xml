@@ -1,0 +1,1076 @@
+<?xml version="1.0"?>
+<h:html xmlns="http://www.w3.org/2002/xforms"
+    xmlns:ev="http://www.w3.org/2001/xml-events"
+    xmlns:h="http://www.w3.org/1999/xhtml"
+    xmlns:jr="http://openrosa.org/javarosa"
+    xmlns:odk="http://www.opendatakit.org/xforms"
+    xmlns:orx="http://openrosa.org/xforms"
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <h:head>
+        <h:title>Nursing Form</h:title>
+        <model odk:xforms-version="1.0.0">
+            <instance>
+                <data id="nusing_form" version="1.1">
+                    <part2>
+                        <A/>
+                        <verify134/>
+                        <why134/>
+                        <image7/>
+                        <B/>
+                        <verify135/>
+                        <why135/>
+                        <image8/>
+                        <C/>
+                        <why136/>
+                        <image9/>
+                        <D/>
+                        <image10/>
+                        <why137/>
+                        <E/>
+                        <why138/>
+                        <image11/>
+                        <F/>
+                        <why139/>
+                        <image50/>
+                        <G/>
+                        <why140/>
+                        <image12/>
+                        <H/>
+                        <why141/>
+                        <image13/>
+                        <I/>
+                        <why142/>
+                        <image14/>
+                        <J/>
+                        <why143/>
+                        <image15/>
+                        <K/>
+                        <why144/>
+                        <image16/>
+                        <L/>
+                        <why145/>
+                        <image17/>
+                        <M/>
+                        <why146/>
+                        <image18/>
+                        <N/>
+                        <why147/>
+                        <image19/>
+                        <O/>
+                        <why148/>
+                        <image20/>
+                        <P/>
+                        <why149/>
+                        <image21/>
+                        <Q/>
+                        <why150/>
+                        <image22/>
+                        <R/>
+                        <why151/>
+                        <image23/>
+                        <S/>
+                        <why152/>
+                        <image24/>
+                        <T/>
+                        <why153/>
+                        <image25/>
+                        <U/>
+                        <why154/>
+                        <image26/>
+                        <V/>
+                        <why155/>
+                        <image27/>
+                        <W/>
+                        <why156/>
+                        <image28/>
+                        <X/>
+                        <why157/>
+                        <image29/>
+                        <Y/>
+                        <why158/>
+                        <image30/>
+                        <Z/>
+                        <why159/>
+                        <image31/>
+                        <AA/>
+                        <why160/>
+                        <image32/>
+                        <AB/>
+                        <why161/>
+                        <image33/>
+                        <AC/>
+                        <image34/>
+                        <AD/>
+                        <why163/>
+                        <image35/>
+                        <AE/>
+                        <why164/>
+                        <image36/>
+                        <AF/>
+                        <why165/>
+                        <image37/>
+                        <AG/>
+                        <why166/>
+                        <image38/>
+                        <AH/>
+                        <why167/>
+                        <image39/>
+                        <AI/>
+                        <why168/>
+                        <image40/>
+                        <AJ/>
+                        <verify169/>
+                        <why169/>
+                        <image41/>
+                        <AK/>
+                        <verify170/>
+                        <why170/>
+                        <image42/>
+                        <AL/>
+                        <verify171/>
+                        <why171/>
+                        <image43/>
+                        <AM/>
+                        <verify172/>
+                        <why172/>
+                        <image44/>
+                        <AN/>
+                        <verify173/>
+                        <why173/>
+                        <image45/>
+                        <AO/>
+                        <verify174/>
+                        <why174/>
+                        <image46/>
+                    </part2>
+                    <meta>
+                        <instanceID/>
+                    </meta>
+                </data>
+            </instance>
+            <bind nodeset="/data/part2/A" type="string"/>
+            <bind nodeset="/data/part2/verify134" type="string"/>
+            <bind nodeset="/data/part2/why134" relevant=" /data/part2/verify134  = 'no'" type="string"/>
+            <bind nodeset="/data/part2/image7" type="binary"/>
+            <bind nodeset="/data/part2/B" type="string"/>
+            <bind nodeset="/data/part2/verify135" type="string"/>
+            <bind nodeset="/data/part2/why135" relevant=" /data/part2/verify135  = 'no'" type="string"/>
+            <bind nodeset="/data/part2/image8" type="binary"/>
+            <bind nodeset="/data/part2/C" type="string"/>
+            <bind nodeset="/data/part2/why136" relevant=" /data/part2/C  = 'no'" type="string"/>
+            <bind nodeset="/data/part2/image9" type="binary"/>
+            <bind nodeset="/data/part2/D" type="string"/>
+            <bind nodeset="/data/part2/image10" type="binary"/>
+            <bind nodeset="/data/part2/why137" relevant=" /data/part2/D  = 'no'" type="string"/>
+            <bind nodeset="/data/part2/E" type="string"/>
+            <bind nodeset="/data/part2/why138" relevant=" /data/part2/E  = 'no'" type="string"/>
+            <bind nodeset="/data/part2/image11" type="binary"/>
+            <bind nodeset="/data/part2/F" type="string"/>
+            <bind nodeset="/data/part2/why139" relevant=" /data/part2/F  = 'no'" type="string"/>
+            <bind nodeset="/data/part2/image50" type="binary"/>
+            <bind nodeset="/data/part2/G" type="string"/>
+            <bind nodeset="/data/part2/why140" relevant=" /data/part2/G  = 'no'" type="string"/>
+            <bind nodeset="/data/part2/image12" type="binary"/>
+            <bind nodeset="/data/part2/H" type="string"/>
+            <bind nodeset="/data/part2/why141" relevant=" /data/part2/H  = 'no'" type="string"/>
+            <bind nodeset="/data/part2/image13" type="binary"/>
+            <bind nodeset="/data/part2/I" type="string"/>
+            <bind nodeset="/data/part2/why142" relevant=" /data/part2/I  = 'no'" type="string"/>
+            <bind nodeset="/data/part2/image14" type="binary"/>
+            <bind nodeset="/data/part2/J" type="string"/>
+            <bind nodeset="/data/part2/why143" relevant=" /data/part2/J  = 'no'" type="string"/>
+            <bind nodeset="/data/part2/image15" type="binary"/>
+            <bind nodeset="/data/part2/K" type="string"/>
+            <bind nodeset="/data/part2/why144" relevant=" /data/part2/K  = 'no'" type="string"/>
+            <bind nodeset="/data/part2/image16" type="binary"/>
+            <bind nodeset="/data/part2/L" type="string"/>
+            <bind nodeset="/data/part2/why145" relevant=" /data/part2/L  = 'no'" type="string"/>
+            <bind nodeset="/data/part2/image17" type="binary"/>
+            <bind nodeset="/data/part2/M" type="string"/>
+            <bind nodeset="/data/part2/why146" relevant=" /data/part2/M  = 'no'" type="string"/>
+            <bind nodeset="/data/part2/image18" type="binary"/>
+            <bind nodeset="/data/part2/N" type="string"/>
+            <bind nodeset="/data/part2/why147" relevant=" /data/part2/N  = 'no'" type="string"/>
+            <bind nodeset="/data/part2/image19" type="binary"/>
+            <bind nodeset="/data/part2/O" type="string"/>
+            <bind nodeset="/data/part2/why148" relevant=" /data/part2/O  = 'no'" type="string"/>
+            <bind nodeset="/data/part2/image20" type="binary"/>
+            <bind nodeset="/data/part2/P" type="string"/>
+            <bind nodeset="/data/part2/why149" relevant=" /data/part2/P  = 'no'" type="string"/>
+            <bind nodeset="/data/part2/image21" type="binary"/>
+            <bind nodeset="/data/part2/Q" type="string"/>
+            <bind nodeset="/data/part2/why150" relevant=" /data/part2/Q  = 'no'" type="string"/>
+            <bind nodeset="/data/part2/image22" type="binary"/>
+            <bind nodeset="/data/part2/R" type="string"/>
+            <bind nodeset="/data/part2/why151" relevant=" /data/part2/R  = 'no'" type="string"/>
+            <bind nodeset="/data/part2/image23" type="binary"/>
+            <bind nodeset="/data/part2/S" type="string"/>
+            <bind nodeset="/data/part2/why152" relevant=" /data/part2/S  = 'no'" type="string"/>
+            <bind nodeset="/data/part2/image24" type="binary"/>
+            <bind nodeset="/data/part2/T" type="string"/>
+            <bind nodeset="/data/part2/why153" relevant=" /data/part2/T  = 'no'" type="string"/>
+            <bind nodeset="/data/part2/image25" type="binary"/>
+            <bind nodeset="/data/part2/U" type="string"/>
+            <bind nodeset="/data/part2/why154" relevant=" /data/part2/U  = 'no'" type="string"/>
+            <bind nodeset="/data/part2/image26" type="binary"/>
+            <bind nodeset="/data/part2/V" type="string"/>
+            <bind nodeset="/data/part2/why155" relevant=" /data/part2/V  = 'no'" type="string"/>
+            <bind nodeset="/data/part2/image27" type="binary"/>
+            <bind nodeset="/data/part2/W" type="string"/>
+            <bind nodeset="/data/part2/why156" relevant=" /data/part2/W  = 'no'" type="string"/>
+            <bind nodeset="/data/part2/image28" type="binary"/>
+            <bind nodeset="/data/part2/X" type="string"/>
+            <bind nodeset="/data/part2/why157" relevant=" /data/part2/X  = 'no'" type="string"/>
+            <bind nodeset="/data/part2/image29" type="binary"/>
+            <bind nodeset="/data/part2/Y" type="string"/>
+            <bind nodeset="/data/part2/why158" relevant=" /data/part2/Y  = 'no'" type="string"/>
+            <bind nodeset="/data/part2/image30" type="binary"/>
+            <bind nodeset="/data/part2/Z" type="string"/>
+            <bind nodeset="/data/part2/why159" relevant=" /data/part2/Z  = 'no'" type="string"/>
+            <bind nodeset="/data/part2/image31" type="binary"/>
+            <bind nodeset="/data/part2/AA" type="string"/>
+            <bind nodeset="/data/part2/why160" relevant=" /data/part2/AA  = 'no'" type="string"/>
+            <bind nodeset="/data/part2/image32" type="binary"/>
+            <bind nodeset="/data/part2/AB" type="string"/>
+            <bind nodeset="/data/part2/why161" relevant=" /data/part2/AB  = 'no'" type="string"/>
+            <bind nodeset="/data/part2/image33" type="binary"/>
+            <bind nodeset="/data/part2/AC" type="string"/>
+            <bind nodeset="/data/part2/image34" type="binary"/>
+            <bind nodeset="/data/part2/AD" type="string"/>
+            <bind nodeset="/data/part2/why163" relevant=" /data/part2/AD  = 'no'" type="string"/>
+            <bind nodeset="/data/part2/image35" type="binary"/>
+            <bind nodeset="/data/part2/AE" type="string"/>
+            <bind nodeset="/data/part2/why164" relevant=" /data/part2/AE  = 'no'" type="string"/>
+            <bind nodeset="/data/part2/image36" type="binary"/>
+            <bind nodeset="/data/part2/AF" type="string"/>
+            <bind nodeset="/data/part2/why165" relevant=" /data/part2/AF  = 'no'" type="string"/>
+            <bind nodeset="/data/part2/image37" type="binary"/>
+            <bind nodeset="/data/part2/AG" type="string"/>
+            <bind nodeset="/data/part2/why166" relevant=" /data/part2/AG  = 'no'" type="string"/>
+            <bind nodeset="/data/part2/image38" type="binary"/>
+            <bind nodeset="/data/part2/AH" type="string"/>
+            <bind nodeset="/data/part2/why167" relevant=" /data/part2/AH  = 'no'" type="string"/>
+            <bind nodeset="/data/part2/image39" type="binary"/>
+            <bind nodeset="/data/part2/AI" type="string"/>
+            <bind nodeset="/data/part2/why168" relevant=" /data/part2/AI  = 'no'" type="string"/>
+            <bind nodeset="/data/part2/image40" type="binary"/>
+            <bind nodeset="/data/part2/AJ" type="string"/>
+            <bind nodeset="/data/part2/verify169" type="string"/>
+            <bind nodeset="/data/part2/why169" relevant=" /data/part2/verify169  = 'no'" type="string"/>
+            <bind nodeset="/data/part2/image41" type="binary"/>
+            <bind nodeset="/data/part2/AK" type="string"/>
+            <bind nodeset="/data/part2/verify170" type="string"/>
+            <bind nodeset="/data/part2/why170" relevant=" /data/part2/verify170  = 'no'" type="string"/>
+            <bind nodeset="/data/part2/image42" type="binary"/>
+            <bind nodeset="/data/part2/AL" type="string"/>
+            <bind nodeset="/data/part2/verify171" type="string"/>
+            <bind nodeset="/data/part2/why171" relevant=" /data/part2/verify171  = 'no'" type="string"/>
+            <bind nodeset="/data/part2/image43" type="binary"/>
+            <bind nodeset="/data/part2/AM" type="string"/>
+            <bind nodeset="/data/part2/verify172" type="string"/>
+            <bind nodeset="/data/part2/why172" relevant=" /data/part2/verify172  = 'no'" type="string"/>
+            <bind nodeset="/data/part2/image44" type="binary"/>
+            <bind nodeset="/data/part2/AN" type="string"/>
+            <bind nodeset="/data/part2/verify173" type="string"/>
+            <bind nodeset="/data/part2/why173" relevant=" /data/part2/verify173  = 'no'" type="string"/>
+            <bind nodeset="/data/part2/image45" type="binary"/>
+            <bind nodeset="/data/part2/AO" type="string"/>
+            <bind nodeset="/data/part2/verify174" type="string"/>
+            <bind nodeset="/data/part2/why174" relevant=" /data/part2/verify174  = 'no'" type="string"/>
+            <bind nodeset="/data/part2/image46" type="binary"/>
+            <bind jr:preload="uid" nodeset="/data/meta/instanceID" readonly="true()" type="string"/>
+        </model>
+    </h:head>
+    <h:body class="pages">
+        <group appearance="field-list" ref="/data/part2">
+            <label>**Quality of Processes**
+*Please use this form to capture the quality of processes being carried out at your assigned institute*</label>
+            <input ref="/data/part2/A">
+                <label>Upload the academic policy for institution with regards to student attendance in theory and practical, dress code, professional conduct and disciplinary actions of students in clinic and classroom, a policy for students to file grievances regarding results</label>
+            </input>
+            <select1 appearance="table-list" ref="/data/part2/verify134">
+                <label>Has this been verified?</label>
+                <item>
+                    <label>Yes</label>
+                    <value>yes</value>
+                </item>
+                <item>
+                    <label>No</label>
+                    <value>no</value>
+                </item>
+            </select1>
+            <input ref="/data/part2/why134">
+                <label>If no, please provide the reason</label>
+            </input>
+            <upload mediatype="image/*" ref="/data/part2/image7">
+                <label>Please upload image, if any</label>
+            </upload>
+            <input ref="/data/part2/B">
+                <label>Upload academic calendar notified to students with the start and end dates of the academic year along with the exams and holidays</label>
+            </input>
+            <select1 appearance="table-list" ref="/data/part2/verify135">
+                <label>Has this been verified?</label>
+                <item>
+                    <label>Yes</label>
+                    <value>yes</value>
+                </item>
+                <item>
+                    <label>No</label>
+                    <value>no</value>
+                </item>
+            </select1>
+            <input ref="/data/part2/why135">
+                <label>If no, please provide the reason</label>
+            </input>
+            <upload mediatype="image/*" ref="/data/part2/image8">
+                <label>Please upload image, if any</label>
+            </upload>
+            <select1 ref="/data/part2/C">
+                <label>Functional computer labs are present with minimum 5 working computers</label>
+                <item>
+                    <label>Yes</label>
+                    <value>yes</value>
+                </item>
+                <item>
+                    <label>No</label>
+                    <value>no</value>
+                </item>
+            </select1>
+            <input ref="/data/part2/why136">
+                <label>If no, please provide the reason</label>
+            </input>
+            <upload mediatype="image/*" ref="/data/part2/image9">
+                <label>Please upload image, if any</label>
+            </upload>
+            <select1 ref="/data/part2/D">
+                <label>There is reliable internet access</label>
+                <item>
+                    <label>Yes</label>
+                    <value>yes</value>
+                </item>
+                <item>
+                    <label>No</label>
+                    <value>no</value>
+                </item>
+            </select1>
+            <upload mediatype="image/*" ref="/data/part2/image10">
+                <label>Please upload image, if any</label>
+            </upload>
+            <input ref="/data/part2/why137">
+                <label>If no, please provide the reason</label>
+            </input>
+            <select1 ref="/data/part2/E">
+                <label>Regular computer classes scheduled in the time table for students</label>
+                <item>
+                    <label>Yes</label>
+                    <value>yes</value>
+                </item>
+                <item>
+                    <label>No</label>
+                    <value>no</value>
+                </item>
+            </select1>
+            <input ref="/data/part2/why138">
+                <label>If no, please provide the reason</label>
+            </input>
+            <upload mediatype="image/*" ref="/data/part2/image11">
+                <label>Please upload image, if any</label>
+            </upload>
+            <select1 ref="/data/part2/F">
+                <label>Students are using lab regularly (as per the attendance register)</label>
+                <item>
+                    <label>Yes</label>
+                    <value>yes</value>
+                </item>
+                <item>
+                    <label>No</label>
+                    <value>no</value>
+                </item>
+            </select1>
+            <input ref="/data/part2/why139">
+                <label>If no, please provide the reason</label>
+            </input>
+            <upload mediatype="image/*" ref="/data/part2/image50">
+                <label>Please upload image, if any</label>
+            </upload>
+            <select1 ref="/data/part2/G">
+                <label>Course syllabus is developed and distributed in units</label>
+                <item>
+                    <label>Yes</label>
+                    <value>yes</value>
+                </item>
+                <item>
+                    <label>No</label>
+                    <value>no</value>
+                </item>
+            </select1>
+            <input ref="/data/part2/why140">
+                <label>If no, please provide the reason</label>
+            </input>
+            <upload mediatype="image/*" ref="/data/part2/image12">
+                <label>Please upload image, if any</label>
+            </upload>
+            <select1 ref="/data/part2/H">
+                <label>Faculty has developed a lesson plan</label>
+                <item>
+                    <label>Yes</label>
+                    <value>yes</value>
+                </item>
+                <item>
+                    <label>No</label>
+                    <value>no</value>
+                </item>
+            </select1>
+            <input ref="/data/part2/why141">
+                <label>If no, please provide the reason</label>
+            </input>
+            <upload mediatype="image/*" ref="/data/part2/image13">
+                <label>Please upload image, if any</label>
+            </upload>
+            <select1 ref="/data/part2/I">
+                <label>Master rotation plan (MRP) / Academic Roaster is displayed - theory, clinical posting, exams, vacations are mentioned according to syllabus prescribed</label>
+                <item>
+                    <label>Yes</label>
+                    <value>yes</value>
+                </item>
+                <item>
+                    <label>No</label>
+                    <value>no</value>
+                </item>
+            </select1>
+            <input ref="/data/part2/why142">
+                <label>If no, please provide the reason</label>
+            </input>
+            <upload mediatype="image/*" ref="/data/part2/image14">
+                <label>Please upload image, if any</label>
+            </upload>
+            <select1 ref="/data/part2/J">
+                <label>Faculty specify the unit/topic that is being taught in each class</label>
+                <item>
+                    <label>Yes</label>
+                    <value>yes</value>
+                </item>
+                <item>
+                    <label>No</label>
+                    <value>no</value>
+                </item>
+            </select1>
+            <input ref="/data/part2/why143">
+                <label>If no, please provide the reason</label>
+            </input>
+            <upload mediatype="image/*" ref="/data/part2/image15">
+                <label>Please upload image, if any</label>
+            </upload>
+            <select1 ref="/data/part2/K">
+                <label>Faculty uses the developed lesson plan in class while teaching</label>
+                <item>
+                    <label>Yes</label>
+                    <value>yes</value>
+                </item>
+                <item>
+                    <label>No</label>
+                    <value>no</value>
+                </item>
+            </select1>
+            <input ref="/data/part2/why144">
+                <label>If no, please provide the reason</label>
+            </input>
+            <upload mediatype="image/*" ref="/data/part2/image16">
+                <label>Please upload image, if any</label>
+            </upload>
+            <select1 ref="/data/part2/L">
+                <label>Learning objectives are discussed with students</label>
+                <item>
+                    <label>Yes</label>
+                    <value>yes</value>
+                </item>
+                <item>
+                    <label>No</label>
+                    <value>no</value>
+                </item>
+            </select1>
+            <input ref="/data/part2/why145">
+                <label>If no, please provide the reason</label>
+            </input>
+            <upload mediatype="image/*" ref="/data/part2/image17">
+                <label>Please upload image, if any</label>
+            </upload>
+            <select1 ref="/data/part2/M">
+                <label>AV aids like projector, overhead projector, white/black board are being used for classroom facilitation</label>
+                <item>
+                    <label>Yes</label>
+                    <value>yes</value>
+                </item>
+                <item>
+                    <label>No</label>
+                    <value>no</value>
+                </item>
+            </select1>
+            <input ref="/data/part2/why146">
+                <label>If no, please provide the reason</label>
+            </input>
+            <upload mediatype="image/*" ref="/data/part2/image18">
+                <label>Please upload image, if any</label>
+            </upload>
+            <select1 ref="/data/part2/N">
+                <label>Teachers utilise the learning labs regularly for skills demonstration</label>
+                <item>
+                    <label>Yes</label>
+                    <value>yes</value>
+                </item>
+                <item>
+                    <label>No</label>
+                    <value>no</value>
+                </item>
+            </select1>
+            <input ref="/data/part2/why147">
+                <label>If no, please provide the reason</label>
+            </input>
+            <upload mediatype="image/*" ref="/data/part2/image19">
+                <label>Please upload image, if any</label>
+            </upload>
+            <select1 ref="/data/part2/O">
+                <label>Procedure checklist is available with students and faculty for demonstration</label>
+                <item>
+                    <label>Yes</label>
+                    <value>yes</value>
+                </item>
+                <item>
+                    <label>No</label>
+                    <value>no</value>
+                </item>
+            </select1>
+            <input ref="/data/part2/why148">
+                <label>If no, please provide the reason</label>
+            </input>
+            <upload mediatype="image/*" ref="/data/part2/image20">
+                <label>Please upload image, if any</label>
+            </upload>
+            <select1 ref="/data/part2/P">
+                <label>Opportunities are given to the students for practicing demonstrated skills</label>
+                <item>
+                    <label>Yes</label>
+                    <value>yes</value>
+                </item>
+                <item>
+                    <label>No</label>
+                    <value>no</value>
+                </item>
+            </select1>
+            <input ref="/data/part2/why149">
+                <label>If no, please provide the reason</label>
+            </input>
+            <upload mediatype="image/*" ref="/data/part2/image21">
+                <label>Please upload image, if any</label>
+            </upload>
+            <select1 ref="/data/part2/Q">
+                <label>Return demonstration / skill evaluations from students are taken for each skill demonstrated</label>
+                <item>
+                    <label>Yes</label>
+                    <value>yes</value>
+                </item>
+                <item>
+                    <label>No</label>
+                    <value>no</value>
+                </item>
+            </select1>
+            <input ref="/data/part2/why150">
+                <label>If no, please provide the reason</label>
+            </input>
+            <upload mediatype="image/*" ref="/data/part2/image22">
+                <label>Please upload image, if any</label>
+            </upload>
+            <select1 ref="/data/part2/R">
+                <label>Clinical Rotation Plan / Clinical Duty Roaster for each class of students exists</label>
+                <item>
+                    <label>Yes</label>
+                    <value>yes</value>
+                </item>
+                <item>
+                    <label>No</label>
+                    <value>no</value>
+                </item>
+            </select1>
+            <input ref="/data/part2/why151">
+                <label>If no, please provide the reason</label>
+            </input>
+            <upload mediatype="image/*" ref="/data/part2/image23">
+                <label>Please upload image, if any</label>
+            </upload>
+            <select1 ref="/data/part2/S">
+                <label>Developed clinical objective and shared with clinical site staffs</label>
+                <item>
+                    <label>Yes</label>
+                    <value>yes</value>
+                </item>
+                <item>
+                    <label>No</label>
+                    <value>no</value>
+                </item>
+            </select1>
+            <input ref="/data/part2/why152">
+                <label>If no, please provide the reason</label>
+            </input>
+            <upload mediatype="image/*" ref="/data/part2/image24">
+                <label>Please upload image, if any</label>
+            </upload>
+            <select1 ref="/data/part2/T">
+                <label>Clinical Rotation Plan / Clinical Duty Roaster has student distribution, area of posting as per curriculum and faculty responsible for each block</label>
+                <item>
+                    <label>Yes</label>
+                    <value>yes</value>
+                </item>
+                <item>
+                    <label>No</label>
+                    <value>no</value>
+                </item>
+            </select1>
+            <input ref="/data/part2/why153">
+                <label>If no, please provide the reason</label>
+            </input>
+            <upload mediatype="image/*" ref="/data/part2/image25">
+                <label>Please upload image, if any</label>
+            </upload>
+            <select1 ref="/data/part2/U">
+                <label>Clinical Rotation Plan / Clinical Duty Roaster copy is shared with clinical site staffs</label>
+                <item>
+                    <label>Yes</label>
+                    <value>yes</value>
+                </item>
+                <item>
+                    <label>No</label>
+                    <value>no</value>
+                </item>
+            </select1>
+            <input ref="/data/part2/why154">
+                <label>If no, please provide the reason</label>
+            </input>
+            <upload mediatype="image/*" ref="/data/part2/image26">
+                <label>Please upload image, if any</label>
+            </upload>
+            <select1 ref="/data/part2/V">
+                <label>Clinical attendance registers for faculty are maintained</label>
+                <item>
+                    <label>Yes</label>
+                    <value>yes</value>
+                </item>
+                <item>
+                    <label>No</label>
+                    <value>no</value>
+                </item>
+            </select1>
+            <input ref="/data/part2/why155">
+                <label>If no, please provide the reason</label>
+            </input>
+            <upload mediatype="image/*" ref="/data/part2/image27">
+                <label>Please upload image, if any</label>
+            </upload>
+            <select1 ref="/data/part2/W">
+                <label>Procedure checklist is available with faculty</label>
+                <item>
+                    <label>Yes</label>
+                    <value>yes</value>
+                </item>
+                <item>
+                    <label>No</label>
+                    <value>no</value>
+                </item>
+            </select1>
+            <input ref="/data/part2/why156">
+                <label>If no, please provide the reason</label>
+            </input>
+            <upload mediatype="image/*" ref="/data/part2/image28">
+                <label>Please upload image, if any</label>
+            </upload>
+            <select1 ref="/data/part2/X">
+                <label>Procedure checklist is available with students</label>
+                <item>
+                    <label>Yes</label>
+                    <value>yes</value>
+                </item>
+                <item>
+                    <label>No</label>
+                    <value>no</value>
+                </item>
+            </select1>
+            <input ref="/data/part2/why157">
+                <label>If no, please provide the reason</label>
+            </input>
+            <upload mediatype="image/*" ref="/data/part2/image29">
+                <label>Please upload image, if any</label>
+            </upload>
+            <select1 ref="/data/part2/Y">
+                <label>Faculty record activities conducted during clinical supervision on a daily basis</label>
+                <item>
+                    <label>Yes</label>
+                    <value>yes</value>
+                </item>
+                <item>
+                    <label>No</label>
+                    <value>no</value>
+                </item>
+            </select1>
+            <input ref="/data/part2/why158">
+                <label>If no, please provide the reason</label>
+            </input>
+            <upload mediatype="image/*" ref="/data/part2/image30">
+                <label>Please upload image, if any</label>
+            </upload>
+            <select1 ref="/data/part2/Z">
+                <label>Pre-post clinical discussions are conducted on daily basis</label>
+                <item>
+                    <label>Yes</label>
+                    <value>yes</value>
+                </item>
+                <item>
+                    <label>No</label>
+                    <value>no</value>
+                </item>
+            </select1>
+            <input ref="/data/part2/why159">
+                <label>If no, please provide the reason</label>
+            </input>
+            <upload mediatype="image/*" ref="/data/part2/image31">
+                <label>Please upload image, if any</label>
+            </upload>
+            <select1 ref="/data/part2/AA">
+                <label>Students daily activities are monitored and recorded</label>
+                <item>
+                    <label>Yes</label>
+                    <value>yes</value>
+                </item>
+                <item>
+                    <label>No</label>
+                    <value>no</value>
+                </item>
+            </select1>
+            <input ref="/data/part2/why160">
+                <label>If no, please provide the reason</label>
+            </input>
+            <upload mediatype="image/*" ref="/data/part2/image32">
+                <label>Please upload image, if any</label>
+            </upload>
+            <select1 ref="/data/part2/AB">
+                <label>Periodic clinical evaluations are conducted</label>
+                <item>
+                    <label>Yes</label>
+                    <value>yes</value>
+                </item>
+                <item>
+                    <label>No</label>
+                    <value>no</value>
+                </item>
+            </select1>
+            <input ref="/data/part2/why161">
+                <label>If no, please provide the reason</label>
+            </input>
+            <upload mediatype="image/*" ref="/data/part2/image33">
+                <label>Please upload image, if any</label>
+            </upload>
+            <select1 appearance="minimal" ref="/data/part2/AC">
+                <label>How many internal exams are conducted in a year for each batch</label>
+                <item>
+                    <label>0</label>
+                    <value>0</value>
+                </item>
+                <item>
+                    <label>1</label>
+                    <value>1</value>
+                </item>
+                <item>
+                    <label>2</label>
+                    <value>2</value>
+                </item>
+                <item>
+                    <label>3</label>
+                    <value>3</value>
+                </item>
+                <item>
+                    <label>4</label>
+                    <value>4</value>
+                </item>
+                <item>
+                    <label>5</label>
+                    <value>5</value>
+                </item>
+                <item>
+                    <label>6</label>
+                    <value>6</value>
+                </item>
+            </select1>
+            <upload mediatype="image/*" ref="/data/part2/image34">
+                <label>Please upload image, if any</label>
+            </upload>
+            <select1 ref="/data/part2/AD">
+                <label>Students are informed about exams at least 1 week in advance through a notice</label>
+                <item>
+                    <label>Yes</label>
+                    <value>yes</value>
+                </item>
+                <item>
+                    <label>No</label>
+                    <value>no</value>
+                </item>
+            </select1>
+            <input ref="/data/part2/why163">
+                <label>If no, please provide the reason</label>
+            </input>
+            <upload mediatype="image/*" ref="/data/part2/image35">
+                <label>Please upload image, if any</label>
+            </upload>
+            <select appearance="minimal" ref="/data/part2/AE">
+                <label>Question papers for internal exams have the following components</label>
+                <item>
+                    <label>MCQ</label>
+                    <value>a</value>
+                </item>
+                <item>
+                    <label>Short Questions</label>
+                    <value>b</value>
+                </item>
+                <item>
+                    <label>Long Questions</label>
+                    <value>c</value>
+                </item>
+                <item>
+                    <label>Case Study Questions</label>
+                    <value>d</value>
+                </item>
+                <item>
+                    <label>Others</label>
+                    <value>e</value>
+                </item>
+            </select>
+            <input ref="/data/part2/why164">
+                <label>If no, please provide the reason</label>
+            </input>
+            <upload mediatype="image/*" ref="/data/part2/image36">
+                <label>Please upload image, if any</label>
+            </upload>
+            <select1 ref="/data/part2/AF">
+                <label>Exams are structured so that they can be scored blindly</label>
+                <item>
+                    <label>Yes</label>
+                    <value>yes</value>
+                </item>
+                <item>
+                    <label>No</label>
+                    <value>no</value>
+                </item>
+            </select1>
+            <input ref="/data/part2/why165">
+                <label>If no, please provide the reason</label>
+            </input>
+            <upload mediatype="image/*" ref="/data/part2/image37">
+                <label>Please upload image, if any</label>
+            </upload>
+            <select1 ref="/data/part2/AG">
+                <label>Practical examinations including skill related objectives are held for students at the end of each term</label>
+                <item>
+                    <label>Yes</label>
+                    <value>yes</value>
+                </item>
+                <item>
+                    <label>No</label>
+                    <value>no</value>
+                </item>
+            </select1>
+            <input ref="/data/part2/why166">
+                <label>If no, please provide the reason</label>
+            </input>
+            <upload mediatype="image/*" ref="/data/part2/image38">
+                <label>Please upload image, if any</label>
+            </upload>
+            <select1 ref="/data/part2/AH">
+                <label>Checklists are used to document observations of students in practical examinations</label>
+                <item>
+                    <label>Yes</label>
+                    <value>yes</value>
+                </item>
+                <item>
+                    <label>No</label>
+                    <value>no</value>
+                </item>
+            </select1>
+            <input ref="/data/part2/why167">
+                <label>If no, please provide the reason</label>
+            </input>
+            <upload mediatype="image/*" ref="/data/part2/image39">
+                <label>Please upload image, if any</label>
+            </upload>
+            <select1 ref="/data/part2/AI">
+                <label>Sessional marks register / record is maintained</label>
+                <item>
+                    <label>Yes</label>
+                    <value>yes</value>
+                </item>
+                <item>
+                    <label>No</label>
+                    <value>no</value>
+                </item>
+            </select1>
+            <input ref="/data/part2/why168">
+                <label>If no, please provide the reason</label>
+            </input>
+            <upload mediatype="image/*" ref="/data/part2/image40">
+                <label>Please upload image, if any</label>
+            </upload>
+            <input ref="/data/part2/AJ">
+                <label>Upload a sample report card of a student</label>
+            </input>
+            <select1 appearance="table-list" ref="/data/part2/verify169">
+                <label>Has this been verified?</label>
+                <item>
+                    <label>Yes</label>
+                    <value>yes</value>
+                </item>
+                <item>
+                    <label>No</label>
+                    <value>no</value>
+                </item>
+            </select1>
+            <input ref="/data/part2/why169">
+                <label>If no, please provide the reason</label>
+            </input>
+            <upload mediatype="image/*" ref="/data/part2/image41">
+                <label>Please upload image, if any</label>
+            </upload>
+            <select1 ref="/data/part2/AK">
+                <label>Faculty meetings are conducted at least once a month</label>
+                <item>
+                    <label>Yes</label>
+                    <value>yes</value>
+                </item>
+                <item>
+                    <label>No</label>
+                    <value>no</value>
+                </item>
+            </select1>
+            <select1 appearance="table-list" ref="/data/part2/verify170">
+                <label>Has this been verified?</label>
+                <item>
+                    <label>Yes</label>
+                    <value>yes</value>
+                </item>
+                <item>
+                    <label>No</label>
+                    <value>no</value>
+                </item>
+            </select1>
+            <input ref="/data/part2/why170">
+                <label>If no, please provide the reason</label>
+            </input>
+            <upload mediatype="image/*" ref="/data/part2/image42">
+                <label>Please upload image, if any</label>
+            </upload>
+            <input ref="/data/part2/AL">
+                <label>Upload minutes of faculty meeting held in last 1 month</label>
+            </input>
+            <select1 appearance="table-list" ref="/data/part2/verify171">
+                <label>Has this been verified?</label>
+                <item>
+                    <label>Yes</label>
+                    <value>yes</value>
+                </item>
+                <item>
+                    <label>No</label>
+                    <value>no</value>
+                </item>
+            </select1>
+            <input ref="/data/part2/why171">
+                <label>If no, please provide the reason</label>
+            </input>
+            <upload mediatype="image/*" ref="/data/part2/image43">
+                <label>Please upload image, if any</label>
+            </upload>
+            <select1 ref="/data/part2/AM">
+                <label>How many meetings of faculty and clinical site staffs are conducted in a year</label>
+                <item>
+                    <label>0</label>
+                    <value>0</value>
+                </item>
+                <item>
+                    <label>1</label>
+                    <value>1</value>
+                </item>
+                <item>
+                    <label>2</label>
+                    <value>2</value>
+                </item>
+                <item>
+                    <label>3</label>
+                    <value>3</value>
+                </item>
+                <item>
+                    <label>4</label>
+                    <value>4</value>
+                </item>
+                <item>
+                    <label>5</label>
+                    <value>5</value>
+                </item>
+                <item>
+                    <label>6</label>
+                    <value>6</value>
+                </item>
+            </select1>
+            <select1 appearance="table-list" ref="/data/part2/verify172">
+                <label>Has this been verified?</label>
+                <item>
+                    <label>Yes</label>
+                    <value>yes</value>
+                </item>
+                <item>
+                    <label>No</label>
+                    <value>no</value>
+                </item>
+            </select1>
+            <input ref="/data/part2/why172">
+                <label>If no, please provide the reason</label>
+            </input>
+            <upload mediatype="image/*" ref="/data/part2/image44">
+                <label>Please upload image, if any</label>
+            </upload>
+            <input ref="/data/part2/AN">
+                <label>Upload minutes of faculty / clinical site staff meetings held in the last year</label>
+            </input>
+            <select1 appearance="table-list" ref="/data/part2/verify173">
+                <label>Has this been verified?</label>
+                <item>
+                    <label>Yes</label>
+                    <value>yes</value>
+                </item>
+                <item>
+                    <label>No</label>
+                    <value>no</value>
+                </item>
+            </select1>
+            <input ref="/data/part2/why173">
+                <label>If no, please provide the reason</label>
+            </input>
+            <upload mediatype="image/*" ref="/data/part2/image45">
+                <label>Please upload image, if any</label>
+            </upload>
+            <input ref="/data/part2/AO">
+                <label>Upload record of Seminars/Webinar/Continue Education meeting minutes conducted for the teachers in last 6 months</label>
+            </input>
+            <select1 appearance="table-list" ref="/data/part2/verify174">
+                <label>Has this been verified?</label>
+                <item>
+                    <label>Yes</label>
+                    <value>yes</value>
+                </item>
+                <item>
+                    <label>No</label>
+                    <value>no</value>
+                </item>
+            </select1>
+            <input ref="/data/part2/why174">
+                <label>If no, please provide the reason</label>
+            </input>
+            <upload mediatype="image/*" ref="/data/part2/image46">
+                <label>Please upload image, if any</label>
+            </upload>
+        </group>
+    </h:body>
+</h:html>

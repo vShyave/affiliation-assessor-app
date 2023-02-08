@@ -1,0 +1,55 @@
+<?xml version="1.0"?><h:html xmlns="http://www.w3.org/2002/xforms" xmlns:ev="http://www.w3.org/2001/xml-events" xmlns:h="http://www.w3.org/1999/xhtml" xmlns:jr="http://openrosa.org/javarosa" xmlns:odk="http://www.opendatakit.org/xforms" xmlns:orx="http://openrosa.org/xforms" xmlns:xsd="http://www.w3.org/2001/XMLSchema"><h:head><h:title>OSCE_Conduct delivery and AMTSL</h:title><model odk:xforms-version="1.0.0"><instance><data id="osce1_form" version="1.1"><intro><reserved_name_for_field_list_labels_3/><step1/><step2/><step3/><step4/></intro><meta><instanceID/></meta></data></instance><bind nodeset="/data/intro/reserved_name_for_field_list_labels_3" type="string"/><bind nodeset="/data/intro/step1" required="true()" type="string"/><bind nodeset="/data/intro/step2" required="true()" type="string"/><bind nodeset="/data/intro/step3" required="true()" type="string"/><bind nodeset="/data/intro/step4" required="true()" type="string"/><bind jr:preload="uid" nodeset="/data/meta/instanceID" readonly="true()" type="string"/></model></h:head><h:body class="pages"><group appearance="field-list" ref="/data/intro"><select1 appearance="label" ref="/data/intro/reserved_name_for_field_list_labels_3"><label> </label><item><label>Done</label><value>done</value></item><item><label>Not Done</label><value>not</value></item></select1><select1 appearance="list-nolabel" ref="/data/intro/step1"><label>GETTING READY
+-Prepare the necessary equipment.
+-Encourage the woman to adopt the position of choice and continue spontaneous bearing-down efforts
+-Tell the woman what is going to be done, listen to her, and respond attentively to her questions and concerns.
+-Provide continual emotional support and reassurance, as feasible.
+-Put on personal protective barriers.</label><item><label>Done</label><value>done</value></item><item><label>Not Done</label><value>not</value></item></select1><select1 appearance="list-nolabel" ref="/data/intro/step2"><label>ASSISTING THE BIRTH
+-Wash hands thoroughly with soap and water and dry with a clean, dry cloth or air dry
+-Put high-level disinfected or sterile surgical gloves on both hands
+-Clean the woman's perineum with a cloth or compress, wet with antiseptic solution or soap and water, wiping from front to back.
+-Place one sterile drape from delivery pack under the woman's buttocks, one over her abdomen, and use the third drape to receive the baby.
+Birth of the Head
+-Ask the woman to pant or give only small pushes with contractions as the baby's head is born. (Put blanket or towel on woman's abdomen.)
+-As the pressure of the head thins out the perineum, control the birth of the head with the fingers of one hand, applying a firm, gentle downward (but not restrictive) pressure to maintain flexion, allow natural stretching of the perineal tissue, and prevent tears.
+-Use the other hand to support the perineum using a compress or cloth, and allow the head to crown slowly and be born spontaneously.
+-Wipe the mucus (and membranes, if necessary) from the baby's mouth and nose with a clean cloth.
+-Feel around the baby's neck to ensure the umbilical cord is not around the neck: • If the cord is around the neck but is loose, slip it over the baby's head; • If the cord is loose but cannot reach over the baby's head, slip it backwards over the shoulders; • If the cord is tight around the neck, clamp the cord with two artery forceps, placed 3 cm apart, and cut the cord between the two clamps.
+Completing the Birth
+-Allow the baby's head to turn spontaneously.
+-After the head turns, place a hand on each side of the baby's head, over the ears, and apply slow, gentle pressure downward (toward the mother's spine) and outward until the anterior shoulder slips under the pubic bone.
+-When the arm fold is seen, guide the head upward toward the mother's abdomen as the posterior shoulder is born over the perineum
+-Lift the baby's head anteriorly to deliver the posterior shoulder
+-Move the topmost hand from the head to support the rest of the baby's body as it slides out.
+-Place the baby on the mother's abdomen (if the mother is unable to hold the baby, ask her birth companion or an assistant to care for the baby).
+-Thoroughly dry the baby and cover with a clean, dry cloth: • Assess breathing while drying the baby and if s/he does not breathe immediately, begin resuscitative measures (see Learning Guide: Newborn Resuscitation). • Note time of birth</label><item><label>Done</label><value>done</value></item><item><label>Not Done</label><value>not</value></item></select1><select1 appearance="list-nolabel" ref="/data/intro/step3"><label>ACTIVE MANAGEMENT OF THIRD STAGE OF LABOR
+-Give oxytocin 10 units IM.
+-Clamp and cut the umbilical cord after pulsations have ceased or approximately 2–3 minutes after the birth, whichever comes first: • Tie the cord at about 3 cm and 5 cm from the umbilicus; • Cut the cord between the ties. • Place the infant on the mother's chest
+-Clamp the cord close to the perineum and hold the clamped cord and the end of the clamp in one hand
+-Place the other hand just above the pubic bone and gently apply counter traction (push upwards on the uterus) to stabilize the uterus and prevent uterine inversion.
+-Keep light tension on the cord and wait for a strong uterine contraction (two to three minutes).
+-When the uterus becomes rounded or the cord lengthens, very gently pull downward on the cord to deliver the placenta.
+-Continue to apply counter traction with the other hand.
+-If the placenta does not descend during 30 to 40 seconds of controlled cord traction, relax the tension and repeat with the next contraction.
+-As the placenta delivers, hold it with both hands and twist slowly so the membranes are expelled intact: • If the membranes do not slip out spontaneously, gently twist them into a rope and move up and down to assist separation without tearing them
+-Slowly pull to complete delivery
+-Massage the uterus if it is not well contracted. Note time of delivery of placenta.
+Examination of Placenta
+Hold placenta in palms of hands, with maternal side facing upwards, and check whether all lobules are present and fit together.
+Hold cord with one hand and allow placenta and membranes to hang down: 
+• Insert fingers of other hand inside membranes, with fingers spread out, and inspect membranes for completeness; 
+• Note position of cord insertion.
+Examination of Vagina and Perineum for Tears
+-Gently separate the labia and inspect lower vagina for lacerations/tears
+-Inspect the perineum for lacerations/tears
+-Gently cleanse the perineum with warm water and a clean cloth
+-Apply a clean pad or cloth to the vulva.
+-Assist the mother to a comfortable position for continued breastfeeding and bonding with her newborn. (Further assessment and immunization of the newborn can occur later before the mother is discharged or the skilled attendant leaves.)</label><item><label>Done</label><value>done</value></item><item><label>Not Done</label><value>not</value></item></select1><select1 appearance="list-nolabel" ref="/data/intro/step4"><label>POST-PROCEDURE TASKS
+Place any contaminated items (e.g., swabs) in a plastic bag or leak-proof, covered waste container
+Decontaminate instruments by placing in a container filled with 0.5% chlorine solution for 10 minutes
+Decontaminate needles and or syringes: 
+• If disposing of needle and syringe, hold the needle under the surface of a 0.5% chlorine solution, fill the syringe, and push out (flush) three times; then place in a puncture-resistant sharps container; 
+• If reusing the syringe (and needle), fill syringe with needle attached with 0.5% chlorine solution and soak in chlorine solution for 10 minutes for decontamination
+Immerse both gloved hands briefly in a container filled with 0.5% chlorine solution; then remove gloves by turning them inside out: 
+• If disposing of gloves (examination gloves and surgical gloves that will not be reused), place in a plastic bag or leak-proof, covered waste container; 
+• If reusing surgical gloves, submerge in 0.5% chlorine solution for 10 minutes for decontamination.
+Wash hands thoroughly with soap and water and dry with clean, dry cloth or air dry.</label><item><label>Done</label><value>done</value></item><item><label>Not Done</label><value>not</value></item></select1></group></h:body></h:html>

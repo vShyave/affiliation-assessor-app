@@ -24,7 +24,7 @@ export class AppService {
       const matchingText = speciality ? `${type}_${year}_${speciality}` : `${type}_${year}`;
       let matchingFiles = [];
       // const fileNames = fs.readdirSync(`/Users/amitsharma/Projects/workflow/packages/form-manager/src/forms`);
-      const fileNames = fs.readdirSync(__dirname + "forms");
+      const fileNames = fs.readdirSync(__dirname + "/forms");
 
       fileNames.forEach(file => { if (file.startsWith(matchingText)) matchingFiles.push(file) })
 

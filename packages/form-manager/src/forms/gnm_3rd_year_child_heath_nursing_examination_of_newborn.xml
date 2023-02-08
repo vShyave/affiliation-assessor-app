@@ -1,0 +1,110 @@
+<?xml version="1.0"?><h:html xmlns="http://www.w3.org/2002/xforms" xmlns:ev="http://www.w3.org/2001/xml-events" xmlns:h="http://www.w3.org/1999/xhtml" xmlns:jr="http://openrosa.org/javarosa" xmlns:odk="http://www.opendatakit.org/xforms" xmlns:orx="http://openrosa.org/xforms" xmlns:xsd="http://www.w3.org/2001/XMLSchema"><h:head><h:title>OSCE_Examination of newborn</h:title><model odk:xforms-version="1.0.0"><instance><data id="osce1_form" version="1.1"><intro><reserved_name_for_field_list_labels_3/><step1/><step2/><step3/><step4/><step5/><step6/><step7/><step8/><step9/><step10/><step11/><step12/><step13/><step14/><step15/></intro><meta><instanceID/></meta></data></instance><bind nodeset="/data/intro/reserved_name_for_field_list_labels_3" type="string"/><bind nodeset="/data/intro/step1" required="true()" type="string"/><bind nodeset="/data/intro/step2" required="true()" type="string"/><bind nodeset="/data/intro/step3" required="true()" type="string"/><bind nodeset="/data/intro/step4" required="true()" type="string"/><bind nodeset="/data/intro/step5" required="true()" type="string"/><bind nodeset="/data/intro/step6" required="true()" type="string"/><bind nodeset="/data/intro/step7" required="true()" type="string"/><bind nodeset="/data/intro/step8" required="true()" type="string"/><bind nodeset="/data/intro/step9" required="true()" type="string"/><bind nodeset="/data/intro/step10" required="true()" type="string"/><bind nodeset="/data/intro/step11" required="true()" type="string"/><bind nodeset="/data/intro/step12" required="true()" type="string"/><bind nodeset="/data/intro/step13" required="true()" type="string"/><bind nodeset="/data/intro/step14" required="true()" type="string"/><bind nodeset="/data/intro/step15" required="true()" type="string"/><bind jr:preload="uid" nodeset="/data/meta/instanceID" readonly="true()" type="string"/></model></h:head><h:body class="pages"><group appearance="field-list" ref="/data/intro"><select1 appearance="label" ref="/data/intro/reserved_name_for_field_list_labels_3"><label> </label><item><label>Done</label><value>done</value></item><item><label>Not Done</label><value>not</value></item></select1><select1 appearance="list-nolabel" ref="/data/intro/step1"><label>Look at
+RESPIRATORY
+RATE
+The normal respiratory rate of a newborn baby is 30 to 60 breaths per minute with no chest indrawing or grunting on expiration
+
+
+Look for
+• Respiratory rate consistently more than 60 or less than 30 breaths per minute
+• Grunting on expiration
+• Chest indrawing
+• Apnoea (spontaneous cessation of breathing for more than 20 seconds)</label><item><label>Done</label><value>done</value></item><item><label>Not Done</label><value>not</value></item></select1><select1 appearance="list-nolabel" ref="/data/intro/step2"><label>Look at
+COLOUR
+Babies born at term appear paler than preterm babies because their skin is thicker.
+Look for
+-Pallor
+-Jaundice (yellow)
+-Central cyanosis (blue tongue and lips; note that blue skin in addition to blue tongue and lips indicates a very serious problem)</label><item><label>Done</label><value>done</value></item><item><label>Not Done</label><value>not</value></item></select1><select1 appearance="list-nolabel" ref="/data/intro/step3"><label>Look at
+HEART RATE (as determined using a stethoscope)
+The normal heart rate of a newborn baby is 100 to 160 beats per minute, but it is not uncommon for the heart rate to be more than 160 beats per minute for short periods of time
+during the first few days of life, especially if the baby is distressed. If unsure of the heart rate, repeat the count.
+Look for
+• Heart rate consistently more than 160 or less than 100 beats per minute</label><item><label>Done</label><value>done</value></item><item><label>Not Done</label><value>not</value></item></select1><select1 appearance="list-nolabel" ref="/data/intro/step4"><label>Look at
+BODY
+TEMPERATURE
+Look for • Less than 36.5 °C
+• More than 37.5 °C</label><item><label>Done</label><value>done</value></item><item><label>Not Done</label><value>not</value></item></select1><select1 appearance="list-nolabel" ref="/data/intro/step5"><label>Look at- POSTURE AND
+MOVEMENTS
+(observed or history of) The normal resting posture of a term newborn baby includes loosely clenched fists and
+flexed arms, hips, and knees (Fig. F-1B, page F-23). The limbs may be extended in small babies (less than 2.5 kg at birth or born before 37 weeks gestation;
+Look For-
+• Opisthotonos (extreme hyperextension of the body, with the head
+and heels bent backward and the body arched forward)
+• Irregular, jerky movements of the body, limbs, or face
+(convulsion or spasm)
+Jitteriness (rapid and repetitive movements that are caused by sudden handling of the baby or loud noises and can be stopped by cuddling, feeding, or flexing a limb)</label><item><label>Done</label><value>done</value></item><item><label>Not Done</label><value>not</value></item></select1><select1 appearance="list-nolabel" ref="/data/intro/step6"><label>Look at- MUSCLE TONE
+AND LEVEL OF
+ALERTNESS
+Look For-
+• Lethargy (decreased level of consciousness from which the baby
+can be roused only with difficulty)
+• Floppiness (weak muscle tone; limbs fall loosely when picked up
+and released)
+• Irritability (abnormally sensitive to stimuli; cries frequently and
+excessively with little observable cause)
+• Drowsiness (sluggish)
+• Reduced activity
+Unconscious (profound sleep; unresponsive to stimuli; no reaction to
+painful procedures)</label><item><label>Done</label><value>done</value></item><item><label>Not Done</label><value>not</value></item></select1><select1 appearance="list-nolabel" ref="/data/intro/step7"><label>Look at- 
+ LIMBS
+Look for-
+• Abnormal position and movement of limbs
+• Baby's arms or legs move asymmetrically
+• Baby cries when a leg, arm, or shoulder is touched or moved
+• Bone is displaced from its normal position
+Club foot (foot is twisted out of shape or position; e.g. heel is turned inward or outward from the midline of the leg)
+• Extra finger(s) or toe(s)</label><item><label>Done</label><value>done</value></item><item><label>Not Done</label><value>not</value></item></select1><select1 appearance="list-nolabel" ref="/data/intro/step8"><label>Look at-SKIN
+Some skin conditions are common and should not cause concern as long as the baby is otherwise normal.e.g. Milia, erythema toxicum
+
+Look for-
+• Redness or swelling of skin or soft tissues
+• Pustules or blisters
+• Blistering skin rash on palms and soles
+• Cut or abrasion
+• Bruise (bluish discolouration without a break in the skin, usually seen on the presenting part, e.g. buttocks in breech presentation)
+• Birth mark or skin tag (abnormal spot, mark, or raised area of the skin)
+• Loss of elasticity
+• Thrush (bright red patches on skin in napkin area on buttocks, often scaly in appearance or with small white centres)</label><item><label>Done</label><value>done</value></item><item><label>Not Done</label><value>not</value></item></select1><select1 appearance="list-nolabel" ref="/data/intro/step9"><label>Look at- UMBILICUSThe normal umbilicus is bluish-white in colour on day 1. It then begins to dry and shrink
+and falls off after 7 to 10 days.
+
+Look for-
+• Umbilicus is red, swollen, draining pus, or foul smelling
+• Skin around umbilicus is red and hardened
+• Bleeding from umbilicus</label><item><label>Done</label><value>done</value></item><item><label>Not Done</label><value>not</value></item></select1><select1 appearance="list-nolabel" ref="/data/intro/step10"><label>Look at- EYES
+Look for-
+• Pus draining from eye
+• Red or swollen eyelids
+• Subconjunctival bleeding (bright red spot under the conjunctiva of one or both eyes)</label><item><label>Done</label><value>done</value></item><item><label>Not Done</label><value>not</value></item></select1><select1 appearance="list-nolabel" ref="/data/intro/step11"><label>Look at- HEAD AND FACE
+The normal newborn baby's head may be moulded from a vertex birth; this will resolvespontaneously over a period of three to four weeks
+
+Look for-
+• Hydrocephalus (large head with bulging fontanelle and widened sutures)
+Bulging anterior fontanelle
+• Sunken fontanelle
+• Unable to wrinkle forehead or close eye on one side; angle of mouth pulled to one side (facial paralysis)
+• Unable to breastfeed without dribbling milk</label><item><label>Done</label><value>done</value></item><item><label>Not Done</label><value>not</value></item></select1><select1 appearance="list-nolabel" ref="/data/intro/step12"><label>Look at- MOUTH AND
+NOSE
+
+Look for-
+• Cleft lip (split in lip)
+• Cleft palate (hole in upper palate connecting mouth and nasal passages)
+• Thrush (thick white patches on tongue or inside mouth)
+• Central cyanosis (blue tongue and lips)
+• Profuse nasal discharge ("snuffles")
+• Dry tongue and mucous membranes</label><item><label>Done</label><value>done</value></item><item><label>Not Done</label><value>not</value></item></select1><select1 appearance="list-nolabel" ref="/data/intro/step13"><label>Look at- ABDOMEN AND BACK
+
+Look for-
+• Abdominal distension
+• Gastroschisis/ omphalocoele (defect of abdominal wall or umbilicus through which bowel or other abdominal organs may protrude)
+• Spina bifida/ myelomeningocoele (defect in back through which the meninges and/or spinal cord may protrude)</label><item><label>Done</label><value>done</value></item><item><label>Not Done</label><value>not</value></item></select1><select1 appearance="list-nolabel" ref="/data/intro/step14"><label>Look at- WEIGHT
+
+Look for-
+• Birth weight less than 2.5 kg
+• Birth weight more than 4.0 kg
+• Not gaining weight (proven or suspected)</label><item><label>Done</label><value>done</value></item><item><label>Not Done</label><value>not</value></item></select1><select1 appearance="list-nolabel" ref="/data/intro/step15"><label>Look at- URINE AND STOOL
+It is normal for a baby to have six to eight watery stools per day. Vaginal bleeding in the female newborn baby may occur for a few days during the first week of life and is not a sign of a problem.
+
+Look for-
+• Passes urine less than six times per day after day 2
+• Diarrhoea (increased frequency of loose stools as observed or reported by the mother; stool is watery or green, or contains mucus or blood)
+• Has not passed meconium within 24 hours after birth</label><item><label>Done</label><value>done</value></item><item><label>Not Done</label><value>not</value></item></select1></group></h:body></h:html>

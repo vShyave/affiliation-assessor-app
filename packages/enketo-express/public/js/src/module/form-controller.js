@@ -1,15 +1,4 @@
-import { xml2json } from './xml2json';
-
-import settings from './settings';
-
-// import { config } from '../../../../app/models/config-model';
-
-// const config = require( '../../../../app/models/config-model' ).server;
-// console.log(config)
-
-// const config = {
-//     'formManagerBaseURI': 'http://localhost:3002/'
-// };
+import { xml2json } from "./xml2json";
 
 export class FormController {
 
@@ -106,7 +95,6 @@ export class FormController {
         var newFile = new File([data], data.name, { type: data.type });
         console.log(newFile);
         fd.append('file', newFile, data.name);
-        // const response = await fetch(settings.formManagerBaseURI + '/form/uploadFile', {
         const response = await fetch('https://enketo-manager-ratings-tech.samagra.io' + '/form/uploadFile', {
             method: 'POST',
             body: fd
@@ -119,26 +107,7 @@ export class FormController {
         return response.fileURL;
     }
 
-    set(obj, path, value) {
-        if (Object(obj) !== obj) return obj; // When obj is not an object
-        // If not yet an array, get the keys from the string-path
-        if (!Array.isArray(path)) path = path.toString().match(/[^.[\]]+/g) || [];
-        path.slice(0, -1).reduce((a, c, i) => // Iterate all of them except the last one
-            Object(a[c]) === a[c] // Does the key exist and is its value an object?
-                // Yes: then follow that path
-                ? a[c]
-                // No: create the key. Is the next key a potential array-index?
-                : a[c] = Math.abs(path[i + 1]) >> 0 === +path[i + 1]
-                    ? [] // Yes: assign a new array object
-                    : {}, // No: assign a new plain object
-            obj)[path[path.length - 1]] = value; // Finally assign the value to the last key
-
-        return obj; // Return the top-level object to allow chaining
-    }
-
-
     async processForm(formData, formFiles) {
-        x
         const doc = this._parser.parseFromString(formData, 'text/xml');
         // this.formData = (await fetch('http://localhost:3002/form/parse/' + encodeURIComponent(formData)).then(res => res.json())).data;
         this.formData = (await fetch('https://enketo-manager-ratings-tech.samagra.io/parse', {
@@ -157,6 +126,7 @@ export class FormController {
         if (await this.formSpec.isSuccessExecute() === true) {
             this._state = 'FORM_SUCCESS';
             this._onFormSuccessData = await this.formSpec.onFormSuccessExecute();
+            console.log(this._onFormFailureData);
             this._state = 'ON_FORM_SUCCESS_COMPLETED';
             this.nextForm = this.formSpec.onSuccess.next;
             this._message = this.formSpec.messageOnSuccess;

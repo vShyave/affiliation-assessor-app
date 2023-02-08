@@ -1,0 +1,75 @@
+<?xml version="1.0"?><h:html xmlns="http://www.w3.org/2002/xforms" xmlns:ev="http://www.w3.org/2001/xml-events" xmlns:h="http://www.w3.org/1999/xhtml" xmlns:jr="http://openrosa.org/javarosa" xmlns:odk="http://www.opendatakit.org/xforms" xmlns:orx="http://openrosa.org/xforms" xmlns:xsd="http://www.w3.org/2001/XMLSchema"><h:head><h:title>OSCE_ANM_1st Year_Oxygen administration_</h:title><model odk:xforms-version="1.0.0"><instance><data id="osce1_form" version="1.1"><intro><reserved_name_for_field_list_labels_3/><step1/><step2/><step3/><step4/><step5/><step6/><step7/><step8/><step9/><step10/><step11/></intro><meta><instanceID/></meta></data></instance><bind nodeset="/data/intro/reserved_name_for_field_list_labels_3" type="string"/><bind nodeset="/data/intro/step1" required="true()" type="string"/><bind nodeset="/data/intro/step2" required="true()" type="string"/><bind nodeset="/data/intro/step3" required="true()" type="string"/><bind nodeset="/data/intro/step4" required="true()" type="string"/><bind nodeset="/data/intro/step5" required="true()" type="string"/><bind nodeset="/data/intro/step6" required="true()" type="string"/><bind nodeset="/data/intro/step7" required="true()" type="string"/><bind nodeset="/data/intro/step8" required="true()" type="string"/><bind nodeset="/data/intro/step9" required="true()" type="string"/><bind nodeset="/data/intro/step10" required="true()" type="string"/><bind nodeset="/data/intro/step11" required="true()" type="string"/><bind jr:preload="uid" nodeset="/data/meta/instanceID" readonly="true()" type="string"/></model></h:head><h:body class="pages"><group appearance="field-list" ref="/data/intro"><select1 appearance="label" ref="/data/intro/reserved_name_for_field_list_labels_3"><label> </label><item><label>Done</label><value>done</value></item><item><label>Not Done</label><value>not</value></item></select1><select1 appearance="list-nolabel" ref="/data/intro/step1"><label>Wash hands</label><item><label>Done</label><value>done</value></item><item><label>Not Done</label><value>not</value></item></select1><select1 appearance="list-nolabel" ref="/data/intro/step2"><label>Provide privacy</label><item><label>Done</label><value>done</value></item><item><label>Not Done</label><value>not</value></item></select1><select1 appearance="list-nolabel" ref="/data/intro/step3"><label>Position patient in Fowler or semi Fowler position unless otherwise ordered , to allow appropriate lung expansion</label><item><label>Done</label><value>done</value></item><item><label>Not Done</label><value>not</value></item></select1><select1 appearance="list-nolabel" ref="/data/intro/step4"><label>Fill humidifier container to designated level</label><item><label>Done</label><value>done</value></item><item><label>Not Done</label><value>not</value></item></select1><select1 appearance="list-nolabel" ref="/data/intro/step5"><label>Attach flow meter to humidifier and insert proper oxygen therapy</label><item><label>Done</label><value>done</value></item><item><label>Not Done</label><value>not</value></item></select1><select1 appearance="list-nolabel" ref="/data/intro/step6"><label>Administer oxygen therapy 
+Via nasal catheter
+
+- Attach nasal catheter to oxygen tubing , then attach tubing to flow meter
+- Place catheter in cup of water and turn on flow meter to 6 10 L flush tubing
+- Adjust flow Rate to prescribed amount , usually 2 L/mt
+- Determine depth of insertion by using nasal catheter to measure from patients ear lobe to tip of nose
+- Cover tip of catheter with water soluble lubricant
+- Hold catheter to observe its natural curvature and gently insert catheter into one side of nasal passage
+Inspect ,mouth
+- With draw catheter approx. 1 cm or until its visible
+- Tape catheter in place, it may be taped to bridge of nose or side of cheek
+- Provide slack of tubing and secure patient garment 
+
+Via nasal cannula/ prongs
+- Attach nasal cannula to oxygen tubing , then attach tubing to flow meter
+- Place prongs in cup of water adjust flow meter to 6 10 L flush tubing and prongs with oxygen
+- Adjust flow arte to prescribed amount , place nasal prongs into each nares of patient 
+- Adjust straps of cannula over ears ,tighten under chin 
+Place padding between strap and ears 
+
+Via Face MASK 
+- Adjust flow Rate to prescribed amount , usually 6-10 L/mt
+Place mask over bridge of nose and then cover mouth
+- Adjust straps around patient head and over ears 
+- Remove mask and clean skin and dry 1-2 hrs 
+
+Via oxygen tent 
+- Place oxygen machine at head of bed 
+- Fanfold top sheet to patients waist
+- Set temperature to 70 degrees
+- Turn machine one , Adjust flow Rate to prescribed amount , usually 10-12 L/mt
+
+
+Placement of Canopy
+
+- Lift canopy over patient and tuck back canopy under head of mattress
+- Tuck sides of canopy under sides of mattress at head of bed 
+- Place folded barn blanket lengthwise across patients thighs
+- Place lower , front edges</label><item><label>Done</label><value>done</value></item><item><label>Not Done</label><value>not</value></item></select1><select1 appearance="list-nolabel" ref="/data/intro/step7"><label>Provide privacy</label><item><label>Done</label><value>done</value></item><item><label>Not Done</label><value>not</value></item></select1><select1 appearance="list-nolabel" ref="/data/intro/step8"><label>Position patient in Fowler or semi Fowler position unless otherwise ordered , to allow appropriate lung expansion</label><item><label>Done</label><value>done</value></item><item><label>Not Done</label><value>not</value></item></select1><select1 appearance="list-nolabel" ref="/data/intro/step9"><label>Fill humidifier container to designated level</label><item><label>Done</label><value>done</value></item><item><label>Not Done</label><value>not</value></item></select1><select1 appearance="list-nolabel" ref="/data/intro/step10"><label>Attach flow meter to humidifier and insert proper oxygen therapy</label><item><label>Done</label><value>done</value></item><item><label>Not Done</label><value>not</value></item></select1><select1 appearance="list-nolabel" ref="/data/intro/step11"><label>Administer oxygen therapy 
+Via nasal catheter
+
+- Attach nasal catheter to oxygen tubing , then attach tubing to flow meter
+- Place catheter in cup of water and turn on flow meter to 6 10 L flush tubing
+- Adjust flow Rate to prescribed amount , usually 2 L/mt
+- Determine depth of insertion by using nasal catheter to measure from patients ear lobe to tip of nose
+- Cover tip of catheter with water soluble lubricant
+- Hold catheter to observe its natural curvature and gently insert catheter into one side of nasal passage
+- Inspect ,mouth
+- With draw catheter approx. 1 cm or until its visible
+- Tape catheter in place, it may be taped to bridge of nose or side of cheek
+- Provide slack of tubing and secure patient garment 
+
+Via nasal cannula/ prongs
+- Attach nasal cannula to oxygen tubing , then attach tubing to flow meter
+- Place prongs in cup of water adjust flow meter to 6 10 L flush tubing and prongs with oxygen
+- Adjust flow arte to prescribed amount , place nasal prongs into each nares of patient 
+- Adjust straps of cannula over ears ,tighten under chin 
+- Place padding between strap and ears 
+
+Via Face MASK 
+- Adjust flow Rate to prescribed amount , usually 6-10 L/mt
+- Place mask over bridge of nose and then cover mouth
+- Adjust straps around patient head and over ears 
+- Remove mask and clean skin and dry 1-2 hrs 
+
+Via oxygen tent 
+- Place oxygen machine at head of bed 
+- Fanfold top sheet to patients waist
+- Set temperature to 70 degrees
+- Turn machine one , Adjust flow Rate to prescribed amount , usually 10-12 L/mt Placement of Canopy
+ - Lift canopy over patient and tuck back canopy under head of mattress
+- Tuck sides of canopy under sides of mattress at head of bed 
+- Place folded barn blanket lengthwise across patients thighs
+- Place lower , front edges</label><item><label>Done</label><value>done</value></item><item><label>Not Done</label><value>not</value></item></select1></group></h:body></h:html>
