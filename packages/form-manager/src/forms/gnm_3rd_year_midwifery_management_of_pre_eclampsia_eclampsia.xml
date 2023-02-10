@@ -1,0 +1,17 @@
+<?xml version="1.0"?><h:html xmlns="http://www.w3.org/2002/xforms" xmlns:ev="http://www.w3.org/2001/xml-events" xmlns:h="http://www.w3.org/1999/xhtml" xmlns:jr="http://openrosa.org/javarosa" xmlns:odk="http://www.opendatakit.org/xforms" xmlns:orx="http://openrosa.org/xforms" xmlns:xsd="http://www.w3.org/2001/XMLSchema"><h:head><h:title>OSCE_Management of Pre eclampsia /Eclampsia</h:title><model odk:xforms-version="1.0.0"><instance><data id="osce1_form" version="1.1"><intro><reserved_name_for_field_list_labels_3/><step1/><step2/><step3/><step4/></intro><meta><instanceID/></meta></data></instance><bind nodeset="/data/intro/reserved_name_for_field_list_labels_3" type="string"/><bind nodeset="/data/intro/step1" required="true()" type="string"/><bind nodeset="/data/intro/step2" required="true()" type="string"/><bind nodeset="/data/intro/step3" required="true()" type="string"/><bind nodeset="/data/intro/step4" required="true()" type="string"/><bind jr:preload="uid" nodeset="/data/meta/instanceID" readonly="true()" type="string"/></model></h:head><h:body class="pages"><group appearance="field-list" ref="/data/intro"><select1 appearance="label" ref="/data/intro/reserved_name_for_field_list_labels_3"><label> </label><item><label>Done</label><value>done</value></item><item><label>Not Done</label><value>not</value></item></select1><select1 appearance="list-nolabel" ref="/data/intro/step1"><label>GETTING READY
+Greet the woman respectfully and with kindness.
+Tell the woman what is going to be done and encourage her to ask questions
+Listen to what the woman has to say.
+Provide emotional support and reassurance</label><item><label>Done</label><value>done</value></item><item><label>Not Done</label><value>not</value></item></select1><select1 appearance="list-nolabel" ref="/data/intro/step2"><label>IMMEDIATE MANAGEMENT
+Ensure that airway is open
+Begin resuscitation measures, if necessary.
+Give oxygen at 4–6 L per minute by mask or cannulae
+Establish an IV and give normal saline or Ringer's lactate</label><item><label>Done</label><value>done</value></item><item><label>Not Done</label><value>not</value></item></select1><select1 appearance="list-nolabel" ref="/data/intro/step3"><label>ANTICONVULSIVE THERAPY (MAGNESIUM SULPHATE)
+Administering Loading Dose of Magnesium Sulphate
+Wash hands thoroughly with soap and water and dry
+Tell the woman that she may experience a feeling of warmth when magnesium sulphate is given.
+Draw up 10 grams of magnesium sulphate 50% solution (20 ml) with 1 ml of 2% lignocaine in the same syringe.
+Give 5 grams by DEEP IM injection in one buttock, replace the needle and give the remaining 5 grams by DEEP IM injection into the other buttock.</label><item><label>Done</label><value>done</value></item><item><label>Not Done</label><value>not</value></item></select1><select1 appearance="list-nolabel" ref="/data/intro/step4"><label>POST-PROCEDURE TASKS
+If disposing of needle and syringe flush it with 0.5% chlorine solution then place in puncture-proof container.
+Wash hands thoroughly with soap and water and dry.
+Arrange urgent referral so that the woman reaches the referral centre within 2 hours of receiving the first dose of Magnesium Sulphate</label><item><label>Done</label><value>done</value></item><item><label>Not Done</label><value>not</value></item></select1></group></h:body></h:html>

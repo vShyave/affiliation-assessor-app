@@ -106,7 +106,7 @@ export class FormController {
         var newFile = new File([data], data.name, { type: data.type });
         console.log(newFile);
         fd.append('file', newFile, data.name);
-        const response = await fetch(settings.formManagerBaseURI + '/form/uploadFile', {
+        const response = await fetch(settings.formManagerBaseURI + 'form/uploadFile', {
             method: 'POST',
             body: fd
         }).then(s => {
@@ -140,9 +140,9 @@ export class FormController {
         const doc = this._parser.parseFromString(formData, 'text/xml');
         console.log("--------------------------------------");
         // this.formData = (await fetch('http://localhost:3002/form/parse/' + encodeURIComponent(formData)).then(res => res.json())).data;
-        this.formData = (await fetch('http://localhost:3002/parse', {
+        this.formData = (await fetch('https://enketo-manager-ratings-tech.samagra.io/parse', {
             method: "POST",
-            body: JSON.stringify({xml: formData.toString()}),
+            body: JSON.stringify({ xml: formData.toString() }),
             headers: {
                 "Content-type": "application/json; charset=UTF-8"
             }

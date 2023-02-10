@@ -1,0 +1,58 @@
+<?xml version="1.0"?><h:html xmlns="http://www.w3.org/2002/xforms" xmlns:ev="http://www.w3.org/2001/xml-events" xmlns:h="http://www.w3.org/1999/xhtml" xmlns:jr="http://openrosa.org/javarosa" xmlns:odk="http://www.opendatakit.org/xforms" xmlns:orx="http://openrosa.org/xforms" xmlns:xsd="http://www.w3.org/2001/XMLSchema"><h:head><h:title>OSCE_BSC_1st Year_CPR basic life support_</h:title><model odk:xforms-version="1.0.0"><instance><data id="osce1_form" version="1.1"><intro><reserved_name_for_field_list_labels_3/><step1/><step2/><step3/><step4/><step5/><step6/><step7/><step8/><step9/><step10/><step11/></intro><meta><instanceID/></meta></data></instance><bind nodeset="/data/intro/reserved_name_for_field_list_labels_3" type="string"/><bind nodeset="/data/intro/step1" required="true()" type="string"/><bind nodeset="/data/intro/step2" required="true()" type="string"/><bind nodeset="/data/intro/step3" required="true()" type="string"/><bind nodeset="/data/intro/step4" required="true()" type="string"/><bind nodeset="/data/intro/step5" required="true()" type="string"/><bind nodeset="/data/intro/step6" required="true()" type="string"/><bind nodeset="/data/intro/step7" required="true()" type="string"/><bind nodeset="/data/intro/step8" required="true()" type="string"/><bind nodeset="/data/intro/step9" required="true()" type="string"/><bind nodeset="/data/intro/step10" required="true()" type="string"/><bind nodeset="/data/intro/step11" required="true()" type="string"/><bind jr:preload="uid" nodeset="/data/meta/instanceID" readonly="true()" type="string"/></model></h:head><h:body class="pages"><group appearance="field-list" ref="/data/intro"><select1 appearance="label" ref="/data/intro/reserved_name_for_field_list_labels_3"><label> </label><item><label>Done</label><value>done</value></item><item><label>Not Done</label><value>not</value></item></select1><select1 appearance="list-nolabel" ref="/data/intro/step1"><label>Determine if client is unconscious by shaking client and shouting " are you ok"</label><item><label>Done</label><value>done</value></item><item><label>Not Done</label><value>not</value></item></select1><select1 appearance="list-nolabel" ref="/data/intro/step2"><label>Activate emergency medical services and call for help</label><item><label>Done</label><value>done</value></item><item><label>Not Done</label><value>not</value></item></select1><select1 appearance="list-nolabel" ref="/data/intro/step3"><label>Place the client supine on hard surface or use backboard</label><item><label>Done</label><value>done</value></item><item><label>Not Done</label><value>not</value></item></select1><select1 appearance="list-nolabel" ref="/data/intro/step4"><label>Kneel at level of victims shoulder</label><item><label>Done</label><value>done</value></item><item><label>Not Done</label><value>not</value></item></select1><select1 appearance="list-nolabel" ref="/data/intro/step5"><label>Open the airway 
+Use a head tilt/ chin maneuver
+Use modified jaw thrust if a neck injury is suspected</label><item><label>Done</label><value>done</value></item><item><label>Not Done</label><value>not</value></item></select1><select1 appearance="list-nolabel" ref="/data/intro/step6"><label>Prepare for artificial respiration 
+
+For mouth to mouth resuscitation 
+
+Adult : pinch victim's nose and occlude mouth with rescuer's mouth 
+Infant : place mouth over infant's mouth
+
+For mouth to nose resuscitation
+
+Keep victim head tilted with one hand on forehead .use other hand to lift jaw and close mouth. Seal nurses lips around victim's nose and blow. Allow passive exhalation</label><item><label>Done</label><value>done</value></item><item><label>Not Done</label><value>not</value></item></select1><select1 appearance="list-nolabel" ref="/data/intro/step7"><label>Administer artificial respiration
+
+ For mouth to mouth resuscitation 
+
+Adult 
+Blow 2 quick breaths into mouth , adequate tile for 2 breaths (1-1.5 seconds per breath ) should be allowed to provide good chest expansion and decreased distention 
+
+Infant and child
+
+Administer two slow breaths (1-1.5 seconds per breath )
+With pause between rescuer to take breath 
+
+artificial respiration with ambu bag 
+Adult : Compress bag fully for two breaths 
+Child : use two small compression of bag</label><item><label>Done</label><value>done</value></item><item><label>Not Done</label><value>not</value></item></select1><select1 appearance="list-nolabel" ref="/data/intro/step8"><label>Observe for rise and fall of chest with each respiration . If lungs don't inflate , reposition head and neck for visible airway obstruction such as vomitus</label><item><label>Done</label><value>done</value></item><item><label>Not Done</label><value>not</value></item></select1><select1 appearance="list-nolabel" ref="/data/intro/step9"><label>Suction secretions from airway , if suction is unavailable , turn head one side</label><item><label>Done</label><value>done</value></item><item><label>Not Done</label><value>not</value></item></select1><select1 appearance="list-nolabel" ref="/data/intro/step10"><label>Assess for carotid 
+pulse for 5-10 seconds on the side next to which you are kneeling</label><item><label>Done</label><value>done</value></item><item><label>Not Done</label><value>not</value></item></select1><select1 appearance="list-nolabel" ref="/data/intro/step11"><label>If client is pulseless , start chest compression 
+Adult
+- Use proper hand position
+- Place middle finger on this notch and the index finger on lower end of notch
+- Place heel of other hand along the lower half of sternum , next to index finger
+- Remove first hand from the notch and place heel of that hand parallel over the hand on the chest, interlock fingers keeping them off client' s chest
+- Extend or interlace fingers but keep fingers off chest
+- Lock elbows , maintain arms straight and shoulders directly over surface
+- Compress chest 3.8-5cm (1.5-2')
+- Compress chest 80-100 times per minute . perfrom 15 external compressions with mnemonic
+- Ventilate lungs with 2 ventilations
+- Reassess victim after 4 cycles (15 compressions ) , 2 ventilations each cycle
+
+Infant
+- Draw proper hand position
+- Draw imaginary line between nippples over sternum
+- Place index fingers of hand farthest from infant's head just under intermammary line where it intersects sternum
+
+Using two fingers compress 1.3-2.5 cm at least 10 times per minute 
+At end of evry 5th compression, pause for ventilation
+Reassess victim after 10 cycles (5 compressions , 1 ventilation each cycle)
+
+Child (1-7 years )
+- Use proper hand position 
+- Locate lower margin of rib cage on side next to rescuer with middle and index fingers
+
+- Follow margin of rib cage with middle finger to notch where ribs and sternum meet
+- Palce index finger next to middle finger
+- Place heel of other hand next to index finger with long axix of heel parallel to sternm 
+- Compress sternum with one hand 2.5 -3.8 cm (1-1.5'_ at arte of 80-100 times per minute
+- At end of evrery fifth compression pause for ventilation (1-1.5 cm)
+- Reassess the client after 10 cycles .</label><item><label>Done</label><value>done</value></item><item><label>Not Done</label><value>not</value></item></select1></group></h:body></h:html>

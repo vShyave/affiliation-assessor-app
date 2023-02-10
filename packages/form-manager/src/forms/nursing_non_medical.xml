@@ -1,0 +1,1410 @@
+<?xml version="1.0"?>
+<h:html xmlns="http://www.w3.org/2002/xforms"
+    xmlns:ev="http://www.w3.org/2001/xml-events"
+    xmlns:h="http://www.w3.org/1999/xhtml"
+    xmlns:jr="http://openrosa.org/javarosa"
+    xmlns:odk="http://www.opendatakit.org/xforms"
+    xmlns:orx="http://openrosa.org/xforms"
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <h:head>
+        <h:title>Nursing Form- Non Medical</h:title>
+        <model odk:xforms-version="1.0.0">
+            <instance>
+                <data id="Nursing Form- Non Medical" version="1">
+                    <username/>
+                    <start/>
+                    <end/>
+                    <today/>
+                    <deviceid/>
+                    <subscriberid/>
+                    <part1_1>
+                        <center_code/>
+                        <nameofIns/>
+                        <dist/>
+                        <address/>
+                        <pincode/>
+                        <email/>
+                        <gov_priv/>
+                        <chair_name/>
+                        <chair_email/>
+                        <chair_number/>
+                        <princial_name/>
+                        <princial_email/>
+                        <princial_number/>
+                    </part1_1>
+                    <part1_2_1>
+                        <nameofTSMC/>
+                        <part1_2_2>
+                            <part1_2_2a/>
+                            <img_part1_2_2a/>
+                            <part1_2_2b/>
+                            <img_part1_2_2b/>
+                        </part1_2_2>
+                        <part1_2_3>
+                            <part1_2_3a/>
+                            <img_part1_2_3a/>
+                            <part1_2_3b/>
+                            <img_part1_2_3b/>
+                        </part1_2_3>
+                        <part1_2_4/>
+                        <part1_2_4g>
+                            <part1_2_4a/>
+                            <img_part1_2_4a/>
+                            <part1_2_4b/>
+                            <img_part1_2_4b/>
+                            <part1_2_4c/>
+                            <img_part1_2_4c/>
+                            <part1_2_4d/>
+                            <img_part1_2_4d/>
+                            <part1_2_4e/>
+                            <img_part1_2_4e/>
+                        </part1_2_4g>
+                    </part1_2_1>
+                    <part1_3>
+                        <p1_3/>
+                        <p1_3.1/>
+                        <part1_3.1>
+                            <anm1.1/>
+                            <anm1.2/>
+                            <anm1.3/>
+                            <anm2.2/>
+                            <anm2.3/>
+                        </part1_3.1>
+                        <p1_3.2/>
+                        <part1_3.2>
+                            <gnm1.1/>
+                            <gnm1.2/>
+                            <gnm1.3/>
+                            <gnm2.2/>
+                            <gnm2.3/>
+                            <gnm3.2/>
+                            <gnm3.3/>
+                        </part1_3.2>
+                        <p1_3.3/>
+                        <part1_3.3>
+                            <pbbsc1.1/>
+                            <pbbsc1.2/>
+                            <pbbsc1.3/>
+                            <pbbsc2.2/>
+                            <pbbsc2.3/>
+                        </part1_3.3>
+                        <p1_3.4/>
+                        <part1_3.4>
+                            <bsc1.1/>
+                            <bsc1.2/>
+                            <bsc1.3/>
+                            <bsc2.2/>
+                            <bsc2.3/>
+                            <bsc3.2/>
+                            <bsc3.3/>
+                            <bsc4.2/>
+                            <bsc4.3/>
+                        </part1_3.4>
+                        <p1_3.5/>
+                        <part1_3.5>
+                            <msc1/>
+                            <msc2/>
+                            <msc3/>
+                            <msc5/>
+                            <msc6/>
+                        </part1_3.5>
+                        <p1_3.6/>
+                        <part1_3.6>
+                            <msc7/>
+                            <msc8/>
+                            <msc9/>
+                            <msc11/>
+                            <msc12/>
+                        </part1_3.6>
+                        <p1_3.7/>
+                        <part1_3.7>
+                            <msc13/>
+                            <msc14/>
+                            <msc15/>
+                            <msc16/>
+                            <msc17/>
+                        </part1_3.7>
+                        <p1_3.8/>
+                        <part1_3.8>
+                            <msc18/>
+                            <msc19/>
+                            <msc20/>
+                            <msc21/>
+                            <msc22/>
+                        </part1_3.8>
+                        <p1_3.9/>
+                        <part1_3.9>
+                            <msc23/>
+                            <msc24/>
+                            <msc25/>
+                            <msc26/>
+                            <msc27/>
+                        </part1_3.9>
+                    </part1_3>
+                    <part1_4>
+                        <part1_4.1/>
+                        <part1_4.2/>
+                        <part1_4.2.1/>
+                        <part1_4.3>
+                            <part1_4.3a/>
+                            <part1_4.3b/>
+                            <part1_4.3c/>
+                        </part1_4.3>
+                    </part1_4>
+                    <part1_4_6>
+                        <library_comp/>
+                        <img_library_comp/>
+                        <books/>
+                        <journal/>
+                        <library_seating/>
+                        <util_register/>
+                        <img_util_register/>
+                        <remark103/>
+                    </part1_4_6>
+                    <part1_4_7>
+                        <part1_4_7.1/>
+                        <part1_4_7.1a/>
+                        <part1_4_7.1b/>
+                        <img_part1_4_7.1/>
+                        <part1_4_7.2/>
+                        <part1_4_7.2a/>
+                        <part1_4_7.2b/>
+                        <img_part1_4_7.2/>
+                        <part1_4_7.3/>
+                        <part1_4_7.3a/>
+                        <part1_4_7.3b/>
+                        <img_part1_4_7.3/>
+                        <part1_4_7.4/>
+                        <part1_4_7.4a/>
+                        <part1_4_7.4b/>
+                        <img_part1_4_7.4/>
+                        <part1_4_7.5/>
+                        <part1_4_7.5a/>
+                        <part1_4_7.5b/>
+                        <img_part1_4_7.5/>
+                    </part1_4_7>
+                    <part1_5>
+                        <part1_5.1/>
+                        <part1_5.2/>
+                        <part1_5.3/>
+                        <part1_5.4/>
+                        <part1_5.5/>
+                        <img_part1_5.5/>
+                        <part1_5.6/>
+                        <part1_5.7/>
+                    </part1_5>
+                    <part1_10>
+                        <part1_10.1/>
+                        <part1_10.1r/>
+                        <part1_10.2/>
+                        <part1_10.2r/>
+                        <part1_10.3/>
+                        <part1_10.3r/>
+                        <part1_10.4/>
+                        <part1_10.4r/>
+                        <part1_10.5/>
+                        <part1_10.5r/>
+                        <part1_10.6/>
+                        <part1_10.6r/>
+                        <part1_10.7/>
+                        <part1_10.7r/>
+                    </part1_10>
+                    <part2>
+                        <p_4>
+                            <p_4.1/>
+                            <img_p_4.1/>
+                            <p_4.2/>
+                            <p_4.3/>
+                            <img_p_4.3/>
+                            <p_4.4/>
+                            <img_p_4.4/>
+                        </p_4>
+                    </part2>
+                    <notea/>
+                    <nurse_emp/>
+                    <Nurs_details_count/>
+                    <Nurs_details jr:template="">
+                        <part1_8>
+                            <nurse_name/>
+                            <nurse_upnc/>
+                            <nurse_reamrks/>
+                        </part1_8>
+                    </Nurs_details>
+                    <Nurs_details>
+                        <part1_8>
+                            <nurse_name/>
+                            <nurse_upnc/>
+                            <nurse_reamrks/>
+                        </part1_8>
+                    </Nurs_details>
+                    <meta>
+                        <instanceID/>
+                    </meta>
+                </data>
+            </instance>
+            <bind jr:preload="property" jr:preloadParams="username" nodeset="/data/username" type="string"/>
+            <bind jr:preload="timestamp" jr:preloadParams="start" nodeset="/data/start" type="dateTime"/>
+            <bind jr:preload="timestamp" jr:preloadParams="end" nodeset="/data/end" type="dateTime"/>
+            <bind jr:preload="date" jr:preloadParams="today" nodeset="/data/today" type="date"/>
+            <bind jr:preload="property" jr:preloadParams="deviceid" nodeset="/data/deviceid" type="string"/>
+            <bind jr:preload="property" jr:preloadParams="subscriberid" nodeset="/data/subscriberid" type="string"/>
+            <bind constraint=".&lt;9999" nodeset="/data/part1_1/center_code" type="int"/>
+            <bind nodeset="/data/part1_1/nameofIns" type="string"/>
+            <bind nodeset="/data/part1_1/dist" type="string"/>
+            <bind nodeset="/data/part1_1/address" type="string"/>
+            <bind nodeset="/data/part1_1/pincode" type="int"/>
+            <bind nodeset="/data/part1_1/email" type="string"/>
+            <bind nodeset="/data/part1_1/gov_priv" type="string"/>
+            <bind nodeset="/data/part1_1/chair_name" type="string"/>
+            <bind nodeset="/data/part1_1/chair_email" type="string"/>
+            <bind nodeset="/data/part1_1/chair_number" type="string"/>
+            <bind nodeset="/data/part1_1/princial_name" type="string"/>
+            <bind nodeset="/data/part1_1/princial_email" type="string"/>
+            <bind nodeset="/data/part1_1/princial_number" type="string"/>
+            <bind nodeset="/data/part1_2_1/nameofTSMC" type="string"/>
+            <bind nodeset="/data/part1_2_1/part1_2_2/part1_2_2a" type="string"/>
+            <bind nodeset="/data/part1_2_1/part1_2_2/img_part1_2_2a" relevant=" /data/part1_2_1/part1_2_2/part1_2_2a ='yes'" type="binary"/>
+            <bind nodeset="/data/part1_2_1/part1_2_2/part1_2_2b" type="string"/>
+            <bind nodeset="/data/part1_2_1/part1_2_2/img_part1_2_2b" relevant=" /data/part1_2_1/part1_2_2/part1_2_2b ='yes'" type="binary"/>
+            <bind nodeset="/data/part1_2_1/part1_2_3/part1_2_3a" type="string"/>
+            <bind nodeset="/data/part1_2_1/part1_2_3/img_part1_2_3a" relevant=" /data/part1_2_1/part1_2_3/part1_2_3a ='yes'" type="binary"/>
+            <bind nodeset="/data/part1_2_1/part1_2_3/part1_2_3b" type="string"/>
+            <bind nodeset="/data/part1_2_1/part1_2_3/img_part1_2_3b" relevant=" /data/part1_2_1/part1_2_3/part1_2_3b ='yes'" type="binary"/>
+            <bind nodeset="/data/part1_2_1/part1_2_4" type="string"/>
+            <bind nodeset="/data/part1_2_1/part1_2_4g" relevant=" /data/part1_2_1/part1_2_4 ='yes'"/>
+            <bind nodeset="/data/part1_2_1/part1_2_4g/part1_2_4a" type="string"/>
+            <bind nodeset="/data/part1_2_1/part1_2_4g/img_part1_2_4a" relevant=" /data/part1_2_1/part1_2_4g/part1_2_4a ='yes'" type="binary"/>
+            <bind nodeset="/data/part1_2_1/part1_2_4g/part1_2_4b" type="string"/>
+            <bind nodeset="/data/part1_2_1/part1_2_4g/img_part1_2_4b" relevant=" /data/part1_2_1/part1_2_4g/part1_2_4b ='yes'" type="binary"/>
+            <bind nodeset="/data/part1_2_1/part1_2_4g/part1_2_4c" type="string"/>
+            <bind nodeset="/data/part1_2_1/part1_2_4g/img_part1_2_4c" relevant=" /data/part1_2_1/part1_2_4g/part1_2_4c ='yes'" type="binary"/>
+            <bind nodeset="/data/part1_2_1/part1_2_4g/part1_2_4d" type="string"/>
+            <bind nodeset="/data/part1_2_1/part1_2_4g/img_part1_2_4d" relevant=" /data/part1_2_1/part1_2_4g/part1_2_4d ='yes'" type="binary"/>
+            <bind nodeset="/data/part1_2_1/part1_2_4g/part1_2_4e" type="string"/>
+            <bind nodeset="/data/part1_2_1/part1_2_4g/img_part1_2_4e" relevant=" /data/part1_2_1/part1_2_4g/part1_2_4e ='yes'" type="binary"/>
+            <bind nodeset="/data/part1_3/p1_3" type="string"/>
+            <bind nodeset="/data/part1_3/p1_3.1" type="string"/>
+            <bind nodeset="/data/part1_3/part1_3.1" relevant=" /data/part1_3/p1_3.1 ='yes'"/>
+            <bind nodeset="/data/part1_3/part1_3.1/anm1.1" type="int"/>
+            <bind nodeset="/data/part1_3/part1_3.1/anm1.2" type="int"/>
+            <bind nodeset="/data/part1_3/part1_3.1/anm1.3" type="int"/>
+            <bind nodeset="/data/part1_3/part1_3.1/anm2.2" type="int"/>
+            <bind nodeset="/data/part1_3/part1_3.1/anm2.3" type="int"/>
+            <bind nodeset="/data/part1_3/p1_3.2" type="string"/>
+            <bind nodeset="/data/part1_3/part1_3.2" relevant=" /data/part1_3/p1_3.2 ='yes'"/>
+            <bind nodeset="/data/part1_3/part1_3.2/gnm1.1" type="int"/>
+            <bind nodeset="/data/part1_3/part1_3.2/gnm1.2" type="int"/>
+            <bind nodeset="/data/part1_3/part1_3.2/gnm1.3" type="int"/>
+            <bind nodeset="/data/part1_3/part1_3.2/gnm2.2" type="int"/>
+            <bind nodeset="/data/part1_3/part1_3.2/gnm2.3" type="int"/>
+            <bind nodeset="/data/part1_3/part1_3.2/gnm3.2" type="int"/>
+            <bind nodeset="/data/part1_3/part1_3.2/gnm3.3" type="int"/>
+            <bind nodeset="/data/part1_3/p1_3.3" type="string"/>
+            <bind nodeset="/data/part1_3/part1_3.3" relevant=" /data/part1_3/p1_3.3 ='yes'"/>
+            <bind nodeset="/data/part1_3/part1_3.3/pbbsc1.1" type="int"/>
+            <bind nodeset="/data/part1_3/part1_3.3/pbbsc1.2" type="int"/>
+            <bind nodeset="/data/part1_3/part1_3.3/pbbsc1.3" type="int"/>
+            <bind nodeset="/data/part1_3/part1_3.3/pbbsc2.2" type="int"/>
+            <bind nodeset="/data/part1_3/part1_3.3/pbbsc2.3" type="int"/>
+            <bind nodeset="/data/part1_3/p1_3.4" type="string"/>
+            <bind nodeset="/data/part1_3/part1_3.4" relevant=" /data/part1_3/p1_3.4 ='yes'"/>
+            <bind nodeset="/data/part1_3/part1_3.4/bsc1.1" type="int"/>
+            <bind nodeset="/data/part1_3/part1_3.4/bsc1.2" type="int"/>
+            <bind nodeset="/data/part1_3/part1_3.4/bsc1.3" type="int"/>
+            <bind nodeset="/data/part1_3/part1_3.4/bsc2.2" type="int"/>
+            <bind nodeset="/data/part1_3/part1_3.4/bsc2.3" type="int"/>
+            <bind nodeset="/data/part1_3/part1_3.4/bsc3.2" type="int"/>
+            <bind nodeset="/data/part1_3/part1_3.4/bsc3.3" type="int"/>
+            <bind nodeset="/data/part1_3/part1_3.4/bsc4.2" type="int"/>
+            <bind nodeset="/data/part1_3/part1_3.4/bsc4.3" type="int"/>
+            <bind nodeset="/data/part1_3/p1_3.5" type="string"/>
+            <bind nodeset="/data/part1_3/part1_3.5" relevant=" /data/part1_3/p1_3.5 ='yes'"/>
+            <bind nodeset="/data/part1_3/part1_3.5/msc1" type="int"/>
+            <bind nodeset="/data/part1_3/part1_3.5/msc2" type="int"/>
+            <bind nodeset="/data/part1_3/part1_3.5/msc3" type="int"/>
+            <bind nodeset="/data/part1_3/part1_3.5/msc5" type="int"/>
+            <bind nodeset="/data/part1_3/part1_3.5/msc6" type="int"/>
+            <bind nodeset="/data/part1_3/p1_3.6" type="string"/>
+            <bind nodeset="/data/part1_3/part1_3.6" relevant=" /data/part1_3/p1_3.6 ='yes'"/>
+            <bind nodeset="/data/part1_3/part1_3.6/msc7" type="int"/>
+            <bind nodeset="/data/part1_3/part1_3.6/msc8" type="int"/>
+            <bind nodeset="/data/part1_3/part1_3.6/msc9" type="int"/>
+            <bind nodeset="/data/part1_3/part1_3.6/msc11" type="int"/>
+            <bind nodeset="/data/part1_3/part1_3.6/msc12" type="int"/>
+            <bind nodeset="/data/part1_3/p1_3.7" type="string"/>
+            <bind nodeset="/data/part1_3/part1_3.7" relevant=" /data/part1_3/p1_3.7 ='yes'"/>
+            <bind nodeset="/data/part1_3/part1_3.7/msc13" type="int"/>
+            <bind nodeset="/data/part1_3/part1_3.7/msc14" type="int"/>
+            <bind nodeset="/data/part1_3/part1_3.7/msc15" type="int"/>
+            <bind nodeset="/data/part1_3/part1_3.7/msc16" type="int"/>
+            <bind nodeset="/data/part1_3/part1_3.7/msc17" type="int"/>
+            <bind nodeset="/data/part1_3/p1_3.8" type="string"/>
+            <bind nodeset="/data/part1_3/part1_3.8" relevant=" /data/part1_3/p1_3.8 ='yes'"/>
+            <bind nodeset="/data/part1_3/part1_3.8/msc18" type="int"/>
+            <bind nodeset="/data/part1_3/part1_3.8/msc19" type="int"/>
+            <bind nodeset="/data/part1_3/part1_3.8/msc20" type="int"/>
+            <bind nodeset="/data/part1_3/part1_3.8/msc21" type="int"/>
+            <bind nodeset="/data/part1_3/part1_3.8/msc22" type="int"/>
+            <bind nodeset="/data/part1_3/p1_3.9" type="string"/>
+            <bind nodeset="/data/part1_3/part1_3.9" relevant=" /data/part1_3/p1_3.9 ='yes'"/>
+            <bind nodeset="/data/part1_3/part1_3.9/msc23" type="int"/>
+            <bind nodeset="/data/part1_3/part1_3.9/msc24" type="int"/>
+            <bind nodeset="/data/part1_3/part1_3.9/msc25" type="int"/>
+            <bind nodeset="/data/part1_3/part1_3.9/msc26" type="int"/>
+            <bind nodeset="/data/part1_3/part1_3.9/msc27" type="int"/>
+            <bind nodeset="/data/part1_4/part1_4.1" type="string"/>
+            <bind nodeset="/data/part1_4/part1_4.2" type="int"/>
+            <bind nodeset="/data/part1_4/part1_4.2.1" type="string"/>
+            <bind nodeset="/data/part1_4/part1_4.3/part1_4.3a" type="string"/>
+            <bind nodeset="/data/part1_4/part1_4.3/part1_4.3b" type="string"/>
+            <bind nodeset="/data/part1_4/part1_4.3/part1_4.3c" type="string"/>
+            <bind nodeset="/data/part1_4_6/library_comp" type="string"/>
+            <bind nodeset="/data/part1_4_6/img_library_comp" relevant=" /data/part1_4_6/library_comp ='yes'" type="binary"/>
+            <bind nodeset="/data/part1_4_6/books" type="int"/>
+            <bind nodeset="/data/part1_4_6/journal" type="int"/>
+            <bind nodeset="/data/part1_4_6/library_seating" type="int"/>
+            <bind nodeset="/data/part1_4_6/util_register" type="string"/>
+            <bind nodeset="/data/part1_4_6/img_util_register" relevant=" /data/part1_4_6/util_register ='yes'" type="binary"/>
+            <bind nodeset="/data/part1_4_6/remark103" type="string"/>
+            <bind nodeset="/data/part1_4_7/part1_4_7.1" readonly="true()" type="string"/>
+            <bind nodeset="/data/part1_4_7/part1_4_7.1a" type="string"/>
+            <bind nodeset="/data/part1_4_7/part1_4_7.1b" relevant=" /data/part1_4_7/part1_4_7.1a ='yes'" type="string"/>
+            <bind nodeset="/data/part1_4_7/img_part1_4_7.1" type="binary"/>
+            <bind nodeset="/data/part1_4_7/part1_4_7.2" readonly="true()" type="string"/>
+            <bind nodeset="/data/part1_4_7/part1_4_7.2a" type="string"/>
+            <bind nodeset="/data/part1_4_7/part1_4_7.2b" relevant=" /data/part1_4_7/part1_4_7.2a ='yes'" type="string"/>
+            <bind nodeset="/data/part1_4_7/img_part1_4_7.2" type="binary"/>
+            <bind nodeset="/data/part1_4_7/part1_4_7.3" readonly="true()" type="string"/>
+            <bind nodeset="/data/part1_4_7/part1_4_7.3a" type="string"/>
+            <bind nodeset="/data/part1_4_7/part1_4_7.3b" relevant=" /data/part1_4_7/part1_4_7.3a ='yes'" type="string"/>
+            <bind nodeset="/data/part1_4_7/img_part1_4_7.3" type="binary"/>
+            <bind nodeset="/data/part1_4_7/part1_4_7.4" readonly="true()" type="string"/>
+            <bind nodeset="/data/part1_4_7/part1_4_7.4a" type="string"/>
+            <bind nodeset="/data/part1_4_7/part1_4_7.4b" relevant=" /data/part1_4_7/part1_4_7.4a ='yes'" type="string"/>
+            <bind nodeset="/data/part1_4_7/img_part1_4_7.4" type="binary"/>
+            <bind nodeset="/data/part1_4_7/part1_4_7.5" readonly="true()" type="string"/>
+            <bind nodeset="/data/part1_4_7/part1_4_7.5a" type="string"/>
+            <bind nodeset="/data/part1_4_7/part1_4_7.5b" relevant=" /data/part1_4_7/part1_4_7.5a ='yes'" type="string"/>
+            <bind nodeset="/data/part1_4_7/img_part1_4_7.5" type="binary"/>
+            <bind nodeset="/data/part1_5/part1_5.1" type="string"/>
+            <bind nodeset="/data/part1_5/part1_5.2" type="int"/>
+            <bind nodeset="/data/part1_5/part1_5.3" type="int"/>
+            <bind nodeset="/data/part1_5/part1_5.4" type="string"/>
+            <bind nodeset="/data/part1_5/part1_5.5" type="string"/>
+            <bind nodeset="/data/part1_5/img_part1_5.5" relevant=" /data/part1_5/part1_5.5 ='yes'" type="binary"/>
+            <bind nodeset="/data/part1_5/part1_5.6" type="string"/>
+            <bind nodeset="/data/part1_5/part1_5.7" type="int"/>
+            <bind nodeset="/data/part1_10/part1_10.1" type="string"/>
+            <bind nodeset="/data/part1_10/part1_10.1r" relevant=" /data/part1_10/part1_10.1 ='yes'" type="binary"/>
+            <bind nodeset="/data/part1_10/part1_10.2" type="string"/>
+            <bind nodeset="/data/part1_10/part1_10.2r" relevant=" /data/part1_10/part1_10.2 ='yes'" type="binary"/>
+            <bind nodeset="/data/part1_10/part1_10.3" type="string"/>
+            <bind nodeset="/data/part1_10/part1_10.3r" relevant=" /data/part1_10/part1_10.3 ='yes'" type="binary"/>
+            <bind nodeset="/data/part1_10/part1_10.4" type="string"/>
+            <bind nodeset="/data/part1_10/part1_10.4r" relevant=" /data/part1_10/part1_10.4 ='yes'" type="binary"/>
+            <bind nodeset="/data/part1_10/part1_10.5" type="string"/>
+            <bind nodeset="/data/part1_10/part1_10.5r" relevant=" /data/part1_10/part1_10.5 ='yes'" type="binary"/>
+            <bind nodeset="/data/part1_10/part1_10.6" type="string"/>
+            <bind nodeset="/data/part1_10/part1_10.6r" relevant=" /data/part1_10/part1_10.6 ='yes'" type="binary"/>
+            <bind nodeset="/data/part1_10/part1_10.7" type="string"/>
+            <bind nodeset="/data/part1_10/part1_10.7r" relevant=" /data/part1_10/part1_10.7 ='yes'" type="binary"/>
+            <bind nodeset="/data/part2/p_4/p_4.1" type="string"/>
+            <bind nodeset="/data/part2/p_4/img_p_4.1" relevant=" /data/part2/p_4/p_4.1 ='yes'" type="binary"/>
+            <bind nodeset="/data/part2/p_4/p_4.2" type="string"/>
+            <bind nodeset="/data/part2/p_4/p_4.3" type="string"/>
+            <bind nodeset="/data/part2/p_4/img_p_4.3" relevant=" /data/part2/p_4/p_4.3 ='yes'" type="binary"/>
+            <bind nodeset="/data/part2/p_4/p_4.4" type="string"/>
+            <bind nodeset="/data/part2/p_4/img_p_4.4" relevant=" /data/part2/p_4/p_4.4 ='yes'" type="binary"/>
+            <bind nodeset="/data/notea" readonly="true()" type="string"/>
+            <bind nodeset="/data/nurse_emp" type="int"/>
+            <bind calculate=" /data/nurse_emp " nodeset="/data/Nurs_details_count" readonly="true()" type="string"/>
+            <bind nodeset="/data/Nurs_details" relevant=" /data/nurse_emp &gt;0"/>
+            <bind nodeset="/data/Nurs_details/part1_8/nurse_name" type="string"/>
+            <bind nodeset="/data/Nurs_details/part1_8/nurse_upnc" type="int"/>
+            <bind nodeset="/data/Nurs_details/part1_8/nurse_reamrks" type="string"/>
+            <bind jr:preload="uid" nodeset="/data/meta/instanceID" readonly="true()" type="string"/>
+        </model>
+    </h:head>
+    <h:body class="pages">
+        <group appearance="field-list" ref="/data/part1_1">
+            <label>Basic Infrastructure</label>
+            <input ref="/data/part1_1/center_code">
+                <label>Training Center Code</label>
+            </input>
+            <input ref="/data/part1_1/nameofIns">
+                <label>Name of institution</label>
+            </input>
+            <input appearance="minimal" ref="/data/part1_1/dist">
+                <label>District</label>
+            </input>
+            <input appearance="multiline" ref="/data/part1_1/address">
+                <label>Full Address</label>
+            </input>
+            <input ref="/data/part1_1/pincode">
+                <label>Pincode</label>
+            </input>
+            <input ref="/data/part1_1/email">
+                <label>Email id of the institution</label>
+            </input>
+            <select1 appearance="horizontal" ref="/data/part1_1/gov_priv">
+                <label>Govt. or Private</label>
+                <item>
+                    <label>Government</label>
+                    <value>a</value>
+                </item>
+                <item>
+                    <label>Private</label>
+                    <value>b</value>
+                </item>
+            </select1>
+            <input ref="/data/part1_1/chair_name">
+                <label>Name of Chairperson</label>
+            </input>
+            <input ref="/data/part1_1/chair_email">
+                <label>Email id of Chairperson</label>
+            </input>
+            <input appearance="numbers" ref="/data/part1_1/chair_number">
+                <label>Contact No of Chairperson</label>
+            </input>
+            <input ref="/data/part1_1/princial_name">
+                <label>Name of Principal</label>
+            </input>
+            <input ref="/data/part1_1/princial_email">
+                <label>Email Id of principal</label>
+            </input>
+            <input appearance="numbers" ref="/data/part1_1/princial_number">
+                <label>Contact No of principal</label>
+            </input>
+        </group>
+        <group appearance="field-list" ref="/data/part1_2_1">
+            <label>Administrative control and statutory requirements</label>
+            <input ref="/data/part1_2_1/nameofTSMC">
+                <label>Name of the Trust/ Society/ Missionary/ Company:</label>
+            </input>
+            <group ref="/data/part1_2_1/part1_2_2">
+                <label>Documents for establishment:</label>
+                <select1 ref="/data/part1_2_1/part1_2_2/part1_2_2a">
+                    <label>Letter from CMO regarding the establishment of hospital</label>
+                    <item>
+                        <label>Yes</label>
+                        <value>yes</value>
+                    </item>
+                    <item>
+                        <label>No</label>
+                        <value>no</value>
+                    </item>
+                </select1>
+                <upload mediatype="image/*" ref="/data/part1_2_1/part1_2_2/img_part1_2_2a">
+                    <label>Upload</label>
+                </upload>
+                <select1 ref="/data/part1_2_1/part1_2_2/part1_2_2b">
+                    <label>Current Fire NOC for college / hostel 
+building</label>
+                    <item>
+                        <label>Yes</label>
+                        <value>yes</value>
+                    </item>
+                    <item>
+                        <label>No</label>
+                        <value>no</value>
+                    </item>
+                </select1>
+                <upload mediatype="image/*" ref="/data/part1_2_1/part1_2_2/img_part1_2_2b">
+                    <label>Upload</label>
+                </upload>
+            </group>
+            <group appearance="field-list" ref="/data/part1_2_1/part1_2_3">
+                <label>Is Biometric system available and in working condition for recording attendance:</label>
+                <select1 ref="/data/part1_2_1/part1_2_3/part1_2_3a">
+                    <label>Faculty</label>
+                    <item>
+                        <label>Yes</label>
+                        <value>yes</value>
+                    </item>
+                    <item>
+                        <label>No</label>
+                        <value>no</value>
+                    </item>
+                </select1>
+                <upload mediatype="image/*" ref="/data/part1_2_1/part1_2_3/img_part1_2_3a">
+                    <label>Upload</label>
+                </upload>
+                <select1 ref="/data/part1_2_1/part1_2_3/part1_2_3b">
+                    <label>Students</label>
+                    <item>
+                        <label>Yes</label>
+                        <value>yes</value>
+                    </item>
+                    <item>
+                        <label>No</label>
+                        <value>no</value>
+                    </item>
+                </select1>
+                <upload mediatype="image/*" ref="/data/part1_2_1/part1_2_3/img_part1_2_3b">
+                    <label>Upload</label>
+                </upload>
+            </group>
+            <select1 ref="/data/part1_2_1/part1_2_4">
+                <label>Is virtual classroom set up available in the institution?</label>
+                <hint>If Yes, which of the following logistics are available in working condition:</hint>
+                <item>
+                    <label>Yes</label>
+                    <value>yes</value>
+                </item>
+                <item>
+                    <label>No</label>
+                    <value>no</value>
+                </item>
+            </select1>
+            <group appearance="field-list" ref="/data/part1_2_1/part1_2_4g">
+                <select1 ref="/data/part1_2_1/part1_2_4g/part1_2_4a">
+                    <label>Internet connection (broadband wired or wireless (3G or 4G/LTE) minimum 2 Mbps</label>
+                    <item>
+                        <label>Yes</label>
+                        <value>yes</value>
+                    </item>
+                    <item>
+                        <label>No</label>
+                        <value>no</value>
+                    </item>
+                </select1>
+                <upload mediatype="image/*" ref="/data/part1_2_1/part1_2_4g/img_part1_2_4a">
+                    <label>Upload</label>
+                </upload>
+                <select1 ref="/data/part1_2_1/part1_2_4g/part1_2_4b">
+                    <label>HD Camera (USB camera)</label>
+                    <item>
+                        <label>Yes</label>
+                        <value>yes</value>
+                    </item>
+                    <item>
+                        <label>No</label>
+                        <value>no</value>
+                    </item>
+                </select1>
+                <upload mediatype="image/*" ref="/data/part1_2_1/part1_2_4g/img_part1_2_4b">
+                    <label>Upload</label>
+                </upload>
+                <select1 ref="/data/part1_2_1/part1_2_4g/part1_2_4c">
+                    <label>LCD Projector</label>
+                    <item>
+                        <label>Yes</label>
+                        <value>yes</value>
+                    </item>
+                    <item>
+                        <label>No</label>
+                        <value>no</value>
+                    </item>
+                </select1>
+                <upload mediatype="image/*" ref="/data/part1_2_1/part1_2_4g/img_part1_2_4c">
+                    <label>Upload</label>
+                </upload>
+                <select1 ref="/data/part1_2_1/part1_2_4g/part1_2_4d">
+                    <label>Microphone</label>
+                    <item>
+                        <label>Yes</label>
+                        <value>yes</value>
+                    </item>
+                    <item>
+                        <label>No</label>
+                        <value>no</value>
+                    </item>
+                </select1>
+                <upload mediatype="image/*" ref="/data/part1_2_1/part1_2_4g/img_part1_2_4d">
+                    <label>Upload</label>
+                </upload>
+                <select1 ref="/data/part1_2_1/part1_2_4g/part1_2_4e">
+                    <label>Speaker</label>
+                    <item>
+                        <label>Yes</label>
+                        <value>yes</value>
+                    </item>
+                    <item>
+                        <label>No</label>
+                        <value>no</value>
+                    </item>
+                </select1>
+                <upload mediatype="image/*" ref="/data/part1_2_1/part1_2_4g/img_part1_2_4e">
+                    <label>Upload</label>
+                </upload>
+            </group>
+        </group>
+        <group appearance="field-list" ref="/data/part1_3">
+            <label>Number of seats sanctioned per program:</label>
+            <select1 appearance="label" ref="/data/part1_3/p1_3">
+                <label>Courses</label>
+                <item>
+                    <label>Yes</label>
+                    <value>yes</value>
+                </item>
+                <item>
+                    <label>No</label>
+                    <value>no</value>
+                </item>
+            </select1>
+            <select1 appearance="list-nolabel" ref="/data/part1_3/p1_3.1">
+                <label>ANM</label>
+                <item>
+                    <label>Yes</label>
+                    <value>yes</value>
+                </item>
+                <item>
+                    <label>No</label>
+                    <value>no</value>
+                </item>
+            </select1>
+            <group appearance="field-list" ref="/data/part1_3/part1_3.1">
+                <input ref="/data/part1_3/part1_3.1/anm1.1">
+                    <label>Number of Sanctioned Seats (1st year)</label>
+                </input>
+                <input ref="/data/part1_3/part1_3.1/anm1.2">
+                    <label>Students admitted (1st year)</label>
+                </input>
+                <input ref="/data/part1_3/part1_3.1/anm1.3">
+                    <label>Students present on day of assessment (1st year)</label>
+                </input>
+                <input ref="/data/part1_3/part1_3.1/anm2.2">
+                    <label>Students admitted (2nd year)</label>
+                </input>
+                <input ref="/data/part1_3/part1_3.1/anm2.3">
+                    <label>Students present on day of assessment (2nd year)</label>
+                </input>
+            </group>
+            <select1 appearance="list-nolabel" ref="/data/part1_3/p1_3.2">
+                <label>GNM</label>
+                <item>
+                    <label>Yes</label>
+                    <value>yes</value>
+                </item>
+                <item>
+                    <label>No</label>
+                    <value>no</value>
+                </item>
+            </select1>
+            <group appearance="field-list" ref="/data/part1_3/part1_3.2">
+                <input ref="/data/part1_3/part1_3.2/gnm1.1">
+                    <label>Number of Sanctioned Seats (1st year)</label>
+                </input>
+                <input ref="/data/part1_3/part1_3.2/gnm1.2">
+                    <label>Students admitted (1st year)</label>
+                </input>
+                <input ref="/data/part1_3/part1_3.2/gnm1.3">
+                    <label>Students present on day of assessment (1st year)</label>
+                </input>
+                <input ref="/data/part1_3/part1_3.2/gnm2.2">
+                    <label>Students admitted (2nd year)</label>
+                </input>
+                <input ref="/data/part1_3/part1_3.2/gnm2.3">
+                    <label>Students present on day of assessment (2nd year)</label>
+                </input>
+                <input ref="/data/part1_3/part1_3.2/gnm3.2">
+                    <label>Students admitted (3rd year)</label>
+                </input>
+                <input ref="/data/part1_3/part1_3.2/gnm3.3">
+                    <label>Students present on day of assessment (3rd year)</label>
+                </input>
+            </group>
+            <select1 appearance="list-nolabel" ref="/data/part1_3/p1_3.3">
+                <label>Post Basic BSc N</label>
+                <item>
+                    <label>Yes</label>
+                    <value>yes</value>
+                </item>
+                <item>
+                    <label>No</label>
+                    <value>no</value>
+                </item>
+            </select1>
+            <group appearance="field-list" ref="/data/part1_3/part1_3.3">
+                <input ref="/data/part1_3/part1_3.3/pbbsc1.1">
+                    <label>Number of Sanctioned Seats (1st year)</label>
+                </input>
+                <input ref="/data/part1_3/part1_3.3/pbbsc1.2">
+                    <label>Students admitted (1st year)</label>
+                </input>
+                <input ref="/data/part1_3/part1_3.3/pbbsc1.3">
+                    <label>Students present on day of assessment (1st year)</label>
+                </input>
+                <input ref="/data/part1_3/part1_3.3/pbbsc2.2">
+                    <label>Students admitted (2nd year)</label>
+                </input>
+                <input ref="/data/part1_3/part1_3.3/pbbsc2.3">
+                    <label>Students present on day of assessment (2nd year)</label>
+                </input>
+            </group>
+            <select1 appearance="list-nolabel" ref="/data/part1_3/p1_3.4">
+                <label>BSc N</label>
+                <item>
+                    <label>Yes</label>
+                    <value>yes</value>
+                </item>
+                <item>
+                    <label>No</label>
+                    <value>no</value>
+                </item>
+            </select1>
+            <group appearance="field-list" ref="/data/part1_3/part1_3.4">
+                <input ref="/data/part1_3/part1_3.4/bsc1.1">
+                    <label>Number of Sanctioned Seats (1st year)</label>
+                </input>
+                <input ref="/data/part1_3/part1_3.4/bsc1.2">
+                    <label>Students admitted (1st year)</label>
+                </input>
+                <input ref="/data/part1_3/part1_3.4/bsc1.3">
+                    <label>Students present on day of assessment (1st year)</label>
+                </input>
+                <input ref="/data/part1_3/part1_3.4/bsc2.2">
+                    <label>Students admitted (2nd year)</label>
+                </input>
+                <input ref="/data/part1_3/part1_3.4/bsc2.3">
+                    <label>Students present on day of assessment (2nd year)</label>
+                </input>
+                <input ref="/data/part1_3/part1_3.4/bsc3.2">
+                    <label>Students admitted (3rd year)</label>
+                </input>
+                <input ref="/data/part1_3/part1_3.4/bsc3.3">
+                    <label>Students present on day of assessment (3rd year)</label>
+                </input>
+                <input ref="/data/part1_3/part1_3.4/bsc4.2">
+                    <label>Students admitted (4th year)</label>
+                </input>
+                <input ref="/data/part1_3/part1_3.4/bsc4.3">
+                    <label>Students present on day of assessment (4th year)</label>
+                </input>
+            </group>
+            <select1 appearance="list-nolabel" ref="/data/part1_3/p1_3.5">
+                <label>MSc N. Community Health</label>
+                <item>
+                    <label>Yes</label>
+                    <value>yes</value>
+                </item>
+                <item>
+                    <label>No</label>
+                    <value>no</value>
+                </item>
+            </select1>
+            <group appearance="field-list" ref="/data/part1_3/part1_3.5">
+                <input ref="/data/part1_3/part1_3.5/msc1">
+                    <label>Number of Sanctioned Seats (1st year)</label>
+                </input>
+                <input ref="/data/part1_3/part1_3.5/msc2">
+                    <label>Students admitted (1st year)</label>
+                </input>
+                <input ref="/data/part1_3/part1_3.5/msc3">
+                    <label>Students present on day of assessment (1st year)</label>
+                </input>
+                <input ref="/data/part1_3/part1_3.5/msc5">
+                    <label>Students admitted (2nd year)</label>
+                </input>
+                <input ref="/data/part1_3/part1_3.5/msc6">
+                    <label>Students present on day of assessment (2nd year)</label>
+                </input>
+            </group>
+            <select1 appearance="list-nolabel" ref="/data/part1_3/p1_3.6">
+                <label>MSc N. Medical Surgical</label>
+                <item>
+                    <label>Yes</label>
+                    <value>yes</value>
+                </item>
+                <item>
+                    <label>No</label>
+                    <value>no</value>
+                </item>
+            </select1>
+            <group appearance="field-list" ref="/data/part1_3/part1_3.6">
+                <input ref="/data/part1_3/part1_3.6/msc7">
+                    <label>Number of Sanctioned Seats (1st year)</label>
+                </input>
+                <input ref="/data/part1_3/part1_3.6/msc8">
+                    <label>Students admitted (1st year)</label>
+                </input>
+                <input ref="/data/part1_3/part1_3.6/msc9">
+                    <label>Students present on day of assessment (1st year)</label>
+                </input>
+                <input ref="/data/part1_3/part1_3.6/msc11">
+                    <label>Students admitted (2nd year)</label>
+                </input>
+                <input ref="/data/part1_3/part1_3.6/msc12">
+                    <label>Students present on day of assessment (2nd year)</label>
+                </input>
+            </group>
+            <select1 appearance="list-nolabel" ref="/data/part1_3/p1_3.7">
+                <label>MSc N. OBG</label>
+                <item>
+                    <label>Yes</label>
+                    <value>yes</value>
+                </item>
+                <item>
+                    <label>No</label>
+                    <value>no</value>
+                </item>
+            </select1>
+            <group appearance="field-list" ref="/data/part1_3/part1_3.7">
+                <input ref="/data/part1_3/part1_3.7/msc13">
+                    <label>Number of Sanctioned Seats (1st year)</label>
+                </input>
+                <input ref="/data/part1_3/part1_3.7/msc14">
+                    <label>Students admitted (1st year)</label>
+                </input>
+                <input ref="/data/part1_3/part1_3.7/msc15">
+                    <label>Students present on day of assessment (1st year)</label>
+                </input>
+                <input ref="/data/part1_3/part1_3.7/msc16">
+                    <label>Students admitted (2nd year)</label>
+                </input>
+                <input ref="/data/part1_3/part1_3.7/msc17">
+                    <label>Students present on day of assessment (2nd year)</label>
+                </input>
+            </group>
+            <select1 appearance="list-nolabel" ref="/data/part1_3/p1_3.8">
+                <label>MSc N. Paediatrics</label>
+                <item>
+                    <label>Yes</label>
+                    <value>yes</value>
+                </item>
+                <item>
+                    <label>No</label>
+                    <value>no</value>
+                </item>
+            </select1>
+            <group appearance="field-list" ref="/data/part1_3/part1_3.8">
+                <input ref="/data/part1_3/part1_3.8/msc18">
+                    <label>Number of Sanctioned Seats (1st year)</label>
+                </input>
+                <input ref="/data/part1_3/part1_3.8/msc19">
+                    <label>Students admitted (1st year)</label>
+                </input>
+                <input ref="/data/part1_3/part1_3.8/msc20">
+                    <label>Students present on day of assessment (1st year)</label>
+                </input>
+                <input ref="/data/part1_3/part1_3.8/msc21">
+                    <label>Students admitted (2nd year)</label>
+                </input>
+                <input ref="/data/part1_3/part1_3.8/msc22">
+                    <label>Students present on day of assessment (2nd year)</label>
+                </input>
+            </group>
+            <select1 appearance="list-nolabel" ref="/data/part1_3/p1_3.9">
+                <label>MSc N. Psychiatric</label>
+                <item>
+                    <label>Yes</label>
+                    <value>yes</value>
+                </item>
+                <item>
+                    <label>No</label>
+                    <value>no</value>
+                </item>
+            </select1>
+            <group appearance="field-list" ref="/data/part1_3/part1_3.9">
+                <input ref="/data/part1_3/part1_3.9/msc23">
+                    <label>Number of Sanctioned Seats (1st year)</label>
+                </input>
+                <input ref="/data/part1_3/part1_3.9/msc24">
+                    <label>Students admitted (1st year)</label>
+                </input>
+                <input ref="/data/part1_3/part1_3.9/msc25">
+                    <label>Students present on day of assessment (1st year)</label>
+                </input>
+                <input ref="/data/part1_3/part1_3.9/msc26">
+                    <label>Students admitted (2nd year)</label>
+                </input>
+                <input ref="/data/part1_3/part1_3.9/msc27">
+                    <label>Students present on day of assessment (2nd year)</label>
+                </input>
+            </group>
+        </group>
+        <group appearance="field-list" ref="/data/part1_4">
+            <label>Training Infrastructure (Teaching Block)</label>
+            <select1 ref="/data/part1_4/part1_4.1">
+                <label>The institution has a separate teaching block available</label>
+                <item>
+                    <label>Yes</label>
+                    <value>yes</value>
+                </item>
+                <item>
+                    <label>No</label>
+                    <value>no</value>
+                </item>
+            </select1>
+            <input ref="/data/part1_4/part1_4.2">
+                <label>Number of Class Room available in the course</label>
+            </input>
+            <select1 ref="/data/part1_4/part1_4.2.1">
+                <label>If the classroom has sufficient seating capacity as per seats sanctioned</label>
+                <item>
+                    <label>Yes</label>
+                    <value>yes</value>
+                </item>
+                <item>
+                    <label>No</label>
+                    <value>no</value>
+                </item>
+            </select1>
+            <group appearance="field-list" ref="/data/part1_4/part1_4.3">
+                <label>Is there a dedicated space for :</label>
+                <select1 ref="/data/part1_4/part1_4.3/part1_4.3a">
+                    <label>Principal's Office</label>
+                    <item>
+                        <label>Yes</label>
+                        <value>yes</value>
+                    </item>
+                    <item>
+                        <label>No</label>
+                        <value>no</value>
+                    </item>
+                </select1>
+                <select1 ref="/data/part1_4/part1_4.3/part1_4.3b">
+                    <label>Teaching Faculty</label>
+                    <item>
+                        <label>Yes</label>
+                        <value>yes</value>
+                    </item>
+                    <item>
+                        <label>No</label>
+                        <value>no</value>
+                    </item>
+                </select1>
+                <select1 ref="/data/part1_4/part1_4.3/part1_4.3c">
+                    <label>Non-teaching faculty</label>
+                    <item>
+                        <label>Yes</label>
+                        <value>yes</value>
+                    </item>
+                    <item>
+                        <label>No</label>
+                        <value>no</value>
+                    </item>
+                </select1>
+            </group>
+        </group>
+        <group appearance="field-list" ref="/data/part1_4_6">
+            <label>Training Infrastructure - Library</label>
+            <select1 ref="/data/part1_4_6/library_comp">
+                <label>Is a computer with internet available in the library</label>
+                <item>
+                    <label>Yes</label>
+                    <value>yes</value>
+                </item>
+                <item>
+                    <label>No</label>
+                    <value>no</value>
+                </item>
+            </select1>
+            <upload mediatype="image/*" ref="/data/part1_4_6/img_library_comp">
+                <label>Upload</label>
+            </upload>
+            <input ref="/data/part1_4_6/books">
+                <label>No. of books available as per accession register</label>
+            </input>
+            <input ref="/data/part1_4_6/journal">
+                <label>No. of Subscribed Journals</label>
+            </input>
+            <input ref="/data/part1_4_6/library_seating">
+                <label>Number of seats in the library</label>
+            </input>
+            <select1 ref="/data/part1_4_6/util_register">
+                <label>is the utilization register available?</label>
+                <item>
+                    <label>Yes</label>
+                    <value>yes</value>
+                </item>
+                <item>
+                    <label>No</label>
+                    <value>no</value>
+                </item>
+            </select1>
+            <upload mediatype="image/*" ref="/data/part1_4_6/img_util_register">
+                <label>Upload</label>
+            </upload>
+            <input ref="/data/part1_4_6/remark103">
+                <label>Remarks</label>
+            </input>
+        </group>
+        <group appearance="field-list" ref="/data/part1_4_7">
+            <label>AV aids</label>
+            <input ref="/data/part1_4_7/part1_4_7.1">
+                <label>&lt;span style='color:Black; font-weight:bold'&gt;Computer&lt;/span&gt;</label>
+            </input>
+            <select1 ref="/data/part1_4_7/part1_4_7.1a">
+                <label>Available</label>
+                <item>
+                    <label>Yes</label>
+                    <value>yes</value>
+                </item>
+                <item>
+                    <label>No</label>
+                    <value>no</value>
+                </item>
+            </select1>
+            <select1 ref="/data/part1_4_7/part1_4_7.1b">
+                <label>Functional</label>
+                <item>
+                    <label>Yes</label>
+                    <value>yes</value>
+                </item>
+                <item>
+                    <label>No</label>
+                    <value>no</value>
+                </item>
+            </select1>
+            <upload mediatype="image/*" ref="/data/part1_4_7/img_part1_4_7.1">
+                <label>Upload</label>
+            </upload>
+            <input ref="/data/part1_4_7/part1_4_7.2">
+                <label>&lt;span style='color:Black; font-weight:bold'&gt;Projector&lt;/span&gt;</label>
+            </input>
+            <select1 ref="/data/part1_4_7/part1_4_7.2a">
+                <label>Available</label>
+                <item>
+                    <label>Yes</label>
+                    <value>yes</value>
+                </item>
+                <item>
+                    <label>No</label>
+                    <value>no</value>
+                </item>
+            </select1>
+            <select1 ref="/data/part1_4_7/part1_4_7.2b">
+                <label>Functional</label>
+                <item>
+                    <label>Yes</label>
+                    <value>yes</value>
+                </item>
+                <item>
+                    <label>No</label>
+                    <value>no</value>
+                </item>
+            </select1>
+            <upload mediatype="image/*" ref="/data/part1_4_7/img_part1_4_7.2">
+                <label>Upload</label>
+            </upload>
+            <input ref="/data/part1_4_7/part1_4_7.3">
+                <label>&lt;span style='color:Black; font-weight:bold'&gt;Screen&lt;/span&gt;</label>
+            </input>
+            <select1 ref="/data/part1_4_7/part1_4_7.3a">
+                <label>Available</label>
+                <item>
+                    <label>Yes</label>
+                    <value>yes</value>
+                </item>
+                <item>
+                    <label>No</label>
+                    <value>no</value>
+                </item>
+            </select1>
+            <select1 ref="/data/part1_4_7/part1_4_7.3b">
+                <label>Functional</label>
+                <item>
+                    <label>Yes</label>
+                    <value>yes</value>
+                </item>
+                <item>
+                    <label>No</label>
+                    <value>no</value>
+                </item>
+            </select1>
+            <upload mediatype="image/*" ref="/data/part1_4_7/img_part1_4_7.3">
+                <label>Upload</label>
+            </upload>
+            <input ref="/data/part1_4_7/part1_4_7.4">
+                <label>&lt;span style='color:Black; font-weight:bold'&gt;Charts&lt;/span&gt;</label>
+            </input>
+            <select1 ref="/data/part1_4_7/part1_4_7.4a">
+                <label>Available</label>
+                <item>
+                    <label>Yes</label>
+                    <value>yes</value>
+                </item>
+                <item>
+                    <label>No</label>
+                    <value>no</value>
+                </item>
+            </select1>
+            <select1 ref="/data/part1_4_7/part1_4_7.4b">
+                <label>Functional</label>
+                <item>
+                    <label>Yes</label>
+                    <value>yes</value>
+                </item>
+                <item>
+                    <label>No</label>
+                    <value>no</value>
+                </item>
+            </select1>
+            <upload mediatype="image/*" ref="/data/part1_4_7/img_part1_4_7.4">
+                <label>Upload</label>
+            </upload>
+            <input ref="/data/part1_4_7/part1_4_7.5">
+                <label>&lt;span style='color:Black; font-weight:bold'&gt;Audio System&lt;/span&gt;</label>
+            </input>
+            <select1 ref="/data/part1_4_7/part1_4_7.5a">
+                <label>Available</label>
+                <item>
+                    <label>Yes</label>
+                    <value>yes</value>
+                </item>
+                <item>
+                    <label>No</label>
+                    <value>no</value>
+                </item>
+            </select1>
+            <select1 ref="/data/part1_4_7/part1_4_7.5b">
+                <label>Functional</label>
+                <item>
+                    <label>Yes</label>
+                    <value>yes</value>
+                </item>
+                <item>
+                    <label>No</label>
+                    <value>no</value>
+                </item>
+            </select1>
+            <upload mediatype="image/*" ref="/data/part1_4_7/img_part1_4_7.5">
+                <label>Upload</label>
+            </upload>
+        </group>
+        <group appearance="field-list" ref="/data/part1_5">
+            <label>Hostel Facilities ( Can be shared between courses)</label>
+            <select1 ref="/data/part1_5/part1_5.1">
+                <label>A separate hostel for boys and girls is provided</label>
+                <item>
+                    <label>Yes</label>
+                    <value>yes</value>
+                </item>
+                <item>
+                    <label>No</label>
+                    <value>no</value>
+                </item>
+            </select1>
+            <input ref="/data/part1_5/part1_5.2">
+                <label>No. of beds for students</label>
+            </input>
+            <input ref="/data/part1_5/part1_5.3">
+                <label>No. of seating arrangement in dining hall</label>
+            </input>
+            <select1 ref="/data/part1_5/part1_5.4">
+                <label>24 hours water supply</label>
+                <item>
+                    <label>Yes</label>
+                    <value>yes</value>
+                </item>
+                <item>
+                    <label>No</label>
+                    <value>no</value>
+                </item>
+            </select1>
+            <select1 ref="/data/part1_5/part1_5.5">
+                <label>Facility for hot water supply</label>
+                <item>
+                    <label>Yes</label>
+                    <value>yes</value>
+                </item>
+                <item>
+                    <label>No</label>
+                    <value>no</value>
+                </item>
+            </select1>
+            <upload mediatype="image/*" ref="/data/part1_5/img_part1_5.5">
+                <label>Upload</label>
+            </upload>
+            <select1 ref="/data/part1_5/part1_5.6">
+                <label>Safe drinking water facility</label>
+                <item>
+                    <label>Yes</label>
+                    <value>yes</value>
+                </item>
+                <item>
+                    <label>No</label>
+                    <value>no</value>
+                </item>
+            </select1>
+            <input ref="/data/part1_5/part1_5.7">
+                <label>No. of functional toilets in hostel</label>
+            </input>
+        </group>
+        <group appearance="field-list" ref="/data/part1_10">
+            <label>List of documents to be uploaded</label>
+            <select1 ref="/data/part1_10/part1_10.1">
+                <label>Document of Registration of the Trust/Society/Missionary/Company</label>
+                <item>
+                    <label>Yes</label>
+                    <value>yes</value>
+                </item>
+                <item>
+                    <label>No</label>
+                    <value>no</value>
+                </item>
+            </select1>
+            <upload mediatype="image/*" ref="/data/part1_10/part1_10.1r">
+                <label>Upload</label>
+            </upload>
+            <select1 ref="/data/part1_10/part1_10.2">
+                <label>Letter from CMO regarding establishment of Institution</label>
+                <item>
+                    <label>Yes</label>
+                    <value>yes</value>
+                </item>
+                <item>
+                    <label>No</label>
+                    <value>no</value>
+                </item>
+            </select1>
+            <upload mediatype="image/*" ref="/data/part1_10/part1_10.2r">
+                <label>Upload</label>
+            </upload>
+            <select1 ref="/data/part1_10/part1_10.3">
+                <label>Letter for Fire NOC for College and Hostel building 
+(Separate or combined)</label>
+                <item>
+                    <label>Yes</label>
+                    <value>yes</value>
+                </item>
+                <item>
+                    <label>No</label>
+                    <value>no</value>
+                </item>
+            </select1>
+            <upload mediatype="image/*" ref="/data/part1_10/part1_10.3r">
+                <label>Upload</label>
+            </upload>
+            <select1 ref="/data/part1_10/part1_10.4">
+                <label>Documents related to Clinical Facilities including bed capacity /Departments (For Part 2)</label>
+                <item>
+                    <label>Yes</label>
+                    <value>yes</value>
+                </item>
+                <item>
+                    <label>No</label>
+                    <value>no</value>
+                </item>
+            </select1>
+            <upload mediatype="image/*" ref="/data/part1_10/part1_10.4r">
+                <label>Upload</label>
+            </upload>
+            <select1 ref="/data/part1_10/part1_10.5">
+                <label>MoU of affiliated hospitals</label>
+                <item>
+                    <label>Yes</label>
+                    <value>yes</value>
+                </item>
+                <item>
+                    <label>No</label>
+                    <value>no</value>
+                </item>
+            </select1>
+            <upload mediatype="image/*" ref="/data/part1_10/part1_10.5r">
+                <label>Upload</label>
+            </upload>
+            <select1 ref="/data/part1_10/part1_10.6">
+                <label>Letter issued related to permission Community Health Facilities and other visit details</label>
+                <item>
+                    <label>Yes</label>
+                    <value>yes</value>
+                </item>
+                <item>
+                    <label>No</label>
+                    <value>no</value>
+                </item>
+            </select1>
+            <upload mediatype="image/*" ref="/data/part1_10/part1_10.6r">
+                <label>Upload</label>
+            </upload>
+            <select1 ref="/data/part1_10/part1_10.7">
+                <label>MRP, CRP, Academic Planning Register and course wise time table</label>
+                <item>
+                    <label>Yes</label>
+                    <value>yes</value>
+                </item>
+                <item>
+                    <label>No</label>
+                    <value>no</value>
+                </item>
+            </select1>
+            <upload mediatype="image/*" ref="/data/part1_10/part1_10.7r">
+                <label>Upload</label>
+            </upload>
+        </group>
+        <group ref="/data/part2">
+            <label>Performance Standards of the Institution</label>
+            <group appearance="field-list" ref="/data/part2/p_4">
+                <label>Visit the Computer lab and physically verify the following</label>
+                <select1 ref="/data/part2/p_4/p_4.1">
+                    <label>There is a functional computer lab with working computers (min 5)</label>
+                    <item>
+                        <label>Yes</label>
+                        <value>yes</value>
+                    </item>
+                    <item>
+                        <label>No</label>
+                        <value>no</value>
+                    </item>
+                </select1>
+                <upload mediatype="image/*" ref="/data/part2/p_4/img_p_4.1">
+                    <label>Upload</label>
+                </upload>
+                <select1 ref="/data/part2/p_4/p_4.2">
+                    <label>There is reliable internet access</label>
+                    <item>
+                        <label>Yes</label>
+                        <value>yes</value>
+                    </item>
+                    <item>
+                        <label>No</label>
+                        <value>no</value>
+                    </item>
+                </select1>
+                <select1 ref="/data/part2/p_4/p_4.3">
+                    <label>The time table shows regular computer class is arranged for the students</label>
+                    <item>
+                        <label>Yes</label>
+                        <value>yes</value>
+                    </item>
+                    <item>
+                        <label>No</label>
+                        <value>no</value>
+                    </item>
+                </select1>
+                <upload mediatype="image/*" ref="/data/part2/p_4/img_p_4.3">
+                    <label>Upload</label>
+                </upload>
+                <select1 ref="/data/part2/p_4/p_4.4">
+                    <label>Check with attendance register, whether students are using lab or not</label>
+                    <item>
+                        <label>Yes</label>
+                        <value>yes</value>
+                    </item>
+                    <item>
+                        <label>No</label>
+                        <value>no</value>
+                    </item>
+                </select1>
+                <upload mediatype="image/*" ref="/data/part2/p_4/img_p_4.4">
+                    <label>Upload</label>
+                </upload>
+            </group>
+        </group>
+        <input ref="/data/notea">
+            <label>Please visit the parent clinical site and fill data for the following</label>
+        </input>
+        <input ref="/data/nurse_emp">
+            <label>Number of Staff Nurses employed at the parent hospital</label>
+        </input>
+        <group ref="/data/Nurs_details">
+            <label></label>
+            <repeat jr:count=" /data/Nurs_details_count " nodeset="/data/Nurs_details">
+                <group appearance="field-list" ref="/data/Nurs_details/part1_8">
+                    <label>Staff Nurses</label>
+                    <input ref="/data/Nurs_details/part1_8/nurse_name">
+                        <label>Name of Staff Nurse</label>
+                    </input>
+                    <input ref="/data/Nurs_details/part1_8/nurse_upnc">
+                        <label>UPNC Reg. No</label>
+                    </input>
+                    <input ref="/data/Nurs_details/part1_8/nurse_reamrks">
+                        <label>Remarks</label>
+                    </input>
+                </group>
+            </repeat>
+        </group>
+    </h:body>
+</h:html>
