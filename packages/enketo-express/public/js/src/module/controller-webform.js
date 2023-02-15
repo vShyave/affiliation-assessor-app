@@ -498,6 +498,7 @@ function _saveRecord(survey, draft = true, recordName, confirmed, errorMsg) {
             // Save the record, determine the save method
             const saveMethod = form.recordName ? 'update' : 'set';
 
+            console.log("saving")
             return records.save(saveMethod, record);
         })
         .then(() => {
@@ -715,22 +716,45 @@ function _setEventHandlers(survey) {
             localize(document.querySelector('body'), form.currentLanguage)
                 .then(dir => document.querySelector('html').setAttribute('dir', dir));
         });
-    }    
+    }
 
-    document.addEventListener(events.XFormsValueChanged().type, () => {
-        console.log('ready to i am here 2');        
+    let arrayOfFileURLs = []
+    document.addEventListener(events.XFormsValueChanged().type, async () => {
         const formController = new FormController({});
-        console.log(form.getDataStr());
-        formController.broadcastFormDataUpdate(form.getDataStr());        
+        const formFiles = await fileManager.getCurrentFiles();
+        if (formFiles) {
+            console.log(arrayOfFileURLs?.length)
+            console.log("formFiles: " + formFiles?.length)
+            if (arrayOfFileURLs?.length <= formFiles?.length) {
+                const file = formFiles[formFiles?.length - 1];
+                const fileURL = await formController.uploadFile(file);
+                arrayOfFileURLs.push({ url: fileURL, name: file.name });
+            } else {
+                arrayOfFileURLs = arrayOfFileURLs.filter(file => formFiles.find(el => el.name == file.name))
+            }
+            // console.log({ arrayOfFileURLs })
+            // this.data = (await fetch('http://localhost:3006/parse', {
+            //     method: "POST",
+            //     body: JSON.stringify({ xml: form.getDataStr() }),
+            //     headers: {
+            //         "Content-type": "application/json; charset=UTF-8"
+            //     }
+            // }).then(res => res.json())).data;
+            // if (fileURL) {
+            //     const kk = formController.findKey(this.data, file.name, '$t', '');
+            //     this.data = formController.set(this.data, kk.substring(1), fileURL);
+            // }
+        }
+        formController.broadcastFormDataUpdate(form.getDataStr(), arrayOfFileURLs);
     });
     if (settings.offline) {
-        document.addEventListener( events.XFormsValueChanged().type, () => {
+        document.addEventListener(events.XFormsValueChanged().type, () => {
             // The delay works around an issue with drawing widgets, where the canvas
             // capture is an empty image. https://github.com/enketo/enketo-express/issues/174
             // const formController = new FormController();
             // formController.broadcastFormDataUpdate(form.getDataStr());
-            setTimeout( _autoSaveRecord, 500 );
-        } );
+            setTimeout(_autoSaveRecord, 500);
+        });
     }
 }
 
