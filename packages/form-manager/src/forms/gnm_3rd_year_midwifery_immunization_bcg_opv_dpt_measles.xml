@@ -1,0 +1,54 @@
+<?xml version="1.0"?><h:html xmlns="http://www.w3.org/2002/xforms" xmlns:ev="http://www.w3.org/2001/xml-events" xmlns:h="http://www.w3.org/1999/xhtml" xmlns:jr="http://openrosa.org/javarosa" xmlns:odk="http://www.opendatakit.org/xforms" xmlns:orx="http://openrosa.org/xforms" xmlns:xsd="http://www.w3.org/2001/XMLSchema"><h:head><h:title>OSCE_Immunization : BCG, OPV, DPT, Measles</h:title><model odk:xforms-version="1.0.0"><instance><data id="osce1_form" version="1.1"><intro><reserved_name_for_field_list_labels_3/><step1/><step2/><step3/><step4/></intro><meta><instanceID/></meta></data></instance><bind nodeset="/data/intro/reserved_name_for_field_list_labels_3" type="string"/><bind nodeset="/data/intro/step1" required="true()" type="string"/><bind nodeset="/data/intro/step2" required="true()" type="string"/><bind nodeset="/data/intro/step3" required="true()" type="string"/><bind nodeset="/data/intro/step4" required="true()" type="string"/><bind jr:preload="uid" nodeset="/data/meta/instanceID" readonly="true()" type="string"/></model></h:head><h:body class="pages"><group appearance="field-list" ref="/data/intro"><select1 appearance="label" ref="/data/intro/reserved_name_for_field_list_labels_3"><label> </label><item><label>Done</label><value>done</value></item><item><label>Not Done</label><value>not</value></item></select1><select1 appearance="list-nolabel" ref="/data/intro/step1"><label>GETTING READY
+Prepare the necessary equipment
+Tell the mother what is going to be done, listen to her attentively and respond to her questions and concerns.
+Wash hands thoroughly with soap and water and dry with a clean, dry cloth or air dry.</label><item><label>Done</label><value>done</value></item><item><label>Not Done</label><value>not</value></item></select1><select1 appearance="list-nolabel" ref="/data/intro/step2"><label>POLIO IMMUNIZATION
+Check the label on the vaccine container for:
+Vaccine name and expiration date
+Check the VVM symbol to ensure patency of the vaccine
+Remove rubber top from vaccine container:
+Place the pipette on the container (if this is required).
+Place 2 drops of vaccine on the baby's tongue.
+Make sure that the baby swallows the vaccine:
+Ask mother not to breastfeed the baby until it is obvious that the vaccine has been swallowed.</label><item><label>Done</label><value>done</value></item><item><label>Not Done</label><value>not</value></item></select1><select1 appearance="list-nolabel" ref="/data/intro/step3"><label>BCG IMMUNIZATION
+Select the site for injection:
+Deltoid muscle area for immunization
+Clean the skin with an alcohol swab or cotton-wool ball soaked in antiseptic and allow drying.
+Check the expiry date on the vial of vaccine.
+Draw vaccine into a TB (1 cc) syringe:
+-Open the sterile pack containing the needle and syringe and attach the needle firmly (if not already attached);
+-Remove the needle cap and insert the needle tip until it touches the bottom of the bottle or vial containing the vaccine;
+-Slowly pull back on the plunger of the syringe and draw up the amount of vaccine required;
+Withdraw the needle and syringe from the bottle or vial and hold the syringe upright and expel air bubbles if present.
+Check that vaccine and dose are correct.
+Hold the syringe and needle almost parallel with skin, with the bevel of needle facing up.
+Pull the skin taut with one hand, insert the tip of needle barely under the skin and advance the needle slowly until bevel of needle has fully entered the skin:
+Gently point the needle upward, without repiercing skin, and inject the vaccine with steady pressure for three to five seconds and look for blanching of skin.
+Withdraw the needle in a single smooth motion after completing the injection and apply gentle pressure with a dry cotton-wool ball.
+DPT IMMUNISATION
+Check the vaccine name and expiry date
+Draw vaccine into a 2 cc syringe:
+-Open the sterile pack containing the needle and syringe and attach the needle firmly (if not already attached);
+-Remove the needle cap and insert the needle tip until it touches the bottom of the bottle or vial containing the vaccine;
+-Slowly pull back on the plunger of the syringe and draw up the amount of vaccine required;
+Withdraw the needle and syringe from the bottle or vial and hold the syringe upright and expel air bubbles if present.
+Select the site for injection; Anterolateral aspect of the middle one third of the thigh.
+Restraint the thigh with the help of an assistant to avoid injury due to movement
+Clean the site with spirit swab in circular motion and allow it to dry
+Insert the needle at 90 degree angle intramuscularly.
+Slowly administer the vaccine 
+Withdraw the needle in a single smooth motion after completing the injection and apply gentle pressure with a dry cotton-wool ball. Do not massage
+MEASLES IMMUNISATION
+Check the vaccine name and expiry date
+Draw vaccine into a 2 cc syringe:
+-Open the sterile pack containing the needle and syringe and attach the needle firmly (if not already attached);
+-Remove the needle cap and insert the needle tip until it touches the bottom of the bottle or vial containing the vaccine;
+-Slowly pull back on the plunger of the syringe and draw up the amount of vaccine required;
+Withdraw the needle and syringe from the bottle or vial and hold the syringe upright and expel air bubbles if present.
+Select the site for injection; Dorsal aspect of upper arm just below the deltoid.
+Clean the site with spirit swab in circular motion and allow it to dry
+Hold the sub cutaneous tissue with thumb and index finger and Insert the needle at 45 degree angle into the subcutaneous tissue.
+Slowly administer the vaccine
+Withdraw the needle in a single smooth motion after completing the injection and apply gentle pressure with a dry cotton-wool ball. Do not massage</label><item><label>Done</label><value>done</value></item><item><label>Not Done</label><value>not</value></item></select1><select1 appearance="list-nolabel" ref="/data/intro/step4"><label>POST-PROCEDURE TASKS (Note: the following steps apply, where appropriate, to each of the procedures above.)
+Place any blood-contaminated items (cotton-wool balls) in a plastic bag or leakproof, covered waste container.
+Decontaminate needles and syringes:
+If disposing of needle and syringe, hold the needle under the surface of a 0.5% chlorine solution, fill the syringe and push out (flush) three times; then place in a puncture-resistant sharps container.</label><item><label>Done</label><value>done</value></item><item><label>Not Done</label><value>not</value></item></select1></group></h:body></h:html>

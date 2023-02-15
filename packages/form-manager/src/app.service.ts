@@ -63,15 +63,22 @@ export class AppService {
     }*/
     for (const key in prefillSpec) {
       if (prefillSpec.hasOwnProperty(key)) {
-        const element = instance.getElementsByTagName(key)[0];
+        const key_arr = key.split('_*_');
+        const element = this.findElementRecursively(0, key_arr, instance);
         if (element) {
           console.log(prefillSpec[key]);
-          console.log(eval(prefillSpec[key]));
+          // console.log(eval(prefillSpec[key]));
           element.textContent = eval(prefillSpec[key]);
         }
       }
     }
     return doc.toString();
+  }
+
+  findElementRecursively(start: number, key_arr: any, instance: any) {
+    if (!instance) return null;
+    if (!key_arr[start + 1]) return instance.getElementsByTagName(key_arr[start])?.[0]
+    return this.findElementRecursively(start + 1, key_arr, instance.getElementsByTagName(key_arr[start])?.[0])
   }
 
   prefillFormXML(form: string, onFormSuccessData: any, prefillSpec: any): string {
