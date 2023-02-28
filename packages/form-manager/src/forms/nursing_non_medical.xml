@@ -1,441 +1,815 @@
 <?xml version="1.0"?>
-<h:html xmlns="http://www.w3.org/2002/xforms"
-    xmlns:ev="http://www.w3.org/2001/xml-events"
-    xmlns:h="http://www.w3.org/1999/xhtml"
-    xmlns:jr="http://openrosa.org/javarosa"
-    xmlns:odk="http://www.opendatakit.org/xforms"
-    xmlns:orx="http://openrosa.org/xforms"
+<h:html xmlns="http://www.w3.org/2002/xforms" xmlns:ev="http://www.w3.org/2001/xml-events"
+    xmlns:h="http://www.w3.org/1999/xhtml" xmlns:jr="http://openrosa.org/javarosa"
+    xmlns:odk="http://www.opendatakit.org/xforms" xmlns:orx="http://openrosa.org/xforms"
     xmlns:xsd="http://www.w3.org/2001/XMLSchema">
     <h:head>
         <h:title>Nursing Form- Non Medical</h:title>
         <model odk:xforms-version="1.0.0">
             <instance>
                 <data id="Nursing Form- Non Medical" version="1">
-                    <username/>
-                    <start/>
-                    <end/>
-                    <today/>
-                    <deviceid/>
-                    <subscriberid/>
+                    <username />
+                    <start />
+                    <end />
+                    <today />
+                    <deviceid />
+                    <subscriberid />
                     <part1_1>
-                        <center_code/>
-                        <nameofIns/>
-                        <dist/>
-                        <address/>
-                        <pincode/>
-                        <email/>
-                        <gov_priv/>
-                        <chair_name/>
-                        <chair_email/>
-                        <chair_number/>
-                        <princial_name/>
-                        <princial_email/>
-                        <princial_number/>
+                        <District />
+                        <NameOfIns />
+                        <ptcc />
+                        <address />
+                        <pincode />
+                        <email />
+                        <gov_priv />
+                        <chair_name />
+                        <chair_email />
+                        <chair_number />
+                        <princial_name />
+                        <princial_email />
+                        <princial_number />
                     </part1_1>
                     <part1_2_1>
-                        <nameofTSMC/>
+                        <nameofTSMC />
                         <part1_2_2>
-                            <part1_2_2a/>
-                            <img_part1_2_2a/>
-                            <part1_2_2b/>
-                            <img_part1_2_2b/>
+                            <part1_2_2a />
+                            <img_part1_2_2a />
+                            <part1_2_2b />
+                            <img_part1_2_2b />
                         </part1_2_2>
                         <part1_2_3>
-                            <part1_2_3a/>
-                            <img_part1_2_3a/>
-                            <part1_2_3b/>
-                            <img_part1_2_3b/>
+                            <part1_2_3a />
+                            <img_part1_2_3a />
+                            <part1_2_3b />
+                            <img_part1_2_3b />
                         </part1_2_3>
-                        <part1_2_4/>
+                        <part1_2_4 />
                         <part1_2_4g>
-                            <part1_2_4a/>
-                            <img_part1_2_4a/>
-                            <part1_2_4b/>
-                            <img_part1_2_4b/>
-                            <part1_2_4c/>
-                            <img_part1_2_4c/>
-                            <part1_2_4d/>
-                            <img_part1_2_4d/>
-                            <part1_2_4e/>
-                            <img_part1_2_4e/>
+                            <part1_2_4a />
+                            <img_part1_2_4a />
+                            <part1_2_4b />
+                            <img_part1_2_4b />
+                            <part1_2_4c />
+                            <img_part1_2_4c />
+                            <part1_2_4d />
+                            <img_part1_2_4d />
+                            <part1_2_4e />
+                            <img_part1_2_4e />
                         </part1_2_4g>
                     </part1_2_1>
                     <part1_3>
-                        <p1_3/>
-                        <p1_3.1/>
+                        <p1_3 />
+                        <p1_3.1 />
                         <part1_3.1>
-                            <anm1.1/>
-                            <anm1.2/>
-                            <anm1.3/>
-                            <anm2.2/>
-                            <anm2.3/>
+                            <anm1.1 />
+                            <anm1.2 />
+                            <anm1.3 />
+                            <anm2.2 />
+                            <anm2.3 />
                         </part1_3.1>
-                        <p1_3.2/>
+                        <p1_3.2 />
                         <part1_3.2>
-                            <gnm1.1/>
-                            <gnm1.2/>
-                            <gnm1.3/>
-                            <gnm2.2/>
-                            <gnm2.3/>
-                            <gnm3.2/>
-                            <gnm3.3/>
+                            <gnm1.1 />
+                            <gnm1.2 />
+                            <gnm1.3 />
+                            <gnm2.2 />
+                            <gnm2.3 />
+                            <gnm3.2 />
+                            <gnm3.3 />
                         </part1_3.2>
-                        <p1_3.3/>
+                        <p1_3.3 />
                         <part1_3.3>
-                            <pbbsc1.1/>
-                            <pbbsc1.2/>
-                            <pbbsc1.3/>
-                            <pbbsc2.2/>
-                            <pbbsc2.3/>
+                            <pbbsc1.1 />
+                            <pbbsc1.2 />
+                            <pbbsc1.3 />
+                            <pbbsc2.2 />
+                            <pbbsc2.3 />
                         </part1_3.3>
-                        <p1_3.4/>
+                        <p1_3.4 />
                         <part1_3.4>
-                            <bsc1.1/>
-                            <bsc1.2/>
-                            <bsc1.3/>
-                            <bsc2.2/>
-                            <bsc2.3/>
-                            <bsc3.2/>
-                            <bsc3.3/>
-                            <bsc4.2/>
-                            <bsc4.3/>
+                            <bsc1.1 />
+                            <bsc1.2 />
+                            <bsc1.3 />
+                            <bsc2.2 />
+                            <bsc2.3 />
+                            <bsc3.2 />
+                            <bsc3.3 />
+                            <bsc4.2 />
+                            <bsc4.3 />
                         </part1_3.4>
-                        <p1_3.5/>
+                        <p1_3.5 />
                         <part1_3.5>
-                            <msc1/>
-                            <msc2/>
-                            <msc3/>
-                            <msc5/>
-                            <msc6/>
+                            <msc1 />
+                            <msc2 />
+                            <msc3 />
+                            <msc5 />
+                            <msc6 />
                         </part1_3.5>
-                        <p1_3.6/>
+                        <p1_3.6 />
                         <part1_3.6>
-                            <msc7/>
-                            <msc8/>
-                            <msc9/>
-                            <msc11/>
-                            <msc12/>
+                            <msc7 />
+                            <msc8 />
+                            <msc9 />
+                            <msc11 />
+                            <msc12 />
                         </part1_3.6>
-                        <p1_3.7/>
+                        <p1_3.7 />
                         <part1_3.7>
-                            <msc13/>
-                            <msc14/>
-                            <msc15/>
-                            <msc16/>
-                            <msc17/>
+                            <msc13 />
+                            <msc14 />
+                            <msc15 />
+                            <msc16 />
+                            <msc17 />
                         </part1_3.7>
-                        <p1_3.8/>
+                        <p1_3.8 />
                         <part1_3.8>
-                            <msc18/>
-                            <msc19/>
-                            <msc20/>
-                            <msc21/>
-                            <msc22/>
+                            <msc18 />
+                            <msc19 />
+                            <msc20 />
+                            <msc21 />
+                            <msc22 />
                         </part1_3.8>
-                        <p1_3.9/>
+                        <p1_3.9 />
                         <part1_3.9>
-                            <msc23/>
-                            <msc24/>
-                            <msc25/>
-                            <msc26/>
-                            <msc27/>
+                            <msc23 />
+                            <msc24 />
+                            <msc25 />
+                            <msc26 />
+                            <msc27 />
                         </part1_3.9>
                     </part1_3>
                     <part1_4>
-                        <part1_4.1/>
-                        <part1_4.2/>
-                        <part1_4.2.1/>
+                        <part1_4.1 />
+                        <part1_4.2 />
+                        <part1_4.2.1 />
                         <part1_4.3>
-                            <part1_4.3a/>
-                            <part1_4.3b/>
-                            <part1_4.3c/>
+                            <part1_4.3a />
+                            <part1_4.3b />
+                            <part1_4.3c />
                         </part1_4.3>
                     </part1_4>
                     <part1_4_6>
-                        <library_comp/>
-                        <img_library_comp/>
-                        <books/>
-                        <journal/>
-                        <library_seating/>
-                        <util_register/>
-                        <img_util_register/>
-                        <remark103/>
+                        <library_comp />
+                        <img_library_comp />
+                        <books />
+                        <img_books />
+                        <journal />
+                        <library_seating />
+                        <util_register />
+                        <img_util_register />
+                        <remark103 />
                     </part1_4_6>
                     <part1_4_7>
-                        <part1_4_7.1/>
-                        <part1_4_7.1a/>
-                        <part1_4_7.1b/>
-                        <img_part1_4_7.1/>
-                        <part1_4_7.2/>
-                        <part1_4_7.2a/>
-                        <part1_4_7.2b/>
-                        <img_part1_4_7.2/>
-                        <part1_4_7.3/>
-                        <part1_4_7.3a/>
-                        <part1_4_7.3b/>
-                        <img_part1_4_7.3/>
-                        <part1_4_7.4/>
-                        <part1_4_7.4a/>
-                        <part1_4_7.4b/>
-                        <img_part1_4_7.4/>
-                        <part1_4_7.5/>
-                        <part1_4_7.5a/>
-                        <part1_4_7.5b/>
-                        <img_part1_4_7.5/>
+                        <part1_4_7.1 />
+                        <part1_4_7.1a />
+                        <part1_4_7.1b />
+                        <img_part1_4_7.1 />
+                        <part1_4_7.2 />
+                        <part1_4_7.2a />
+                        <part1_4_7.2b />
+                        <img_part1_4_7.2 />
+                        <part1_4_7.3 />
+                        <part1_4_7.3a />
+                        <part1_4_7.3b />
+                        <img_part1_4_7.3 />
+                        <part1_4_7.4 />
+                        <part1_4_7.4a />
+                        <part1_4_7.4b />
+                        <img_part1_4_7.4 />
+                        <part1_4_7.5 />
+                        <part1_4_7.5a />
+                        <part1_4_7.5b />
+                        <img_part1_4_7.5 />
                     </part1_4_7>
                     <part1_5>
-                        <part1_5.1/>
-                        <part1_5.2/>
-                        <part1_5.3/>
-                        <part1_5.4/>
-                        <part1_5.5/>
-                        <img_part1_5.5/>
-                        <part1_5.6/>
-                        <part1_5.7/>
+                        <part1_5.1 />
+                        <part1_5.2 />
+                        <part1_5.3 />
+                        <part1_5.4 />
+                        <part1_5.5 />
+                        <img_part1_5.5 />
+                        <part1_5.6 />
+                        <part1_5.7 />
                     </part1_5>
+                    <fac>
+                        <fac_count />
+                        <part1_6_details_count />
+                        <part1_6_details jr:template="">
+                            <fac_deatils>
+                                <fac_desig />
+                                <fac_name />
+                                <fac_qual />
+                                <fac_qual1>
+                                    <fac_sp />
+                                    <fac_spa />
+                                </fac_qual1>
+                                <fac_doe />
+                                <fac_acn />
+                                <fac_upnc />
+                            </fac_deatils>
+                        </part1_6_details>
+                        <part1_6_details>
+                            <fac_deatils>
+                                <fac_desig />
+                                <fac_name />
+                                <fac_qual />
+                                <fac_qual1>
+                                    <fac_sp />
+                                    <fac_spa />
+                                </fac_qual1>
+                                <fac_doe />
+                                <fac_acn />
+                                <fac_upnc />
+                            </fac_deatils>
+                        </part1_6_details>
+                    </fac>
                     <part1_10>
-                        <part1_10.1/>
-                        <part1_10.1r/>
-                        <part1_10.2/>
-                        <part1_10.2r/>
-                        <part1_10.3/>
-                        <part1_10.3r/>
-                        <part1_10.4/>
-                        <part1_10.4r/>
-                        <part1_10.5/>
-                        <part1_10.5r/>
-                        <part1_10.6/>
-                        <part1_10.6r/>
-                        <part1_10.7/>
-                        <part1_10.7r/>
+                        <part1_10.1 />
+                        <part1_10.1r />
+                        <part1_10.2 />
+                        <part1_10.2r />
+                        <part1_10.3 />
+                        <part1_10.3r />
+                        <part1_10.4 />
+                        <part1_10.4r />
+                        <part1_10.5 />
+                        <part1_10.5r />
+                        <part1_10.6 />
+                        <part1_10.6r />
+                        <part1_10.7 />
+                        <part1_10.7r />
                     </part1_10>
                     <part2>
                         <p_4>
-                            <p_4.1/>
-                            <img_p_4.1/>
-                            <p_4.2/>
-                            <p_4.3/>
-                            <img_p_4.3/>
-                            <p_4.4/>
-                            <img_p_4.4/>
+                            <p_4.1 />
+                            <img_p_4.1 />
+                            <p_4.2 />
+                            <p_4.3 />
+                            <img_p_4.3 />
+                            <p_4.4 />
+                            <img_p_4.4 />
                         </p_4>
                     </part2>
-                    <notea/>
-                    <nurse_emp/>
-                    <Nurs_details_count/>
+                    <notea />
+                    <nurse_emp />
+                    <Nurs_details_count />
                     <Nurs_details jr:template="">
                         <part1_8>
-                            <nurse_name/>
-                            <nurse_upnc/>
-                            <nurse_reamrks/>
+                            <nurse_name />
+                            <nurse_upnc />
+                            <nurse_reamrks />
                         </part1_8>
                     </Nurs_details>
                     <Nurs_details>
                         <part1_8>
-                            <nurse_name/>
-                            <nurse_upnc/>
-                            <nurse_reamrks/>
+                            <nurse_name />
+                            <nurse_upnc />
+                            <nurse_reamrks />
                         </part1_8>
                     </Nurs_details>
                     <meta>
-                        <instanceID/>
+                        <instanceID />
                     </meta>
                 </data>
             </instance>
-            <bind jr:preload="property" jr:preloadParams="username" nodeset="/data/username" type="string"/>
-            <bind jr:preload="timestamp" jr:preloadParams="start" nodeset="/data/start" type="dateTime"/>
-            <bind jr:preload="timestamp" jr:preloadParams="end" nodeset="/data/end" type="dateTime"/>
-            <bind jr:preload="date" jr:preloadParams="today" nodeset="/data/today" type="date"/>
-            <bind jr:preload="property" jr:preloadParams="deviceid" nodeset="/data/deviceid" type="string"/>
-            <bind jr:preload="property" jr:preloadParams="subscriberid" nodeset="/data/subscriberid" type="string"/>
-            <bind constraint=".&lt;9999" nodeset="/data/part1_1/center_code" type="int"/>
-            <bind nodeset="/data/part1_1/nameofIns" type="string"/>
-            <bind nodeset="/data/part1_1/dist" type="string"/>
-            <bind nodeset="/data/part1_1/address" type="string"/>
-            <bind nodeset="/data/part1_1/pincode" type="int"/>
-            <bind nodeset="/data/part1_1/email" type="string"/>
-            <bind nodeset="/data/part1_1/gov_priv" type="string"/>
-            <bind nodeset="/data/part1_1/chair_name" type="string"/>
-            <bind nodeset="/data/part1_1/chair_email" type="string"/>
-            <bind nodeset="/data/part1_1/chair_number" type="string"/>
-            <bind nodeset="/data/part1_1/princial_name" type="string"/>
-            <bind nodeset="/data/part1_1/princial_email" type="string"/>
-            <bind nodeset="/data/part1_1/princial_number" type="string"/>
-            <bind nodeset="/data/part1_2_1/nameofTSMC" type="string"/>
-            <bind nodeset="/data/part1_2_1/part1_2_2/part1_2_2a" type="string"/>
-            <bind nodeset="/data/part1_2_1/part1_2_2/img_part1_2_2a" relevant=" /data/part1_2_1/part1_2_2/part1_2_2a ='yes'" type="binary"/>
-            <bind nodeset="/data/part1_2_1/part1_2_2/part1_2_2b" type="string"/>
-            <bind nodeset="/data/part1_2_1/part1_2_2/img_part1_2_2b" relevant=" /data/part1_2_1/part1_2_2/part1_2_2b ='yes'" type="binary"/>
-            <bind nodeset="/data/part1_2_1/part1_2_3/part1_2_3a" type="string"/>
-            <bind nodeset="/data/part1_2_1/part1_2_3/img_part1_2_3a" relevant=" /data/part1_2_1/part1_2_3/part1_2_3a ='yes'" type="binary"/>
-            <bind nodeset="/data/part1_2_1/part1_2_3/part1_2_3b" type="string"/>
-            <bind nodeset="/data/part1_2_1/part1_2_3/img_part1_2_3b" relevant=" /data/part1_2_1/part1_2_3/part1_2_3b ='yes'" type="binary"/>
-            <bind nodeset="/data/part1_2_1/part1_2_4" type="string"/>
-            <bind nodeset="/data/part1_2_1/part1_2_4g" relevant=" /data/part1_2_1/part1_2_4 ='yes'"/>
-            <bind nodeset="/data/part1_2_1/part1_2_4g/part1_2_4a" type="string"/>
-            <bind nodeset="/data/part1_2_1/part1_2_4g/img_part1_2_4a" relevant=" /data/part1_2_1/part1_2_4g/part1_2_4a ='yes'" type="binary"/>
-            <bind nodeset="/data/part1_2_1/part1_2_4g/part1_2_4b" type="string"/>
-            <bind nodeset="/data/part1_2_1/part1_2_4g/img_part1_2_4b" relevant=" /data/part1_2_1/part1_2_4g/part1_2_4b ='yes'" type="binary"/>
-            <bind nodeset="/data/part1_2_1/part1_2_4g/part1_2_4c" type="string"/>
-            <bind nodeset="/data/part1_2_1/part1_2_4g/img_part1_2_4c" relevant=" /data/part1_2_1/part1_2_4g/part1_2_4c ='yes'" type="binary"/>
-            <bind nodeset="/data/part1_2_1/part1_2_4g/part1_2_4d" type="string"/>
-            <bind nodeset="/data/part1_2_1/part1_2_4g/img_part1_2_4d" relevant=" /data/part1_2_1/part1_2_4g/part1_2_4d ='yes'" type="binary"/>
-            <bind nodeset="/data/part1_2_1/part1_2_4g/part1_2_4e" type="string"/>
-            <bind nodeset="/data/part1_2_1/part1_2_4g/img_part1_2_4e" relevant=" /data/part1_2_1/part1_2_4g/part1_2_4e ='yes'" type="binary"/>
-            <bind nodeset="/data/part1_3/p1_3" type="string"/>
-            <bind nodeset="/data/part1_3/p1_3.1" type="string"/>
-            <bind nodeset="/data/part1_3/part1_3.1" relevant=" /data/part1_3/p1_3.1 ='yes'"/>
-            <bind nodeset="/data/part1_3/part1_3.1/anm1.1" type="int"/>
-            <bind nodeset="/data/part1_3/part1_3.1/anm1.2" type="int"/>
-            <bind nodeset="/data/part1_3/part1_3.1/anm1.3" type="int"/>
-            <bind nodeset="/data/part1_3/part1_3.1/anm2.2" type="int"/>
-            <bind nodeset="/data/part1_3/part1_3.1/anm2.3" type="int"/>
-            <bind nodeset="/data/part1_3/p1_3.2" type="string"/>
-            <bind nodeset="/data/part1_3/part1_3.2" relevant=" /data/part1_3/p1_3.2 ='yes'"/>
-            <bind nodeset="/data/part1_3/part1_3.2/gnm1.1" type="int"/>
-            <bind nodeset="/data/part1_3/part1_3.2/gnm1.2" type="int"/>
-            <bind nodeset="/data/part1_3/part1_3.2/gnm1.3" type="int"/>
-            <bind nodeset="/data/part1_3/part1_3.2/gnm2.2" type="int"/>
-            <bind nodeset="/data/part1_3/part1_3.2/gnm2.3" type="int"/>
-            <bind nodeset="/data/part1_3/part1_3.2/gnm3.2" type="int"/>
-            <bind nodeset="/data/part1_3/part1_3.2/gnm3.3" type="int"/>
-            <bind nodeset="/data/part1_3/p1_3.3" type="string"/>
-            <bind nodeset="/data/part1_3/part1_3.3" relevant=" /data/part1_3/p1_3.3 ='yes'"/>
-            <bind nodeset="/data/part1_3/part1_3.3/pbbsc1.1" type="int"/>
-            <bind nodeset="/data/part1_3/part1_3.3/pbbsc1.2" type="int"/>
-            <bind nodeset="/data/part1_3/part1_3.3/pbbsc1.3" type="int"/>
-            <bind nodeset="/data/part1_3/part1_3.3/pbbsc2.2" type="int"/>
-            <bind nodeset="/data/part1_3/part1_3.3/pbbsc2.3" type="int"/>
-            <bind nodeset="/data/part1_3/p1_3.4" type="string"/>
-            <bind nodeset="/data/part1_3/part1_3.4" relevant=" /data/part1_3/p1_3.4 ='yes'"/>
-            <bind nodeset="/data/part1_3/part1_3.4/bsc1.1" type="int"/>
-            <bind nodeset="/data/part1_3/part1_3.4/bsc1.2" type="int"/>
-            <bind nodeset="/data/part1_3/part1_3.4/bsc1.3" type="int"/>
-            <bind nodeset="/data/part1_3/part1_3.4/bsc2.2" type="int"/>
-            <bind nodeset="/data/part1_3/part1_3.4/bsc2.3" type="int"/>
-            <bind nodeset="/data/part1_3/part1_3.4/bsc3.2" type="int"/>
-            <bind nodeset="/data/part1_3/part1_3.4/bsc3.3" type="int"/>
-            <bind nodeset="/data/part1_3/part1_3.4/bsc4.2" type="int"/>
-            <bind nodeset="/data/part1_3/part1_3.4/bsc4.3" type="int"/>
-            <bind nodeset="/data/part1_3/p1_3.5" type="string"/>
-            <bind nodeset="/data/part1_3/part1_3.5" relevant=" /data/part1_3/p1_3.5 ='yes'"/>
-            <bind nodeset="/data/part1_3/part1_3.5/msc1" type="int"/>
-            <bind nodeset="/data/part1_3/part1_3.5/msc2" type="int"/>
-            <bind nodeset="/data/part1_3/part1_3.5/msc3" type="int"/>
-            <bind nodeset="/data/part1_3/part1_3.5/msc5" type="int"/>
-            <bind nodeset="/data/part1_3/part1_3.5/msc6" type="int"/>
-            <bind nodeset="/data/part1_3/p1_3.6" type="string"/>
-            <bind nodeset="/data/part1_3/part1_3.6" relevant=" /data/part1_3/p1_3.6 ='yes'"/>
-            <bind nodeset="/data/part1_3/part1_3.6/msc7" type="int"/>
-            <bind nodeset="/data/part1_3/part1_3.6/msc8" type="int"/>
-            <bind nodeset="/data/part1_3/part1_3.6/msc9" type="int"/>
-            <bind nodeset="/data/part1_3/part1_3.6/msc11" type="int"/>
-            <bind nodeset="/data/part1_3/part1_3.6/msc12" type="int"/>
-            <bind nodeset="/data/part1_3/p1_3.7" type="string"/>
-            <bind nodeset="/data/part1_3/part1_3.7" relevant=" /data/part1_3/p1_3.7 ='yes'"/>
-            <bind nodeset="/data/part1_3/part1_3.7/msc13" type="int"/>
-            <bind nodeset="/data/part1_3/part1_3.7/msc14" type="int"/>
-            <bind nodeset="/data/part1_3/part1_3.7/msc15" type="int"/>
-            <bind nodeset="/data/part1_3/part1_3.7/msc16" type="int"/>
-            <bind nodeset="/data/part1_3/part1_3.7/msc17" type="int"/>
-            <bind nodeset="/data/part1_3/p1_3.8" type="string"/>
-            <bind nodeset="/data/part1_3/part1_3.8" relevant=" /data/part1_3/p1_3.8 ='yes'"/>
-            <bind nodeset="/data/part1_3/part1_3.8/msc18" type="int"/>
-            <bind nodeset="/data/part1_3/part1_3.8/msc19" type="int"/>
-            <bind nodeset="/data/part1_3/part1_3.8/msc20" type="int"/>
-            <bind nodeset="/data/part1_3/part1_3.8/msc21" type="int"/>
-            <bind nodeset="/data/part1_3/part1_3.8/msc22" type="int"/>
-            <bind nodeset="/data/part1_3/p1_3.9" type="string"/>
-            <bind nodeset="/data/part1_3/part1_3.9" relevant=" /data/part1_3/p1_3.9 ='yes'"/>
-            <bind nodeset="/data/part1_3/part1_3.9/msc23" type="int"/>
-            <bind nodeset="/data/part1_3/part1_3.9/msc24" type="int"/>
-            <bind nodeset="/data/part1_3/part1_3.9/msc25" type="int"/>
-            <bind nodeset="/data/part1_3/part1_3.9/msc26" type="int"/>
-            <bind nodeset="/data/part1_3/part1_3.9/msc27" type="int"/>
-            <bind nodeset="/data/part1_4/part1_4.1" type="string"/>
-            <bind nodeset="/data/part1_4/part1_4.2" type="int"/>
-            <bind nodeset="/data/part1_4/part1_4.2.1" type="string"/>
-            <bind nodeset="/data/part1_4/part1_4.3/part1_4.3a" type="string"/>
-            <bind nodeset="/data/part1_4/part1_4.3/part1_4.3b" type="string"/>
-            <bind nodeset="/data/part1_4/part1_4.3/part1_4.3c" type="string"/>
-            <bind nodeset="/data/part1_4_6/library_comp" type="string"/>
-            <bind nodeset="/data/part1_4_6/img_library_comp" relevant=" /data/part1_4_6/library_comp ='yes'" type="binary"/>
-            <bind nodeset="/data/part1_4_6/books" type="int"/>
-            <bind nodeset="/data/part1_4_6/journal" type="int"/>
-            <bind nodeset="/data/part1_4_6/library_seating" type="int"/>
-            <bind nodeset="/data/part1_4_6/util_register" type="string"/>
-            <bind nodeset="/data/part1_4_6/img_util_register" relevant=" /data/part1_4_6/util_register ='yes'" type="binary"/>
-            <bind nodeset="/data/part1_4_6/remark103" type="string"/>
-            <bind nodeset="/data/part1_4_7/part1_4_7.1" readonly="true()" type="string"/>
-            <bind nodeset="/data/part1_4_7/part1_4_7.1a" type="string"/>
-            <bind nodeset="/data/part1_4_7/part1_4_7.1b" relevant=" /data/part1_4_7/part1_4_7.1a ='yes'" type="string"/>
-            <bind nodeset="/data/part1_4_7/img_part1_4_7.1" type="binary"/>
-            <bind nodeset="/data/part1_4_7/part1_4_7.2" readonly="true()" type="string"/>
-            <bind nodeset="/data/part1_4_7/part1_4_7.2a" type="string"/>
-            <bind nodeset="/data/part1_4_7/part1_4_7.2b" relevant=" /data/part1_4_7/part1_4_7.2a ='yes'" type="string"/>
-            <bind nodeset="/data/part1_4_7/img_part1_4_7.2" type="binary"/>
-            <bind nodeset="/data/part1_4_7/part1_4_7.3" readonly="true()" type="string"/>
-            <bind nodeset="/data/part1_4_7/part1_4_7.3a" type="string"/>
-            <bind nodeset="/data/part1_4_7/part1_4_7.3b" relevant=" /data/part1_4_7/part1_4_7.3a ='yes'" type="string"/>
-            <bind nodeset="/data/part1_4_7/img_part1_4_7.3" type="binary"/>
-            <bind nodeset="/data/part1_4_7/part1_4_7.4" readonly="true()" type="string"/>
-            <bind nodeset="/data/part1_4_7/part1_4_7.4a" type="string"/>
-            <bind nodeset="/data/part1_4_7/part1_4_7.4b" relevant=" /data/part1_4_7/part1_4_7.4a ='yes'" type="string"/>
-            <bind nodeset="/data/part1_4_7/img_part1_4_7.4" type="binary"/>
-            <bind nodeset="/data/part1_4_7/part1_4_7.5" readonly="true()" type="string"/>
-            <bind nodeset="/data/part1_4_7/part1_4_7.5a" type="string"/>
-            <bind nodeset="/data/part1_4_7/part1_4_7.5b" relevant=" /data/part1_4_7/part1_4_7.5a ='yes'" type="string"/>
-            <bind nodeset="/data/part1_4_7/img_part1_4_7.5" type="binary"/>
-            <bind nodeset="/data/part1_5/part1_5.1" type="string"/>
-            <bind nodeset="/data/part1_5/part1_5.2" type="int"/>
-            <bind nodeset="/data/part1_5/part1_5.3" type="int"/>
-            <bind nodeset="/data/part1_5/part1_5.4" type="string"/>
-            <bind nodeset="/data/part1_5/part1_5.5" type="string"/>
-            <bind nodeset="/data/part1_5/img_part1_5.5" relevant=" /data/part1_5/part1_5.5 ='yes'" type="binary"/>
-            <bind nodeset="/data/part1_5/part1_5.6" type="string"/>
-            <bind nodeset="/data/part1_5/part1_5.7" type="int"/>
-            <bind nodeset="/data/part1_10/part1_10.1" type="string"/>
-            <bind nodeset="/data/part1_10/part1_10.1r" relevant=" /data/part1_10/part1_10.1 ='yes'" type="binary"/>
-            <bind nodeset="/data/part1_10/part1_10.2" type="string"/>
-            <bind nodeset="/data/part1_10/part1_10.2r" relevant=" /data/part1_10/part1_10.2 ='yes'" type="binary"/>
-            <bind nodeset="/data/part1_10/part1_10.3" type="string"/>
-            <bind nodeset="/data/part1_10/part1_10.3r" relevant=" /data/part1_10/part1_10.3 ='yes'" type="binary"/>
-            <bind nodeset="/data/part1_10/part1_10.4" type="string"/>
-            <bind nodeset="/data/part1_10/part1_10.4r" relevant=" /data/part1_10/part1_10.4 ='yes'" type="binary"/>
-            <bind nodeset="/data/part1_10/part1_10.5" type="string"/>
-            <bind nodeset="/data/part1_10/part1_10.5r" relevant=" /data/part1_10/part1_10.5 ='yes'" type="binary"/>
-            <bind nodeset="/data/part1_10/part1_10.6" type="string"/>
-            <bind nodeset="/data/part1_10/part1_10.6r" relevant=" /data/part1_10/part1_10.6 ='yes'" type="binary"/>
-            <bind nodeset="/data/part1_10/part1_10.7" type="string"/>
-            <bind nodeset="/data/part1_10/part1_10.7r" relevant=" /data/part1_10/part1_10.7 ='yes'" type="binary"/>
-            <bind nodeset="/data/part2/p_4/p_4.1" type="string"/>
-            <bind nodeset="/data/part2/p_4/img_p_4.1" relevant=" /data/part2/p_4/p_4.1 ='yes'" type="binary"/>
-            <bind nodeset="/data/part2/p_4/p_4.2" type="string"/>
-            <bind nodeset="/data/part2/p_4/p_4.3" type="string"/>
-            <bind nodeset="/data/part2/p_4/img_p_4.3" relevant=" /data/part2/p_4/p_4.3 ='yes'" type="binary"/>
-            <bind nodeset="/data/part2/p_4/p_4.4" type="string"/>
-            <bind nodeset="/data/part2/p_4/img_p_4.4" relevant=" /data/part2/p_4/p_4.4 ='yes'" type="binary"/>
-            <bind nodeset="/data/notea" readonly="true()" type="string"/>
-            <bind nodeset="/data/nurse_emp" type="int"/>
-            <bind calculate=" /data/nurse_emp " nodeset="/data/Nurs_details_count" readonly="true()" type="string"/>
-            <bind nodeset="/data/Nurs_details" relevant=" /data/nurse_emp &gt;0"/>
-            <bind nodeset="/data/Nurs_details/part1_8/nurse_name" type="string"/>
-            <bind nodeset="/data/Nurs_details/part1_8/nurse_upnc" type="int"/>
-            <bind nodeset="/data/Nurs_details/part1_8/nurse_reamrks" type="string"/>
-            <bind jr:preload="uid" nodeset="/data/meta/instanceID" readonly="true()" type="string"/>
+            <bind jr:preload="property" jr:preloadParams="username" nodeset="/data/username"
+                type="string" />
+            <bind jr:preload="timestamp" jr:preloadParams="start" nodeset="/data/start"
+                type="dateTime" />
+            <bind jr:preload="timestamp" jr:preloadParams="end" nodeset="/data/end" type="dateTime" />
+            <bind jr:preload="date" jr:preloadParams="today" nodeset="/data/today" type="date" />
+            <bind jr:preload="property" jr:preloadParams="deviceid" nodeset="/data/deviceid"
+                type="string" />
+            <bind jr:preload="property" jr:preloadParams="subscriberid" nodeset="/data/subscriberid"
+                type="string" />
+            <bind nodeset="/data/part1_1/District" required="true()" type="string" />
+            <bind nodeset="/data/part1_1/NameOfIns" required="true()" type="string" />
+            <bind nodeset="/data/part1_1/ptcc" required="true()" type="int" />
+            <bind nodeset="/data/part1_1/address" required="true()" type="string" />
+            <bind nodeset="/data/part1_1/pincode" required="true()" type="int" />
+            <bind nodeset="/data/part1_1/email" required="true()" type="string" />
+            <bind nodeset="/data/part1_1/gov_priv" required="true()" type="string" />
+            <bind nodeset="/data/part1_1/chair_name" required="true()" type="string" />
+            <bind nodeset="/data/part1_1/chair_email" required="true()" type="string" />
+            <bind nodeset="/data/part1_1/chair_number" required="true()" type="string" />
+            <bind nodeset="/data/part1_1/princial_name" required="true()" type="string" />
+            <bind nodeset="/data/part1_1/princial_email" required="true()" type="string" />
+            <bind nodeset="/data/part1_1/princial_number" required="true()" type="string" />
+            <bind nodeset="/data/part1_2_1/nameofTSMC" required="true()" type="string" />
+            <bind nodeset="/data/part1_2_1/part1_2_2/part1_2_2a" required="true()" type="string" />
+            <bind nodeset="/data/part1_2_1/part1_2_2/img_part1_2_2a"
+                relevant=" /data/part1_2_1/part1_2_2/part1_2_2a ='yes'" required="true()"
+                type="binary" />
+            <bind nodeset="/data/part1_2_1/part1_2_2/part1_2_2b" required="true()" type="string" />
+            <bind nodeset="/data/part1_2_1/part1_2_2/img_part1_2_2b"
+                relevant=" /data/part1_2_1/part1_2_2/part1_2_2b ='yes'" required="true()"
+                type="binary" />
+            <bind nodeset="/data/part1_2_1/part1_2_3/part1_2_3a" required="true()" type="string" />
+            <bind nodeset="/data/part1_2_1/part1_2_3/img_part1_2_3a"
+                relevant=" /data/part1_2_1/part1_2_3/part1_2_3a ='yes'" required="true()"
+                type="binary" />
+            <bind nodeset="/data/part1_2_1/part1_2_3/part1_2_3b" required="true()" type="string" />
+            <bind nodeset="/data/part1_2_1/part1_2_3/img_part1_2_3b"
+                relevant=" /data/part1_2_1/part1_2_3/part1_2_3b ='yes'" required="true()"
+                type="binary" />
+            <bind nodeset="/data/part1_2_1/part1_2_4" required="true()" type="string" />
+            <bind nodeset="/data/part1_2_1/part1_2_4g" relevant=" /data/part1_2_1/part1_2_4 ='yes'" />
+            <bind nodeset="/data/part1_2_1/part1_2_4g/part1_2_4a" required="true()" type="string" />
+            <bind nodeset="/data/part1_2_1/part1_2_4g/img_part1_2_4a"
+                relevant=" /data/part1_2_1/part1_2_4g/part1_2_4a ='yes'" required="true()"
+                type="binary" />
+            <bind nodeset="/data/part1_2_1/part1_2_4g/part1_2_4b" required="true()" type="string" />
+            <bind nodeset="/data/part1_2_1/part1_2_4g/img_part1_2_4b"
+                relevant=" /data/part1_2_1/part1_2_4g/part1_2_4b ='yes'" required="true()"
+                type="binary" />
+            <bind nodeset="/data/part1_2_1/part1_2_4g/part1_2_4c" required="true()" type="string" />
+            <bind nodeset="/data/part1_2_1/part1_2_4g/img_part1_2_4c"
+                relevant=" /data/part1_2_1/part1_2_4g/part1_2_4c ='yes'" required="true()"
+                type="binary" />
+            <bind nodeset="/data/part1_2_1/part1_2_4g/part1_2_4d" required="true()" type="string" />
+            <bind nodeset="/data/part1_2_1/part1_2_4g/img_part1_2_4d"
+                relevant=" /data/part1_2_1/part1_2_4g/part1_2_4d ='yes'" required="true()"
+                type="binary" />
+            <bind nodeset="/data/part1_2_1/part1_2_4g/part1_2_4e" required="true()" type="string" />
+            <bind nodeset="/data/part1_2_1/part1_2_4g/img_part1_2_4e"
+                relevant=" /data/part1_2_1/part1_2_4g/part1_2_4e ='yes'" required="true()"
+                type="binary" />
+            <bind nodeset="/data/part1_3/p1_3" required="true()" type="string" />
+            <bind nodeset="/data/part1_3/p1_3.1" required="true()" type="string" />
+            <bind nodeset="/data/part1_3/part1_3.1" relevant=" /data/part1_3/p1_3.1 ='yes'" />
+            <bind nodeset="/data/part1_3/part1_3.1/anm1.1" required="true()" type="int" />
+            <bind nodeset="/data/part1_3/part1_3.1/anm1.2" required="true()" type="int" />
+            <bind nodeset="/data/part1_3/part1_3.1/anm1.3" required="true()" type="int" />
+            <bind nodeset="/data/part1_3/part1_3.1/anm2.2" required="true()" type="int" />
+            <bind nodeset="/data/part1_3/part1_3.1/anm2.3" required="true()" type="int" />
+            <bind nodeset="/data/part1_3/p1_3.2" required="true()" type="string" />
+            <bind nodeset="/data/part1_3/part1_3.2" relevant=" /data/part1_3/p1_3.2 ='yes'" />
+            <bind nodeset="/data/part1_3/part1_3.2/gnm1.1" required="true()" type="int" />
+            <bind nodeset="/data/part1_3/part1_3.2/gnm1.2" required="true()" type="int" />
+            <bind nodeset="/data/part1_3/part1_3.2/gnm1.3" required="true()" type="int" />
+            <bind nodeset="/data/part1_3/part1_3.2/gnm2.2" required="true()" type="int" />
+            <bind nodeset="/data/part1_3/part1_3.2/gnm2.3" required="true()" type="int" />
+            <bind nodeset="/data/part1_3/part1_3.2/gnm3.2" required="true()" type="int" />
+            <bind nodeset="/data/part1_3/part1_3.2/gnm3.3" required="true()" type="int" />
+            <bind nodeset="/data/part1_3/p1_3.3" required="true()" type="string" />
+            <bind nodeset="/data/part1_3/part1_3.3" relevant=" /data/part1_3/p1_3.3 ='yes'" />
+            <bind nodeset="/data/part1_3/part1_3.3/pbbsc1.1" required="true()" type="int" />
+            <bind nodeset="/data/part1_3/part1_3.3/pbbsc1.2" required="true()" type="int" />
+            <bind nodeset="/data/part1_3/part1_3.3/pbbsc1.3" required="true()" type="int" />
+            <bind nodeset="/data/part1_3/part1_3.3/pbbsc2.2" required="true()" type="int" />
+            <bind nodeset="/data/part1_3/part1_3.3/pbbsc2.3" required="true()" type="int" />
+            <bind nodeset="/data/part1_3/p1_3.4" required="true()" type="string" />
+            <bind nodeset="/data/part1_3/part1_3.4" relevant=" /data/part1_3/p1_3.4 ='yes'" />
+            <bind nodeset="/data/part1_3/part1_3.4/bsc1.1" required="true()" type="int" />
+            <bind nodeset="/data/part1_3/part1_3.4/bsc1.2" required="true()" type="int" />
+            <bind nodeset="/data/part1_3/part1_3.4/bsc1.3" required="true()" type="int" />
+            <bind nodeset="/data/part1_3/part1_3.4/bsc2.2" required="true()" type="int" />
+            <bind nodeset="/data/part1_3/part1_3.4/bsc2.3" required="true()" type="int" />
+            <bind nodeset="/data/part1_3/part1_3.4/bsc3.2" required="true()" type="int" />
+            <bind nodeset="/data/part1_3/part1_3.4/bsc3.3" required="true()" type="int" />
+            <bind nodeset="/data/part1_3/part1_3.4/bsc4.2" required="true()" type="int" />
+            <bind nodeset="/data/part1_3/part1_3.4/bsc4.3" required="true()" type="int" />
+            <bind nodeset="/data/part1_3/p1_3.5" required="true()" type="string" />
+            <bind nodeset="/data/part1_3/part1_3.5" relevant=" /data/part1_3/p1_3.5 ='yes'" />
+            <bind nodeset="/data/part1_3/part1_3.5/msc1" required="true()" type="int" />
+            <bind nodeset="/data/part1_3/part1_3.5/msc2" required="true()" type="int" />
+            <bind nodeset="/data/part1_3/part1_3.5/msc3" required="true()" type="int" />
+            <bind nodeset="/data/part1_3/part1_3.5/msc5" required="true()" type="int" />
+            <bind nodeset="/data/part1_3/part1_3.5/msc6" required="true()" type="int" />
+            <bind nodeset="/data/part1_3/p1_3.6" required="true()" type="string" />
+            <bind nodeset="/data/part1_3/part1_3.6" relevant=" /data/part1_3/p1_3.6 ='yes'" />
+            <bind nodeset="/data/part1_3/part1_3.6/msc7" required="true()" type="int" />
+            <bind nodeset="/data/part1_3/part1_3.6/msc8" required="true()" type="int" />
+            <bind nodeset="/data/part1_3/part1_3.6/msc9" required="true()" type="int" />
+            <bind nodeset="/data/part1_3/part1_3.6/msc11" required="true()" type="int" />
+            <bind nodeset="/data/part1_3/part1_3.6/msc12" required="true()" type="int" />
+            <bind nodeset="/data/part1_3/p1_3.7" required="true()" type="string" />
+            <bind nodeset="/data/part1_3/part1_3.7" relevant=" /data/part1_3/p1_3.7 ='yes'" />
+            <bind nodeset="/data/part1_3/part1_3.7/msc13" required="true()" type="int" />
+            <bind nodeset="/data/part1_3/part1_3.7/msc14" required="true()" type="int" />
+            <bind nodeset="/data/part1_3/part1_3.7/msc15" required="true()" type="int" />
+            <bind nodeset="/data/part1_3/part1_3.7/msc16" required="true()" type="int" />
+            <bind nodeset="/data/part1_3/part1_3.7/msc17" required="true()" type="int" />
+            <bind nodeset="/data/part1_3/p1_3.8" required="true()" type="string" />
+            <bind nodeset="/data/part1_3/part1_3.8" relevant=" /data/part1_3/p1_3.8 ='yes'" />
+            <bind nodeset="/data/part1_3/part1_3.8/msc18" required="true()" type="int" />
+            <bind nodeset="/data/part1_3/part1_3.8/msc19" required="true()" type="int" />
+            <bind nodeset="/data/part1_3/part1_3.8/msc20" required="true()" type="int" />
+            <bind nodeset="/data/part1_3/part1_3.8/msc21" required="true()" type="int" />
+            <bind nodeset="/data/part1_3/part1_3.8/msc22" required="true()" type="int" />
+            <bind nodeset="/data/part1_3/p1_3.9" required="true()" type="string" />
+            <bind nodeset="/data/part1_3/part1_3.9" relevant=" /data/part1_3/p1_3.9 ='yes'" />
+            <bind nodeset="/data/part1_3/part1_3.9/msc23" required="true()" type="int" />
+            <bind nodeset="/data/part1_3/part1_3.9/msc24" required="true()" type="int" />
+            <bind nodeset="/data/part1_3/part1_3.9/msc25" required="true()" type="int" />
+            <bind nodeset="/data/part1_3/part1_3.9/msc26" required="true()" type="int" />
+            <bind nodeset="/data/part1_3/part1_3.9/msc27" required="true()" type="int" />
+            <bind nodeset="/data/part1_4/part1_4.1" required="true()" type="string" />
+            <bind nodeset="/data/part1_4/part1_4.2" required="true()" type="int" />
+            <bind nodeset="/data/part1_4/part1_4.2.1" required="true()" type="string" />
+            <bind nodeset="/data/part1_4/part1_4.3/part1_4.3a" required="true()" type="string" />
+            <bind nodeset="/data/part1_4/part1_4.3/part1_4.3b" required="true()" type="string" />
+            <bind nodeset="/data/part1_4/part1_4.3/part1_4.3c" required="true()" type="string" />
+            <bind nodeset="/data/part1_4_6/library_comp" required="true()" type="string" />
+            <bind nodeset="/data/part1_4_6/img_library_comp"
+                relevant=" /data/part1_4_6/library_comp ='yes'" required="true()" type="binary" />
+            <bind nodeset="/data/part1_4_6/books" required="true()" type="int" />
+            <bind nodeset="/data/part1_4_6/img_books" relevant=" /data/part1_4_6/books &gt;=1"
+                required="true()" type="binary" />
+            <bind nodeset="/data/part1_4_6/journal" required="true()" type="int" />
+            <bind nodeset="/data/part1_4_6/library_seating" required="true()" type="int" />
+            <bind nodeset="/data/part1_4_6/util_register" required="true()" type="string" />
+            <bind nodeset="/data/part1_4_6/img_util_register"
+                relevant=" /data/part1_4_6/util_register ='yes'" required="true()" type="binary" />
+            <bind nodeset="/data/part1_4_6/remark103" required="true()" type="string" />
+            <bind nodeset="/data/part1_4_7/part1_4_7.1" readonly="true()" type="string" />
+            <bind nodeset="/data/part1_4_7/part1_4_7.1a" required="true()" type="string" />
+            <bind nodeset="/data/part1_4_7/part1_4_7.1b"
+                relevant=" /data/part1_4_7/part1_4_7.1a ='yes'" required="true()" type="string" />
+            <bind nodeset="/data/part1_4_7/img_part1_4_7.1" required="true()" type="binary" />
+            <bind nodeset="/data/part1_4_7/part1_4_7.2" readonly="true()" type="string" />
+            <bind nodeset="/data/part1_4_7/part1_4_7.2a" required="true()" type="string" />
+            <bind nodeset="/data/part1_4_7/part1_4_7.2b"
+                relevant=" /data/part1_4_7/part1_4_7.2a ='yes'" required="true()" type="string" />
+            <bind nodeset="/data/part1_4_7/img_part1_4_7.2" required="true()" type="binary" />
+            <bind nodeset="/data/part1_4_7/part1_4_7.3" readonly="true()" type="string" />
+            <bind nodeset="/data/part1_4_7/part1_4_7.3a" required="true()" type="string" />
+            <bind nodeset="/data/part1_4_7/part1_4_7.3b"
+                relevant=" /data/part1_4_7/part1_4_7.3a ='yes'" required="true()" type="string" />
+            <bind nodeset="/data/part1_4_7/img_part1_4_7.3" required="true()" type="binary" />
+            <bind nodeset="/data/part1_4_7/part1_4_7.4" readonly="true()" type="string" />
+            <bind nodeset="/data/part1_4_7/part1_4_7.4a" required="true()" type="string" />
+            <bind nodeset="/data/part1_4_7/part1_4_7.4b"
+                relevant=" /data/part1_4_7/part1_4_7.4a ='yes'" required="true()" type="string" />
+            <bind nodeset="/data/part1_4_7/img_part1_4_7.4" required="true()" type="binary" />
+            <bind nodeset="/data/part1_4_7/part1_4_7.5" readonly="true()" type="string" />
+            <bind nodeset="/data/part1_4_7/part1_4_7.5a" required="true()" type="string" />
+            <bind nodeset="/data/part1_4_7/part1_4_7.5b"
+                relevant=" /data/part1_4_7/part1_4_7.5a ='yes'" required="true()" type="string" />
+            <bind nodeset="/data/part1_4_7/img_part1_4_7.5" required="true()" type="binary" />
+            <bind nodeset="/data/part1_5/part1_5.1" required="true()" type="string" />
+            <bind nodeset="/data/part1_5/part1_5.2" required="true()" type="int" />
+            <bind nodeset="/data/part1_5/part1_5.3" required="true()" type="int" />
+            <bind nodeset="/data/part1_5/part1_5.4" required="true()" type="string" />
+            <bind nodeset="/data/part1_5/part1_5.5" required="true()" type="string" />
+            <bind nodeset="/data/part1_5/img_part1_5.5" relevant=" /data/part1_5/part1_5.5 ='yes'"
+                required="true()" type="binary" />
+            <bind nodeset="/data/part1_5/part1_5.6" required="true()" type="string" />
+            <bind nodeset="/data/part1_5/part1_5.7" required="true()" type="int" />
+            <bind nodeset="/data/fac/fac_count" type="int" />
+            <bind calculate=" /data/fac/fac_count " nodeset="/data/fac/part1_6_details_count"
+                readonly="true()" type="string" />
+            <bind nodeset="/data/fac/part1_6_details" relevant=" /data/fac/fac_count &gt;0" />
+            <bind nodeset="/data/fac/part1_6_details/fac_deatils/fac_desig" type="string" />
+            <bind nodeset="/data/fac/part1_6_details/fac_deatils/fac_name" type="string" />
+            <bind nodeset="/data/fac/part1_6_details/fac_deatils/fac_qual" type="string" />
+            <bind nodeset="/data/fac/part1_6_details/fac_deatils/fac_qual1"
+                relevant=" ../fac_qual ='b' or  ../fac_qual ='c'" />
+            <bind nodeset="/data/fac/part1_6_details/fac_deatils/fac_qual1/fac_sp" type="string" />
+            <bind nodeset="/data/fac/part1_6_details/fac_deatils/fac_qual1/fac_spa"
+                relevant=" ../fac_sp ='f'" type="string" />
+            <bind nodeset="/data/fac/part1_6_details/fac_deatils/fac_doe" type="date" />
+            <bind nodeset="/data/fac/part1_6_details/fac_deatils/fac_acn" type="int" />
+            <bind nodeset="/data/fac/part1_6_details/fac_deatils/fac_upnc" type="int" />
+            <bind nodeset="/data/part1_10/part1_10.1" required="true()" type="string" />
+            <bind nodeset="/data/part1_10/part1_10.1r" relevant=" /data/part1_10/part1_10.1 ='yes'"
+                required="true()" type="binary" />
+            <bind nodeset="/data/part1_10/part1_10.2" required="true()" type="string" />
+            <bind nodeset="/data/part1_10/part1_10.2r" relevant=" /data/part1_10/part1_10.2 ='yes'"
+                required="true()" type="binary" />
+            <bind nodeset="/data/part1_10/part1_10.3" required="true()" type="string" />
+            <bind nodeset="/data/part1_10/part1_10.3r" relevant=" /data/part1_10/part1_10.3 ='yes'"
+                required="true()" type="binary" />
+            <bind nodeset="/data/part1_10/part1_10.4" required="true()" type="string" />
+            <bind nodeset="/data/part1_10/part1_10.4r" relevant=" /data/part1_10/part1_10.4 ='yes'"
+                required="true()" type="binary" />
+            <bind nodeset="/data/part1_10/part1_10.5" required="true()" type="string" />
+            <bind nodeset="/data/part1_10/part1_10.5r" relevant=" /data/part1_10/part1_10.5 ='yes'"
+                required="true()" type="binary" />
+            <bind nodeset="/data/part1_10/part1_10.6" required="true()" type="string" />
+            <bind nodeset="/data/part1_10/part1_10.6r" relevant=" /data/part1_10/part1_10.6 ='yes'"
+                required="true()" type="binary" />
+            <bind nodeset="/data/part1_10/part1_10.7" required="true()" type="string" />
+            <bind nodeset="/data/part1_10/part1_10.7r" relevant=" /data/part1_10/part1_10.7 ='yes'"
+                required="true()" type="binary" />
+            <bind nodeset="/data/part2/p_4/p_4.1" required="true()" type="string" />
+            <bind nodeset="/data/part2/p_4/img_p_4.1" relevant=" /data/part2/p_4/p_4.1 ='yes'"
+                required="true()" type="binary" />
+            <bind nodeset="/data/part2/p_4/p_4.2" required="true()" type="string" />
+            <bind nodeset="/data/part2/p_4/p_4.3" required="true()" type="string" />
+            <bind nodeset="/data/part2/p_4/img_p_4.3" relevant=" /data/part2/p_4/p_4.3 ='yes'"
+                required="true()" type="binary" />
+            <bind nodeset="/data/part2/p_4/p_4.4" required="true()" type="string" />
+            <bind nodeset="/data/part2/p_4/img_p_4.4" relevant=" /data/part2/p_4/p_4.4 ='yes'"
+                required="true()" type="binary" />
+            <bind nodeset="/data/notea" readonly="true()" required="true()" type="string" />
+            <bind nodeset="/data/nurse_emp" required="true()" type="int" />
+            <bind calculate=" /data/nurse_emp " nodeset="/data/Nurs_details_count" readonly="true()"
+                type="string" />
+            <bind nodeset="/data/Nurs_details" relevant=" /data/nurse_emp &gt;0" />
+            <bind nodeset="/data/Nurs_details/part1_8/nurse_name" required="true()" type="string" />
+            <bind nodeset="/data/Nurs_details/part1_8/nurse_upnc" required="true()" type="int" />
+            <bind nodeset="/data/Nurs_details/part1_8/nurse_reamrks" required="true()" type="string" />
+            <bind jr:preload="uid" nodeset="/data/meta/instanceID" readonly="true()" type="string" />
         </model>
     </h:head>
     <h:body class="pages">
         <group appearance="field-list" ref="/data/part1_1">
             <label>Basic Infrastructure</label>
-            <input ref="/data/part1_1/center_code">
-                <label>Training Center Code</label>
-            </input>
-            <input ref="/data/part1_1/nameofIns">
+            <select1 appearance="minimal" ref="/data/part1_1/District">
+                <label>District</label>
+                <item>
+                    <label>AGRA</label>
+                    <value>AGRA</value>
+                </item>
+                <item>
+                    <label>ALIGARH</label>
+                    <value>ALIGARH</value>
+                </item>
+                <item>
+                    <label>AMBEDKAR NAGAR</label>
+                    <value>AMBEDKAR NAGAR</value>
+                </item>
+                <item>
+                    <label>AMETHI</label>
+                    <value>AMETHI</value>
+                </item>
+                <item>
+                    <label>AMROHA</label>
+                    <value>AMROHA</value>
+                </item>
+                <item>
+                    <label>AURAIYA</label>
+                    <value>AURAIYA</value>
+                </item>
+                <item>
+                    <label>AYODHYA</label>
+                    <value>AYODHYA</value>
+                </item>
+                <item>
+                    <label>AZAMGARH</label>
+                    <value>AZAMGARH</value>
+                </item>
+                <item>
+                    <label>BAGHPAT</label>
+                    <value>BAGHPAT</value>
+                </item>
+                <item>
+                    <label>BAHRAICH</label>
+                    <value>BAHRAICH</value>
+                </item>
+                <item>
+                    <label>BALLIA</label>
+                    <value>BALLIA</value>
+                </item>
+                <item>
+                    <label>BALRAMPUR</label>
+                    <value>BALRAMPUR</value>
+                </item>
+                <item>
+                    <label>BANDA</label>
+                    <value>BANDA</value>
+                </item>
+                <item>
+                    <label>BARABANKI</label>
+                    <value>BARABANKI</value>
+                </item>
+                <item>
+                    <label>BAREILLY</label>
+                    <value>BAREILLY</value>
+                </item>
+                <item>
+                    <label>BASTI</label>
+                    <value>BASTI</value>
+                </item>
+                <item>
+                    <label>BIJNOR</label>
+                    <value>BIJNOR</value>
+                </item>
+                <item>
+                    <label>BULANDSHAHR</label>
+                    <value>BULANDSHAHR</value>
+                </item>
+                <item>
+                    <label>CHANDAULI</label>
+                    <value>CHANDAULI</value>
+                </item>
+                <item>
+                    <label>CHITRAKOOT</label>
+                    <value>CHITRAKOOT</value>
+                </item>
+                <item>
+                    <label>DEORIA</label>
+                    <value>DEORIA</value>
+                </item>
+                <item>
+                    <label>ETAH</label>
+                    <value>ETAH</value>
+                </item>
+                <item>
+                    <label>ETAWAH</label>
+                    <value>ETAWAH</value>
+                </item>
+                <item>
+                    <label>FARRUKHABAD</label>
+                    <value>FARRUKHABAD</value>
+                </item>
+                <item>
+                    <label>FATEHPUR</label>
+                    <value>FATEHPUR</value>
+                </item>
+                <item>
+                    <label>FIROZABAD</label>
+                    <value>FIROZABAD</value>
+                </item>
+                <item>
+                    <label>GAUTAM BUDDH NAGAR</label>
+                    <value>GAUTAM BUDDH NAGAR</value>
+                </item>
+                <item>
+                    <label>GHAZIABAD</label>
+                    <value>GHAZIABAD</value>
+                </item>
+                <item>
+                    <label>GHAZIPUR</label>
+                    <value>GHAZIPUR</value>
+                </item>
+                <item>
+                    <label>GONDA</label>
+                    <value>GONDA</value>
+                </item>
+                <item>
+                    <label>GORAKHPUR</label>
+                    <value>GORAKHPUR</value>
+                </item>
+                <item>
+                    <label>HAPUR</label>
+                    <value>HAPUR</value>
+                </item>
+                <item>
+                    <label>HARDOI</label>
+                    <value>HARDOI</value>
+                </item>
+                <item>
+                    <label>HATHRAS</label>
+                    <value>HATHRAS</value>
+                </item>
+                <item>
+                    <label>JALAUN</label>
+                    <value>JALAUN</value>
+                </item>
+                <item>
+                    <label>JAUNPUR</label>
+                    <value>JAUNPUR</value>
+                </item>
+                <item>
+                    <label>JHANSI</label>
+                    <value>JHANSI</value>
+                </item>
+                <item>
+                    <label>KANNAUJ</label>
+                    <value>KANNAUJ</value>
+                </item>
+                <item>
+                    <label>KANPUR</label>
+                    <value>KANPUR</value>
+                </item>
+                <item>
+                    <label>KANPUR DEHAT</label>
+                    <value>KANPUR DEHAT</value>
+                </item>
+                <item>
+                    <label>KASGANJ</label>
+                    <value>KASGANJ</value>
+                </item>
+                <item>
+                    <label>KAUSHAMBI</label>
+                    <value>KAUSHAMBI</value>
+                </item>
+                <item>
+                    <label>KUSHI NAGAR</label>
+                    <value>KUSHI NAGAR</value>
+                </item>
+                <item>
+                    <label>LAKHIMPUR KHERI</label>
+                    <value>LAKHIMPUR KHERI</value>
+                </item>
+                <item>
+                    <label>LUCKNOW</label>
+                    <value>LUCKNOW</value>
+                </item>
+                <item>
+                    <label>MAHARAJGANJ</label>
+                    <value>MAHARAJGANJ</value>
+                </item>
+                <item>
+                    <label>MAHOBA</label>
+                    <value>MAHOBA</value>
+                </item>
+                <item>
+                    <label>MAINPURI</label>
+                    <value>MAINPURI</value>
+                </item>
+                <item>
+                    <label>MATHURA</label>
+                    <value>MATHURA</value>
+                </item>
+                <item>
+                    <label>MAU</label>
+                    <value>MAU</value>
+                </item>
+                <item>
+                    <label>MEERUT</label>
+                    <value>MEERUT</value>
+                </item>
+                <item>
+                    <label>MIRZAPUR</label>
+                    <value>MIRZAPUR</value>
+                </item>
+                <item>
+                    <label>MORADABAD</label>
+                    <value>MORADABAD</value>
+                </item>
+                <item>
+                    <label>MUZAFFARNAGAR</label>
+                    <value>MUZAFFARNAGAR</value>
+                </item>
+                <item>
+                    <label>PILIBHIT</label>
+                    <value>PILIBHIT</value>
+                </item>
+                <item>
+                    <label>PRATAPGARH</label>
+                    <value>PRATAPGARH</value>
+                </item>
+                <item>
+                    <label>PRAYAGRAJ</label>
+                    <value>PRAYAGRAJ</value>
+                </item>
+                <item>
+                    <label>RAEBARELI</label>
+                    <value>RAEBARELI</value>
+                </item>
+                <item>
+                    <label>RAMPUR</label>
+                    <value>RAMPUR</value>
+                </item>
+                <item>
+                    <label>SAHARANPUR</label>
+                    <value>SAHARANPUR</value>
+                </item>
+                <item>
+                    <label>SAMBHAL</label>
+                    <value>SAMBHAL</value>
+                </item>
+                <item>
+                    <label>SANT KABIR NAGAR</label>
+                    <value>SANT KABIR NAGAR</value>
+                </item>
+                <item>
+                    <label>SANT RAVIDAS NAGAR</label>
+                    <value>SANT RAVIDAS NAGAR</value>
+                </item>
+                <item>
+                    <label>SHAHJAHANPUR</label>
+                    <value>SHAHJAHANPUR</value>
+                </item>
+                <item>
+                    <label>SHAMLI</label>
+                    <value>SHAMLI</value>
+                </item>
+                <item>
+                    <label>SIDDHARTHNAGAR</label>
+                    <value>SIDDHARTHNAGAR</value>
+                </item>
+                <item>
+                    <label>SITAPUR</label>
+                    <value>SITAPUR</value>
+                </item>
+                <item>
+                    <label>SONBHADRA</label>
+                    <value>SONBHADRA</value>
+                </item>
+                <item>
+                    <label>SULTANPUR</label>
+                    <value>SULTANPUR</value>
+                </item>
+                <item>
+                    <label>UNNAO</label>
+                    <value>UNNAO</value>
+                </item>
+                <item>
+                    <label>VARANASI</label>
+                    <value>VARANASI</value>
+                </item>
+            </select1>
+            <input appearance="minimal"
+                query="instance('nameofIns')/root/item[districts= /data/part1_1/District ]"
+                ref="/data/part1_1/NameOfIns">
                 <label>Name of institution</label>
             </input>
-            <input appearance="minimal" ref="/data/part1_1/dist">
-                <label>District</label>
+            <input ref="/data/part1_1/ptcc">
+                <label>Parent Training Centre Code</label>
             </input>
             <input appearance="multiline" ref="/data/part1_1/address">
                 <label>Full Address</label>
@@ -498,8 +872,8 @@
                     <label>Upload</label>
                 </upload>
                 <select1 ref="/data/part1_2_1/part1_2_2/part1_2_2b">
-                    <label>Current Fire NOC for college / hostel 
-building</label>
+                    <label>Current Fire NOC for college / hostel
+                        building</label>
                     <item>
                         <label>Yes</label>
                         <value>yes</value>
@@ -514,7 +888,8 @@ building</label>
                 </upload>
             </group>
             <group appearance="field-list" ref="/data/part1_2_1/part1_2_3">
-                <label>Is Biometric system available and in working condition for recording attendance:</label>
+                <label>Is Biometric system available and in working condition for recording
+                    attendance:</label>
                 <select1 ref="/data/part1_2_1/part1_2_3/part1_2_3a">
                     <label>Faculty</label>
                     <item>
@@ -558,7 +933,8 @@ building</label>
             </select1>
             <group appearance="field-list" ref="/data/part1_2_1/part1_2_4g">
                 <select1 ref="/data/part1_2_1/part1_2_4g/part1_2_4a">
-                    <label>Internet connection (broadband wired or wireless (3G or 4G/LTE) minimum 2 Mbps</label>
+                    <label>Internet connection (broadband wired or wireless (3G or 4G/LTE) minimum 2
+                        Mbps</label>
                     <item>
                         <label>Yes</label>
                         <value>yes</value>
@@ -996,6 +1372,9 @@ building</label>
             <input ref="/data/part1_4_6/books">
                 <label>No. of books available as per accession register</label>
             </input>
+            <upload mediatype="image/*" ref="/data/part1_4_6/img_books">
+                <label>Upload</label>
+            </upload>
             <input ref="/data/part1_4_6/journal">
                 <label>No. of Subscribed Journals</label>
             </input>
@@ -1003,7 +1382,7 @@ building</label>
                 <label>Number of seats in the library</label>
             </input>
             <select1 ref="/data/part1_4_6/util_register">
-                <label>is the utilization register available?</label>
+                <label>Is the utilization register available?</label>
                 <item>
                     <label>Yes</label>
                     <value>yes</value>
@@ -1222,6 +1601,87 @@ building</label>
                 <label>No. of functional toilets in hostel</label>
             </input>
         </group>
+        <group appearance="field-list" ref="/data/fac">
+            <label>Teaching Faculty</label>
+            <input ref="/data/fac/fac_count">
+                <label>Total number of teaching faculty registered</label>
+            </input>
+            <group ref="/data/fac/part1_6_details">
+                <label></label>
+                <repeat jr:count=" /data/fac/part1_6_details_count "
+                    nodeset="/data/fac/part1_6_details">
+                    <group ref="/data/fac/part1_6_details/fac_deatils">
+                        <input ref="/data/fac/part1_6_details/fac_deatils/fac_desig">
+                            <label>Designation</label>
+                        </input>
+                        <input ref="/data/fac/part1_6_details/fac_deatils/fac_name">
+                            <label>Name of
+                                Faculty</label>
+                        </input>
+                        <select1 ref="/data/fac/part1_6_details/fac_deatils/fac_qual">
+                            <label>Highest Qualification</label>
+                            <item>
+                                <label>BSc/PBBSC Nursing</label>
+                                <value>a</value>
+                            </item>
+                            <item>
+                                <label>MSC Nursing</label>
+                                <value>b</value>
+                            </item>
+                            <item>
+                                <label>PHD Nursing</label>
+                                <value>c</value>
+                            </item>
+                        </select1>
+                        <group appearance="field-list"
+                            ref="/data/fac/part1_6_details/fac_deatils/fac_qual1">
+                            <select1 ref="/data/fac/part1_6_details/fac_deatils/fac_qual1/fac_sp">
+                                <label>Specilization</label>
+                                <item>
+                                    <label>Child Health Nursing</label>
+                                    <value>a</value>
+                                </item>
+                                <item>
+                                    <label>Obs/Gynae Nursing</label>
+                                    <value>b</value>
+                                </item>
+                                <item>
+                                    <label>Community Health Nursing</label>
+                                    <value>c</value>
+                                </item>
+                                <item>
+                                    <label>Medical Surgical Nursing</label>
+                                    <value>d</value>
+                                </item>
+                                <item>
+                                    <label>Mental Health Nursing</label>
+                                    <value>e</value>
+                                </item>
+                                <item>
+                                    <label>Others</label>
+                                    <value>f</value>
+                                </item>
+                            </select1>
+                            <input ref="/data/fac/part1_6_details/fac_deatils/fac_qual1/fac_spa">
+                                <label>Please specify</label>
+                            </input>
+                        </group>
+                        <input ref="/data/fac/part1_6_details/fac_deatils/fac_doe">
+                            <label>Date of
+                                Enrollment on Center Login Panel</label>
+                        </input>
+                        <input ref="/data/fac/part1_6_details/fac_deatils/fac_acn">
+                            <label>Aadhaar
+                                Card
+                                No</label>
+                        </input>
+                        <input ref="/data/fac/part1_6_details/fac_deatils/fac_upnc">
+                            <label>UPNC Reg. No</label>
+                        </input>
+                    </group>
+                </repeat>
+            </group>
+        </group>
         <group appearance="field-list" ref="/data/part1_10">
             <label>List of documents to be uploaded</label>
             <select1 ref="/data/part1_10/part1_10.1">
@@ -1253,8 +1713,8 @@ building</label>
                 <label>Upload</label>
             </upload>
             <select1 ref="/data/part1_10/part1_10.3">
-                <label>Letter for Fire NOC for College and Hostel building 
-(Separate or combined)</label>
+                <label>Letter for Fire NOC for College and Hostel building
+                    (Separate or combined)</label>
                 <item>
                     <label>Yes</label>
                     <value>yes</value>
@@ -1268,7 +1728,8 @@ building</label>
                 <label>Upload</label>
             </upload>
             <select1 ref="/data/part1_10/part1_10.4">
-                <label>Documents related to Clinical Facilities including bed capacity /Departments (For Part 2)</label>
+                <label>Documents related to Clinical Facilities including bed capacity /Departments
+                    (For Part 2)</label>
                 <item>
                     <label>Yes</label>
                     <value>yes</value>
@@ -1296,7 +1757,8 @@ building</label>
                 <label>Upload</label>
             </upload>
             <select1 ref="/data/part1_10/part1_10.6">
-                <label>Letter issued related to permission Community Health Facilities and other visit details</label>
+                <label>Letter issued related to permission Community Health Facilities and other
+                    visit details</label>
                 <item>
                     <label>Yes</label>
                     <value>yes</value>

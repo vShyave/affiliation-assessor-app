@@ -1,0 +1,143 @@
+<?xml version="1.0"?>
+<h:html xmlns="http://www.w3.org/2002/xforms"
+    xmlns:ev="http://www.w3.org/2001/xml-events"
+    xmlns:h="http://www.w3.org/1999/xhtml"
+    xmlns:jr="http://openrosa.org/javarosa"
+    xmlns:odk="http://www.opendatakit.org/xforms"
+    xmlns:orx="http://openrosa.org/xforms"
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <h:head>
+        <h:title>Nursing Form-Medical (Community Health)</h:title>
+        <model odk:xforms-version="1.0.0">
+            <instance>
+                <data id="Nursing Form-Medical (Community Health)" version="1">
+                    <username/>
+                    <start/>
+                    <end/>
+                    <today/>
+                    <deviceid/>
+                    <subscriberid/>
+                    <part1_9>
+                        <notea/>
+                        <notek/>
+                        <f_number/>
+                        <part1_9_details_count/>
+                        <part1_9_details jr:template="">
+                            <f_details>
+                                <f_name/>
+                                <f_type/>
+                                <f_letter/>
+                                <img_f_letter/>
+                                <url15/>
+                                <f_reg/>
+                                <img_f_reg/>
+                                <url16/>
+                                <f_remarks/>
+                            </f_details>
+                        </part1_9_details>
+                        <part1_9_details>
+                            <f_details>
+                                <f_name/>
+                                <f_type/>
+                                <f_letter/>
+                                <img_f_letter/>
+                                <url15/>
+                                <f_reg/>
+                                <img_f_reg/>
+                                <url16/>
+                                <f_remarks/>
+                            </f_details>
+                        </part1_9_details>
+                    </part1_9>
+                    <meta>
+                        <instanceID/>
+                    </meta>
+                </data>
+            </instance>
+            <bind jr:preload="property" jr:preloadParams="username" nodeset="/data/username" type="string"/>
+            <bind jr:preload="timestamp" jr:preloadParams="start" nodeset="/data/start" type="dateTime"/>
+            <bind jr:preload="timestamp" jr:preloadParams="end" nodeset="/data/end" type="dateTime"/>
+            <bind jr:preload="date" jr:preloadParams="today" nodeset="/data/today" type="date"/>
+            <bind jr:preload="property" jr:preloadParams="deviceid" nodeset="/data/deviceid" type="string"/>
+            <bind jr:preload="property" jr:preloadParams="subscriberid" nodeset="/data/subscriberid" type="string"/>
+            <bind nodeset="/data/part1_9/notea" readonly="true()" type="string"/>
+            <bind nodeset="/data/part1_9/notek" readonly="true()" type="string"/>
+            <bind nodeset="/data/part1_9/f_number" type="int"/>
+            <bind calculate=" /data/part1_9/f_number " nodeset="/data/part1_9/part1_9_details_count" readonly="true()" type="string"/>
+            <bind nodeset="/data/part1_9/part1_9_details" relevant=" /data/part1_9/f_number &gt;0"/>
+            <bind nodeset="/data/part1_9/part1_9_details/f_details/f_name" type="string"/>
+            <bind nodeset="/data/part1_9/part1_9_details/f_details/f_type" type="string"/>
+            <bind nodeset="/data/part1_9/part1_9_details/f_details/f_letter" type="string"/>
+            <bind nodeset="/data/part1_9/part1_9_details/f_details/img_f_letter" relevant=" ../f_letter ='yes'" type="binary"/>
+            <bind nodeset="/data/part1_9/part1_9_details/f_details/url15" relevant=" ../f_letter ='yes'" type="string"/>
+            <bind nodeset="/data/part1_9/part1_9_details/f_details/f_reg" type="string"/>
+            <bind nodeset="/data/part1_9/part1_9_details/f_details/img_f_reg" relevant=" ../f_reg ='yes'" type="binary"/>
+            <bind nodeset="/data/part1_9/part1_9_details/f_details/url16" relevant=" ../f_reg ='yes'" type="string"/>
+            <bind nodeset="/data/part1_9/part1_9_details/f_details/f_remarks" relevant=" ../f_reg ='no'" type="string"/>
+            <bind jr:preload="uid" nodeset="/data/meta/instanceID" readonly="true()" type="string"/>
+        </model>
+    </h:head>
+    <h:body class="pages">
+        <group appearance="field-list" ref="/data/part1_9">
+            <input ref="/data/part1_9/notea">
+                <label>Please visit the parent hospital and observe the following</label>
+            </input>
+            <input ref="/data/part1_9/notek">
+                <label>####Community Health Facilities and other visit details (letters copy to be enclosed)</label>
+            </input>
+            <input ref="/data/part1_9/f_number">
+                <label>Total number of facilities</label>
+            </input>
+            <group ref="/data/part1_9/part1_9_details">
+                <label></label>
+                <repeat jr:count=" /data/part1_9/part1_9_details_count " nodeset="/data/part1_9/part1_9_details">
+                    <group ref="/data/part1_9/part1_9_details/f_details">
+                        <input ref="/data/part1_9/part1_9_details/f_details/f_name">
+                            <label>Name of facility</label>
+                        </input>
+                        <input ref="/data/part1_9/part1_9_details/f_details/f_type">
+                            <label>Type of facility</label>
+                        </input>
+                        <select1 ref="/data/part1_9/part1_9_details/f_details/f_letter">
+                            <label>Permission letters available of current year ?</label>
+                            <item>
+                                <label>Yes</label>
+                                <value>yes</value>
+                            </item>
+                            <item>
+                                <label>No</label>
+                                <value>no</value>
+                            </item>
+                        </select1>
+                        <upload mediatype="image/*" ref="/data/part1_9/part1_9_details/f_details/img_f_letter">
+                            <label>Upload</label>
+                        </upload>
+                        <input ref="/data/part1_9/part1_9_details/f_details/url15">
+                            <label>URL Link</label>
+                        </input>
+                        <select1 ref="/data/part1_9/part1_9_details/f_details/f_reg">
+                            <label>Community visit register available &amp; used?</label>
+                            <item>
+                                <label>Yes</label>
+                                <value>yes</value>
+                            </item>
+                            <item>
+                                <label>No</label>
+                                <value>no</value>
+                            </item>
+                        </select1>
+                        <upload mediatype="image/*" ref="/data/part1_9/part1_9_details/f_details/img_f_reg">
+                            <label>Upload</label>
+                        </upload>
+                        <input ref="/data/part1_9/part1_9_details/f_details/url16">
+                            <label>URL Link</label>
+                        </input>
+                        <input ref="/data/part1_9/part1_9_details/f_details/f_remarks">
+                            <label>Remarks</label>
+                        </input>
+                    </group>
+                </repeat>
+            </group>
+        </group>
+    </h:body>
+</h:html>

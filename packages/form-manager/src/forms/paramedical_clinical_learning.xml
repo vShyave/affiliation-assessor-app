@@ -1,0 +1,172 @@
+<?xml version="1.0"?>
+<h:html xmlns="http://www.w3.org/2002/xforms"
+    xmlns:ev="http://www.w3.org/2001/xml-events"
+    xmlns:h="http://www.w3.org/1999/xhtml"
+    xmlns:jr="http://openrosa.org/javarosa"
+    xmlns:odk="http://www.opendatakit.org/xforms"
+    xmlns:orx="http://openrosa.org/xforms"
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <h:head>
+        <h:title>Paramedical Institutions_Technical (Facilitation in Clinical Learning)</h:title>
+        <model odk:xforms-version="1.0.0">
+            <instance>
+                <data id="Paramedical Institutions_Technical (Facilitation in Clinical Learning)" version="1">
+                    <username/>
+                    <start/>
+                    <end/>
+                    <today/>
+                    <deviceid/>
+                    <subscriberid/>
+                    <part2>
+                        <note2/>
+                        <p_8/>
+                        <p_8_1/>
+                        <p_8_2/>
+                        <p_8_3/>
+                        <p_8_3a/>
+                        <p_8_3b/>
+                        <p_8_3c/>
+                        <p_8_4/>
+                        <p_8_5/>
+                        <p_8_5a/>
+                        <p_8_5b/>
+                    </part2>
+                    <meta>
+                        <instanceID/>
+                    </meta>
+                </data>
+            </instance>
+            <bind jr:preload="property" jr:preloadParams="username" nodeset="/data/username" type="string"/>
+            <bind jr:preload="timestamp" jr:preloadParams="start" nodeset="/data/start" type="dateTime"/>
+            <bind jr:preload="timestamp" jr:preloadParams="end" nodeset="/data/end" type="dateTime"/>
+            <bind jr:preload="date" jr:preloadParams="today" nodeset="/data/today" type="date"/>
+            <bind jr:preload="property" jr:preloadParams="deviceid" nodeset="/data/deviceid" type="string"/>
+            <bind jr:preload="property" jr:preloadParams="subscriberid" nodeset="/data/subscriberid" type="string"/>
+            <bind nodeset="/data/part2/note2" readonly="true()" type="string"/>
+            <bind nodeset="/data/part2/p_8" readonly="true()" type="string"/>
+            <bind nodeset="/data/part2/p_8_1" type="string"/>
+            <bind nodeset="/data/part2/p_8_2" type="string"/>
+            <bind nodeset="/data/part2/p_8_3" readonly="true()" type="string"/>
+            <bind nodeset="/data/part2/p_8_3a" type="string"/>
+            <bind nodeset="/data/part2/p_8_3b" type="string"/>
+            <bind nodeset="/data/part2/p_8_3c" type="string"/>
+            <bind nodeset="/data/part2/p_8_4" type="string"/>
+            <bind nodeset="/data/part2/p_8_5" type="string"/>
+            <bind nodeset="/data/part2/p_8_5a" type="string"/>
+            <bind nodeset="/data/part2/p_8_5b" type="string"/>
+            <bind jr:preload="uid" nodeset="/data/meta/instanceID" readonly="true()" type="string"/>
+        </model>
+    </h:head>
+    <h:body class="pages">
+        <group appearance="field-list" ref="/data/part2">
+            <input ref="/data/part2/note2">
+                <label>###Facilitation in Clinical Learning</label>
+            </input>
+            <input ref="/data/part2/p_8">
+                <label>####Clinical Rotation Plan/Clinical Duty Roaster</label>
+            </input>
+            <select1 ref="/data/part2/p_8_1">
+                <label>CRP/Clinical Duty Roaster for each class of students exists</label>
+                <item>
+                    <label>Yes</label>
+                    <value>yes</value>
+                </item>
+                <item>
+                    <label>No</label>
+                    <value>no</value>
+                </item>
+            </select1>
+            <select1 ref="/data/part2/p_8_2">
+                <label>Developed clinical objective and shared with clinical site staff</label>
+                <item>
+                    <label>Yes</label>
+                    <value>yes</value>
+                </item>
+                <item>
+                    <label>No</label>
+                    <value>no</value>
+                </item>
+            </select1>
+            <input ref="/data/part2/p_8_3">
+                <label>####CRP /Clinical Duty Roaster has :</label>
+            </input>
+            <select1 ref="/data/part2/p_8_3a">
+                <label>Student distribution</label>
+                <item>
+                    <label>Yes</label>
+                    <value>yes</value>
+                </item>
+                <item>
+                    <label>No</label>
+                    <value>no</value>
+                </item>
+            </select1>
+            <select1 ref="/data/part2/p_8_3b">
+                <label>Area of posting as per curriculum</label>
+                <item>
+                    <label>Yes</label>
+                    <value>yes</value>
+                </item>
+                <item>
+                    <label>No</label>
+                    <value>no</value>
+                </item>
+            </select1>
+            <select1 ref="/data/part2/p_8_3c">
+                <label>Faculty responsible for each block</label>
+                <item>
+                    <label>Yes</label>
+                    <value>yes</value>
+                </item>
+                <item>
+                    <label>No</label>
+                    <value>no</value>
+                </item>
+            </select1>
+            <select1 ref="/data/part2/p_8_4">
+                <label>CRP /Clinical Duty Roaster copy is shared with clinical site staff</label>
+                <item>
+                    <label>Yes</label>
+                    <value>yes</value>
+                </item>
+                <item>
+                    <label>No</label>
+                    <value>no</value>
+                </item>
+            </select1>
+            <select1 ref="/data/part2/p_8_5">
+                <label>Clinical attendance registers for faculty</label>
+                <item>
+                    <label>Yes</label>
+                    <value>yes</value>
+                </item>
+                <item>
+                    <label>No</label>
+                    <value>no</value>
+                </item>
+            </select1>
+            <select1 ref="/data/part2/p_8_5a">
+                <label>Procedure checklist is available with faculty</label>
+                <item>
+                    <label>Yes</label>
+                    <value>yes</value>
+                </item>
+                <item>
+                    <label>No</label>
+                    <value>no</value>
+                </item>
+            </select1>
+            <select1 ref="/data/part2/p_8_5b">
+                <label>Procedure checklist is available with students</label>
+                <item>
+                    <label>Yes</label>
+                    <value>yes</value>
+                </item>
+                <item>
+                    <label>No</label>
+                    <value>no</value>
+                </item>
+            </select1>
+        </group>
+    </h:body>
+</h:html>

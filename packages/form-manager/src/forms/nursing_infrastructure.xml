@@ -1,0 +1,368 @@
+<?xml version="1.0"?>
+<h:html xmlns="http://www.w3.org/2002/xforms"
+    xmlns:ev="http://www.w3.org/2001/xml-events"
+    xmlns:h="http://www.w3.org/1999/xhtml"
+    xmlns:jr="http://openrosa.org/javarosa"
+    xmlns:odk="http://www.opendatakit.org/xforms"
+    xmlns:orx="http://openrosa.org/xforms"
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <h:head>
+        <h:title>Nursing Form-Medical (Infrastructure)</h:title>
+        <model odk:xforms-version="1.0.0">
+            <instance>
+                <data id="Nursing Form-Medical (Infrastructure)" version="1">
+                    <username/>
+                    <start/>
+                    <end/>
+                    <today/>
+                    <deviceid/>
+                    <subscriberid/>
+                    <infra>
+                        <notea/>
+                        <noteb/>
+                        <lab_obg/>
+                        <verify92/>
+                        <img_lab_obg1/>
+                        <url1/>
+                        <remarks92/>
+                        <lab_comm/>
+                        <verify93/>
+                        <img_lab_comm/>
+                        <url2/>
+                        <remarks93/>
+                        <lab_nutri/>
+                        <verify94/>
+                        <img_lab_nutri/>
+                        <url3/>
+                        <remarks94/>
+                        <lab_foundation/>
+                        <verify95/>
+                        <img_lab_foundation/>
+                        <url4/>
+                        <remarks95/>
+                        <lab_pre-clinical/>
+                        <verify96/>
+                        <img_lab_pre-clinical/>
+                        <url5/>
+                        <remarks96/>
+                        <lab_adv/>
+                        <verify97/>
+                        <img_lab_adv/>
+                        <url6/>
+                        <remarks97/>
+                    </infra>
+                    <meta>
+                        <instanceID/>
+                    </meta>
+                </data>
+            </instance>
+            <bind jr:preload="property" jr:preloadParams="username" nodeset="/data/username" type="string"/>
+            <bind jr:preload="timestamp" jr:preloadParams="start" nodeset="/data/start" type="dateTime"/>
+            <bind jr:preload="timestamp" jr:preloadParams="end" nodeset="/data/end" type="dateTime"/>
+            <bind jr:preload="date" jr:preloadParams="today" nodeset="/data/today" type="date"/>
+            <bind jr:preload="property" jr:preloadParams="deviceid" nodeset="/data/deviceid" type="string"/>
+            <bind jr:preload="property" jr:preloadParams="subscriberid" nodeset="/data/subscriberid" type="string"/>
+            <bind nodeset="/data/infra/notea" readonly="true()" type="string"/>
+            <bind nodeset="/data/infra/noteb" readonly="true()" type="string"/>
+            <bind nodeset="/data/infra/lab_obg" type="string"/>
+            <bind nodeset="/data/infra/verify92" type="string"/>
+            <bind nodeset="/data/infra/img_lab_obg1" relevant=" /data/infra/verify92  = 'yes'" type="binary"/>
+            <bind nodeset="/data/infra/url1" relevant=" /data/infra/verify92  = 'yes'" type="string"/>
+            <bind nodeset="/data/infra/remarks92" relevant=" /data/infra/verify92  = 'no'" type="string"/>
+            <bind nodeset="/data/infra/lab_comm" type="string"/>
+            <bind nodeset="/data/infra/verify93" type="string"/>
+            <bind nodeset="/data/infra/img_lab_comm" relevant=" /data/infra/verify93  = 'yes'" type="binary"/>
+            <bind nodeset="/data/infra/url2" relevant=" /data/infra/verify93  = 'yes'" type="string"/>
+            <bind nodeset="/data/infra/remarks93" relevant=" /data/infra/verify93  = 'no'" type="string"/>
+            <bind nodeset="/data/infra/lab_nutri" type="string"/>
+            <bind nodeset="/data/infra/verify94" type="string"/>
+            <bind nodeset="/data/infra/img_lab_nutri" relevant=" /data/infra/verify94  = 'yes'" type="binary"/>
+            <bind nodeset="/data/infra/url3" relevant=" /data/infra/verify94  = 'yes'" type="string"/>
+            <bind nodeset="/data/infra/remarks94" relevant=" /data/infra/verify94  = 'no'" type="string"/>
+            <bind nodeset="/data/infra/lab_foundation" type="string"/>
+            <bind nodeset="/data/infra/verify95" type="string"/>
+            <bind nodeset="/data/infra/img_lab_foundation" relevant=" /data/infra/verify95  = 'yes'" type="binary"/>
+            <bind nodeset="/data/infra/url4" relevant=" /data/infra/verify95  = 'yes'" type="string"/>
+            <bind nodeset="/data/infra/remarks95" relevant=" /data/infra/verify95  = 'no'" type="string"/>
+            <bind nodeset="/data/infra/lab_pre-clinical" type="string"/>
+            <bind nodeset="/data/infra/verify96" type="string"/>
+            <bind nodeset="/data/infra/img_lab_pre-clinical" relevant=" /data/infra/verify96  = 'yes'" type="binary"/>
+            <bind nodeset="/data/infra/url5" relevant=" /data/infra/verify96  = 'yes'" type="string"/>
+            <bind nodeset="/data/infra/remarks96" relevant=" /data/infra/verify96  = 'no'" type="string"/>
+            <bind nodeset="/data/infra/lab_adv" type="string"/>
+            <bind nodeset="/data/infra/verify97" type="string"/>
+            <bind nodeset="/data/infra/img_lab_adv" relevant=" /data/infra/verify97  = 'yes'" type="binary"/>
+            <bind nodeset="/data/infra/url6" relevant=" /data/infra/verify97  = 'yes'" type="string"/>
+            <bind nodeset="/data/infra/remarks97" relevant=" /data/infra/verify97  = 'no'" type="string"/>
+            <bind jr:preload="uid" nodeset="/data/meta/instanceID" readonly="true()" type="string"/>
+        </model>
+    </h:head>
+    <h:body class="pages">
+        <group appearance="field-list" ref="/data/infra">
+            <input ref="/data/infra/notea">
+                <label>To be observed at Institute</label>
+            </input>
+            <input ref="/data/infra/noteb">
+                <label>###Infrastructure - Laboratories</label>
+            </input>
+            <select ref="/data/infra/lab_obg">
+                <label>OBG &amp; Pediatric lab/MCH lab</label>
+                <item>
+                    <label>Birth Simulator</label>
+                    <value>1</value>
+                </item>
+                <item>
+                    <label>New born resuscitation</label>
+                    <value>2</value>
+                </item>
+                <item>
+                    <label>PPIUCD insertion model</label>
+                    <value>3</value>
+                </item>
+                <item>
+                    <label>IUCD insertion Model</label>
+                    <value>4</value>
+                </item>
+                <item>
+                    <label>Abdomen palpation model</label>
+                    <value>5</value>
+                </item>
+            </select>
+            <select1 appearance="table-list" ref="/data/infra/verify92">
+                <label>The utilization register is available &amp; in use</label>
+                <item>
+                    <label>Yes</label>
+                    <value>yes</value>
+                </item>
+                <item>
+                    <label>No</label>
+                    <value>no</value>
+                </item>
+            </select1>
+            <upload mediatype="image/*" ref="/data/infra/img_lab_obg1">
+                <label>Upload</label>
+            </upload>
+            <input ref="/data/infra/url1">
+                <label>URL Link</label>
+            </input>
+            <input ref="/data/infra/remarks92">
+                <label>Remarks</label>
+            </input>
+            <select ref="/data/infra/lab_comm">
+                <label>Community Lab</label>
+                <item>
+                    <label>Community Bags contents</label>
+                    <value>1</value>
+                </item>
+                <item>
+                    <label>Flip book or other AV aids</label>
+                    <value>2</value>
+                </item>
+                <item>
+                    <label>Weighing machine Baby</label>
+                    <value>3</value>
+                </item>
+                <item>
+                    <label>Weighing machine Adult</label>
+                    <value>4</value>
+                </item>
+                <item>
+                    <label>Home environment scenario</label>
+                    <value>5</value>
+                </item>
+            </select>
+            <select1 appearance="table-list" ref="/data/infra/verify93">
+                <label>The utilization register is available &amp; in use</label>
+                <item>
+                    <label>Yes</label>
+                    <value>yes</value>
+                </item>
+                <item>
+                    <label>No</label>
+                    <value>no</value>
+                </item>
+            </select1>
+            <upload mediatype="image/*" ref="/data/infra/img_lab_comm">
+                <label>Upload</label>
+            </upload>
+            <input ref="/data/infra/url2">
+                <label>URL Link</label>
+            </input>
+            <input ref="/data/infra/remarks93">
+                <label>Remarks</label>
+            </input>
+            <select ref="/data/infra/lab_nutri">
+                <label>Nutrition lab</label>
+                <item>
+                    <label>Refrigerator</label>
+                    <value>1</value>
+                </item>
+                <item>
+                    <label>Dinner set</label>
+                    <value>2</value>
+                </item>
+                <item>
+                    <label>Gas stove with Cylinder</label>
+                    <value>3</value>
+                </item>
+                <item>
+                    <label>Basic Utensils</label>
+                    <value>4</value>
+                </item>
+                <item>
+                    <label>Weighing machine</label>
+                    <value>5</value>
+                </item>
+            </select>
+            <select1 appearance="table-list" ref="/data/infra/verify94">
+                <label>The utilization register is available &amp; in use</label>
+                <item>
+                    <label>Yes</label>
+                    <value>yes</value>
+                </item>
+                <item>
+                    <label>No</label>
+                    <value>no</value>
+                </item>
+            </select1>
+            <upload mediatype="image/*" ref="/data/infra/img_lab_nutri">
+                <label>Upload</label>
+            </upload>
+            <input ref="/data/infra/url3">
+                <label>URL Link</label>
+            </input>
+            <input ref="/data/infra/remarks94">
+                <label>Remarks</label>
+            </input>
+            <select ref="/data/infra/lab_foundation">
+                <label>Foundation lab</label>
+                <item>
+                    <label>Patient cot (Adult)</label>
+                    <value>1</value>
+                </item>
+                <item>
+                    <label>Patient Cot (child)</label>
+                    <value>2</value>
+                </item>
+                <item>
+                    <label>Adult male</label>
+                    <value>3</value>
+                </item>
+                <item>
+                    <label>Adult female</label>
+                    <value>4</value>
+                </item>
+                <item>
+                    <label>Child</label>
+                    <value>5</value>
+                </item>
+            </select>
+            <select1 appearance="table-list" ref="/data/infra/verify95">
+                <label>The utilization register is available &amp; in use</label>
+                <item>
+                    <label>Yes</label>
+                    <value>yes</value>
+                </item>
+                <item>
+                    <label>No</label>
+                    <value>no</value>
+                </item>
+            </select1>
+            <upload mediatype="image/*" ref="/data/infra/img_lab_foundation">
+                <label>Upload</label>
+            </upload>
+            <input ref="/data/infra/url4">
+                <label>URL Link</label>
+            </input>
+            <input ref="/data/infra/remarks95">
+                <label>Remarks</label>
+            </input>
+            <select ref="/data/infra/lab_pre-clinical">
+                <label>Pre-clinical</label>
+                <item>
+                    <label>Adult human articulated skeleton</label>
+                    <value>1</value>
+                </item>
+                <item>
+                    <label>Full size human bodywith muscles, arteries and veins</label>
+                    <value>2</value>
+                </item>
+                <item>
+                    <label>Adult human skull</label>
+                    <value>3</value>
+                </item>
+                <item>
+                    <label>Digestive system model</label>
+                    <value>4</value>
+                </item>
+                <item>
+                    <label>Female pelvic bone</label>
+                    <value>5</value>
+                </item>
+            </select>
+            <select1 appearance="table-list" ref="/data/infra/verify96">
+                <label>The utilization register is available &amp; in use</label>
+                <item>
+                    <label>Yes</label>
+                    <value>yes</value>
+                </item>
+                <item>
+                    <label>No</label>
+                    <value>no</value>
+                </item>
+            </select1>
+            <upload mediatype="image/*" ref="/data/infra/img_lab_pre-clinical">
+                <label>Upload</label>
+            </upload>
+            <input ref="/data/infra/url5">
+                <label>URL Link</label>
+            </input>
+            <input ref="/data/infra/remarks96">
+                <label>Remarks</label>
+            </input>
+            <select ref="/data/infra/lab_adv">
+                <label>Advance Skill lab</label>
+                <item>
+                    <label>Adult CPR</label>
+                    <value>1</value>
+                </item>
+                <item>
+                    <label>Child CPR</label>
+                    <value>2</value>
+                </item>
+                <item>
+                    <label>IV Arm</label>
+                    <value>3</value>
+                </item>
+                <item>
+                    <label>IM Model</label>
+                    <value>4</value>
+                </item>
+                <item>
+                    <label>Ambu bag with all sizes mask</label>
+                    <value>5</value>
+                </item>
+            </select>
+            <select1 appearance="table-list" ref="/data/infra/verify97">
+                <label>The utilization register is available &amp; in use</label>
+                <item>
+                    <label>Yes</label>
+                    <value>yes</value>
+                </item>
+                <item>
+                    <label>No</label>
+                    <value>no</value>
+                </item>
+            </select1>
+            <upload mediatype="image/*" ref="/data/infra/img_lab_adv">
+                <label>Upload</label>
+            </upload>
+            <input ref="/data/infra/url6">
+                <label>URL Link</label>
+            </input>
+            <input ref="/data/infra/remarks97">
+                <label>Remarks</label>
+            </input>
+        </group>
+    </h:body>
+</h:html>
