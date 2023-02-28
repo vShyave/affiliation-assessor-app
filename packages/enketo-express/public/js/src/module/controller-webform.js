@@ -725,7 +725,7 @@ function _setEventHandlers(survey) {
         if (formFiles) {
             console.log(arrayOfFileURLs?.length)
             console.log("formFiles: " + formFiles?.length)
-            if (arrayOfFileURLs?.length <= formFiles?.length) {
+            if (arrayOfFileURLs?.length <= formFiles?.length && formFiles?.length) {
                 const file = formFiles[formFiles?.length - 1];
                 const fileURL = await formController.uploadFile(file);
                 arrayOfFileURLs.push({ url: fileURL, name: file.name });

@@ -64,15 +64,36 @@ export class AppService {
     for (const key in prefillSpec) {
       if (prefillSpec.hasOwnProperty(key)) {
         const key_arr = key.split('_*_');
-        const element = this.findElementRecursively(0, key_arr, instance);
+        let element = null;
+        if (this.isImage(prefillSpec[key])) {
+          const parentEl = this.findElementRecursively(0, key_arr.slice(0, key_arr.length - 1), instance);
+          for (let i = 0; i < parentEl.childNodes.length; i++) {
+            if (element) break;
+            if (parentEl.childNodes[i].tagName == key_arr[key_arr.length - 1]) {
+              while (i--) {
+                if (parentEl?.childNodes[i]?.tagName) {
+                  element = parentEl.childNodes[i];
+                  break;
+                }
+              }
+            }
+          }
+
+        } else element = this.findElementRecursively(0, key_arr, instance);
         if (element) {
-          console.log(prefillSpec[key]);
+          // console.log(prefillSpec[key]);
           // console.log(eval(prefillSpec[key]));
           element.textContent = eval(prefillSpec[key]);
         }
       }
     }
     return doc.toString();
+  }
+
+  isImage(filename: string): boolean {
+    if (filename.includes(".png") || filename.includes(".tif") || filename.includes(".tiff") || filename.includes(".jpg") || filename.includes(".jpeg") || filename.includes(".bmp") || filename.includes(".gif") || filename.includes(".eps"))
+      return true;
+    return false;
   }
 
   findElementRecursively(start: number, key_arr: any, instance: any) {
@@ -82,7 +103,6 @@ export class AppService {
   }
 
   prefillFormXML(form: string, onFormSuccessData: any, prefillSpec: any): string {
-    console.log("MAI YAHAN AA GAYA");
     const formFilePath = join(__dirname, `forms/${form}.xml`);
     const formString = fs.readFileSync(formFilePath, 'utf8');
     const doc = this.parser.parseFromString(formString, 'text/xml');
