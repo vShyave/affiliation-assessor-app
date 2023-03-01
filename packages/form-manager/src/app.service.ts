@@ -70,7 +70,7 @@ export class AppService {
           for (let i = 0; i < parentEl.childNodes.length; i++) {
             if (element) break;
             if (parentEl.childNodes[i].tagName == key_arr[key_arr.length - 1]) {
-              while (i--) {
+              while (++i) {
                 if (parentEl?.childNodes[i]?.tagName) {
                   element = parentEl.childNodes[i];
                   break;

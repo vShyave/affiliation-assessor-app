@@ -1,100 +1,113 @@
 <?xml version="1.0"?>
-<h:html xmlns="http://www.w3.org/2002/xforms"
-    xmlns:ev="http://www.w3.org/2001/xml-events"
-    xmlns:h="http://www.w3.org/1999/xhtml"
-    xmlns:jr="http://openrosa.org/javarosa"
-    xmlns:odk="http://www.opendatakit.org/xforms"
-    xmlns:orx="http://openrosa.org/xforms"
+<h:html xmlns="http://www.w3.org/2002/xforms" xmlns:ev="http://www.w3.org/2001/xml-events"
+    xmlns:h="http://www.w3.org/1999/xhtml" xmlns:jr="http://openrosa.org/javarosa"
+    xmlns:odk="http://www.opendatakit.org/xforms" xmlns:orx="http://openrosa.org/xforms"
     xmlns:xsd="http://www.w3.org/2001/XMLSchema">
     <h:head>
         <h:title>Nursing Form-Medical (Infrastructure)</h:title>
         <model odk:xforms-version="1.0.0">
             <instance>
                 <data id="Nursing Form-Medical (Infrastructure)" version="1">
-                    <username/>
-                    <start/>
-                    <end/>
-                    <today/>
-                    <deviceid/>
-                    <subscriberid/>
+                    <username />
+                    <start />
+                    <end />
+                    <today />
+                    <deviceid />
+                    <subscriberid />
                     <infra>
-                        <notea/>
-                        <noteb/>
-                        <lab_obg/>
-                        <verify92/>
-                        <img_lab_obg1/>
-                        <url1/>
-                        <remarks92/>
-                        <lab_comm/>
-                        <verify93/>
-                        <img_lab_comm/>
-                        <url2/>
-                        <remarks93/>
-                        <lab_nutri/>
-                        <verify94/>
-                        <img_lab_nutri/>
-                        <url3/>
-                        <remarks94/>
-                        <lab_foundation/>
-                        <verify95/>
-                        <img_lab_foundation/>
-                        <url4/>
-                        <remarks95/>
-                        <lab_pre-clinical/>
-                        <verify96/>
-                        <img_lab_pre-clinical/>
-                        <url5/>
-                        <remarks96/>
-                        <lab_adv/>
-                        <verify97/>
-                        <img_lab_adv/>
-                        <url6/>
-                        <remarks97/>
+                        <notea />
+                        <noteb />
+                        <lab_obg />
+                        <verify92 />
+                        <img_lab_obg1 />
+                        <url1 />
+                        <remarks92 />
+                        <lab_comm />
+                        <verify93 />
+                        <img_lab_comm />
+                        <url2 />
+                        <remarks93 />
+                        <lab_nutri />
+                        <verify94 />
+                        <img_lab_nutri />
+                        <url3 />
+                        <remarks94 />
+                        <lab_foundation />
+                        <verify95 />
+                        <img_lab_foundation />
+                        <url4 />
+                        <remarks95 />
+                        <lab_pre-clinical />
+                        <verify96 />
+                        <img_lab_pre-clinical />
+                        <url5 />
+                        <remarks96 />
+                        <lab_adv />
+                        <verify97 />
+                        <img_lab_adv />
+                        <url6 />
+                        <remarks97 />
                     </infra>
                     <meta>
-                        <instanceID/>
+                        <instanceID />
                     </meta>
                 </data>
             </instance>
-            <bind jr:preload="property" jr:preloadParams="username" nodeset="/data/username" type="string"/>
-            <bind jr:preload="timestamp" jr:preloadParams="start" nodeset="/data/start" type="dateTime"/>
-            <bind jr:preload="timestamp" jr:preloadParams="end" nodeset="/data/end" type="dateTime"/>
-            <bind jr:preload="date" jr:preloadParams="today" nodeset="/data/today" type="date"/>
-            <bind jr:preload="property" jr:preloadParams="deviceid" nodeset="/data/deviceid" type="string"/>
-            <bind jr:preload="property" jr:preloadParams="subscriberid" nodeset="/data/subscriberid" type="string"/>
-            <bind nodeset="/data/infra/notea" readonly="true()" type="string"/>
-            <bind nodeset="/data/infra/noteb" readonly="true()" type="string"/>
-            <bind nodeset="/data/infra/lab_obg" type="string"/>
-            <bind nodeset="/data/infra/verify92" type="string"/>
-            <bind nodeset="/data/infra/img_lab_obg1" relevant=" /data/infra/verify92  = 'yes'" type="binary"/>
-            <bind nodeset="/data/infra/url1" relevant=" /data/infra/verify92  = 'yes'" type="string"/>
-            <bind nodeset="/data/infra/remarks92" relevant=" /data/infra/verify92  = 'no'" type="string"/>
-            <bind nodeset="/data/infra/lab_comm" type="string"/>
-            <bind nodeset="/data/infra/verify93" type="string"/>
-            <bind nodeset="/data/infra/img_lab_comm" relevant=" /data/infra/verify93  = 'yes'" type="binary"/>
-            <bind nodeset="/data/infra/url2" relevant=" /data/infra/verify93  = 'yes'" type="string"/>
-            <bind nodeset="/data/infra/remarks93" relevant=" /data/infra/verify93  = 'no'" type="string"/>
-            <bind nodeset="/data/infra/lab_nutri" type="string"/>
-            <bind nodeset="/data/infra/verify94" type="string"/>
-            <bind nodeset="/data/infra/img_lab_nutri" relevant=" /data/infra/verify94  = 'yes'" type="binary"/>
-            <bind nodeset="/data/infra/url3" relevant=" /data/infra/verify94  = 'yes'" type="string"/>
-            <bind nodeset="/data/infra/remarks94" relevant=" /data/infra/verify94  = 'no'" type="string"/>
-            <bind nodeset="/data/infra/lab_foundation" type="string"/>
-            <bind nodeset="/data/infra/verify95" type="string"/>
-            <bind nodeset="/data/infra/img_lab_foundation" relevant=" /data/infra/verify95  = 'yes'" type="binary"/>
-            <bind nodeset="/data/infra/url4" relevant=" /data/infra/verify95  = 'yes'" type="string"/>
-            <bind nodeset="/data/infra/remarks95" relevant=" /data/infra/verify95  = 'no'" type="string"/>
-            <bind nodeset="/data/infra/lab_pre-clinical" type="string"/>
-            <bind nodeset="/data/infra/verify96" type="string"/>
-            <bind nodeset="/data/infra/img_lab_pre-clinical" relevant=" /data/infra/verify96  = 'yes'" type="binary"/>
-            <bind nodeset="/data/infra/url5" relevant=" /data/infra/verify96  = 'yes'" type="string"/>
-            <bind nodeset="/data/infra/remarks96" relevant=" /data/infra/verify96  = 'no'" type="string"/>
-            <bind nodeset="/data/infra/lab_adv" type="string"/>
-            <bind nodeset="/data/infra/verify97" type="string"/>
-            <bind nodeset="/data/infra/img_lab_adv" relevant=" /data/infra/verify97  = 'yes'" type="binary"/>
-            <bind nodeset="/data/infra/url6" relevant=" /data/infra/verify97  = 'yes'" type="string"/>
-            <bind nodeset="/data/infra/remarks97" relevant=" /data/infra/verify97  = 'no'" type="string"/>
-            <bind jr:preload="uid" nodeset="/data/meta/instanceID" readonly="true()" type="string"/>
+            <bind jr:preload="property" jr:preloadParams="username" nodeset="/data/username"
+                type="string" />
+            <bind jr:preload="timestamp" jr:preloadParams="start" nodeset="/data/start"
+                type="dateTime" />
+            <bind jr:preload="timestamp" jr:preloadParams="end" nodeset="/data/end" type="dateTime" />
+            <bind jr:preload="date" jr:preloadParams="today" nodeset="/data/today" type="date" />
+            <bind jr:preload="property" jr:preloadParams="deviceid" nodeset="/data/deviceid"
+                type="string" />
+            <bind jr:preload="property" jr:preloadParams="subscriberid" nodeset="/data/subscriberid"
+                type="string" />
+            <bind nodeset="/data/infra/notea" readonly="true()" type="string" />
+            <bind nodeset="/data/infra/noteb" readonly="true()" type="string" />
+            <bind nodeset="/data/infra/lab_obg" required="true()" type="string" />
+            <bind nodeset="/data/infra/verify92" required="true()" type="string" />
+            <bind nodeset="/data/infra/img_lab_obg1" relevant=" /data/infra/verify92  = 'yes'"
+                required="true()" type="binary" />
+            <bind nodeset="/data/infra/url1" relevant=" /data/infra/verify92  = 'yes'" type="string" />
+            <bind nodeset="/data/infra/remarks92" relevant=" /data/infra/verify92  = 'no'"
+                required="true()" type="string" />
+            <bind nodeset="/data/infra/lab_comm" required="true()" type="string" />
+            <bind nodeset="/data/infra/verify93" required="true()" type="string" />
+            <bind nodeset="/data/infra/img_lab_comm" relevant=" /data/infra/verify93  = 'yes'"
+                required="true()" type="binary" />
+            <bind nodeset="/data/infra/url2" relevant=" /data/infra/verify93  = 'yes'" type="string" />
+            <bind nodeset="/data/infra/remarks93" relevant=" /data/infra/verify93  = 'no'"
+                required="true()" type="string" />
+            <bind nodeset="/data/infra/lab_nutri" required="true()" type="string" />
+            <bind nodeset="/data/infra/verify94" required="true()" type="string" />
+            <bind nodeset="/data/infra/img_lab_nutri" relevant=" /data/infra/verify94  = 'yes'"
+                required="true()" type="binary" />
+            <bind nodeset="/data/infra/url3" relevant=" /data/infra/verify94  = 'yes'" type="string" />
+            <bind nodeset="/data/infra/remarks94" relevant=" /data/infra/verify94  = 'no'"
+                required="true()" type="string" />
+            <bind nodeset="/data/infra/lab_foundation" required="true()" type="string" />
+            <bind nodeset="/data/infra/verify95" required="true()" type="string" />
+            <bind nodeset="/data/infra/img_lab_foundation" relevant=" /data/infra/verify95  = 'yes'"
+                required="true()" type="binary" />
+            <bind nodeset="/data/infra/url4" relevant=" /data/infra/verify95  = 'yes'" type="string" />
+            <bind nodeset="/data/infra/remarks95" relevant=" /data/infra/verify95  = 'no'"
+                required="true()" type="string" />
+            <bind nodeset="/data/infra/lab_pre-clinical" required="true()" type="string" />
+            <bind nodeset="/data/infra/verify96" required="true()" type="string" />
+            <bind nodeset="/data/infra/img_lab_pre-clinical"
+                relevant=" /data/infra/verify96  = 'yes'" required="true()" type="binary" />
+            <bind nodeset="/data/infra/url5" relevant=" /data/infra/verify96  = 'yes'" type="string" />
+            <bind nodeset="/data/infra/remarks96" relevant=" /data/infra/verify96  = 'no'"
+                required="true()" type="string" />
+            <bind nodeset="/data/infra/lab_adv" required="true()" type="string" />
+            <bind nodeset="/data/infra/verify97" required="true()" type="string" />
+            <bind nodeset="/data/infra/img_lab_adv" relevant=" /data/infra/verify97  = 'yes'"
+                required="true()" type="binary" />
+            <bind nodeset="/data/infra/url6" relevant=" /data/infra/verify97  = 'yes'" type="string" />
+            <bind nodeset="/data/infra/remarks97" relevant=" /data/infra/verify97  = 'no'"
+                required="true()" type="string" />
+            <bind jr:preload="uid" nodeset="/data/meta/instanceID" readonly="true()" type="string" />
         </model>
     </h:head>
     <h:body class="pages">
@@ -142,7 +155,7 @@
             <upload mediatype="image/*" ref="/data/infra/img_lab_obg1">
                 <label>Upload</label>
             </upload>
-            <input ref="/data/infra/url1">
+            <input appearance="url" ref="/data/infra/url1">
                 <label>URL Link</label>
             </input>
             <input ref="/data/infra/remarks92">
@@ -185,7 +198,7 @@
             <upload mediatype="image/*" ref="/data/infra/img_lab_comm">
                 <label>Upload</label>
             </upload>
-            <input ref="/data/infra/url2">
+            <input appearance="url" ref="/data/infra/url2">
                 <label>URL Link</label>
             </input>
             <input ref="/data/infra/remarks93">
@@ -228,7 +241,7 @@
             <upload mediatype="image/*" ref="/data/infra/img_lab_nutri">
                 <label>Upload</label>
             </upload>
-            <input ref="/data/infra/url3">
+            <input appearance="url" ref="/data/infra/url3">
                 <label>URL Link</label>
             </input>
             <input ref="/data/infra/remarks94">
@@ -271,7 +284,7 @@
             <upload mediatype="image/*" ref="/data/infra/img_lab_foundation">
                 <label>Upload</label>
             </upload>
-            <input ref="/data/infra/url4">
+            <input appearance="url" ref="/data/infra/url4">
                 <label>URL Link</label>
             </input>
             <input ref="/data/infra/remarks95">
@@ -314,7 +327,7 @@
             <upload mediatype="image/*" ref="/data/infra/img_lab_pre-clinical">
                 <label>Upload</label>
             </upload>
-            <input ref="/data/infra/url5">
+            <input appearance="url" ref="/data/infra/url5">
                 <label>URL Link</label>
             </input>
             <input ref="/data/infra/remarks96">
@@ -357,7 +370,7 @@
             <upload mediatype="image/*" ref="/data/infra/img_lab_adv">
                 <label>Upload</label>
             </upload>
-            <input ref="/data/infra/url6">
+            <input appearance="url" ref="/data/infra/url6">
                 <label>URL Link</label>
             </input>
             <input ref="/data/infra/remarks97">
