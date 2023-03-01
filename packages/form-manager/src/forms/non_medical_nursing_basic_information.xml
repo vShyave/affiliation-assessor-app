@@ -1,0 +1,533 @@
+<?xml version="1.0"?>
+<h:html xmlns="http://www.w3.org/2002/xforms" xmlns:ev="http://www.w3.org/2001/xml-events"
+    xmlns:h="http://www.w3.org/1999/xhtml" xmlns:jr="http://openrosa.org/javarosa"
+    xmlns:odk="http://www.opendatakit.org/xforms" xmlns:orx="http://openrosa.org/xforms"
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <h:head>
+        <h:title>Nursing Form- Non Medical (Basic Information)</h:title>
+        <model odk:xforms-version="1.0.0">
+            <instance>
+                <data id="Nursing Form- Non Medical (Basic Information)" version="1">
+                    <username />
+                    <start />
+                    <end />
+                    <today />
+                    <deviceid />
+                    <subscriberid />
+                    <part1_1>
+                        <note1 />
+                        <District />
+                        <NameOfIns />
+                        <ptcc />
+                        <address />
+                        <pincode />
+                        <email />
+                        <gov_priv />
+                        <chair_name />
+                        <chair_email />
+                        <chair_number />
+                        <princial_name />
+                        <princial_email />
+                        <princial_number />
+                        <part1_2_1 />
+                        <nameofTSMC />
+                        <part1_2_2 />
+                        <part1_2_2a />
+                        <img_part1_2_2a />
+                        <url1 />
+                        <part1_2_2b />
+                        <img_part1_2_2b />
+                        <url2 />
+                        <part1_2_3 />
+                        <part1_2_3a />
+                        <img_part1_2_3a />
+                        <url3 />
+                        <part1_2_3b />
+                        <img_part1_2_3b />
+                        <url4 />
+                    </part1_1>
+                    <meta>
+                        <instanceID />
+                    </meta>
+                </data>
+            </instance>
+            <bind jr:preload="property" jr:preloadParams="username" nodeset="/data/username"
+                type="string" />
+            <bind jr:preload="timestamp" jr:preloadParams="start" nodeset="/data/start"
+                type="dateTime" />
+            <bind jr:preload="timestamp" jr:preloadParams="end" nodeset="/data/end" type="dateTime" />
+            <bind jr:preload="date" jr:preloadParams="today" nodeset="/data/today" type="date" />
+            <bind jr:preload="property" jr:preloadParams="deviceid" nodeset="/data/deviceid"
+                type="string" />
+            <bind jr:preload="property" jr:preloadParams="subscriberid" nodeset="/data/subscriberid"
+                type="string" />
+            <bind nodeset="/data/part1_1/note1" readonly="true()" type="string" />
+            <bind nodeset="/data/part1_1/District" required="true()" type="string" />
+            <bind nodeset="/data/part1_1/NameOfIns" required="true()" type="string" />
+            <bind nodeset="/data/part1_1/ptcc" required="true()" type="int" />
+            <bind nodeset="/data/part1_1/address" required="true()" type="string" />
+            <bind nodeset="/data/part1_1/pincode" required="true()" type="int" />
+            <bind nodeset="/data/part1_1/email" required="true()" type="string" />
+            <bind nodeset="/data/part1_1/gov_priv" required="true()" type="string" />
+            <bind nodeset="/data/part1_1/chair_name" required="true()" type="string" />
+            <bind nodeset="/data/part1_1/chair_email" required="true()" type="string" />
+            <bind constraint="string-length(.)=10" nodeset="/data/part1_1/chair_number"
+                required="true()" type="string" />
+            <bind nodeset="/data/part1_1/princial_name" required="true()" type="string" />
+            <bind nodeset="/data/part1_1/princial_email" required="true()" type="string" />
+            <bind constraint="string-length(.)=10" nodeset="/data/part1_1/princial_number"
+                required="true()" type="string" />
+            <bind nodeset="/data/part1_1/part1_2_1" readonly="true()" type="string" />
+            <bind nodeset="/data/part1_1/nameofTSMC" required="true()" type="string" />
+            <bind nodeset="/data/part1_1/part1_2_2" readonly="true()" type="string" />
+            <bind nodeset="/data/part1_1/part1_2_2a" required="true()" type="string" />
+            <bind nodeset="/data/part1_1/img_part1_2_2a" relevant=" /data/part1_1/part1_2_2a ='yes'"
+                required="true()" type="binary" />
+            <bind nodeset="/data/part1_1/url1" relevant=" /data/part1_1/part1_2_2a ='yes'"
+                type="string" />
+            <bind nodeset="/data/part1_1/part1_2_2b" required="true()" type="string" />
+            <bind nodeset="/data/part1_1/img_part1_2_2b" relevant=" /data/part1_1/part1_2_2b ='yes'"
+                required="true()" type="binary" />
+            <bind nodeset="/data/part1_1/url2" relevant=" /data/part1_1/part1_2_2b ='yes'"
+                type="string" />
+            <bind nodeset="/data/part1_1/part1_2_3" readonly="true()" type="string" />
+            <bind nodeset="/data/part1_1/part1_2_3a" required="true()" type="string" />
+            <bind nodeset="/data/part1_1/img_part1_2_3a" relevant=" /data/part1_1/part1_2_3a ='yes'"
+                required="true()" type="binary" />
+            <bind nodeset="/data/part1_1/url3" relevant=" /data/part1_1/part1_2_3a ='yes'"
+                type="string" />
+            <bind nodeset="/data/part1_1/part1_2_3b" required="true()" type="string" />
+            <bind nodeset="/data/part1_1/img_part1_2_3b" relevant=" /data/part1_1/part1_2_3b ='yes'"
+                required="true()" type="binary" />
+            <bind nodeset="/data/part1_1/url4" relevant=" /data/part1_1/part1_2_3b ='yes'"
+                type="string" />
+            <bind jr:preload="uid" nodeset="/data/meta/instanceID" readonly="true()" type="string" />
+        </model>
+    </h:head>
+    <h:body class="pages">
+        <group appearance="field-list" ref="/data/part1_1">
+            <input ref="/data/part1_1/note1">
+                <label>####Basic Information</label>
+            </input>
+            <select1 appearance="minimal" ref="/data/part1_1/District">
+                <label>District</label>
+                <item>
+                    <label>AGRA</label>
+                    <value>AGRA</value>
+                </item>
+                <item>
+                    <label>ALIGARH</label>
+                    <value>ALIGARH</value>
+                </item>
+                <item>
+                    <label>AMBEDKAR NAGAR</label>
+                    <value>AMBEDKAR NAGAR</value>
+                </item>
+                <item>
+                    <label>AMETHI</label>
+                    <value>AMETHI</value>
+                </item>
+                <item>
+                    <label>AMROHA</label>
+                    <value>AMROHA</value>
+                </item>
+                <item>
+                    <label>AURAIYA</label>
+                    <value>AURAIYA</value>
+                </item>
+                <item>
+                    <label>AYODHYA</label>
+                    <value>AYODHYA</value>
+                </item>
+                <item>
+                    <label>AZAMGARH</label>
+                    <value>AZAMGARH</value>
+                </item>
+                <item>
+                    <label>BAGHPAT</label>
+                    <value>BAGHPAT</value>
+                </item>
+                <item>
+                    <label>BAHRAICH</label>
+                    <value>BAHRAICH</value>
+                </item>
+                <item>
+                    <label>BALLIA</label>
+                    <value>BALLIA</value>
+                </item>
+                <item>
+                    <label>BALRAMPUR</label>
+                    <value>BALRAMPUR</value>
+                </item>
+                <item>
+                    <label>BANDA</label>
+                    <value>BANDA</value>
+                </item>
+                <item>
+                    <label>BARABANKI</label>
+                    <value>BARABANKI</value>
+                </item>
+                <item>
+                    <label>BAREILLY</label>
+                    <value>BAREILLY</value>
+                </item>
+                <item>
+                    <label>BASTI</label>
+                    <value>BASTI</value>
+                </item>
+                <item>
+                    <label>BIJNOR</label>
+                    <value>BIJNOR</value>
+                </item>
+                <item>
+                    <label>BULANDSHAHR</label>
+                    <value>BULANDSHAHR</value>
+                </item>
+                <item>
+                    <label>CHANDAULI</label>
+                    <value>CHANDAULI</value>
+                </item>
+                <item>
+                    <label>CHITRAKOOT</label>
+                    <value>CHITRAKOOT</value>
+                </item>
+                <item>
+                    <label>DEORIA</label>
+                    <value>DEORIA</value>
+                </item>
+                <item>
+                    <label>ETAH</label>
+                    <value>ETAH</value>
+                </item>
+                <item>
+                    <label>ETAWAH</label>
+                    <value>ETAWAH</value>
+                </item>
+                <item>
+                    <label>FARRUKHABAD</label>
+                    <value>FARRUKHABAD</value>
+                </item>
+                <item>
+                    <label>FATEHPUR</label>
+                    <value>FATEHPUR</value>
+                </item>
+                <item>
+                    <label>FIROZABAD</label>
+                    <value>FIROZABAD</value>
+                </item>
+                <item>
+                    <label>GAUTAM BUDDH NAGAR</label>
+                    <value>GAUTAM BUDDH NAGAR</value>
+                </item>
+                <item>
+                    <label>GHAZIABAD</label>
+                    <value>GHAZIABAD</value>
+                </item>
+                <item>
+                    <label>GHAZIPUR</label>
+                    <value>GHAZIPUR</value>
+                </item>
+                <item>
+                    <label>GONDA</label>
+                    <value>GONDA</value>
+                </item>
+                <item>
+                    <label>GORAKHPUR</label>
+                    <value>GORAKHPUR</value>
+                </item>
+                <item>
+                    <label>HAPUR</label>
+                    <value>HAPUR</value>
+                </item>
+                <item>
+                    <label>HARDOI</label>
+                    <value>HARDOI</value>
+                </item>
+                <item>
+                    <label>HATHRAS</label>
+                    <value>HATHRAS</value>
+                </item>
+                <item>
+                    <label>JALAUN</label>
+                    <value>JALAUN</value>
+                </item>
+                <item>
+                    <label>JAUNPUR</label>
+                    <value>JAUNPUR</value>
+                </item>
+                <item>
+                    <label>JHANSI</label>
+                    <value>JHANSI</value>
+                </item>
+                <item>
+                    <label>KANNAUJ</label>
+                    <value>KANNAUJ</value>
+                </item>
+                <item>
+                    <label>KANPUR</label>
+                    <value>KANPUR</value>
+                </item>
+                <item>
+                    <label>KANPUR DEHAT</label>
+                    <value>KANPUR DEHAT</value>
+                </item>
+                <item>
+                    <label>KASGANJ</label>
+                    <value>KASGANJ</value>
+                </item>
+                <item>
+                    <label>KAUSHAMBI</label>
+                    <value>KAUSHAMBI</value>
+                </item>
+                <item>
+                    <label>KUSHI NAGAR</label>
+                    <value>KUSHI NAGAR</value>
+                </item>
+                <item>
+                    <label>LAKHIMPUR KHERI</label>
+                    <value>LAKHIMPUR KHERI</value>
+                </item>
+                <item>
+                    <label>LUCKNOW</label>
+                    <value>LUCKNOW</value>
+                </item>
+                <item>
+                    <label>MAHARAJGANJ</label>
+                    <value>MAHARAJGANJ</value>
+                </item>
+                <item>
+                    <label>MAHOBA</label>
+                    <value>MAHOBA</value>
+                </item>
+                <item>
+                    <label>MAINPURI</label>
+                    <value>MAINPURI</value>
+                </item>
+                <item>
+                    <label>MATHURA</label>
+                    <value>MATHURA</value>
+                </item>
+                <item>
+                    <label>MAU</label>
+                    <value>MAU</value>
+                </item>
+                <item>
+                    <label>MEERUT</label>
+                    <value>MEERUT</value>
+                </item>
+                <item>
+                    <label>MIRZAPUR</label>
+                    <value>MIRZAPUR</value>
+                </item>
+                <item>
+                    <label>MORADABAD</label>
+                    <value>MORADABAD</value>
+                </item>
+                <item>
+                    <label>MUZAFFARNAGAR</label>
+                    <value>MUZAFFARNAGAR</value>
+                </item>
+                <item>
+                    <label>PILIBHIT</label>
+                    <value>PILIBHIT</value>
+                </item>
+                <item>
+                    <label>PRATAPGARH</label>
+                    <value>PRATAPGARH</value>
+                </item>
+                <item>
+                    <label>PRAYAGRAJ</label>
+                    <value>PRAYAGRAJ</value>
+                </item>
+                <item>
+                    <label>RAEBARELI</label>
+                    <value>RAEBARELI</value>
+                </item>
+                <item>
+                    <label>RAMPUR</label>
+                    <value>RAMPUR</value>
+                </item>
+                <item>
+                    <label>SAHARANPUR</label>
+                    <value>SAHARANPUR</value>
+                </item>
+                <item>
+                    <label>SAMBHAL</label>
+                    <value>SAMBHAL</value>
+                </item>
+                <item>
+                    <label>SANT KABIR NAGAR</label>
+                    <value>SANT KABIR NAGAR</value>
+                </item>
+                <item>
+                    <label>SANT RAVIDAS NAGAR</label>
+                    <value>SANT RAVIDAS NAGAR</value>
+                </item>
+                <item>
+                    <label>SHAHJAHANPUR</label>
+                    <value>SHAHJAHANPUR</value>
+                </item>
+                <item>
+                    <label>SHAMLI</label>
+                    <value>SHAMLI</value>
+                </item>
+                <item>
+                    <label>SIDDHARTHNAGAR</label>
+                    <value>SIDDHARTHNAGAR</value>
+                </item>
+                <item>
+                    <label>SITAPUR</label>
+                    <value>SITAPUR</value>
+                </item>
+                <item>
+                    <label>SONBHADRA</label>
+                    <value>SONBHADRA</value>
+                </item>
+                <item>
+                    <label>SULTANPUR</label>
+                    <value>SULTANPUR</value>
+                </item>
+                <item>
+                    <label>UNNAO</label>
+                    <value>UNNAO</value>
+                </item>
+                <item>
+                    <label>VARANASI</label>
+                    <value>VARANASI</value>
+                </item>
+            </select1>
+            <input appearance="minimal"
+                query="instance('nameofIns')/root/item[districts= /data/part1_1/District ]"
+                ref="/data/part1_1/NameOfIns">
+                <label>Name of institution</label>
+            </input>
+            <input ref="/data/part1_1/ptcc">
+                <label>Parent Training Centre Code</label>
+            </input>
+            <input appearance="multiline" ref="/data/part1_1/address">
+                <label>Full Address</label>
+            </input>
+            <input ref="/data/part1_1/pincode">
+                <label>Pincode</label>
+            </input>
+            <input ref="/data/part1_1/email">
+                <label>Email id of the institution</label>
+            </input>
+            <select1 appearance="horizontal" ref="/data/part1_1/gov_priv">
+                <label>Govt. or Private</label>
+                <item>
+                    <label>Government</label>
+                    <value>a</value>
+                </item>
+                <item>
+                    <label>Private</label>
+                    <value>b</value>
+                </item>
+            </select1>
+            <input ref="/data/part1_1/chair_name">
+                <label>Name of Chairperson</label>
+            </input>
+            <input ref="/data/part1_1/chair_email">
+                <label>Email id of Chairperson</label>
+            </input>
+            <input appearance="numbers" ref="/data/part1_1/chair_number">
+                <label>Contact No of Chairperson</label>
+            </input>
+            <input ref="/data/part1_1/princial_name">
+                <label>Name of Principal</label>
+            </input>
+            <input ref="/data/part1_1/princial_email">
+                <label>Email Id of principal</label>
+            </input>
+            <input appearance="numbers" ref="/data/part1_1/princial_number">
+                <label>Contact No of principal</label>
+            </input>
+            <input ref="/data/part1_1/part1_2_1">
+                <label>Administrative control and statutory requirements</label>
+            </input>
+            <input ref="/data/part1_1/nameofTSMC">
+                <label>Name of the Trust/ Society/ Missionary/ Company:</label>
+            </input>
+            <input ref="/data/part1_1/part1_2_2">
+                <label>Documents for establishment:</label>
+            </input>
+            <select1 ref="/data/part1_1/part1_2_2a">
+                <label>Letter from CMO regarding the establishment of hospital</label>
+                <item>
+                    <label>Yes</label>
+                    <value>y</value>
+                </item>
+                <item>
+                    <label>No</label>
+                    <value>n</value>
+                </item>
+                <item>
+                    <label>Not Applicable</label>
+                    <value>na</value>
+                </item>
+            </select1>
+            <upload mediatype="image/*" ref="/data/part1_1/img_part1_2_2a">
+                <label>Upload</label>
+            </upload>
+            <input ref="/data/part1_1/url1">
+                <label>URL</label>
+            </input>
+            <select1 ref="/data/part1_1/part1_2_2b">
+                <label>Current Fire NOC for college / hostel
+                    building</label>
+                <item>
+                    <label>Yes</label>
+                    <value>yes</value>
+                </item>
+                <item>
+                    <label>No</label>
+                    <value>no</value>
+                </item>
+            </select1>
+            <upload mediatype="image/*" ref="/data/part1_1/img_part1_2_2b">
+                <label>Upload</label>
+            </upload>
+            <input ref="/data/part1_1/url2">
+                <label>URL</label>
+            </input>
+            <input ref="/data/part1_1/part1_2_3">
+                <label>Is Biometric system available and in working condition for recording
+                    attendance:</label>
+            </input>
+            <select1 ref="/data/part1_1/part1_2_3a">
+                <label>Faculty</label>
+                <item>
+                    <label>Yes</label>
+                    <value>yes</value>
+                </item>
+                <item>
+                    <label>No</label>
+                    <value>no</value>
+                </item>
+            </select1>
+            <upload mediatype="image/*" ref="/data/part1_1/img_part1_2_3a">
+                <label>Upload</label>
+            </upload>
+            <input ref="/data/part1_1/url3">
+                <label>URL</label>
+            </input>
+            <select1 ref="/data/part1_1/part1_2_3b">
+                <label>Students</label>
+                <item>
+                    <label>Yes</label>
+                    <value>yes</value>
+                </item>
+                <item>
+                    <label>No</label>
+                    <value>no</value>
+                </item>
+            </select1>
+            <upload mediatype="image/*" ref="/data/part1_1/img_part1_2_3b">
+                <label>Upload</label>
+            </upload>
+            <input ref="/data/part1_1/url4">
+                <label>URL</label>
+            </input>
+        </group>
+    </h:body>
+</h:html>

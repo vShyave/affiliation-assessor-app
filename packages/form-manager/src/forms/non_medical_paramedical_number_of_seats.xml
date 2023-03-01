@@ -1,0 +1,1887 @@
+<?xml version="1.0"?>
+<h:html xmlns="http://www.w3.org/2002/xforms" xmlns:ev="http://www.w3.org/2001/xml-events"
+    xmlns:h="http://www.w3.org/1999/xhtml" xmlns:jr="http://openrosa.org/javarosa"
+    xmlns:odk="http://www.opendatakit.org/xforms" xmlns:orx="http://openrosa.org/xforms"
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <h:head>
+        <h:title>Paramedical Institutions_Non_Technical (Number of seats sanctioned per program)</h:title>
+        <model odk:xforms-version="1.0.0">
+            <instance>
+                <data
+                    id="Paramedical Institutions_Non_Technical (Number of seats sanctioned per program)"
+                    version="1">
+                    <username />
+                    <start />
+                    <end />
+                    <today />
+                    <deviceid />
+                    <subscriberid />
+                    <part1_1>
+                        <part1_3 />
+                        <p1_3 />
+                        <p1_3_1 />
+                        <dop1.1 />
+                        <dop1.2 />
+                        <dop1.3 />
+                        <dop2.2 />
+                        <dop2.3 />
+                        <p1_3_2 />
+                        <dor1.1 />
+                        <dor1.2 />
+                        <dor1.3 />
+                        <dor2.2 />
+                        <dor2.3 />
+                        <p1_3_3 />
+                        <dpy1.1 />
+                        <dpy1.2 />
+                        <dpy1.3 />
+                        <dpy2.2 />
+                        <dpy2.3 />
+                        <p1_3_4 />
+                        <cst1.1 />
+                        <cst1.2 />
+                        <cst1.3 />
+                        <cst2.2 />
+                        <cst2.3 />
+                        <p1_3_5 />
+                        <mrit1.1 />
+                        <mrit1.2 />
+                        <mrit1.3 />
+                        <mrit1.4 />
+                        <mrit1.5 />
+                        <p1_3_6 />
+                        <btt1.1 />
+                        <btt1.2 />
+                        <btt1.3 />
+                        <btt2.1 />
+                        <btt2.2 />
+                        <p1_3_7 />
+                        <xrt1.1 />
+                        <xrt1.2 />
+                        <xrt1.3 />
+                        <xrt2.1 />
+                        <xrt2.2 />
+                        <p1_3_8 />
+                        <astt1.1 />
+                        <astt1.2 />
+                        <astt1.3 />
+                        <astt2.1 />
+                        <astt2.2 />
+                        <p1_3_9 />
+                        <mtt1.1 />
+                        <mtt1.2 />
+                        <mtt1.3 />
+                        <mtt2.1 />
+                        <mtt2.2 />
+                        <p1_3_10 />
+                        <rt1.1 />
+                        <rt1.2 />
+                        <rt1.3 />
+                        <rt2.1 />
+                        <rt2.2 />
+                        <p1_3_11 />
+                        <nct1.1 />
+                        <nct1.2 />
+                        <nct1.3 />
+                        <nct2.1 />
+                        <nct2.2 />
+                        <p1_3_12 />
+                        <lt1.1 />
+                        <lt1.2 />
+                        <lt1.3 />
+                        <lt2.1 />
+                        <lt2.2 />
+                        <p1_3_13 />
+                        <rat1.1 />
+                        <rat1.2 />
+                        <rat1.3 />
+                        <rat1.4 />
+                        <rat1.5 />
+                        <p1_3_14 />
+                        <ott1.1 />
+                        <ott1.2 />
+                        <ott1.3 />
+                        <ott2.1 />
+                        <ott2.2 />
+                        <p1_3_15 />
+                        <ct1.1 />
+                        <ct1.2 />
+                        <ct1.3 />
+                        <ct2.1 />
+                        <ct2.2 />
+                        <p1_3_16 />
+                        <dt1.1 />
+                        <dt1.2 />
+                        <dt1.3 />
+                        <dt2.1 />
+                        <dt2.2 />
+                        <p1_3_17 />
+                        <ett1.1 />
+                        <ett1.2 />
+                        <ett1.3 />
+                        <ett2.1 />
+                        <ett2.2 />
+                        <p1_3_18 />
+                        <act1.1 />
+                        <act1.2 />
+                        <act1.3 />
+                        <act2.1 />
+                        <act2.2 />
+                        <p1_3_19 />
+                        <bpst1.1 />
+                        <bpst1.2 />
+                        <bpst1.3 />
+                        <bpst2.1 />
+                        <bpst2.2 />
+                        <p1_3_20 />
+                        <opt1.1 />
+                        <opt1.2 />
+                        <opt1.3 />
+                        <opt2.1 />
+                        <opt2.2 />
+                        <p1_3_21 />
+                        <oprt1.1 />
+                        <oprt1.2 />
+                        <oprt1.3 />
+                        <oprt2.1 />
+                        <oprt2.2 />
+                        <p1_3_22 />
+                        <mast1.1 />
+                        <mast1.2 />
+                        <mast1.3 />
+                        <mast2.1 />
+                        <mast2.2 />
+                        <p1_3_23 />
+                        <ctn1.1 />
+                        <ctn1.2 />
+                        <ctn1.3 />
+                        <ctn1.4 />
+                        <ctn1.5 />
+                        <p1_3_24 />
+                        <irt1.1 />
+                        <irt1.2 />
+                        <irt1.3 />
+                        <irt1.4 />
+                        <irt1.5 />
+                        <p1_3_25 />
+                        <bcg1.1 />
+                        <bcg1.2 />
+                        <bcg1.3 />
+                        <bcg1.4 />
+                        <bcg1.5 />
+                        <p1_3_26 />
+                        <dhrk1.1 />
+                        <dhrk1.2 />
+                        <dhrk1.3 />
+                        <dhrk1.4 />
+                        <dhrk1.5 />
+                        <p1_3_27 />
+                        <ds1.1 />
+                        <ds1.2 />
+                        <ds1.3 />
+                        <ds1.4 />
+                        <ds1.5 />
+                        <p1_3_28 />
+                        <cetca1.1 />
+                        <cetca1.2 />
+                        <cetca1.3 />
+                        <cetca1.4 />
+                        <cetca1.5 />
+                        <p1_3_29 />
+                        <hdca1.1 />
+                        <hdca1.2 />
+                        <hdca1.3 />
+                        <hdca1.4 />
+                        <hdca1.5 />
+                        <p1_3_30 />
+                        <da1.1 />
+                        <da1.2 />
+                        <da1.3 />
+                        <da1.4 />
+                        <da1.5 />
+                        <p1_3_31 />
+                        <bpt1.1 />
+                        <bpt1.2 />
+                        <bpt1.3 />
+                        <bpt1.4 />
+                        <bpt1.5 />
+                        <bpt1.6 />
+                        <bpt1.7 />
+                        <bpt1.8 />
+                        <bpt1.9 />
+                        <p1_3_32 />
+                        <bopt1.1 />
+                        <bopt1.2 />
+                        <bopt1.3 />
+                        <bopt1.4 />
+                        <bopt1.5 />
+                        <bopt1.6 />
+                        <bopt1.7 />
+                        <p1_3_33 />
+                        <bpath1.1 />
+                        <bpath1.2 />
+                        <bpath1.3 />
+                        <bpath1.4 />
+                        <bpath1.5 />
+                        <bpath1.6 />
+                        <bpath1.7 />
+                        <p1_3_34 />
+                        <brit1.1 />
+                        <brit1.2 />
+                        <brit1.3 />
+                        <brit1.4 />
+                        <brit1.5 />
+                        <brit1.6 />
+                        <brit1.7 />
+                        <p1_3_35 />
+                        <bott1.1 />
+                        <bott1.2 />
+                        <bott1.3 />
+                        <bott1.4 />
+                        <bott1.5 />
+                        <bott1.6 />
+                        <bott1.7 />
+                        <p1_3_36 />
+                        <mpt1.1 />
+                        <mpt1.2 />
+                        <mpt1.3 />
+                        <mpt1.4 />
+                        <mpt1.5 />
+                        <p1_3_37 />
+                        <mo1.1 />
+                        <mo1.2 />
+                        <mo1.3 />
+                        <mo1.4 />
+                        <mo1.5 />
+                        <p1_3_38 />
+                        <mpath1.1 />
+                        <mpath1.2 />
+                        <mpath1.3 />
+                        <mpath1.4 />
+                        <mpath1.5 />
+                        <p1_3_39 />
+                        <msrit1.1 />
+                        <msrit1.2 />
+                        <msrit1.3 />
+                        <msrit1.4 />
+                        <msrit1.5 />
+                        <p1_3_40 />
+                        <mott1.1 />
+                        <mott1.2 />
+                        <mott1.3 />
+                        <mott1.4 />
+                        <mott1.5 />
+                        <part1_3i>
+                            <p1_3i />
+                            <part1_3.1 />
+                            <part1_3i_1 />
+                            <p1_3i_1.1 />
+                            <bpt1.1a />
+                            <bpt1.3a />
+                            <p1_3i_1.2 />
+                            <bopt1.1a />
+                            <bopt1.3a />
+                            <p1_3i_1.3 />
+                            <bpath1.1a />
+                            <bpath1.3a />
+                            <p1_3i_1.4 />
+                            <brit1.1a />
+                            <brit1.3a />
+                            <p1_3i_1.5 />
+                            <bto1.1a />
+                            <bto1.3a />
+                        </part1_3i>
+                    </part1_1>
+                    <meta>
+                        <instanceID />
+                    </meta>
+                </data>
+            </instance>
+            <bind jr:preload="property" jr:preloadParams="username" nodeset="/data/username"
+                type="string" />
+            <bind jr:preload="timestamp" jr:preloadParams="start" nodeset="/data/start"
+                type="dateTime" />
+            <bind jr:preload="timestamp" jr:preloadParams="end" nodeset="/data/end" type="dateTime" />
+            <bind jr:preload="date" jr:preloadParams="today" nodeset="/data/today" type="date" />
+            <bind jr:preload="property" jr:preloadParams="deviceid" nodeset="/data/deviceid"
+                type="string" />
+            <bind jr:preload="property" jr:preloadParams="subscriberid" nodeset="/data/subscriberid"
+                type="string" />
+            <bind nodeset="/data/part1_1/part1_3" readonly="true()" type="string" />
+            <bind nodeset="/data/part1_1/p1_3" type="string" />
+            <bind nodeset="/data/part1_1/p1_3_1" type="string" />
+            <bind nodeset="/data/part1_1/dop1.1" relevant=" /data/part1_1/p1_3_1 ='yes'" type="int" />
+            <bind nodeset="/data/part1_1/dop1.2" relevant=" /data/part1_1/p1_3_1 ='yes'" type="int" />
+            <bind nodeset="/data/part1_1/dop1.3" relevant=" /data/part1_1/p1_3_1 ='yes'" type="int" />
+            <bind nodeset="/data/part1_1/dop2.2" relevant=" /data/part1_1/p1_3_1 ='yes'" type="int" />
+            <bind nodeset="/data/part1_1/dop2.3" relevant=" /data/part1_1/p1_3_1 ='yes'" type="int" />
+            <bind nodeset="/data/part1_1/p1_3_2" type="string" />
+            <bind nodeset="/data/part1_1/dor1.1" relevant=" /data/part1_1/p1_3_2 ='yes'" type="int" />
+            <bind nodeset="/data/part1_1/dor1.2" relevant=" /data/part1_1/p1_3_2 ='yes'" type="int" />
+            <bind nodeset="/data/part1_1/dor1.3" relevant=" /data/part1_1/p1_3_2 ='yes'" type="int" />
+            <bind nodeset="/data/part1_1/dor2.2" relevant=" /data/part1_1/p1_3_2 ='yes'" type="int" />
+            <bind nodeset="/data/part1_1/dor2.3" relevant=" /data/part1_1/p1_3_2 ='yes'" type="int" />
+            <bind nodeset="/data/part1_1/p1_3_3" type="string" />
+            <bind nodeset="/data/part1_1/dpy1.1" relevant=" /data/part1_1/p1_3_3 ='yes'" type="int" />
+            <bind nodeset="/data/part1_1/dpy1.2" relevant=" /data/part1_1/p1_3_3 ='yes'" type="int" />
+            <bind nodeset="/data/part1_1/dpy1.3" relevant=" /data/part1_1/p1_3_3 ='yes'" type="int" />
+            <bind nodeset="/data/part1_1/dpy2.2" relevant=" /data/part1_1/p1_3_3 ='yes'" type="int" />
+            <bind nodeset="/data/part1_1/dpy2.3" relevant=" /data/part1_1/p1_3_3 ='yes'" type="int" />
+            <bind nodeset="/data/part1_1/p1_3_4" type="string" />
+            <bind nodeset="/data/part1_1/cst1.1" relevant=" /data/part1_1/p1_3_4 ='yes'" type="int" />
+            <bind nodeset="/data/part1_1/cst1.2" relevant=" /data/part1_1/p1_3_4 ='yes'" type="int" />
+            <bind nodeset="/data/part1_1/cst1.3" relevant=" /data/part1_1/p1_3_4 ='yes'" type="int" />
+            <bind nodeset="/data/part1_1/cst2.2" relevant=" /data/part1_1/p1_3_4 ='yes'" type="int" />
+            <bind nodeset="/data/part1_1/cst2.3" relevant=" /data/part1_1/p1_3_4 ='yes'" type="int" />
+            <bind nodeset="/data/part1_1/p1_3_5" type="string" />
+            <bind nodeset="/data/part1_1/mrit1.1" relevant=" /data/part1_1/p1_3_5 ='yes'" type="int" />
+            <bind nodeset="/data/part1_1/mrit1.2" relevant=" /data/part1_1/p1_3_5 ='yes'" type="int" />
+            <bind nodeset="/data/part1_1/mrit1.3" relevant=" /data/part1_1/p1_3_5 ='yes'" type="int" />
+            <bind nodeset="/data/part1_1/mrit1.4" relevant=" /data/part1_1/p1_3_5 ='yes'" type="int" />
+            <bind nodeset="/data/part1_1/mrit1.5" relevant=" /data/part1_1/p1_3_5 ='yes'" type="int" />
+            <bind nodeset="/data/part1_1/p1_3_6" type="string" />
+            <bind nodeset="/data/part1_1/btt1.1" relevant=" /data/part1_1/p1_3_6 ='yes'" type="int" />
+            <bind nodeset="/data/part1_1/btt1.2" relevant=" /data/part1_1/p1_3_6 ='yes'" type="int" />
+            <bind nodeset="/data/part1_1/btt1.3" relevant=" /data/part1_1/p1_3_6 ='yes'" type="int" />
+            <bind nodeset="/data/part1_1/btt2.1" relevant=" /data/part1_1/p1_3_6 ='yes'" type="int" />
+            <bind nodeset="/data/part1_1/btt2.2" relevant=" /data/part1_1/p1_3_6 ='yes'" type="int" />
+            <bind nodeset="/data/part1_1/p1_3_7" type="string" />
+            <bind nodeset="/data/part1_1/xrt1.1" relevant=" /data/part1_1/p1_3_7 ='yes'" type="int" />
+            <bind nodeset="/data/part1_1/xrt1.2" relevant=" /data/part1_1/p1_3_7 ='yes'" type="int" />
+            <bind nodeset="/data/part1_1/xrt1.3" relevant=" /data/part1_1/p1_3_7 ='yes'" type="int" />
+            <bind nodeset="/data/part1_1/xrt2.1" relevant=" /data/part1_1/p1_3_7 ='yes'" type="int" />
+            <bind nodeset="/data/part1_1/xrt2.2" relevant=" /data/part1_1/p1_3_7 ='yes'" type="int" />
+            <bind nodeset="/data/part1_1/p1_3_8" type="string" />
+            <bind nodeset="/data/part1_1/astt1.1" relevant=" /data/part1_1/p1_3_8 ='yes'" type="int" />
+            <bind nodeset="/data/part1_1/astt1.2" relevant=" /data/part1_1/p1_3_8 ='yes'" type="int" />
+            <bind nodeset="/data/part1_1/astt1.3" relevant=" /data/part1_1/p1_3_8 ='yes'" type="int" />
+            <bind nodeset="/data/part1_1/astt2.1" relevant=" /data/part1_1/p1_3_8 ='yes'" type="int" />
+            <bind nodeset="/data/part1_1/astt2.2" relevant=" /data/part1_1/p1_3_8 ='yes'" type="int" />
+            <bind nodeset="/data/part1_1/p1_3_9" type="string" />
+            <bind nodeset="/data/part1_1/mtt1.1" relevant=" /data/part1_1/p1_3_9 ='yes'" type="int" />
+            <bind nodeset="/data/part1_1/mtt1.2" relevant=" /data/part1_1/p1_3_9 ='yes'" type="int" />
+            <bind nodeset="/data/part1_1/mtt1.3" relevant=" /data/part1_1/p1_3_9 ='yes'" type="int" />
+            <bind nodeset="/data/part1_1/mtt2.1" relevant=" /data/part1_1/p1_3_9 ='yes'" type="int" />
+            <bind nodeset="/data/part1_1/mtt2.2" relevant=" /data/part1_1/p1_3_9 ='yes'" type="int" />
+            <bind nodeset="/data/part1_1/p1_3_10" type="string" />
+            <bind nodeset="/data/part1_1/rt1.1" relevant=" /data/part1_1/p1_3_10 ='yes'" type="int" />
+            <bind nodeset="/data/part1_1/rt1.2" relevant=" /data/part1_1/p1_3_10 ='yes'" type="int" />
+            <bind nodeset="/data/part1_1/rt1.3" relevant=" /data/part1_1/p1_3_10 ='yes'" type="int" />
+            <bind nodeset="/data/part1_1/rt2.1" relevant=" /data/part1_1/p1_3_10 ='yes'" type="int" />
+            <bind nodeset="/data/part1_1/rt2.2" relevant=" /data/part1_1/p1_3_10 ='yes'" type="int" />
+            <bind nodeset="/data/part1_1/p1_3_11" type="string" />
+            <bind nodeset="/data/part1_1/nct1.1" relevant=" /data/part1_1/p1_3_11 ='yes'" type="int" />
+            <bind nodeset="/data/part1_1/nct1.2" relevant=" /data/part1_1/p1_3_11 ='yes'" type="int" />
+            <bind nodeset="/data/part1_1/nct1.3" relevant=" /data/part1_1/p1_3_11 ='yes'" type="int" />
+            <bind nodeset="/data/part1_1/nct2.1" relevant=" /data/part1_1/p1_3_11 ='yes'" type="int" />
+            <bind nodeset="/data/part1_1/nct2.2" relevant=" /data/part1_1/p1_3_11 ='yes'" type="int" />
+            <bind nodeset="/data/part1_1/p1_3_12" type="string" />
+            <bind nodeset="/data/part1_1/lt1.1" relevant=" /data/part1_1/p1_3_12 ='yes'" type="int" />
+            <bind nodeset="/data/part1_1/lt1.2" relevant=" /data/part1_1/p1_3_12 ='yes'" type="int" />
+            <bind nodeset="/data/part1_1/lt1.3" relevant=" /data/part1_1/p1_3_12 ='yes'" type="int" />
+            <bind nodeset="/data/part1_1/lt2.1" relevant=" /data/part1_1/p1_3_12 ='yes'" type="int" />
+            <bind nodeset="/data/part1_1/lt2.2" relevant=" /data/part1_1/p1_3_12 ='yes'" type="int" />
+            <bind nodeset="/data/part1_1/p1_3_13" type="string" />
+            <bind nodeset="/data/part1_1/rat1.1" relevant=" /data/part1_1/p1_3_13 ='yes'" type="int" />
+            <bind nodeset="/data/part1_1/rat1.2" relevant=" /data/part1_1/p1_3_13 ='yes'" type="int" />
+            <bind nodeset="/data/part1_1/rat1.3" relevant=" /data/part1_1/p1_3_13 ='yes'" type="int" />
+            <bind nodeset="/data/part1_1/rat1.4" relevant=" /data/part1_1/p1_3_13 ='yes'" type="int" />
+            <bind nodeset="/data/part1_1/rat1.5" relevant=" /data/part1_1/p1_3_13 ='yes'" type="int" />
+            <bind nodeset="/data/part1_1/p1_3_14" type="string" />
+            <bind nodeset="/data/part1_1/ott1.1" relevant=" /data/part1_1/p1_3_14 ='yes'" type="int" />
+            <bind nodeset="/data/part1_1/ott1.2" relevant=" /data/part1_1/p1_3_14 ='yes'" type="int" />
+            <bind nodeset="/data/part1_1/ott1.3" relevant=" /data/part1_1/p1_3_14 ='yes'" type="int" />
+            <bind nodeset="/data/part1_1/ott2.1" relevant=" /data/part1_1/p1_3_14 ='yes'" type="int" />
+            <bind nodeset="/data/part1_1/ott2.2" relevant=" /data/part1_1/p1_3_14 ='yes'" type="int" />
+            <bind nodeset="/data/part1_1/p1_3_15" type="string" />
+            <bind nodeset="/data/part1_1/ct1.1" relevant=" /data/part1_1/p1_3_15 ='yes'" type="int" />
+            <bind nodeset="/data/part1_1/ct1.2" relevant=" /data/part1_1/p1_3_15 ='yes'" type="int" />
+            <bind nodeset="/data/part1_1/ct1.3" relevant=" /data/part1_1/p1_3_15 ='yes'" type="int" />
+            <bind nodeset="/data/part1_1/ct2.1" relevant=" /data/part1_1/p1_3_15 ='yes'" type="int" />
+            <bind nodeset="/data/part1_1/ct2.2" relevant=" /data/part1_1/p1_3_15 ='yes'" type="int" />
+            <bind nodeset="/data/part1_1/p1_3_16" type="string" />
+            <bind nodeset="/data/part1_1/dt1.1" relevant=" /data/part1_1/p1_3_16 ='yes'" type="int" />
+            <bind nodeset="/data/part1_1/dt1.2" relevant=" /data/part1_1/p1_3_16 ='yes'" type="int" />
+            <bind nodeset="/data/part1_1/dt1.3" relevant=" /data/part1_1/p1_3_16 ='yes'" type="int" />
+            <bind nodeset="/data/part1_1/dt2.1" relevant=" /data/part1_1/p1_3_16 ='yes'" type="int" />
+            <bind nodeset="/data/part1_1/dt2.2" relevant=" /data/part1_1/p1_3_16 ='yes'" type="int" />
+            <bind nodeset="/data/part1_1/p1_3_17" type="string" />
+            <bind nodeset="/data/part1_1/ett1.1" relevant=" /data/part1_1/p1_3_17 ='yes'" type="int" />
+            <bind nodeset="/data/part1_1/ett1.2" relevant=" /data/part1_1/p1_3_17 ='yes'" type="int" />
+            <bind nodeset="/data/part1_1/ett1.3" relevant=" /data/part1_1/p1_3_17 ='yes'" type="int" />
+            <bind nodeset="/data/part1_1/ett2.1" relevant=" /data/part1_1/p1_3_17 ='yes'" type="int" />
+            <bind nodeset="/data/part1_1/ett2.2" relevant=" /data/part1_1/p1_3_17 ='yes'" type="int" />
+            <bind nodeset="/data/part1_1/p1_3_18" type="string" />
+            <bind nodeset="/data/part1_1/act1.1" relevant=" /data/part1_1/p1_3_18 ='yes'" type="int" />
+            <bind nodeset="/data/part1_1/act1.2" relevant=" /data/part1_1/p1_3_18 ='yes'" type="int" />
+            <bind nodeset="/data/part1_1/act1.3" relevant=" /data/part1_1/p1_3_18 ='yes'" type="int" />
+            <bind nodeset="/data/part1_1/act2.1" relevant=" /data/part1_1/p1_3_18 ='yes'" type="int" />
+            <bind nodeset="/data/part1_1/act2.2" relevant=" /data/part1_1/p1_3_18 ='yes'" type="int" />
+            <bind nodeset="/data/part1_1/p1_3_19" type="string" />
+            <bind nodeset="/data/part1_1/bpst1.1" relevant=" /data/part1_1/p1_3_19 ='yes'"
+                type="int" />
+            <bind nodeset="/data/part1_1/bpst1.2" relevant=" /data/part1_1/p1_3_19 ='yes'"
+                type="int" />
+            <bind nodeset="/data/part1_1/bpst1.3" relevant=" /data/part1_1/p1_3_19 ='yes'"
+                type="int" />
+            <bind nodeset="/data/part1_1/bpst2.1" relevant=" /data/part1_1/p1_3_19 ='yes'"
+                type="int" />
+            <bind nodeset="/data/part1_1/bpst2.2" relevant=" /data/part1_1/p1_3_19 ='yes'"
+                type="int" />
+            <bind nodeset="/data/part1_1/p1_3_20" type="string" />
+            <bind nodeset="/data/part1_1/opt1.1" relevant=" /data/part1_1/p1_3_20 ='yes'" type="int" />
+            <bind nodeset="/data/part1_1/opt1.2" relevant=" /data/part1_1/p1_3_20 ='yes'" type="int" />
+            <bind nodeset="/data/part1_1/opt1.3" relevant=" /data/part1_1/p1_3_20 ='yes'" type="int" />
+            <bind nodeset="/data/part1_1/opt2.1" relevant=" /data/part1_1/p1_3_20 ='yes'" type="int" />
+            <bind nodeset="/data/part1_1/opt2.2" relevant=" /data/part1_1/p1_3_20 ='yes'" type="int" />
+            <bind nodeset="/data/part1_1/p1_3_21" type="string" />
+            <bind nodeset="/data/part1_1/oprt1.1" relevant=" /data/part1_1/p1_3_21 ='yes'"
+                type="int" />
+            <bind nodeset="/data/part1_1/oprt1.2" relevant=" /data/part1_1/p1_3_21 ='yes'"
+                type="int" />
+            <bind nodeset="/data/part1_1/oprt1.3" relevant=" /data/part1_1/p1_3_21 ='yes'"
+                type="int" />
+            <bind nodeset="/data/part1_1/oprt2.1" relevant=" /data/part1_1/p1_3_21 ='yes'"
+                type="int" />
+            <bind nodeset="/data/part1_1/oprt2.2" relevant=" /data/part1_1/p1_3_21 ='yes'"
+                type="int" />
+            <bind nodeset="/data/part1_1/p1_3_22" type="string" />
+            <bind nodeset="/data/part1_1/mast1.1" relevant=" /data/part1_1/p1_3_22 ='yes'"
+                type="int" />
+            <bind nodeset="/data/part1_1/mast1.2" relevant=" /data/part1_1/p1_3_22 ='yes'"
+                type="int" />
+            <bind nodeset="/data/part1_1/mast1.3" relevant=" /data/part1_1/p1_3_22 ='yes'"
+                type="int" />
+            <bind nodeset="/data/part1_1/mast2.1" relevant=" /data/part1_1/p1_3_22 ='yes'"
+                type="int" />
+            <bind nodeset="/data/part1_1/mast2.2" relevant=" /data/part1_1/p1_3_22 ='yes'"
+                type="int" />
+            <bind nodeset="/data/part1_1/p1_3_23" type="string" />
+            <bind nodeset="/data/part1_1/ctn1.1" relevant=" /data/part1_1/p1_3_23 ='yes'" type="int" />
+            <bind nodeset="/data/part1_1/ctn1.2" relevant=" /data/part1_1/p1_3_23 ='yes'" type="int" />
+            <bind nodeset="/data/part1_1/ctn1.3" relevant=" /data/part1_1/p1_3_23 ='yes'" type="int" />
+            <bind nodeset="/data/part1_1/ctn1.4" relevant=" /data/part1_1/p1_3_23 ='yes'" type="int" />
+            <bind nodeset="/data/part1_1/ctn1.5" relevant=" /data/part1_1/p1_3_23 ='yes'" type="int" />
+            <bind nodeset="/data/part1_1/p1_3_24" type="string" />
+            <bind nodeset="/data/part1_1/irt1.1" relevant=" /data/part1_1/p1_3_24 ='yes'" type="int" />
+            <bind nodeset="/data/part1_1/irt1.2" relevant=" /data/part1_1/p1_3_24 ='yes'" type="int" />
+            <bind nodeset="/data/part1_1/irt1.3" relevant=" /data/part1_1/p1_3_24 ='yes'" type="int" />
+            <bind nodeset="/data/part1_1/irt1.4" relevant=" /data/part1_1/p1_3_24 ='yes'" type="int" />
+            <bind nodeset="/data/part1_1/irt1.5" relevant=" /data/part1_1/p1_3_24 ='yes'" type="int" />
+            <bind nodeset="/data/part1_1/p1_3_25" type="string" />
+            <bind nodeset="/data/part1_1/bcg1.1" relevant=" /data/part1_1/p1_3_25 ='yes'" type="int" />
+            <bind nodeset="/data/part1_1/bcg1.2" relevant=" /data/part1_1/p1_3_25 ='yes'" type="int" />
+            <bind nodeset="/data/part1_1/bcg1.3" relevant=" /data/part1_1/p1_3_25 ='yes'" type="int" />
+            <bind nodeset="/data/part1_1/bcg1.4" relevant=" /data/part1_1/p1_3_25 ='yes'" type="int" />
+            <bind nodeset="/data/part1_1/bcg1.5" relevant=" /data/part1_1/p1_3_25 ='yes'" type="int" />
+            <bind nodeset="/data/part1_1/p1_3_26" type="string" />
+            <bind nodeset="/data/part1_1/dhrk1.1" relevant=" /data/part1_1/p1_3_26 ='yes'"
+                type="int" />
+            <bind nodeset="/data/part1_1/dhrk1.2" relevant=" /data/part1_1/p1_3_26 ='yes'"
+                type="int" />
+            <bind nodeset="/data/part1_1/dhrk1.3" relevant=" /data/part1_1/p1_3_26 ='yes'"
+                type="int" />
+            <bind nodeset="/data/part1_1/dhrk1.4" relevant=" /data/part1_1/p1_3_26 ='yes'"
+                type="int" />
+            <bind nodeset="/data/part1_1/dhrk1.5" relevant=" /data/part1_1/p1_3_26 ='yes'"
+                type="int" />
+            <bind nodeset="/data/part1_1/p1_3_27" type="string" />
+            <bind nodeset="/data/part1_1/ds1.1" relevant=" /data/part1_1/p1_3_27 ='yes'" type="int" />
+            <bind nodeset="/data/part1_1/ds1.2" relevant=" /data/part1_1/p1_3_27 ='yes'" type="int" />
+            <bind nodeset="/data/part1_1/ds1.3" relevant=" /data/part1_1/p1_3_27 ='yes'" type="int" />
+            <bind nodeset="/data/part1_1/ds1.4" relevant=" /data/part1_1/p1_3_27 ='yes'" type="int" />
+            <bind nodeset="/data/part1_1/ds1.5" relevant=" /data/part1_1/p1_3_27 ='yes'" type="int" />
+            <bind nodeset="/data/part1_1/p1_3_28" type="string" />
+            <bind nodeset="/data/part1_1/cetca1.1" relevant=" /data/part1_1/p1_3_28 ='yes'"
+                type="int" />
+            <bind nodeset="/data/part1_1/cetca1.2" relevant=" /data/part1_1/p1_3_28 ='yes'"
+                type="int" />
+            <bind nodeset="/data/part1_1/cetca1.3" relevant=" /data/part1_1/p1_3_28 ='yes'"
+                type="int" />
+            <bind nodeset="/data/part1_1/cetca1.4" relevant=" /data/part1_1/p1_3_28 ='yes'"
+                type="int" />
+            <bind nodeset="/data/part1_1/cetca1.5" relevant=" /data/part1_1/p1_3_28 ='yes'"
+                type="int" />
+            <bind nodeset="/data/part1_1/p1_3_29" type="string" />
+            <bind nodeset="/data/part1_1/hdca1.1" relevant=" /data/part1_1/p1_3_29 ='yes'"
+                type="int" />
+            <bind nodeset="/data/part1_1/hdca1.2" relevant=" /data/part1_1/p1_3_29 ='yes'"
+                type="int" />
+            <bind nodeset="/data/part1_1/hdca1.3" relevant=" /data/part1_1/p1_3_29 ='yes'"
+                type="int" />
+            <bind nodeset="/data/part1_1/hdca1.4" relevant=" /data/part1_1/p1_3_29 ='yes'"
+                type="int" />
+            <bind nodeset="/data/part1_1/hdca1.5" relevant=" /data/part1_1/p1_3_29 ='yes'"
+                type="int" />
+            <bind nodeset="/data/part1_1/p1_3_30" type="string" />
+            <bind nodeset="/data/part1_1/da1.1" relevant=" /data/part1_1/p1_3_30 ='yes'" type="int" />
+            <bind nodeset="/data/part1_1/da1.2" relevant=" /data/part1_1/p1_3_30 ='yes'" type="int" />
+            <bind nodeset="/data/part1_1/da1.3" relevant=" /data/part1_1/p1_3_30 ='yes'" type="int" />
+            <bind nodeset="/data/part1_1/da1.4" relevant=" /data/part1_1/p1_3_30 ='yes'" type="int" />
+            <bind nodeset="/data/part1_1/da1.5" relevant=" /data/part1_1/p1_3_30 ='yes'" type="int" />
+            <bind nodeset="/data/part1_1/p1_3_31" type="string" />
+            <bind nodeset="/data/part1_1/bpt1.1" relevant=" /data/part1_1/p1_3_31 ='yes'" type="int" />
+            <bind nodeset="/data/part1_1/bpt1.2" relevant=" /data/part1_1/p1_3_31 ='yes'" type="int" />
+            <bind nodeset="/data/part1_1/bpt1.3" relevant=" /data/part1_1/p1_3_31 ='yes'" type="int" />
+            <bind nodeset="/data/part1_1/bpt1.4" relevant=" /data/part1_1/p1_3_31 ='yes'" type="int" />
+            <bind nodeset="/data/part1_1/bpt1.5" relevant=" /data/part1_1/p1_3_31 ='yes'" type="int" />
+            <bind nodeset="/data/part1_1/bpt1.6" relevant=" /data/part1_1/p1_3_31 ='yes'" type="int" />
+            <bind nodeset="/data/part1_1/bpt1.7" relevant=" /data/part1_1/p1_3_31 ='yes'" type="int" />
+            <bind nodeset="/data/part1_1/bpt1.8" relevant=" /data/part1_1/p1_3_31 ='yes'" type="int" />
+            <bind nodeset="/data/part1_1/bpt1.9" relevant=" /data/part1_1/p1_3_31 ='yes'" type="int" />
+            <bind nodeset="/data/part1_1/p1_3_32" type="string" />
+            <bind nodeset="/data/part1_1/bopt1.1" relevant=" /data/part1_1/p1_3_32 ='yes'"
+                type="int" />
+            <bind nodeset="/data/part1_1/bopt1.2" relevant=" /data/part1_1/p1_3_32 ='yes'"
+                type="int" />
+            <bind nodeset="/data/part1_1/bopt1.3" relevant=" /data/part1_1/p1_3_32 ='yes'"
+                type="int" />
+            <bind nodeset="/data/part1_1/bopt1.4" relevant=" /data/part1_1/p1_3_32 ='yes'"
+                type="int" />
+            <bind nodeset="/data/part1_1/bopt1.5" relevant=" /data/part1_1/p1_3_32 ='yes'"
+                type="int" />
+            <bind nodeset="/data/part1_1/bopt1.6" relevant=" /data/part1_1/p1_3_32 ='yes'"
+                type="int" />
+            <bind nodeset="/data/part1_1/bopt1.7" relevant=" /data/part1_1/p1_3_32 ='yes'"
+                type="int" />
+            <bind nodeset="/data/part1_1/p1_3_33" type="string" />
+            <bind nodeset="/data/part1_1/bpath1.1" relevant=" /data/part1_1/p1_3_33 ='yes'"
+                type="int" />
+            <bind nodeset="/data/part1_1/bpath1.2" relevant=" /data/part1_1/p1_3_33 ='yes'"
+                type="int" />
+            <bind nodeset="/data/part1_1/bpath1.3" relevant=" /data/part1_1/p1_3_33 ='yes'"
+                type="int" />
+            <bind nodeset="/data/part1_1/bpath1.4" relevant=" /data/part1_1/p1_3_33 ='yes'"
+                type="int" />
+            <bind nodeset="/data/part1_1/bpath1.5" relevant=" /data/part1_1/p1_3_33 ='yes'"
+                type="int" />
+            <bind nodeset="/data/part1_1/bpath1.6" relevant=" /data/part1_1/p1_3_33 ='yes'"
+                type="int" />
+            <bind nodeset="/data/part1_1/bpath1.7" relevant=" /data/part1_1/p1_3_33 ='yes'"
+                type="int" />
+            <bind nodeset="/data/part1_1/p1_3_34" type="string" />
+            <bind nodeset="/data/part1_1/brit1.1" relevant=" /data/part1_1/p1_3_34 ='yes'"
+                type="int" />
+            <bind nodeset="/data/part1_1/brit1.2" relevant=" /data/part1_1/p1_3_34 ='yes'"
+                type="int" />
+            <bind nodeset="/data/part1_1/brit1.3" relevant=" /data/part1_1/p1_3_34 ='yes'"
+                type="int" />
+            <bind nodeset="/data/part1_1/brit1.4" relevant=" /data/part1_1/p1_3_34 ='yes'"
+                type="int" />
+            <bind nodeset="/data/part1_1/brit1.5" relevant=" /data/part1_1/p1_3_34 ='yes'"
+                type="int" />
+            <bind nodeset="/data/part1_1/brit1.6" relevant=" /data/part1_1/p1_3_34 ='yes'"
+                type="int" />
+            <bind nodeset="/data/part1_1/brit1.7" relevant=" /data/part1_1/p1_3_34 ='yes'"
+                type="int" />
+            <bind nodeset="/data/part1_1/p1_3_35" type="string" />
+            <bind nodeset="/data/part1_1/bott1.1" relevant=" /data/part1_1/p1_3_35 ='yes'"
+                type="int" />
+            <bind nodeset="/data/part1_1/bott1.2" relevant=" /data/part1_1/p1_3_35 ='yes'"
+                type="int" />
+            <bind nodeset="/data/part1_1/bott1.3" relevant=" /data/part1_1/p1_3_35 ='yes'"
+                type="int" />
+            <bind nodeset="/data/part1_1/bott1.4" relevant=" /data/part1_1/p1_3_35 ='yes'"
+                type="int" />
+            <bind nodeset="/data/part1_1/bott1.5" relevant=" /data/part1_1/p1_3_35 ='yes'"
+                type="int" />
+            <bind nodeset="/data/part1_1/bott1.6" relevant=" /data/part1_1/p1_3_35 ='yes'"
+                type="int" />
+            <bind nodeset="/data/part1_1/bott1.7" relevant=" /data/part1_1/p1_3_35 ='yes'"
+                type="int" />
+            <bind nodeset="/data/part1_1/p1_3_36" type="string" />
+            <bind nodeset="/data/part1_1/mpt1.1" relevant=" /data/part1_1/p1_3_36 ='yes'" type="int" />
+            <bind nodeset="/data/part1_1/mpt1.2" relevant=" /data/part1_1/p1_3_36 ='yes'" type="int" />
+            <bind nodeset="/data/part1_1/mpt1.3" relevant=" /data/part1_1/p1_3_36 ='yes'" type="int" />
+            <bind nodeset="/data/part1_1/mpt1.4" relevant=" /data/part1_1/p1_3_36 ='yes'" type="int" />
+            <bind nodeset="/data/part1_1/mpt1.5" relevant=" /data/part1_1/p1_3_36 ='yes'" type="int" />
+            <bind nodeset="/data/part1_1/p1_3_37" type="string" />
+            <bind nodeset="/data/part1_1/mo1.1" relevant=" /data/part1_1/p1_3_37 ='yes'" type="int" />
+            <bind nodeset="/data/part1_1/mo1.2" relevant=" /data/part1_1/p1_3_37 ='yes'" type="int" />
+            <bind nodeset="/data/part1_1/mo1.3" relevant=" /data/part1_1/p1_3_37 ='yes'" type="int" />
+            <bind nodeset="/data/part1_1/mo1.4" relevant=" /data/part1_1/p1_3_37 ='yes'" type="int" />
+            <bind nodeset="/data/part1_1/mo1.5" relevant=" /data/part1_1/p1_3_37 ='yes'" type="int" />
+            <bind nodeset="/data/part1_1/p1_3_38" type="string" />
+            <bind nodeset="/data/part1_1/mpath1.1" relevant=" /data/part1_1/p1_3_38 ='yes'"
+                type="int" />
+            <bind nodeset="/data/part1_1/mpath1.2" relevant=" /data/part1_1/p1_3_38 ='yes'"
+                type="int" />
+            <bind nodeset="/data/part1_1/mpath1.3" relevant=" /data/part1_1/p1_3_38 ='yes'"
+                type="int" />
+            <bind nodeset="/data/part1_1/mpath1.4" relevant=" /data/part1_1/p1_3_38 ='yes'"
+                type="int" />
+            <bind nodeset="/data/part1_1/mpath1.5" relevant=" /data/part1_1/p1_3_38 ='yes'"
+                type="int" />
+            <bind nodeset="/data/part1_1/p1_3_39" type="string" />
+            <bind nodeset="/data/part1_1/msrit1.1" relevant=" /data/part1_1/p1_3_39 ='yes'"
+                type="int" />
+            <bind nodeset="/data/part1_1/msrit1.2" relevant=" /data/part1_1/p1_3_39 ='yes'"
+                type="int" />
+            <bind nodeset="/data/part1_1/msrit1.3" relevant=" /data/part1_1/p1_3_39 ='yes'"
+                type="int" />
+            <bind nodeset="/data/part1_1/msrit1.4" relevant=" /data/part1_1/p1_3_39 ='yes'"
+                type="int" />
+            <bind nodeset="/data/part1_1/msrit1.5" relevant=" /data/part1_1/p1_3_39 ='yes'"
+                type="int" />
+            <bind nodeset="/data/part1_1/p1_3_40" type="string" />
+            <bind nodeset="/data/part1_1/mott1.1" relevant=" /data/part1_1/p1_3_40 ='yes'"
+                type="int" />
+            <bind nodeset="/data/part1_1/mott1.2" relevant=" /data/part1_1/p1_3_40 ='yes'"
+                type="int" />
+            <bind nodeset="/data/part1_1/mott1.3" relevant=" /data/part1_1/p1_3_40 ='yes'"
+                type="int" />
+            <bind nodeset="/data/part1_1/mott1.4" relevant=" /data/part1_1/p1_3_40 ='yes'"
+                type="int" />
+            <bind nodeset="/data/part1_1/mott1.5" relevant=" /data/part1_1/p1_3_40 ='yes'"
+                type="int" />
+            <bind nodeset="/data/part1_1/part1_3i/p1_3i" type="string" />
+            <bind nodeset="/data/part1_1/part1_3i/part1_3.1" type="string" />
+            <bind nodeset="/data/part1_1/part1_3i/part1_3i_1" readonly="true()"
+                relevant=" /data/part1_1/part1_3i/part1_3.1 ='yes'" type="string" />
+            <bind nodeset="/data/part1_1/part1_3i/p1_3i_1.1"
+                relevant=" /data/part1_1/part1_3i/part1_3.1 ='yes'" type="string" />
+            <bind nodeset="/data/part1_1/part1_3i/bpt1.1a"
+                relevant=" /data/part1_1/part1_3i/p1_3i_1.1 ='yes'" type="int" />
+            <bind nodeset="/data/part1_1/part1_3i/bpt1.3a"
+                relevant=" /data/part1_1/part1_3i/p1_3i_1.1 ='yes'" type="string" />
+            <bind nodeset="/data/part1_1/part1_3i/p1_3i_1.2"
+                relevant=" /data/part1_1/part1_3i/part1_3.1 ='yes'" type="string" />
+            <bind nodeset="/data/part1_1/part1_3i/bopt1.1a"
+                relevant=" /data/part1_1/part1_3i/p1_3i_1.2 ='yes'" type="int" />
+            <bind nodeset="/data/part1_1/part1_3i/bopt1.3a"
+                relevant=" /data/part1_1/part1_3i/p1_3i_1.2 ='yes'" type="string" />
+            <bind nodeset="/data/part1_1/part1_3i/p1_3i_1.3"
+                relevant=" /data/part1_1/part1_3i/part1_3.1 ='yes'" type="string" />
+            <bind nodeset="/data/part1_1/part1_3i/bpath1.1a"
+                relevant=" /data/part1_1/part1_3i/p1_3i_1.3 ='yes'" type="int" />
+            <bind nodeset="/data/part1_1/part1_3i/bpath1.3a"
+                relevant=" /data/part1_1/part1_3i/p1_3i_1.3 ='yes'" type="string" />
+            <bind nodeset="/data/part1_1/part1_3i/p1_3i_1.4"
+                relevant=" /data/part1_1/part1_3i/part1_3.1 ='yes'" type="string" />
+            <bind nodeset="/data/part1_1/part1_3i/brit1.1a"
+                relevant=" /data/part1_1/part1_3i/p1_3i_1.4 ='yes'" type="int" />
+            <bind nodeset="/data/part1_1/part1_3i/brit1.3a"
+                relevant=" /data/part1_1/part1_3i/p1_3i_1.4 ='yes'" type="string" />
+            <bind nodeset="/data/part1_1/part1_3i/p1_3i_1.5"
+                relevant=" /data/part1_1/part1_3i/part1_3.1 ='yes'" type="string" />
+            <bind nodeset="/data/part1_1/part1_3i/bto1.1a"
+                relevant=" /data/part1_1/part1_3i/p1_3i_1.5 ='yes'" type="int" />
+            <bind nodeset="/data/part1_1/part1_3i/bto1.3a"
+                relevant=" /data/part1_1/part1_3i/p1_3i_1.5 ='yes'" type="string" />
+            <bind jr:preload="uid" nodeset="/data/meta/instanceID" readonly="true()" type="string" />
+        </model>
+    </h:head>
+    <h:body class="pages">
+        <group appearance="field-list" ref="/data/part1_1">
+            <input ref="/data/part1_1/part1_3">
+                <label>####Number of seats sanctioned per program:</label>
+            </input>
+            <select1 appearance="label" ref="/data/part1_1/p1_3">
+                <label>Courses</label>
+                <item>
+                    <label>Yes</label>
+                    <value>yes</value>
+                </item>
+                <item>
+                    <label>No</label>
+                    <value>no</value>
+                </item>
+            </select1>
+            <select1 appearance="list-nolabel" ref="/data/part1_1/p1_3_1">
+                <label>Diploma in Optometry</label>
+                <item>
+                    <label>Yes</label>
+                    <value>yes</value>
+                </item>
+                <item>
+                    <label>No</label>
+                    <value>no</value>
+                </item>
+            </select1>
+            <input ref="/data/part1_1/dop1.1">
+                <label>Number of Sanctioned Seats (1st year)</label>
+            </input>
+            <input ref="/data/part1_1/dop1.2">
+                <label>Students admitted (1st year)</label>
+            </input>
+            <input ref="/data/part1_1/dop1.3">
+                <label>Students present on day of assessment (1st year)</label>
+            </input>
+            <input ref="/data/part1_1/dop2.2">
+                <label>Students admitted (2nd year)</label>
+            </input>
+            <input ref="/data/part1_1/dop2.3">
+                <label>Students present on day of assessment (2nd year)</label>
+            </input>
+            <select1 appearance="list-nolabel" ref="/data/part1_1/p1_3_2">
+                <label>Diploma in orthoptics</label>
+                <item>
+                    <label>Yes</label>
+                    <value>yes</value>
+                </item>
+                <item>
+                    <label>No</label>
+                    <value>no</value>
+                </item>
+            </select1>
+            <input ref="/data/part1_1/dor1.1">
+                <label>Number of Sanctioned Seats (1st year)</label>
+            </input>
+            <input ref="/data/part1_1/dor1.2">
+                <label>Students admitted (1st year)</label>
+            </input>
+            <input ref="/data/part1_1/dor1.3">
+                <label>Students present on day of assessment (1st year)</label>
+            </input>
+            <input ref="/data/part1_1/dor2.2">
+                <label>Students admitted (2nd year)</label>
+            </input>
+            <input ref="/data/part1_1/dor2.3">
+                <label>Students present on day of assessment (2nd year)</label>
+            </input>
+            <select1 appearance="list-nolabel" ref="/data/part1_1/p1_3_3">
+                <label>Diploma in physiotherapy</label>
+                <item>
+                    <label>Yes</label>
+                    <value>yes</value>
+                </item>
+                <item>
+                    <label>No</label>
+                    <value>no</value>
+                </item>
+            </select1>
+            <input ref="/data/part1_1/dpy1.1">
+                <label>Number of Sanctioned Seats (1st year)</label>
+            </input>
+            <input ref="/data/part1_1/dpy1.2">
+                <label>Students admitted (1st year)</label>
+            </input>
+            <input ref="/data/part1_1/dpy1.3">
+                <label>Students present on day of assessment (1st year)</label>
+            </input>
+            <input ref="/data/part1_1/dpy2.2">
+                <label>Students admitted (2nd year)</label>
+            </input>
+            <input ref="/data/part1_1/dpy2.3">
+                <label>Students present on day of assessment (2nd year)</label>
+            </input>
+            <select1 appearance="list-nolabel" ref="/data/part1_1/p1_3_4">
+                <label>CT scan technician</label>
+                <item>
+                    <label>Yes</label>
+                    <value>yes</value>
+                </item>
+                <item>
+                    <label>No</label>
+                    <value>no</value>
+                </item>
+            </select1>
+            <input ref="/data/part1_1/cst1.1">
+                <label>Number of Sanctioned Seats (1st year)</label>
+            </input>
+            <input ref="/data/part1_1/cst1.2">
+                <label>Students admitted (1st year)</label>
+            </input>
+            <input ref="/data/part1_1/cst1.3">
+                <label>Students present on day of assessment (1st year)</label>
+            </input>
+            <input ref="/data/part1_1/cst2.2">
+                <label>Students admitted (2nd year)</label>
+            </input>
+            <input ref="/data/part1_1/cst2.3">
+                <label>Students present on day of assessment (2nd year)</label>
+            </input>
+            <select1 appearance="list-nolabel" ref="/data/part1_1/p1_3_5">
+                <label>MRI technician</label>
+                <item>
+                    <label>Yes</label>
+                    <value>yes</value>
+                </item>
+                <item>
+                    <label>No</label>
+                    <value>no</value>
+                </item>
+            </select1>
+            <input ref="/data/part1_1/mrit1.1">
+                <label>Number of Sanctioned Seats (1st year)</label>
+            </input>
+            <input ref="/data/part1_1/mrit1.2">
+                <label>Students admitted (1st year)</label>
+            </input>
+            <input ref="/data/part1_1/mrit1.3">
+                <label>Students present on day of assessment (1st year)</label>
+            </input>
+            <input ref="/data/part1_1/mrit1.4">
+                <label>Students admitted (2nd year)</label>
+            </input>
+            <input ref="/data/part1_1/mrit1.5">
+                <label>Students present on day of assessment (2nd year)</label>
+            </input>
+            <select1 appearance="list-nolabel" ref="/data/part1_1/p1_3_6">
+                <label>Blood transfusion technician</label>
+                <item>
+                    <label>Yes</label>
+                    <value>yes</value>
+                </item>
+                <item>
+                    <label>No</label>
+                    <value>no</value>
+                </item>
+            </select1>
+            <input ref="/data/part1_1/btt1.1">
+                <label>Number of Sanctioned Seats (1st year)</label>
+            </input>
+            <input ref="/data/part1_1/btt1.2">
+                <label>Students admitted (1st year)</label>
+            </input>
+            <input ref="/data/part1_1/btt1.3">
+                <label>Students present on day of assessment (1st year)</label>
+            </input>
+            <input ref="/data/part1_1/btt2.1">
+                <label>Students admitted (2nd year)</label>
+            </input>
+            <input ref="/data/part1_1/btt2.2">
+                <label>Students present on day of assessment (2nd year)</label>
+            </input>
+            <select1 appearance="list-nolabel" ref="/data/part1_1/p1_3_7">
+                <label>X RAY Technician</label>
+                <item>
+                    <label>Yes</label>
+                    <value>yes</value>
+                </item>
+                <item>
+                    <label>No</label>
+                    <value>no</value>
+                </item>
+            </select1>
+            <input ref="/data/part1_1/xrt1.1">
+                <label>Number of Sanctioned Seats (1st year)</label>
+            </input>
+            <input ref="/data/part1_1/xrt1.2">
+                <label>Students admitted (1st year)</label>
+            </input>
+            <input ref="/data/part1_1/xrt1.3">
+                <label>Students present on day of assessment (1st year)</label>
+            </input>
+            <input ref="/data/part1_1/xrt2.1">
+                <label>Students admitted (2nd year)</label>
+            </input>
+            <input ref="/data/part1_1/xrt2.2">
+                <label>Students present on day of assessment (2nd year)</label>
+            </input>
+            <select1 appearance="list-nolabel" ref="/data/part1_1/p1_3_8">
+                <label>Audio &amp; speech therapy technician</label>
+                <item>
+                    <label>Yes</label>
+                    <value>yes</value>
+                </item>
+                <item>
+                    <label>No</label>
+                    <value>no</value>
+                </item>
+            </select1>
+            <input ref="/data/part1_1/astt1.1">
+                <label>Number of Sanctioned Seats (1st year)</label>
+            </input>
+            <input ref="/data/part1_1/astt1.2">
+                <label>Students admitted (1st year)</label>
+            </input>
+            <input ref="/data/part1_1/astt1.3">
+                <label>Students present on day of assessment (1st year)</label>
+            </input>
+            <input ref="/data/part1_1/astt2.1">
+                <label>Students admitted (2nd year)</label>
+            </input>
+            <input ref="/data/part1_1/astt2.2">
+                <label>Students present on day of assessment (2nd year)</label>
+            </input>
+            <select1 appearance="list-nolabel" ref="/data/part1_1/p1_3_9">
+                <label>Medical transcription and typing</label>
+                <item>
+                    <label>Yes</label>
+                    <value>yes</value>
+                </item>
+                <item>
+                    <label>No</label>
+                    <value>no</value>
+                </item>
+            </select1>
+            <input ref="/data/part1_1/mtt1.1">
+                <label>Number of Sanctioned Seats (1st year)</label>
+            </input>
+            <input ref="/data/part1_1/mtt1.2">
+                <label>Students admitted (1st year)</label>
+            </input>
+            <input ref="/data/part1_1/mtt1.3">
+                <label>Students present on day of assessment (1st year)</label>
+            </input>
+            <input ref="/data/part1_1/mtt2.1">
+                <label>Students admitted (2nd year)</label>
+            </input>
+            <input ref="/data/part1_1/mtt2.2">
+                <label>Students present on day of assessment (2nd year)</label>
+            </input>
+            <select1 appearance="list-nolabel" ref="/data/part1_1/p1_3_10">
+                <label>Respiratory technician</label>
+                <item>
+                    <label>Yes</label>
+                    <value>yes</value>
+                </item>
+                <item>
+                    <label>No</label>
+                    <value>no</value>
+                </item>
+            </select1>
+            <input ref="/data/part1_1/rt1.1">
+                <label>Number of Sanctioned Seats (1st year)</label>
+            </input>
+            <input ref="/data/part1_1/rt1.2">
+                <label>Students admitted (1st year)</label>
+            </input>
+            <input ref="/data/part1_1/rt1.3">
+                <label>Students present on day of assessment (1st year)</label>
+            </input>
+            <input ref="/data/part1_1/rt2.1">
+                <label>Students admitted (2nd year)</label>
+            </input>
+            <input ref="/data/part1_1/rt2.2">
+                <label>Students present on day of assessment (2nd year)</label>
+            </input>
+            <select1 appearance="list-nolabel" ref="/data/part1_1/p1_3_11">
+                <label>Neonatal care technician</label>
+                <item>
+                    <label>Yes</label>
+                    <value>yes</value>
+                </item>
+                <item>
+                    <label>No</label>
+                    <value>no</value>
+                </item>
+            </select1>
+            <input ref="/data/part1_1/nct1.1">
+                <label>Number of Sanctioned Seats (1st year)</label>
+            </input>
+            <input ref="/data/part1_1/nct1.2">
+                <label>Students admitted (1st year)</label>
+            </input>
+            <input ref="/data/part1_1/nct1.3">
+                <label>Students present on day of assessment (1st year)</label>
+            </input>
+            <input ref="/data/part1_1/nct2.1">
+                <label>Students admitted (2nd year)</label>
+            </input>
+            <input ref="/data/part1_1/nct2.2">
+                <label>Students present on day of assessment (2nd year)</label>
+            </input>
+            <select1 appearance="list-nolabel" ref="/data/part1_1/p1_3_12">
+                <label>Neonatal care technician</label>
+                <item>
+                    <label>Yes</label>
+                    <value>yes</value>
+                </item>
+                <item>
+                    <label>No</label>
+                    <value>no</value>
+                </item>
+            </select1>
+            <input ref="/data/part1_1/lt1.1">
+                <label>Number of Sanctioned Seats (1st year)</label>
+            </input>
+            <input ref="/data/part1_1/lt1.2">
+                <label>Students admitted (1st year)</label>
+            </input>
+            <input ref="/data/part1_1/lt1.3">
+                <label>Students present on day of assessment (1st year)</label>
+            </input>
+            <input ref="/data/part1_1/lt2.1">
+                <label>Students admitted (2nd year)</label>
+            </input>
+            <input ref="/data/part1_1/lt2.2">
+                <label>Students present on day of assessment (2nd year)</label>
+            </input>
+            <select1 appearance="list-nolabel" ref="/data/part1_1/p1_3_13">
+                <label>Radiotherapy technician</label>
+                <item>
+                    <label>Yes</label>
+                    <value>yes</value>
+                </item>
+                <item>
+                    <label>No</label>
+                    <value>no</value>
+                </item>
+            </select1>
+            <input ref="/data/part1_1/rat1.1">
+                <label>Number of Sanctioned Seats (1st year)</label>
+            </input>
+            <input ref="/data/part1_1/rat1.2">
+                <label>Students admitted (1st year)</label>
+            </input>
+            <input ref="/data/part1_1/rat1.3">
+                <label>Students present on day of assessment (1st year)</label>
+            </input>
+            <input ref="/data/part1_1/rat1.4">
+                <label>Students admitted (2nd year)</label>
+            </input>
+            <input ref="/data/part1_1/rat1.5">
+                <label>Students present on day of assessment (2nd year)</label>
+            </input>
+            <select1 appearance="list-nolabel" ref="/data/part1_1/p1_3_14">
+                <label>OT technician</label>
+                <item>
+                    <label>Yes</label>
+                    <value>yes</value>
+                </item>
+                <item>
+                    <label>No</label>
+                    <value>no</value>
+                </item>
+            </select1>
+            <input ref="/data/part1_1/ott1.1">
+                <label>Number of Sanctioned Seats (1st year)</label>
+            </input>
+            <input ref="/data/part1_1/ott1.2">
+                <label>Students admitted (1st year)</label>
+            </input>
+            <input ref="/data/part1_1/ott1.3">
+                <label>Students present on day of assessment (1st year)</label>
+            </input>
+            <input ref="/data/part1_1/ott2.1">
+                <label>Students admitted (2nd year)</label>
+            </input>
+            <input ref="/data/part1_1/ott2.2">
+                <label>Students present on day of assessment (2nd year)</label>
+            </input>
+            <select1 appearance="list-nolabel" ref="/data/part1_1/p1_3_15">
+                <label>Cardiology technician</label>
+                <item>
+                    <label>Yes</label>
+                    <value>yes</value>
+                </item>
+                <item>
+                    <label>No</label>
+                    <value>no</value>
+                </item>
+            </select1>
+            <input ref="/data/part1_1/ct1.1">
+                <label>Number of Sanctioned Seats (1st year)</label>
+            </input>
+            <input ref="/data/part1_1/ct1.2">
+                <label>Students admitted (1st year)</label>
+            </input>
+            <input ref="/data/part1_1/ct1.3">
+                <label>Students present on day of assessment (1st year)</label>
+            </input>
+            <input ref="/data/part1_1/ct2.1">
+                <label>Students admitted (2nd year)</label>
+            </input>
+            <input ref="/data/part1_1/ct2.2">
+                <label>Students present on day of assessment (2nd year)</label>
+            </input>
+            <select1 appearance="list-nolabel" ref="/data/part1_1/p1_3_16">
+                <label>Dialysis technician</label>
+                <item>
+                    <label>Yes</label>
+                    <value>yes</value>
+                </item>
+                <item>
+                    <label>No</label>
+                    <value>no</value>
+                </item>
+            </select1>
+            <input ref="/data/part1_1/dt1.1">
+                <label>Number of Sanctioned Seats (1st year)</label>
+            </input>
+            <input ref="/data/part1_1/dt1.2">
+                <label>Students admitted (1st year)</label>
+            </input>
+            <input ref="/data/part1_1/dt1.3">
+                <label>Students present on day of assessment (1st year)</label>
+            </input>
+            <input ref="/data/part1_1/dt2.1">
+                <label>Students admitted (2nd year)</label>
+            </input>
+            <input ref="/data/part1_1/dt2.2">
+                <label>Students present on day of assessment (2nd year)</label>
+            </input>
+            <select1 appearance="list-nolabel" ref="/data/part1_1/p1_3_17">
+                <label>Emergency and Trauma technician</label>
+                <item>
+                    <label>Yes</label>
+                    <value>yes</value>
+                </item>
+                <item>
+                    <label>No</label>
+                    <value>no</value>
+                </item>
+            </select1>
+            <input ref="/data/part1_1/ett1.1">
+                <label>Number of Sanctioned Seats (1st year)</label>
+            </input>
+            <input ref="/data/part1_1/ett1.2">
+                <label>Students admitted (1st year)</label>
+            </input>
+            <input ref="/data/part1_1/ett1.3">
+                <label>Students present on day of assessment (1st year)</label>
+            </input>
+            <input ref="/data/part1_1/ett2.1">
+                <label>Students admitted (2nd year)</label>
+            </input>
+            <input ref="/data/part1_1/ett2.2">
+                <label>Students present on day of assessment (2nd year)</label>
+            </input>
+            <select1 appearance="list-nolabel" ref="/data/part1_1/p1_3_18">
+                <label>Anesthesia and critical technician</label>
+                <item>
+                    <label>Yes</label>
+                    <value>yes</value>
+                </item>
+                <item>
+                    <label>No</label>
+                    <value>no</value>
+                </item>
+            </select1>
+            <input ref="/data/part1_1/act1.1">
+                <label>Number of Sanctioned Seats (1st year)</label>
+            </input>
+            <input ref="/data/part1_1/act1.2">
+                <label>Students admitted (1st year)</label>
+            </input>
+            <input ref="/data/part1_1/act1.3">
+                <label>Students present on day of assessment (1st year)</label>
+            </input>
+            <input ref="/data/part1_1/act2.1">
+                <label>Students admitted (2nd year)</label>
+            </input>
+            <input ref="/data/part1_1/act2.2">
+                <label>Students present on day of assessment (2nd year)</label>
+            </input>
+            <select1 appearance="list-nolabel" ref="/data/part1_1/p1_3_19">
+                <label>Burn and plastic surgery technician</label>
+                <item>
+                    <label>Yes</label>
+                    <value>yes</value>
+                </item>
+                <item>
+                    <label>No</label>
+                    <value>no</value>
+                </item>
+            </select1>
+            <input ref="/data/part1_1/bpst1.1">
+                <label>Number of Sanctioned Seats (1st year)</label>
+            </input>
+            <input ref="/data/part1_1/bpst1.2">
+                <label>Students admitted (1st year)</label>
+            </input>
+            <input ref="/data/part1_1/bpst1.3">
+                <label>Students present on day of assessment (1st year)</label>
+            </input>
+            <input ref="/data/part1_1/bpst2.1">
+                <label>Students admitted (2nd year)</label>
+            </input>
+            <input ref="/data/part1_1/bpst2.2">
+                <label>Students present on day of assessment (2nd year)</label>
+            </input>
+            <select1 appearance="list-nolabel" ref="/data/part1_1/p1_3_20">
+                <label>Orthopedic and plaster technician</label>
+                <item>
+                    <label>Yes</label>
+                    <value>yes</value>
+                </item>
+                <item>
+                    <label>No</label>
+                    <value>no</value>
+                </item>
+            </select1>
+            <input ref="/data/part1_1/opt1.1">
+                <label>Number of Sanctioned Seats (1st year)</label>
+            </input>
+            <input ref="/data/part1_1/opt1.2">
+                <label>Students admitted (1st year)</label>
+            </input>
+            <input ref="/data/part1_1/opt1.3">
+                <label>Students present on day of assessment (1st year)</label>
+            </input>
+            <input ref="/data/part1_1/opt2.1">
+                <label>Students admitted (2nd year)</label>
+            </input>
+            <input ref="/data/part1_1/opt2.2">
+                <label>Students present on day of assessment (2nd year)</label>
+            </input>
+            <select1 appearance="list-nolabel" ref="/data/part1_1/p1_3_21">
+                <label>Orthotic and prosthetic technician</label>
+                <item>
+                    <label>Yes</label>
+                    <value>yes</value>
+                </item>
+                <item>
+                    <label>No</label>
+                    <value>no</value>
+                </item>
+            </select1>
+            <input ref="/data/part1_1/oprt1.1">
+                <label>Number of Sanctioned Seats (1st year)</label>
+            </input>
+            <input ref="/data/part1_1/oprt1.2">
+                <label>Students admitted (1st year)</label>
+            </input>
+            <input ref="/data/part1_1/oprt1.3">
+                <label>Students present on day of assessment (1st year)</label>
+            </input>
+            <input ref="/data/part1_1/oprt2.1">
+                <label>Students admitted (2nd year)</label>
+            </input>
+            <input ref="/data/part1_1/oprt2.2">
+                <label>Students present on day of assessment (2nd year)</label>
+            </input>
+            <select1 appearance="list-nolabel" ref="/data/part1_1/p1_3_22">
+                <label>Minimal access surgical technician</label>
+                <item>
+                    <label>Yes</label>
+                    <value>yes</value>
+                </item>
+                <item>
+                    <label>No</label>
+                    <value>no</value>
+                </item>
+            </select1>
+            <input ref="/data/part1_1/mast1.1">
+                <label>Number of Sanctioned Seats (1st year)</label>
+            </input>
+            <input ref="/data/part1_1/mast1.2">
+                <label>Students admitted (1st year)</label>
+            </input>
+            <input ref="/data/part1_1/mast1.3">
+                <label>Students present on day of assessment (1st year)</label>
+            </input>
+            <input ref="/data/part1_1/mast2.1">
+                <label>Students admitted (2nd year)</label>
+            </input>
+            <input ref="/data/part1_1/mast2.2">
+                <label>Students present on day of assessment (2nd year)</label>
+            </input>
+            <select1 appearance="list-nolabel" ref="/data/part1_1/p1_3_23">
+                <label>Clinical and therapeutic nutritionist</label>
+                <item>
+                    <label>Yes</label>
+                    <value>yes</value>
+                </item>
+                <item>
+                    <label>No</label>
+                    <value>no</value>
+                </item>
+            </select1>
+            <input ref="/data/part1_1/ctn1.1">
+                <label>Number of Sanctioned Seats (1st year)</label>
+            </input>
+            <input ref="/data/part1_1/ctn1.2">
+                <label>Students admitted (1st year)</label>
+            </input>
+            <input ref="/data/part1_1/ctn1.3">
+                <label>Students present on day of assessment (1st year)</label>
+            </input>
+            <input ref="/data/part1_1/ctn1.4">
+                <label>Students admitted (2nd year)</label>
+            </input>
+            <input ref="/data/part1_1/ctn1.5">
+                <label>Students present on day of assessment (2nd year)</label>
+            </input>
+            <select1 appearance="list-nolabel" ref="/data/part1_1/p1_3_24">
+                <label>Intervention radiology technician</label>
+                <item>
+                    <label>Yes</label>
+                    <value>yes</value>
+                </item>
+                <item>
+                    <label>No</label>
+                    <value>no</value>
+                </item>
+            </select1>
+            <input ref="/data/part1_1/irt1.1">
+                <label>Number of Sanctioned Seats (1st year)</label>
+            </input>
+            <input ref="/data/part1_1/irt1.2">
+                <label>Students admitted (1st year)</label>
+            </input>
+            <input ref="/data/part1_1/irt1.3">
+                <label>Students present on day of assessment (1st year)</label>
+            </input>
+            <input ref="/data/part1_1/irt1.4">
+                <label>Students admitted (2nd year)</label>
+            </input>
+            <input ref="/data/part1_1/irt1.5">
+                <label>Students present on day of assessment (2nd year)</label>
+            </input>
+            <select1 appearance="list-nolabel" ref="/data/part1_1/p1_3_25">
+                <label>BCG technician and tuberculosis program management</label>
+                <item>
+                    <label>Yes</label>
+                    <value>yes</value>
+                </item>
+                <item>
+                    <label>No</label>
+                    <value>no</value>
+                </item>
+            </select1>
+            <input ref="/data/part1_1/bcg1.1">
+                <label>Number of Sanctioned Seats (1st year)</label>
+            </input>
+            <input ref="/data/part1_1/bcg1.2">
+                <label>Students admitted (1st year)</label>
+            </input>
+            <input ref="/data/part1_1/bcg1.3">
+                <label>Students present on day of assessment (1st year)</label>
+            </input>
+            <input ref="/data/part1_1/bcg1.4">
+                <label>Students admitted (2nd year)</label>
+            </input>
+            <input ref="/data/part1_1/bcg1.5">
+                <label>Students present on day of assessment (2nd year)</label>
+            </input>
+            <select1 appearance="list-nolabel" ref="/data/part1_1/p1_3_26">
+                <label>Diploma in hospital record keeping</label>
+                <item>
+                    <label>Yes</label>
+                    <value>yes</value>
+                </item>
+                <item>
+                    <label>No</label>
+                    <value>no</value>
+                </item>
+            </select1>
+            <input ref="/data/part1_1/dhrk1.1">
+                <label>Number of Sanctioned Seats (1st year)</label>
+            </input>
+            <input ref="/data/part1_1/dhrk1.2">
+                <label>Students admitted (1st year)</label>
+            </input>
+            <input ref="/data/part1_1/dhrk1.3">
+                <label>Students present on day of assessment (1st year)</label>
+            </input>
+            <input ref="/data/part1_1/dhrk1.4">
+                <label>Students admitted (2nd year)</label>
+            </input>
+            <input ref="/data/part1_1/dhrk1.5">
+                <label>Students present on day of assessment (2nd year)</label>
+            </input>
+            <select1 appearance="list-nolabel" ref="/data/part1_1/p1_3_27">
+                <label>Diploma in sanitation</label>
+                <item>
+                    <label>Yes</label>
+                    <value>yes</value>
+                </item>
+                <item>
+                    <label>No</label>
+                    <value>no</value>
+                </item>
+            </select1>
+            <input ref="/data/part1_1/ds1.1">
+                <label>Number of Sanctioned Seats (1st year)</label>
+            </input>
+            <input ref="/data/part1_1/ds1.2">
+                <label>Students admitted (1st year)</label>
+            </input>
+            <input ref="/data/part1_1/ds1.3">
+                <label>Students present on day of assessment (1st year)</label>
+            </input>
+            <input ref="/data/part1_1/ds1.4">
+                <label>Students admitted (2nd year)</label>
+            </input>
+            <input ref="/data/part1_1/ds1.5">
+                <label>Students present on day of assessment (2nd year)</label>
+            </input>
+            <select1 appearance="list-nolabel" ref="/data/part1_1/p1_3_28">
+                <label>Certificate in emergency and trauma care assistant</label>
+                <item>
+                    <label>Yes</label>
+                    <value>yes</value>
+                </item>
+                <item>
+                    <label>No</label>
+                    <value>no</value>
+                </item>
+            </select1>
+            <input ref="/data/part1_1/cetca1.1">
+                <label>Number of Sanctioned Seats (1st year)</label>
+            </input>
+            <input ref="/data/part1_1/cetca1.2">
+                <label>Students admitted (1st year)</label>
+            </input>
+            <input ref="/data/part1_1/cetca1.3">
+                <label>Students present on day of assessment (1st year)</label>
+            </input>
+            <input ref="/data/part1_1/cetca1.4">
+                <label>Students admitted (2nd year)</label>
+            </input>
+            <input ref="/data/part1_1/cetca1.5">
+                <label>Students present on day of assessment (2nd year)</label>
+            </input>
+            <select1 appearance="list-nolabel" ref="/data/part1_1/p1_3_29">
+                <label>Hospital and domiciliary care attendant</label>
+                <item>
+                    <label>Yes</label>
+                    <value>yes</value>
+                </item>
+                <item>
+                    <label>No</label>
+                    <value>no</value>
+                </item>
+            </select1>
+            <input ref="/data/part1_1/hdca1.1">
+                <label>Number of Sanctioned Seats (1st year)</label>
+            </input>
+            <input ref="/data/part1_1/hdca1.2">
+                <label>Students admitted (1st year)</label>
+            </input>
+            <input ref="/data/part1_1/hdca1.3">
+                <label>Students present on day of assessment (1st year)</label>
+            </input>
+            <input ref="/data/part1_1/hdca1.4">
+                <label>Students admitted (2nd year)</label>
+            </input>
+            <input ref="/data/part1_1/hdca1.5">
+                <label>Students present on day of assessment (2nd year)</label>
+            </input>
+            <select1 appearance="list-nolabel" ref="/data/part1_1/p1_3_30">
+                <label>Diploma in acupuncture</label>
+                <item>
+                    <label>Yes</label>
+                    <value>yes</value>
+                </item>
+                <item>
+                    <label>No</label>
+                    <value>no</value>
+                </item>
+            </select1>
+            <input ref="/data/part1_1/da1.1">
+                <label>Number of Sanctioned Seats (1st year)</label>
+            </input>
+            <input ref="/data/part1_1/da1.2">
+                <label>Students admitted (1st year)</label>
+            </input>
+            <input ref="/data/part1_1/da1.3">
+                <label>Students present on day of assessment (1st year)</label>
+            </input>
+            <input ref="/data/part1_1/da1.4">
+                <label>Students admitted (2nd year)</label>
+            </input>
+            <input ref="/data/part1_1/da1.5">
+                <label>Students present on day of assessment (2nd year)</label>
+            </input>
+            <select1 appearance="list-nolabel" ref="/data/part1_1/p1_3_31">
+                <label>Bachelor of physiotherapy (BPT)</label>
+                <item>
+                    <label>Yes</label>
+                    <value>yes</value>
+                </item>
+                <item>
+                    <label>No</label>
+                    <value>no</value>
+                </item>
+            </select1>
+            <input ref="/data/part1_1/bpt1.1">
+                <label>Number of Sanctioned Seats (1st year)</label>
+            </input>
+            <input ref="/data/part1_1/bpt1.2">
+                <label>Students admitted (1st year)</label>
+            </input>
+            <input ref="/data/part1_1/bpt1.3">
+                <label>Students present on day of assessment (1st year)</label>
+            </input>
+            <input ref="/data/part1_1/bpt1.4">
+                <label>Students admitted (2nd year)</label>
+            </input>
+            <input ref="/data/part1_1/bpt1.5">
+                <label>Students present on day of assessment (2nd year)</label>
+            </input>
+            <input ref="/data/part1_1/bpt1.6">
+                <label>Students admitted (3rd year)</label>
+            </input>
+            <input ref="/data/part1_1/bpt1.7">
+                <label>Students present on day of assessment (3rd year)</label>
+            </input>
+            <input ref="/data/part1_1/bpt1.8">
+                <label>Students admitted (4th year)</label>
+            </input>
+            <input ref="/data/part1_1/bpt1.9">
+                <label>Students present on day of assessment (4th year)</label>
+            </input>
+            <select1 appearance="list-nolabel" ref="/data/part1_1/p1_3_32">
+                <label>Bachelor of science optometry (B OPT)</label>
+                <item>
+                    <label>Yes</label>
+                    <value>yes</value>
+                </item>
+                <item>
+                    <label>No</label>
+                    <value>no</value>
+                </item>
+            </select1>
+            <input ref="/data/part1_1/bopt1.1">
+                <label>Number of Sanctioned Seats (1st year)</label>
+            </input>
+            <input ref="/data/part1_1/bopt1.2">
+                <label>Students admitted (1st year)</label>
+            </input>
+            <input ref="/data/part1_1/bopt1.3">
+                <label>Students present on day of assessment (1st year)</label>
+            </input>
+            <input ref="/data/part1_1/bopt1.4">
+                <label>Students admitted (2nd year)</label>
+            </input>
+            <input ref="/data/part1_1/bopt1.5">
+                <label>Students present on day of assessment (2nd year)</label>
+            </input>
+            <input ref="/data/part1_1/bopt1.6">
+                <label>Students admitted (3rd year)</label>
+            </input>
+            <input ref="/data/part1_1/bopt1.7">
+                <label>Students present on day of assessment (3rd year)</label>
+            </input>
+            <select1 appearance="list-nolabel" ref="/data/part1_1/p1_3_33">
+                <label>Bachelor of science in medical lab technician (Pathology)</label>
+                <item>
+                    <label>Yes</label>
+                    <value>yes</value>
+                </item>
+                <item>
+                    <label>No</label>
+                    <value>no</value>
+                </item>
+            </select1>
+            <input ref="/data/part1_1/bpath1.1">
+                <label>Number of Sanctioned Seats (1st year)</label>
+            </input>
+            <input ref="/data/part1_1/bpath1.2">
+                <label>Students admitted (1st year)</label>
+            </input>
+            <input ref="/data/part1_1/bpath1.3">
+                <label>Students present on day of assessment (1st year)</label>
+            </input>
+            <input ref="/data/part1_1/bpath1.4">
+                <label>Students admitted (2nd year)</label>
+            </input>
+            <input ref="/data/part1_1/bpath1.5">
+                <label>Students present on day of assessment (2nd year)</label>
+            </input>
+            <input ref="/data/part1_1/bpath1.6">
+                <label>Students admitted (3rd year)</label>
+            </input>
+            <input ref="/data/part1_1/bpath1.7">
+                <label>Students present on day of assessment (3rd year)</label>
+            </input>
+            <select1 appearance="list-nolabel" ref="/data/part1_1/p1_3_34">
+                <label>Bachelor of science in radiological imaging techniques (Radiology/CT/MRI)</label>
+                <item>
+                    <label>Yes</label>
+                    <value>yes</value>
+                </item>
+                <item>
+                    <label>No</label>
+                    <value>no</value>
+                </item>
+            </select1>
+            <input ref="/data/part1_1/brit1.1">
+                <label>Number of Sanctioned Seats (1st year)</label>
+            </input>
+            <input ref="/data/part1_1/brit1.2">
+                <label>Students admitted (1st year)</label>
+            </input>
+            <input ref="/data/part1_1/brit1.3">
+                <label>Students present on day of assessment (1st year)</label>
+            </input>
+            <input ref="/data/part1_1/brit1.4">
+                <label>Students admitted (2nd year)</label>
+            </input>
+            <input ref="/data/part1_1/brit1.5">
+                <label>Students present on day of assessment (2nd year)</label>
+            </input>
+            <input ref="/data/part1_1/brit1.6">
+                <label>Students admitted (3rd year)</label>
+            </input>
+            <input ref="/data/part1_1/brit1.7">
+                <label>Students present on day of assessment (3rd year)</label>
+            </input>
+            <select1 appearance="list-nolabel" ref="/data/part1_1/p1_3_35">
+                <label>Bachelor of OT techniques</label>
+                <item>
+                    <label>Yes</label>
+                    <value>yes</value>
+                </item>
+                <item>
+                    <label>No</label>
+                    <value>no</value>
+                </item>
+            </select1>
+            <input ref="/data/part1_1/bott1.1">
+                <label>Number of Sanctioned Seats (1st year)</label>
+            </input>
+            <input ref="/data/part1_1/bott1.2">
+                <label>Students admitted (1st year)</label>
+            </input>
+            <input ref="/data/part1_1/bott1.3">
+                <label>Students present on day of assessment (1st year)</label>
+            </input>
+            <input ref="/data/part1_1/bott1.4">
+                <label>Students admitted (2nd year)</label>
+            </input>
+            <input ref="/data/part1_1/bott1.5">
+                <label>Students present on day of assessment (2nd year)</label>
+            </input>
+            <input ref="/data/part1_1/bott1.6">
+                <label>Students admitted (3rd year)</label>
+            </input>
+            <input ref="/data/part1_1/bott1.7">
+                <label>Students present on day of assessment (3rd year)</label>
+            </input>
+            <select1 appearance="list-nolabel" ref="/data/part1_1/p1_3_36">
+                <label>Master physiotherapy (MPT)</label>
+                <item>
+                    <label>Yes</label>
+                    <value>yes</value>
+                </item>
+                <item>
+                    <label>No</label>
+                    <value>no</value>
+                </item>
+            </select1>
+            <input ref="/data/part1_1/mpt1.1">
+                <label>Number of Sanctioned Seats (1st year)</label>
+            </input>
+            <input ref="/data/part1_1/mpt1.2">
+                <label>Students admitted (1st year)</label>
+            </input>
+            <input ref="/data/part1_1/mpt1.3">
+                <label>Students present on day of assessment (1st year)</label>
+            </input>
+            <input ref="/data/part1_1/mpt1.4">
+                <label>Students admitted (2nd year)</label>
+            </input>
+            <input ref="/data/part1_1/mpt1.5">
+                <label>Students present on day of assessment (2nd year)</label>
+            </input>
+            <select1 appearance="list-nolabel" ref="/data/part1_1/p1_3_37">
+                <label>M.Sc. optometry (B MPT)</label>
+                <item>
+                    <label>Yes</label>
+                    <value>yes</value>
+                </item>
+                <item>
+                    <label>No</label>
+                    <value>no</value>
+                </item>
+            </select1>
+            <input ref="/data/part1_1/mo1.1">
+                <label>Number of Sanctioned Seats (1st year)</label>
+            </input>
+            <input ref="/data/part1_1/mo1.2">
+                <label>Students admitted (1st year)</label>
+            </input>
+            <input ref="/data/part1_1/mo1.3">
+                <label>Students present on day of assessment (1st year)</label>
+            </input>
+            <input ref="/data/part1_1/mo1.4">
+                <label>Students admitted (2nd year)</label>
+            </input>
+            <input ref="/data/part1_1/mo1.5">
+                <label>Students present on day of assessment (2nd year)</label>
+            </input>
+            <select1 appearance="list-nolabel" ref="/data/part1_1/p1_3_38">
+                <label>M.Sc. in medical lab technician (Pathology)</label>
+                <item>
+                    <label>Yes</label>
+                    <value>yes</value>
+                </item>
+                <item>
+                    <label>No</label>
+                    <value>no</value>
+                </item>
+            </select1>
+            <input ref="/data/part1_1/mpath1.1">
+                <label>Number of Sanctioned Seats (1st year)</label>
+            </input>
+            <input ref="/data/part1_1/mpath1.2">
+                <label>Students admitted (1st year)</label>
+            </input>
+            <input ref="/data/part1_1/mpath1.3">
+                <label>Students present on day of assessment (1st year)</label>
+            </input>
+            <input ref="/data/part1_1/mpath1.4">
+                <label>Students admitted (2nd year)</label>
+            </input>
+            <input ref="/data/part1_1/mpath1.5">
+                <label>Students present on day of assessment (2nd year)</label>
+            </input>
+            <select1 appearance="list-nolabel" ref="/data/part1_1/p1_3_39">
+                <label>M.Sc. in radiological imaging techniques (Radiology/CT/MRI)</label>
+                <item>
+                    <label>Yes</label>
+                    <value>yes</value>
+                </item>
+                <item>
+                    <label>No</label>
+                    <value>no</value>
+                </item>
+            </select1>
+            <input ref="/data/part1_1/msrit1.1">
+                <label>Number of Sanctioned Seats (1st year)</label>
+            </input>
+            <input ref="/data/part1_1/msrit1.2">
+                <label>Students admitted (1st year)</label>
+            </input>
+            <input ref="/data/part1_1/msrit1.3">
+                <label>Students present on day of assessment (1st year)</label>
+            </input>
+            <input ref="/data/part1_1/msrit1.4">
+                <label>Students admitted (2nd year)</label>
+            </input>
+            <input ref="/data/part1_1/msrit1.5">
+                <label>Students present on day of assessment (2nd year)</label>
+            </input>
+            <select1 appearance="list-nolabel" ref="/data/part1_1/p1_3_40">
+                <label>Master in OT techniques</label>
+                <item>
+                    <label>Yes</label>
+                    <value>yes</value>
+                </item>
+                <item>
+                    <label>No</label>
+                    <value>no</value>
+                </item>
+            </select1>
+            <input ref="/data/part1_1/mott1.1">
+                <label>Number of Sanctioned Seats (1st year)</label>
+            </input>
+            <input ref="/data/part1_1/mott1.2">
+                <label>Students admitted (1st year)</label>
+            </input>
+            <input ref="/data/part1_1/mott1.3">
+                <label>Students present on day of assessment (1st year)</label>
+            </input>
+            <input ref="/data/part1_1/mott1.4">
+                <label>Students admitted (2nd year)</label>
+            </input>
+            <input ref="/data/part1_1/mott1.5">
+                <label>Students present on day of assessment (2nd year)</label>
+            </input>
+            <group ref="/data/part1_1/part1_3i">
+                <label>####Interns</label>
+                <select1 appearance="label" ref="/data/part1_1/part1_3i/p1_3i">
+                    <label> </label>
+                    <item>
+                        <label>Yes</label>
+                        <value>yes</value>
+                    </item>
+                    <item>
+                        <label>No</label>
+                        <value>no</value>
+                    </item>
+                </select1>
+                <select1 appearance="list-nolabel" ref="/data/part1_1/part1_3i/part1_3.1">
+                    <label>Is there any Interns?</label>
+                    <item>
+                        <label>Yes</label>
+                        <value>yes</value>
+                    </item>
+                    <item>
+                        <label>No</label>
+                        <value>no</value>
+                    </item>
+                </select1>
+                <input appearance="field-list" ref="/data/part1_1/part1_3i/part1_3i_1">
+                    <label>Students interning from each program</label>
+                </input>
+                <select1 appearance="list-nolabel" ref="/data/part1_1/part1_3i/p1_3i_1.1">
+                    <label>Bachelor of physiotherapy (BPT)</label>
+                    <item>
+                        <label>Yes</label>
+                        <value>yes</value>
+                    </item>
+                    <item>
+                        <label>No</label>
+                        <value>no</value>
+                    </item>
+                </select1>
+                <input ref="/data/part1_1/part1_3i/bpt1.1a">
+                    <label>No. of students interning as per record</label>
+                    <hint>4 Year + 6 months (Course Duration)</hint>
+                </input>
+                <input ref="/data/part1_1/part1_3i/bpt1.3a">
+                    <label>Remark</label>
+                </input>
+                <select1 appearance="list-nolabel" ref="/data/part1_1/part1_3i/p1_3i_1.2">
+                    <label>Bachelor of science optometry (B OPT)</label>
+                    <item>
+                        <label>Yes</label>
+                        <value>yes</value>
+                    </item>
+                    <item>
+                        <label>No</label>
+                        <value>no</value>
+                    </item>
+                </select1>
+                <input ref="/data/part1_1/part1_3i/bopt1.1a">
+                    <label>No. of students interning as per record</label>
+                    <hint>3 + 1 year (Course Duration)</hint>
+                </input>
+                <input ref="/data/part1_1/part1_3i/bopt1.3a">
+                    <label>Remark</label>
+                </input>
+                <select1 appearance="list-nolabel" ref="/data/part1_1/part1_3i/p1_3i_1.3">
+                    <label>Bachelor of science in medical lab technician (Pathology)</label>
+                    <item>
+                        <label>Yes</label>
+                        <value>yes</value>
+                    </item>
+                    <item>
+                        <label>No</label>
+                        <value>no</value>
+                    </item>
+                </select1>
+                <input ref="/data/part1_1/part1_3i/bpath1.1a">
+                    <label>No. of students interning as per record</label>
+                    <hint>3 + 1 year (Course Duration)</hint>
+                </input>
+                <input ref="/data/part1_1/part1_3i/bpath1.3a">
+                    <label>Remark</label>
+                </input>
+                <select1 appearance="list-nolabel" ref="/data/part1_1/part1_3i/p1_3i_1.4">
+                    <label>Bachelor of science in radiological imaging techniques
+                        (Radiology/CT/MRI)</label>
+                    <item>
+                        <label>Yes</label>
+                        <value>yes</value>
+                    </item>
+                    <item>
+                        <label>No</label>
+                        <value>no</value>
+                    </item>
+                </select1>
+                <input ref="/data/part1_1/part1_3i/brit1.1a">
+                    <label>No. of students interning as per record</label>
+                    <hint>3 + 1 year (Course Duration)</hint>
+                </input>
+                <input ref="/data/part1_1/part1_3i/brit1.3a">
+                    <label>Remark</label>
+                </input>
+                <select1 appearance="list-nolabel" ref="/data/part1_1/part1_3i/p1_3i_1.5">
+                    <label>Bachelors in OT Technician</label>
+                    <item>
+                        <label>Yes</label>
+                        <value>yes</value>
+                    </item>
+                    <item>
+                        <label>No</label>
+                        <value>no</value>
+                    </item>
+                </select1>
+                <input ref="/data/part1_1/part1_3i/bto1.1a">
+                    <label>No. of students interning as per record</label>
+                    <hint>3 + 1 year (Course Duration)</hint>
+                </input>
+                <input ref="/data/part1_1/part1_3i/bto1.3a">
+                    <label>Remark</label>
+                </input>
+            </group>
+        </group>
+    </h:body>
+</h:html>

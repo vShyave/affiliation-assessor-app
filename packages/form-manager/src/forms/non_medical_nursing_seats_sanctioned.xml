@@ -1,0 +1,516 @@
+<?xml version="1.0"?>
+<h:html xmlns="http://www.w3.org/2002/xforms" xmlns:ev="http://www.w3.org/2001/xml-events"
+    xmlns:h="http://www.w3.org/1999/xhtml" xmlns:jr="http://openrosa.org/javarosa"
+    xmlns:odk="http://www.opendatakit.org/xforms" xmlns:orx="http://openrosa.org/xforms"
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <h:head>
+        <h:title>Nursing Form- Non Medical (Seats sanctioned)</h:title>
+        <model odk:xforms-version="1.0.0">
+            <instance>
+                <data id="Nursing Form- Non Medical (Seats sanctioned)" version="1">
+                    <username />
+                    <start />
+                    <end />
+                    <today />
+                    <deviceid />
+                    <subscriberid />
+                    <part1_3>
+                        <note1 />
+                        <p1_3 />
+                        <p1_3.1 />
+                        <part1_3.1>
+                            <anm1.1 />
+                            <anm1.2 />
+                            <anm1.3 />
+                            <anm2.2 />
+                            <anm2.3 />
+                        </part1_3.1>
+                        <p1_3.2 />
+                        <part1_3.2>
+                            <gnm1.1 />
+                            <gnm1.2 />
+                            <gnm1.3 />
+                            <gnm2.2 />
+                            <gnm2.3 />
+                            <gnm3.2 />
+                            <gnm3.3 />
+                        </part1_3.2>
+                        <p1_3.3 />
+                        <part1_3.3>
+                            <pbbsc1.1 />
+                            <pbbsc1.2 />
+                            <pbbsc1.3 />
+                            <pbbsc2.2 />
+                            <pbbsc2.3 />
+                        </part1_3.3>
+                        <p1_3.4 />
+                        <part1_3.4>
+                            <bsc1.1 />
+                            <bsc1.2 />
+                            <bsc1.3 />
+                            <bsc2.2 />
+                            <bsc2.3 />
+                            <bsc3.2 />
+                            <bsc3.3 />
+                            <bsc4.2 />
+                            <bsc4.3 />
+                        </part1_3.4>
+                        <p1_3.5 />
+                        <part1_3.5>
+                            <msc1 />
+                            <msc2 />
+                            <msc3 />
+                            <msc5 />
+                            <msc6 />
+                        </part1_3.5>
+                        <p1_3.6 />
+                        <part1_3.6>
+                            <msc7 />
+                            <msc8 />
+                            <msc9 />
+                            <msc11 />
+                            <msc12 />
+                        </part1_3.6>
+                        <p1_3.7 />
+                        <part1_3.7>
+                            <msc13 />
+                            <msc14 />
+                            <msc15 />
+                            <msc16 />
+                            <msc17 />
+                        </part1_3.7>
+                        <p1_3.8 />
+                        <part1_3.8>
+                            <msc18 />
+                            <msc19 />
+                            <msc20 />
+                            <msc21 />
+                            <msc22 />
+                        </part1_3.8>
+                        <p1_3.9 />
+                        <part1_3.9>
+                            <msc23 />
+                            <msc24 />
+                            <msc25 />
+                            <msc26 />
+                            <msc27 />
+                        </part1_3.9>
+                    </part1_3>
+                    <meta>
+                        <instanceID />
+                    </meta>
+                </data>
+            </instance>
+            <bind jr:preload="property" jr:preloadParams="username" nodeset="/data/username"
+                type="string" />
+            <bind jr:preload="timestamp" jr:preloadParams="start" nodeset="/data/start"
+                type="dateTime" />
+            <bind jr:preload="timestamp" jr:preloadParams="end" nodeset="/data/end" type="dateTime" />
+            <bind jr:preload="date" jr:preloadParams="today" nodeset="/data/today" type="date" />
+            <bind jr:preload="property" jr:preloadParams="deviceid" nodeset="/data/deviceid"
+                type="string" />
+            <bind jr:preload="property" jr:preloadParams="subscriberid" nodeset="/data/subscriberid"
+                type="string" />
+            <bind nodeset="/data/part1_3/note1" readonly="true()" type="string" />
+            <bind nodeset="/data/part1_3/p1_3" required="true()" type="string" />
+            <bind nodeset="/data/part1_3/p1_3.1" required="true()" type="string" />
+            <bind nodeset="/data/part1_3/part1_3.1" relevant=" /data/part1_3/p1_3.1 ='yes'" />
+            <bind nodeset="/data/part1_3/part1_3.1/anm1.1" required="true()" type="int" />
+            <bind nodeset="/data/part1_3/part1_3.1/anm1.2" required="true()" type="int" />
+            <bind nodeset="/data/part1_3/part1_3.1/anm1.3" required="true()" type="int" />
+            <bind nodeset="/data/part1_3/part1_3.1/anm2.2" required="true()" type="int" />
+            <bind nodeset="/data/part1_3/part1_3.1/anm2.3" required="true()" type="int" />
+            <bind nodeset="/data/part1_3/p1_3.2" required="true()" type="string" />
+            <bind nodeset="/data/part1_3/part1_3.2" relevant=" /data/part1_3/p1_3.2 ='yes'" />
+            <bind nodeset="/data/part1_3/part1_3.2/gnm1.1" required="true()" type="int" />
+            <bind nodeset="/data/part1_3/part1_3.2/gnm1.2" required="true()" type="int" />
+            <bind nodeset="/data/part1_3/part1_3.2/gnm1.3" required="true()" type="int" />
+            <bind nodeset="/data/part1_3/part1_3.2/gnm2.2" required="true()" type="int" />
+            <bind nodeset="/data/part1_3/part1_3.2/gnm2.3" required="true()" type="int" />
+            <bind nodeset="/data/part1_3/part1_3.2/gnm3.2" required="true()" type="int" />
+            <bind nodeset="/data/part1_3/part1_3.2/gnm3.3" required="true()" type="int" />
+            <bind nodeset="/data/part1_3/p1_3.3" required="true()" type="string" />
+            <bind nodeset="/data/part1_3/part1_3.3" relevant=" /data/part1_3/p1_3.3 ='yes'" />
+            <bind nodeset="/data/part1_3/part1_3.3/pbbsc1.1" required="true()" type="int" />
+            <bind nodeset="/data/part1_3/part1_3.3/pbbsc1.2" required="true()" type="int" />
+            <bind nodeset="/data/part1_3/part1_3.3/pbbsc1.3" required="true()" type="int" />
+            <bind nodeset="/data/part1_3/part1_3.3/pbbsc2.2" required="true()" type="int" />
+            <bind nodeset="/data/part1_3/part1_3.3/pbbsc2.3" required="true()" type="int" />
+            <bind nodeset="/data/part1_3/p1_3.4" required="true()" type="string" />
+            <bind nodeset="/data/part1_3/part1_3.4" relevant=" /data/part1_3/p1_3.4 ='yes'" />
+            <bind nodeset="/data/part1_3/part1_3.4/bsc1.1" required="true()" type="int" />
+            <bind nodeset="/data/part1_3/part1_3.4/bsc1.2" required="true()" type="int" />
+            <bind nodeset="/data/part1_3/part1_3.4/bsc1.3" required="true()" type="int" />
+            <bind nodeset="/data/part1_3/part1_3.4/bsc2.2" required="true()" type="int" />
+            <bind nodeset="/data/part1_3/part1_3.4/bsc2.3" required="true()" type="int" />
+            <bind nodeset="/data/part1_3/part1_3.4/bsc3.2" required="true()" type="int" />
+            <bind nodeset="/data/part1_3/part1_3.4/bsc3.3" required="true()" type="int" />
+            <bind nodeset="/data/part1_3/part1_3.4/bsc4.2" required="true()" type="int" />
+            <bind nodeset="/data/part1_3/part1_3.4/bsc4.3" required="true()" type="int" />
+            <bind nodeset="/data/part1_3/p1_3.5" required="true()" type="string" />
+            <bind nodeset="/data/part1_3/part1_3.5" relevant=" /data/part1_3/p1_3.5 ='yes'" />
+            <bind nodeset="/data/part1_3/part1_3.5/msc1" required="true()" type="int" />
+            <bind nodeset="/data/part1_3/part1_3.5/msc2" required="true()" type="int" />
+            <bind nodeset="/data/part1_3/part1_3.5/msc3" required="true()" type="int" />
+            <bind nodeset="/data/part1_3/part1_3.5/msc5" required="true()" type="int" />
+            <bind nodeset="/data/part1_3/part1_3.5/msc6" required="true()" type="int" />
+            <bind nodeset="/data/part1_3/p1_3.6" required="true()" type="string" />
+            <bind nodeset="/data/part1_3/part1_3.6" relevant=" /data/part1_3/p1_3.6 ='yes'" />
+            <bind nodeset="/data/part1_3/part1_3.6/msc7" required="true()" type="int" />
+            <bind nodeset="/data/part1_3/part1_3.6/msc8" required="true()" type="int" />
+            <bind nodeset="/data/part1_3/part1_3.6/msc9" required="true()" type="int" />
+            <bind nodeset="/data/part1_3/part1_3.6/msc11" required="true()" type="int" />
+            <bind nodeset="/data/part1_3/part1_3.6/msc12" required="true()" type="int" />
+            <bind nodeset="/data/part1_3/p1_3.7" required="true()" type="string" />
+            <bind nodeset="/data/part1_3/part1_3.7" relevant=" /data/part1_3/p1_3.7 ='yes'" />
+            <bind nodeset="/data/part1_3/part1_3.7/msc13" required="true()" type="int" />
+            <bind nodeset="/data/part1_3/part1_3.7/msc14" required="true()" type="int" />
+            <bind nodeset="/data/part1_3/part1_3.7/msc15" required="true()" type="int" />
+            <bind nodeset="/data/part1_3/part1_3.7/msc16" required="true()" type="int" />
+            <bind nodeset="/data/part1_3/part1_3.7/msc17" required="true()" type="int" />
+            <bind nodeset="/data/part1_3/p1_3.8" required="true()" type="string" />
+            <bind nodeset="/data/part1_3/part1_3.8" relevant=" /data/part1_3/p1_3.8 ='yes'" />
+            <bind nodeset="/data/part1_3/part1_3.8/msc18" required="true()" type="int" />
+            <bind nodeset="/data/part1_3/part1_3.8/msc19" required="true()" type="int" />
+            <bind nodeset="/data/part1_3/part1_3.8/msc20" required="true()" type="int" />
+            <bind nodeset="/data/part1_3/part1_3.8/msc21" required="true()" type="int" />
+            <bind nodeset="/data/part1_3/part1_3.8/msc22" required="true()" type="int" />
+            <bind nodeset="/data/part1_3/p1_3.9" required="true()" type="string" />
+            <bind nodeset="/data/part1_3/part1_3.9" relevant=" /data/part1_3/p1_3.9 ='yes'" />
+            <bind nodeset="/data/part1_3/part1_3.9/msc23" required="true()" type="int" />
+            <bind nodeset="/data/part1_3/part1_3.9/msc24" required="true()" type="int" />
+            <bind nodeset="/data/part1_3/part1_3.9/msc25" required="true()" type="int" />
+            <bind nodeset="/data/part1_3/part1_3.9/msc26" required="true()" type="int" />
+            <bind nodeset="/data/part1_3/part1_3.9/msc27" required="true()" type="int" />
+            <bind jr:preload="uid" nodeset="/data/meta/instanceID" readonly="true()" type="string" />
+        </model>
+    </h:head>
+    <h:body class="pages">
+        <group appearance="field-list" ref="/data/part1_3">
+            <input ref="/data/part1_3/note1">
+                <label>####Number of seats sanctioned per program:</label>
+            </input>
+            <select1 appearance="label" ref="/data/part1_3/p1_3">
+                <label>Courses</label>
+                <item>
+                    <label>Yes</label>
+                    <value>yes</value>
+                </item>
+                <item>
+                    <label>No</label>
+                    <value>no</value>
+                </item>
+                <item>
+                    <label>NA</label>
+                    <value>na</value>
+                </item>
+            </select1>
+            <select1 appearance="list-nolabel" ref="/data/part1_3/p1_3.1">
+                <label>ANM</label>
+                <item>
+                    <label>Yes</label>
+                    <value>yes</value>
+                </item>
+                <item>
+                    <label>No</label>
+                    <value>no</value>
+                </item>
+                <item>
+                    <label>NA</label>
+                    <value>na</value>
+                </item>
+            </select1>
+            <group appearance="field-list" ref="/data/part1_3/part1_3.1">
+                <input ref="/data/part1_3/part1_3.1/anm1.1">
+                    <label>Number of Sanctioned Seats (1st year)</label>
+                </input>
+                <input ref="/data/part1_3/part1_3.1/anm1.2">
+                    <label>Students admitted (1st year)</label>
+                </input>
+                <input ref="/data/part1_3/part1_3.1/anm1.3">
+                    <label>Students present on day of assessment (1st year)</label>
+                </input>
+                <input ref="/data/part1_3/part1_3.1/anm2.2">
+                    <label>Students admitted (2nd year)</label>
+                </input>
+                <input ref="/data/part1_3/part1_3.1/anm2.3">
+                    <label>Students present on day of assessment (2nd year)</label>
+                </input>
+            </group>
+            <select1 appearance="list-nolabel" ref="/data/part1_3/p1_3.2">
+                <label>GNM</label>
+                <item>
+                    <label>Yes</label>
+                    <value>yes</value>
+                </item>
+                <item>
+                    <label>No</label>
+                    <value>no</value>
+                </item>
+                <item>
+                    <label>NA</label>
+                    <value>na</value>
+                </item>
+            </select1>
+            <group appearance="field-list" ref="/data/part1_3/part1_3.2">
+                <input ref="/data/part1_3/part1_3.2/gnm1.1">
+                    <label>Number of Sanctioned Seats (1st year)</label>
+                </input>
+                <input ref="/data/part1_3/part1_3.2/gnm1.2">
+                    <label>Students admitted (1st year)</label>
+                </input>
+                <input ref="/data/part1_3/part1_3.2/gnm1.3">
+                    <label>Students present on day of assessment (1st year)</label>
+                </input>
+                <input ref="/data/part1_3/part1_3.2/gnm2.2">
+                    <label>Students admitted (2nd year)</label>
+                </input>
+                <input ref="/data/part1_3/part1_3.2/gnm2.3">
+                    <label>Students present on day of assessment (2nd year)</label>
+                </input>
+                <input ref="/data/part1_3/part1_3.2/gnm3.2">
+                    <label>Students admitted (3rd year)</label>
+                </input>
+                <input ref="/data/part1_3/part1_3.2/gnm3.3">
+                    <label>Students present on day of assessment (3rd year)</label>
+                </input>
+            </group>
+            <select1 appearance="list-nolabel" ref="/data/part1_3/p1_3.3">
+                <label>Post Basic BSc N</label>
+                <item>
+                    <label>Yes</label>
+                    <value>yes</value>
+                </item>
+                <item>
+                    <label>No</label>
+                    <value>no</value>
+                </item>
+                <item>
+                    <label>NA</label>
+                    <value>na</value>
+                </item>
+            </select1>
+            <group appearance="field-list" ref="/data/part1_3/part1_3.3">
+                <input ref="/data/part1_3/part1_3.3/pbbsc1.1">
+                    <label>Number of Sanctioned Seats (1st year)</label>
+                </input>
+                <input ref="/data/part1_3/part1_3.3/pbbsc1.2">
+                    <label>Students admitted (1st year)</label>
+                </input>
+                <input ref="/data/part1_3/part1_3.3/pbbsc1.3">
+                    <label>Students present on day of assessment (1st year)</label>
+                </input>
+                <input ref="/data/part1_3/part1_3.3/pbbsc2.2">
+                    <label>Students admitted (2nd year)</label>
+                </input>
+                <input ref="/data/part1_3/part1_3.3/pbbsc2.3">
+                    <label>Students present on day of assessment (2nd year)</label>
+                </input>
+            </group>
+            <select1 appearance="list-nolabel" ref="/data/part1_3/p1_3.4">
+                <label>BSc N</label>
+                <item>
+                    <label>Yes</label>
+                    <value>yes</value>
+                </item>
+                <item>
+                    <label>No</label>
+                    <value>no</value>
+                </item>
+                <item>
+                    <label>NA</label>
+                    <value>na</value>
+                </item>
+            </select1>
+            <group appearance="field-list" ref="/data/part1_3/part1_3.4">
+                <input ref="/data/part1_3/part1_3.4/bsc1.1">
+                    <label>Number of Sanctioned Seats (1st year)</label>
+                </input>
+                <input ref="/data/part1_3/part1_3.4/bsc1.2">
+                    <label>Students admitted (1st year)</label>
+                </input>
+                <input ref="/data/part1_3/part1_3.4/bsc1.3">
+                    <label>Students present on day of assessment (1st year)</label>
+                </input>
+                <input ref="/data/part1_3/part1_3.4/bsc2.2">
+                    <label>Students admitted (2nd year)</label>
+                </input>
+                <input ref="/data/part1_3/part1_3.4/bsc2.3">
+                    <label>Students present on day of assessment (2nd year)</label>
+                </input>
+                <input ref="/data/part1_3/part1_3.4/bsc3.2">
+                    <label>Students admitted (3rd year)</label>
+                </input>
+                <input ref="/data/part1_3/part1_3.4/bsc3.3">
+                    <label>Students present on day of assessment (3rd year)</label>
+                </input>
+                <input ref="/data/part1_3/part1_3.4/bsc4.2">
+                    <label>Students admitted (4th year)</label>
+                </input>
+                <input ref="/data/part1_3/part1_3.4/bsc4.3">
+                    <label>Students present on day of assessment (4th year)</label>
+                </input>
+            </group>
+            <select1 appearance="list-nolabel" ref="/data/part1_3/p1_3.5">
+                <label>MSc N. Community Health</label>
+                <item>
+                    <label>Yes</label>
+                    <value>yes</value>
+                </item>
+                <item>
+                    <label>No</label>
+                    <value>no</value>
+                </item>
+                <item>
+                    <label>NA</label>
+                    <value>na</value>
+                </item>
+            </select1>
+            <group appearance="field-list" ref="/data/part1_3/part1_3.5">
+                <input ref="/data/part1_3/part1_3.5/msc1">
+                    <label>Number of Sanctioned Seats (1st year)</label>
+                </input>
+                <input ref="/data/part1_3/part1_3.5/msc2">
+                    <label>Students admitted (1st year)</label>
+                </input>
+                <input ref="/data/part1_3/part1_3.5/msc3">
+                    <label>Students present on day of assessment (1st year)</label>
+                </input>
+                <input ref="/data/part1_3/part1_3.5/msc5">
+                    <label>Students admitted (2nd year)</label>
+                </input>
+                <input ref="/data/part1_3/part1_3.5/msc6">
+                    <label>Students present on day of assessment (2nd year)</label>
+                </input>
+            </group>
+            <select1 appearance="list-nolabel" ref="/data/part1_3/p1_3.6">
+                <label>MSc N. Medical Surgical</label>
+                <item>
+                    <label>Yes</label>
+                    <value>yes</value>
+                </item>
+                <item>
+                    <label>No</label>
+                    <value>no</value>
+                </item>
+                <item>
+                    <label>NA</label>
+                    <value>na</value>
+                </item>
+            </select1>
+            <group appearance="field-list" ref="/data/part1_3/part1_3.6">
+                <input ref="/data/part1_3/part1_3.6/msc7">
+                    <label>Number of Sanctioned Seats (1st year)</label>
+                </input>
+                <input ref="/data/part1_3/part1_3.6/msc8">
+                    <label>Students admitted (1st year)</label>
+                </input>
+                <input ref="/data/part1_3/part1_3.6/msc9">
+                    <label>Students present on day of assessment (1st year)</label>
+                </input>
+                <input ref="/data/part1_3/part1_3.6/msc11">
+                    <label>Students admitted (2nd year)</label>
+                </input>
+                <input ref="/data/part1_3/part1_3.6/msc12">
+                    <label>Students present on day of assessment (2nd year)</label>
+                </input>
+            </group>
+            <select1 appearance="list-nolabel" ref="/data/part1_3/p1_3.7">
+                <label>MSc N. OBG</label>
+                <item>
+                    <label>Yes</label>
+                    <value>yes</value>
+                </item>
+                <item>
+                    <label>No</label>
+                    <value>no</value>
+                </item>
+                <item>
+                    <label>NA</label>
+                    <value>na</value>
+                </item>
+            </select1>
+            <group appearance="field-list" ref="/data/part1_3/part1_3.7">
+                <input ref="/data/part1_3/part1_3.7/msc13">
+                    <label>Number of Sanctioned Seats (1st year)</label>
+                </input>
+                <input ref="/data/part1_3/part1_3.7/msc14">
+                    <label>Students admitted (1st year)</label>
+                </input>
+                <input ref="/data/part1_3/part1_3.7/msc15">
+                    <label>Students present on day of assessment (1st year)</label>
+                </input>
+                <input ref="/data/part1_3/part1_3.7/msc16">
+                    <label>Students admitted (2nd year)</label>
+                </input>
+                <input ref="/data/part1_3/part1_3.7/msc17">
+                    <label>Students present on day of assessment (2nd year)</label>
+                </input>
+            </group>
+            <select1 appearance="list-nolabel" ref="/data/part1_3/p1_3.8">
+                <label>MSc N. Paediatrics</label>
+                <item>
+                    <label>Yes</label>
+                    <value>yes</value>
+                </item>
+                <item>
+                    <label>No</label>
+                    <value>no</value>
+                </item>
+                <item>
+                    <label>NA</label>
+                    <value>na</value>
+                </item>
+            </select1>
+            <group appearance="field-list" ref="/data/part1_3/part1_3.8">
+                <input ref="/data/part1_3/part1_3.8/msc18">
+                    <label>Number of Sanctioned Seats (1st year)</label>
+                </input>
+                <input ref="/data/part1_3/part1_3.8/msc19">
+                    <label>Students admitted (1st year)</label>
+                </input>
+                <input ref="/data/part1_3/part1_3.8/msc20">
+                    <label>Students present on day of assessment (1st year)</label>
+                </input>
+                <input ref="/data/part1_3/part1_3.8/msc21">
+                    <label>Students admitted (2nd year)</label>
+                </input>
+                <input ref="/data/part1_3/part1_3.8/msc22">
+                    <label>Students present on day of assessment (2nd year)</label>
+                </input>
+            </group>
+            <select1 appearance="list-nolabel" ref="/data/part1_3/p1_3.9">
+                <label>MSc N. Psychiatric</label>
+                <item>
+                    <label>Yes</label>
+                    <value>yes</value>
+                </item>
+                <item>
+                    <label>No</label>
+                    <value>no</value>
+                </item>
+                <item>
+                    <label>NA</label>
+                    <value>na</value>
+                </item>
+            </select1>
+            <group appearance="field-list" ref="/data/part1_3/part1_3.9">
+                <input ref="/data/part1_3/part1_3.9/msc23">
+                    <label>Number of Sanctioned Seats (1st year)</label>
+                </input>
+                <input ref="/data/part1_3/part1_3.9/msc24">
+                    <label>Students admitted (1st year)</label>
+                </input>
+                <input ref="/data/part1_3/part1_3.9/msc25">
+                    <label>Students present on day of assessment (1st year)</label>
+                </input>
+                <input ref="/data/part1_3/part1_3.9/msc26">
+                    <label>Students admitted (2nd year)</label>
+                </input>
+                <input ref="/data/part1_3/part1_3.9/msc27">
+                    <label>Students present on day of assessment (2nd year)</label>
+                </input>
+            </group>
+        </group>
+    </h:body>
+</h:html>
