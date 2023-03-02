@@ -65,6 +65,19 @@ export class AppService {
       if (prefillSpec.hasOwnProperty(key)) {
         const key_arr = key.split('_*_');
         let element = null;
+        // if (this.isImage(prefillSpec[key])) {
+        //   continue
+        // } else element = this.findElementRecursively(0, key_arr, instance);
+        element = this.findElementRecursively(0, key_arr, instance);
+        if (element) {
+          element.textContent = eval(prefillSpec[key]);
+        }
+      }
+    }
+    for (const key in prefillSpec) {
+      if (prefillSpec.hasOwnProperty(key)) {
+        const key_arr = key.split('_*_');
+        let element = null;
         if (this.isImage(prefillSpec[key])) {
           const parentEl = this.findElementRecursively(0, key_arr.slice(0, key_arr.length - 1), instance);
           for (let i = 0; i < parentEl.childNodes.length; i++) {
@@ -79,10 +92,8 @@ export class AppService {
             }
           }
 
-        } else element = this.findElementRecursively(0, key_arr, instance);
+        }
         if (element) {
-          // console.log(prefillSpec[key]);
-          // console.log(eval(prefillSpec[key]));
           element.textContent = eval(prefillSpec[key]);
         }
       }
