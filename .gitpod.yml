@@ -14,7 +14,7 @@ tasks:
       gp sync-await setup
       cd packages/form-manager
       nvm use 16
-      npm install
+      pnpm install
     command: |
       npm run start:dev
   - name: Setup React Wrapper
@@ -22,8 +22,8 @@ tasks:
     init: |
       gp sync-await setup
       cd apps/wrapper
-      nvm use 14
-      npm install
+      nvm use 16
+      pnpm install
     command: |
       npm run start
       
