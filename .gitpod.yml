@@ -1,29 +1,31 @@
 tasks:
-  - name: Install things
-    init: bash ./install-node.sh
   - name: Setup Enketo Express
     openMode: tab-after
     init: |
-      nvm use 14
+      nvm install 14.19.1
       npm start-ee
   - name: Setup Form Manager
     openMode: tab-after
     init: |
+      nvm install 14.19.1
       nvm use 14
+      npm install
       npm run start:dev
   - name: Setup Enketo Express
     openMode: tab-after
     init: |
+      nvm install 14.19.1
       nvm use 14
+      npm install
       grunt develop
   - name: Setup React Wrapper
     openMode: tab-after
     init: |
-      nvm use 16
+      nvm install 14.19.1
+      nvm use 14
+      npm install
       npm run start
       
-      
-
 ports:
   - port: 8065 # Enketo Express
     onOpen: ignore
