@@ -37,3 +37,6 @@ ports:
   - port: 3000 # React Wrapper
     onOpen: ignore
     visibility: public
+  - port: 8080 # React Wrapper
+    onOpen: ignore
+    visibility: public
