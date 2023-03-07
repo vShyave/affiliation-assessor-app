@@ -2,30 +2,24 @@ tasks:
   - name: Setup Enketo Express
     openMode: tab-after
     init: |
+      bash install-node.sh
       nvm install 14.19.1
       nvm use 14
-      cd packages/enketo-express && docker run --name enketo-redis-main -p 6381:6379 -d redis && docker run --name enketo-redis-cache -p 6382:6379 -d redis && npm i && npm i -g grunt && grunt develop
-  # - name: Setup Form Manager
-  #   openMode: tab-after
-  #   init: |
-  #     nvm install 14.19.1
-  #     nvm use 14
-  #     npm install
-  #     npm run start:dev
-  # - name: Setup Enketo Express
-  #   openMode: tab-after
-  #   init: |
-  #     nvm install 14.19.1
-  #     nvm use 14
-  #     npm install
-  #     grunt develop
-  # - name: Setup React Wrapper
-  #   openMode: tab-after
-  #   init: |
-  #     nvm install 14.19.1
-  #     nvm use 14
-  #     npm install
-  #     npm run start
+      cd packages/enketo-express && docker run --name enketo-redis-main -p 6381:6379 -d redis && docker run --name enketo-redis-cache -p 6382:6379 -d redis && pnpm i && pnpm i -g grunt && grunt develop
+  - name: Setup Form Manager
+    openMode: tab-after
+    init: |
+      nvm install 14.19.1
+      nvm use 14
+      pnpm install
+      npm run start:dev
+  - name: Setup React Wrapper
+    openMode: tab-after
+    init: |
+      nvm install 14.19.1
+      nvm use 14
+      pnpm install
+      npm run start
       
 ports:
   - port: 8065 # Enketo Express

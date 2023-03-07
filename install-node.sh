@@ -8,10 +8,12 @@ nvm install v14.19.1
 nvm install 16
 nvm use 14
 
-cd ./packages/enketo-core && npm i
-cd ..
-cd ./packages/enketo-express && docker run --name enketo-redis-main -p 6381:6379 -d redis && docker run --name enketo-redis-cache -p 6382:6379 -d redis && npm i && npm i -g grunt
-cd ..
-cd packages/form-manager && npm i
-cd ..
-cd ./apps/wrapper && npm i
+wget -qO- https://get.pnpm.io/install.sh | ENV="$HOME/.bashrc" SHELL="$(which bash)" bash -
+
+# cd ./packages/enketo-core && npm i
+# cd ..
+# cd ./packages/enketo-express && docker run --name enketo-redis-main -p 6381:6379 -d redis && docker run --name enketo-redis-cache -p 6382:6379 -d redis && npm i && npm i -g grunt
+# cd ..
+# cd packages/form-manager && npm i
+# cd ..
+# cd ./apps/wrapper && npm i
