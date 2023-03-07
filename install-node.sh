@@ -7,10 +7,10 @@ export NVM_DIR="$([ -z "${XDG_CONFIG_HOME-}" ] && printf %s "${HOME}/.nvm" || pr
 nvm install v14.19.1
 nvm install 16
 
-cd packages/enketo-core && npm i
-cd .
-cd packages/enketo-express && docker run --name enketo-redis-main -p 6381:6379 -d redis && docker run --name enketo-redis-cache -p 6382:6379 -d redis && npm i && npm i -g grunt
-cd .
-cd packages/form-manager && npm i
-cd .
+cd ./packages/enketo-core && npm i
+cd ..
+cd ./packages/enketo-express && docker run --name enketo-redis-main -p 6381:6379 -d redis && docker run --name enketo-redis-cache -p 6382:6379 -d redis && npm i && npm i -g grunt
+cd ..
+cd ./packages/form-manager && npm i
+cd ..
 cd app/wrapper && npm i
