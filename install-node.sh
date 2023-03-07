@@ -6,6 +6,7 @@ export NVM_DIR="$([ -z "${XDG_CONFIG_HOME-}" ] && printf %s "${HOME}/.nvm" || pr
 
 nvm install v14.19.1
 nvm install 16
+nvm use 14
 
 cd ./packages/enketo-core && npm i
 cd ..
