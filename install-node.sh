@@ -12,6 +12,6 @@ cd ./packages/enketo-core && npm i
 cd ..
 cd ./packages/enketo-express && docker run --name enketo-redis-main -p 6381:6379 -d redis && docker run --name enketo-redis-cache -p 6382:6379 -d redis && npm i && npm i -g grunt
 cd ..
-cd ./packages/form-manager && npm i
+cd packages/form-manager && npm i
 cd ..
-cd app/wrapper && npm i
+cd ./apps/wrapper && npm i
