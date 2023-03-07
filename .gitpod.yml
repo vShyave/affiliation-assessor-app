@@ -3,22 +3,22 @@ tasks:
     init: bash ./install-node.sh
   - name: Setup Enketo Express
     openMode: tab-after
-    init: >
+    init: |
       nvm use 14
       npm start-ee
   - name: Setup Form Manager
     openMode: tab-after
-    init: >
+    init: |
       nvm use 14
       npm run start:dev
   - name: Setup Enketo Express
     openMode: tab-after
-    init: >
+    init: |
       nvm use 14
       grunt develop
   - name: Setup React Wrapper
     openMode: tab-after
-    init: >
+    init: |
       nvm use 16
       npm run start
       
