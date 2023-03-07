@@ -4,7 +4,7 @@ tasks:
     init: |
       bash install-node.sh
       nvm use 14
-      cd packages/enketo-express && docker run --name enketo-redis-main -p 6381:6379 -d redis && docker run --name enketo-redis-cache -p 6382:6379 -d redis && pnpm i && pnpm i -g grunt
+      cd packages/enketo-express && pnpm i && pnpm i -g grunt
       gp sync-done setup
     command: |
       grunt develop
