@@ -1,9 +1,9 @@
 {
   "forms": {
-    "form1": {
+    "test": {
       "skipOnSuccessMessage": true,
       "submissionURL": "http://esamwad.samagra.io/api/v4/form/submit",
-      "name": "SampleForm",
+      "name": "Test Form",
       "isSuccess": "async (formData) => { console.log('From isSuccess', formData.getElementsByTagName('reg_no')[0].textContent); return formData.getElementsByTagName('reg_no')[0].textContent === 'registration123'; }",
       "messageOnFailure": "Form submission failed",
       "messageOnSuccess": "Form submitted successfully or Maybe you are already registered",
@@ -44,6 +44,6 @@
       }
     }
   },
-  "startingForm": "form1",
+  "startingForm": "test",
   "metaData": {}
 }

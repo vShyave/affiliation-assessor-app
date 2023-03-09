@@ -1,38 +1,49 @@
-.App {
-  text-align: center;
-}
-
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+.container {
   display: flex;
-  flex-direction: column;
-  align-items: center;
+  height: 100vh;
+  width: 100vw;
+  background: #2b2b2b;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+  align-items: center;
+  flex-direction: column;
+  gap: 2rem;
 }
 
-.App-link {
-  color: #61dafb;
+.heading {
+  font-size: 5rem;
+  color: #ffc119;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.subtitle {
+  font-size: 2rem;
+  color: #efefef;
+  margin-top: -2rem;
+  margin-bottom: 4rem;
+}
+
+.btnContainer {
+  display: flex;
+  flex-direction: row;
+  gap: 2rem;
+}
+
+.workflowBtns {
+  height: 8rem;
+  width: 8rem;
+  border: 1px solid #ffc119;
+  border-radius: 1rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #efefef;
+  font-size: 1.5rem;
+  cursor: pointer;
+  transition: all 0.3s ease-in;
+}
+
+.workflowBtns:hover {
+  background: #ffc119;
+  color: #000;
+  transform: translateY(-5px);
+  box-shadow: #ffc119 0px 30px 60px -6px, #ffc119 0px 18px 36px -9px;
 }
