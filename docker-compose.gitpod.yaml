@@ -45,10 +45,6 @@ services:
     networks:
       - search_net
     restart: unless-stopped
-    ulimits:
-      memlock:
-        soft: -1
-        hard: -1
     volumes:
       - search_data:/usr/share/elasticsearch/data
 
@@ -70,15 +66,15 @@ services:
       FUSIONAUTH_APP_URL: http://fusionauth:9011
       SEARCH_SERVERS: http://search:9200
       SEARCH_TYPE: elasticsearch
-
+    volumes:
+      - fa-config:/usr/local/fusionauth/config
+      - ./kickstart:/usr/local/fusionauth/kickstarts
     networks:
       - db_net
       - search_net
     restart: unless-stopped
     ports:
       - 9011:9011
-    volumes:
-      - fusionauth_config:/usr/local/fusionauth/config
 
   redis_main:
     image: redis:5
@@ -138,5 +134,5 @@ networks:
 
 volumes:
   db_data:
-  fusionauth_config:
   search_data:
+  fa-config:

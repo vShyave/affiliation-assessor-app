@@ -40,7 +40,7 @@ export class AppController {
   constructor(
     private readonly appService: AppService,
     private configService: ConfigService,
-  ) { }
+  ) {}
 
   getLoginToken = () => {
     try {
@@ -62,7 +62,7 @@ export class AppController {
         json: postData,
       };
 
-      console.log(options)
+      console.log(options);
 
       return new Promise((resolve, reject) => {
         request(options, function (error, response, body) {
@@ -180,10 +180,10 @@ export class AppController {
           prefillXML,
         );
       } else {
-        return "OK";
+        return 'OK';
       }
     } catch (e) {
-      return "OK2";
+      return 'OK2';
     }
   }
 
@@ -200,19 +200,27 @@ export class AppController {
   }
 
   @Get('osceForm/:type/:year/:speciality?')
-  getOsceForm(@Param('type') type, @Param('year') year, @Param('speciality') speciality): any {
+  getOsceForm(
+    @Param('type') type,
+    @Param('year') year,
+    @Param('speciality') speciality,
+  ): any {
     return this.appService.getOsceForms(type, year, speciality);
   }
 
   @Get('osceFormTeachers/:type/:year/:speciality?')
-  getOsceFormTeachers(@Param('type') type, @Param('year') year, @Param('speciality') speciality): any {
+  getOsceFormTeachers(
+    @Param('type') type,
+    @Param('year') year,
+    @Param('speciality') speciality,
+  ): any {
     return this.appService.getOsceForms(type, year, speciality, 2);
   }
 
   @Post('form/uploadFile')
   @UseInterceptors(FileInterceptor('file'))
   async uploadFile(@UploadedFile() file: Express.Multer.File) {
-    console.log(file)
+    console.log(file);
     const extension = file.originalname.split('.').pop();
     const fileName = uuidv4() + `.${extension}`;
     const tokenRes = await this.getLoginToken();
@@ -252,7 +260,7 @@ export class AppController {
       'MINIO_BUCKET_ID',
     )}/${fileName}`;
 
-    console.log("Uploaded File:", fileURL);
+    console.log('Uploaded File:', fileURL);
 
     return { fileURL };
   }
