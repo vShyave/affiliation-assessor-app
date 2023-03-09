@@ -1,3 +1,31 @@
 .container {
-    
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    align-items: center;
+    width: 40vw;
+    padding-bottom: 2rem;
+}
+
+.header {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    justify-content: space-between;
+}
+
+.header:nth-child(1) {
+    font-size: 1rem;
+    color: #ffc119;
+}
+
+.header:nth-child(2) {
+    font-size: 3rem;
+    color: #ffc119;
+}
+
+.odkForm {
+    height: 90%;
+    width: 100%;
 }

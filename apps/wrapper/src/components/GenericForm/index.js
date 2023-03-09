@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import styles from './index.module.css';
 
+const GITPOD_URL = process.env.GITPOD_WORKSPACE_URL
+
 const GenericForm = (props) => {
   const { selectedFlow } = props;
   const formSpec = require(`../../${selectedFlow.config}`);
@@ -12,21 +14,21 @@ const GenericForm = (props) => {
 
   const getFormURI = (form, ofsd, prefillSpec) => {
     console.log(form, ofsd, prefillSpec);
-    return encodeURIComponent(`https://enketo-manager-ratings-tech.samagra.io/?form=${form}&onFormSuccessData=${encodeFunction(ofsd)}&prefillSpec=${encodeFunction(prefillSpec)}`);
+    return encodeURIComponent(`${GITPOD_URL.slice(0, GITPOD_URL.indexOf('/') + 2) + "3006-" + GITPOD_URL.slice(GITPOD_URL.indexOf('/') + 2)}/prefill?form=${form}&onFormSuccessData=${encodeFunction(ofsd)}&prefillSpec=${encodeFunction(prefillSpec)}`);
   }
 
-  const startingForm = formSpec.start;
+  const startingForm = formSpec.startingForm;
   const [formId, setFormId] = useState(startingForm);
   const [encodedFormSpec, setEncodedFormSpec] = useState(encodeURI(JSON.stringify(formSpec.forms[formId])));
   const [onFormSuccessData, setOnFormSuccessData] = useState(undefined);
   const [onFormFailureData, setOnFormFailureData] = useState(undefined);
-  const [encodedFormURI, setEncodedFormURI] = useState(getFormURI(formId, formSpec.forms[formId].onSuccess, formSpec.forms[formId].prefill));
+  const [encodedFormURI, setEncodedFormURI] = useState(getFormURI(formId, formSpec.forms[formId].onFormSuccess, formSpec.forms[formId].prefill));
 
   useEffect(() => {
     // Manage onNext
     window.addEventListener('message', function (e) {
       const data = e.data;
-      
+
       try {
         /* message = {
           nextForm: "formID",
@@ -54,11 +56,14 @@ const GenericForm = (props) => {
 
   return (
     <div className={styles.container}>
-      <div>ODK FORM</div>
+      <div className={styles.header}>
+        <div>Go back</div>
+        <div>{selectedFlow.name}</div>
+      </div>
       <iframe title='current-form'
-        style={{ height: "100vh", width: "100vw" }}
+        className={styles.odkForm}
         src={
-          `http://localhost:8005/preview?formSpec=${encodedFormSpec}&xform=${encodedFormURI}`
+          `${GITPOD_URL.slice(0, GITPOD_URL.indexOf('/') + 2) + "8065-" + GITPOD_URL.slice(GITPOD_URL.indexOf('/') + 2)}/preview?formSpec=${encodedFormSpec}&xform=${encodedFormURI}`
         }
       />
     </div>

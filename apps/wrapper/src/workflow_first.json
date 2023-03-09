@@ -1,9 +1,9 @@
 {
   "forms": {
-    "test": {
+    "nursing": {
       "skipOnSuccessMessage": true,
       "submissionURL": "http://esamwad.samagra.io/api/v4/form/submit",
-      "name": "Test Form",
+      "name": "Nursing Test Form",
       "isSuccess": "async (formData) => { console.log('From isSuccess', formData.getElementsByTagName('reg_no')[0].textContent); return formData.getElementsByTagName('reg_no')[0].textContent === 'registration123'; }",
       "messageOnFailure": "Form submission failed",
       "messageOnSuccess": "Form submitted successfully or Maybe you are already registered",
@@ -44,6 +44,6 @@
       }
     }
   },
-  "startingForm": "test",
+  "startingForm": "nursing",
   "metaData": {}
 }

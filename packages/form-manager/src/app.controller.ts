@@ -129,10 +129,10 @@ export class AppController {
     }
   };
 
-  @Get()
-  getHello(): string {
-    return this.appService.getHello();
-  }
+  // @Get()
+  // getHello(): string {
+  //   return this.appService.getHello();
+  // }
 
   @Post('prefill')
   getPrefill(@Body() prefillDto: PrefillDto): string {
