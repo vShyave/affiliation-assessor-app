@@ -66,6 +66,9 @@ services:
       FUSIONAUTH_APP_URL: http://fusionauth:9011
       SEARCH_SERVERS: http://search:9200
       SEARCH_TYPE: elasticsearch
+      FUSIONAUTH_APP_KICKSTART_FILE: /usr/local/fusionauth/kickstarts/kickstart.json
+    env_file:
+      - ./fusionauth.env
     volumes:
       - fa-config:/usr/local/fusionauth/config
       - ./kickstart:/usr/local/fusionauth/kickstarts

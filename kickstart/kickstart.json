@@ -2,7 +2,15 @@
     "variables": {
         "apiKey": "#{ENV.FUSIONAUTH_API_KEY}",
         "adminPassword": "#{ENV.FUSIONAUTH_ADMIN_PASSWORD}",
-        "adminEmail": "#{ENV.FUSIONAUTH_ADMIN_EMAIL}"
+        "adminEmail": "#{ENV.FUSIONAUTH_ADMIN_EMAIL}",
+        "applicationName": "#{ENV.APPLICATION_NAME}",
+        "applicationUUID": "#{UUID()}",
+        "medicalUserEmail": "#{ENV.MEDICAL_USER_EMAIL}",
+        "medicalUserPassword": "#{ENV.MEDICAL_USER_PASSWORD}",
+        "nonMedicalUserEmail": "#{ENV.NON_MEDICAL_USER_EMAIL}",
+        "nonMedicalUserPassword": "#{ENV.NON_MEDICAL_USER_PASSWORD}",
+        "applicationAdminEmail": "#{ENV.APPLICATION_ADMIN_EMAIL}",
+        "applicationAdminPassword": "#{ENV.APPLICATION_ADMIN_PASSWORD}"
     },
     "apiKeys": [
         {
@@ -22,6 +30,91 @@
                     "applicationId": "#{FUSIONAUTH_APPLICATION_ID}",
                     "roles": [
                         "admin"
+                    ]
+                }
+            }
+        },
+        {
+            "method": "POST",
+            "url": "/api/application/#{applicationUUID}",
+            "tenantId": "#{FUSIONAUTH_TENANT_ID}",
+            "body": {
+              "application": {
+                "name": "#{applicationName}"
+              }
+            }
+        },
+        {
+            "method": "POST",
+            "url": "/api/application/#{applicationUUID}/role",
+            "body": {
+              "role": {
+                "name": "Admin"
+              }
+            }
+        },
+        {
+            "method": "POST",
+            "url": "/api/application/#{applicationUUID}/role",
+            "body": {
+              "role": {
+                "name": "Medical"
+              }
+            }
+        },
+        {
+            "method": "POST",
+            "url": "/api/application/#{applicationUUID}/role",
+            "body": {
+              "role": {
+                "name": "Non-Medical"
+              }
+            }
+        },
+        {
+            "method": "POST",
+            "url": "/api/user/registration",
+            "body": {
+                "user": {
+                    "email": "#{applicationAdminEmail}",
+                    "password": "#{applicationAdminPassword}"
+                },
+                "registration": {
+                    "applicationId": "#{applicationUUID}",
+                    "roles": [
+                        "Admin"
+                    ]
+                }
+            }
+        },
+        {
+            "method": "POST",
+            "url": "/api/user/registration",
+            "body": {
+                "user": {
+                    "email": "#{medicalUserEmail}",
+                    "password": "#{medicalUserPassword}"
+                },
+                "registration": {
+                    "applicationId": "#{applicationUUID}",
+                    "roles": [
+                        "Medical"
+                    ]
+                }
+            }
+        },
+        {
+            "method": "POST",
+            "url": "/api/user/registration",
+            "body": {
+                "user": {
+                    "email": "#{nonMedicalUserEmail}",
+                    "password": "#{nonMedicalUserPassword}"
+                },
+                "registration": {
+                    "applicationId": "#{applicationUUID}",
+                    "roles": [
+                        "Non-Medical"
                     ]
                 }
             }
