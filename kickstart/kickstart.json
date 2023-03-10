@@ -11,7 +11,12 @@
         "nonMedicalUserPassword": "#{ENV.NON_MEDICAL_USER_PASSWORD}",
         "applicationAdminEmail": "#{ENV.APPLICATION_ADMIN_EMAIL}",
         "applicationAdminPassword": "#{ENV.APPLICATION_ADMIN_PASSWORD}",
-        "lambdaName": "#{ENV.LAMBDA_NAME}"
+        "lambdaName": "#{ENV.LAMBDA_NAME}",
+        "lambdaUUID": "#{UUID()}",
+        "applicationIDTokenSigningKeyName": "#{ENV.APPLICATION_ID_TOKEN_SIGNING_KEY}", 
+        "applicationIDTokenSigningKeyUUID": "#{UUID()}", 
+        "applicationAccessTokenSigningKeyName": "#{ENV.APPLICATION_ACCESS_TOKEN_SIGNING_KEY}",
+        "applicationAccessTokenSigningKeyUUID": "#{UUID()}" 
     },
     "apiKeys": [
         {
@@ -37,16 +42,61 @@
         },
         {
             "method": "POST",
+            "url": "/api/key/generate/#{applicationIDTokenSigningKeyUUID}",
+            "body": {
+                "key": {
+                    "algorithm": "RS256",
+                    "name": "#{applicationIDTokenSigningKeyName}",
+                    "length": "2048"
+                }
+            }
+        },
+        {
+            "method": "POST",
+            "url": "/api/key/generate/#{applicationAccessTokenSigningKeyUUID}",
+            "body": {
+                "key": {
+                    "algorithm": "RS256",
+                    "name": "#{applicationAccessTokenSigningKeyName}",
+                    "length": "2048"
+                }
+            }
+        },
+        {
+            "method": "POST",
+            "url": "/api/lambda/#{lambdaUUID}",
+            "body": {
+                "lambda": {
+                    "body":"function populate(jwt, user, registration) {\n    applicationId = registration.applicationId || null;\n    claims = {\n        'x-hasura-allowed-roles': ['Medical', 'Non-Medical', 'Admin']\n    };\n\n    if (applicationId) {\n        user.registrations.map(function (reg) {\n            claims['x-hasura-user-id'] = '1';\n            claims['x-hasura-default-role'] = 'Medical';\n            if (reg.applicationId === applicationId && Array.isArray(reg.roles)) {\n                if (reg.roles.indexOf('Admin') >= 0) {\n                    claims['x-hasura-default-role'] = 'Admin';\n                } else if (reg.roles.indexOf('Medical') >= 0) {\n                    claims['x-hasura-default-role'] = 'Medical';\n                } else if (reg.roles.indexOf('Non-Medical') >= 0) {\n                    claims['x-hasura-default-role'] = 'Non-Medical';\n                }\n            }\n        });\n    }\n\n    jwt['https://hasura.io/jwt/claims'] = claims;\n}",
+                    "engineType": "GraalJS",
+                    "name": "#{lambdaName}",
+                    "type": "JWTPopulate"
+                }
+            }
+        },
+        {
+            "method": "POST",
             "url": "/api/application/#{applicationUUID}",
             "tenantId": "#{FUSIONAUTH_TENANT_ID}",
             "body": {
               "application": {
                 "name": "#{applicationName}",
                 "oauthConfiguration": {
-                    "enabledGrants": ["authorization_code", "refresh_token"]
+                    "enabledGrants": ["authorization_code", "refresh_token"],
+                    "generateRefreshTokens": true
                 },
                 "loginConfiguration": {
-                    "allowTokenRefresh": true
+                    "allowTokenRefresh": true,
+                    "generateRefreshTokens": true,
+                    "enableJwtRefresh": true
+                },
+                "jwtConfiguration": {
+                    "enabled": true,
+                    "idTokenKeyId": "#{applicationIDTokenSigningKeyUUID}",
+                    "accessTokenKeyId": "#{applicationAccessTokenSigningKeyUUID}"
+                },
+                "lambdaConfiguration": {
+                    "accessTokenPopulateId": "#{lambdaUUID}"
                 }
               }
             }
@@ -123,18 +173,6 @@
                     "roles": [
                         "Non-Medical"
                     ]
-                }
-            }
-        },
-        {
-            "method": "POST",
-            "url": "/api/lambda",
-            "body": {
-                "lambda": {
-                    "body":"function populate(jwt, user, registration) {\n    applicationId = registration.applicationId || null;\n    claims = {\n        'x-hasura-allowed-roles': ['Medical', 'Non-Medical', 'Admin']\n    };\n\n    if (applicationId) {\n        user.registrations.map(function (reg) {\n            claims['x-hasura-user-id'] = '1';\n            claims['x-hasura-default-role'] = 'Medical';\n            if (reg.applicationId === applicationId && Array.isArray(reg.roles)) {\n                if (reg.roles.indexOf('Admin') >= 0) {\n                    claims['x-hasura-default-role'] = 'Admin';\n                } else if (reg.roles.indexOf('Medical') >= 0) {\n                    claims['x-hasura-default-role'] = 'Medical';\n                } else if (reg.roles.indexOf('Non-Medical') >= 0) {\n                    claims['x-hasura-default-role'] = 'Non-Medical';\n                }\n            }\n        });\n    }\n\n    jwt['https://hasura.io/jwt/claims'] = claims;\n}",
-                    "engineType": "GraalJS",
-                    "name": "#{lambdaName}",
-                    "type": "JWTPopulate"
                 }
             }
         }

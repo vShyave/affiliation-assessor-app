@@ -127,7 +127,7 @@ services:
       - HASURA_GRAPHQL_MIGRATIONS_DISABLE_TRANSACTION=true
       - HASURA_GRAPHQL_CONSOLE_ASSETS_DIR=/srv/console-assets
       - HASURA_GRAPHQL_ADMIN_SECRET=myadminsecretkey
-      - HASURA_GRAPHQL_JWT_SECRET={"type":"RS256","jwk_url":"https://auth.konnect.samagra.io/.well-known/jwks.json"}
+      - HASURA_GRAPHQL_JWT_SECRET={"type":"RS256","jwk_url":"http://fusionauth/.well-known/jwks.json"}
 
 networks:
   db_net:
