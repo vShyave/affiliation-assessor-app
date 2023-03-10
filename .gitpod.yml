@@ -3,6 +3,7 @@ tasks:
     openMode: tab-after
     init: |
       bash install-node.sh
+      bash make-envs-for-react.sh
       nvm use 14
       cd packages/enketo-express && pnpm i && pnpm i -g grunt
       gp sync-done setup

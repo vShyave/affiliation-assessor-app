@@ -4,7 +4,7 @@ import styles from './index.module.css';
 const GITPOD_URL = process.env.GITPOD_WORKSPACE_URL
 
 const GenericForm = (props) => {
-  const { selectedFlow } = props;
+  const { selectedFlow, setSelectedFlow } = props;
   const formSpec = require(`../../${selectedFlow.config}`);
   const [isFirst, setIsFirst] = useState(true);
   // Encode string method to URI
@@ -14,6 +14,7 @@ const GenericForm = (props) => {
 
   const getFormURI = (form, ofsd, prefillSpec) => {
     console.log(form, ofsd, prefillSpec);
+    // return encodeURIComponent(`https://3006-samagradevelop-workflow-gkbrz650idv.ws-us89b.gitpod.io/prefill?form=${form}&onFormSuccessData=${encodeFunction(ofsd)}&prefillSpec=${encodeFunction(prefillSpec)}`);
     return encodeURIComponent(`${GITPOD_URL.slice(0, GITPOD_URL.indexOf('/') + 2) + "3006-" + GITPOD_URL.slice(GITPOD_URL.indexOf('/') + 2)}/prefill?form=${form}&onFormSuccessData=${encodeFunction(ofsd)}&prefillSpec=${encodeFunction(prefillSpec)}`);
   }
 
@@ -56,10 +57,8 @@ const GenericForm = (props) => {
 
   return (
     <div className={styles.container}>
-      <div className={styles.header}>
-        <div>Go back</div>
-        <div>{selectedFlow.name}</div>
-      </div>
+      <div>{selectedFlow.name}</div>
+      <div onClick={() => setSelectedFlow({})}>Go Back</div>
       <iframe title='current-form'
         className={styles.odkForm}
         src={

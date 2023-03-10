@@ -2,7 +2,6 @@ import './App.css';
 import React, { useState, useEffect } from 'react';
 import GenericForm from './components/GenericForm';
 
-
 function App() {
   const [flows, setFlows] = useState([
     {
@@ -40,7 +39,7 @@ function App() {
               {flows?.map(el => <div className='workflowBtns' onClick={() => setSelectedFlow(el)}>{el.name}</div>)}
             </div>
           </>
-          : <GenericForm {...{ selectedFlow }} />
+          : <GenericForm {...{ selectedFlow, setSelectedFlow}} />
         }
 
       </div>

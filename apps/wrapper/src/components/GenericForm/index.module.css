@@ -6,23 +6,22 @@
     align-items: center;
     width: 40vw;
     padding-bottom: 2rem;
+    position: relative;
 }
 
-.header {
-    display: flex;
-    flex-direction: row;
-    width: 100%;
-    justify-content: space-between;
-}
-
-.header:nth-child(1) {
-    font-size: 1rem;
-    color: #ffc119;
-}
-
-.header:nth-child(2) {
+.container >div:nth-child(1) {
     font-size: 3rem;
     color: #ffc119;
+}
+
+.container >div:nth-child(2) {
+    font-size: 1rem;
+    color: #ffc119;
+    position: absolute;
+    top: 0;
+    left: 0;
+    cursor: pointer;
+    margin-top: 1.5rem;
 }
 
 .odkForm {
