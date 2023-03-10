@@ -28,8 +28,8 @@
 }
 
 .workflowBtns {
-  height: 8rem;
-  width: 8rem;
+  height: 11rem;
+  width: 11rem;
   border: 1px solid #ffc119;
   border-radius: 1rem;
   display: flex;
@@ -39,6 +39,7 @@
   font-size: 1.5rem;
   cursor: pointer;
   transition: all 0.3s ease-in;
+  text-align: center;
 }
 
 .workflowBtns:hover {

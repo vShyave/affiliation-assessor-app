@@ -7,7 +7,7 @@ const GITPOD_URL = process.env.REACT_APP_GITPOD_WORKSPACE_URL
 const GenericForm = (props) => {
   const { selectedFlow, setSelectedFlow } = props;
   const formSpec = require(`../../${selectedFlow.config}`);
-  const [formData, setFormData] = useState(true);
+  const [formData, setFormData] = useState("");
   // Encode string method to URI
   const encodeFunction = (func) => {
     return encodeURIComponent(JSON.stringify(func));
@@ -59,8 +59,10 @@ const GenericForm = (props) => {
 
   return (
     <div className={styles.container}>
-      <div>{selectedFlow.name}</div>
-      <div onClick={() => setSelectedFlow({})}>Go Back</div>
+      <div className={styles.header}>
+        <div onClick={() => setSelectedFlow({})}>Go Back</div>
+        <div>Workflow /{selectedFlow.name}</div>
+      </div>
       <div className={styles.formContainer}>
         <iframe title='current-form'
           className={styles.odkForm}
@@ -69,7 +71,8 @@ const GenericForm = (props) => {
           }
         />
         <div className={styles.jsonResponse}>
-          {formData}
+          <textarea value={formData} className={styles.formText}>
+          </textarea>
         </div>
       </div>
     </div>

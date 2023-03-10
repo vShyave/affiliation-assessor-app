@@ -5,23 +5,19 @@ import GenericForm from './components/GenericForm';
 function App() {
   const [flows, setFlows] = useState([
     {
-      name: 'Flow 1',
+      name: 'Jumping Forms',
       config: 'workflow_first.json'
     },
     {
-      name: 'Flow 2',
-      config: 'workflow_second.json'
-    },
-    {
-      name: 'Flow 3',
+      name: 'Hasura Submissions',
       config: 'workflow_3_config.json'
     },
     {
-      name: 'Flow 4',
+      name: 'Offline Capabilities',
       config: 'workflow_4_config.json'
     },
     {
-      name: 'Flow 5',
+      name: 'File Upload',
       config: 'workflow_5_config.json'
     }
   ])
@@ -39,7 +35,7 @@ function App() {
               {flows?.map(el => <div className='workflowBtns' onClick={() => setSelectedFlow(el)}>{el.name}</div>)}
             </div>
           </>
-          : <GenericForm {...{ selectedFlow, setSelectedFlow}} />
+          : <GenericForm {...{ selectedFlow, setSelectedFlow }} />
         }
 
       </div>

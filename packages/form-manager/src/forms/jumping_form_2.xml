@@ -1,0 +1,1148 @@
+<?xml version="1.0"?>
+<h:html xmlns="http://www.w3.org/2002/xforms"
+    xmlns:ev="http://www.w3.org/2001/xml-events"
+    xmlns:h="http://www.w3.org/1999/xhtml"
+    xmlns:jr="http://openrosa.org/javarosa"
+    xmlns:odk="http://www.opendatakit.org/xforms"
+    xmlns:orx="http://openrosa.org/xforms"
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <h:head>
+        <h:title>Second Jump Form</h:title>
+        <model odk:xforms-version="1.0.0">
+            <instance>
+                <data id="Nursing Form-Medical" version="1">
+                    <username/>
+                    <start/>
+                    <end/>
+                    <today/>
+                    <deviceid/>
+                    <subscriberid/>
+                    <part1_4_5>
+                        <lab_obg/>
+                        <img_lab_obg1/>
+                        <verify92/>
+                        <remarks92/>
+                        <lab_comm/>
+                        <img_lab_comm/>
+                        <verify93/>
+                        <remarks93/>
+                        <lab_nutri/>
+                        <img_lab_nutri/>
+                        <verify94/>
+                        <remarks94/>
+                        <lab_foundation/>
+                        <img_lab_foundation/>
+                        <verify95/>
+                        <remarks95/>
+                        <lab_pre-clinical/>
+                        <img_lab_pre-clinical/>
+                        <verify96/>
+                        <remarks96/>
+                        <lab_adv/>
+                        <img_lab_adv/>
+                        <verify97/>
+                        <remarks97/>
+                    </part1_4_5>
+                    <fac>
+                        <fac_count/>
+                        <part1_6_details_count/>
+                        <part1_6_details jr:template="">
+                            <fac_deatils>
+                                <fac_desig/>
+                                <fac_name/>
+                                <fac_qual/>
+                                <fac_qual1>
+                                    <fac_sp/>
+                                    <fac_spa/>
+                                </fac_qual1>
+                                <fac_doe/>
+                                <fac_acn/>
+                                <fac_upnc/>
+                            </fac_deatils>
+                        </part1_6_details>
+                        <part1_6_details>
+                            <fac_deatils>
+                                <fac_desig/>
+                                <fac_name/>
+                                <fac_qual/>
+                                <fac_qual1>
+                                    <fac_sp/>
+                                    <fac_spa/>
+                                </fac_qual1>
+                                <fac_doe/>
+                                <fac_acn/>
+                                <fac_upnc/>
+                            </fac_deatils>
+                        </part1_6_details>
+                    </fac>
+                    <part1_7>
+                        <parent_add/>
+                        <hosp_codeofHos/>
+                        <beds_hosp/>
+                        <total_ipd/>
+                        <dept_parent_hosp/>
+                    </part1_7>
+                    <part1_9>
+                        <f_number/>
+                        <part1_9_details_count/>
+                        <part1_9_details jr:template="">
+                            <f_details>
+                                <f_name/>
+                                <f_type/>
+                                <f_letter/>
+                                <f_reg/>
+                                <f_remarks/>
+                            </f_details>
+                        </part1_9_details>
+                        <part1_9_details>
+                            <f_details>
+                                <f_name/>
+                                <f_type/>
+                                <f_letter/>
+                                <f_reg/>
+                                <f_remarks/>
+                            </f_details>
+                        </part1_9_details>
+                    </part1_9>
+                    <part2>
+                        <p_2/>
+                        <p_3/>
+                        <img_p_3/>
+                        <p_5>
+                            <p_5.1/>
+                            <p_5.2/>
+                            <p_5.3/>
+                        </p_5>
+                        <p_6>
+                            <p_6.1/>
+                            <p_6.2/>
+                            <p_6.3/>
+                            <p_6.4/>
+                        </p_6>
+                        <p_7>
+                            <p_7.1/>
+                            <p_7.2/>
+                            <p_7.3/>
+                            <p_7.4/>
+                        </p_7>
+                        <p_9>
+                            <p_9_1/>
+                            <p_9_2/>
+                            <p_9_3/>
+                            <p_9_4/>
+                        </p_9>
+                        <p_10>
+                            <p_10_1/>
+                            <p_10_2/>
+                            <img_p_10_2/>
+                            <p_10_3/>
+                            <img_p_10_3/>
+                            <p_10_4/>
+                            <img_p_10_4/>
+                            <p_10_5/>
+                            <img_p_10_5/>
+                            <p_10_6/>
+                            <img_p_10_6/>
+                            <p_10_7/>
+                            <img_p_10_7/>
+                            <p_10_8/>
+                            <img_p_10_8/>
+                        </p_10>
+                        <p_11>
+                            <p_11_1/>
+                            <p_11_2/>
+                        </p_11>
+                        <p_12>
+                            <p_12_1/>
+                            <img_p_12_1/>
+                        </p_12>
+                    </part2>
+                    <p_8>
+                        <notea/>
+                        <p_8.1>
+                            <p_8_1/>
+                            <img_p_8_1/>
+                            <p_8_2/>
+                            <p_8_3>
+                                <p_8_3a/>
+                                <p_8_3b/>
+                                <p_8_3c/>
+                                <p_8_3d/>
+                                <p_8_3e/>
+                            </p_8_3>
+                        </p_8.1>
+                    </p_8>
+                    <meta>
+                        <instanceID/>
+                    </meta>
+                </data>
+            </instance>
+            <bind jr:preload="property" jr:preloadParams="username" nodeset="/data/username" type="string"/>
+            <bind jr:preload="timestamp" jr:preloadParams="start" nodeset="/data/start" type="dateTime"/>
+            <bind jr:preload="timestamp" jr:preloadParams="end" nodeset="/data/end" type="dateTime"/>
+            <bind jr:preload="date" jr:preloadParams="today" nodeset="/data/today" type="date"/>
+            <bind jr:preload="property" jr:preloadParams="deviceid" nodeset="/data/deviceid" type="string"/>
+            <bind jr:preload="property" jr:preloadParams="subscriberid" nodeset="/data/subscriberid" type="string"/>
+            <bind nodeset="/data/part1_4_5/lab_obg" type="string"/>
+            <bind nodeset="/data/part1_4_5/img_lab_obg1" type="binary"/>
+            <bind nodeset="/data/part1_4_5/verify92" type="string"/>
+            <bind nodeset="/data/part1_4_5/remarks92" relevant=" /data/part1_4_5/verify92  = 'no'" type="string"/>
+            <bind nodeset="/data/part1_4_5/lab_comm" type="string"/>
+            <bind nodeset="/data/part1_4_5/img_lab_comm" type="binary"/>
+            <bind nodeset="/data/part1_4_5/verify93" type="string"/>
+            <bind nodeset="/data/part1_4_5/remarks93" relevant=" /data/part1_4_5/verify93  = 'no'" type="string"/>
+            <bind nodeset="/data/part1_4_5/lab_nutri" type="string"/>
+            <bind nodeset="/data/part1_4_5/img_lab_nutri" type="binary"/>
+            <bind nodeset="/data/part1_4_5/verify94" type="string"/>
+            <bind nodeset="/data/part1_4_5/remarks94" relevant=" /data/part1_4_5/verify94  = 'no'" type="string"/>
+            <bind nodeset="/data/part1_4_5/lab_foundation" type="string"/>
+            <bind nodeset="/data/part1_4_5/img_lab_foundation" type="binary"/>
+            <bind nodeset="/data/part1_4_5/verify95" type="string"/>
+            <bind nodeset="/data/part1_4_5/remarks95" relevant=" /data/part1_4_5/verify95  = 'no'" type="string"/>
+            <bind nodeset="/data/part1_4_5/lab_pre-clinical" type="string"/>
+            <bind nodeset="/data/part1_4_5/img_lab_pre-clinical" type="binary"/>
+            <bind nodeset="/data/part1_4_5/verify96" type="string"/>
+            <bind nodeset="/data/part1_4_5/remarks96" relevant=" /data/part1_4_5/verify96  = 'no'" type="string"/>
+            <bind nodeset="/data/part1_4_5/lab_adv" type="string"/>
+            <bind nodeset="/data/part1_4_5/img_lab_adv" type="binary"/>
+            <bind nodeset="/data/part1_4_5/verify97" type="string"/>
+            <bind nodeset="/data/part1_4_5/remarks97" relevant=" /data/part1_4_5/verify97  = 'no'" type="string"/>
+            <bind nodeset="/data/fac/fac_count" type="int"/>
+            <bind calculate=" /data/fac/fac_count " nodeset="/data/fac/part1_6_details_count" readonly="true()" type="string"/>
+            <bind nodeset="/data/fac/part1_6_details" relevant=" /data/fac/fac_count &gt;0"/>
+            <bind nodeset="/data/fac/part1_6_details/fac_deatils/fac_desig" type="string"/>
+            <bind nodeset="/data/fac/part1_6_details/fac_deatils/fac_name" type="string"/>
+            <bind nodeset="/data/fac/part1_6_details/fac_deatils/fac_qual" type="string"/>
+            <bind nodeset="/data/fac/part1_6_details/fac_deatils/fac_qual1" relevant=" ../fac_qual ='b' or  ../fac_qual ='c'"/>
+            <bind nodeset="/data/fac/part1_6_details/fac_deatils/fac_qual1/fac_sp" type="string"/>
+            <bind nodeset="/data/fac/part1_6_details/fac_deatils/fac_qual1/fac_spa" relevant=" ../fac_sp ='f'" type="string"/>
+            <bind nodeset="/data/fac/part1_6_details/fac_deatils/fac_doe" type="date"/>
+            <bind nodeset="/data/fac/part1_6_details/fac_deatils/fac_acn" type="int"/>
+            <bind nodeset="/data/fac/part1_6_details/fac_deatils/fac_upnc" type="int"/>
+            <bind nodeset="/data/part1_7/parent_add" type="string"/>
+            <bind nodeset="/data/part1_7/hosp_codeofHos" type="string"/>
+            <bind nodeset="/data/part1_7/beds_hosp" type="int"/>
+            <bind nodeset="/data/part1_7/total_ipd" type="int"/>
+            <bind nodeset="/data/part1_7/dept_parent_hosp" type="string"/>
+            <bind nodeset="/data/part1_9/f_number" type="int"/>
+            <bind calculate=" /data/part1_9/f_number " nodeset="/data/part1_9/part1_9_details_count" readonly="true()" type="string"/>
+            <bind nodeset="/data/part1_9/part1_9_details" relevant=" /data/part1_9/f_number &gt;0"/>
+            <bind nodeset="/data/part1_9/part1_9_details/f_details/f_name" type="string"/>
+            <bind nodeset="/data/part1_9/part1_9_details/f_details/f_type" type="string"/>
+            <bind nodeset="/data/part1_9/part1_9_details/f_details/f_letter" type="string"/>
+            <bind nodeset="/data/part1_9/part1_9_details/f_details/f_reg" type="string"/>
+            <bind nodeset="/data/part1_9/part1_9_details/f_details/f_remarks" type="string"/>
+            <bind nodeset="/data/part2/p_2" type="string"/>
+            <bind nodeset="/data/part2/p_3" type="string"/>
+            <bind nodeset="/data/part2/img_p_3" type="binary"/>
+            <bind nodeset="/data/part2/p_5/p_5.1" type="string"/>
+            <bind nodeset="/data/part2/p_5/p_5.2" type="string"/>
+            <bind nodeset="/data/part2/p_5/p_5.3" type="string"/>
+            <bind nodeset="/data/part2/p_6/p_6.1" type="string"/>
+            <bind nodeset="/data/part2/p_6/p_6.2" type="string"/>
+            <bind nodeset="/data/part2/p_6/p_6.3" type="string"/>
+            <bind nodeset="/data/part2/p_6/p_6.4" type="string"/>
+            <bind nodeset="/data/part2/p_7/p_7.1" type="string"/>
+            <bind nodeset="/data/part2/p_7/p_7.2" type="string"/>
+            <bind nodeset="/data/part2/p_7/p_7.3" type="string"/>
+            <bind nodeset="/data/part2/p_7/p_7.4" type="string"/>
+            <bind nodeset="/data/part2/p_9/p_9_1" type="string"/>
+            <bind nodeset="/data/part2/p_9/p_9_2" type="string"/>
+            <bind nodeset="/data/part2/p_9/p_9_3" type="string"/>
+            <bind nodeset="/data/part2/p_9/p_9_4" type="string"/>
+            <bind nodeset="/data/part2/p_10/p_10_1" type="string"/>
+            <bind nodeset="/data/part2/p_10/p_10_2" type="string"/>
+            <bind nodeset="/data/part2/p_10/img_p_10_2" relevant=" /data/part2/p_10/p_10_2 ='yes'" type="binary"/>
+            <bind nodeset="/data/part2/p_10/p_10_3" type="string"/>
+            <bind nodeset="/data/part2/p_10/img_p_10_3" relevant=" /data/part2/p_10/p_10_3 ='yes'" type="binary"/>
+            <bind nodeset="/data/part2/p_10/p_10_4" type="string"/>
+            <bind nodeset="/data/part2/p_10/img_p_10_4" relevant=" /data/part2/p_10/p_10_4 ='yes'" type="binary"/>
+            <bind nodeset="/data/part2/p_10/p_10_5" type="string"/>
+            <bind nodeset="/data/part2/p_10/img_p_10_5" relevant=" /data/part2/p_10/p_10_5 ='yes'" type="binary"/>
+            <bind nodeset="/data/part2/p_10/p_10_6" type="string"/>
+            <bind nodeset="/data/part2/p_10/img_p_10_6" relevant=" /data/part2/p_10/p_10_6 ='yes'" type="binary"/>
+            <bind nodeset="/data/part2/p_10/p_10_7" type="string"/>
+            <bind nodeset="/data/part2/p_10/img_p_10_7" relevant=" /data/part2/p_10/p_10_7 ='yes'" type="binary"/>
+            <bind nodeset="/data/part2/p_10/p_10_8" type="string"/>
+            <bind nodeset="/data/part2/p_10/img_p_10_8" relevant=" /data/part2/p_10/p_10_8 ='yes'" type="binary"/>
+            <bind nodeset="/data/part2/p_11/p_11_1" type="string"/>
+            <bind nodeset="/data/part2/p_11/p_11_2" type="string"/>
+            <bind nodeset="/data/part2/p_12/p_12_1" type="string"/>
+            <bind nodeset="/data/part2/p_12/img_p_12_1" relevant=" /data/part2/p_12/p_12_1 ='yes'" type="binary"/>
+            <bind nodeset="/data/p_8/notea" readonly="true()" type="string"/>
+            <bind nodeset="/data/p_8/p_8.1/p_8_1" type="string"/>
+            <bind nodeset="/data/p_8/p_8.1/img_p_8_1" relevant=" /data/p_8/p_8.1/p_8_1 ='yes'" type="binary"/>
+            <bind nodeset="/data/p_8/p_8.1/p_8_2" type="string"/>
+            <bind nodeset="/data/p_8/p_8.1/p_8_3/p_8_3a" type="string"/>
+            <bind nodeset="/data/p_8/p_8.1/p_8_3/p_8_3b" type="string"/>
+            <bind nodeset="/data/p_8/p_8.1/p_8_3/p_8_3c" type="string"/>
+            <bind nodeset="/data/p_8/p_8.1/p_8_3/p_8_3d" type="string"/>
+            <bind nodeset="/data/p_8/p_8.1/p_8_3/p_8_3e" type="string"/>
+            <bind jr:preload="uid" nodeset="/data/meta/instanceID" readonly="true()" type="string"/>
+        </model>
+    </h:head>
+    <h:body class="pages">
+        <group appearance="field-list" ref="/data/part1_4_5">
+            <label>Training Infrastructure - Laboratories</label>
+            <select ref="/data/part1_4_5/lab_obg">
+                <label>OBG &amp; Pediatric lab/MCH lab</label>
+                <item>
+                    <label>Birth Simulator</label>
+                    <value>1</value>
+                </item>
+                <item>
+                    <label>New born resuscitation</label>
+                    <value>2</value>
+                </item>
+                <item>
+                    <label>PPIUCD insertion model</label>
+                    <value>3</value>
+                </item>
+                <item>
+                    <label>IUCD insertion Model</label>
+                    <value>4</value>
+                </item>
+                <item>
+                    <label>Abdomen palpation model</label>
+                    <value>5</value>
+                </item>
+            </select>
+            <upload mediatype="image/*" ref="/data/part1_4_5/img_lab_obg1">
+                <label>Upload</label>
+            </upload>
+            <select1 appearance="table-list" ref="/data/part1_4_5/verify92">
+                <label>The utilization register is available &amp; in use</label>
+                <item>
+                    <label>Yes</label>
+                    <value>yes</value>
+                </item>
+                <item>
+                    <label>No</label>
+                    <value>no</value>
+                </item>
+            </select1>
+            <input ref="/data/part1_4_5/remarks92">
+                <label>Remarks</label>
+            </input>
+            <select ref="/data/part1_4_5/lab_comm">
+                <label>Community Lab</label>
+                <item>
+                    <label>Community Bags contents</label>
+                    <value>1</value>
+                </item>
+                <item>
+                    <label>Flip book or other AV aids</label>
+                    <value>2</value>
+                </item>
+                <item>
+                    <label>Weighing machine Baby</label>
+                    <value>3</value>
+                </item>
+                <item>
+                    <label>Weighing machine Adult</label>
+                    <value>4</value>
+                </item>
+                <item>
+                    <label>Home environment scenario</label>
+                    <value>5</value>
+                </item>
+            </select>
+            <upload mediatype="image/*" ref="/data/part1_4_5/img_lab_comm">
+                <label>Upload</label>
+            </upload>
+            <select1 appearance="table-list" ref="/data/part1_4_5/verify93">
+                <label>The utilization register is available &amp; in use</label>
+                <item>
+                    <label>Yes</label>
+                    <value>yes</value>
+                </item>
+                <item>
+                    <label>No</label>
+                    <value>no</value>
+                </item>
+            </select1>
+            <input ref="/data/part1_4_5/remarks93">
+                <label>Remarks</label>
+            </input>
+            <select ref="/data/part1_4_5/lab_nutri">
+                <label>Nutrition lab</label>
+                <item>
+                    <label>Refrigerator</label>
+                    <value>1</value>
+                </item>
+                <item>
+                    <label>Dinner set</label>
+                    <value>2</value>
+                </item>
+                <item>
+                    <label>Gas stove with Cylinder</label>
+                    <value>3</value>
+                </item>
+                <item>
+                    <label>Basic Utensils</label>
+                    <value>4</value>
+                </item>
+                <item>
+                    <label>Weighing machine</label>
+                    <value>5</value>
+                </item>
+            </select>
+            <upload mediatype="image/*" ref="/data/part1_4_5/img_lab_nutri">
+                <label>Upload</label>
+            </upload>
+            <select1 appearance="table-list" ref="/data/part1_4_5/verify94">
+                <label>The utilization register is available &amp; in use</label>
+                <item>
+                    <label>Yes</label>
+                    <value>yes</value>
+                </item>
+                <item>
+                    <label>No</label>
+                    <value>no</value>
+                </item>
+            </select1>
+            <input ref="/data/part1_4_5/remarks94">
+                <label>Remarks</label>
+            </input>
+            <select ref="/data/part1_4_5/lab_foundation">
+                <label>Foundation lab</label>
+                <item>
+                    <label>Patient cot (Adult)</label>
+                    <value>1</value>
+                </item>
+                <item>
+                    <label>Patient Cot (child)</label>
+                    <value>2</value>
+                </item>
+                <item>
+                    <label>Adult male</label>
+                    <value>3</value>
+                </item>
+                <item>
+                    <label>Adult female</label>
+                    <value>4</value>
+                </item>
+                <item>
+                    <label>Child</label>
+                    <value>5</value>
+                </item>
+            </select>
+            <upload mediatype="image/*" ref="/data/part1_4_5/img_lab_foundation">
+                <label>Upload</label>
+            </upload>
+            <select1 appearance="table-list" ref="/data/part1_4_5/verify95">
+                <label>The utilization register is available &amp; in use</label>
+                <item>
+                    <label>Yes</label>
+                    <value>yes</value>
+                </item>
+                <item>
+                    <label>No</label>
+                    <value>no</value>
+                </item>
+            </select1>
+            <input ref="/data/part1_4_5/remarks95">
+                <label>Remarks</label>
+            </input>
+            <select ref="/data/part1_4_5/lab_pre-clinical">
+                <label>Pre-clinical</label>
+                <item>
+                    <label>Adult human articulated skeleton</label>
+                    <value>1</value>
+                </item>
+                <item>
+                    <label>Full size human bodywith muscles, arteries and veins</label>
+                    <value>2</value>
+                </item>
+                <item>
+                    <label>Adult human skull</label>
+                    <value>3</value>
+                </item>
+                <item>
+                    <label>Digestive system model</label>
+                    <value>4</value>
+                </item>
+                <item>
+                    <label>Female pelvic bone</label>
+                    <value>5</value>
+                </item>
+            </select>
+            <upload mediatype="image/*" ref="/data/part1_4_5/img_lab_pre-clinical">
+                <label>Upload</label>
+            </upload>
+            <select1 appearance="table-list" ref="/data/part1_4_5/verify96">
+                <label>The utilization register is available &amp; in use</label>
+                <item>
+                    <label>Yes</label>
+                    <value>yes</value>
+                </item>
+                <item>
+                    <label>No</label>
+                    <value>no</value>
+                </item>
+            </select1>
+            <input ref="/data/part1_4_5/remarks96">
+                <label>Remarks</label>
+            </input>
+            <select ref="/data/part1_4_5/lab_adv">
+                <label>Advance Skill lab</label>
+                <item>
+                    <label>Adult CPR</label>
+                    <value>1</value>
+                </item>
+                <item>
+                    <label>Child CPR</label>
+                    <value>2</value>
+                </item>
+                <item>
+                    <label>IV Arm</label>
+                    <value>3</value>
+                </item>
+                <item>
+                    <label>IM Model</label>
+                    <value>4</value>
+                </item>
+                <item>
+                    <label>Ambu bag with all sizes mask</label>
+                    <value>5</value>
+                </item>
+            </select>
+            <upload mediatype="image/*" ref="/data/part1_4_5/img_lab_adv">
+                <label>Upload</label>
+            </upload>
+            <select1 appearance="table-list" ref="/data/part1_4_5/verify97">
+                <label>The utilization register is available &amp; in use</label>
+                <item>
+                    <label>Yes</label>
+                    <value>yes</value>
+                </item>
+                <item>
+                    <label>No</label>
+                    <value>no</value>
+                </item>
+            </select1>
+            <input ref="/data/part1_4_5/remarks97">
+                <label>Remarks</label>
+            </input>
+        </group>
+        <group appearance="field-list" ref="/data/fac">
+            <label>Teaching Faculty</label>
+            <input ref="/data/fac/fac_count">
+                <label>Total number of teaching faculty registered</label>
+            </input>
+            <group ref="/data/fac/part1_6_details">
+                <label></label>
+                <repeat jr:count=" /data/fac/part1_6_details_count " nodeset="/data/fac/part1_6_details">
+                    <group ref="/data/fac/part1_6_details/fac_deatils">
+                        <input ref="/data/fac/part1_6_details/fac_deatils/fac_desig">
+                            <label>Designation</label>
+                        </input>
+                        <input ref="/data/fac/part1_6_details/fac_deatils/fac_name">
+                            <label>Name of 
+Faculty</label>
+                        </input>
+                        <select1 ref="/data/fac/part1_6_details/fac_deatils/fac_qual">
+                            <label>Highest Qualification</label>
+                            <item>
+                                <label>BSc/PBBSC Nursing</label>
+                                <value>a</value>
+                            </item>
+                            <item>
+                                <label>MSC Nursing</label>
+                                <value>b</value>
+                            </item>
+                            <item>
+                                <label>PHD Nursing</label>
+                                <value>c</value>
+                            </item>
+                        </select1>
+                        <group appearance="field-list" ref="/data/fac/part1_6_details/fac_deatils/fac_qual1">
+                            <select1 ref="/data/fac/part1_6_details/fac_deatils/fac_qual1/fac_sp">
+                                <label>Specilization</label>
+                                <item>
+                                    <label>Child Health Nursing</label>
+                                    <value>a</value>
+                                </item>
+                                <item>
+                                    <label>Obs/Gynae Nursing</label>
+                                    <value>b</value>
+                                </item>
+                                <item>
+                                    <label>Community Health Nursing</label>
+                                    <value>c</value>
+                                </item>
+                                <item>
+                                    <label>Medical Surgical Nursing</label>
+                                    <value>d</value>
+                                </item>
+                                <item>
+                                    <label>Mental Health Nursing</label>
+                                    <value>e</value>
+                                </item>
+                                <item>
+                                    <label>Others</label>
+                                    <value>f</value>
+                                </item>
+                            </select1>
+                            <input ref="/data/fac/part1_6_details/fac_deatils/fac_qual1/fac_spa">
+                                <label>Remarks</label>
+                            </input>
+                        </group>
+                        <input ref="/data/fac/part1_6_details/fac_deatils/fac_doe">
+                            <label>Date of 
+Enrollment on Center Login Panel</label>
+                        </input>
+                        <input ref="/data/fac/part1_6_details/fac_deatils/fac_acn">
+                            <label>Aadhaar 
+Card 
+No</label>
+                        </input>
+                        <input ref="/data/fac/part1_6_details/fac_deatils/fac_upnc">
+                            <label>UPNC Reg. No</label>
+                        </input>
+                    </group>
+                </repeat>
+            </group>
+        </group>
+        <group appearance="field-list" ref="/data/part1_7">
+            <label>Clinical Facilities</label>
+            <input ref="/data/part1_7/parent_add">
+                <label>Complete address of the parent hospital</label>
+            </input>
+            <input ref="/data/part1_7/hosp_codeofHos">
+                <label>Health Facility Registry/Code of Hospital</label>
+            </input>
+            <input ref="/data/part1_7/beds_hosp">
+                <label>Number of beds in parent hospital</label>
+            </input>
+            <input ref="/data/part1_7/total_ipd">
+                <label>Total number of IPD patients in parent hospital in 1 month</label>
+            </input>
+            <select ref="/data/part1_7/dept_parent_hosp">
+                <label>Departments at the parent hospital</label>
+                <item>
+                    <label>Medical</label>
+                    <value>med</value>
+                </item>
+                <item>
+                    <label>Surgical</label>
+                    <value>sur</value>
+                </item>
+                <item>
+                    <label>Obst. &amp; Gynecology</label>
+                    <value>obst</value>
+                </item>
+                <item>
+                    <label>Pediatrics</label>
+                    <value>ped</value>
+                </item>
+                <item>
+                    <label>Ortho</label>
+                    <value>orthi</value>
+                </item>
+                <item>
+                    <label>Others</label>
+                    <value>others</value>
+                </item>
+                <item>
+                    <label>None</label>
+                    <value>none</value>
+                </item>
+            </select>
+        </group>
+        <group appearance="field-list" ref="/data/part1_9">
+            <label>Community Health Facilities and other visit details (letters copy to be enclosed)</label>
+            <input ref="/data/part1_9/f_number">
+                <label>Total number of facilities</label>
+            </input>
+            <group ref="/data/part1_9/part1_9_details">
+                <label></label>
+                <repeat jr:count=" /data/part1_9/part1_9_details_count " nodeset="/data/part1_9/part1_9_details">
+                    <group ref="/data/part1_9/part1_9_details/f_details">
+                        <input ref="/data/part1_9/part1_9_details/f_details/f_name">
+                            <label>Name of facility</label>
+                        </input>
+                        <input ref="/data/part1_9/part1_9_details/f_details/f_type">
+                            <label>Type of facility</label>
+                        </input>
+                        <select1 ref="/data/part1_9/part1_9_details/f_details/f_letter">
+                            <label>Permission letters available of current year ?</label>
+                            <item>
+                                <label>Yes</label>
+                                <value>yes</value>
+                            </item>
+                            <item>
+                                <label>No</label>
+                                <value>no</value>
+                            </item>
+                        </select1>
+                        <select1 ref="/data/part1_9/part1_9_details/f_details/f_reg">
+                            <label>Community visit register available &amp; used?</label>
+                            <item>
+                                <label>Yes</label>
+                                <value>yes</value>
+                            </item>
+                            <item>
+                                <label>No</label>
+                                <value>no</value>
+                            </item>
+                        </select1>
+                        <input ref="/data/part1_9/part1_9_details/f_details/f_remarks">
+                            <label>Remarks</label>
+                        </input>
+                    </group>
+                </repeat>
+            </group>
+        </group>
+        <group appearance="field-list" ref="/data/part2">
+            <label>Performance Standards of the Institution</label>
+            <select1 ref="/data/part2/p_2">
+                <label>Academic Policy for institution is available with regards to student attendance in theory and practical, dress code, professional conduct and disciplinary actions of students in clinic and classroom, a policy for students to file grievances regarding results exists</label>
+                <item>
+                    <label>Yes</label>
+                    <value>yes</value>
+                </item>
+                <item>
+                    <label>No</label>
+                    <value>no</value>
+                </item>
+            </select1>
+            <select1 ref="/data/part2/p_3">
+                <label>The start and end dates of the academic year included along with the exams and holidays in the academic calender</label>
+                <item>
+                    <label>Yes</label>
+                    <value>yes</value>
+                </item>
+                <item>
+                    <label>No</label>
+                    <value>no</value>
+                </item>
+            </select1>
+            <upload mediatype="image/*" ref="/data/part2/img_p_3">
+                <label>Upload</label>
+            </upload>
+            <group appearance="field-list" ref="/data/part2/p_5">
+                <label>Teaching plan is available with the faculty</label>
+                <select1 ref="/data/part2/p_5/p_5.1">
+                    <label>Teaching plan is developed and the units in the course are distributed to the faculties</label>
+                    <item>
+                        <label>Yes</label>
+                        <value>yes</value>
+                    </item>
+                    <item>
+                        <label>No</label>
+                        <value>no</value>
+                    </item>
+                </select1>
+                <select1 ref="/data/part2/p_5/p_5.2">
+                    <label>Faculty has developed a lesson plan</label>
+                    <item>
+                        <label>Yes</label>
+                        <value>yes</value>
+                    </item>
+                    <item>
+                        <label>No</label>
+                        <value>no</value>
+                    </item>
+                </select1>
+                <select1 ref="/data/part2/p_5/p_5.3">
+                    <label>Master rotation plan (MRP)/Academic Roaster is displayed - theory, clinical posting, exams, and vacations are mentioned according to the syllabus prescribed</label>
+                    <item>
+                        <label>Yes</label>
+                        <value>yes</value>
+                    </item>
+                    <item>
+                        <label>No</label>
+                        <value>no</value>
+                    </item>
+                </select1>
+            </group>
+            <group appearance="field-list" ref="/data/part2/p_6">
+                <label>Attend any of the ongoing classes and observe if faculty uses effective facilitation skills in the classroom</label>
+                <select1 ref="/data/part2/p_6/p_6.1">
+                    <label>Specify which unit/topic is being taught</label>
+                    <item>
+                        <label>Yes</label>
+                        <value>yes</value>
+                    </item>
+                    <item>
+                        <label>No</label>
+                        <value>no</value>
+                    </item>
+                </select1>
+                <select1 ref="/data/part2/p_6/p_6.2">
+                    <label>Faculty uses lesson plan</label>
+                    <item>
+                        <label>Yes</label>
+                        <value>yes</value>
+                    </item>
+                    <item>
+                        <label>No</label>
+                        <value>no</value>
+                    </item>
+                </select1>
+                <select1 ref="/data/part2/p_6/p_6.3">
+                    <label>Faculty discussed learning objectives with students</label>
+                    <item>
+                        <label>Yes</label>
+                        <value>yes</value>
+                    </item>
+                    <item>
+                        <label>No</label>
+                        <value>no</value>
+                    </item>
+                </select1>
+                <select1 ref="/data/part2/p_6/p_6.4">
+                    <label>AV aids like projector/overhead projector, white and black board are being used for classroom facilitation</label>
+                    <item>
+                        <label>Yes</label>
+                        <value>yes</value>
+                    </item>
+                    <item>
+                        <label>No</label>
+                        <value>no</value>
+                    </item>
+                </select1>
+            </group>
+            <group appearance="field-list" ref="/data/part2/p_7">
+                <label>Attend any ongoing skill demonstration classes and observe if skills demonstrations are conducted efficiently in the learning lab</label>
+                <select1 ref="/data/part2/p_7/p_7.1">
+                    <label>Teachers utilized the learning labs regularly for skills demonstration</label>
+                    <item>
+                        <label>Yes</label>
+                        <value>yes</value>
+                    </item>
+                    <item>
+                        <label>No</label>
+                        <value>no</value>
+                    </item>
+                </select1>
+                <select1 ref="/data/part2/p_7/p_7.2">
+                    <label>Procedure checklist is available with students and faculty for demonstration</label>
+                    <item>
+                        <label>Yes</label>
+                        <value>yes</value>
+                    </item>
+                    <item>
+                        <label>No</label>
+                        <value>no</value>
+                    </item>
+                </select1>
+                <select1 ref="/data/part2/p_7/p_7.3">
+                    <label>Opportunities are given to the students for practice of the skills demonstrated</label>
+                    <item>
+                        <label>Yes</label>
+                        <value>yes</value>
+                    </item>
+                    <item>
+                        <label>No</label>
+                        <value>no</value>
+                    </item>
+                </select1>
+                <select1 ref="/data/part2/p_7/p_7.4">
+                    <label>Return demonstration/skill evaluations from students are taken for each skill demonstrated</label>
+                    <item>
+                        <label>Yes</label>
+                        <value>yes</value>
+                    </item>
+                    <item>
+                        <label>No</label>
+                        <value>no</value>
+                    </item>
+                </select1>
+            </group>
+            <group appearance="field-list" ref="/data/part2/p_9">
+                <label>Effective clinical supervision</label>
+                <select1 ref="/data/part2/p_9/p_9_1">
+                    <label>Faculty record activities conducted during clinical supervision on a daily basis</label>
+                    <item>
+                        <label>Yes</label>
+                        <value>yes</value>
+                    </item>
+                    <item>
+                        <label>No</label>
+                        <value>no</value>
+                    </item>
+                </select1>
+                <select1 ref="/data/part2/p_9/p_9_2">
+                    <label>Pre-post clinical discussions are conducted on daily basis</label>
+                    <item>
+                        <label>Yes</label>
+                        <value>yes</value>
+                    </item>
+                    <item>
+                        <label>No</label>
+                        <value>no</value>
+                    </item>
+                </select1>
+                <select1 ref="/data/part2/p_9/p_9_3">
+                    <label>Students daily activities are monitored and recorded</label>
+                    <item>
+                        <label>Yes</label>
+                        <value>yes</value>
+                    </item>
+                    <item>
+                        <label>No</label>
+                        <value>no</value>
+                    </item>
+                </select1>
+                <select1 ref="/data/part2/p_9/p_9_4">
+                    <label>Periodic clinical evaluations are conducted</label>
+                    <item>
+                        <label>Yes</label>
+                        <value>yes</value>
+                    </item>
+                    <item>
+                        <label>No</label>
+                        <value>no</value>
+                    </item>
+                </select1>
+            </group>
+            <group appearance="field-list" ref="/data/part2/p_10">
+                <label>Evaluation criteria &amp; examination records</label>
+                <select1 ref="/data/part2/p_10/p_10_1">
+                    <label>Minimum two internal exams are conducted in a year for each batch</label>
+                    <item>
+                        <label>Yes</label>
+                        <value>yes</value>
+                    </item>
+                    <item>
+                        <label>No</label>
+                        <value>no</value>
+                    </item>
+                </select1>
+                <select1 ref="/data/part2/p_10/p_10_2">
+                    <label>Document/notice shows that students are informed at least 1 week before internal exams</label>
+                    <item>
+                        <label>Yes</label>
+                        <value>yes</value>
+                    </item>
+                    <item>
+                        <label>No</label>
+                        <value>no</value>
+                    </item>
+                </select1>
+                <upload mediatype="image/*" ref="/data/part2/p_10/img_p_10_2">
+                    <label>Upload</label>
+                </upload>
+                <select1 ref="/data/part2/p_10/p_10_3">
+                    <label>Question paper has composition of MCQ, Short questions and long questions</label>
+                    <item>
+                        <label>Yes</label>
+                        <value>yes</value>
+                    </item>
+                    <item>
+                        <label>No</label>
+                        <value>no</value>
+                    </item>
+                </select1>
+                <upload mediatype="image/*" ref="/data/part2/p_10/img_p_10_3">
+                    <label>Upload</label>
+                </upload>
+                <select1 ref="/data/part2/p_10/p_10_4">
+                    <label>Exams are structured so that they can be scored blindly (student names are not mentioned)</label>
+                    <item>
+                        <label>Yes</label>
+                        <value>yes</value>
+                    </item>
+                    <item>
+                        <label>No</label>
+                        <value>no</value>
+                    </item>
+                </select1>
+                <upload mediatype="image/*" ref="/data/part2/p_10/img_p_10_4">
+                    <label>Upload</label>
+                </upload>
+                <select1 ref="/data/part2/p_10/p_10_5">
+                    <label>Structured practical examinations are held for each student at the end of each term that includes skill related objectives</label>
+                    <item>
+                        <label>Yes</label>
+                        <value>yes</value>
+                    </item>
+                    <item>
+                        <label>No</label>
+                        <value>no</value>
+                    </item>
+                </select1>
+                <upload mediatype="image/*" ref="/data/part2/p_10/img_p_10_5">
+                    <label>Upload</label>
+                </upload>
+                <select1 ref="/data/part2/p_10/p_10_6">
+                    <label>Checklists or other tools are used to document observations of students in structured practical examinations</label>
+                    <item>
+                        <label>Yes</label>
+                        <value>yes</value>
+                    </item>
+                    <item>
+                        <label>No</label>
+                        <value>no</value>
+                    </item>
+                </select1>
+                <upload mediatype="image/*" ref="/data/part2/p_10/img_p_10_6">
+                    <label>Upload</label>
+                </upload>
+                <select1 ref="/data/part2/p_10/p_10_7">
+                    <label>Sessional marks register/record is maintained</label>
+                    <item>
+                        <label>Yes</label>
+                        <value>yes</value>
+                    </item>
+                    <item>
+                        <label>No</label>
+                        <value>no</value>
+                    </item>
+                </select1>
+                <upload mediatype="image/*" ref="/data/part2/p_10/img_p_10_7">
+                    <label>Upload</label>
+                </upload>
+                <select1 ref="/data/part2/p_10/p_10_8">
+                    <label>A document exists to track students from the entrance to exit</label>
+                    <item>
+                        <label>Yes</label>
+                        <value>yes</value>
+                    </item>
+                    <item>
+                        <label>No</label>
+                        <value>no</value>
+                    </item>
+                </select1>
+                <upload mediatype="image/*" ref="/data/part2/p_10/img_p_10_8">
+                    <label>Upload</label>
+                </upload>
+            </group>
+            <group appearance="field-list" ref="/data/part2/p_11">
+                <label>Meeting records</label>
+                <select1 ref="/data/part2/p_11/p_11_1">
+                    <label>Faculty meetings are conducted and minutes are recorded in registers/file in the last 1 month</label>
+                    <item>
+                        <label>Yes</label>
+                        <value>yes</value>
+                    </item>
+                    <item>
+                        <label>No</label>
+                        <value>no</value>
+                    </item>
+                </select1>
+                <select1 ref="/data/part2/p_11/p_11_2">
+                    <label>Regular meetings of faculty and clinical site staff are conducted and minutes are recorded (minimum thrice a year)</label>
+                    <item>
+                        <label>Yes</label>
+                        <value>yes</value>
+                    </item>
+                    <item>
+                        <label>No</label>
+                        <value>no</value>
+                    </item>
+                </select1>
+            </group>
+            <group appearance="field-list" ref="/data/part2/p_12">
+                <label>CNE exists for faculty</label>
+                <select1 ref="/data/part2/p_12/p_12_1">
+                    <label>A record of Seminars/Webinar/Continue Education meeting minutes (last 6 months) for the teachers</label>
+                    <item>
+                        <label>Yes</label>
+                        <value>yes</value>
+                    </item>
+                    <item>
+                        <label>No</label>
+                        <value>no</value>
+                    </item>
+                </select1>
+                <upload mediatype="image/*" ref="/data/part2/p_12/img_p_12_1">
+                    <label>Upload</label>
+                </upload>
+            </group>
+        </group>
+        <group appearance="field-list" ref="/data/p_8">
+            <input ref="/data/p_8/notea">
+                <label>Please visit the parent hospital and observe the following</label>
+            </input>
+            <group appearance="field-list" ref="/data/p_8/p_8.1">
+                <label>Clinical Rotation Plan/Clinical Duty Roaster</label>
+                <select1 ref="/data/p_8/p_8.1/p_8_1">
+                    <label>CRP/Clinical Duty Roaster for each class of students exists</label>
+                    <item>
+                        <label>Yes</label>
+                        <value>yes</value>
+                    </item>
+                    <item>
+                        <label>No</label>
+                        <value>no</value>
+                    </item>
+                </select1>
+                <upload mediatype="image/*" ref="/data/p_8/p_8.1/img_p_8_1">
+                    <label>Upload</label>
+                </upload>
+                <select1 ref="/data/p_8/p_8.1/p_8_2">
+                    <label>Developed clinical objective and shared with clinical site staff</label>
+                    <item>
+                        <label>Yes</label>
+                        <value>yes</value>
+                    </item>
+                    <item>
+                        <label>No</label>
+                        <value>no</value>
+                    </item>
+                </select1>
+                <group appearance="field-list" ref="/data/p_8/p_8.1/p_8_3">
+                    <label>CRP /Clinical Duty Roaster has :</label>
+                    <select1 ref="/data/p_8/p_8.1/p_8_3/p_8_3a">
+                        <label>Student distribution</label>
+                        <item>
+                            <label>Yes</label>
+                            <value>yes</value>
+                        </item>
+                        <item>
+                            <label>No</label>
+                            <value>no</value>
+                        </item>
+                    </select1>
+                    <select1 ref="/data/p_8/p_8.1/p_8_3/p_8_3b">
+                        <label>Area of posting as per curriculum</label>
+                        <item>
+                            <label>Yes</label>
+                            <value>yes</value>
+                        </item>
+                        <item>
+                            <label>No</label>
+                            <value>no</value>
+                        </item>
+                    </select1>
+                    <select1 ref="/data/p_8/p_8.1/p_8_3/p_8_3c">
+                        <label>Faculty responsible for each block</label>
+                        <item>
+                            <label>Yes</label>
+                            <value>yes</value>
+                        </item>
+                        <item>
+                            <label>No</label>
+                            <value>no</value>
+                        </item>
+                    </select1>
+                    <select1 ref="/data/p_8/p_8.1/p_8_3/p_8_3d">
+                        <label>Procedure checklist is available with faculty</label>
+                        <item>
+                            <label>Yes</label>
+                            <value>yes</value>
+                        </item>
+                        <item>
+                            <label>No</label>
+                            <value>no</value>
+                        </item>
+                    </select1>
+                    <select1 ref="/data/p_8/p_8.1/p_8_3/p_8_3e">
+                        <label>Procedure checklist is available with students</label>
+                        <item>
+                            <label>Yes</label>
+                            <value>yes</value>
+                        </item>
+                        <item>
+                            <label>No</label>
+                            <value>no</value>
+                        </item>
+                    </select1>
+                </group>
+            </group>
+        </group>
+    </h:body>
+</h:html>
