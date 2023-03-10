@@ -29,10 +29,10 @@ function App() {
       <div className='container'>
         {!Object.keys(selectedFlow).length ?
           <>
-            <div className='heading'>Workflow Demo App</div>
-            <div className='subtitle'>Please select one of the flows</div>
+            <div className='heading animate__animated animate__fadeInDown'>Workflow Demo App</div>
+            <div className='subtitle animate__animated animate__fadeInDown'>Please select one of the flows</div>
             <div className='btnContainer'>
-              {flows?.map(el => <div className='workflowBtns' onClick={() => setSelectedFlow(el)}>{el.name}</div>)}
+              {flows?.map(el => <div className='workflowBtns animate__animated animate__fadeIn' onClick={() => setSelectedFlow(el)}>{el.name}</div>)}
             </div>
           </>
           : <GenericForm {...{ selectedFlow, setSelectedFlow }} />

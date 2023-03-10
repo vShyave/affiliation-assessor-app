@@ -8,6 +8,9 @@ const GenericForm = (props) => {
   const { selectedFlow, setSelectedFlow } = props;
   const formSpec = require(`../../${selectedFlow.config}`);
   const [formData, setFormData] = useState("");
+  const [formDataJson, setFormDataJSON] = useState("");
+  const [isXml, setIsXml] = useState(false);
+
   // Encode string method to URI
   const encodeFunction = (func) => {
     return encodeURIComponent(JSON.stringify(func));
@@ -28,7 +31,7 @@ const GenericForm = (props) => {
 
   useEffect(() => {
     // Manage onNext
-    window.addEventListener('message', function (e) {
+    window.addEventListener('message', async function (e) {
       const data = e.data;
 
       try {
@@ -39,7 +42,11 @@ const GenericForm = (props) => {
         */
         const { nextForm, formData, onSuccessData, onFailureData } = JSON.parse(data);
         console.log({ nextForm, formData, onSuccessData, onFailureData });
-        if (formData) setFormData(beautify(formData))
+        if (formData) {
+          setFormData(beautify(formData))
+          let jsonRes = await parseFormData(formData);
+          if (jsonRes) setFormDataJSON(JSON.stringify(jsonRes.data, null, 2));
+        }
         if (nextForm.type === 'form') {
           setFormId(nextForm.id);
           setOnFormSuccessData(onSuccessData);
@@ -56,6 +63,28 @@ const GenericForm = (props) => {
     });
   }, []);
 
+  const handleFormView = async (e) => {
+    setIsXml(e)
+    if (e) {
+      let jsonRes = await parseFormData(formData);
+      if (jsonRes) setFormDataJSON(JSON.stringify(jsonRes, null, 2));
+    }
+  }
+
+  const parseFormData = async (formData) => {
+    let jsonRes = await fetch(`${GITPOD_URL.slice(0, GITPOD_URL.indexOf('/') + 2) + "3006-" + GITPOD_URL.slice(GITPOD_URL.indexOf('/') + 2)}/parse`, {
+      method: 'POST',
+      body: JSON.stringify({
+        xml: formData,
+      }),
+      headers: {
+        "Content-type": "application/json; charset=UTF-8"
+      },
+    });
+    jsonRes = await jsonRes.json();
+    return jsonRes?.data;
+  }
+
 
   return (
     <div className={styles.container}>
@@ -71,7 +100,14 @@ const GenericForm = (props) => {
           }
         />
         <div className={styles.jsonResponse}>
-          <textarea value={formData} className={styles.formText}>
+          <div className={styles.toggleBtn}>
+            <label class={styles.switch}>
+              <input type="checkbox" value={isXml} onChange={e => handleFormView(e.target.checked)} />
+              <span class={styles.slider}></span>
+            </label>
+            {isXml ? <span className='animate__animated animate__fadeIn'>XML</span> : <span className='animate__animated animate__fadeIn'>JSON</span>}
+          </div>
+          <textarea value={!isXml ? formData : formDataJson} className={styles.formText}>
           </textarea>
         </div>
       </div>
