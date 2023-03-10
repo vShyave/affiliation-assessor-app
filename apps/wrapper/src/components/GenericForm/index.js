@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import styles from './index.module.css';
+import beautify from "xml-beautifier";
 
-const GITPOD_URL = process.env.GITPOD_WORKSPACE_URL
+const GITPOD_URL = process.env.REACT_APP_GITPOD_WORKSPACE_URL
 
 const GenericForm = (props) => {
   const { selectedFlow, setSelectedFlow } = props;
   const formSpec = require(`../../${selectedFlow.config}`);
-  const [isFirst, setIsFirst] = useState(true);
+  const [formData, setFormData] = useState(true);
   // Encode string method to URI
   const encodeFunction = (func) => {
     return encodeURIComponent(JSON.stringify(func));
@@ -38,6 +39,7 @@ const GenericForm = (props) => {
         */
         const { nextForm, formData, onSuccessData, onFailureData } = JSON.parse(data);
         console.log({ nextForm, formData, onSuccessData, onFailureData });
+        if (formData) setFormData(beautify(formData))
         if (nextForm.type === 'form') {
           setFormId(nextForm.id);
           setOnFormSuccessData(onSuccessData);
@@ -59,12 +61,17 @@ const GenericForm = (props) => {
     <div className={styles.container}>
       <div>{selectedFlow.name}</div>
       <div onClick={() => setSelectedFlow({})}>Go Back</div>
-      <iframe title='current-form'
-        className={styles.odkForm}
-        src={
-          `${GITPOD_URL.slice(0, GITPOD_URL.indexOf('/') + 2) + "8065-" + GITPOD_URL.slice(GITPOD_URL.indexOf('/') + 2)}/preview?formSpec=${encodedFormSpec}&xform=${encodedFormURI}`
-        }
-      />
+      <div className={styles.formContainer}>
+        <iframe title='current-form'
+          className={styles.odkForm}
+          src={
+            `${GITPOD_URL.slice(0, GITPOD_URL.indexOf('/') + 2) + "8065-" + GITPOD_URL.slice(GITPOD_URL.indexOf('/') + 2)}/preview?formSpec=${encodedFormSpec}&xform=${encodedFormURI}`
+          }
+        />
+        <div className={styles.jsonResponse}>
+          {formData}
+        </div>
+      </div>
     </div>
   );
 }
