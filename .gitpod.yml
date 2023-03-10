@@ -29,15 +29,27 @@ tasks:
       npm run start
       
 ports:
-  - port: 8065 # Enketo Express
+  - port: 8065
     onOpen: ignore
     visibility: public
-  - port: 3006 # Form Manager
+    description: Enketo Express
+
+  - port: 3006
     onOpen: ignore
     visibility: public
-  - port: 3000 # React Wrapper
+    description: Form Manager
+
+  - port: 3000 
     onOpen: ignore
     visibility: public
-  - port: 8080 # React Wrapper
+    description: React Wrapper
+
+  - port: 8080
     onOpen: ignore
     visibility: public
+    description: Hasura
+
+  - port: 9011 
+    onOpen: ignore
+    visibility: public
+    description: Fusion Auth

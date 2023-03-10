@@ -41,7 +41,13 @@
             "tenantId": "#{FUSIONAUTH_TENANT_ID}",
             "body": {
               "application": {
-                "name": "#{applicationName}"
+                "name": "#{applicationName}",
+                "oauthConfiguration": {
+                    "enabledGrants": ["authorization_code", "refresh_token"]
+                },
+                "loginConfiguration": {
+                    "allowTokenRefresh": true
+                }
               }
             }
         },
