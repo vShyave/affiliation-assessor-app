@@ -4,8 +4,8 @@ tasks:
     init: |
       bash install-node.sh
       nvm use 14
-      cd packages/enketo-express && pnpm i && pnpm i -g grunt
       bash update-config.sh
+      pnpm i && pnpm i -g grunt
       gp sync-done setup
     command: |
       grunt develop
