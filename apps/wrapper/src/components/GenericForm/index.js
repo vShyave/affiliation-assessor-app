@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import styles from './index.module.css';
 import beautify from "xml-beautifier";
+import { saveFormSubmission } from '../../api';
 
 const GITPOD_URL = process.env.REACT_APP_GITPOD_WORKSPACE_URL
 
@@ -32,20 +33,20 @@ const GenericForm = (props) => {
   useEffect(() => {
     // Manage onNext
     window.addEventListener('message', async function (e) {
-      const data = e.data;
-
+      const data = typeof e.data === "string" ? JSON.parse(e.data) : e.data;
       try {
-        /* message = {
-          nextForm: "formID",
-          formData: {},
-        }
-        */
-        const { nextForm, formData, onSuccessData, onFailureData } = JSON.parse(data);
-        console.log({ nextForm, formData, onSuccessData, onFailureData });
+        const { nextForm, formData, onSuccessData, onFailureData } = data;
+        // console.log({ nextForm, formData, onSuccessData, onFailureData });
         if (formData) {
           setFormData(beautify(formData))
           let jsonRes = await parseFormData(formData);
           if (jsonRes) setFormDataJSON(JSON.stringify(jsonRes.data, null, 2));
+        }
+        if (data?.state == "ON_FORM_SUCCESS_COMPLETED" && selectedFlow.submitToHasura) {
+          saveFormSubmission({
+            form_data: formData,
+            form_name: formSpec.startingForm,
+          });
         }
         if (nextForm.type === 'form') {
           setFormId(nextForm.id);

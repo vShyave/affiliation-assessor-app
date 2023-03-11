@@ -6,11 +6,13 @@ function App() {
   const [flows, setFlows] = useState([
     {
       name: 'Jumping Forms',
-      config: 'workflow_first.json'
+      config: 'workflow_first.json',
+      submitToHasura: false
     },
     {
       name: 'Hasura Submissions',
-      config: 'workflow_3_config.json'
+      config: 'workflow_second.json',
+      submitToHasura: true
     },
     {
       name: 'Offline Capabilities',
