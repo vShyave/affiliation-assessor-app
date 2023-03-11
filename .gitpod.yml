@@ -6,6 +6,10 @@ tasks:
       sudo apt install gh
       gp sync-done dev-setup
   - name: Install ODK Central
+    openMode: tab-after
+    init: |
+      gp sync-done dev-setup
+      bash install-central.sh
   - name: Setup Enketo Express
     openMode: tab-after
     init: |
