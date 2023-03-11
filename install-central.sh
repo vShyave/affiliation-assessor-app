@@ -1,6 +1,6 @@
 #!/bin/bash
 
-git clone --recurse-submodules -j8 git@github.com:getodk/central.git
+git clone --recurse-submodules -j8 https://github.com/getodk/central
 cd central
 
 # overwrite files from central-config to current folder
