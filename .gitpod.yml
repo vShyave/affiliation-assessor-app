@@ -1,7 +1,15 @@
 tasks:
+  - name: Setup Development Env
+    openMode: tab-after
+    init: |
+      sudo apt update
+      sudo apt install gh
+      gp sync-done dev-setup
+  - name: Install ODK Central
   - name: Setup Enketo Express
     openMode: tab-after
     init: |
+      gp sync-done dev-setup
       bash install-node.sh
       nvm use 14
       cd packages/enketo-express && pnpm i && pnpm i -g grunt
@@ -54,3 +62,18 @@ ports:
     onOpen: ignore
     visibility: public
     description: Fusion Auth
+
+  - port: 8090 
+    onOpen: ignore
+    visibility: public
+    description: ODK Central
+
+  - port: 9001 
+    onOpen: ignore
+    visibility: public
+    description: Minio UI
+  
+  - port: 9000 
+    onOpen: ignore
+    visibility: public
+    description: Minio API

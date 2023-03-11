@@ -127,7 +127,19 @@ services:
       - HASURA_GRAPHQL_MIGRATIONS_DISABLE_TRANSACTION=true
       - HASURA_GRAPHQL_CONSOLE_ASSETS_DIR=/srv/console-assets
       - HASURA_GRAPHQL_ADMIN_SECRET=myadminsecretkey
-      - HASURA_GRAPHQL_JWT_SECRET={"type":"RS256","jwk_url":"http://fusionauth/.well-known/jwks.json"}
+      - HASURA_GRAPHQL_JWT_SECRET={"type":"RS256","jwk_url":"http://fusionauth:9011/.well-known/jwks.json"}
+
+  minio:
+    image: minio/minio
+    ports:
+      - "9000:9000"
+      - "9001:9001"
+    volumes:
+      - ./mnt/cqube_bucket/minio:/data
+    environment:
+      MINIO_ROOT_USER: cqube-dev
+      MINIO_ROOT_PASSWORD: cqubeDevPassTibil
+    command: server --console-address ":9001" /data
 
 networks:
   db_net:
@@ -139,3 +151,4 @@ volumes:
   db_data:
   search_data:
   fa-config:
+  minio_storage: {}
