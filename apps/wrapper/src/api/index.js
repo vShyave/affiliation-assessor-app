@@ -2,7 +2,7 @@ const GITPOD_URL = process.env.REACT_APP_GITPOD_WORKSPACE_URL
 
 const makeHasuraCalls = async (query) => {
     // const userData = getCookie("userData");
-    return fetch(`${GITPOD_URL.slice(0, GITPOD_URL.indexOf('/') + 2) + "8080-" + GITPOD_URL.slice(GITPOD_URL.indexOf('/') + 2)}`, {
+    return fetch(`${GITPOD_URL.slice(0, GITPOD_URL.indexOf('/') + 2) + "8080-" + GITPOD_URL.slice(GITPOD_URL.indexOf('/') + 2)}/v1/graphql`, {
         method: "POST",
         headers: {
             Accept: "application/json",

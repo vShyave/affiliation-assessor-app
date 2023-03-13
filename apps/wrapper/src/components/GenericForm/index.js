@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import styles from './index.module.css';
 import beautify from "xml-beautifier";
 import { saveFormSubmission } from '../../api';
@@ -18,7 +18,7 @@ const GenericForm = (props) => {
   }
 
   const getFormURI = (form, ofsd, prefillSpec) => {
-    console.log(form, ofsd, prefillSpec);
+    // console.log(form, ofsd, prefillSpec);
     // return encodeURIComponent(`https://3006-samagradevelop-workflow-gkbrz650idv.ws-us89b.gitpod.io/prefill?form=${form}&onFormSuccessData=${encodeFunction(ofsd)}&prefillSpec=${encodeFunction(prefillSpec)}`);
     return encodeURIComponent(`${GITPOD_URL.slice(0, GITPOD_URL.indexOf('/') + 2) + "3006-" + GITPOD_URL.slice(GITPOD_URL.indexOf('/') + 2)}/prefill?form=${form}&onFormSuccessData=${encodeFunction(ofsd)}&prefillSpec=${encodeFunction(prefillSpec)}`);
   }
@@ -29,6 +29,7 @@ const GenericForm = (props) => {
   const [onFormSuccessData, setOnFormSuccessData] = useState(undefined);
   const [onFormFailureData, setOnFormFailureData] = useState(undefined);
   const [encodedFormURI, setEncodedFormURI] = useState(getFormURI(formId, formSpec.forms[formId].onFormSuccess, formSpec.forms[formId].prefill));
+  const formSubmitted = useRef(false);
 
   useEffect(() => {
     // Manage onNext
@@ -36,17 +37,21 @@ const GenericForm = (props) => {
       const data = typeof e.data === "string" ? JSON.parse(e.data) : e.data;
       try {
         const { nextForm, formData, onSuccessData, onFailureData } = data;
-        // console.log({ nextForm, formData, onSuccessData, onFailureData });
-        if (formData) {
+        // console.log("data--->", data)
+
+        if (data?.state != "ON_FORM_SUCCESS_COMPLETED" && formData) {
           setFormData(beautify(formData))
           let jsonRes = await parseFormData(formData);
-          if (jsonRes) setFormDataJSON(JSON.stringify(jsonRes.data, null, 2));
+          if (jsonRes) setFormDataJSON(JSON.stringify(jsonRes, null, 2));
         }
-        if (data?.state == "ON_FORM_SUCCESS_COMPLETED" && selectedFlow.submitToHasura) {
-          saveFormSubmission({
+
+        if (data?.state == "ON_FORM_SUCCESS_COMPLETED" && selectedFlow.submitToHasura && !formSubmitted.current) {
+          formSubmitted.current = true;
+          await saveFormSubmission({
             form_data: formData,
             form_name: formSpec.startingForm,
           });
+          formSubmitted.current = false;
         }
         if (nextForm.type === 'form') {
           setFormId(nextForm.id);
@@ -57,9 +62,10 @@ const GenericForm = (props) => {
         } else {
           window.location.href = nextForm.url;
         }
+
       }
       catch (e) {
-        // console.log(e)
+        console.log(e)
       }
     });
   }, []);
@@ -85,7 +91,6 @@ const GenericForm = (props) => {
     jsonRes = await jsonRes.json();
     return jsonRes?.data;
   }
-
 
   return (
     <div className={styles.container}>
