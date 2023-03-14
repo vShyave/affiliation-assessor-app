@@ -17,6 +17,15 @@ import formCache from './form-cache';
 import { getLastSavedRecord, populateLastSavedInstances } from './last-saved';
 import { FormController } from './form-controller';
 
+const cronInterval = setInterval(async () => {
+    connection.getOnlineStatus()
+        .then(appearsOnline => {
+            console.log(appearsOnline)
+            if (!appearsOnline) {
+            }
+        })
+}, 5000);
+
 /**
  * @typedef {import('../../../../app/models/survey-model').SurveyObject} Survey
  */
@@ -348,6 +357,9 @@ function _submitRecord(survey) {
                 heading = t('alert.submissionsuccess.heading');
             } else if (level === 'warning') {
                 heading = t('alert.submissionwarning.heading');
+            } else if (level === 'offline') {
+                heading = "You are offline";
+                level = 'warning';
             } else {
                 heading = t('alert.submissionerror.heading');
             }
@@ -726,9 +738,14 @@ function _setEventHandlers(survey) {
             console.log(arrayOfFileURLs?.length)
             console.log("formFiles: " + formFiles?.length)
             if (arrayOfFileURLs?.length <= formFiles?.length && formFiles?.length) {
-                const file = formFiles[formFiles?.length - 1];
-                const fileURL = await formController.uploadFile(file);
-                arrayOfFileURLs.push({ url: fileURL, name: file.name });
+                for (let i = 0; i < formFiles.length; i++) {
+                    const file = formFiles[i];
+                    if (typeof file === 'object') {
+                        const fileURL = await formController.uploadFile(file);
+                        if (fileURL)
+                            arrayOfFileURLs.push({ url: fileURL, name: file.name });
+                    }
+                }
             } else {
                 arrayOfFileURLs = arrayOfFileURLs.filter(file => formFiles.find(el => el.name == file.name))
             }
