@@ -137,8 +137,8 @@ services:
     volumes:
       - ./mnt/cqube_bucket/minio:/data
     environment:
-      MINIO_ROOT_USER: cqube-dev
-      MINIO_ROOT_PASSWORD: cqubeDevPassTibil
+      MINIO_ROOT_USER: ${MINIO_USERNAME}
+      MINIO_ROOT_PASSWORD: ${MINIO_PASSWORD}
     command: server --console-address ":9001" /data
 
 networks:
