@@ -11,5 +11,5 @@ docker-compose up -d
 
 sleep 30
 
-docker compose exec service odk-cmd --email chakshu@samagragovernance.in user-create
+echo "StrongPassword@1234" | docker compose exec -T service odk-cmd --email chakshu@samagragovernance.in user-create
 docker compose exec service odk-cmd --email chakshu@samagragovernance.in user-promote
