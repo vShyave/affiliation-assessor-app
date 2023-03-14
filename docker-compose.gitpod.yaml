@@ -75,6 +75,7 @@ services:
     networks:
       - db_net
       - search_net
+      - default
     restart: unless-stopped
     ports:
       - 9011:9011
@@ -146,6 +147,7 @@ networks:
     driver: bridge
   search_net:
     driver: bridge
+  default:
 
 volumes:
   db_data:
