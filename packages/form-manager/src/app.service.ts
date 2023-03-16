@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { ConsoleLogger, Injectable } from '@nestjs/common';
 import { DOMParser } from 'xmldom';
 import * as fs from 'fs';
 import { join } from 'path';
@@ -6,6 +6,7 @@ import { join } from 'path';
 @Injectable()
 export class AppService {
   parser = new DOMParser();
+  pf = '';
 
   getHello(): string {
     return 'Hello World!';
@@ -16,25 +17,34 @@ export class AppService {
     return fs.readFileSync(formFilePath, 'utf8');
   }
 
-  getOsceForms(type?: string, year?: string, speciality?: string, noOfForms?: number) {
+  getOsceForms(
+    type?: string,
+    year?: string,
+    speciality?: string,
+    noOfForms?: number,
+  ) {
     try {
-      if (!type || !year)
-        return "Please provide valid inputs"
+      if (!type || !year) return 'Please provide valid inputs';
 
-      const matchingText = speciality ? `${type}_${year}_${speciality}` : `${type}_${year}`;
+      const matchingText = speciality
+        ? `${type}_${year}_${speciality}`
+        : `${type}_${year}`;
       let matchingFiles = [];
       // const fileNames = fs.readdirSync(`/Users/amitsharma/Projects/workflow/packages/form-manager/src/forms`);
-      const fileNames = fs.readdirSync(__dirname + "/forms");
+      const fileNames = fs.readdirSync(__dirname + '/forms');
 
-      fileNames.forEach(file => { if (file.startsWith(matchingText)) matchingFiles.push(file) })
+      fileNames.forEach((file) => {
+        if (file.startsWith(matchingText)) matchingFiles.push(file);
+      });
 
       if (matchingFiles.length) {
         if (noOfForms) {
           const names = [];
           for (let i = 0; i < noOfForms; i++) {
-            let form = matchingFiles[Math.floor(Math.random() * matchingFiles.length)];
+            let form =
+              matchingFiles[Math.floor(Math.random() * matchingFiles.length)];
             names.push(form);
-            matchingFiles = matchingFiles.filter(el => el != form);
+            matchingFiles = matchingFiles.filter((el) => el != form);
           }
           return names;
         }
@@ -79,7 +89,11 @@ export class AppService {
         const key_arr = key.split('_*_');
         let element = null;
         if (this.isImage(prefillSpec[key])) {
-          const parentEl = this.findElementRecursively(0, key_arr.slice(0, key_arr.length - 1), instance);
+          const parentEl = this.findElementRecursively(
+            0,
+            key_arr.slice(0, key_arr.length - 1),
+            instance,
+          );
           for (let i = 0; i < parentEl.childNodes.length; i++) {
             if (element) break;
             if (parentEl.childNodes[i].tagName == key_arr[key_arr.length - 1]) {
@@ -91,7 +105,6 @@ export class AppService {
               }
             }
           }
-
         }
         if (element) {
           element.textContent = eval(prefillSpec[key]);
@@ -102,26 +115,201 @@ export class AppService {
   }
 
   isImage(filename: string): boolean {
-    if (filename.includes(".png") || filename.includes(".tif") || filename.includes(".tiff") || filename.includes(".jpg") || filename.includes(".jpeg") || filename.includes(".bmp") || filename.includes(".gif") || filename.includes(".eps"))
+    if (
+      filename.includes('.png') ||
+      filename.includes('.tif') ||
+      filename.includes('.tiff') ||
+      filename.includes('.jpg') ||
+      filename.includes('.jpeg') ||
+      filename.includes('.bmp') ||
+      filename.includes('.gif') ||
+      filename.includes('.eps')
+    )
       return true;
     return false;
   }
 
   findElementRecursively(start: number, key_arr: any, instance: any) {
     if (!instance) return null;
-    if (!key_arr[start + 1]) return instance.getElementsByTagName(key_arr[start])?.[0]
-    return this.findElementRecursively(start + 1, key_arr, instance.getElementsByTagName(key_arr[start])?.[0])
+    if (!key_arr[start + 1])
+      return instance.getElementsByTagName(key_arr[start])?.[0];
+    return this.findElementRecursively(
+      start + 1,
+      key_arr,
+      instance.getElementsByTagName(key_arr[start])?.[0],
+    );
   }
 
-  prefillFormXML(form: string, onFormSuccessData: any, prefillSpec: any): string {
+  prefillFormXML(
+    form: string,
+    onFormSuccessData: any,
+    prefillSpec: any,
+    files: any,
+  ): string {
     const formFilePath = join(__dirname, `forms/${form}.xml`);
     const formString = fs.readFileSync(formFilePath, 'utf8');
     const doc = this.parser.parseFromString(formString, 'text/xml');
-    console.log({ prefillSpec })
-    const instance = doc.getElementsByTagName('instance')[0];
-    if (instance) {
-      instance.textContent = prefillSpec;
+    const instanceFromForm = doc.getElementsByTagName('instance')[0];
+    console.log({ form, prefillSpec, files });
+
+    if (prefillSpec !== undefined) {
+      let instanceData = this.parser.parseFromString(prefillSpec, 'text/xml');
+      if (files) {
+        for (const [key, value] of Object.entries(files)) {
+          instanceData = this.setElementByPath(
+            instanceData,
+            key,
+            value,
+          ).cloneNode(true);
+          console.log('instance after 1 cycle', instanceData.toString());
+          // this.walk(instanceData, prefillSpec, key, value);
+          // instanceData = this.parser.parseFromString(this.pf, 'text/xml');
+        }
+      }
+      console.log(instanceData.toString());
+      doc
+        .getElementsByTagName('instance')[0]
+        .replaceChild(instanceData, instanceFromForm);
     }
+
+    console.log(doc.toString().length);
     return doc.toString();
+  }
+
+  submissionFormXML(form: string, prefillSpec: any, files: any): string {
+    const formFilePath = join(__dirname, `forms/${form}.xml`);
+    const formString = fs.readFileSync(formFilePath, 'utf8');
+    const doc = this.parser.parseFromString(formString, 'text/xml');
+    const instanceFromForm = doc.getElementsByTagName('instance')[0];
+    console.log({ form, prefillSpec, files });
+
+    if (prefillSpec !== undefined) {
+      let instanceData = this.parser.parseFromString(prefillSpec, 'text/xml');
+      if (files) {
+        for (const [key, value] of Object.entries(files)) {
+          instanceData = this.setElementByPath(
+            instanceData,
+            key,
+            value,
+          ).cloneNode(true);
+          console.log('instance after 1 cycle', instanceData.toString());
+          // this.walk(instanceData, prefillSpec, key, value);
+          // instanceData = this.parser.parseFromString(this.pf, 'text/xml');
+        }
+      }
+      console.log(instanceData.toString());
+      doc
+        .getElementsByTagName('instance')[0]
+        .replaceChild(instanceData, instanceFromForm);
+      return instanceData.toString();
+    } else {
+      return instanceFromForm.toString();
+    }
+  }
+
+  setElementByPath(doc, path, value) {
+    const pathParts = path.split('/');
+    let node = doc;
+    let tree = [];
+    tree.push(node.cloneNode(true));
+    for (let i = 1; i < pathParts.length - 1; i++) {
+      console.log(pathParts[i], '||', node.toString());
+      node = node.getElementsByTagName(pathParts[i + 1])[0];
+      tree.push(node);
+    }
+
+    console.log('root', tree[pathParts.length - 2].toString());
+
+    let originalURLNode = tree[pathParts.length - 2].cloneNode(true);
+    originalURLNode.textContent = value['url'];
+
+    let rootNode = tree[pathParts.length - 2].nextSibling.cloneNode(true);
+    rootNode.textContent = value['url'];
+    tree[pathParts.length - 2] = tree[pathParts.length - 2].nextSibling;
+
+    console.log(
+      'RootNode ****************',
+      '\n',
+      rootNode.toString(),
+      '\n',
+      tree[pathParts.length - 2].toString(),
+      '\n',
+      tree[pathParts.length - 3].toString(),
+      '\n',
+    );
+
+    // parts = 7
+
+    // T[0] = data
+    // T[1] = l1
+    // T[2] = l2
+    // T[3] = l3
+    // T[4] = l4
+    // T[5] = <url78/>
+
+    // rootNode = <url78>url</url78>
+
+    // rootNode = T[4].replaceChild(rootNode, T[5]).cloneNode(true)
+    // rootNode = T[3].replaceChild(rootNode, T[4]).cloneNode(true)
+    // rootNode = T[2].replaceChild(rootNode, T[3]).cloneNode(true)
+    // rootNode = T[1].replaceChild(rootNode, T[2]).cloneNode(true)
+    // rootNode = T[0].replaceChild(rootNode, T[1]).cloneNode(true)
+    for (let j = pathParts.length - 3; j >= 0; j--) {
+      console.log(
+        j,
+        'pathParts',
+        pathParts[j + 2],
+        '\n',
+        'Parent',
+        tree[j].toString(),
+        '\n',
+        'Old Child',
+        tree[j + 1].toString(),
+        '\n',
+        'New Child',
+        rootNode.toString(),
+      );
+      console.log('');
+      // Edge case
+      let oldChild = tree[j].getElementsByTagName(pathParts[j + 2])[0];
+      if (j + 2 === pathParts.length - 1) {
+        tree[j].replaceChild(originalURLNode, oldChild);
+        oldChild = oldChild.nextSibling;
+      }
+      tree[j].replaceChild(rootNode, oldChild);
+      rootNode = tree[j].cloneNode(true);
+    }
+    console.log('After replace T[0]', rootNode.toString());
+    console.log('After replace T[1]', tree[1].toString());
+    // tree[0].replaceChild(rootNode, tree[1]);
+    return rootNode;
+  }
+
+  walk(node, prefillSpec, key, value) {
+    try {
+      var children = node.childNodes;
+      if (children) {
+        for (
+          var i = 0;
+          i < children.length;
+          i++ // Children are siblings to each other
+        )
+          this.walk(children[i], prefillSpec, key, value);
+        const nodeName = key.split('/')[key.split('/').length - 1];
+        if (node.nodeName === nodeName || node.tagName === nodeName) {
+          const xmlString = `<${node.nextSibling.tagName}>${value['url']}</${node.nextSibling.tagName}>`;
+          console.log(`<${node.nextSibling.tagName}/>`, xmlString);
+          prefillSpec = prefillSpec.replace(
+            `<${node.nextSibling.tagName}/>`,
+            xmlString,
+          );
+          this.pf = prefillSpec;
+          return prefillSpec;
+        }
+      }
+    } catch (e) {
+      console.error(e);
+      console.log('Update Done');
+    }
   }
 }

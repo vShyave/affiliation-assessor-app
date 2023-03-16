@@ -218,6 +218,18 @@ export class FormController {
     }
 
     async broadcastFormDataUpdate(xml, fileURLs) {
+        console.log("Broadcasting file update")
+        // broadcast form data to parent window
+        window.parent.postMessage(JSON.stringify({
+            formData: xml,
+            formXML: xml,
+            state: this._state,
+            fileURLs: fileURLs
+        }), '*');
+    }
+
+    async broadcastFileRemoveUpdate(xml, fileURLs) {
+        console.log("Broadcasting file update")
         // broadcast form data to parent window
         window.parent.postMessage(JSON.stringify({
             formData: xml,

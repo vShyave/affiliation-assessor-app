@@ -1,9 +1,11 @@
 import {
   Body,
+  CACHE_MANAGER,
   Controller,
   Get,
   HttpException,
   HttpStatus,
+  Inject,
   Param,
   Post,
   Query,
@@ -13,6 +15,8 @@ import {
 import { FileInterceptor } from '@nestjs/platform-express/multer';
 import { AppService } from './app.service';
 import { v4 as uuidv4 } from 'uuid';
+
+import { Cache } from 'cache-manager';
 
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const Minio = require('minio');
@@ -38,9 +42,10 @@ type PrefillDto = {
 @Controller()
 export class AppController {
   constructor(
+    @Inject(CACHE_MANAGER) private cacheManager: Cache,
     private readonly appService: AppService,
     private configService: ConfigService,
-  ) { }
+  ) {}
 
   getLoginToken = () => {
     try {
@@ -62,7 +67,7 @@ export class AppController {
         json: postData,
       };
 
-      console.log(options)
+      console.log(options);
 
       return new Promise((resolve, reject) => {
         request(options, function (error, response, body) {
@@ -167,29 +172,64 @@ export class AppController {
   }
 
   @Post('prefillXML')
-  prefillXML(
+  async prefillXML(
     @Query('form') form,
     @Query('onFormSuccessData') onFormSuccessData,
     @Body('prefillXML') prefillXML,
-  ): string {
+    @Body('imageUrls') files,
+  ): Promise<string> {
     try {
       if (onFormSuccessData) {
-        return this.appService.prefillFormXML(
+        const prefilledForm = this.appService.prefillFormXML(
           form,
           onFormSuccessData,
           prefillXML,
+          files,
         );
+        const instanceId = uuidv4();
+        await this.cacheManager.set(instanceId, prefilledForm, 86400 * 10);
+        return `${this.configService.get(
+          'SERVER_BASR_URL',
+        )}form/instance/${instanceId}`;
       } else {
-        return "OK";
+        return 'OK';
       }
     } catch (e) {
-      return "OK2";
+      console.error(e);
+      return 'OK2';
+    }
+  }
+
+  @Post('submissionXML')
+  async submissionXML(
+    @Query('form') form,
+    @Body('prefillXML') prefillXML,
+    @Body('imageUrls') files,
+  ): Promise<string> {
+    try {
+      const submissionFormXML = this.appService.submissionFormXML(
+        form,
+        prefillXML,
+        files,
+      );
+      return submissionFormXML;
+    } catch (e) {
+      console.error(e);
+      return 'OK2';
     }
   }
 
   @Get('form/:id')
   getForm(@Param('id') id): string {
     return this.appService.getForm(id);
+  }
+
+  @Get('form/instance/:instanceId')
+  async getFormWithInstanceID(
+    @Param('instanceId') instanceId,
+  ): Promise<string> {
+    const xml = await this.cacheManager.get(instanceId);
+    return xml;
   }
 
   @Post('parse')
@@ -200,19 +240,27 @@ export class AppController {
   }
 
   @Get('osceForm/:type/:year/:speciality?')
-  getOsceForm(@Param('type') type, @Param('year') year, @Param('speciality') speciality): any {
+  getOsceForm(
+    @Param('type') type,
+    @Param('year') year,
+    @Param('speciality') speciality,
+  ): any {
     return this.appService.getOsceForms(type, year, speciality);
   }
 
   @Get('osceFormTeachers/:type/:year/:speciality?')
-  getOsceFormTeachers(@Param('type') type, @Param('year') year, @Param('speciality') speciality): any {
+  getOsceFormTeachers(
+    @Param('type') type,
+    @Param('year') year,
+    @Param('speciality') speciality,
+  ): any {
     return this.appService.getOsceForms(type, year, speciality, 2);
   }
 
   @Post('form/uploadFile')
   @UseInterceptors(FileInterceptor('file'))
   async uploadFile(@UploadedFile() file: Express.Multer.File) {
-    console.log(file)
+    console.log(file);
     const extension = file.originalname.split('.').pop();
     const fileName = uuidv4() + `.${extension}`;
     const tokenRes = await this.getLoginToken();
@@ -252,7 +300,7 @@ export class AppController {
       'MINIO_BUCKET_ID',
     )}/${fileName}`;
 
-    console.log("Uploaded File:", fileURL);
+    console.log('Uploaded File:', fileURL);
 
     return { fileURL };
   }
