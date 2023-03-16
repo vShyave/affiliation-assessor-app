@@ -8,10 +8,6 @@ export class AppService {
   parser = new DOMParser();
   pf = '';
 
-  getHello(): string {
-    return 'Hello World!';
-  }
-
   getForm(form: string): string {
     const formFilePath = join(__dirname, `forms/${form}.xml`);
     return fs.readFileSync(formFilePath, 'utf8');
@@ -52,7 +48,7 @@ export class AppService {
       }
       return null;
     } catch (err) {
-      console.log(err);
+      console.debug(err);
       return err;
     }
   }
