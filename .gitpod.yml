@@ -29,7 +29,11 @@ tasks:
     openMode: tab-after
     init: |
       gp sync-await setup
+      source .env
       cd packages/form-manager
+      echo "MINIO_USERNAME=$MINIO_USERNAME"  >> .env
+      echo "MINIO_PASSWORD=$MINIO_PASSWORD"  >> .env
+      echo "MINIO_BUCKETNAME=$MINIO_BUCKETNAME"  >> .env
       nvm use 16
       pnpm install
     command: |

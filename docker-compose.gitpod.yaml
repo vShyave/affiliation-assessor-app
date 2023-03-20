@@ -136,11 +136,24 @@ services:
       - "9000:9000"
       - "9001:9001"
     volumes:
-      - ./mnt/cqube_bucket/minio:/data
+      - minio-data:/data
     environment:
       MINIO_ROOT_USER: ${MINIO_USERNAME}
       MINIO_ROOT_PASSWORD: ${MINIO_PASSWORD}
     command: server --console-address ":9001" /data
+
+  createbuckets:
+    image: minio/mc
+    depends_on:
+      - minio
+    entrypoint: >
+      /bin/sh -c "
+      /usr/bin/mc config host add myminio http://minio:9000 ${MINIO_USERNAME} ${MINIO_PASSWORD};
+      /usr/bin/mc rm -r --force myminio/${MINIO_BUCKETNAME};
+      /usr/bin/mc mb myminio/${MINIO_BUCKETNAME};
+      /usr/bin/mc policy download myminio/${MINIO_BUCKETNAME};
+      exit 0;
+      "
 
 networks:
   db_net:
@@ -152,5 +165,6 @@ networks:
 volumes:
   db_data:
   search_data:
+  minio-data:
   fa-config:
   minio_storage: {}
