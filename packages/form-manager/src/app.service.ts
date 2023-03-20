@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { ConsoleLogger, Injectable } from '@nestjs/common';
 import { DOMParser } from 'xmldom';
 import * as fs from 'fs';
 import { join } from 'path';
@@ -6,6 +6,7 @@ import { join } from 'path';
 @Injectable()
 export class AppService {
   parser = new DOMParser();
+  pf = '';
 
   getForm(form: string): string {
     const formFilePath = join(__dirname, `forms/${form}.xml`);
@@ -36,7 +37,7 @@ export class AppService {
         if (noOfForms) {
           const names = [];
           for (let i = 0; i < noOfForms; i++) {
-            const form =
+            let form =
               matchingFiles[Math.floor(Math.random() * matchingFiles.length)];
             names.push(form);
             matchingFiles = matchingFiles.filter((el) => el != form);
@@ -139,15 +140,172 @@ export class AppService {
     form: string,
     onFormSuccessData: any,
     prefillSpec: any,
+    files: any,
   ): string {
     const formFilePath = join(__dirname, `forms/${form}.xml`);
     const formString = fs.readFileSync(formFilePath, 'utf8');
     const doc = this.parser.parseFromString(formString, 'text/xml');
-    console.debug({ prefillSpec });
-    const instance = doc.getElementsByTagName('instance')[0];
-    if (instance) {
-      instance.textContent = prefillSpec;
+    const instanceFromForm = doc.getElementsByTagName('instance')[0];
+    console.log({ form, prefillSpec, files });
+
+    if (prefillSpec !== undefined) {
+      let instanceData = this.parser.parseFromString(prefillSpec, 'text/xml');
+      if (files) {
+        for (const [key, value] of Object.entries(files)) {
+          instanceData = this.setElementByPath(
+            instanceData,
+            key,
+            value,
+          ).cloneNode(true);
+          console.log('instance after 1 cycle', instanceData.toString());
+          // this.walk(instanceData, prefillSpec, key, value);
+          // instanceData = this.parser.parseFromString(this.pf, 'text/xml');
+        }
+      }
+      console.log(instanceData.toString());
+      doc
+        .getElementsByTagName('instance')[0]
+        .replaceChild(instanceData, instanceFromForm);
     }
+
+    console.log(doc.toString().length);
     return doc.toString();
+  }
+
+  submissionFormXML(form: string, prefillSpec: any, files: any): string {
+    const formFilePath = join(__dirname, `forms/${form}.xml`);
+    const formString = fs.readFileSync(formFilePath, 'utf8');
+    const doc = this.parser.parseFromString(formString, 'text/xml');
+    const instanceFromForm = doc.getElementsByTagName('instance')[0];
+    console.log({ form, prefillSpec, files });
+
+    if (prefillSpec !== undefined) {
+      let instanceData = this.parser.parseFromString(prefillSpec, 'text/xml');
+      if (files) {
+        for (const [key, value] of Object.entries(files)) {
+          instanceData = this.setElementByPath(
+            instanceData,
+            key,
+            value,
+          ).cloneNode(true);
+          console.log('instance after 1 cycle', instanceData.toString());
+          // this.walk(instanceData, prefillSpec, key, value);
+          // instanceData = this.parser.parseFromString(this.pf, 'text/xml');
+        }
+      }
+      console.log(instanceData.toString());
+      doc
+        .getElementsByTagName('instance')[0]
+        .replaceChild(instanceData, instanceFromForm);
+      return instanceData.toString();
+    } else {
+      return instanceFromForm.toString();
+    }
+  }
+
+  setElementByPath(doc, path, value) {
+    const pathParts = path.split('/');
+    let node = doc;
+    let tree = [];
+    tree.push(node.cloneNode(true));
+    for (let i = 1; i < pathParts.length - 1; i++) {
+      console.log(pathParts[i], '||', node.toString());
+      node = node.getElementsByTagName(pathParts[i + 1])[0];
+      tree.push(node);
+    }
+
+    console.log('root', tree[pathParts.length - 2].toString());
+
+    let originalURLNode = tree[pathParts.length - 2].cloneNode(true);
+    originalURLNode.textContent = value['url'];
+
+    let rootNode = tree[pathParts.length - 2].nextSibling.cloneNode(true);
+    rootNode.textContent = value['url'];
+    tree[pathParts.length - 2] = tree[pathParts.length - 2].nextSibling;
+
+    console.log(
+      'RootNode ****************',
+      '\n',
+      rootNode.toString(),
+      '\n',
+      tree[pathParts.length - 2].toString(),
+      '\n',
+      tree[pathParts.length - 3].toString(),
+      '\n',
+    );
+
+    // parts = 7
+
+    // T[0] = data
+    // T[1] = l1
+    // T[2] = l2
+    // T[3] = l3
+    // T[4] = l4
+    // T[5] = <url78/>
+
+    // rootNode = <url78>url</url78>
+
+    // rootNode = T[4].replaceChild(rootNode, T[5]).cloneNode(true)
+    // rootNode = T[3].replaceChild(rootNode, T[4]).cloneNode(true)
+    // rootNode = T[2].replaceChild(rootNode, T[3]).cloneNode(true)
+    // rootNode = T[1].replaceChild(rootNode, T[2]).cloneNode(true)
+    // rootNode = T[0].replaceChild(rootNode, T[1]).cloneNode(true)
+    for (let j = pathParts.length - 3; j >= 0; j--) {
+      console.log(
+        j,
+        'pathParts',
+        pathParts[j + 2],
+        '\n',
+        'Parent',
+        tree[j].toString(),
+        '\n',
+        'Old Child',
+        tree[j + 1].toString(),
+        '\n',
+        'New Child',
+        rootNode.toString(),
+      );
+      console.log('');
+      // Edge case
+      let oldChild = tree[j].getElementsByTagName(pathParts[j + 2])[0];
+      if (j + 2 === pathParts.length - 1) {
+        tree[j].replaceChild(originalURLNode, oldChild);
+        oldChild = oldChild.nextSibling;
+      }
+      tree[j].replaceChild(rootNode, oldChild);
+      rootNode = tree[j].cloneNode(true);
+    }
+    console.log('After replace T[0]', rootNode.toString());
+    console.log('After replace T[1]', tree[1].toString());
+    // tree[0].replaceChild(rootNode, tree[1]);
+    return rootNode;
+  }
+
+  walk(node, prefillSpec, key, value) {
+    try {
+      var children = node.childNodes;
+      if (children) {
+        for (
+          var i = 0;
+          i < children.length;
+          i++ // Children are siblings to each other
+        )
+          this.walk(children[i], prefillSpec, key, value);
+        const nodeName = key.split('/')[key.split('/').length - 1];
+        if (node.nodeName === nodeName || node.tagName === nodeName) {
+          const xmlString = `<${node.nextSibling.tagName}>${value['url']}</${node.nextSibling.tagName}>`;
+          console.log(`<${node.nextSibling.tagName}/>`, xmlString);
+          prefillSpec = prefillSpec.replace(
+            `<${node.nextSibling.tagName}/>`,
+            xmlString,
+          );
+          this.pf = prefillSpec;
+          return prefillSpec;
+        }
+      }
+    } catch (e) {
+      console.error(e);
+      console.log('Update Done');
+    }
   }
 }

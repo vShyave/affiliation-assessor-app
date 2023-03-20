@@ -17,6 +17,19 @@ import formCache from './form-cache';
 import { getLastSavedRecord, populateLastSavedInstances } from './last-saved';
 import { FormController } from './form-controller';
 
+const cronInterval = setInterval(async () => {
+    connection.getOnlineStatus()
+        .then(appearsOnline => {
+            console.log(appearsOnline)
+            if (!appearsOnline) {
+            }
+        })
+}, 5000);
+
+function getMeta(metaName) {
+    return document.querySelector(`meta[name=${metaName}]`).content;
+}
+
 /**
  * @typedef {import('../../../../app/models/survey-model').SurveyObject} Survey
  */
@@ -215,7 +228,6 @@ function _resetForm(survey, options = {}) {
             }
         });
 }
-
 /**
  * Loads a record from storage
  *
@@ -348,6 +360,9 @@ function _submitRecord(survey) {
                 heading = t('alert.submissionsuccess.heading');
             } else if (level === 'warning') {
                 heading = t('alert.submissionwarning.heading');
+            } else if (level === 'offline') {
+                heading = "You are offline";
+                level = 'warning';
             } else {
                 heading = t('alert.submissionerror.heading');
             }
@@ -691,6 +706,14 @@ function _setEventHandlers(survey) {
         }
     });
 
+    document.addEventListener(events.Edited().type, async event => {
+        const formController = new FormController({});
+        const userId = getMeta('userId');
+        const keyToStorage = `${userId}_${form.model.rootElement.id}_${new Date().toISOString().split("T")[0]}`;
+        let olderFiles = JSON.parse(localStorage.getItem(keyToStorage)) || {};
+        await formController.broadcastFormDataUpdate(form.getDataStr(), {});
+    });
+
     if (inIframe() && settings.parentWindowOrigin) {
         document.addEventListener(events.SubmissionSuccess().type, postEventAsMessageToParentWindow);
         document.addEventListener(events.Edited().type, postEventAsMessageToParentWindow);
@@ -718,34 +741,89 @@ function _setEventHandlers(survey) {
         });
     }
 
-    let arrayOfFileURLs = []
-    document.addEventListener(events.XFormsValueChanged().type, async () => {
+
+    document.addEventListener(events.XFormsValueChanged().type, async (e) => {
         const formController = new FormController({});
-        const formFiles = await fileManager.getCurrentFiles();
-        if (formFiles) {
-            console.log(arrayOfFileURLs?.length)
-            console.log("formFiles: " + formFiles?.length)
-            if (arrayOfFileURLs?.length <= formFiles?.length && formFiles?.length) {
-                const file = formFiles[formFiles?.length - 1];
-                const fileURL = await formController.uploadFile(file);
-                arrayOfFileURLs.push({ url: fileURL, name: file.name });
-            } else {
-                arrayOfFileURLs = arrayOfFileURLs.filter(file => formFiles.find(el => el.name == file.name))
+        const userId = getMeta('userId');
+        const keyToStorage = `${userId}_${form.model.rootElement.id}_${new Date().toISOString().split("T")[0]}`;
+        let olderFiles = JSON.parse(localStorage.getItem(keyToStorage)) || {};
+        await formController.broadcastFormDataUpdate(form.getDataStr(), {});
+        let arrayOfFileURLs = {};
+        if (e.target.nodeName === "INPUT" && e.target.accept === "image/*") {
+            const formFiles = await fileManager.getCurrentFiles();
+            if (formFiles) {
+                console.log("formFiles: " + formFiles?.length)
+                if (formFiles?.length) {
+                    for (let i = 0; i < formFiles.length; i++) {
+                        const file = formFiles[i];
+                        const parts = e.target.name.split("/").slice();
+                        const lastPart = parts[parts.length - 1]
+                        // if (typeof file === 'object' && file.name.includes(lastPart)) {
+                        if (typeof file === 'object') {
+                            const fileURL = await formController.uploadFile(file);
+                            if (fileURL) {
+                                console.log({ fileURL });
+                                arrayOfFileURLs[e.target.name] = { url: fileURL, name: file.name, ref: e.target.name };
+                                // Broadcast File Remove
+                                olderFiles = JSON.parse(localStorage.getItem(keyToStorage)) || {};
+                                const arrayOfFileURLsNew = { ...olderFiles, ...arrayOfFileURLs };
+                                for (const [key, value] of Object.entries(olderFiles)) {
+                                    if (arrayOfFileURLs[key] !== undefined && value.url !== '') {
+                                        arrayOfFileURLsNew[key] = value;
+                                    }
+                                }
+                                if (olderFiles && olderFiles !== undefined) {
+                                    for (const [key, value] of Object.entries(olderFiles)) {
+                                        if (arrayOfFileURLsNew[key] === undefined) {
+                                            arrayOfFileURLsNew[key] = { url: '', name: '', ref: '' }
+                                        }
+                                    }
+                                }
+                                localStorage.setItem(keyToStorage, JSON.stringify(arrayOfFileURLsNew));
+                                await formController.broadcastFormDataUpdate(form.getDataStr(), arrayOfFileURLsNew);
+                            }
+                        } else {
+                            if (file.includes("cdn.samagra.io")) {
+                                if (e.target.value === '') {
+                                    olderFiles = JSON.parse(localStorage.getItem(keyToStorage)) || {};
+                                    olderFiles[e.target.name] = { url: '', name: '', ref: '' }
+                                    localStorage.setItem(keyToStorage, JSON.stringify(olderFiles));
+                                    olderFiles = JSON.parse(localStorage.getItem(keyToStorage)) || {};
+                                    await formController.broadcastFormDataUpdate(form.getDataStr(), olderFiles);
+                                } else {
+                                    console.info("File has already been uploaded");
+                                }
+                            } else {
+                                arrayOfFileURLs[e.target.name] = { url: '', name: '', ref: '' }
+                                // Broadcast File Remove
+                                const arrayOfFileURLsNew = { ...arrayOfFileURLs, ...olderFiles };
+                                if (olderFiles && olderFiles !== undefined) {
+                                    for (const [key, value] of Object.entries(olderFiles)) {
+                                        if (arrayOfFileURLs[key] === undefined) {
+                                            arrayOfFileURLsNew[key] = { url: '', name: '', ref: '' }
+                                        }
+                                    }
+                                }
+                                localStorage.setItem(keyToStorage, JSON.stringify(arrayOfFileURLsNew));
+                                olderFiles = JSON.parse(localStorage.getItem(keyToStorage)) || {};
+                                await formController.broadcastFormDataUpdate(form.getDataStr(), arrayOfFileURLsNew);
+                            }
+                        }
+                    }
+                }
             }
-            // console.log({ arrayOfFileURLs })
-            // this.data = (await fetch('http://localhost:3006/parse', {
-            //     method: "POST",
-            //     body: JSON.stringify({ xml: form.getDataStr() }),
-            //     headers: {
-            //         "Content-type": "application/json; charset=UTF-8"
+            // Broadcast File Remove
+            // const arrayOfFileURLsNew = { ...olderFiles, ...arrayOfFileURLs };
+            // if (olderFiles && olderFiles !== undefined) {
+            //     for (const [key, value] of Object.entries(olderFiles)) {
+            //         if (arrayOfFileURLs[key] === undefined) {
+            //             arrayOfFileURLsNew[key] = { url: '', name: '', ref: '' }
+            //         }
             //     }
-            // }).then(res => res.json())).data;
-            // if (fileURL) {
-            //     const kk = formController.findKey(this.data, file.name, '$t', '');
-            //     this.data = formController.set(this.data, kk.substring(1), fileURL);
             // }
+            // localStorage.setItem(`${form.model}_${new Date().toISOString().split("T")[0]}`, JSON.stringify(arrayOfFileURLsNew));
+            // await formController.broadcastFormDataUpdate(form.getDataStr(), arrayOfFileURLsNew);
         }
-        formController.broadcastFormDataUpdate(form.getDataStr(), arrayOfFileURLs);
     });
     if (settings.offline) {
         document.addEventListener(events.XFormsValueChanged().type, () => {

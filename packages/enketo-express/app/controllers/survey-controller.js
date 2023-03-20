@@ -188,8 +188,8 @@ function edit(req, res, next) {
  */
 function _renderWebform(req, res, next, options) {
     const deviceId =
-            req.signedCookies["__enketo_meta_deviceid"] ||
-            `${req.hostname}:${utils.randomString(16)}`,
+        req.signedCookies["__enketo_meta_deviceid"] ||
+        `${req.hostname}:${utils.randomString(16)}`,
         cookieOptions = {
             signed: true,
             maxAge: 10 * 365 * 24 * 60 * 60 * 1000,
@@ -201,8 +201,10 @@ function _renderWebform(req, res, next, options) {
     options.formId = req?.query?.id;
     options.backendToken = req?.query?.token;
     options.formSpec = req?.query?.formSpec;
+    options.userId = req?.query?.userId;
 
     res.cookie("backendToken", req?.query?.token, cookieOptions);
+    res.cookie("userId", req?.query?.userId, cookieOptions);
     res.cookie("enketoFormId", req?.query?.id, cookieOptions);
     res.cookie("__enketo_meta_deviceid", deviceId, cookieOptions).render(
         "surveys/webform",
