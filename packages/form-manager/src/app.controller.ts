@@ -45,7 +45,9 @@ export class AppController {
     @Inject(CACHE_MANAGER) private cacheManager: Cache,
     private readonly appService: AppService,
     private configService: ConfigService,
-  ) {}
+  ) { }
+
+  GITPOD_URL = this.configService.get('GITPOD_WORKSPACE_URL');
 
   getLoginToken = () => {
     try {
@@ -188,9 +190,7 @@ export class AppController {
         );
         const instanceId = uuidv4();
         await this.cacheManager.set(instanceId, prefilledForm, 86400 * 10);
-        return `${this.configService.get(
-          'SERVER_BASR_URL',
-        )}form/instance/${instanceId}`;
+        return `${this.GITPOD_URL.slice(0, this.GITPOD_URL.indexOf('/') + 2) + "3006-" + this.GITPOD_URL.slice(this.GITPOD_URL.indexOf('/') + 2)}/form/instance/${instanceId}`;
       } else {
         return 'OK';
       }
@@ -263,17 +263,16 @@ export class AppController {
     console.log(file);
     const extension = file.originalname.split('.').pop();
     const fileName = uuidv4() + `.${extension}`;
-    const tokenRes = await this.getLoginToken();
-    const sessionRes: any = await this.getSessionToken(tokenRes);
+    // const tokenRes = await this.getLoginToken();
+    // const sessionRes: any = await this.getSessionToken(tokenRes);
 
-    console.log('sessionRes', sessionRes);
+    // console.log('sessionRes', sessionRes);
 
     const minioClient: Client = new Minio.Client({
-      endPoint: 'cdn.samagra.io',
+      endPoint: this.GITPOD_URL.slice(8),
       useSSL: true,
-      accessKey: sessionRes?.accessKey,
-      secretKey: sessionRes?.secretKey,
-      sessionToken: sessionRes?.sessionToken,
+      accessKey: this.configService.get('MINIO_USERNAME'),
+      secretKey: this.configService.get('MINIO_PASSWORD')
     });
 
     const metaData: ItemBucketMetadata = {
@@ -281,13 +280,14 @@ export class AppController {
     };
 
     minioClient.putObject(
-      this.configService.get('MINIO_BUCKET_ID'),
+      this.configService.get('MINIO_BUCKETNAME'),
       fileName,
       file.buffer,
       file.size,
       metaData,
       function (err, res) {
         if (err) {
+          console.log(err)
           throw new HttpException(
             'Error uploading file',
             HttpStatus.BAD_REQUEST,
@@ -296,9 +296,7 @@ export class AppController {
       },
     );
 
-    const fileURL = `https://cdn.samagra.io/${this.configService.get(
-      'MINIO_BUCKET_ID',
-    )}/${fileName}`;
+    const fileURL = `${this.GITPOD_URL.slice(0, this.GITPOD_URL.indexOf('/') + 2) + "9000-" + this.GITPOD_URL.slice(this.GITPOD_URL.indexOf('/') + 2)}/${this.configService.get('MINIO_BUCKETNAME')}/${fileName}`;
 
     console.log('Uploaded File:', fileURL);
 

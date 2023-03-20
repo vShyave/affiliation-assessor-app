@@ -40,3 +40,19 @@ export const saveFormSubmission = (data) => {
     };
     return makeHasuraCalls(query);
 };
+
+export const getPrefillXML = async (form, onFormSuccessData, prefillXML, imageUrls) => {
+    try {
+        let res = await fetch(`${GITPOD_URL.slice(0, GITPOD_URL.indexOf('/') + 2) + "3006-" + GITPOD_URL.slice(GITPOD_URL.indexOf('/') + 2)}/prefillXML?form=${form}&onFormSuccessData=${encodeURI(
+            JSON.stringify(onFormSuccessData)
+        )}`, {
+            method: 'POST',
+            headers: {},
+            body: JSON.stringify({ prefillXML, imageUrls })
+        })
+        return await res.text();
+    } catch (err) {
+        console.log(err);
+        return null;
+    }
+};

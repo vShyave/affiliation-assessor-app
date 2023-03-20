@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import styles from './index.module.css';
 import beautify from "xml-beautifier";
-import { saveFormSubmission } from '../../api';
+import { getPrefillXML, saveFormSubmission } from '../../api';
 
 const GITPOD_URL = process.env.REACT_APP_GITPOD_WORKSPACE_URL
 
@@ -17,18 +17,13 @@ const GenericForm = (props) => {
     return encodeURIComponent(JSON.stringify(func));
   }
 
-  const getFormURI = (form, ofsd, prefillSpec) => {
-    // console.log(form, ofsd, prefillSpec);
-    // return encodeURIComponent(`https://3006-samagradevelop-workflow-gkbrz650idv.ws-us89b.gitpod.io/prefill?form=${form}&onFormSuccessData=${encodeFunction(ofsd)}&prefillSpec=${encodeFunction(prefillSpec)}`);
-    return encodeURIComponent(`${GITPOD_URL.slice(0, GITPOD_URL.indexOf('/') + 2) + "3006-" + GITPOD_URL.slice(GITPOD_URL.indexOf('/') + 2)}/prefill?form=${form}&onFormSuccessData=${encodeFunction(ofsd)}&prefillSpec=${encodeFunction(prefillSpec)}`);
-  }
-
   const startingForm = formSpec.startingForm;
+  const [fileUrls, setFileUrls] = useState({});
   const [formId, setFormId] = useState(startingForm);
   const [encodedFormSpec, setEncodedFormSpec] = useState(encodeURI(JSON.stringify(formSpec.forms[formId])));
   const [onFormSuccessData, setOnFormSuccessData] = useState(undefined);
   const [onFormFailureData, setOnFormFailureData] = useState(undefined);
-  const [encodedFormURI, setEncodedFormURI] = useState(getFormURI(formId, formSpec.forms[formId].onFormSuccess, formSpec.forms[formId].prefill));
+  const [encodedFormURI, setEncodedFormURI] = useState('');
   const formSubmitted = useRef(false);
 
   useEffect(() => {
@@ -37,7 +32,8 @@ const GenericForm = (props) => {
       const data = typeof e.data === "string" ? JSON.parse(e.data) : e.data;
       try {
         const { nextForm, formData, onSuccessData, onFailureData } = data;
-        // console.log("data--->", data)
+        console.log("data--->", data)
+        if (data.fileURLs) setFileUrls(data.fileURLs)
 
         if (data?.state != "ON_FORM_SUCCESS_COMPLETED" && formData) {
           setFormData(beautify(formData))
@@ -53,13 +49,15 @@ const GenericForm = (props) => {
           });
           formSubmitted.current = false;
         }
-        if (nextForm.type === 'form') {
+        if (nextForm?.type === 'form') {
           setFormId(nextForm.id);
           setOnFormSuccessData(onSuccessData);
           setOnFormFailureData(onFailureData);
           setEncodedFormSpec(encodeURI(JSON.stringify(formSpec.forms[formId])));
-          setEncodedFormURI(getFormURI(nextForm.id, onSuccessData, formSpec.forms[nextForm.id].prefill));
-        } else {
+          let newForm = await getPrefillXML(nextForm.id, formSpec.forms[nextForm.id].onFormSuccess);
+          console.log("new FORM", newForm)
+          setEncodedFormURI(newForm);
+        } else if (nextForm?.type == 'url') {
           window.location.href = nextForm.url;
         }
 
@@ -92,12 +90,32 @@ const GenericForm = (props) => {
     return jsonRes?.data;
   }
 
+  const getForm = async () => {
+    let prefilledForm = await getPrefillXML(startingForm, formSpec.forms[formId].onFormSuccess);
+    setEncodedFormURI(prefilledForm)
+  }
+
+  useEffect(() => {
+    getForm();
+  }, [])
+
   return (
     <div className={styles.container}>
-      <div className={styles.header}>
+      <div className={styles.header + ' animate__animated animate__slideInLeft animate__faster'}>
         <div onClick={() => setSelectedFlow({})}>Go Back</div>
         <div>Workflow /{selectedFlow.name}</div>
       </div>
+      {Object.keys(fileUrls)?.length > 0 && <div className={styles.imageLinks}>
+        <p>Uploaded Images</p>
+        {Object.keys(fileUrls)?.map(el => <a href={fileUrls[el].url} target="_blank">{fileUrls[el].url}</a>)}
+      </div>
+      }
+      {
+        selectedFlow.offline && <p className='animate__animated animate__fadeIn' style={{ color: '#fff', fontSize: '1.5rem' }}>Disable internet and try submitting the form</p>
+      }
+      {
+        selectedFlow.submitToHasura && <p className='animate__animated animate__fadeIn' style={{ color: '#fff', fontSize: '1.5rem' }}>Submit the form and check <a style={{color: '#ffc119'}} target="_blank" href={`${GITPOD_URL.slice(0, GITPOD_URL.indexOf('/') + 2) + "8080-" + GITPOD_URL.slice(GITPOD_URL.indexOf('/') + 2)}`}>Hasura</a></p>
+      }
       <div className={styles.formContainer}>
         <iframe title='current-form'
           className={styles.odkForm}

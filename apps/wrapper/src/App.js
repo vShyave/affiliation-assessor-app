@@ -16,11 +16,12 @@ function App() {
     },
     {
       name: 'Offline Capabilities',
-      config: 'workflow_4_config.json'
+      config: 'workflow_first.json',
+      offline: true
     },
     {
       name: 'File Upload',
-      config: 'workflow_5_config.json'
+      config: 'workflow_first.json'
     }
   ])
 
