@@ -23,7 +23,7 @@ import { redisStore } from 'cache-manager-redis-store';
     }),
     ConfigModule.forRoot({
       isGlobal: true,
-      envFilePath: '.development.env',
+      envFilePath: '.env',
     }),
     // CacheModule.register(),
   ],
