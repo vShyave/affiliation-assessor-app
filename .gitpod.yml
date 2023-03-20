@@ -30,6 +30,7 @@ tasks:
     init: |
       gp sync-await setup
       source .env
+      docker run --name enketo-redis-main -p 6369:6379 -d redis 
       cd packages/form-manager
       echo "MINIO_USERNAME=$MINIO_USERNAME"  >> .env
       echo "MINIO_PASSWORD=$MINIO_PASSWORD"  >> .env
