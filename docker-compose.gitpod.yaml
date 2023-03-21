@@ -151,7 +151,7 @@ services:
       /usr/bin/mc config host add myminio http://minio:9000 ${MINIO_USERNAME} ${MINIO_PASSWORD};
       /usr/bin/mc rm -r --force myminio/${MINIO_BUCKETNAME};
       /usr/bin/mc mb myminio/${MINIO_BUCKETNAME};
-      /usr/bin/mc policy set public myminio/${MINIO_BUCKETNAME};
+      /usr/bin/mc anonymous set public myminio/${MINIO_BUCKETNAME};
       exit 0;
       "
 

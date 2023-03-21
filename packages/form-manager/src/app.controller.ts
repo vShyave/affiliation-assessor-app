@@ -269,7 +269,7 @@ export class AppController {
     // console.log('sessionRes', sessionRes);
 
     const minioClient: Client = new Minio.Client({
-      endPoint: this.GITPOD_URL.slice(8),
+      endPoint: "9000-"+this.GITPOD_URL.slice(8),
       useSSL: true,
       accessKey: this.configService.get('MINIO_USERNAME'),
       secretKey: this.configService.get('MINIO_PASSWORD')
