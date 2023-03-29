@@ -1,135 +1,70 @@
-# Ratings Application
+# Getting Started with Create React App
 
-## Lego Blocks
-- [Workflow Manager (Enketo)](https://github.com/SakshamHaryana-SE/enketo)
-- [Fusionauth](https://fusionauth.io/docs/v1/tech/)
+This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
-## Tech Stack
-- [React.js](https://reactjs.org/docs/getting-started.html)
-- [Tailwind](https://tailwindcss.com/docs/installation)
-- [GraphQL](https://graphql.org/code/#javascript)
-- [Hasura](https://hasura.io/docs/latest/index/)
+## Available Scripts
 
-## Installation Guide
+In the project directory, you can run:
 
-## Requirements :scroll:
+### `npm start`
 
-1. Your machine should have [Yarn](https://classic.yarnpkg.com/en/docs/install/#windows-stable) (preferable) or [Npm](https://docs.npmjs.com/downloading-and-installing-node-js-and-npm) or [Docker](https://docs.docker.com/get-docker/) installed.
+Runs the app in the development mode.\
+Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
 
-## Installation Steps :walking:
+The page will reload when you make changes.\
+You may also see any lint errors in the console.
 
-### 1. Fork it :fork_and_knife:
+### `npm test`
 
-You can get your own fork/copy of [UP-HRH](https://github.com/Samagra-Development/UP-HRH) by using the <kbd><b>Fork</b></kbd> button.
+Launches the test runner in the interactive watch mode.\
+See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
 
-### 2. Clone it :busts_in_silhouette:
+### `npm run build`
 
-You need to clone (download) it to a local machine using
+Builds the app for production to the `build` folder.\
+It correctly bundles React in production mode and optimizes the build for the best performance.
 
-```sh
-git clone https://github.com/Your_Username/UP-HRH.git
-```
+The build is minified and the filenames include the hashes.\
+Your app is ready to be deployed!
 
-> This makes a local copy of the repository in your machine.
+See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
 
-Once you have cloned the `UP-HRH` repository in GitHub, move to that folder first using the change directory command.
+### `npm run eject`
 
-```sh
-# This will change directory to a folder UP-HRH
-cd UP-HRH
-```
+**Note: this is a one-way operation. Once you `eject`, you can't go back!**
 
-Move to this folder for all other commands.
+If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
 
-### 3. Set it up :arrow_up:
+Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
 
-Run the following commands to see that _your local copy_ has a reference to _your forked remote repository_ in GitHub :octocat:
+You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
 
-```sh
-git remote -v
-origin  https://github.com/Your_Username/UP-HRH.git (fetch)
-origin  https://github.com/Your_Username/UP-HRH.git (push)
-```
+## Learn More
 
-Now, add a reference to the original [UP-HRHUI](https://github.com/Samagra-Development/UP-HRH) repository using
+You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
 
-```sh
-git remote add upstream https://github.com/Samagra-Development/UP-HRH.git
-```
+To learn React, check out the [React documentation](https://reactjs.org/).
 
-> This adds a new remote named **_upstream_**.
+### Code Splitting
 
-See the changes using
+This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
 
-```sh
-git remote -v
-origin    https://github.com/Your_Username/UP-HRH.git (fetch)
-origin    https://github.com/Your_Username/UP-HRH.git (push)
-upstream  https://github.com/Samagra-Development/UP-HRH.git (fetch)
-upstream  https://github.com/Samagra-Development/UP-HRH.git (push)
-```
+### Analyzing the Bundle Size
 
-### 4. Run it :checkered_flag:
+This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
 
-Using Yarn (preferable)
-```sh
-# To install all the dependencies
-yarn install
+### Making a Progressive Web App
 
-# To start the application
-yarn start
-```
+This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
 
-**OR**
+### Advanced Configuration
 
-using NPM
-```sh
-# To install all the dependencies
-npm install
+This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
 
-# To start the application
-npm start
-```
-The React application will start on port 3000.
-Go to: http://localhost:3000
+### Deployment
 
-## Environment
+This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
 
-```.env
-REACT_APP_USER_SERVICE_URL=
-REACT_APP_APPLICATION_ID=
-REACT_APP_HASURA_URL=
-REACT_APP_ENKETO_URL=
-REACT_APP_ENKETO_URL=
-HASURA_REST_API_URL=
-HASURA_ADMIN_SECRET=
-```
+### `npm run build` fails to minify
 
-## Data uploading
-
-Scripts reside inside the `scripts` folder. To run scripts, create copies of data inside the `scripts/input/samples` folder inside `scripts/inputs` and insert data as per the format mentioned in the samples. 
-
-Note: Ensure `.env` is updated. 
-
-### To upload institutes:
-
-Command: `python3 institute_upload.py`
-
-Input file: `scripts/input/institutes/InstituteData.csv`
-Sample input file: `scripts/input/samples/institutes/InstituteData.csv`
-
-### To upload assessors:
-
-Command: `python3 assessors_upload.py`
-
-Input file: `scripts/input/assessors/CodePhonenumberMapping.csv`, `scripts/input/assessors/PhonenumberUserIdMapping.csv`
-Sample input file: `scripts/input/samples/assessors/CodePhonenumberMapping.csv`, `scripts/input/samples/assessors/PhonenumberUserIdMapping.csv`
-
-Note: New users will be needed to be created on fusionauth using https://github.com/choxx/hasura-fa-user-creation-script
-
-### To upload schedules:
-
-Command: `python3 schedule_upload.py`
-
-Input file: `scripts/input/scheduling/AssessmentSchedule.csv`
-Sample input file: `scripts/input/samples/scheduling/AssessmentSchedule.csv`
+This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
