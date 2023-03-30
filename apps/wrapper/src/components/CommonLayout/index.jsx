@@ -1,8 +1,9 @@
 import React, { useRef, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
-  faChevronLeft,
+  faArrowLeft,
   faRightFromBracket,
+  faXmark
 } from "@fortawesome/free-solid-svg-icons";
 import { useNavigate } from "react-router-dom";
 import CommonModal from "../Modal";
@@ -40,12 +41,12 @@ const CommonLayout = (props) => {
             alt="illustration"
           />
         </div>
-        <div className="bg-white h-full w-full rounded-t-[60px] overflow-scroll pb-5">
-          <div className="flex flex-row w-full px-8 py-7 justify-between cursor-pointer">
+        <div className="bg-white h-full w-full rounded-t-[60px] overflow-y-auto pb-5">
+          <div className="flex flex-row w-full px-8 py-7 items-center cursor-pointer">
             {!props.backDisabled && (
               <FontAwesomeIcon
-                icon={faChevronLeft}
-                className="text-2xl text-gray-300 lg:text-4xl"
+                icon={ props.iconType === 'backArrow' ? faArrowLeft : faXmark }
+                className="text-2xl lg:text-4xl"
                 onClick={() => {
                   props.backFunction
                     ? props.backFunction()
@@ -53,10 +54,11 @@ const CommonLayout = (props) => {
                 }}
               />
             )}
+            <div className="text-secondary tracking-wide text-[25px] ml-4 font-bold lg:text-[45px]">{props.pageTitle}</div>
             {!props.logoutDisabled && (
               <FontAwesomeIcon
                 icon={faRightFromBracket}
-                className="text-2xl text-gray-300 lg:text-4xl"
+                className="text-2xl lg:text-4xl"
                 onClick={() => showLogoutModal(true)}
               />
             )}
