@@ -42,26 +42,44 @@ const CommonLayout = (props) => {
           />
         </div>
         <div className="bg-white h-full w-full rounded-t-[60px] overflow-y-auto pb-5">
-          <div className="flex flex-row w-full px-8 py-7 items-center cursor-pointer">
-            {!props.backDisabled && (
-              <FontAwesomeIcon
-                icon={ props.iconType === 'backArrow' ? faArrowLeft : faXmark }
-                className="text-2xl lg:text-4xl"
-                onClick={() => {
-                  props.backFunction
-                    ? props.backFunction()
-                    : navigate(props.back);
-                }}
-              />
-            )}
-            <div className="text-secondary tracking-wide text-[25px] ml-4 font-bold lg:text-[45px]">{props.pageTitle}</div>
-            {!props.logoutDisabled && (
-              <FontAwesomeIcon
-                icon={faRightFromBracket}
-                className="text-2xl lg:text-4xl"
-                onClick={() => showLogoutModal(true)}
-              />
-            )}
+          <div className="flex flex-col px-8 py-7 gap-2">
+            <div className="flex flex-row w-full items-center cursor-pointer gap-4">
+              <div className="flex grow-0">
+                {
+                  !props.backDisabled && (
+                    <FontAwesomeIcon
+                      icon={ props.iconType === 'backArrow' ? faArrowLeft : faXmark }
+                      className="text-2xl lg:text-4xl"
+                      onClick={() => {
+                        props.backFunction
+                          ? props.backFunction()
+                          : navigate(props.back);
+                      }}
+                    />
+                  )
+                }
+              </div>
+              <div className="flex grow items-center flex-col gap-4">
+                <div className="text-secondary tracking-wide text-[25px] font-bold lg:text-[45px] items-center">{ props.pageTitle }</div>
+              </div>
+              <div className="flex grow-0">
+                { 
+                  !props.logoutDisabled && (
+                    <FontAwesomeIcon
+                      icon={faRightFromBracket}
+                      className="text-2xl lg:text-4xl"
+                      onClick={() => showLogoutModal(true)}
+                    />
+                  )
+                }
+              </div>
+            </div>
+            {
+              props.pageDesc && (
+                <div className="text-center text-gray-600">{ props.pageDesc }</div>
+              )
+            }
+            
           </div>
           {props.children}
         </div>
