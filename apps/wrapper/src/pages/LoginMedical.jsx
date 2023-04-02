@@ -1,11 +1,14 @@
 import React, { useState } from "react";
-import CommonLayout from "../components/CommonLayout";
+import { useNavigate } from "react-router-dom";
+import ROUTE_MAP from "../routing/routeMap";
+
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUser, faLock } from "@fortawesome/free-solid-svg-icons";
+
+import CommonLayout from "../components/CommonLayout";
 import Button from "../components/Button";
-import { useNavigate } from "react-router-dom";
+
 import { loginMedical } from "../api";
-import ROUTE_MAP from "../routing/routeMap";
 import { setCookie } from "../utils";
 
 const LoginMedical = ({ handleStepChangeForLogin }) => {
@@ -57,59 +60,65 @@ const LoginMedical = ({ handleStepChangeForLogin }) => {
   };
 
   return (
-    <CommonLayout backFunction={handleStepChangeForLogin} logoutDisabled>
-      <div className="flex flex-col px-5 py-8 items-center">
-        <p className="text-secondary text-[34px] font-bold mt-5 lg:text-[45px] animate__animated animate__fadeInDown">
-          Welcome Back
-        </p>
-        <p className="text-primary text-md lg:text-[20px] font-medium animate__animated animate__fadeInDown">
-          Please enter your details
-        </p>
-        <div className="flex flex-col w-80 py-5 mt-5 lg:w-[70%] animate__animated animate__fadeInDown">
-          <span className="text-secondary pl-0.5 pb-2">
-            <FontAwesomeIcon icon={faUser} /> &nbsp;Username
-          </span>
-          <input
-            type="text"
-            placeholder="Enter username"
-            className="border-2 border-primary p-3.5"
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
-          />
+    <CommonLayout backFunction={handleStepChangeForLogin} backDisabled logoutDisabled>
+      <div className="flex flex-col px-5 h-[calc(100vh-176px)] gap-5">
+
+        <div className="flex">
+          <img src="/assets/affiliationHome.png" className="w-[64%] m-auto lg:h-60 lg:mt-[40px]" alt="illustration" />
         </div>
-        <div className="flex flex-col w-80 pt-3 lg:w-[70%] animate__animated animate__fadeInDown">
-          <span className="text-secondary pl-0.5 pb-2">
-            <FontAwesomeIcon icon={faLock} />
-            &nbsp; Password
-          </span>
-          <input
-            type="password"
-            placeholder="Enter password"
-            className="border-2 border-primary p-3.5 mb-5"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            onKeyDown={(e) => {
-              console.log(e.key);
-              if (e.key == "Enter") handleLogin();
-            }}
-          />
+
+        <div className="flex flex-col w-80 lg:w-[70%] animate__animated animate__fadeInDown gap-6 mx-auto">
+          <div className="flex flex-col gap-2">
+            <div className="text-secondary text-[14px] font-medium">Enter Mobile number</div>
+            <input
+              type="text"
+              placeholder="Enter phone number"
+              className="border-2 border-primary p-3.5"
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
+            />
+          </div>
+
+          <div className="flex flex-col gap-2">
+            <div className="text-secondary text-[14px] font-medium">Enter Password</div>
+            <input
+              type="password"
+              placeholder="Enter password"
+              className="border-2 border-primary p-3.5"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              onKeyDown={(e) => {
+                if (e.key == "Enter") handleLogin();
+              }}
+            />
+          </div>
         </div>
-        {error && (
-          <span className="text-white animate__animated animate__headShake bg-rose-600 font-medium px-4 py-2 text-center mt-2">
-            {error}
-          </span>
-        )}
+
+        {
+          error && (
+            <span className="text-white animate__animated animate__headShake bg-rose-600 font-medium px-4 py-2 text-center mt-2">
+              { error }
+            </span>
+          )
+        }
+
         <Button
           text={"Sign In"}
-          styles="w-80 lg:w-[70%] animate__animated animate__fadeInDown"
+          styles="w-80 lg:w-[70%] animate__animated animate__fadeInDown mx-auto bg-primary mt-2"
           onClick={handleLogin}
         />
-        <p
-          className="text-secondary py-5 animate__animated animate__fadeInDown"
+
+        <Button
+          text={"Reset Password"}
+          styles="bg-white border-[#DBDBDB] border-1 text-[#535461] hover:text-[#535461] w-80 mx-auto mt-2"
           onClick={() => navigate(ROUTE_MAP.forgot_password)}
-        >
-          Forgot Password?
-        </p>
+        />
+
+        <Button
+          text={"Read terms & conditions"}
+          styles="bg-white border-white text-[#535461] hover:text-[#535461] w-80 mx-auto"
+          onClick={() => navigate(ROUTE_MAP.terms_and_condition)}
+        />
       </div>
     </CommonLayout>
   );
