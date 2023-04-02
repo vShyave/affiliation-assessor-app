@@ -13,20 +13,41 @@ import { StateContext } from "../App";
 import { getCookie } from "../utils";
 
 const MedicalAssessments = () => {
+
+  const userData = {
+    id: '12345',
+    district: 'Ballari',
+    instituteName: "RYMEC",
+    specialization: "Engineering",
+    courses: "CSE, EEE, ECE, MECH",
+    type: 'Engineering',
+    pocs: [{
+      name: 'Vinod Shyave',
+      number: '9743298498',
+    }, {
+      name: 'Praveen Shyave',
+      number: '9986727442',
+    }],
+    address: '#97, 3rd cross, Bhuvaneshari nagara, Bengaluru - 560024',
+    latitude: '13.0575675',
+    longitude: '77.601587'
+  };
+
   const { state, setState } = useContext(StateContext);
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
   const isMobile = window.innerWidth < 500;
   const [role, setRole] = useState('');
-  const [data, setData] = useState({
-    district: "",
-    instituteName: "",
-    nursing: "",
-    paramedical: "",
-    type: "",
-    latitude: null,
-    longitude: null,
-  });
+  // const [data, setData] = useState({
+  //   district: "",
+  //   instituteName: "",
+  //   nursing: "",
+  //   paramedical: "",
+  //   type: "",
+  //   latitude: null,
+  //   longitude: null,
+  // });
+  const [data, setData] = useState(userData);
 
   const startAssess = () => {
     setState({ ...state, todayAssessment: { ...data } });
@@ -59,7 +80,7 @@ const MedicalAssessments = () => {
   }
 
   useEffect(() => {
-    getTodayAssessments();
+    // getTodayAssessments();
     const {
       user: { registrations },
     } = getCookie("userData");
@@ -71,7 +92,7 @@ const MedicalAssessments = () => {
     <CommonLayout back={ROUTE_MAP.root} logoutDisabled pageTitle="Today's Inspection" iconType="backArrow">
       <div className={`flex flex-col px-6 h-full ${!data?.id ? 'justify-center' : '' }` }>
         {
-          !loading && data && (
+          data && (
             <div className="w-full bg-tertiary flex flex-col p-7 lg:w-[90%] rounded-[8px] animate__animated animate__fadeIn animate__slow overflow-scroll">
               <div className="flex flex-col pb-4">
                 <div className="flex flex-row">
