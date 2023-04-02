@@ -1,12 +1,11 @@
 import React, { useEffect, useState } from "react";
+import ROUTE_MAP from "../routing/routeMap";
+
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faLocationDot, faCalendar, faCalendarDay, faCalendarAlt
-} from "@fortawesome/free-solid-svg-icons";
+import { faLocationDot, faCalendarAlt } from "@fortawesome/free-solid-svg-icons";
 
 import CommonLayout from "../components/CommonLayout";
 import { getMedicalAssessmentsUpcoming } from "../api";
-import ROUTE_MAP from "../routing/routeMap";
 
 const UpcomingMedicalAssessments = () => {
   const [inspectionData, setInspectionData] = useState();
