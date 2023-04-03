@@ -61,7 +61,7 @@ const LoginMedical = ({ handleStepChangeForLogin }) => {
 
   return (
     <CommonLayout backFunction={handleStepChangeForLogin} backDisabled logoutDisabled>
-      <div className="flex flex-col px-5 h-[calc(100vh-176px)] gap-5">
+      <div className="flex flex-col px-5 h-[calc(100vh-176px)] gap-5 overflow-y-auto">
 
         <div className="flex">
           <img src="/assets/affiliationHome.png" className="w-[64%] m-auto lg:h-60 lg:mt-[40px]" alt="illustration" />
@@ -104,7 +104,7 @@ const LoginMedical = ({ handleStepChangeForLogin }) => {
 
         <Button
           text={"Sign In"}
-          styles="w-80 lg:w-[70%] animate__animated animate__fadeInDown mx-auto bg-primary mt-2"
+          styles="w-80 lg:w-[70%] animate__animated animate__fadeInDown mx-auto bg-primary mt-2 border-primary text-white"
           onClick={handleLogin}
         />
 
