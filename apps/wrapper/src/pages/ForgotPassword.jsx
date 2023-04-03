@@ -1,10 +1,12 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import ROUTE_MAP from "../routing/routeMap";
+
 import CommonLayout from "../components/CommonLayout";
 import Button from "../components/Button";
-import { useNavigate } from "react-router-dom";
 import OtpInput from "react-otp-input";
+
 import { sendOtpToMobile, verifyOtpSavePassword } from "../api";
-import ROUTE_MAP from "../routing/routeMap";
 
 const ForgotPassword = () => {
   const navigate = useNavigate();
@@ -81,7 +83,7 @@ const ForgotPassword = () => {
   };
 
   return (
-    <CommonLayout back={"/"} logoutDisabled>
+    <CommonLayout back={"/"} logoutDisabled pageTitle="Reset Password">
       {!otpPage && !changePassPage && !passChanged && (
         <div className="flex flex-col px-10 py-8 h-100 justify-between h-[90%]">
           <div className="w-full">
