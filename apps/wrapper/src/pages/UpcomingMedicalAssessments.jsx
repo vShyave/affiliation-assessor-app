@@ -8,14 +8,32 @@ import CommonLayout from "../components/CommonLayout";
 import { getMedicalAssessmentsUpcoming } from "../api";
 
 const UpcomingMedicalAssessments = () => {
-  const [inspectionData, setInspectionData] = useState();
+  const inspection_data = [
+    {
+      institute: {
+        district: 'Ballari',
+      },
+      date: '24 March 2023'
+    },
+    {
+      institute: {
+        district: 'Raichur',
+      },
+      date: '24 Feb 2023'
+    }
+  ];
+
+  const [inspectionData, setInspectionData] = useState(inspection_data);
 
   const getData = async () => {
     const res = await getMedicalAssessmentsUpcoming();
     console.log('res - ', res);
-    if (res?.data?.assessment_schedule?.length)
-      setInspectionData(res.data.assessment_schedule);
-    else setInspectionData([]);
+    if (res?.data?.assessment_schedule?.length) {
+      // setInspectionData(res.data.assessment_schedule);
+      setInspectionData(inspection_data);
+    } else {
+      setInspectionData([]);
+    }
   };
 
   useEffect(() => {

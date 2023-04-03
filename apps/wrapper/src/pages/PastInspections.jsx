@@ -31,7 +31,7 @@ const PastInspections = () => {
                     <hr className="border-slate-300" />
                     <div className="flex flex-col gap-1">
                         <div className="flex flex-row gap-2 items-center">
-                            <FontAwesomeIcon icon={faCalendarAlt} className="text-1xl lg:text-4xl text-gray-600" />
+                            <FontAwesomeIcon icon={faLocationDot} className="text-1xl lg:text-4xl text-gray-600" />
                             <div className="text-gray-500">District</div>
                         </div>
                         <div className="text-secondary text-[18px] font-medium">Lucknow</div>
