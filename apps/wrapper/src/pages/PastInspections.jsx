@@ -74,8 +74,8 @@ const PastInspections = () => {
                         })
                     ) : (
                         <div className="flex flex-col">
-                            <div className="w-full bg-tertiary p-7 font-medium rounded-[8px]">
-                                <div className="text-secondary text-[24px] text-center">Couldn't able to find Past Inspections Data</div>
+                            <div className="w-full bg-tertiary p-7 rounded-[8px]">
+                                <div className="text-secondary text-[24px] text-center font-medium">Couldn't able to find Past Inspections Data</div>
                             </div>
                         </div>
                     )

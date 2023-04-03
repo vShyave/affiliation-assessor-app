@@ -80,8 +80,8 @@ const UpcomingMedicalAssessments = () => {
             })
           ) : (
             <div className="flex flex-col">
-              <div className="w-full bg-tertiary p-7 font-medium rounded-[8px]">
-                <div className="text-secondary text-[24px] text-center">No Upcoming Inspections found!</div>
+              <div className="w-full bg-tertiary p-7 rounded-[8px]">
+                <div className="text-secondary text-[24px] text-center font-medium">No Upcoming Inspections found!</div>
               </div>
             </div>
           )
