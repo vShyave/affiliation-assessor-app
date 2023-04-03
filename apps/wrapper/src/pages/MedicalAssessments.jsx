@@ -13,41 +13,39 @@ import { StateContext } from "../App";
 import { getCookie } from "../utils";
 
 const MedicalAssessments = () => {
-
-  const userData = {
+  const inspection_data = {
     id: '12345',
     district: 'Ballari',
-    instituteName: "RYMEC",
-    specialization: "Engineering",
-    courses: "CSE, EEE, ECE, MECH",
+    instituteName: 'RYMEC',
+    specialization: 'Engineering',
+    courses: 'CSE, ECE, Mech, EEE',
     type: 'Engineering',
     pocs: [{
-      name: 'Vinod Shyave',
-      number: '9743298498',
+      name: 'Vinod Shyave', 
+      number: '9743298498'
     }, {
       name: 'Praveen Shyave',
-      number: '9986727442',
+      number: '9654591151'
     }],
-    address: '#97, 3rd cross, Bhuvaneshari nagara, Bengaluru - 560024',
-    latitude: '13.0575675',
-    longitude: '77.601587'
-  };
+    address: '5V5R+2H5, Cantonment Bellary, Karnataka 583104',
+    latitude: '15.144318792',
+    longitude: '76.941914408',
+  }
 
   const { state, setState } = useContext(StateContext);
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
   const isMobile = window.innerWidth < 500;
   const [role, setRole] = useState('');
-  // const [data, setData] = useState({
-  //   district: "",
-  //   instituteName: "",
-  //   nursing: "",
-  //   paramedical: "",
-  //   type: "",
-  //   latitude: null,
-  //   longitude: null,
-  // });
-  const [data, setData] = useState(userData);
+  const [data, setData] = useState({
+    district: "",
+    instituteName: "",
+    nursing: "",
+    paramedical: "",
+    type: "",
+    latitude: null,
+    longitude: null,
+  });
 
   const startAssess = () => {
     setState({ ...state, todayAssessment: { ...data } });
@@ -72,6 +70,8 @@ const MedicalAssessments = () => {
         longitude: ass.institute.longitude,
       });
     } else setData(null);
+
+    setData(inspection_data);
     setLoading(false);
   };
 
@@ -80,7 +80,7 @@ const MedicalAssessments = () => {
   }
 
   useEffect(() => {
-    // getTodayAssessments();
+    getTodayAssessments();
     const {
       user: { registrations },
     } = getCookie("userData");
@@ -89,72 +89,62 @@ const MedicalAssessments = () => {
   }, []);
 
   return (
-    <CommonLayout back={ROUTE_MAP.root} logoutDisabled pageTitle="Today's Inspection" iconType="backArrow">
-      <div className={`flex flex-col px-6 h-full ${!data?.id ? 'justify-center' : '' }` }>
+    <CommonLayout back={ROUTE_MAP.root} pageTitle="Today's Inspection" logoutDisabled>
+      <div className={`flex flex-col px-6 h-[calc(100vh-214px)] overflow-y-auto ${!data?.id ? 'justify-center' : '' }` }>
         {
-          data && (
-            <div className="w-full bg-tertiary flex flex-col p-7 lg:w-[90%] rounded-[8px] animate__animated animate__fadeIn animate__slow overflow-scroll">
-              <div className="flex flex-col pb-4">
-                <div className="flex flex-row">
-                  <div>
-                    <FontAwesomeIcon icon={faBuilding} className="text-1xl lg:text-4xl text-gray-600" />
-                  </div>
-                  <div className="text-gray-500 ml-2">Applicant name</div>
+          !loading && data && (
+            <div className="flex flex-col bg-tertiary p-7 rounded-[8px] gap-3 animate__animated animate__fadeIn animate__slow">
+              <div className="flex flex-col gap-1">
+                <div className="flex flex-row gap-2 items-center">
+                  <FontAwesomeIcon icon={faBuilding} className="text-1xl lg:text-4xl text-gray-600" />
+                  <div className="text-gray-500">Applicant name</div>
                 </div>
-                <div className="mt-[4px] text-secondary text-[18px] font-medium">{ data?.instituteName }</div>
+                <div className="text-secondary text-[18px] font-medium">{ data?.instituteName }</div>
               </div>
-              <hr className="border-slate-400" />
-              <div className="flex flex-col py-4">
-                <div className="flex flex-row">
-                  <div>
-                    <FontAwesomeIcon icon={faLocationDot} className="text-1xl lg:text-4xl text-gray-600" />
-                  </div>
-                  <div className="text-gray-500 ml-2">District</div>
+              <hr className="border-slate-300" />
+              <div className="flex flex-col gap-1">
+                <div className="flex flex-row gap-2 items-center">
+                  <FontAwesomeIcon icon={faLocationDot} className="text-1xl lg:text-4xl text-gray-600" />
+                  <div className="text-gray-500">District</div>
                 </div>
-                <div className="mt-[4px] text-secondary text-[18px] font-medium">{ data?.district }</div>
+                <div className="text-secondary text-[18px] font-medium">{ data?.district }</div>
               </div>
-              <hr className="border-slate-400" />
-              <div className="flex flex-col py-4">
-                <div className="flex flex-row">
-                  <div>
-                    <FontAwesomeIcon icon={faUser} className="text-1xl lg:text-4xl text-gray-600" />
-                  </div>
-                  <div className="text-gray-500 ml-2">POC Names</div>
+              <hr className="border-slate-300" />
+              <div className="flex flex-col gap-1">
+                <div className="flex flex-row gap-2 items-center">
+                  <FontAwesomeIcon icon={faUser} className="text-1xl lg:text-4xl text-gray-600" />
+                  <div className="text-gray-500">POC Names</div>
                 </div>
                 { 
-                  data?.pocs?.map(el =>
-                    <div className="mt-[4px] text-secondary text-[18px] font-medium">{ el.name }</div>
+                  data?.pocs?.map((el, idx) =>
+                    <div className="mt-[4px] text-secondary text-[18px] font-medium" key={idx}>{ el.name }</div>
                   )
                 }
               </div>
-              <hr className="border-slate-400" />
-              <div className="flex flex-col py-4">
-                <div className="flex flex-row">
-                  <div>
-                    <FontAwesomeIcon icon={faPhone} className="text-1xl lg:text-4xl text-gray-600" />
-                  </div>
-                  <div className="text-gray-500 ml-2">POC Numbers</div>
+              <hr className="border-slate-300" />
+              <div className="flex flex-col gap-1">
+                <div className="flex flex-row gap-2 items-center">
+                  <FontAwesomeIcon icon={faPhone} className="text-1xl lg:text-4xl text-gray-600" />
+                  <div className="text-gray-500">POC Numbers</div>
                 </div>
-                <div className="flex flex-row mt-[4px] wrap">
+                <div className="flex flex-row wrap">
                   { 
-                    data?.pocs?.map(el =>
-                      <div className="flex flex-col p-2 m-[4px] bg-[#DBDBDB;] grow items-center rounded-[8px]">
+                    data?.pocs?.map((el, idx) =>
+                      <div className="flex flex-col p-2 m-[4px] bg-[#DBDBDB;] grow items-center rounded-[8px] gap-2" key={idx}>
                         <div className="rounded-[50%] w-[36px] h-[36px] bg-[#009A2B;] flex items-center justify-center">
                           <FontAwesomeIcon icon={faPhone} className="text-1xl lg:text-4xl text-gray-600 text-white w-[16px]" />
                         </div>
-                        <div className="mt-[4px] text-secondary text-[18px] font-medium">{ el.number }</div>
+                        <div className="text-secondary text-[18px] font-medium">{ el.number }</div>
                       </div>
                     )
                   }
                 </div>
               </div>
-              <hr className="border-slate-400" />
-              <div className="flex flex-col py-4">
-                <div className="flex flex-row">
-                  <div>
-                    <FontAwesomeIcon icon={faLocationDot} className="text-1xl lg:text-4xl text-gray-600" />
-                  </div>
-                  <div className="text-gray-500 ml-2">Address</div>
+              <hr className="border-slate-300" />
+              <div className="flex flex-col gap-1">
+                <div className="flex flex-row gap-2 items-center">
+                  <FontAwesomeIcon icon={faLocationDot} className="text-1xl lg:text-4xl text-gray-600" />
+                  <div className="text-gray-500">Address</div>
                 </div>
                 <div className="flex flex-row gap-7">
                   <div className="flex grow mt-[4px]">
@@ -172,15 +162,15 @@ const MedicalAssessments = () => {
                   }
                 </div>
               </div>
-              <Button text="Start Assessing" onClick={startAssess} />
+              <Button text="Start Assessing" styles="border-primary text-white" onClick={startAssess} />
             </div>
           )
         }
         {
           !loading && !data && (
             <div className="flex flex-col">
-              <div className="w-full bg-tertiary flex flex-col p-7 lg:w-[90%] font-medium overflow-scroll rounded-[8px]">
-                <div className="text-secondary text-[24px] text-center">No Assessments Today</div>
+              <div className="w-full bg-tertiary p-7 rounded-[8px]">
+                <div className="text-secondary text-[24px] text-center font-medium">No Assessments Today!</div>
               </div>
             </div>
           )

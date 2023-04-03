@@ -18,7 +18,7 @@ const ThankYou = () => {
             <div className="flex flex-col px-6">
                 <div className="flex flex-col justify-center h-[60vh]">
                     <div className="flex flex-col gap-3 justify-center items-center">
-                        <FontAwesomeIcon icon={faCircleCheck} className="text-4xl text-gray-600 text-[#009A2B;]" />
+                        <FontAwesomeIcon icon={faCircleCheck} className="text-4xl text-[#009A2B;]" />
                         <div className="text-[#009A2B;] text-2xl lg:text-4xl font-bold">Thank you!</div>
                     </div>
                     <div className="my-4">
@@ -32,7 +32,7 @@ const ThankYou = () => {
                 </div>
 
                 <div className="flex flex-col gap-6 h-[15vh]">
-                    <Button text="Inspect Next Form"></Button>
+                    <Button text="Inspect Next Form" styles="border-primary text-white"></Button>
                     <Button text="Exit" styles="bg-white border-[#DBDBDB] border-1 text-[#535461] hover:text-[#535461]"></Button>
                 </div>
 
