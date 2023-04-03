@@ -27,7 +27,7 @@ const CommonLayout = (props) => {
 
   return (
     <>
-      <div className="bg-tertiary h-screen w-screen flex flex-col lg:w-[52vw] md:w-[80vw] md:m-auto lg:m-auto">
+      <div className="flex flex-col bg-tertiary h-screen w-screen lg:w-[52vw] md:w-[80vw] md:m-auto lg:m-auto overflow-none">
         <div className="w-full flex flex-row justify-between relative">
           <div style={{ height: 20, width: 20, borderRadius: '50%', position: 'absolute', top: 0, right: 0, background: online ? '#229225' : 'red', marginTop: 20, marginRight: 20 }}></div>
           <img
@@ -41,11 +41,11 @@ const CommonLayout = (props) => {
             alt="illustration"
           />
         </div>
-        <div className="bg-white h-[calc(100%-120px)] w-full rounded-t-[60px] overflow-y-auto">
+        <div className="bg-white h-[calc(100vh-120px)] w-full rounded-t-[60px] overflow-none">
           <div className="flex flex-row w-full px-8 py-7 items-center cursor-pointer">
             {!props.backDisabled && (
               <FontAwesomeIcon
-                icon={ props.iconType === 'backArrow' ? faArrowLeft : faXmark }
+                icon={ props.iconType === 'close' ? faXmark : faArrowLeft }
                 className="text-2xl lg:text-4xl"
                 onClick={() => {
                   props.backFunction
