@@ -28,7 +28,7 @@ const CommonLayout = (props) => {
   return (
     <>
       <div className="flex flex-col bg-tertiary h-screen w-screen lg:w-[52vw] md:w-[80vw] md:m-auto lg:m-auto overflow-none">
-        <div className="w-full flex flex-row justify-between relative">
+        <div className="flex flex-row w-full justify-between relative">
           <div style={{ height: 20, width: 20, borderRadius: '50%', position: 'absolute', top: 0, right: 0, background: online ? '#229225' : 'red', marginTop: 20, marginRight: 20 }}></div>
           <img
             src="/assets/redGolLogo.png"
