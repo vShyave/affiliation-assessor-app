@@ -1,9 +1,11 @@
 import {
   Body,
+  CACHE_MANAGER,
   Controller,
   Get,
   HttpException,
   HttpStatus,
+  Inject,
   Param,
   Post,
   Query,
@@ -13,6 +15,8 @@ import {
 import { FileInterceptor } from '@nestjs/platform-express/multer';
 import { AppService } from './app.service';
 import { v4 as uuidv4 } from 'uuid';
+
+import { Cache } from 'cache-manager';
 
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const Minio = require('minio');
@@ -38,9 +42,12 @@ type PrefillDto = {
 @Controller()
 export class AppController {
   constructor(
+    @Inject(CACHE_MANAGER) private cacheManager: Cache,
     private readonly appService: AppService,
     private configService: ConfigService,
   ) { }
+
+  GITPOD_URL = this.configService.get('GITPOD_WORKSPACE_URL');
 
   getLoginToken = () => {
     try {
@@ -61,6 +68,8 @@ export class AppController {
         headers: header,
         json: postData,
       };
+
+      console.log(options);
 
       return new Promise((resolve, reject) => {
         request(options, function (error, response, body) {
@@ -127,10 +136,10 @@ export class AppController {
     }
   };
 
-  @Get()
-  getHello(): string {
-    return this.appService.getHello();
-  }
+  // @Get()
+  // getHello(): string {
+  //   return this.appService.getHello();
+  // }
 
   @Post('prefill')
   getPrefill(@Body() prefillDto: PrefillDto): string {
@@ -151,7 +160,6 @@ export class AppController {
       console.log('onFormSuccessData', onFormSuccessData);
       console.log('prefillSpec', prefillSpec);
       if (onFormSuccessData !== 'undefined') {
-        console;
         return this.appService.prefillForm(
           form,
           JSON.parse(onFormSuccessData),
@@ -165,32 +173,106 @@ export class AppController {
     }
   }
 
+  @Post('prefillXML')
+  async prefillXML(
+    @Query('form') form,
+    @Query('onFormSuccessData') onFormSuccessData,
+    @Body('prefillXML') prefillXML,
+    @Body('imageUrls') files,
+  ): Promise<string> {
+    try {
+      if (onFormSuccessData) {
+        const prefilledForm = this.appService.prefillFormXML(
+          form,
+          onFormSuccessData,
+          prefillXML,
+          files,
+        );
+        const instanceId = uuidv4();
+        await this.cacheManager.set(instanceId, prefilledForm, 86400 * 10);
+        return `${this.GITPOD_URL.slice(0, this.GITPOD_URL.indexOf('/') + 2) + "3006-" + this.GITPOD_URL.slice(this.GITPOD_URL.indexOf('/') + 2)}/form/instance/${instanceId}`;
+      } else {
+        return 'OK';
+      }
+    } catch (e) {
+      console.error(e);
+      return 'OK2';
+    }
+  }
+
+  @Post('submissionXML')
+  async submissionXML(
+    @Query('form') form,
+    @Body('prefillXML') prefillXML,
+    @Body('imageUrls') files,
+  ): Promise<string> {
+    try {
+      const submissionFormXML = this.appService.submissionFormXML(
+        form,
+        prefillXML,
+        files,
+      );
+      return submissionFormXML;
+    } catch (e) {
+      console.error(e);
+      return 'OK2';
+    }
+  }
+
   @Get('form/:id')
   getForm(@Param('id') id): string {
     return this.appService.getForm(id);
   }
 
-  @Get('form/parse/:xml')
-  parseXML(@Param('xml') xml): any {
-    return parser.toJson(xml);
+  @Get('form/instance/:instanceId')
+  async getFormWithInstanceID(
+    @Param('instanceId') instanceId,
+  ): Promise<string> {
+    const xml = await this.cacheManager.get(instanceId);
+    return xml;
+  }
+
+  @Post('parse')
+  parseXML(@Body() xml: any): any {
+    // console.log({ xml })
+    // console.log(parser.toJson(xml));
+    return parser.toJson(xml.xml);
+  }
+
+  @Get('osceForm/:type/:year/:speciality?')
+  getOsceForm(
+    @Param('type') type,
+    @Param('year') year,
+    @Param('speciality') speciality,
+  ): any {
+    return this.appService.getOsceForms(type, year, speciality);
+  }
+
+  @Get('osceFormTeachers/:type/:year/:speciality?')
+  getOsceFormTeachers(
+    @Param('type') type,
+    @Param('year') year,
+    @Param('speciality') speciality,
+  ): any {
+    return this.appService.getOsceForms(type, year, speciality, 2);
   }
 
   @Post('form/uploadFile')
   @UseInterceptors(FileInterceptor('file'))
   async uploadFile(@UploadedFile() file: Express.Multer.File) {
+    console.log(file);
     const extension = file.originalname.split('.').pop();
     const fileName = uuidv4() + `.${extension}`;
-    const tokenRes = await this.getLoginToken();
-    const sessionRes: any = await this.getSessionToken(tokenRes);
+    // const tokenRes = await this.getLoginToken();
+    // const sessionRes: any = await this.getSessionToken(tokenRes);
 
-    console.log('sessionRes', sessionRes);
+    // console.log('sessionRes', sessionRes);
 
     const minioClient: Client = new Minio.Client({
-      endPoint: 'cdn.samagra.io',
+      endPoint: "9000-"+this.GITPOD_URL.slice(8),
       useSSL: true,
-      accessKey: sessionRes?.accessKey,
-      secretKey: sessionRes?.secretKey,
-      sessionToken: sessionRes?.sessionToken,
+      accessKey: this.configService.get('MINIO_USERNAME'),
+      secretKey: this.configService.get('MINIO_PASSWORD')
     });
 
     const metaData: ItemBucketMetadata = {
@@ -198,13 +280,14 @@ export class AppController {
     };
 
     minioClient.putObject(
-      this.configService.get('MINIO_BUCKET_ID'),
+      this.configService.get('MINIO_BUCKETNAME'),
       fileName,
       file.buffer,
       file.size,
       metaData,
       function (err, res) {
         if (err) {
+          console.log(err)
           throw new HttpException(
             'Error uploading file',
             HttpStatus.BAD_REQUEST,
@@ -213,9 +296,9 @@ export class AppController {
       },
     );
 
-    const fileURL = `https://cdn.samagra.io/${this.configService.get(
-      'MINIO_BUCKET_ID',
-    )}/${fileName}`;
+    const fileURL = `${this.GITPOD_URL.slice(0, this.GITPOD_URL.indexOf('/') + 2) + "9000-" + this.GITPOD_URL.slice(this.GITPOD_URL.indexOf('/') + 2)}/${this.configService.get('MINIO_BUCKETNAME')}/${fileName}`;
+
+    console.log('Uploaded File:', fileURL);
 
     return { fileURL };
   }

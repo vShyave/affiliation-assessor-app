@@ -1,0 +1,58 @@
+<?xml version="1.0"?><h:html xmlns="http://www.w3.org/2002/xforms" xmlns:ev="http://www.w3.org/2001/xml-events" xmlns:h="http://www.w3.org/1999/xhtml" xmlns:jr="http://openrosa.org/javarosa" xmlns:odk="http://www.opendatakit.org/xforms" xmlns:orx="http://openrosa.org/xforms" xmlns:xsd="http://www.w3.org/2001/XMLSchema"><h:head><h:title>OSCE_Breast Feeding</h:title><model odk:xforms-version="1.0.0"><instance><data id="osce1_form" version="1.1"><intro><reserved_name_for_field_list_labels_3/><step1/><step2/><step3/><step4/></intro><meta><instanceID/></meta></data></instance><bind nodeset="/data/intro/reserved_name_for_field_list_labels_3" type="string"/><bind nodeset="/data/intro/step1" required="true()" type="string"/><bind nodeset="/data/intro/step2" required="true()" type="string"/><bind nodeset="/data/intro/step3" required="true()" type="string"/><bind nodeset="/data/intro/step4" required="true()" type="string"/><bind jr:preload="uid" nodeset="/data/meta/instanceID" readonly="true()" type="string"/></model></h:head><h:body class="pages"><group appearance="field-list" ref="/data/intro"><select1 appearance="label" ref="/data/intro/reserved_name_for_field_list_labels_3"><label> </label><item><label>Done</label><value>done</value></item><item><label>Not Done</label><value>not</value></item></select1><select1 appearance="list-nolabel" ref="/data/intro/step1"><label>Explain to the mother that:
+Breast milk contains exactly the nutrients a baby needs
+-is easily digested and efficiently used by the baby's body
+-protects a baby against infection
+Babies should start breastfeeding within 1 hour of birth. They should not have any other food or drink before they start to breastfeed
+Babies should be exclusively breastfed for the first 6 months of life.
+
+Breastfeeding
+-helps baby's development and mother/baby attachment
+-can help delay a new pregnancy</label><item><label>Done</label><value>done</value></item><item><label>Not Done</label><value>not</value></item></select1><select1 appearance="list-nolabel" ref="/data/intro/step2"><label>Help the mother to initiate breastfeeding
+within 1 hour, when baby is ready
+After birth, let the baby rest comfortably on the mother's chest in skin-to-skin contact.
+Tell the mother to help the baby to her breast when the baby seems to be ready, usually within the first hour. Signs of readiness to breastfeed are:
+-baby looking around/moving
+-mouth open
+-searching.
+Check that position and attachment are correct at the first feed. Offer to help the mother at any time
+Let the baby release the breast by her/himself; then offer the second breast
+If the baby does not feed in 1 hour, examine the baby. If healthy, leave the baby with the mother to try later. Assess in 3 hours, or earlier if the baby is small
+If the mother is ill and unable to breastfeed, help her to express breast milk and feed the baby by
+cup. On day 1 express in a spoon and feed by spoon.
+If mother cannot breastfeed at all, use one of the following options:
+-donated heat-treated breast milk.
+-If not available, then commercial infant formula.
+-If not available, then home-made formula from modified animal milk.</label><item><label>Done</label><value>done</value></item><item><label>Not Done</label><value>not</value></item></select1><select1 appearance="list-nolabel" ref="/data/intro/step3"><label>Support exclusive breastfeeding
+Keep the mother and baby together in bed or within easy reach. DO NOT separate them
+Encourage breastfeeding on demand, day and night, as long as the baby wants.
+A baby needs to feed day and night, 8 or more times in 24 hours from birth. Only on the first day may a full-term baby sleep many hours after a good feed.
+ A small baby should be encouraged to feed, day and night, at least 8 times in 24 hours from birth.
+ Help the mother whenever she wants, and especially if she is a first time or adolescent mother
+Let baby release the breast, then offer the second breast
+ If the mother must be absent, let her express breast milk and let somebody else feed the expressed breast milk to the baby by cup.
+DO NOT force the baby to take the breast.
+DO NOT interrupt feed before baby wants.
+DO NOT give any other feeds or water.
+DO NOT use artificial teats or pacifiers.
+Advise the mother on medication and breastfeeding
+-Most drugs given to the mother in this guide are safe and the baby can be breastfed.
+-If mother is taking cotrimoxazole or fansidar, monitor baby for jaundice</label><item><label>Done</label><value>done</value></item><item><label>Not Done</label><value>not</value></item></select1><select1 appearance="list-nolabel" ref="/data/intro/step4"><label>Teach correct positioning and attachmentfor breastfeeding
+Show the mother how to hold her baby. She should:
+-make sure the baby's head and body are in a straight line
+-make sure the baby is facing the breast, the baby's nose is opposite her nipple
+-hold the baby's body close to her body
+-support the baby's whole body, not just the neck and shoulders
+Show the mother how to help her baby to attach. She should:
+-touch her baby's lips with her nipple
+-wait until her baby's mouth is opened wide
+-move her baby quickly onto her breast, aiming the infant's lower lip well below the nipple.
+Look for signs of good attachment:
+-more of areola visible above the baby's mouth
+-mouth wide open
+-lower lip turned outwards
+-baby's chin touching breast
+Look for signs of effective suckling (that is, slow, deep sucks, sometimes pausing
+
+If the attachment or suckling is not good, try again. Then reassess.
+If breast engorgement, express a small amount of breast milk before starting breastfeeding to soften
+nipple area so that it is easier for the baby to attach.</label><item><label>Done</label><value>done</value></item><item><label>Not Done</label><value>not</value></item></select1></group></h:body></h:html>

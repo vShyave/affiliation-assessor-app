@@ -1,0 +1,38 @@
+<?xml version="1.0"?><h:html xmlns="http://www.w3.org/2002/xforms" xmlns:ev="http://www.w3.org/2001/xml-events" xmlns:h="http://www.w3.org/1999/xhtml" xmlns:jr="http://openrosa.org/javarosa" xmlns:odk="http://www.opendatakit.org/xforms" xmlns:orx="http://openrosa.org/xforms" xmlns:xsd="http://www.w3.org/2001/XMLSchema"><h:head><h:title>OSCE_Episiotomy and Repair</h:title><model odk:xforms-version="1.0.0"><instance><data id="osce1_form" version="1.1"><intro><reserved_name_for_field_list_labels_3/><step1/><step2/><step3/><step4/><step5/></intro><meta><instanceID/></meta></data></instance><bind nodeset="/data/intro/reserved_name_for_field_list_labels_3" type="string"/><bind nodeset="/data/intro/step1" required="true()" type="string"/><bind nodeset="/data/intro/step2" required="true()" type="string"/><bind nodeset="/data/intro/step3" required="true()" type="string"/><bind nodeset="/data/intro/step4" required="true()" type="string"/><bind nodeset="/data/intro/step5" required="true()" type="string"/><bind jr:preload="uid" nodeset="/data/meta/instanceID" readonly="true()" type="string"/></model></h:head><h:body class="pages"><group appearance="field-list" ref="/data/intro"><select1 appearance="label" ref="/data/intro/reserved_name_for_field_list_labels_3"><label> </label><item><label>Done</label><value>done</value></item><item><label>Not Done</label><value>not</value></item></select1><select1 appearance="list-nolabel" ref="/data/intro/step1"><label>GETTING READY
+-Prepare the necessary equipment.
+-Tell the woman what is going to be done and encourage her to ask questions.
+-Listen to what the woman has to say.
+-Make sure that the woman has no allergies to lignocaine or related drugs.
+-Provide emotional support and reassurance, as feasible.</label><item><label>Done</label><value>done</value></item><item><label>Not Done</label><value>not</value></item></select1><select1 appearance="list-nolabel" ref="/data/intro/step2"><label>ADMINISTERING LOCAL ANESTHETIC
+-Cleanse perineum with antiseptic solution.
+-Draw 10 mL of 0.5% lignocaine into a syringe.
+-Place two fingers into vagina along proposed incision line.
+-Insert needle beneath skin for 4–5 cm following same line (preferably 1½", 22 gauge).
+-Draw back the plunger of syringe to make sure that needle is not in a blood vessel.
+-Inject lignocaine into vaginal mucosa, beneath skin of perineum and deeply into perineal muscle.
+-Wait 2 minutes and then pinch incision site with forceps.
+-If the woman feels the pinch, wait 2 more minutes and then retest.</label><item><label>Done</label><value>done</value></item><item><label>Not Done</label><value>not</value></item></select1><select1 appearance="list-nolabel" ref="/data/intro/step3"><label>MAKING THE EPISIOTOMY
+-. Wait to perform episiotomy until: Perineum is thinned out 3–4 cm of the baby's head is visible during a contraction
+-Place two fingers between the baby's head and the perineum.
+-Insert open blade of scissors between perineum and two fingers and cut mediolaterally the perineum and posterior vagina
+-If birth of head does not follow immediately, apply pressure to episiotomy site between contractions, using a piece of gauze, to minimize bleeding.
+-Control birth of head and shoulders to avoid extension of the episiotomy</label><item><label>Done</label><value>done</value></item><item><label>Not Done</label><value>not</value></item></select1><select1 appearance="list-nolabel" ref="/data/intro/step4"><label>REPAIRING THE EPISIOTOMY
+-Ask the woman to position her buttocks toward lower end of bed or table (use stirrups if available).
+-Ask an assistant to direct a strong light onto the woman's perineum.
+-Apply antiseptic solution to area around episiotomy
+-Using 2/0 or 3/0suture, insert suture needle just above (1 cm) the apex of the episiotomy
+-Use a continuous suture from apex downward to level of vaginal opening.
+-At opening of vagina, bring together cut edges.
+-Bring needle under vaginal opening and out through incision and tie.
+-Use interrupted sutures to repair perineal muscle, working from top of perineal incision downward
+-Use interrupted or subcuticular sutures to bring skin edges together.
+-Wash perineal area with antiseptic, pat dry, and place a sterile sanitary pad over the vulva and perineum.</label><item><label>Done</label><value>done</value></item><item><label>Not Done</label><value>not</value></item></select1><select1 appearance="list-nolabel" ref="/data/intro/step5"><label>POST-PROCEDURE TASKS
+Dispose of waste materials (e.g. blood-contaminated swabs) in a leak-proof container or plastic bag.
+Decontaminate instruments by placing in a plastic container filled with 0.5% chlorine solution for 10 minutes
+Decontaminate or dispose of syringe and needle: 
+ -If reusing needle or syringe, fill syringe (with needle attached) with 0.5% chlorine solution and submerge in solution for 10 minutes for decontamination. 
+ -If disposing of needle and syringe, flush needle and syringe with 0.5% chlorine solution three times, then place in a puncture-proof container.
+Immerse both gloved hands in 0.5% chlorine solution and remove gloves by turning them inside out. 
+ -If disposing of gloves, place in leak-proof container or plastic bag. 
+ -If reusing surgical gloves, submerge in 0.5% chlorine solution for 10 minutes to decontaminate
+Wash hands thoroughly with soap and water and dry with clean, dry cloth or air dry.</label><item><label>Done</label><value>done</value></item><item><label>Not Done</label><value>not</value></item></select1></group></h:body></h:html>

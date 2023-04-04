@@ -1,6 +1,14 @@
 import { xml2json } from './xml2json';
 
 import settings from './settings';
+import imageCompression from 'browser-image-compression';
+const options = {
+    maxSizeMB: 0.5,
+    maxWidthOrHeight: 840,
+    useWebWorker: true,
+}
+
+
 
 // import { config } from '../../../../app/models/config-model';
 
@@ -65,6 +73,7 @@ export class FormController {
         this._message = '';
         this.formSpec = formSpec;
         this._parser = new DOMParser();
+        this.formFiles = null;
 
         this.formSpec.isSuccessExecute = () => this.executeMethod(this.formSpec.successCheck);
         this.formSpec.onFormSuccessExecute = () => this.executeMethod(this.formSpec.onSuccess.sideEffect);
@@ -96,25 +105,30 @@ export class FormController {
                 }
             }
         }
-
         return null;
     }
 
     async uploadFile(data) {
-        const fd = new FormData();
-        var newFile = new File([data], data.name, { type: data.type });
-        console.log(newFile);
-        fd.append('file', newFile, data.name);
-        const response = await fetch(settings.formManagerBaseURI + '/form/uploadFile', {
-            method: 'POST',
-            body: fd
-        }).then(s => {
-            return s.json();
-        }).catch(e => {
-            console.log(e);
-        });
+        console.log("Ab dekh data:", data)
+        if (data) {
+            const fd = new FormData();
+            var newFile = new File([data], data.name, { type: data.type });
+            // Compressing this file
+            newFile = await imageCompression(newFile, options)
+            fd.append('file', newFile, data.name);
+            const response = await fetch(`${settings.formManagerBaseURI}/form/uploadFile`, {
+                method: 'POST',
+                body: fd
+            }).then(s => {
+                return s.json();
+            }).catch(e => {
+                console.log(e);
+                return null;
+            });
 
-        return response.fileURL;
+            return response ? response.fileURL : null;
+        }
+        return null;
     }
 
     set(obj, path, value) {
@@ -137,13 +151,37 @@ export class FormController {
 
     async processForm(formData, formFiles) {
         const doc = this._parser.parseFromString(formData, 'text/xml');
-        this.formData = (await fetch(settings.formManagerBaseURI + '/form/parse/' + encodeURIComponent(formData)).then(res => res.json())).data;
-        for (let i = 0; i < formFiles.length; i++) {
-            const file = formFiles[i];
-            const fileURL = await this.uploadFile(file);
-            const kk = this.findKey(this.formData, file.name, '$t', '');
-            this.formData = this.set(this.formData, kk.substring(1), fileURL);
-        }
+        const parseRes = await fetch(`${settings.formManagerBaseURI}/parse`, {
+            method: "POST",
+            body: JSON.stringify({ xml: formData.toString() }),
+            headers: {
+                "Content-type": "application/json; charset=UTF-8"
+            }
+        }).then(res => res.json()).catch(e => {
+            this._state = 'FORM_FAILURE_OFFLINE';
+            this.formFiles = formFiles;
+            window.parent.postMessage(JSON.stringify({
+                state: this._state,
+                formDataXml: formData,
+                formFilesXml: formFiles
+            }), '*');
+        });
+
+        if (parseRes == undefined)
+            return Promise.resolve({
+                status: "offline",
+                message: "You are oflline. Your form data has been saved. Please re-submit using the submit button once back online"
+            });
+        this.formData = parseRes.data;
+
+        // for (let i = 0; i < formFiles.length; i++) {
+        //     const file = formFiles[i];
+        //     const fileURL = await this.uploadFile(file);
+        //     // console.log({ fileURL });
+        //     console.log(this.findKey)
+        //     const kk = this.findKey(this.formData, file.name, '$t', '');
+        //     this.formData = this.set(this.formData, kk.substring(1), fileURL);
+        // }
         if (await this.formSpec.isSuccessExecute() === true) {
             this._state = 'FORM_SUCCESS';
             this._onFormSuccessData = await this.formSpec.onFormSuccessExecute();
@@ -178,6 +216,29 @@ export class FormController {
             state: this._state
         }), '*');
     }
+
+    async broadcastFormDataUpdate(xml, fileURLs) {
+        console.log("Broadcasting file update")
+        // broadcast form data to parent window
+        window.parent.postMessage(JSON.stringify({
+            formData: xml,
+            formXML: xml,
+            state: this._state,
+            fileURLs: fileURLs
+        }), '*');
+    }
+
+    async broadcastFileRemoveUpdate(xml, fileURLs) {
+        console.log("Broadcasting file update")
+        // broadcast form data to parent window
+        window.parent.postMessage(JSON.stringify({
+            formData: xml,
+            formXML: xml,
+            state: this._state,
+            fileURLs: fileURLs
+        }), '*');
+    }
+
 
     async submit() {
         // submit form data to server

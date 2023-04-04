@@ -1,6 +1,8 @@
 <p align="center">
-  <h1>Enketo - ODK Backend</h1>
+  <h1>Workflow Module</h1>
 </p>
+
+[![Open in Gitpod](https://gitpod.io/button/open-in-gitpod.svg)](https://gitpod.io/#https://github.com/Samagra-Development/workflow/tree/gitpod)
 
 ## About :open_book:
 
@@ -33,76 +35,56 @@ node -v
 npm -v
 ```
 
-## Installation Steps :walking:
+# How to get up and running?
 
-### 1. Fork it :fork_and_knife:
+- Fork this repo 🍴
+- Click on the Gitpod button above ☝️
+- It opens a complete development setup directly 😄
+- No need to clone and struggle with installing packages, managing node versions, banging head on the keyboard, etc (Cool right?)
 
-You can get your own fork/copy of [enketo](https://github.com/Samagra-Development/enketo) by using the <kbd><b>Fork</b></kbd> button.
+### This is how it looks 👀
+![Gitpod Image](https://user-images.githubusercontent.com/46066481/227315278-7e4f4ee7-ffa5-4ffb-b614-54126d72f467.png)
 
-### 2. Clone it :busts_in_silhouette:
+# How to interact?
+- If you go to ports on terminal and open the `React Wrapper app` running on port 3000 you can see a demo UI like this 👇
 
-You need to clone (download) it to a local machine using
+![Workfow Demo UI](https://user-images.githubusercontent.com/46066481/227316968-487e52db-0236-4282-b57a-73d71788d4ea.gif)
+- Currently offering 4 demo flows namely
+- Jumping Forms (Opening of next form once once is submitted)
+- Hasura Submissions (Basically saving the form data to any database, hasura extending postgres in this case)
+- Offline capabilites (How the form behaves when working offline)
+- File Upload (How to handle uploading files to any desired CDN, Minio in this case)
 
-```sh
-git clone https://github.com/Your_Username/enketo.git
-```
+# Flows Explained 📝
+## Jumping Forms
+- This flow basically covers how you can configure your forms using form spec file (covered in a little while) to handle how the submission works. Like opening another form or redirecting to some page within the app or opening this link [here](https://www.youtube.com/watch?v=dQw4w9WgXcQ)
 
-> This makes a local copy of the repository in your machine.
+![Jumping Form Workflow](https://user-images.githubusercontent.com/46066481/227321550-55aee2c8-8c2e-4443-a922-9c23134e6e23.gif)
 
-Once you have cloned the `enketo` repository in GitHub, move to that folder first using the change directory command.
+## Hasura Submissions
+- Covering how to handle form data submission to your database be it a sql or NoSql based db. In our setup we have used Hasura which creates an instant GraphQL data provider to use with Postgres based db
 
-```sh
-# This will change directory to a folder enketo
-cd enketo
-```
 
-Move to this folder for all other commands.
+![Hasura Submissions](https://user-images.githubusercontent.com/46066481/227329443-0c832935-ac4c-42ea-80e6-ee00282aa6e6.gif)
 
-### 3. Set it up :arrow_up:
+## Offline Capabilites
+- Just touching on to the offline capabilites offered right now. Here we have configured the form such that rather than failing form submissions entirely, it throws a warning/info message to the user indicating that the user is offline and is advised to resubmit the form once they're back online.
 
-Run the following commands to see that _your local copy_ has a reference to _your forked remote repository_ in GitHub :octocat:
+![Offline Capabilites](https://user-images.githubusercontent.com/46066481/227333111-fba64444-de4b-4075-8c71-8cb1f783a1b7.gif)
 
-```sh
-git remote -v
-origin  https://github.com/Your_Username/enketo.git (fetch)
-origin  https://github.com/Your_Username/enketo.git (push)
-```
 
-### 4. Run it :checkered_flag:
+## File Upload
+- One of the most important thing in any kind of form input is how to handle file uploads. Workflow module allows you to configure your cdn easily and point file uploads directly to the CDN effortleslly 💃 In our configuration we have used Minio to store all the uploaded files.
 
-```sh
-cd enketo-express
-docker run --name enketo-redis-main -p 6379:6379 -d redis
-docker run --name enketo-redis-cache -p 6380:6379 -d redis
-npm install
-npm i -g grunt
-grunt develop
-```
+![File Upload](https://user-images.githubusercontent.com/46066481/227331536-c28224a7-4b60-41ce-93a3-59fe20033201.gif)
 
-```sh
-cd ../enketo-core
-npm install
-npm start
-```
 
-```sh
-cd ../enketo-transformer
-npm install
-npm start
-```
+# How to integrate custom backend?
 
-```sh
-cd ../forms
-python3 -m http.server
-```
+In order to achiever this, the submission url in the form spec (covered later below) with your hosted backend.
+![Submission Url](https://user-images.githubusercontent.com/46066481/227327334-30bd083e-cee3-488c-81b5-e8d68a72c91f.png)
 
-You can preview your form on http://localhost:8005/preview?xform=http://localhost:8080/getForm/SOE
-
-### 5. For integrating your backend
-
-Customize the [submission url](https://github.com/Samagra-Development/enketo/blob/main/enketo-express/public/js/src/module/connection.js#L150) with your hosted backend.
-
-## Future Enhancements :rocket:
+# Future Enhancements :rocket:
 
 - [Encrypting query parameters on rendering the enketo form. ](https://github.com/Samagra-Development/enketo/issues/1)
 - Writing a API for changing an XML form directly from it.
@@ -110,52 +92,31 @@ Customize the [submission url](https://github.com/Samagra-Development/enketo/blo
 
 We are trying to an inversion of control here.
 
+# API Docs 🤓
+
 ### For Get API
 
 `curl --location --request GET 'http://localhost:3002/form/form2'`
 
-### Form Prefill API
+### Form PrefillXML API
 
 ```sh
-curl --location --request POST 'http://localhost:3002/prefill' \
---header 'Content-Type: application/json' \
---data-raw '{
-    "prefillSpec": {
-        "pf_name": "`${onFormSuccessData.name}`",
-        "pf_iti": "`${onFormSuccessData.itiByIti.name}`",
-        "pf_trade": "`${onFormSuccessData.tradeName}`",
-        "pf_batch": "`${onFormSuccessData.batch}`",
-        "pf_industry": "`${onFormSuccessData.industryByIndustry.name}`",
-        "ojt_month": "`${onFormSuccessData.industryByIndustry.schedules[0].is_industry === true ? 1 : 0}`"
-    },
-    "onFormSuccessData": {
-        "name": "DEVA",
-        "batch": "2021-2023",
-        "id": 8,
-        "DOB": "2005-03-04",
-        "affiliationType": "NCVT",
-        "registrationNumber": "ICA211021569832",
-        "tradeName": "Electrician",
-        "iti": 7,
-        "industry": 1,
-        "itiByIti": {
-            "id": 7,
-            "name": "GITI Nagina"
-        },
-        "industryByIndustry": {
-            "id": 1,
-            "name": "Kaushal Bhawan",
-            "latitude": 30.695753,
-            "longitude": 76.872025,
-            "schedules": [
-                {
-                    "is_industry": true
-                }
-            ]
-        }
-    },
-    "form": "form2"
-}'
+curl 'https://3006-samagradevelop-workflow-mxpsr1yqse0.ws-us92.gitpod.io/prefillXML?form=jumping_form_1&onFormSuccessData=formFunction' \
+  -H 'authority: 3006-samagradevelop-workflow-mxpsr1yqse0.ws-us92.gitpod.io' \
+  -H 'accept: */*' \
+  -H 'accept-language: en-GB,en-US;q=0.9,en;q=0.8' \
+  -H 'content-type: text/plain;charset=UTF-8' \
+  -H 'origin: https://3000-samagradevelop-workflow-mxpsr1yqse0.ws-us92.gitpod.io' \
+  -H 'referer: https://3000-samagradevelop-workflow-mxpsr1yqse0.ws-us92.gitpod.io/' \
+  -H 'sec-ch-ua: "Google Chrome";v="111", "Not(A:Brand";v="8", "Chromium";v="111"' \
+  -H 'sec-ch-ua-mobile: ?0' \
+  -H 'sec-ch-ua-platform: "macOS"' \
+  -H 'sec-fetch-dest: empty' \
+  -H 'sec-fetch-mode: cors' \
+  -H 'sec-fetch-site: same-site' \
+  -H 'user-agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/111.0.0.0 Safari/537.36' \
+  --data-raw '{}' \
+  --compressed
 ```
 
 ## Architecture

@@ -1,0 +1,42 @@
+<?xml version="1.0"?><h:html xmlns="http://www.w3.org/2002/xforms" xmlns:ev="http://www.w3.org/2001/xml-events" xmlns:h="http://www.w3.org/1999/xhtml" xmlns:jr="http://openrosa.org/javarosa" xmlns:odk="http://www.opendatakit.org/xforms" xmlns:orx="http://openrosa.org/xforms" xmlns:xsd="http://www.w3.org/2001/XMLSchema"><h:head><h:title>OSCE_Blood test for HB</h:title><model odk:xforms-version="1.0.0"><instance><data id="osce1_form" version="1.1"><intro><reserved_name_for_field_list_labels_3/><step1/><step2/><step3/><step4/></intro><meta><instanceID/></meta></data></instance><bind nodeset="/data/intro/reserved_name_for_field_list_labels_3" type="string"/><bind nodeset="/data/intro/step1" required="true()" type="string"/><bind nodeset="/data/intro/step2" required="true()" type="string"/><bind nodeset="/data/intro/step3" required="true()" type="string"/><bind nodeset="/data/intro/step4" required="true()" type="string"/><bind jr:preload="uid" nodeset="/data/meta/instanceID" readonly="true()" type="string"/></model></h:head><h:body class="pages"><group appearance="field-list" ref="/data/intro"><select1 appearance="label" ref="/data/intro/reserved_name_for_field_list_labels_3"><label> </label><item><label>Done</label><value>done</value></item><item><label>Not Done</label><value>not</value></item></select1><select1 appearance="list-nolabel" ref="/data/intro/step1"><label>GETTING READY
+-Prepare the necessary equipment.
+-A pair of gloves
+-Spirit swabs
+-Lancet
+-N/10 HCL
+-Distilled water
+-Dropper
+-Haemoglobinometer with a comparator on both sides
+-Pippette and stirrer
+-Hemoglobin tube (Sahli-Adams Tube) It is graduated on one side in g% from 2 to 24g% and on the other side in percentage from 20% to 40%
+-Explain the purpose of the hemoglobin test to the woman and encourage her to ask questions.
+-Tell the woman how the test will be done.
+-Wash hands thoroughly with soap and water and dry with clean dry cloth or allow to air dry.
+-Put new examination or high-level disinfected gloves on both hands.
+-Fill the Hb tube with N/10 HClupto 20% or 2g% with the dropper</label><item><label>Done</label><value>done</value></item><item><label>Not Done</label><value>not</value></item></select1><select1 appearance="list-nolabel" ref="/data/intro/step2"><label>HEMOGLOBIN TEST (Using Hemoglobinometer)
+-Clean the tip of the woman's index finger with an alcohol swab.
+-Prick finger using lancet and discard first drop of blood.
+-Allow a large drop of blood to form on the fingertip. Dip the tip of the Hb pipette into the blood drop and suck blood up to the 20 cmm mark on the pipette. Do not squeeze finger tip to collect blood. While sucking the blood, care should be taken to prevent entry of air.
+-Wipe the tip of the pipette with cotton. Immediately transfer the 20 cmm (0.02ml) of blood from the pipette into the Hb tube containing N/10 HCL
+-Rinse the pipette two to three times by drawing up and blowing out the acid solution
+-Leave the solution in the tube for about 10 minutes (for conversion of Hb into hematin)
+-After 10 minutes, dilute the acid by adding distilled water drop by drop. Mix it with stirrer.
+-Note down the reading (lower meniscus) when the colour of the solution exactly matches that of the comparator on both sides of the hemoglobinometer. This expresses the Hb content as g%.</label><item><label>Done</label><value>done</value></item><item><label>Not Done</label><value>not</value></item></select1><select1 appearance="list-nolabel" ref="/data/intro/step3"><label>HEMOGLOBIN TEST (Using WHO Hemoglobin Color Scale)
+-Clean the tip of the woman's index finger with an alcohol swab.
+-Prick finger using lancet.
+-Squeeze blood into capillary tube or collect in pipette
+-Place one drop of blood at one end of test paper to form stain of 8-9 mm in diameter:
+-Wait 30 seconds
+-Compare stain with color scale in good light with open color scale booklet in left hand, avoiding shadow and direct sunlight.
+Slide bloodstain up and down behind color-scale apparatus:
+-If bloodstain closely matches one of the shades on the scale, record its hemoglobin value
+If color of stain lies between two of the shades, record the lower value</label><item><label>Done</label><value>done</value></item><item><label>Not Done</label><value>not</value></item></select1><select1 appearance="list-nolabel" ref="/data/intro/step4"><label>POST-TEST TASKS
+Dispose of pipette or capillary tube and lancet in puncture proof container
+Immerse both gloved hands in 0.5% chlorine solution:
+ -Remove gloves by turning them inside out
+ -If disposing of gloves, place in leak proof container or plastic bag
+If reusing surgical gloves, submerge in 0.5% chlorine solution for 10 minutes to decontaminate
+Discuss the results of the test with the woman:
+ -If hemoglobin is less than 7 g/dL, refer the woman for treatment
+If hemoglobin is 7-11 g/dL prescribe iron/folate one tablet daily and provide nutrition counseling
+Record test results on the woman's record</label><item><label>Done</label><value>done</value></item><item><label>Not Done</label><value>not</value></item></select1></group></h:body></h:html>

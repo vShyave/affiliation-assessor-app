@@ -1,0 +1,3 @@
+#!/bin/bash
+
+echo "REACT_APP_GITPOD_WORKSPACE_URL=${GITPOD_WORKSPACE_URL}" > .env

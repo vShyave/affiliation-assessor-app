@@ -1,0 +1,37 @@
+<?xml version="1.0"?><h:html xmlns="http://www.w3.org/2002/xforms" xmlns:ev="http://www.w3.org/2001/xml-events" xmlns:h="http://www.w3.org/1999/xhtml" xmlns:jr="http://openrosa.org/javarosa" xmlns:odk="http://www.opendatakit.org/xforms" xmlns:orx="http://openrosa.org/xforms" xmlns:xsd="http://www.w3.org/2001/XMLSchema"><h:head><h:title>OSCE_Newborn Resuscitation</h:title><model odk:xforms-version="1.0.0"><instance><data id="osce1_form" version="1.1"><intro><reserved_name_for_field_list_labels_3/><step1/><step2/><step3/></intro><meta><instanceID/></meta></data></instance><bind nodeset="/data/intro/reserved_name_for_field_list_labels_3" type="string"/><bind nodeset="/data/intro/step1" required="true()" type="string"/><bind nodeset="/data/intro/step2" required="true()" type="string"/><bind nodeset="/data/intro/step3" required="true()" type="string"/><bind jr:preload="uid" nodeset="/data/meta/instanceID" readonly="true()" type="string"/></model></h:head><h:body class="pages"><group appearance="field-list" ref="/data/intro"><select1 appearance="label" ref="/data/intro/reserved_name_for_field_list_labels_3"><label> </label><item><label>Done</label><value>done</value></item><item><label>Not Done</label><value>not</value></item></select1><select1 appearance="list-nolabel" ref="/data/intro/step1"><label>GETTING READY
+Dry the baby, remove the wet cloth, and wrap the baby in a dry, warm cloth.
+Place the baby on its back on a clean, warm surface and keep covered except for the face and chest.</label><item><label>Done</label><value>done</value></item><item><label>Not Done</label><value>not</value></item></select1><select1 appearance="list-nolabel" ref="/data/intro/step2"><label>RESUSCITATION USING BAG AND MASK
+Position the head in a slightly extended position to open the airway
+Clear the airway by suctioning the mouth first and then the nose:
+-Introduce catheter into the baby's mouth and suction while withdrawing catheter;
+-Introduce catheter into each nostril and suction while withdrawing catheter;
+-Be especially thorough with suctioning if there is blood or meconium in the baby's mouth and/or nose;
+If the baby is still not breathing after the airway has been suctioned, start ventilating
+Quickly recheck the position of the baby's head to make sure that the neck is slightly extended
+Place the mask on the baby's face so that it covers the chin, mouth and nose to form a seal (size 1 mask for normal weight newborn and size 0 for a small newborn)
+Squeeze the bag with two fingers only or with the whole hand, depending on the size of the bag
+Check the seal by ventilating two or three times and observing the rise of the chest.
+If the baby's chest is rising:
+Ventilate at a rate of 40 breaths per minute.
+If the baby's chest is not rising:
+-Repeat suction of mouth and nose to remove mucus, blood or meconium from the airway;
+-Check the position of the head again to make sure the neck is slightly extended;
+-Reposition the mask on the baby's face to improve the seal between mask and face;
+Squeeze the bag with the whole hand to increase ventilation pressure.
+Ventilate for 1 minute, using oxygen, if available, and then stop and quickly assess the baby for spontaneous breathing and color:
+-If breathing is normal (30–60 breaths per minute), stop ventilating and place the baby in skin-to-skin contact with the mother;
+-If there is central cyanosis (blue tongue and lips), chest indrawing, grunting on expiration, or respiratory rate is less than 30 breaths per minute, treat the baby for breathing difficulty;
+If the baby is gasping, not breathing, or the respiratory rate is less than 20 breaths per minute, continue ventilating.
+If the baby starts crying, stop ventilating and observe the baby's respiratory rate for five minutes after crying stops:
+If breathing is normal (30–60 breaths per minute), stop ventilating;
+If there is central cyanosis (blue tongue and lips), chest indrawing, grunting on expiration, or respiratory rate is 20 to 30 breaths per minute, treat the baby for breathing difficulty;
+If the baby is gasping, not breathing, or the respiratory rate is less than 20 breaths per minute, continue ventilating
+If the baby is not breathing regularly after 20 minutes of ventilation:
+-Continue ventilation with oxygen;
+Organize transfer and refer baby to a tertiary care centre, if possible
+If there is no gasping or breathing at all after 20 minutes of ventilation, stop ventilating: 
+Provide emotional support to mother and family</label><item><label>Done</label><value>done</value></item><item><label>Not Done</label><value>not</value></item></select1><select1 appearance="list-nolabel" ref="/data/intro/step3"><label>POST-RESUSCITATION TASKS
+Soak suction catheters in 0.5% chlorine solution for 10 minutes for decontamination.
+Wipe exposed surfaces of the bag and mask with a gauze pad soaked in 60-90% alcohol or 0.5% chlorine solution and rinse immediately. 
+Wash hands thoroughly with soap and water and dry with a clean, dry cloth (or air dry).
+Record the information on the record</label><item><label>Done</label><value>done</value></item><item><label>Not Done</label><value>not</value></item></select1></group></h:body></h:html>

@@ -1,0 +1,188 @@
+<?xml version="1.0"?><h:html xmlns="http://www.w3.org/2002/xforms" xmlns:ev="http://www.w3.org/2001/xml-events" xmlns:h="http://www.w3.org/1999/xhtml" xmlns:jr="http://openrosa.org/javarosa" xmlns:odk="http://www.opendatakit.org/xforms" xmlns:orx="http://openrosa.org/xforms" xmlns:xsd="http://www.w3.org/2001/XMLSchema"><h:head><h:title>OSCE GNM_3rd Year_"Antenatal Assessment -History taking during antenatal period, Physical Examination, Abdominal Palpation"</h:title><model odk:xforms-version="1.0.0"><instance><data id="osce1_form" version="1.1"><intro><reserved_name_for_field_list_labels_3/><step1/><step2/><step3/><step4/><step5/></intro><meta><instanceID/></meta></data></instance><bind nodeset="/data/intro/reserved_name_for_field_list_labels_3" type="string"/><bind nodeset="/data/intro/step1" required="true()" type="string"/><bind nodeset="/data/intro/step2" required="true()" type="string"/><bind nodeset="/data/intro/step3" required="true()" type="string"/><bind nodeset="/data/intro/step4" required="true()" type="string"/><bind nodeset="/data/intro/step5" required="true()" type="string"/><bind jr:preload="uid" nodeset="/data/meta/instanceID" readonly="true()" type="string"/></model></h:head><h:body class="pages"><group appearance="field-list" ref="/data/intro"><select1 appearance="label" ref="/data/intro/reserved_name_for_field_list_labels_3"><label> </label><item><label>Done</label><value>done</value></item><item><label>Not Done</label><value>not</value></item></select1><select1 appearance="list-nolabel" ref="/data/intro/step1"><label>GETTING READY
+-Prepare the necessary equipment.
+-Greet the woman respectfully and with kindness.
+-Tell the woman (and her support person) what is going to be done,listen to her attentively and respond to her questions and concerns
+-Provide continual emotional support and reassurance, as possible.</label><item><label>Done</label><value>done</value></item><item><label>Not Done</label><value>not</value></item></select1><select1 appearance="list-nolabel" ref="/data/intro/step2"><label>Are you frightened of anyone?
+
+HISTORY (ASK/CHECK RECORD) 
+a- Personal Information (First Visit)
+-What is your name, your age, and your address and phone number? 
+If the woman is less than 20 years of age, determine the circumstances surrounding the pregnancy (e.g. unprotected sex, multiple partners, incest, sexual abuse, rape, sexual exploitation, prostitution, forced marriage, forced sex)
+-Do you have access to reliable transportation?
+-What sources of income/financial support do you/your family has?
+-How many times have you been pregnant and how many children have you had?
+-Are you having a particular problem at present? If yes, find out what the problem is and ask the following additional questions:
+*When did the problem first start?
+*Did it occur suddenly or develop gradually?
+*When and how often does the problem occur?
+*What may have caused the problem? 
+*Did anything unusual occur before it started?
+*How does the problem affect you?
+*Are you eating, sleeping, and doing other things normally?
+*Has the problem become more severe?
+*Are there other signs and conditions related to the problem? If yes, ask what they are.
+Have you received treatment for the problem? If yes, ask who provided the treatment, what it involved, and whether it helped
+-Have you received treatment for the problem? If yes, ask who provided the treatment, what it involved, and whether it helped *Why did you seek care from *another caregiver?
+*What did the care involve?
+*What was the outcome of this care?
+ b-Menstrual and Contraceptive History (Fist Visit)
+-Do you know the first day of your last menstrual period? If the woman does not know her LMP, (LMP can be recalled by asking about public celebrations e.g. Diwali, Durga Puja, Christmas, Ramjan or winter, spring etc).
+ If yes, calculate EDD.
+-How many more children do you plan to have?
+-Have you used a family planning method before? If yes, ask the following additional questions:
+*Which method(s) have you used?
+*Did you like the method(s) and why?
+*Which method did you like the most and why (if more than one method used)?
+Would you like information about other methods?
+-Do you plan on using a family planning method after this baby is born? If yes, ask which method and whether she would like information on additional methods.
+
+c-Present Pregnancy (First Visit) -Have you felt the baby move? If yes, ask the woman when the baby first moved and whether she has felt it move in the last day. -How do you feel about this pregnancy? -How does your partner/family feel about this pregnancy?
+d-Daily Habits and Lifestyle (First Visit)
+-Do you work outside the home?
+-Do you walk long distances, carry heavy loads or do heavy physical labor?
+-Do you get enough sleep/rest?
+-Have you had a baby within the last year? If yes, ask if the woman is currently breastfeeding
+-What do you normally eat in a day?
+-Do you eat any non-food substances such as dirt or clay?
+-Do you smoke, drink alcohol or use any other possibly harmful substances?
+-Who do you live with?
+-Has anyone ever prevented you from seeing family or friends, stopped you from leaving your house, or threatened your life?
+-Have you ever been injured, hit, or forced to have sex by someone? -Are you frightened of anyone?
+
+
+e-Obstetric History (First Visit) -Did you have any problems during a previous pregnancy or during/following childbirth?
+*convulsions (pre-eclampsia/eclampsia) during pregnancy or childbirth
+*caesarean section or uterine rupture during childbirth
+*tears through rectum (or third- or fourth-degree tears) during childbirth
+*postpartum hemorrhage
+*stillbirths, preterm, low birthweight, babies who died before 1 month of age
+three or more spontaneous abortions
+-Have you had any problems breastfeeding (if this is not the woman's first child)?
+
+ f-Medical History (First Visit) 
+-Do you have any allergies?
+-Have you been tested for HIV? If yes, ask whether the result was positive.
+-Have you had anemia recently (within last 3 months)?
+-Have you been tested for syphilis? If yes, ask whether the result was positive and if and when and with what she was treated.
+-Do you have any chronic illnesses or conditions such as tuberculosis, hepatitis, heart disease, diabetes, or any other serious disease?
+-Have you ever been in hospital or had surgery?
+-Are you taking any drugs/medications (including traditions/local preparations, herbal remedies, over-the-counter drugs, vitamins, or dietary supplements)?
+-Have you had a tetanus toxoid (TT) immunization? If yes, find out when did she have the last dose? g-Interim History (Return Visits) -Do you have a problem at present? If yes, ask follow-up questions under "Personal Information" item 5, above.
+-Have you had any problems since your last visit?
+-Has your address or phone number changed since your last visit?
+-Have your daily habits or lifestyle (workload, rest, dietary intake) changed since your last visit.
+-Have you received care from another caregiver since your last visit? If yes, ask who provided the care, what care was provided and what the outcome of care was.
+-Have you taken drugs/medications prescribed and followed the advice/recommendations (plan of care) provided at your last visit? -Have you had any reactions to or side effects from immunizations or drugs/medications given at your last visit?</label><item><label>Done</label><value>done</value></item><item><label>Not Done</label><value>not</value></item></select1><select1 appearance="list-nolabel" ref="/data/intro/step3"><label>PHYSICAL EXAMINATION (LOOK/LISTEN/FEEL)
+a-Assessment of General Well-Being (Every Visit)
+-Observe gait and movements (i.e. walks steadily and without a limp).
+-Observe facial expression (i.e. is alert and responsive).
+-Observe general cleanliness (i.e. no visible dirt, no odor. etc.).
+-Observe skin (i.e. free from lesions and bruises)
+-Check conjunctiva (mucus membrane on inside of eyelid) for pallor.
+b-Blood Pressure (Every Visit)
+-Measure blood pressure while the woman is seated and relaxed:
+If diastolic BP is &gt;90 mm Hg., ask the woman if she has severe headache, blurred vision or epigastric pain, and check her urine for protein.
+c-Breast Examination (First Visit/As Needed)
+-Explain the steps in examination of breasts, abdomen and vagina, and ask her to empty her bladder before beginning the examination.
+-While she is seated, ask the woman to uncover her upper body and place her arms at her sides.
+Visually inspect the overall appearance of the woman's breasts (i.e. contours, skin, nipples, abnormalities):
+If nipples appear inverted test for protractility by placing the thumb and fingers on either side of areola and gently squeezing
+If the nipple goes in it is inverted
+d-Abdominal Examination (Every Visit)
+-Help her onto the examination table.
+-Ask the woman to uncover her stomach and lie on her back with her knees slightly bent.
+-Check abdomen for scars:
+If there is a scar, ask if it is from a caesarean section or other uterine surgery
+e-Fundal Height -Measure fundal height:
+If 12-22 weeks, gently palpate the abdomen above the symphysis pubis and estimate weeks of gestation by determining distance between top of fundus and symphysis pubis
+If more than 24 weeks, place zero line of tape measure on the upper edge of symphysis pubis and stretch it up over the abdomen, at the midline, to the top of the fundus
+f-Fetal Lie and Presentation Carry out fundal palpation:
+-Make sure hands are clean and warm;
+-Stand at the woman's side, facing her head;
+-Place both hands on the sides of the fundus;
+-Apply gentle but firm pressure to assess consistency and mobility of the fetal part: 
+the buttocks feel softer and more irregular than head and cannot be moved independently of body;
+The head feels harder than buttocks and can be moved back and forth with both hands.
+Carry out lateral palpation:
+-Move hands smoothly down sides of uterus to feel for fetal back:
+It will feel firm and smooth in contrast to the small parts, which will feel knobby and easily moveable;
+-Keep dominant hand steady against the side of uterus, while using palm of other hand to apply gentle but deep pressure to explore opposite side of uterus;
+Repeat procedure on other side of uterus.
+Carry out pelvic palpation:
+-Turn and face the woman's feet (the woman's knees should already be bent slightly to relax abdominal muscles):
+-Place hands on either side of uterus with palms below the level of the umbilicus and fingers pointing to symphysis pubis
+-Grasp fetal part snugly between hands
+-If fetal part is above symphysis pubis, feel shape, size, consistency and mobility
+-If head is presenting, a hard mass with a distinctive round surface will be felt
+Observe the woman's face for signs of pain/tenderness during palpation
+g-Fetal Heart Listen to the fetal heart rate:
+-Place fetal stethoscope on abdomen at right angles to it (on the same side that you palpated the fetal back)
+-Place your ear in close, firm contact with fetal stethoscope
+-Move fetal stethoscope around to where fetal heart is heard most clearly
+-Remove hands from fetal stethoscope and listen to fetal heart
+-Listen for a full minute, counting beats again second hand of clock/watch(Fetal heart rate 120-160 beats/min normally)
+Feel the woman's pulse at wrist, simultaneously, to ensure that fetal heart tones, and not maternal pulse, are being measured
+h-Vaginal Examination (First Visit/As Needed) -Ask the woman to uncover her genital area and cover or drape her to preserve privacy and modesty.
+-Ask the woman to separate her legs while continuing to keep knees slightly bent.
+-Turn on light and direct toward genital area
+-Wash hands thoroughly with soap and water and dry with clean, dry cloth or allow to air dry.
+-Put new examination or high-level disinfected gloves on both hands
+-Touch the inside of the woman's thigh before touching genital area.
+-Separate labia majora with two fingers, check labia minora, clitoris, urethral opening and vaginal opening, noting signs of female genital cutting, sores, ulcers, warts, nits, lice, blood or foul-smelling discharge, urine, or stool coming from vaginal opening.
+-Palpate the labia minora:
+*Look for swelling, discharge, tenderness, ulcers and fistulas;
+Feel for irregularities and nodules.
+-Look at perineum, noting scars, lesions, inflammation, or cracks in skin. -Check Skene's glands for discharge and tenderness:
+With palm facing upward, insert index finger into vagina and gently push upward against urethra and milk gland on each side and then directly on urethra.
+-Check Bartholin's glands for discharge and tenderness:
+Insert index finger into vagina at lower edge of opening and feel at base of each labia majora;
+Using finger and thumb, palpate each side for swelling or tenderness
+-Hold the labia open and ask the woman to bear down:
+Check for bulging of anterior or posterior vaginal walls.
+-Immerse both gloved hands in 0.5% chlorine solution:
+Remove gloves by turning them inside out;
+If disposing of gloves, place in leak proof container or plastic bag;
+If reusing gloves, submerge in 0.5% chlorine solution for 10 minutes to decontaminate.
+-Wash hands thoroughly with soap and water and dry with clean, dry cloth or allow to air dry.
+-Help the woman off the examination table.</label><item><label>Done</label><value>done</value></item><item><label>Not Done</label><value>not</value></item></select1><select1 appearance="list-nolabel" ref="/data/intro/step4"><label>TESTING -Do a hemoglobin test (1st visit, at about 28 weeks, and as needed based on signs and symptoms) – (see Learning Guide 5.2: Hemoglobin Test):
+*If hemoglobin is less than 7 g/dL, refer the woman to hospital
+If hemoglobin is 7-11 g/dL, give iron/folate 1 tablet daily
+-Refer the woman to ICTC (Integrated Counselling &amp; Testing Centre)services for HIV test, if she volunteers:
+Provide information about ICTC
+-Test urine for glucose if woman lives in an area with high prevalence of diabetes/gestational diabetes:
+If urine positive for glucose, refer for treatment</label><item><label>Done</label><value>done</value></item><item><label>Not Done</label><value>not</value></item></select1><select1 appearance="list-nolabel" ref="/data/intro/step5"><label>CARE PROVISION NOTE: Individualize the woman's care by considering all information gathered during assessment.
+-Provide advice and counseling about diet and nutrition:
+*Eat a balanced diet and a variety of foods rich in iron and vitamin A, calcium, magnesium, vitamin C
+*Eat an extra serving of staple food per day
+*Eat smaller more frequent meals, if necessary
+Take 1 iron/folate tablet daily
+-Develop a birth plan with the woman, including all preparations for normal birth and plans in case of an emergency:
+*Skilled provider and place of birth
+*Transportation/emergency transportation and funds/emergency funds
+*Decision making and support person
+*Items for clean and safe birth and for newborn
+Danger signs and signs of labor
+-Provide advice and counseling about:
+*Use of potentially harmful substances
+*Prevention of infection/hygiene
+*Rest and activity
+*Sexual relations and safer sex
+Early and exclusive breast feeding
+ Immunizations and Other Prophylaxis -Give tetanus toxoid (TT) based on the woman's need.
+-Dispense sufficient supply of iron/folate until next visit and counsel the woman about the following:
+*Eat food rich in vitamin C
+*Avoid tea, coffee and colas
+Possible side effects and management
+-Dispense medications as follows:
+*Antimalarial tablets (based on region/population-specific need)
+*Mebendazole (based on region/population-specific need)
+*Vitamin A (based on region/population-specific need)
+Iodine (based on region/population-specific need)
+
+ Return Visits -Schedule the next antenatal visit:
+*Make sure the woman knows when and where to come
+*Answer any additional questions or concerns
+*Advise her to bring her records with her to each visit
+*Make sure she understand that she can return any time before the next scheduled visit if she has a problem
+*Review danger signs and key points of the complication readiness plan
+-Thank the woman and her family for coming.</label><item><label>Done</label><value>done</value></item><item><label>Not Done</label><value>not</value></item></select1></group></h:body></h:html>
