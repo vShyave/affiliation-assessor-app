@@ -8,7 +8,7 @@ import { faLocationDot, faBuilding, faUser, faPhone, faLocationArrow } from "@fo
 import Button from "../components/Button";
 import CommonLayout from "../components/CommonLayout";
 
-import { getMedicalAssessments } from "../api";
+import { getMedicalAssessments, getTodaysAssessment } from "../api";
 import { StateContext } from "../App";
 import { getCookie } from "../utils";
 
@@ -56,7 +56,8 @@ const MedicalAssessments = () => {
 
   const getTodayAssessments = async () => {
     setLoading(true);
-    const res = await getMedicalAssessments();
+    const res = await getTodaysAssessment();
+    console.log('res - ', res);
     if (res?.data?.assessment_schedule?.[0]) {
       let ass = res?.data?.assessment_schedule?.[0];
       setData({

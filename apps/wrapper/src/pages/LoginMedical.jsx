@@ -2,9 +2,6 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import ROUTE_MAP from "../routing/routeMap";
 
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faUser, faLock } from "@fortawesome/free-solid-svg-icons";
-
 import CommonLayout from "../components/CommonLayout";
 import Button from "../components/Button";
 
@@ -33,6 +30,7 @@ const LoginMedical = ({ handleStepChangeForLogin }) => {
       }, 3000);
       return;
     }
+    
     const loginRes = await loginMedical(username, password);
 
     if (loginRes?.params?.errMsg && loginRes.responseCode == "FAILURE") {
@@ -42,6 +40,7 @@ const LoginMedical = ({ handleStepChangeForLogin }) => {
       }, 3000);
       return;
     }
+
     if (loginRes.responseCode == "OK" && loginRes.result) {
       let loggedInUser = loginRes.result.data.user;
       setCookie("userData", loggedInUser);
