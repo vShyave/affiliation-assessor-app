@@ -36,6 +36,8 @@ import PrivateRoute from "./routing/PrivateRoute/PrivateRoute";
 import { getCookie } from "./utils";
 import AssessmentType from "./pages/AssessmentType";
 import HospitalOptions from "./pages/HospitalOptions";
+import ThankYou from "./pages/ThankYou";
+import PastInspections from "./pages/PastInspections";
 
 export const StateContext = createContext();
 
@@ -73,6 +75,14 @@ function App() {
               element={
                 <PrivateRoute>
                   <UpcomingMedicalAssessments />
+                </PrivateRoute>
+              }
+            />
+            <Route
+              path={ROUTE_MAP.past_inspections}
+              element={
+                <PrivateRoute>
+                  <PastInspections />
                 </PrivateRoute>
               }
             />
@@ -277,6 +287,14 @@ function App() {
               element={
                 <PrivateRoute>
                   <GenericParamedicalForm />
+                </PrivateRoute>
+              }
+            />
+            <Route
+              path={ROUTE_MAP.thank_you}
+              element={
+                <PrivateRoute>
+                  <ThankYou />
                 </PrivateRoute>
               }
             />
