@@ -2,27 +2,42 @@ import React, { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import ROUTE_MAP from "../routing/routeMap";
 import { Tabs, TabsHeader, TabsBody, Tab, TabPanel } from "@material-tailwind/react";
+import {Accordion,AccordionHeader,AccordionBody} from "@material-tailwind/react";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronRight } from "@fortawesome/free-solid-svg-icons";
 
 import CommonLayout from "../components/CommonLayout";
 import Button from "../components/Button";
-import Accordion from "../components/Accordion";
+// import Accordion from "../components/Accordion";
 
 const AssessmentType = () => {
+  
   const navigate = useNavigate();
   const tabData = [
     { 
-        label: "HTML",
-        value: "html",
-        desc: `It really matters and then like it really doesn't matter. What matters is the people who are sparked by it. And the people who are like offended by it, it doesn't matter.`
+        label: "Nursing",
+        value: "nursing",
+        desc: ``
     }, { 
-        label: "React",
-        value: "react",
-        desc: `Because it's about motivating the doers. Because I'm here to follow my dreams and inspire other people to follow their dreams, too.`
+        label: "Paramedical",
+        value: "paramedical",
+        desc: ``
     }
-];
+  ];
+  const [activeTabValue, setActiveTabValue] = useState(tabData[0].value);
+  const [activeButtonValue, setActiveButtonValue] = useState('degree');
+
+  const [open, setOpen] = useState(1);
+  const handleOpen = (value) => {
+    setOpen(open === value ? 0 : value);
+  };
+
+  const coursesList=[
+    {openId:1, courseName:"A", formName:["abc","xyz"]},
+    {openId:2, courseName:"B", formName:["def"]},
+    {openId:3, courseName:"C", formName:["123","234","345","456"]}
+  ];
 
   return (
     <CommonLayout back={ROUTE_MAP.medical_assessments}
@@ -47,30 +62,72 @@ const AssessmentType = () => {
           <hr className="border-slate-300" />
         </div>
 
-        <Tabs value="html">
-          <TabsHeader className="bg-transparent text-primary" indicatorProps={{ className: "bg-orange-500/10 shadow-none text-black ", }}> 
+        <Tabs value="nursing">
+          <TabsHeader className="bg-transparent" indicatorProps={{ className: "bg-orange-500/10 shadow-none" }}> 
             {
-              tabData.map(({ label, value }) => ( <Tab key={value} value={value}> {label} </Tab> ))
+              tabData.map(
+                ({ label, value }) => ( 
+                  <Tab key={value} value={value} className={`p-3 font-bold border-b- border-b-2 ${(value === activeTabValue) ? 'text-primary border-b-primary' : 'text-gray-500 border-[#DBDBDB]'}`} onClick={() => setActiveTabValue(value)}> {label} </Tab> 
+                )
+              )
             }
           </TabsHeader>
           <TabsBody> 
             {
-              tabData.map(({ value, desc }) => (
-                <TabPanel key={value} value={value}> {
-        <div className="flex flex-row wrap">
-          <Button styles="lg:w-[40%] bg-white text-black m-2 hover:bg-black hover:text-white border-black animate__animated animate__fadeInDown rounded-[28px] p-4 w-[120px] font-light" text="Degree"></Button>
-          <Button styles="lg:w-[40%] bg-white text-black m-2 hover:bg-black hover:text-white border-black animate__animated animate__fadeInDown rounded-[28px] p-4 w-[120px] font-light" text="Diploma"></Button>
-        </div>
-      } </TabPanel> ))
+              tabData.map(
+                (
+                  {value, desc }) => (
+                    <TabPanel key={value} value={value}> 
+                      {
+                        <>
+                          <div className="flex flex-row gap-4 justify-center">
+                            <Button styles={`border-black p-4 w-[120px] rounded-[28px] animate__animated animate__fadeInDown hover:bg-black hover:text-white ${ (activeButtonValue === 'degree') ? 'text-white bg-black' : 'text-black bg-white' }`} text="Degree" onClick={() => setActiveButtonValue('degree')}></Button>
+                            <Button styles={`border-black p-4 w-[120px] rounded-[28px] animate__animated animate__fadeInDown hover:bg-black hover:text-white ${ (activeButtonValue === 'diploma') ? 'text-white bg-black' : 'text-black bg-white' }`} text="Diploma" onClick={() => setActiveButtonValue('diploma')}></Button>
+                          </div>
+
+                          <div>
+                            {
+                              coursesList.map(
+                                (course) => {
+                                  return(
+                                    <Accordion open={open === course.openId} >
+                                      <AccordionHeader onClick={() => handleOpen(course.openId)}>
+                                        {course.courseName}
+                                      </AccordionHeader>
+                                      {
+                                        course.formName.map(
+                                          (form) => {
+                                            return(
+                                              <AccordionBody>
+                                                <div className="flex flex-row gap-2 border-1 border-black">
+                                                  <div className="flex stretch">
+                                                    <label className="h-10 w-10">{form}</label>
+                                                  </div>
+                                                  <div className="flex grow-0">
+                                                    <img className="h-10 w-10" src="https://cdn.iconscout.com/icon/free/png-256/right-arrow-1438234-1216195.png" />
+                                                  </div>
+                                                </div>
+                                              </AccordionBody>
+                                            );
+                                          }
+                                        )
+                                      }
+                                    </Accordion>
+                                  );
+                                }
+                              )
+                            }
+                          </div>
+                        </>
+                      } 
+                    </TabPanel>
+                )
+              )
             } 
           </TabsBody>
         </Tabs>
 
-       
-      
-        <div id="accordionExample">
-          <Accordion headText="BSC" number="1"></Accordion>
-        </div>
+        
       </div>
     </CommonLayout>
   );
