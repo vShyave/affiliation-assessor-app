@@ -1,5 +1,5 @@
 import axios from 'axios';
-const BASE_URL = process.env.REACT_APP_USER_SERVICE_URL;
+const BASE_URL = process.env.REACT_APP_HASURA_SERVICE_URL;
 
 const customPost = axios.create({
   baseURL: BASE_URL,

@@ -64,9 +64,8 @@ export const verifyOtpSavePassword = async (mobile, pass, otp) => {
   }
 };
 
-export const getTodaysAssessment = async () => {
-  const res = await customPost('rest/getTodaysInspections');
-  console.log('res - ', res);
+export const getTodaysAssessment = async (postData) => {
+  const res = await customPost.post('rest/getTodaysInspections', postData);
   return res;
 }
 

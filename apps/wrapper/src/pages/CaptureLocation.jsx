@@ -28,8 +28,8 @@ const CaptureLocation = () => {
       navigator.geolocation.getCurrentPosition((p) => {
         setLat(p.coords.latitude);
         setLong(p.coords.longitude);
-        setShowMap(true);
-        setLoading(false);
+        // setShowMap(true);
+        // setLoading(false);
       });
     } else {
       setError(`Please allow location access.`);
@@ -150,6 +150,10 @@ const CaptureLocation = () => {
     } = getCookie("userData");
     const roles = registrations[0]?.roles[0];
     setRole(roles);
+    setTimeout(() => {
+      setLoading(false);
+      setShowMap(true);
+    }, 2000);
     getLocation();
   }, [])
 
