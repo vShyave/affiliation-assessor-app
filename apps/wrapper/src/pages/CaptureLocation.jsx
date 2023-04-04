@@ -173,13 +173,17 @@ const CaptureLocation = () => {
           {
             showMap && 
             (
-              <iframe
-                src={`https://maps.google.com/maps?q=${lat},${long}&t=&z=13&ie=UTF8&iwloc=&output=embed`}
-                width={isMobile ? "100%" : "60%"}
-                loading="lazy"
-                title="map"
-                className="animate__animated animate__fadeIn h-[50vh]"
-              />
+              <>
+                <div className={`w-full ${showContinue ? 'pointer-events-none' : ''}`}>
+                  <iframe
+                    src={`https://maps.google.com/maps?q=${lat},${long}&t=&z=13&ie=UTF8&iwloc=&output=embed`}
+                    width={isMobile ? "100%" : "60%"}
+                    loading="lazy"
+                    title="map"
+                    className={`animate__animated animate__fadeIn ${showContinue ? 'h-[40vh]' : 'h-[50vh]' } `}
+                  />
+                </div>
+              </>
             )
           }
         </div>
