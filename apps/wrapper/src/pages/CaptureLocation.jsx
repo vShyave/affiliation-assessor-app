@@ -136,7 +136,7 @@ const CaptureLocation = () => {
       }, 5000);
       return;
     }
-    navigate(ROUTE_MAP.medical_assessment_options);
+    navigate(ROUTE_MAP.capture_selfie);
   };
 
   useEffect(() => {
