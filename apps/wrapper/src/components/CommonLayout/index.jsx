@@ -80,27 +80,6 @@ const CommonLayout = (props) => {
               )
             }
           </div>
-          {/* <div className="flex flex-row w-full px-8 py-7 items-center cursor-pointer">
-            {!props.backDisabled && (
-              <FontAwesomeIcon
-                icon={ props.iconType === 'close' ? faXmark : faArrowLeft }
-                className="text-2xl lg:text-4xl"
-                onClick={() => {
-                  props.backFunction
-                    ? props.backFunction()
-                    : navigate(props.back);
-                }}
-              />
-            )}
-            <div className="text-secondary tracking-wide text-[25px] ml-4 font-bold lg:text-[45px]">{props.pageTitle}</div>
-            {!props.logoutDisabled && (
-              <FontAwesomeIcon
-                icon={faRightFromBracket}
-                className="text-2xl lg:text-4xl"
-                onClick={() => showLogoutModal(true)}
-              />
-            )}
-          </div> */}
           {props.children}
         </div>
       </div>

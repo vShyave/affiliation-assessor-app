@@ -38,6 +38,7 @@ import AssessmentType from "./pages/AssessmentType";
 import HospitalOptions from "./pages/HospitalOptions";
 import ThankYou from "./pages/ThankYou";
 import PastInspections from "./pages/PastInspections";
+import CaptureSelfie from "./pages/CaptureSelfie";
 
 export const StateContext = createContext();
 
@@ -91,6 +92,14 @@ function App() {
               element={
                 <PrivateRoute>
                   <CaptureLocation />
+                </PrivateRoute>
+              }
+            />
+            <Route
+              path={ROUTE_MAP.capture_selfie}
+              element={
+                <PrivateRoute>
+                  <CaptureSelfie />
                 </PrivateRoute>
               }
             />

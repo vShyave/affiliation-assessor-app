@@ -28,8 +28,8 @@ const MedicalAssessments = () => {
       number: '9654591151'
     }],
     address: '5V5R+2H5, Cantonment Bellary, Karnataka 583104',
-    latitude: '15.144318792',
-    longitude: '76.941914408',
+    latitude: '12.9327621',
+    longitude: '77.6028376',
   }
 
   const { state, setState } = useContext(StateContext);
@@ -47,9 +47,11 @@ const MedicalAssessments = () => {
     longitude: null,
   });
 
-  const startAssess = () => {
+  const handleStartAssessment = () => {
     setState({ ...state, todayAssessment: { ...data } });
-    navigate(role == 'Medical' ? ROUTE_MAP.assessment_type : ROUTE_MAP.capture_location);
+    console.log('role - ', role);
+    navigate(ROUTE_MAP.capture_location);
+    // navigate(role === 'Medical' ? ROUTE_MAP.assessment_type : ROUTE_MAP.capture_location);
   };
 
   const getTodayAssessments = async () => {
@@ -162,7 +164,7 @@ const MedicalAssessments = () => {
                   }
                 </div>
               </div>
-              <Button text="Start Assessing" styles="border-primary text-white" onClick={startAssess} />
+              <Button text="Start Assessing" styles="border-primary text-white" onClick={handleStartAssessment} />
             </div>
           )
         }
