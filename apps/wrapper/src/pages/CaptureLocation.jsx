@@ -1,16 +1,19 @@
 import React, { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { StateContext } from "../App";
-import Button from "../components/Button";
-import CommonLayout from "../components/CommonLayout";
 import ROUTE_MAP from "../routing/routeMap";
+
+import { StateContext } from "../App";
 import { getCookie } from "../utils";
 
+import Button from "../components/Button";
+import CommonLayout from "../components/CommonLayout";
+
 const CaptureLocation = () => {
-  const [lat, setLat] = useState(0);
-  const [long, setLong] = useState(0);
-  const [showMap, setShowMap] = useState(false);
+  const [lat, setLat] = useState(12.9330171);
+  const [long, setLong] = useState(77.5998201);
+  const [showMap, setShowMap] = useState(true);
   const [loading, setLoading] = useState(false);
+  const [showContinue, setShowContinue ] = useState(false);
   const [disabled, setDisabled] = useState(true);
   const [role, setRole] = useState('');
   const { state, setState } = useContext(StateContext);
@@ -27,6 +30,25 @@ const CaptureLocation = () => {
         setLong(p.coords.longitude);
         setShowMap(true);
         setLoading(false);
+      });
+    } else {
+      setError(`Please allow location access.`);
+      setLoading(false);
+      setTimeout(() => {
+        setError(false);
+      }, 5000);
+    }
+  }
+
+  const handleCaptureLocation = () => {
+    console.log('navigator.geolocation - ', navigator);
+    if (navigator.geolocation && !loading) {
+      setLoading(true);
+      navigator.geolocation.getCurrentPosition((p) => {
+        setLat(p.coords.latitude);
+        setLong(p.coords.longitude);
+        setShowMap(true);
+        // setLoading(false);
         setState({
           ...state,
           userData: {
@@ -43,6 +65,9 @@ const CaptureLocation = () => {
             state.todayAssessment.longitude
           )
         );
+
+        setShowContinue(true);
+        // console.log('distance - ', distance);
       });
     } else {
       setError(`Please allow location access.`);
@@ -54,6 +79,7 @@ const CaptureLocation = () => {
   };
 
   function calcDistance(lat1, lon1, lat2, lon2) {
+    // console.log(`lat1 - ${lat1} & lon1 - ${lon1} & lat2 - ${lat2} & lon2 - ${lon2}`);
     var d;
     try {
       var R = 6371000; // radius of earth in metres
@@ -110,7 +136,7 @@ const CaptureLocation = () => {
       }, 5000);
       return;
     }
-    navigate(ROUTE_MAP.medical_assessment_options);
+    navigate(ROUTE_MAP.capture_selfie);
   };
 
   useEffect(() => {
@@ -124,73 +150,107 @@ const CaptureLocation = () => {
     } = getCookie("userData");
     const roles = registrations[0]?.roles[0];
     setRole(roles);
+    getLocation();
   }, [])
 
   return (
-    <CommonLayout back={role == 'Medical' ? ROUTE_MAP.assessment_type : ROUTE_MAP.medical_assessments}>
-      <div className="flex flex-col px-5 py-8 items-center">
-        <img
-          src="/assets/locationGirl.png"
-          className="h-[200px] mt-4 lg:h-[300px]"
-          alt="locationGirl"
-        />
-        {!showMap && loading && (
-          <div className="w-[60%] h-[200px] bg-gray-200 flex">
-            <div className="loader"></div>
-          </div>
-        )}
-        {showMap && (
-          <iframe
-            src={`https://maps.google.com/maps?q=${lat},${long}&t=&z=13&ie=UTF8&iwloc=&output=embed`}
-            width={isMobile ? "100%" : "60%"}
-            height={200}
-            loading="lazy"
-            title="map"
-            className="mt-5 animate__animated animate__fadeIn"
-          />
-        )}
-        {error && (
-          <span className="text-white animate__animated animate__headShake bg-rose-600 font-medium px-4 py-2 text-center mt-2">
-            {error}
-          </span>
-        )}
-        {!showMap && distance > 500 && (
-          <Button
-            text="Capture Location"
-            onClick={getLocation}
-            styles={
-              loading
-                ? "bg-white text-primary opacity-75 w-80 lg:w-[60%]"
-                : "w-80 lg:w-[60%] animate__animated animate__fadeInDown"
-            }
-          />
-        )}
-        <Button
-          text="Continue"
-          styles={
-            disabled
-              ? "bg-white text-primary opacity-75 w-80 lg:w-[60%] animate__animated animate__fadeInDown"
-              : "w-80 lg:w-[60%]"
+    <CommonLayout back={role == 'Medical' ? ROUTE_MAP.medical_assessments : ROUTE_MAP.assessment_type} 
+      logoutDisabled 
+      iconType='close' 
+      pageTitle="1. Capture Location" 
+      pageDesc="Enable location in your mobile settings and capture Institute's location">
+      <div className="flex flex-col px-6 gap-5 pb-5 overflow-y-auto">
+        <div className="flex flex-row w-full text-center">
+          {
+            !showMap && loading && 
+            (
+              <div className="flex w-[80%] border-primary border-[1px] h-[280px] mx-auto">
+                <div className="loader"></div>
+              </div>
+            )
           }
-          onClick={handleSubmit}
-        />
+
+          {
+            showMap && 
+            (
+              <>
+                <div className={`w-full ${showContinue ? 'pointer-events-none' : ''}`}>
+                  <iframe
+                    src={`https://maps.google.com/maps?q=${lat},${long}&t=&z=13&ie=UTF8&iwloc=&output=embed`}
+                    width={isMobile ? "100%" : "60%"}
+                    loading="lazy"
+                    title="map"
+                    className={`animate__animated animate__fadeIn ${showContinue ? 'h-[40vh]' : 'h-[50vh]' } `}
+                  />
+                </div>
+              </>
+            )
+          }
+        </div>
+
+        {
+          error && (
+            <span className="text-white animate__animated animate__headShake bg-rose-600 font-medium px-4 py-2 text-center mt-2">
+              {error}
+            </span>
+          )
+        }
+
+        <div className="flex flex-col gap-4">
+          {
+            showMap && !showContinue && 
+            (
+              <Button
+                text="Capture Location"
+                onClick={handleCaptureLocation}
+                styles="border-primary text-white animate__animated animate__fadeInDown"
+              />
+            )
+          }
+          {
+            showContinue && (
+              <>
+                <Button
+                  text="Continue"
+                  styles="bg-primary border-primary text-white"
+                  onClick={handleSubmit}
+                />
+
+                <Button 
+                  text="Re-capture Location"
+                  onClick={handleCaptureLocation}
+                  styles={
+                    loading
+                      ? "bg-white text-primary border-primary border-[1px] opacity-75"
+                      : "bg-white border-primary text-primary animate__animated animate__fadeInDown"
+                  }
+                />
+              </>
+            )
+          }
+          
+          
+        </div>
+
         <style>
-          {`
-                    .loader {
-                        border: 8px solid #FFF; /* Light grey */
-                        border-top: 8px solid #F8913D; /* Blue */
-                        border-radius: 50%;
-                        width: 60px;
-                        height: 60px;
-                        animation: spin 2s linear infinite;
-                        margin: auto;
-                      }
-                      
-                      @keyframes spin {
-                        0% { transform: rotate(0deg); }
-                        100% { transform: rotate(360deg); }
-                      }
-                    `}
+          {
+            `
+              .loader {
+                border: 8px solid #FFF; /* Light grey */
+                border-top: 8px solid #F8913D; /* Blue */
+                border-radius: 50%;
+                width: 60px;
+                height: 60px;
+                animation: spin 2s linear infinite;
+                margin: auto;
+              }
+                
+              @keyframes spin {
+                0% { transform: rotate(0deg); }
+                100% { transform: rotate(360deg); }
+              }
+            `
+          }
         </style>
       </div>
     </CommonLayout>
