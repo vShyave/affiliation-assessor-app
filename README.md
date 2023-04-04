@@ -64,6 +64,7 @@ npm -v
 ## Hasura Submissions
 - Covering how to handle form data submission to your database be it a sql or NoSql based db. In our setup we have used Hasura which creates an instant GraphQL data provider to use with Postgres based db
 
+
 ![Hasura Submissions](https://user-images.githubusercontent.com/46066481/227329443-0c832935-ac4c-42ea-80e6-ee00282aa6e6.gif)
 
 ## Offline Capabilites
