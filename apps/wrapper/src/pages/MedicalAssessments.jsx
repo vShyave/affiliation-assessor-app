@@ -146,7 +146,7 @@ const MedicalAssessments = () => {
                   }
                 </div>
               </div>
-              <Button text="Start Assessing" styles="border-primary text-white" onClick={handleStartAssessment} />
+              <Button text="Start Assessing" styles="border-primary text-white bg-primary" onClick={handleStartAssessment} />
             </div>
           )
         }

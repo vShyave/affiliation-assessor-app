@@ -53,7 +53,7 @@ const CaptureSelfie = () => {
                                 <div className="text-center break-words text-[#373839]">You have successfully uploaded your image and marked your attendance for the day.</div>
                             </div>
                             <div className="flex flex-col gap-4">
-                                <Button text={"Continue"} styles="border-primary text-white" onClick={handleNavigation}></Button>
+                                <Button text={"Continue"} styles="border-primary text-white bg-primary" onClick={handleNavigation}></Button>
                                 <Button text={"Re-capture photo"} styles="bg-white border-[#DBDBDB] border-1 text-[#535461] hover:text-[#535461]" onClick={() => setImg(null)}>Retake</Button>
                             </div>
                         </div>

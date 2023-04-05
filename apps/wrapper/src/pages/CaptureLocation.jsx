@@ -207,7 +207,7 @@ const CaptureLocation = () => {
               <Button
                 text="Capture Location"
                 onClick={handleCaptureLocation}
-                styles="border-primary text-white animate__animated animate__fadeInDown"
+                styles="border-primary bg-primary text-white animate__animated animate__fadeInDown"
               />
             )
           }
