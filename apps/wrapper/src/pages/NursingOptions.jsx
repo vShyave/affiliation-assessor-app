@@ -197,7 +197,7 @@ const NursingOptions = () => {
           }
           {/* Forms for Non-Medical Assessor  */}
           {error && (
-            <span className="text-white animate__animated animate__headShake bg-rose-600 font-medium px-4 py-2 mt-5 text-center ">
+            <span className="text-white animate__animated animate__headShake bg-red-500 font-medium px-4 py-3 mt-5 text-center ">
               {error}
             </span>
           )}

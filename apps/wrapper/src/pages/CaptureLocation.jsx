@@ -28,8 +28,8 @@ const CaptureLocation = () => {
       navigator.geolocation.getCurrentPosition((p) => {
         setLat(p.coords.latitude);
         setLong(p.coords.longitude);
-        setShowMap(true);
-        setLoading(false);
+        // setShowMap(true);
+        // setLoading(false);
       });
     } else {
       setError(`Please allow location access.`);
@@ -150,6 +150,10 @@ const CaptureLocation = () => {
     } = getCookie("userData");
     const roles = registrations[0]?.roles[0];
     setRole(roles);
+    setTimeout(() => {
+      setLoading(false);
+      setShowMap(true);
+    }, 2000);
     getLocation();
   }, [])
 
@@ -190,7 +194,7 @@ const CaptureLocation = () => {
 
         {
           error && (
-            <span className="text-white animate__animated animate__headShake bg-rose-600 font-medium px-4 py-2 text-center mt-2">
+            <span className="text-white animate__animated animate__headShake bg-red-500 font-medium px-4 py-3 text-center mt-2">
               {error}
             </span>
           )
@@ -203,7 +207,7 @@ const CaptureLocation = () => {
               <Button
                 text="Capture Location"
                 onClick={handleCaptureLocation}
-                styles="border-primary text-white animate__animated animate__fadeInDown"
+                styles="border-primary bg-primary text-white animate__animated animate__fadeInDown"
               />
             )
           }

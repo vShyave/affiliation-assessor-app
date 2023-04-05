@@ -41,8 +41,8 @@ const CommonLayout = (props) => {
             alt="illustration"
           />
         </div>
-        <div className="bg-white h-[calc(100vh-120px)] w-full rounded-t-[60px] overflow-none">
-          <div className="flex flex-col px-8 py-7 gap-2">
+        <div className="bg-white min-h-[calc(100vh-120px)] w-full rounded-t-[60px] overflow-none">
+          <div className="flex flex-col px-8 py-7 gap-1">
             <div className="flex flex-row w-full items-center cursor-pointer gap-4">
               <div className="flex grow-0">
                 {

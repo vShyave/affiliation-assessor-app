@@ -1,20 +1,22 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import Home from "./pages/Home";
-import "./App.css";
 import { createContext, useEffect, useState } from "react";
+
+import ROUTE_MAP from "./routing/routeMap";
+import { getCookie } from "./utils";
+
+import Home from "./pages/Home";
 import MedicalAssessor from "./pages/MedicalAssessor";
 import MedicalAssessments from "./pages/MedicalAssessments";
 import UpcomingMedicalAssessments from "./pages/UpcomingMedicalAssessments";
-import Form from "./pages/Form";
 import CaptureLocation from "./pages/CaptureLocation";
 import MedicalAssessmentsOptions from "./pages/MedicalAssessmentsOptions";
 import ForgotPassword from "./pages/ForgotPassword";
 import Nursing from "./pages/forms/Nursing";
 import Paramedical from "./pages/forms/Paramedical";
+import BasicInfrastructure from "./pages/forms/BasicInfrastructure";
 import Osce1 from "./pages/forms/Osce1";
 import Osce2 from "./pages/forms/Osce2";
 import Register from "./pages/Register";
-import BasicInfrastructure from "./pages/forms/BasicInfrastructure";
 import Facilities from "./pages/forms/Facilities";
 import StudentInfo from "./pages/forms/StudentInfo";
 import NursingOptions from "./pages/NursingOptions";
@@ -30,15 +32,16 @@ import GenericOdkForm from "./pages/forms/GenericOdkForm";
 import NursingNonMedical from "./pages/forms/NursingNonMedical";
 import ParamedicalNonMedical from "./pages/forms/ParamedicalNonMedical";
 import Admin from "./pages/Admin";
-import ROUTE_MAP from "./routing/routeMap";
 import Login from "./pages/Login/Login";
 import PrivateRoute from "./routing/PrivateRoute/PrivateRoute";
-import { getCookie } from "./utils";
 import AssessmentType from "./pages/AssessmentType";
 import HospitalOptions from "./pages/HospitalOptions";
 import ThankYou from "./pages/ThankYou";
 import PastInspections from "./pages/PastInspections";
 import CaptureSelfie from "./pages/CaptureSelfie";
+import Form from "./pages/Form";
+
+import "./App.css";
 
 export const StateContext = createContext();
 

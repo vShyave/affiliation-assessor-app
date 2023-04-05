@@ -8,30 +8,11 @@ import { faLocationDot, faBuilding, faUser, faPhone, faLocationArrow } from "@fo
 import Button from "../components/Button";
 import CommonLayout from "../components/CommonLayout";
 
-import { getMedicalAssessments } from "../api";
+import { getTodaysAssessment } from "../api";
 import { StateContext } from "../App";
 import { getCookie } from "../utils";
 
 const MedicalAssessments = () => {
-  const inspection_data = {
-    id: '12345',
-    district: 'Ballari',
-    instituteName: 'RYMEC',
-    specialization: 'Engineering',
-    courses: 'CSE, ECE, Mech, EEE',
-    type: 'Engineering',
-    pocs: [{
-      name: 'Vinod Shyave', 
-      number: '9743298498'
-    }, {
-      name: 'Praveen Shyave',
-      number: '9654591151'
-    }],
-    address: '5V5R+2H5, Cantonment Bellary, Karnataka 583104',
-    latitude: '12.9327621',
-    longitude: '77.6028376',
-  }
-
   const { state, setState } = useContext(StateContext);
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
@@ -49,14 +30,16 @@ const MedicalAssessments = () => {
 
   const handleStartAssessment = () => {
     setState({ ...state, todayAssessment: { ...data } });
-    console.log('role - ', role);
     navigate(ROUTE_MAP.capture_location);
     // navigate(role === 'Medical' ? ROUTE_MAP.assessment_type : ROUTE_MAP.capture_location);
   };
 
   const getTodayAssessments = async () => {
     setLoading(true);
-    const res = await getMedicalAssessments();
+    const postData = {
+      "date" : "2023-04-04"
+    };
+    const res = await getTodaysAssessment(postData);
     if (res?.data?.assessment_schedule?.[0]) {
       let ass = res?.data?.assessment_schedule?.[0];
       setData({
@@ -73,12 +56,11 @@ const MedicalAssessments = () => {
       });
     } else setData(null);
 
-    setData(inspection_data);
     setLoading(false);
   };
 
   const handleNavigate = () => {
-    alert(`lat - ${data.latitude} && long - ${data.longitude}`);
+    window.open(`https://maps.google.com/maps?q=${data.latitude},${data.longitude}&t=&z=13&ie=UTF8&iwloc=&output=embed`);
   }
 
   useEffect(() => {
@@ -129,7 +111,7 @@ const MedicalAssessments = () => {
                   <FontAwesomeIcon icon={faPhone} className="text-1xl lg:text-4xl text-gray-600" />
                   <div className="text-gray-500">POC Numbers</div>
                 </div>
-                <div className="flex flex-row wrap">
+                <div className="flex flex-wrap">
                   { 
                     data?.pocs?.map((el, idx) =>
                       <div className="flex flex-col p-2 m-[4px] bg-[#DBDBDB;] grow items-center rounded-[8px] gap-2" key={idx}>
@@ -164,7 +146,7 @@ const MedicalAssessments = () => {
                   }
                 </div>
               </div>
-              <Button text="Start Assessing" styles="border-primary text-white" onClick={handleStartAssessment} />
+              <Button text="Start Assessing" styles="border-primary text-white bg-primary" onClick={handleStartAssessment} />
             </div>
           )
         }

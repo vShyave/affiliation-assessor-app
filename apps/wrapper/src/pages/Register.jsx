@@ -129,7 +129,7 @@ const Register = () => {
             </div>
           </div>
           {error && (
-            <span className="text-white animate__animated animate__headShake bg-rose-600 font-medium px-4 py-2 text-center mt-2">
+            <span className="text-white animate__animated animate__headShake bg-red-500 font-medium px-4 py-3 text-center mt-2">
               {error}
             </span>
           )}
