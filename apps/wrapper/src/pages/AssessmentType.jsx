@@ -127,7 +127,7 @@ const AssessmentType = () => {
                                             (form, idx) => {
                                               return (
                                                 <div key={idx}>
-                                                  <div className="flex flex-row gap-2 border-1 border-black py-4">
+                                                  <div className="flex flex-row gap-2 border-1 border-black py-4" onClick={() => navigate(ROUTE_MAP.basic_infrastructure)}>
                                                     <div className="flex grow items-center">
                                                       <div className="text-[14px] font-medium">{ form }</div>
                                                     </div>

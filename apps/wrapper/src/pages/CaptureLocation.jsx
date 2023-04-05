@@ -7,6 +7,7 @@ import { getCookie } from "../utils";
 
 import Button from "../components/Button";
 import CommonLayout from "../components/CommonLayout";
+import Loader from "../components/Loader";
 
 const CaptureLocation = () => {
   const [lat, setLat] = useState(12.9330171);
@@ -28,8 +29,6 @@ const CaptureLocation = () => {
       navigator.geolocation.getCurrentPosition((p) => {
         setLat(p.coords.latitude);
         setLong(p.coords.longitude);
-        // setShowMap(true);
-        // setLoading(false);
       });
     } else {
       setError(`Please allow location access.`);
@@ -153,7 +152,7 @@ const CaptureLocation = () => {
     setTimeout(() => {
       setLoading(false);
       setShowMap(true);
-    }, 2000);
+    }, 2500);
     getLocation();
   }, [])
 
@@ -168,9 +167,7 @@ const CaptureLocation = () => {
           {
             !showMap && loading && 
             (
-              <div className="flex w-[80%] border-primary border-[1px] h-[280px] mx-auto">
-                <div className="loader"></div>
-              </div>
+              <Loader></Loader>
             )
           }
 
@@ -232,30 +229,7 @@ const CaptureLocation = () => {
               </>
             )
           }
-          
-          
         </div>
-
-        <style>
-          {
-            `
-              .loader {
-                border: 8px solid #FFF; /* Light grey */
-                border-top: 8px solid #F8913D; /* Blue */
-                border-radius: 50%;
-                width: 60px;
-                height: 60px;
-                animation: spin 2s linear infinite;
-                margin: auto;
-              }
-                
-              @keyframes spin {
-                0% { transform: rotate(0deg); }
-                100% { transform: rotate(360deg); }
-              }
-            `
-          }
-        </style>
       </div>
     </CommonLayout>
   );

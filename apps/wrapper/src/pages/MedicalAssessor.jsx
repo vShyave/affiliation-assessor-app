@@ -1,9 +1,12 @@
-import React from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import ROUTE_MAP from "../routing/routeMap";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {faEllipsis, faUser, faCircleQuestion} from "@fortawesome/free-solid-svg-icons";
+
+import { getAssessor } from "../api";
+import { getCookie } from "../utils";
 
 import Button from "../components/Button";
 import CommonLayout from "../components/CommonLayout";
@@ -11,11 +14,29 @@ import CommonLayout from "../components/CommonLayout";
 const MedicalAssessor = () => {
 
   const navigate = useNavigate();
-
+  const [data, setData] = useState("");
+  const [role, setRole] = useState('');
   const handleClick = (route) => {
     navigate(route);
   };
 
+  const getAssessors = async (number) => {
+    const postData = {
+      "number": number
+    };
+    
+    const res = await getAssessor(postData);
+    setData(res?.data?.assessors[0].user_id)
+  }
+  
+  useEffect(() => { 
+    const user = getCookie("userData");
+   // const roles = user?.registrations[0]?.roles[0];
+    const number= user.user.mobilePhone;
+    //setRole(roles);
+    getAssessors(number);
+  }, []);
+ 
   return (
     <CommonLayout back="/login" backDisabled logoutDisabled>
       <div className="flex flex-col px-5 h-[calc(100vh-176px)] overflow-y-auto justify-between">
@@ -29,8 +50,8 @@ const MedicalAssessor = () => {
           <div className="gap-3">
             <hr className="border-slate-300" />
             <div className="gap-3 py-3 px-2">
-              <div className="text-[12px]">Your Employee Identity Code</div>
-              <div className="text-secondary font-semibold text-[18px]">ID-909883</div>
+              <div className="text-[12px]">Your Assessor Identity Code</div>
+              <div className="text-secondary font-semibold text-[18px]">{data}</div>
             </div>
             <hr className="border-slate-300" />
           </div>

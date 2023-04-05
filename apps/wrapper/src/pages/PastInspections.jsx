@@ -5,40 +5,35 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faLocationDot, faCalendarAlt, faBuilding } from "@fortawesome/free-solid-svg-icons";
 
 import CommonLayout from "../components/CommonLayout";
-import { getMedicalAssessmentsUpcoming } from "../api";
+
+import { getPastInspections } from "../api";
+import { readableDate } from "./../utils/common";
 
 
 const PastInspections = () => {
 
-    const inspection_data = [{
-        institute: {
-            name: 'RYMEC',
-            district: 'Ballari',
-        },
-        date: '24 March 2023'
-    },
-    {
-        institute: {
-            name: 'SLN',
-            district: 'Raichur',
-        },
-        date: '24 Feb 2023'
-    },
-    {
-        institute: {
-            name: 'DBIT',
-            district: 'Bengaluru',
-        },
-        date: '24 Feb 2023'
-    },
-    {
-        institute: {
-            name: 'PDIT',
-            district: 'Vijayanagara',
-        },
-        date: '24 Feb 2023'
-    }];
-    const [inspectionData, setInspectionData] = useState(inspection_data);
+    const [inspectionData, setInspectionData] = useState([]);
+    const getPastInspectionData = async () => {
+        const postData = {
+            "date" : new Date().toJSON().slice(0, 10)
+        };
+
+        try {
+            const res = await getPastInspections(postData);
+            if (res?.data?.assessment_schedule?.length) {
+                setInspectionData(res.data.assessment_schedule);
+            } else {
+                setInspectionData([]);
+            }
+        } catch (error) {
+            console.log('error - ', error);
+            alert(error);
+        }
+    };
+
+    useState(() => {
+        getPastInspectionData();
+    }, []);
 
     return (
         <CommonLayout back={ROUTE_MAP.root} logoutDisabled pageTitle="Past Inspections">
@@ -52,7 +47,7 @@ const PastInspections = () => {
                                         <FontAwesomeIcon icon={faCalendarAlt} className="text-1xl lg:text-4xl text-gray-600" />
                                         <div className="text-gray-500">Completed on</div>
                                     </div>
-                                    <div className="text-secondary text-[18px] font-medium">{ el.date || 'NA' }</div>
+                                    <div className="text-secondary text-[18px] font-medium">{ readableDate(el.date) || 'NA' }</div>
                                 </div>
                                 <hr className="border-slate-300" />
                                 <div className="flex flex-col gap-1">

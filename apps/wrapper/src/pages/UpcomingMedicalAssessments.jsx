@@ -6,47 +6,28 @@ import { faLocationDot, faCalendarAlt } from "@fortawesome/free-solid-svg-icons"
 
 import CommonLayout from "../components/CommonLayout";
 
-import { getMedicalAssessmentsUpcoming } from "../api";
+import { getUpcomingAssessments } from "../api";
+import { readableDate } from "./../utils/common";
 
 const UpcomingMedicalAssessments = () => {
-  const inspection_data = [
-    {
-      institute: {
-        district: 'Ballari',
-      },
-      date: '24 March 2023'
-    },
-    {
-      institute: {
-        district: 'Raichur',
-      },
-      date: '24 Feb 2023'
-    },
-    {
-      institute: {
-        district: 'Raichur',
-      },
-      date: '24 Feb 2023'
-    },
-    {
-      institute: {
-        district: 'Raichur',
-      },
-      date: '24 Feb 2023'
-    }
-  ];
-
-  const [inspectionData, setInspectionData] = useState(inspection_data);
-
+  
+  const [inspectionData, setInspectionData] = useState();
   const getData = async () => {
-    const res = await getMedicalAssessmentsUpcoming();
-    console.log('res - ', res);
-    if (res?.data?.assessment_schedule?.length) {
-      // setInspectionData(res.data.assessment_schedule);
-      setInspectionData(inspection_data);
-    } else {
-      setInspectionData(inspection_data);
-      // setInspectionData([]);
+    const postData = {
+      "date" : new Date().toJSON().slice(0, 10)
+    };
+
+    try {
+      const res = await getUpcomingAssessments(postData);
+      console.log('res - ', res);
+      if (res?.data?.assessment_schedule?.length) {
+        setInspectionData(res.data.assessment_schedule);
+      } else {
+        setInspectionData([]);
+      }
+    } catch(error) {
+      console.log('error - ', error);
+      alert(error);
     }
   };
 
@@ -74,7 +55,7 @@ const UpcomingMedicalAssessments = () => {
                     <FontAwesomeIcon icon={faCalendarAlt} className="text-1xl lg:text-4xl text-gray-600" />
                     <div className="text-gray-500">Scheduled on</div>
                   </div>
-                  <div className="text-secondary text-[18px] font-medium">{ el.date || 'NA' }</div>
+                  <div className="text-secondary text-[18px] font-medium">{ readableDate(el.date) || 'NA' }</div>
                 </div>
               </div>
             })
