@@ -95,7 +95,7 @@ const LoginMedical = ({ handleStepChangeForLogin }) => {
 
         {
           error && (
-            <span className="text-white animate__animated animate__headShake bg-rose-600 font-medium px-4 py-2 text-center mt-2">
+            <span className="text-white animate__animated animate__headShake bg-red-500 w-80 font-medium px-4 py-3 text-center mx-auto">
               { error }
             </span>
           )

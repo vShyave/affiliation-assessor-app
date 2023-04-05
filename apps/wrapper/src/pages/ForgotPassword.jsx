@@ -92,7 +92,7 @@ const ForgotPassword = () => {
             </p>
             <input
               className={`${
-                error && "border-red-400 animate__animated animate__headShake"
+                error && "border-red-500 animate__animated animate__headShake"
               } border-2 rounded px-3 py-4 text-xl mt-10 w-full`}
               value={mobile}
               onChange={(e) => handleMobileInput(e.target.value)}

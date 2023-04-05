@@ -69,6 +69,11 @@ export const getTodaysAssessment = async (postData) => {
   return res;
 }
 
+export const getCoursesForAccordions = async (postData) => {
+  const res = await customPost.post('rest/getCourses', postData);
+  return res;
+}
+
 export const getMedicalAssessments = () => {
   const query = {
     query: `
