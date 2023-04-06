@@ -12,6 +12,7 @@ import Loader from "../components/Loader";
 import { getTodaysAssessment } from "../api";
 import { StateContext } from "../App";
 import { getCookie } from "../utils";
+import { StoreToLocalStorage } from "../utils/common";
 
 const MedicalAssessments = () => {
   const { state, setState } = useContext(StateContext);
@@ -55,6 +56,12 @@ const MedicalAssessments = () => {
         latitude: ass.institute.latitude,
         longitude: ass.institute.longitude,
       });
+
+      const required_data = {
+        institute_id: ass.institute.id
+      };
+      
+      StoreToLocalStorage(required_data, 'required_data');
     } else setData(null);
 
     setLoading(false);

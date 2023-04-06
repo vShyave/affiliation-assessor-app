@@ -80,6 +80,19 @@ export const getPastInspections = async (postData) => {
   return res;
 }
 
+export const UploadImage = async (postData) => {
+  const res = await axios.post(`${ENKETO_MANAGER_URL}/form/uploadFile`, postData, {
+    "Accept": "*/*",
+    "Content-Type": "multipart/form-data",
+  });
+  return res;
+}
+
+export const ValidateAssessor = async (postData) => {
+  const res = await customPost.post('rest/validateAssessor', postData);
+  return res;
+}
+
 export const getMedicalAssessments = () => {
   const query = {
     query: `

@@ -47,7 +47,7 @@ const AssessmentType = () => {
 
   const getAccordionsData = async () => {
     const postData = {
-      courseType: activeTabValue ,
+      courseType: activeTabValue,
       courseLevel: activeButtonValue
     };
 
@@ -63,13 +63,23 @@ const AssessmentType = () => {
     }
   }
 
+  const handleChangeInTab = (value) => {
+    setActiveTabValue(value);
+    // getAccordionsData(value);
+  }
+
+  const handleCourseLevel = (value) => {
+    setActiveButtonValue(value);
+    // getAccordionsData(value);
+  }
+
   const handleNavigateToBasicFrom = () => {
     navigate(ROUTE_MAP.hospital_forms);
   }
 
   useEffect(() => {
     getAccordionsData();
-  }, []);
+  }, [activeTabValue, activeButtonValue]);
 
   return (
     <CommonLayout back={ROUTE_MAP.medical_assessments}
@@ -94,12 +104,12 @@ const AssessmentType = () => {
           <hr className="border-slate-300" />
         </div>
 
-        <Tabs value={tabData[0].value}>
+        <Tabs value={activeTabValue}>
           <TabsHeader className="bg-transparent p-0" indicatorProps={{ className: "bg-orange-500/10 shadow-none" }}> 
             {
               tabData.map(
                 ({ label, value }) => ( 
-                  <Tab key={value} value={value} className={`p-3 font-bold border-b- border-b-2 ${(value === activeTabValue) ? 'text-primary border-b-primary' : 'text-gray-500 border-[#DBDBDB]'}`} onClick={() => setActiveTabValue(value)}> {label} </Tab> 
+                  <Tab key={value} value={value} className={`p-3 font-bold border-b- border-b-2 ${(value === activeTabValue) ? 'text-primary border-b-primary' : 'text-gray-500 border-[#DBDBDB]'}`} onClick={() => handleChangeInTab(value)}> {label} </Tab> 
                 )
               )
             }
@@ -108,11 +118,11 @@ const AssessmentType = () => {
             {
               tabData.map(
                 ({value}, idx) => (
-                    <TabPanel key={idx} value={value} className="flex flex-col gap-5 px-0 py-5"> 
+                    <TabPanel key={idx} value={value} className="flex flex-col gap-5 px-0 py-5" onChange={() => handleChangeInTab(value)}> 
                       {
                         <>
                           <div className="flex flex-row gap-4 justify-center">
-                            <Button styles={`border-black p-3 w-[120px] rounded-[28px] animate__animated animate__fadeInDown hover:bg-black hover:text-white ${ (activeButtonValue === 'Degree') ? 'text-white bg-black' : 'text-black bg-white' }`} css={{fontSize: '14px'}} text="Degree" onClick={() => setActiveButtonValue('Degree')}></Button>
+                            <Button styles={`border-black p-3 w-[120px] rounded-[28px] animate__animated animate__fadeInDown hover:bg-black hover:text-white ${ (activeButtonValue === 'Degree') ? 'text-white bg-black' : 'text-black bg-white' }`} css={{fontSize: '14px'}} text="Degree" onClick={() => handleCourseLevel('Degree')}></Button>
                             <Button styles={`border-black p-3 w-[120px] rounded-[28px] animate__animated animate__fadeInDown hover:bg-black hover:text-white ${ (activeButtonValue === 'Diploma') ? 'text-white bg-black' : 'text-black bg-white' }`} css={{fontSize: '14px'}} text="Diploma" onClick={() => setActiveButtonValue('Diploma')}></Button>
                           </div>
 

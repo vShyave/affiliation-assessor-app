@@ -1,5 +1,5 @@
 import React, { Fragment, useCallback, useEffect, useRef, useState } from 'react'
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import ROUTE_MAP from "../routing/routeMap";
 import Webcam from "react-webcam";
 
@@ -9,24 +9,65 @@ import { faCamera } from "@fortawesome/free-solid-svg-icons";
 import CommonLayout from "../components/CommonLayout";
 import Button from '../components/Button';
 
+import { ConvertB64toFormData } from "./../utils/common";
+import { UploadImage, ValidateAssessor } from '../api';
+
 const videoConstraints = {
     aspectRatio: 0.8,
     facingMode: "user"
 };
 
 const CaptureSelfie = () => {
+
+    let { lat, long } = useParams();
     const [role, setRole] = useState('');
+    const [error, setError] = useState('');
     const [img, setImg] = useState(null);
     const webcamRef = useRef(null);
     const navigate = useNavigate();
     
     const handleCapture = useCallback(() => {
+        console.log('webcamRef - ', webcamRef);
         const imageSrc = webcamRef.current.getScreenshot();
         setImg(imageSrc);
     }, [webcamRef]);
 
-    const handleNavigation = () => {
-        navigate(ROUTE_MAP.assessment_type)
+    const handlePostImage = async () => {
+        const formDataToUpload = ConvertB64toFormData(img);
+        
+        try {
+            const res = await UploadImage(formDataToUpload);
+            if (res?.data?.fileURL) {
+                postAssessorValidations(res?.data?.fileURL);
+            } else {
+                setError('Unable to upload image, contact Admin');
+                setTimeout(() => {
+                    setError(false);
+                }, 5000);
+            }
+        } catch (error) {
+            alert(error);
+        }
+    }
+
+    const postAssessorValidations = async (minioUrl) => {
+        const storedObj = JSON.parse(localStorage.getItem('required_data'));
+
+        const postData = {
+            assessorUserId: storedObj.assessor_user_id,
+            location: JSON.stringify({lat, long}),
+            selfieImageURL: minioUrl
+        };
+
+        try {
+            const res = await ValidateAssessor(postData);
+            console.log('res - ', res);
+            if (res.statusText.toLowerCase() === "ok") {
+                navigate(ROUTE_MAP.assessment_type);
+            }
+        } catch (error) {
+            alert(error);
+        }
     }
 
     useEffect(() => {
@@ -59,9 +100,17 @@ const CaptureSelfie = () => {
                                 <img src={img} alt="screenshot" className="h-[40vh] w-full" />
                                 <div className="text-center font-bold text-[#009A2B] text-[18px]">Selfie captured!</div>
                                 <div className="text-center break-words text-[#373839]">You have successfully captured your image and mark your attendance for the day by clicking on Continue.</div>
+
+                                {
+                                    error && (
+                                        <span className="text-white animate__animated animate__headShake bg-red-500 font-medium px-4 py-3 text-center mt-2">
+                                            {error}
+                                        </span>
+                                )
+                                }
                             </div>
                             <div className="flex flex-col gap-4">
-                                <Button text={"Continue"} styles="border-primary text-white bg-primary" onClick={handleNavigation}></Button>
+                                <Button text={"Continue"} styles="border-primary text-white bg-primary" onClick={handlePostImage}></Button>
                                 <Button text={"Re-capture photo"} styles="bg-white border-[#DBDBDB] border-1 text-[#535461] hover:text-[#535461]" onClick={() => setImg(null)}>Retake</Button>
                             </div>
                         </div>

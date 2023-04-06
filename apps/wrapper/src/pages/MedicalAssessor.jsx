@@ -7,6 +7,7 @@ import {faEllipsis, faUser, faCircleQuestion} from "@fortawesome/free-solid-svg-
 
 import { getAssessor } from "../api";
 import { getCookie } from "../utils";
+import { StoreToLocalStorage } from "./../utils/common";
 
 import Button from "../components/Button";
 import CommonLayout from "../components/CommonLayout";
@@ -16,25 +17,38 @@ const MedicalAssessor = () => {
   const navigate = useNavigate();
   const [data, setData] = useState("");
   const [role, setRole] = useState('');
+  const [userNumber, setUserNumber] = useState();
   const handleClick = (route) => {
     navigate(route);
   };
 
-  const getAssessors = async (number) => {
+  const getAssessorDetails = async (number) => {
     const postData = {
       "number": number
     };
     
-    const res = await getAssessor(postData);
-    setData(res?.data?.assessors[0].user_id)
+    try {
+      const res = await getAssessor(postData);
+      setData(res?.data?.assessors[0].user_id);
+      const requiredData = {
+        assessor_user_id: res?.data?.assessors[0].user_id
+      };
+
+      StoreToLocalStorage(requiredData, 'required_data');
+      // localStorage.setItem('required_data', JSON.stringify(requiredData));
+    } catch (error) {
+      alert (error);
+      console.error();
+    }
+    
   }
   
   useEffect(() => { 
     const user = getCookie("userData");
-   // const roles = user?.registrations[0]?.roles[0];
     const number= user.user.mobilePhone;
+    getAssessorDetails(number);
+    // const roles = user?.registrations[0]?.roles[0];
     //setRole(roles);
-    getAssessors(number);
   }, []);
  
   return (

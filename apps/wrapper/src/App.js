@@ -99,7 +99,7 @@ function App() {
               }
             />
             <Route
-              path={ROUTE_MAP.capture_selfie}
+              path={`${ROUTE_MAP.capture_selfie}/:lat/:long`}
               element={
                 <PrivateRoute>
                   <CaptureSelfie />

@@ -167,7 +167,7 @@ const CaptureLocation = () => {
       return;
     }
 
-    navigate(ROUTE_MAP.capture_selfie);
+    navigate(`${ROUTE_MAP.capture_selfie}/${state.todayAssessment.latitude}/${state.todayAssessment.longitude}`);
   };
 
   useEffect(() => {
