@@ -63,6 +63,10 @@ const AssessmentType = () => {
     }
   }
 
+  const handleNavigateToBasicFrom = () => {
+    navigate(ROUTE_MAP.hospital_forms);
+  }
+
   useEffect(() => {
     getAccordionsData();
   }, []);
@@ -76,7 +80,7 @@ const AssessmentType = () => {
       <div className="w-full flex flex-col px-6">
         <div className="flex flex-col gap-4">
           <div className="font-medium">Begin by filling the basic information first:</div>
-          <div className="flex flex-row bg-primary gap-4 p-4">
+          <div className="flex flex-row bg-primary gap-4 p-4" onClick={handleNavigateToBasicFrom}>
             <div className="text-white grow">
               Basic information
             </div>

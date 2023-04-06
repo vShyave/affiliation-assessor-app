@@ -107,6 +107,18 @@ function App() {
               }
             />
             <Route
+              path={ROUTE_MAP.assessment_type}
+              element={
+                <PrivateRoute>
+                  <AssessmentType />
+                </PrivateRoute>
+              }
+            />
+            <Route
+              path={ROUTE_MAP.forgot_password}
+              element={<ForgotPassword />}
+            />
+            <Route
               path={ROUTE_MAP.medical_assessment_options}
               element={
                 <PrivateRoute>
@@ -135,18 +147,6 @@ function App() {
               element={
                 <PrivateRoute>
                   <OsceOptions />
-                </PrivateRoute>
-              }
-            />
-            <Route
-              path={ROUTE_MAP.forgot_password}
-              element={<ForgotPassword />}
-            />
-            <Route
-              path={ROUTE_MAP.assessment_type}
-              element={
-                <PrivateRoute>
-                  <AssessmentType />
                 </PrivateRoute>
               }
             />
