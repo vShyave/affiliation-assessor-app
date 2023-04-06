@@ -70,6 +70,11 @@ export const getCoursesForAccordions = async (postData) => {
   return res;
 }
 
+export const getCoursesOfInstitutes = async (postData) => {
+  const res = await customPost.post('rest/getCourseType', postData);
+  return res;
+}
+
 export const getUpcomingAssessments = async (postData) => {
   const res = await customPost.post('rest/getUpcomingInspections', postData);
   return res;
@@ -81,7 +86,7 @@ export const getPastInspections = async (postData) => {
 }
 
 export const UploadImage = async (postData) => {
-  const res = await axios.post(`${ENKETO_MANAGER_URL}/form/uploadFile`, postData, {
+  const res = await axios.post(`${ENKETO_MANAGER_URL}form/uploadFile`, postData, {
     "Accept": "*/*",
     "Content-Type": "multipart/form-data",
   });
