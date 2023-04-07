@@ -64,7 +64,7 @@ const MedicalAssessments = () => {
     const res = await getTodaysAssessment(postData);
     const check = await getValidatedAssessor(validateData);
     console.log("Check",check.data.assessor_validation.length);
-    if(check.data.assessor_validation.length>0){
+    if(check.data.assessor_validation.length>0) {
       handleClick();
     }
    
@@ -84,7 +84,8 @@ const MedicalAssessments = () => {
       });
 
       const required_data = {
-        institute_id: ass.institute.id
+        institute_id: ass.institute.id,
+        schedule_id:ass.id
       };
      
       StoreToLocalStorage(required_data, 'required_data');

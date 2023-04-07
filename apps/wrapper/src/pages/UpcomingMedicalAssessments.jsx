@@ -12,9 +12,11 @@ import { readableDate } from "./../utils/common";
 const UpcomingMedicalAssessments = () => {
   
   const [inspectionData, setInspectionData] = useState();
+  const assessor_id = JSON.parse(localStorage.getItem('required_data'))?.assessor_user_id;
   const getData = async () => {
     const postData = {
-      "date" : new Date().toJSON().slice(0, 10)
+      "date" : new Date().toJSON().slice(0, 10),
+      "assessor_id": assessor_id
     };
 
     try {

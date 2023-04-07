@@ -10,7 +10,7 @@ import { faChevronRight } from "@fortawesome/free-solid-svg-icons";
 import CommonLayout from "../components/CommonLayout";
 import Button from "../components/Button";
 
-import { getCoursesForAccordions, getCoursesOfInstitutes } from '../api';
+import { getCoursesForAccordions, getCoursesOfInstitutes, getStatusOfForms } from '../api';
 import { StateContext } from "../App";
 
 const AssessmentType = () => {
@@ -29,6 +29,21 @@ const AssessmentType = () => {
   const handleOpen = (value) => {
     setOpen(open === value ? 0 : value);
     setActiveAccordionValue(value);
+  };
+
+  const getStatus = async () => {
+    const postData = {
+      form_name: "bsc_nursing",
+      assessor_id: "d7da6c6d-96d7-42a8-bfda-d3501f9116d1"
+    };
+
+    try {
+      const response = await getStatusOfForms(postData);
+      const formStatus = response?.data?.form_submissions[0];
+      console.log(formStatus);
+    } catch (error) {
+      alert(error);
+    }
   };
 
   const getCourses = async () => {
@@ -67,7 +82,7 @@ const AssessmentType = () => {
           return obj;
         });
       }
-      console.log('courses_data - ', courses_data);
+      
       setActiveAccordionValue(courses_data?.[0]?.course_id);
       setAccordionData(courses_data);
       checkFormStatus(courses_data);

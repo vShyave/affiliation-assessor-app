@@ -98,6 +98,11 @@ export const UploadImage = async (postData) => {
   return res;
 }
 
+export const getStatusOfForms = async (postData) => {
+  const res = await customPost.post('rest/getFormStatus', postData);
+  return res;
+}
+
 export const ValidateAssessor = async (postData) => {
   const res = await customPost.post('rest/validateAssessor', postData);
   return res;
