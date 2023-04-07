@@ -53,7 +53,8 @@ const MedicalAssessments = () => {
   const getTodayAssessments = async () => {
     setLoading(true);
     const postData = {
-      "date" : new Date().toJSON().slice(0, 10)
+      "date" : new Date().toJSON().slice(0, 10),
+      "assessor_id": assessor_user_id
     };
     
     const validateData = {

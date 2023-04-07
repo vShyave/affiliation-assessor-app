@@ -85,7 +85,7 @@ const AssessmentType = () => {
       
       setActiveAccordionValue(courses_data?.[0]?.course_id);
       setAccordionData(courses_data);
-      checkFormStatus(courses_data);
+      // checkFormStatus(courses_data);
     } catch (error) {
       console.log('error - ', error);
     }
@@ -94,7 +94,7 @@ const AssessmentType = () => {
   const checkFormStatus = (courses_data) => {
     const newCourseArr = courses_data.map((obj) => {
       if (state) {
-        const value = state.userData?.filledForms[obj.formObject?.path];
+        const value = state.userData?.filledForms[obj?.formObject?.path];
         if (value) {
           obj['formStatus'] = value;
         }
