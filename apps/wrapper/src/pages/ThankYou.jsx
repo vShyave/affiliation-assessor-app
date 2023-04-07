@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
 import ROUTE_MAP from "../routing/routeMap";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -8,6 +9,16 @@ import CommonLayout from "../components/CommonLayout";
 import Button from "../components/Button";
 
 const ThankYou = () => {
+
+    const navigate = useNavigate();
+    let { formName } = useParams();
+    const handleNavigateToAssessmentType = () => {
+        navigate(ROUTE_MAP.assessment_type);
+    };
+
+    const handleNavigateToTodaysAssessment = () => {
+        navigate(ROUTE_MAP.medical_assessments);
+    }
 
     useEffect(() => {
         // getData();
@@ -26,14 +37,14 @@ const ThankYou = () => {
                     </div>
                     <div className="flex flex-col gap-1 text-center">
                         <div className="text-gray-500">You've now completed</div>
-                        <div className="text-primary font-bold text-[26px]">BSC in Nursing</div>
-                        <div className="text-[18px] text-gray-500">(1/8 Applications)</div>
+                        <div className="text-primary font-bold text-[26px]">{ formName?.split('_')?.join(' ')?.toUpperCase() } FORM</div>
+                        {/* <div className="text-[18px] text-gray-500">(1/8 Applications)</div> */}
                     </div>
                 </div>
 
                 <div className="flex flex-col gap-6 h-[15vh]">
-                    <Button text="Inspect Next Form" styles="border-primary text-white"></Button>
-                    <Button text="Exit" styles="bg-white border-[#DBDBDB] border-1 text-[#535461] hover:text-[#535461]"></Button>
+                    <Button text="Inspect Next Form" styles="border-primary text-white bg-primary" onClick={handleNavigateToAssessmentType}></Button>
+                    <Button text="Exit" styles="bg-white border-[#DBDBDB] border-1 text-[#535461] hover:text-[#535461]" onClick={handleNavigateToTodaysAssessment}></Button>
                 </div>
 
             </div>

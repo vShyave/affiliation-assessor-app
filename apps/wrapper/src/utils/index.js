@@ -113,6 +113,10 @@ export const setToLocalForage = async (key, value) => {
   await localforage.setItem(key, value);
 }
 
+export const removeItemFromLocalForage = (key) => {
+  localforage.removeItem(key);
+}
+
 export const handleFormEvents = async (startingForm, afterFormSubmit, e) => {
   const user = getCookie("userData");
   if (

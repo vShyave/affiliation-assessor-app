@@ -9,7 +9,7 @@ import Button from "../components/Button";
 import CommonLayout from "../components/CommonLayout";
 import Loader from "../components/Loader";
 
-import { getTodaysAssessment } from "../api";
+import { getTodaysAssessment, getValidatedAssessor } from "../api";
 import { StateContext } from "../App";
 import { getCookie } from "../utils";
 import { StoreToLocalStorage } from "../utils/common";
@@ -29,19 +29,46 @@ const MedicalAssessments = () => {
     latitude: null,
     longitude: null,
   });
-
+  const [validation, setValidation] = useState(false);
   const handleStartAssessment = () => {
     setState({ ...state, todayAssessment: { ...data } });
-    navigate(ROUTE_MAP.capture_location);
+    if(buttonText==="Continue")
+    {
+      navigate(ROUTE_MAP.assessment_type);
+    }
+    else{
+      navigate(ROUTE_MAP.capture_location);
+   
+    }
+  //  navigate(ROUTE_MAP.capture_location);
+   
     // navigate(role === 'Medical' ? ROUTE_MAP.assessment_type : ROUTE_MAP.capture_location);
   };
-
+  const [buttonText, setButtonText] = useState('Start Assessing');
+  function handleClick() {
+    setButtonText('Continue');
+  }
+  const storedData = localStorage.getItem('required_data');
+  const assessor_user_id = JSON.parse(storedData)?.assessor_user_id;
   const getTodayAssessments = async () => {
     setLoading(true);
     const postData = {
-      "date" : "2023-04-04"
+      "date" : new Date().toJSON().slice(0, 10),
+      "assessor_id": assessor_user_id
+    };
+    
+    const validateData = {
+      "assessor_id":assessor_user_id
+      //"ID-92752"
+      //"3f1af8c4-f97e-40d8-8bc4-94ce3a7069ed"
     };
     const res = await getTodaysAssessment(postData);
+    const check = await getValidatedAssessor(validateData);
+    console.log("Check",check.data.assessor_validation.length);
+    if(check.data.assessor_validation.length>0) {
+      handleClick();
+    }
+   
     if (res?.data?.assessment_schedule?.[0]) {
       let ass = res?.data?.assessment_schedule?.[0];
       setData({
@@ -58,9 +85,10 @@ const MedicalAssessments = () => {
       });
 
       const required_data = {
-        institute_id: ass.institute.id
+        institute_id: ass.institute.id,
+        schedule_id:ass.id
       };
-      
+     
       StoreToLocalStorage(required_data, 'required_data');
     } else setData(null);
 
@@ -72,6 +100,7 @@ const MedicalAssessments = () => {
   }
 
   useEffect(() => {
+   
     getTodayAssessments();
     const {
       user: { registrations },
@@ -127,12 +156,14 @@ const MedicalAssessments = () => {
                 <div className="flex flex-wrap">
                   { 
                     data?.pocs?.map((el, idx) =>
-                      <div className="flex flex-col p-2 m-[4px] bg-[#DBDBDB;] grow items-center rounded-[8px] gap-2" key={idx}>
-                        <div className="rounded-[50%] w-[36px] h-[36px] bg-[#009A2B;] flex items-center justify-center">
-                          <FontAwesomeIcon icon={faPhone} className="text-1xl lg:text-4xl text-gray-600 text-white w-[16px]" />
+                      <a href={`tel:${el.number}`} key={idx}>
+                        <div className="flex flex-col p-2 m-[4px] bg-[#DBDBDB;] grow items-center rounded-[8px] gap-2">
+                          <div className="rounded-[50%] w-[36px] h-[36px] bg-[#009A2B;] flex items-center justify-center">
+                            <FontAwesomeIcon icon={faPhone} className="text-1xl lg:text-4xl text-gray-600 text-white w-[16px]" />
+                          </div>
+                          <div className="text-secondary text-[18px] font-medium">{ el.number }</div>
                         </div>
-                        <div className="text-secondary text-[18px] font-medium">{ el.number }</div>
-                      </div>
+                      </a>
                     )
                   }
                 </div>
@@ -159,7 +190,7 @@ const MedicalAssessments = () => {
                   }
                 </div>
               </div>
-              <Button text="Start Assessing" styles="border-primary text-white bg-primary" onClick={handleStartAssessment} />
+              <Button text={buttonText} styles="border-primary text-white bg-primary" onClick={handleStartAssessment} />
             </div>
           )
         }

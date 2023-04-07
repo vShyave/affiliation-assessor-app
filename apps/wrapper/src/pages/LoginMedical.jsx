@@ -113,13 +113,7 @@ const LoginMedical = ({ handleStepChangeForLogin }) => {
           onClick={() => navigate(ROUTE_MAP.forgot_password)}
         />
 
-        {/* <Button
-          text={"Read terms & conditions"}
-          styles="bg-white border-white text-[#535461] hover:text-[#535461] w-80 mx-auto"
-          onClick={() => navigate(ROUTE_MAP.terms_and_condition)}
-        /> */}
-
-        <div className="text-[#535461] w-80 mx-auto text-[18px] text-center">By continuing you agree to our <Link to='/' className="text-blue-600/100">Terms and Conditions</Link></div>
+        <div className="text-[#535461] w-80 mx-auto text-[16px] text-center">By continuing you agree to our <Link to='/' className="text-blue-600/100">Terms and Conditions</Link></div>
       </div>
     </CommonLayout>
   );

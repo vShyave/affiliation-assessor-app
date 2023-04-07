@@ -56,7 +56,8 @@ const CaptureSelfie = () => {
         const postData = {
             assessorUserId: storedObj.assessor_user_id,
             location: JSON.stringify({lat, long}),
-            selfieImageURL: minioUrl
+            selfieImageURL: minioUrl,
+            schedule_id:storedObj.schedule_id,
         };
 
         try {

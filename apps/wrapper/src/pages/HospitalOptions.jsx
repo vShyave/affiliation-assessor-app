@@ -65,7 +65,7 @@ const HospitalOptions = () => {
               handleNavigation(ROUTE_MAP.otherforms_param_formName + "hospital_basic_information");
             else {
               setError(
-                "You've already filled this asessment for today"
+                "You've already filled this assessment for today"
               );
               setTimeout(() => setError(""), 3000);
             }
@@ -81,7 +81,7 @@ const HospitalOptions = () => {
               handleNavigation(ROUTE_MAP.otherforms_param_formName + "hospital_clinical_facilities");
             else {
               setError(
-                "You've already filled this asessment for today"
+                "You've already filled this assessment for today"
               );
               setTimeout(() => setError(""), 3000);
             }
@@ -97,7 +97,7 @@ const HospitalOptions = () => {
               handleNavigation(ROUTE_MAP.otherforms_param_formName + "hospital_community_postings");
             else {
               setError(
-                "You've already filled this asessment for today"
+                "You've already filled this assessment for today"
               );
               setTimeout(() => setError(""), 3000);
             }
