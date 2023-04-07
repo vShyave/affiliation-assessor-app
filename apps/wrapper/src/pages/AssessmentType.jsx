@@ -68,7 +68,8 @@ const AssessmentType = () => {
   }
 
   const handleNavigateToForms = (formName) => {
-    navigate(`${ROUTE_MAP.otherforms_param_formName}${formName}`);
+    const newFormName = formName?.toLowerCase()?.split(' ').join('_');
+    navigate(`${ROUTE_MAP.otherforms_param_formName}${newFormName}`);
   }
 
   useEffect(() => {

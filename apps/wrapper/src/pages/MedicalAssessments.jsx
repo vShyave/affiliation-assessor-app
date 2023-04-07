@@ -9,7 +9,7 @@ import Button from "../components/Button";
 import CommonLayout from "../components/CommonLayout";
 import Loader from "../components/Loader";
 
-import { getTodaysAssessment } from "../api";
+import { getTodaysAssessment, getValidatedAssessor } from "../api";
 import { StateContext } from "../App";
 import { getCookie } from "../utils";
 import { StoreToLocalStorage } from "../utils/common";
@@ -29,19 +29,45 @@ const MedicalAssessments = () => {
     latitude: null,
     longitude: null,
   });
-
+  const [validation, setValidation] = useState(false);
   const handleStartAssessment = () => {
     setState({ ...state, todayAssessment: { ...data } });
-    navigate(ROUTE_MAP.capture_location);
+    if(buttonText==="Continue")
+    {
+      navigate(ROUTE_MAP.assessment_type);
+    }
+    else{
+      navigate(ROUTE_MAP.capture_location);
+   
+    }
+  //  navigate(ROUTE_MAP.capture_location);
+   
     // navigate(role === 'Medical' ? ROUTE_MAP.assessment_type : ROUTE_MAP.capture_location);
   };
-
+  const [buttonText, setButtonText] = useState('Start Assessing');
+  function handleClick() {
+    setButtonText('Continue');
+  }
+  const storedData = localStorage.getItem('required_data');
+  const assessor_user_id = JSON.parse(storedData)?.assessor_user_id;
   const getTodayAssessments = async () => {
     setLoading(true);
     const postData = {
       "date" : new Date().toJSON().slice(0, 10)
     };
+    
+    const validateData = {
+      "assessor_id":assessor_user_id
+      //"ID-92752"
+      //"3f1af8c4-f97e-40d8-8bc4-94ce3a7069ed"
+    };
     const res = await getTodaysAssessment(postData);
+    const check = await getValidatedAssessor(validateData);
+    console.log("Check",check.data.assessor_validation.length);
+    if(check.data.assessor_validation.length>0){
+      handleClick();
+    }
+   
     if (res?.data?.assessment_schedule?.[0]) {
       let ass = res?.data?.assessment_schedule?.[0];
       setData({
@@ -60,7 +86,7 @@ const MedicalAssessments = () => {
       const required_data = {
         institute_id: ass.institute.id
       };
-      
+     
       StoreToLocalStorage(required_data, 'required_data');
     } else setData(null);
 
@@ -72,6 +98,7 @@ const MedicalAssessments = () => {
   }
 
   useEffect(() => {
+   
     getTodayAssessments();
     const {
       user: { registrations },
@@ -159,7 +186,7 @@ const MedicalAssessments = () => {
                   }
                 </div>
               </div>
-              <Button text="Start Assessing" styles="border-primary text-white bg-primary" onClick={handleStartAssessment} />
+              <Button text={buttonText} styles="border-primary text-white bg-primary" onClick={handleStartAssessment} />
             </div>
           )
         }
