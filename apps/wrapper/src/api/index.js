@@ -1,5 +1,5 @@
 import axios from "axios";
-import { makeHasuraCalls } from "../utils";
+import { getCookie, makeHasuraCalls } from "../utils";
 import customPost from "./customPost";
 
 const BASE_URL = process.env.REACT_APP_USER_SERVICE_URL;
@@ -72,17 +72,17 @@ export const getCoursesForAccordions = async (postData) => {
 
 export const getCoursesOfInstitutes = async (postData) => {
   const res = await customPost.post('rest/getCourseType', postData);
-  return res;
+  return res;
 }
 
 export const getUpcomingAssessments = async (postData) => {
   const res = await customPost.post('rest/getUpcomingInspections', postData);
-  return res;
+  return res;
 }
 
 export const getPastInspections = async (postData) => {
   const res = await customPost.post('rest/getPastInspections', postData);
-  return res;
+  return res;
 }
 
 export const UploadImage = async (postData) => {
@@ -154,7 +154,7 @@ export const getMedicalAssessmentsUpcoming = () => {
   return makeHasuraCalls(query);
 };
 
-export const getPrefillXML = async (form, onFormSuccessData, prefillXML) => {
+export const getPrefillXML = async (form, onFormSuccessData, prefillXML, imageUrls) => {
   try {
     const res = await axios.post(
       `${ENKETO_MANAGER_URL}/prefillXML?form=${form}&onFormSuccessData=${encodeURI(
@@ -162,13 +162,31 @@ export const getPrefillXML = async (form, onFormSuccessData, prefillXML) => {
       )}`,
       {
         prefillXML,
+        imageUrls
       },
       { headers: {} }
     );
     return res.data;
   } catch (err) {
     console.log(err);
-    return err;
+    return null;
+  }
+};
+
+export const getSubmissionXML = async (form, prefillXML, imageUrls) => {
+  try {
+    const res = await axios.post(
+      `${ENKETO_MANAGER_URL}/submissionXML?form=${form}`,
+      {
+        prefillXML,
+        imageUrls
+      },
+      { headers: {} }
+    );
+    return res.data;
+  } catch (err) {
+    console.log(err);
+    return null;
   }
 };
 
