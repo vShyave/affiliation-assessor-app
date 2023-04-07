@@ -11,6 +11,7 @@ import CommonLayout from "../components/CommonLayout";
 import Button from "../components/Button";
 
 import { getCoursesForAccordions, getCoursesOfInstitutes } from '../api';
+import { StateContext } from "../App";
 
 const AssessmentType = () => {
   
@@ -22,6 +23,7 @@ const AssessmentType = () => {
   const [activeButtonValue, setActiveButtonValue] = useState('Degree');
   const [activeAccordionValue, setActiveAccordionValue] = useState();
   const [accordionData, setAccordionData] = useState(null);
+  const { state, setState } = useContext(StateContext);
 
   const [open, setOpen] = useState(1);
   const handleOpen = (value) => {
@@ -55,21 +57,45 @@ const AssessmentType = () => {
 
     try {
       const response = await getCoursesForAccordions(postData);
-      const courses_data = response?.data?.courses;
+      let courses_data = response?.data?.courses;
+      if (courses_data.length) {
+        courses_data = courses_data.map((obj) => {
+          if (obj.formObject) {
+            obj.formObject = obj.formObject?.replace(/\\/g, "");
+            obj.formObject = JSON.parse(obj.formObject);
+          }
+          return obj;
+        });
+      }
+      console.log('courses_data - ', courses_data);
       setActiveAccordionValue(courses_data?.[0]?.course_id);
       setAccordionData(courses_data);
+      checkFormStatus(courses_data);
     } catch (error) {
       console.log('error - ', error);
     }
+  }
+
+  const checkFormStatus = (courses_data) => {
+    const newCourseArr = courses_data.map((obj) => {
+      if (state) {
+        const value = state.userData?.filledForms[obj.formObject?.path];
+        if (value) {
+          obj['formStatus'] = value;
+        }
+      }
+      return obj;
+    });
+    console.log('newCourseArr - ', newCourseArr);
   }
 
   const handleNavigateToBasicFrom = () => {
     navigate(ROUTE_MAP.hospital_forms);
   }
 
-  const handleNavigateToForms = (formName) => {
-    const newFormName = formName?.toLowerCase()?.split(' ').join('_');
-    navigate(`${ROUTE_MAP.otherforms_param_formName}${newFormName}`);
+  const handleNavigateToForms = (courseObj) => {
+    // const newFormName = formName?.toLowerCase()?.split(' ').join('_');
+    navigate(`${ROUTE_MAP.otherforms_param_formName}${courseObj.formObject?.path.trim()}`);
   }
 
   useEffect(() => {
@@ -78,6 +104,8 @@ const AssessmentType = () => {
 
   useEffect(() => {
     getCourses();
+    console.log('state - ', state);
+    // state?.userData?.filledForms?.["hospital_clinical_facilities"]
   }, []);
 
   return (
@@ -142,12 +170,16 @@ const AssessmentType = () => {
                                                 course?.formName && course?.formName?.length && course.formName.map(
                                                   (form, idx) => {
                                                     return (
-                                                      <div key={idx} onClick={() => handleNavigateToForms(form)}>
-                                                        <div className="flex flex-row gap-2 border-1 border-black py-4" onClick={() => navigate(ROUTE_MAP.basic_infrastructure)}>
+                                                      <div key={idx} onClick={() => handleNavigateToForms(course)}>
+                                                        <div className="flex flex-row gap-2 border-1 border-black py-4">
                                                           <div className="flex grow items-center">
                                                             <div className="text-[14px] font-medium">{ form }</div>
                                                           </div>
-                                                          <div className="flex grow-0 items-center">
+                                                          <div className="flex flex-row grow-0 items-center gap-4">
+                                                            {/* {
+                                                              formCompleted && 
+                                                              <div className="h-[40px] w-[auto] bg-primary text-white border-primary">Completed</div>
+                                                            } */}
                                                             <FontAwesomeIcon icon={faChevronRight} className="text-[16px]" />
                                                           </div>
                                                         </div>

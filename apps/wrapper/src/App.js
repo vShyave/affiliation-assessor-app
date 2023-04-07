@@ -303,7 +303,7 @@ function App() {
               }
             />
             <Route
-              path={ROUTE_MAP.thank_you}
+              path={`${ROUTE_MAP.thank_you}:formName`}
               element={
                 <PrivateRoute>
                   <ThankYou />

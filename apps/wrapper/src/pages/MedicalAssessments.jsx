@@ -154,12 +154,14 @@ const MedicalAssessments = () => {
                 <div className="flex flex-wrap">
                   { 
                     data?.pocs?.map((el, idx) =>
-                      <div className="flex flex-col p-2 m-[4px] bg-[#DBDBDB;] grow items-center rounded-[8px] gap-2" key={idx}>
-                        <div className="rounded-[50%] w-[36px] h-[36px] bg-[#009A2B;] flex items-center justify-center">
-                          <FontAwesomeIcon icon={faPhone} className="text-1xl lg:text-4xl text-gray-600 text-white w-[16px]" />
+                      <a href={`tel:${el.number}`} key={idx}>
+                        <div className="flex flex-col p-2 m-[4px] bg-[#DBDBDB;] grow items-center rounded-[8px] gap-2">
+                          <div className="rounded-[50%] w-[36px] h-[36px] bg-[#009A2B;] flex items-center justify-center">
+                            <FontAwesomeIcon icon={faPhone} className="text-1xl lg:text-4xl text-gray-600 text-white w-[16px]" />
+                          </div>
+                          <div className="text-secondary text-[18px] font-medium">{ el.number }</div>
                         </div>
-                        <div className="text-secondary text-[18px] font-medium">{ el.number }</div>
-                      </div>
+                      </a>
                     )
                   }
                 </div>
