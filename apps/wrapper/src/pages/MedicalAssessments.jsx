@@ -7,10 +7,12 @@ import { faLocationDot, faBuilding, faUser, faPhone, faLocationArrow } from "@fo
 
 import Button from "../components/Button";
 import CommonLayout from "../components/CommonLayout";
+import Loader from "../components/Loader";
 
 import { getTodaysAssessment } from "../api";
 import { StateContext } from "../App";
 import { getCookie } from "../utils";
+import { StoreToLocalStorage } from "../utils/common";
 
 const MedicalAssessments = () => {
   const { state, setState } = useContext(StateContext);
@@ -54,6 +56,12 @@ const MedicalAssessments = () => {
         latitude: ass.institute.latitude,
         longitude: ass.institute.longitude,
       });
+
+      const required_data = {
+        institute_id: ass.institute.id
+      };
+      
+      StoreToLocalStorage(required_data, 'required_data');
     } else setData(null);
 
     setLoading(false);
@@ -74,7 +82,12 @@ const MedicalAssessments = () => {
 
   return (
     <CommonLayout back={ROUTE_MAP.root} pageTitle="Today's Inspection" logoutDisabled>
-      <div className={`flex flex-col px-6 h-[calc(100vh-214px)] overflow-y-auto ${!data?.id ? 'justify-center' : '' }` }>
+      <div className={`flex flex-col px-6 min-h-[calc(100vh-214px)] overflow-y-scroll pb-6 ${!data?.id ? 'justify-center' : '' }` }>
+        {
+          loading && (
+            <Loader></Loader>
+          )
+        }
         {
           !loading && data && (
             <div className="flex flex-col bg-tertiary p-7 rounded-[8px] gap-3 animate__animated animate__fadeIn animate__slow">

@@ -5,16 +5,7 @@ import customPost from "./customPost";
 const BASE_URL = process.env.REACT_APP_USER_SERVICE_URL;
 const applicationId = process.env.REACT_APP_APPLICATION_ID;
 const ENKETO_MANAGER_URL = process.env.REACT_APP_ENKETO_MANAGER_URL;
-// const ENKETO_URL = process.env.REACT_APP_ENKETO_URL;
-
-// const customPost = axios.create({
-//   baseURL: BASE_URL,
-//   headers: {
-//     'Content-Type': "application/json",
-//     'Hasura-Client-Name': process.env.REACT_APP_HASURA_CLIENT_NAME,
-//     'x-hasura-admin-secret': process.env.REACT_APP_HASURA_ADMIN_SECRET_KEY
-//   }
-// })
+const ENKETO_URL = process.env.REACT_APP_ENKETO_URL;
 
 export const loginMedical = async (username, pass) => {
   try {
@@ -64,6 +55,11 @@ export const verifyOtpSavePassword = async (mobile, pass, otp) => {
   }
 };
 
+export const getAssessor = async (postData) => {
+  const res = await customPost.post('rest/getAssessor', postData);
+  return res;
+}
+
 export const getTodaysAssessment = async (postData) => {
   const res = await customPost.post('rest/getTodaysInspections', postData);
   return res;
@@ -71,6 +67,34 @@ export const getTodaysAssessment = async (postData) => {
 
 export const getCoursesForAccordions = async (postData) => {
   const res = await customPost.post('rest/getCourses', postData);
+  return res;
+}
+
+export const getCoursesOfInstitutes = async (postData) => {
+  const res = await customPost.post('rest/getCourseType', postData);
+  return res;
+}
+
+export const getUpcomingAssessments = async (postData) => {
+  const res = await customPost.post('rest/getUpcomingInspections', postData);
+  return res;
+}
+
+export const getPastInspections = async (postData) => {
+  const res = await customPost.post('rest/getPastInspections', postData);
+  return res;
+}
+
+export const UploadImage = async (postData) => {
+  const res = await axios.post(`${ENKETO_MANAGER_URL}form/uploadFile`, postData, {
+    "Accept": "*/*",
+    "Content-Type": "multipart/form-data",
+  });
+  return res;
+}
+
+export const ValidateAssessor = async (postData) => {
+  const res = await customPost.post('rest/validateAssessor', postData);
   return res;
 }
 

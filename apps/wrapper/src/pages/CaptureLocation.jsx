@@ -7,14 +7,16 @@ import { getCookie } from "../utils";
 
 import Button from "../components/Button";
 import CommonLayout from "../components/CommonLayout";
+import Loader from "../components/Loader";
 
 const CaptureLocation = () => {
-  const [lat, setLat] = useState(12.9330171);
-  const [long, setLong] = useState(77.5998201);
-  const [showMap, setShowMap] = useState(true);
-  const [loading, setLoading] = useState(false);
+  const [lat, setLat] = useState();
+  const [long, setLong] = useState();
+  const [showMap, setShowMap] = useState(false);
+  const [loading, setLoading] = useState(true);
   const [showContinue, setShowContinue ] = useState(false);
-  const [disabled, setDisabled] = useState(true);
+  const [captureLocation, setLocationCapture] = useState('');
+  // const [disabled, setDisabled] = useState(true);
   const [role, setRole] = useState('');
   const { state, setState } = useContext(StateContext);
   const [distance, setDistance] = useState(9999);
@@ -22,14 +24,37 @@ const CaptureLocation = () => {
   const navigate = useNavigate();
   const isMobile = window.innerWidth < 769;
 
-  const getLocation = () => {
-    if (navigator.geolocation && !loading) {
-      setLoading(true);
+  const getLocationPermissions = () => {
+    navigator.permissions && navigator.permissions.query({name: 'geolocation'})
+    .then(function(PermissionStatus) {
+      PermissionStatus.addEventListener('change', function (e) {
+        if (e.currentTarget.state === 'denied') {
+          setError(`Please allow location access && reload the page to continue`);
+        }
+
+        if (e.currentTarget.state === 'granted') {
+          getGeolocationCoordinates();
+          setError(false);
+        }
+      });
+
+      if (PermissionStatus.state === 'granted') {
+        getGeolocationCoordinates();
+      } else if (PermissionStatus.state == 'prompt') {
+        setError(`Please allow location access to continue`);
+      } else {
+        setError(`Please allow location access && reload the page to continue`);
+      }
+    })
+  }
+
+  const getGeolocationCoordinates = () => {
+    if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition((p) => {
         setLat(p.coords.latitude);
         setLong(p.coords.longitude);
-        // setShowMap(true);
-        // setLoading(false);
+        setShowMap(true);
+        setLoading(false);
       });
     } else {
       setError(`Please allow location access.`);
@@ -40,15 +65,15 @@ const CaptureLocation = () => {
     }
   }
 
-  const handleCaptureLocation = () => {
-    console.log('navigator.geolocation - ', navigator);
-    if (navigator.geolocation && !loading) {
-      setLoading(true);
+  const handleCaptureLocation = (flag) => {
+    setLoading(true);
+    if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition((p) => {
         setLat(p.coords.latitude);
         setLong(p.coords.longitude);
         setShowMap(true);
-        // setLoading(false);
+        setLoading(false);
+
         setState({
           ...state,
           userData: {
@@ -57,6 +82,7 @@ const CaptureLocation = () => {
             long: p.coords.longitude,
           },
         });
+
         setDistance(
           calcDistance(
             p.coords.latitude,
@@ -66,8 +92,13 @@ const CaptureLocation = () => {
           )
         );
 
+        if (flag) {
+          setLocationCapture('Location re-captured!');
+        } else {
+          setLocationCapture('Location captured!');
+        }
+
         setShowContinue(true);
-        // console.log('distance - ', distance);
       });
     } else {
       setError(`Please allow location access.`);
@@ -79,7 +110,6 @@ const CaptureLocation = () => {
   };
 
   function calcDistance(lat1, lon1, lat2, lon2) {
-    // console.log(`lat1 - ${lat1} & lon1 - ${lon1} & lat2 - ${lat2} & lon2 - ${lon2}`);
     var d;
     try {
       var R = 6371000; // radius of earth in metres
@@ -110,18 +140,17 @@ const CaptureLocation = () => {
   }
 
   const handleSubmit = () => {
-    if (
-      !state?.todayAssessment?.latitude ||
-      !state?.todayAssessment?.longitude
-    ) {
+    if ( !state?.todayAssessment?.latitude || !state?.todayAssessment?.longitude ) {
       setError(
         `Institute co-ordinates are missing. Please try again from start`
       );
+
       setTimeout(() => {
         setError(false);
       }, 5000);
       return;
     }
+
     if (!lat || !long) {
       setError(`Please capture location before continuing`);
       setTimeout(() => {
@@ -129,6 +158,7 @@ const CaptureLocation = () => {
       }, 5000);
       return;
     }
+
     if (distance > 500) {
       setError(`Please ensure you are within the institute premises`);
       setTimeout(() => {
@@ -136,12 +166,14 @@ const CaptureLocation = () => {
       }, 5000);
       return;
     }
-    navigate(ROUTE_MAP.capture_selfie);
+
+    navigate(`${ROUTE_MAP.capture_selfie}/${state.todayAssessment.latitude}/${state.todayAssessment.longitude}`);
   };
 
   useEffect(() => {
-    if (lat != 0 && long != 0) setDisabled(false);
-    else setDisabled(true);
+    if (lat != 0 && long != 0) {
+      getLocationPermissions();
+    }
   }, [lat, long]);
 
   useEffect(() => {
@@ -150,11 +182,7 @@ const CaptureLocation = () => {
     } = getCookie("userData");
     const roles = registrations[0]?.roles[0];
     setRole(roles);
-    setTimeout(() => {
-      setLoading(false);
-      setShowMap(true);
-    }, 2000);
-    getLocation();
+    getLocationPermissions();
   }, [])
 
   return (
@@ -164,18 +192,16 @@ const CaptureLocation = () => {
       pageTitle="1. Capture Location" 
       pageDesc="Enable location in your mobile settings and capture Institute's location">
       <div className="flex flex-col px-6 gap-5 pb-5 overflow-y-auto">
-        <div className="flex flex-row w-full text-center">
+        <div className="flex flex-col w-full text-center gap-5">
           {
-            !showMap && loading && 
+            loading && 
             (
-              <div className="flex w-[80%] border-primary border-[1px] h-[280px] mx-auto">
-                <div className="loader"></div>
-              </div>
+              <Loader></Loader>
             )
           }
 
           {
-            showMap && 
+            showMap && !loading && 
             (
               <>
                 <div className={`w-full ${showContinue ? 'pointer-events-none' : ''}`}>
@@ -187,6 +213,7 @@ const CaptureLocation = () => {
                     className={`animate__animated animate__fadeIn ${showContinue ? 'h-[40vh]' : 'h-[50vh]' } `}
                   />
                 </div>
+                <div className="text-[18px] text-[#009A2B] font-semibold">{ captureLocation }</div>
               </>
             )
           }
@@ -202,17 +229,17 @@ const CaptureLocation = () => {
 
         <div className="flex flex-col gap-4">
           {
-            showMap && !showContinue && 
+            showMap && !showContinue && !loading && 
             (
               <Button
                 text="Capture Location"
-                onClick={handleCaptureLocation}
+                onClick={() => handleCaptureLocation()}
                 styles="border-primary bg-primary text-white animate__animated animate__fadeInDown"
               />
             )
           }
           {
-            showContinue && (
+            showContinue && !loading && (
               <>
                 <Button
                   text="Continue"
@@ -222,40 +249,13 @@ const CaptureLocation = () => {
 
                 <Button 
                   text="Re-capture Location"
-                  onClick={handleCaptureLocation}
-                  styles={
-                    loading
-                      ? "bg-white text-primary border-primary border-[1px] opacity-75"
-                      : "bg-white border-primary text-primary animate__animated animate__fadeInDown"
-                  }
+                  onClick={() => handleCaptureLocation('re-capture')}
+                  styles={ `bg-white border-primary text-primary animate__animated animate__fadeInDown` }
                 />
               </>
             )
           }
-          
-          
         </div>
-
-        <style>
-          {
-            `
-              .loader {
-                border: 8px solid #FFF; /* Light grey */
-                border-top: 8px solid #F8913D; /* Blue */
-                border-radius: 50%;
-                width: 60px;
-                height: 60px;
-                animation: spin 2s linear infinite;
-                margin: auto;
-              }
-                
-              @keyframes spin {
-                0% { transform: rotate(0deg); }
-                100% { transform: rotate(360deg); }
-              }
-            `
-          }
-        </style>
       </div>
     </CommonLayout>
   );

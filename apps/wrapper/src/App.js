@@ -99,12 +99,24 @@ function App() {
               }
             />
             <Route
-              path={ROUTE_MAP.capture_selfie}
+              path={`${ROUTE_MAP.capture_selfie}/:lat/:long`}
               element={
                 <PrivateRoute>
                   <CaptureSelfie />
                 </PrivateRoute>
               }
+            />
+            <Route
+              path={ROUTE_MAP.assessment_type}
+              element={
+                <PrivateRoute>
+                  <AssessmentType />
+                </PrivateRoute>
+              }
+            />
+            <Route
+              path={ROUTE_MAP.forgot_password}
+              element={<ForgotPassword />}
             />
             <Route
               path={ROUTE_MAP.medical_assessment_options}
@@ -135,18 +147,6 @@ function App() {
               element={
                 <PrivateRoute>
                   <OsceOptions />
-                </PrivateRoute>
-              }
-            />
-            <Route
-              path={ROUTE_MAP.forgot_password}
-              element={<ForgotPassword />}
-            />
-            <Route
-              path={ROUTE_MAP.assessment_type}
-              element={
-                <PrivateRoute>
-                  <AssessmentType />
                 </PrivateRoute>
               }
             />
