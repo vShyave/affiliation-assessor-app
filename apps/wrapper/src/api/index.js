@@ -86,7 +86,7 @@ export const getPastInspections = async (postData) => {
 }
 
 export const UploadImage = async (postData) => {
-  const res = await axios.post(`${ENKETO_MANAGER_URL}form/uploadFile`, postData, {
+  const res = await axios.post(`${ENKETO_MANAGER_URL}/form/uploadFile`, postData, {
     "Accept": "*/*",
     "Content-Type": "multipart/form-data",
   });

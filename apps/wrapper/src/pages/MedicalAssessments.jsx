@@ -39,7 +39,7 @@ const MedicalAssessments = () => {
   const getTodayAssessments = async () => {
     setLoading(true);
     const postData = {
-      "date" : "2023-04-04"
+      "date" : new Date().toJSON().slice(0, 10)
     };
     const res = await getTodaysAssessment(postData);
     if (res?.data?.assessment_schedule?.[0]) {

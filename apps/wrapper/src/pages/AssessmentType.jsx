@@ -17,18 +17,6 @@ const AssessmentType = () => {
   const navigate = useNavigate();
   const storedData = localStorage.getItem('required_data');
   const instituteId = JSON.parse(storedData)?.institute_id;
-  // const tabData = [
-  //   { 
-  //     label: "Nursing",
-  //     value: "Nursing",
-  //     desc: ``
-  //   }, { 
-  //     label: "Paramedical",
-  //     value: "Paramedical",
-  //     desc: ``
-  //   }
-  // ];
-
   const [tabs, setTabs]=useState([]);
   const [activeTabValue, setActiveTabValue] = useState('');
   const [activeButtonValue, setActiveButtonValue] = useState('Degree');
@@ -77,6 +65,10 @@ const AssessmentType = () => {
 
   const handleNavigateToBasicFrom = () => {
     navigate(ROUTE_MAP.hospital_forms);
+  }
+
+  const handleNavigateToForms = (formName) => {
+    navigate(`${ROUTE_MAP.otherforms_param_formName}${formName}`);
   }
 
   useEffect(() => {
@@ -149,7 +141,7 @@ const AssessmentType = () => {
                                                 course?.formName && course?.formName?.length && course.formName.map(
                                                   (form, idx) => {
                                                     return (
-                                                      <div key={idx}>
+                                                      <div key={idx} onClick={() => handleNavigateToForms(form)}>
                                                         <div className="flex flex-row gap-2 border-1 border-black py-4" onClick={() => navigate(ROUTE_MAP.basic_infrastructure)}>
                                                           <div className="flex grow items-center">
                                                             <div className="text-[14px] font-medium">{ form }</div>
