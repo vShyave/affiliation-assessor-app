@@ -1,19 +1,13 @@
-FROM node:12
+FROM ubuntu:20.04
 
-ENV ENKETO_SRC_DIR=/srv/src/enketo_express
-
-WORKDIR ${ENKETO_SRC_DIR}
-
-RUN npm install -g grunt-cli pm2
-
-COPY . ${ENKETO_SRC_DIR}
-
-RUN npm install --production
-
-# Persist the `secrets` directory so the encryption key remains consistent.
-RUN mkdir -p ${ENKETO_SRC_DIR}/setup/docker/secrets
-VOLUME ${ENKETO_SRC_DIR}/setup/docker/secrets
-
-EXPOSE 8005
-
-CMD ["/bin/bash", "-c", "${ENKETO_SRC_DIR}/setup/docker/start.sh"]
+RUN apt update && apt install -y build-essential curl wget jq
+RUN curl -fsSL https://deb.nodesource.com/setup_14.x | bash -
+RUN apt-get install -y nodejs
+RUN npm i -g pnpm@7 
+RUN npm i -g pm2
+WORKDIR /app
+COPY enketo-core enketo-core
+COPY enketo-express enketo-express
+WORKDIR enketo-express
+RUN pnpm i 
+CMD ["bash", "start.sh"]
