@@ -171,6 +171,7 @@ services:
       REDIS_MAIN_PORT: 6379
       REDIS_CACHE_HOST: redis_cache
       REDIS_CACHE_PORT: 6379
+      FORM_MANAGER_BASE_URI: https://enketo-manager-ratings-tech.samagra.io/
       
 networks:
   db_net:

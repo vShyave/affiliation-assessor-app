@@ -12,5 +12,5 @@ WORKDIR enketo-express
 # TODO: builds can be made faster if we only copy files needed to do pnpm i. pnpm i will be cached or explore multistage builds
 RUN pnpm i 
 EXPOSE 8065
-# To transfer env variables of current shell to start.sh
-CMD [".", "start.sh"]
+RUN chmod +x start.sh
+ENTRYPOINT ["./start.sh"]
