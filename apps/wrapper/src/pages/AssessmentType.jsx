@@ -1,28 +1,30 @@
 import React, { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import ROUTE_MAP from "../routing/routeMap";
-import { Tabs, TabsHeader, TabsBody, Tab, TabPanel } from "@material-tailwind/react";
-import {Accordion,AccordionHeader,AccordionBody} from "@material-tailwind/react";
+import { Tabs, TabsHeader, TabsBody, Tab, TabPanel, Accordion, AccordionHeader, AccordionBody } from "@material-tailwind/react";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronRight } from "@fortawesome/free-solid-svg-icons";
 
+import { StateContext } from "../App";
+import { getCoursesForAccordions, getCoursesOfInstitutes, getStatusOfForms } from '../api';
+import { getAllKeysFromForage, getCookie } from "../utils";
+
 import CommonLayout from "../components/CommonLayout";
 import Button from "../components/Button";
-
-import { getCoursesForAccordions, getCoursesOfInstitutes, getStatusOfForms } from '../api';
-import { StateContext } from "../App";
 
 const AssessmentType = () => {
   
   const navigate = useNavigate();
   const storedData = localStorage.getItem('required_data');
   const instituteId = JSON.parse(storedData)?.institute_id;
-  const [tabs, setTabs]=useState([]);
+  const [tabs, setTabs] = useState([]);
   const [activeTabValue, setActiveTabValue] = useState('');
   const [activeButtonValue, setActiveButtonValue] = useState('Degree');
   const [activeAccordionValue, setActiveAccordionValue] = useState();
   const [accordionData, setAccordionData] = useState(null);
+  const [formNames, setFormNames] = useState([]);
+  const [completedForms, setCompletedForms] = useState([]);
   const { state, setState } = useContext(StateContext);
 
   const [open, setOpen] = useState(1);
@@ -31,21 +33,41 @@ const AssessmentType = () => {
     setActiveAccordionValue(value);
   };
 
-  const getStatus = async () => {
+  const getFormStatus = async () => {
+    const { user : { id } } = getCookie("userData");
+
     const postData = {
-      form_name: "bsc_nursing",
-      assessor_id: "d7da6c6d-96d7-42a8-bfda-d3501f9116d1"
+      date: new Date().toJSON().slice(0, 10),
+      assessor_id: id
     };
 
     try {
       const response = await getStatusOfForms(postData);
-      const formStatus = response?.data?.form_submissions[0];
-      console.log(formStatus);
+      let formStatus = response?.data?.form_submissions;
+      formStatus = formStatus.map((obj) => {
+        return obj.form_name;
+      });
+      setCompletedForms(formStatus);
+      getDataFromLocalForage();
     } catch (error) {
       alert(error);
     }
   };
 
+  const getDataFromLocalForage = async () => {
+    const keys = await getAllKeysFromForage();
+    if (keys.length) {
+      const form_names = keys && keys.map((elem) => {
+        const str1 = elem.substr(elem.indexOf('_') + 1);
+        return str1.substr(0, str1.indexOf('-') - 4);
+      });
+  
+      console.log('form_names - ', form_names);
+      setFormNames(form_names);
+    }
+    getCourses();
+  };
+ 
   const getCourses = async () => {
     const postData = {
       institute_id: instituteId
@@ -59,68 +81,71 @@ const AssessmentType = () => {
       });
       setTabs(tabs);
       setActiveTabValue(tabs[0].value);
+      getAccordionsData(tabs[0].value);
     } catch (error) {
       alert(error);
     }
   };
 
-  const getAccordionsData = async () => {
-    const postData = {
-      courseType: activeTabValue,
-      courseLevel: activeButtonValue
-    };
-
-    try {
-      const response = await getCoursesForAccordions(postData);
-      let courses_data = response?.data?.courses;
-      if (courses_data.length) {
-        courses_data = courses_data.map((obj) => {
-          if (obj.formObject) {
-            obj.formObject = obj.formObject?.replace(/\\/g, "");
-            obj.formObject = JSON.parse(obj.formObject);
-          }
-          return obj;
-        });
-      }
-      
-      setActiveAccordionValue(courses_data?.[0]?.course_id);
-      setAccordionData(courses_data);
-      // checkFormStatus(courses_data);
-    } catch (error) {
-      console.log('error - ', error);
-    }
-  }
-
-  const checkFormStatus = (courses_data) => {
-    const newCourseArr = courses_data.map((obj) => {
-      if (state) {
-        const value = state.userData?.filledForms[obj?.formObject?.path];
-        if (value) {
-          obj['formStatus'] = value;
+  const getAccordionsData = async (tabValue) => {
+    if (activeButtonValue && (tabValue || activeTabValue)) {
+      const postData = {
+        courseType: tabValue || activeTabValue,
+        courseLevel: activeButtonValue
+      };
+  
+      try {
+        const response = await getCoursesForAccordions(postData);
+        let courses_data = response?.data?.courses;
+        if (courses_data.length) {
+          courses_data = courses_data.map((obj) => {
+            if (obj.formObject) {
+              obj.formObject = obj.formObject?.replace(/\\/g, "");
+              obj.formObject = JSON.parse(obj.formObject);
+              obj.formObject.forEach((eachObj) => {
+                if ( formNames.includes(eachObj.path.trim()) ) {
+                  eachObj.status = 'continue';
+                } else if (completedForms.includes(eachObj.path.trim())) {
+                  eachObj.status = 'completed';
+                } else {
+                  eachObj.status = '';
+                }
+              });
+            }
+            return obj;
+          });
         }
+  
+        setActiveAccordionValue(courses_data?.[0]?.course_id);
+        setAccordionData(courses_data);
+      } catch (error) {
+        console.log('error - ', error);
       }
-      return obj;
-    });
-    console.log('newCourseArr - ', newCourseArr);
+    }
+
   }
 
   const handleNavigateToBasicFrom = () => {
     navigate(ROUTE_MAP.hospital_forms);
   }
 
-  const handleNavigateToForms = (courseObj) => {
-    // const newFormName = formName?.toLowerCase()?.split(' ').join('_');
-    navigate(`${ROUTE_MAP.otherforms_param_formName}${courseObj.formObject?.path.trim()}`);
+  const handleNavigateToForms = (formObj) => {
+    if (formObj?.status !== 'completed' || !formObj?.status) {
+      navigate(`${ROUTE_MAP.otherforms_param_formName}${formObj.path?.trim()}`);
+    }
+  }
+
+  const handleChangeTabValue = (value) => {
+    setActiveTabValue(value);
+    getAccordionsData(value);
   }
 
   useEffect(() => {
     getAccordionsData();
-  }, [activeTabValue, activeButtonValue]);
+  }, [activeButtonValue]);
 
   useEffect(() => {
-    getCourses();
-    console.log('state - ', state);
-    // state?.userData?.filledForms?.["hospital_clinical_facilities"]
+    getFormStatus();
   }, []);
 
   return (
@@ -154,7 +179,7 @@ const AssessmentType = () => {
                   {
                     tabs.map(
                       ({ label, value }) => ( 
-                        <Tab key={value} value={value} className={`p-3 font-bold border-b- border-b-2 ${(value === activeTabValue) ? 'text-primary border-b-primary' : 'text-gray-500 border-[#DBDBDB]'}`} onClick={() => setActiveTabValue(value)}> {label} </Tab> 
+                        <Tab key={value} value={value} className={`p-3 font-bold border-b- border-b-2 ${(value === activeTabValue) ? 'text-primary border-b-primary' : 'text-gray-500 border-[#DBDBDB]'}`} onClick={() => handleChangeTabValue(value)}> {label} </Tab> 
                       )
                     )
                   }
@@ -167,8 +192,8 @@ const AssessmentType = () => {
                             {
                               <>
                                 <div className="flex flex-row gap-4 justify-center">
-                                  <Button styles={`border-black p-3 w-[120px] rounded-[28px] animate__animated animate__fadeInDown hover:bg-black hover:text-white ${ (activeButtonValue === 'Degree') ? 'text-white bg-black' : 'text-black bg-white' }`} css={{fontSize: '14px'}} text="Degree" onClick={() => setActiveButtonValue('Degree')}></Button>
-                                  <Button styles={`border-black p-3 w-[120px] rounded-[28px] animate__animated animate__fadeInDown hover:bg-black hover:text-white ${ (activeButtonValue === 'Diploma') ? 'text-white bg-black' : 'text-black bg-white' }`} css={{fontSize: '14px'}} text="Diploma" onClick={() => setActiveButtonValue('Diploma')}></Button>
+                                  <Button styles={`border-[#535461] p-2 w-[120px] rounded-[28px] animate__animated animate__fadeInDown hover:bg-[#535461] hover:text-white ${ (activeButtonValue === 'Degree') ? 'text-white bg-[#535461]' : 'text-[#535461] bg-white' }`} css={{fontSize: '16px'}} text="Degree" onClick={() => setActiveButtonValue('Degree')}></Button>
+                                  <Button styles={`border-[#535461] p-2 w-[120px] rounded-[28px] animate__animated animate__fadeInDown hover:bg-[#535461] hover:text-white ${ (activeButtonValue === 'Diploma') ? 'text-white bg-[#535461]' : 'text-[#535461] bg-white' }`} css={{fontSize: '16px'}} text="Diploma" onClick={() => setActiveButtonValue('Diploma')}></Button>
                                 </div>
 
                                 <div className="flex flex-col gap-4">
@@ -182,19 +207,26 @@ const AssessmentType = () => {
                                             </AccordionHeader>
                                             <AccordionBody className="border-b-[1px] border-l-[1px] border-r-[1px] border-primary px-4 bg-orange-500/10 py-0">
                                               {
-                                                course?.formName && course?.formName?.length && course.formName.map(
+                                                course?.formName && course?.formObject?.length && course.formObject.map(
                                                   (form, idx) => {
                                                     return (
-                                                      <div key={idx} onClick={() => handleNavigateToForms(course)}>
+                                                      <div key={idx} onClick={() => handleNavigateToForms(form)}>
                                                         <div className="flex flex-row gap-2 border-1 border-black py-4">
                                                           <div className="flex grow items-center">
-                                                            <div className="text-[14px] font-medium">{ form }</div>
+                                                            <div className="text-[14px] font-medium">{ form.name }</div>
                                                           </div>
                                                           <div className="flex flex-row grow-0 items-center gap-4">
-                                                            {/* {
-                                                              formCompleted && 
-                                                              <div className="h-[40px] w-[auto] bg-primary text-white border-primary">Completed</div>
-                                                            } */}
+                                                            {/* <div> abc = { form?.status } </div> */}
+                                                            {
+                                                              form.status === 'completed' && (
+                                                                <div className="w-[auto] bg-[#009A2B] text-white border-[#009A2B] py-1 px-3 text-[12px] rounded-[24px] capitalize font-semibold">{ form.status }</div>
+                                                              )
+                                                            }
+                                                            {
+                                                              form.status === 'continue' && (
+                                                                <div className="w-[auto] bg-[#535461] text-white border-[#535461] py-1 px-3 text-[12px] rounded-[24px] capitalize font-semibold">{ form.status }</div>
+                                                              )
+                                                            }
                                                             <FontAwesomeIcon icon={faChevronRight} className="text-[16px]" />
                                                           </div>
                                                         </div>

@@ -70,13 +70,13 @@ export const getValidatedAssessor = async (postData) => {
   return res;
 }
 
-export const getCoursesForAccordions = async (postData) => {
-  const res = await customPost.post('rest/getCourses', postData);
+export const getCoursesOfInstitutes = async (postData) => {
+  const res = await customPost.post('rest/getCourseType', postData);
   return res;
 }
 
-export const getCoursesOfInstitutes = async (postData) => {
-  const res = await customPost.post('rest/getCourseType', postData);
+export const getCoursesForAccordions = async (postData) => {
+  const res = await customPost.post('rest/getCourses', postData);
   return res;
 }
 

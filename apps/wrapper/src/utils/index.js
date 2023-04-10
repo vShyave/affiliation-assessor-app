@@ -109,6 +109,14 @@ export const getFromLocalForage = async (key) => {
   }
 }
 
+export const getAllKeysFromForage = async () => {
+  let keys = [];
+  await localforage.keys().then((keysOfArray) => {
+    keys = keysOfArray
+  });
+  return keys;
+}
+
 export const setToLocalForage = async (key, value) => {
   await localforage.setItem(key, value);
 }

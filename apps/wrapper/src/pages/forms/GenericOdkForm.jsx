@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useContext, useRef } from "react";
 import { Routes, useNavigate, useParams } from "react-router-dom";
 import ROUTE_MAP from "../../routing/routeMap";
-// import { getFromLocalForage } from "../../utils";
 
 
 import { StateContext } from "../../App";
@@ -100,7 +99,8 @@ const GenericOdkForm = () => {
           assessment_type: formName.startsWith('hospital') ? 'hospital' : 'institute',
           form_name: formSpec.start,
           status: true,
-          assessor_id: assessor_id
+          assessor_id: assessor_id,
+          submitted_on: new Date().toJSON().slice(0, 10)
         });
 
         // Delete the data from the Local Forage
