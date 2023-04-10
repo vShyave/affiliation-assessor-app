@@ -13,4 +13,4 @@ WORKDIR enketo-express
 RUN pnpm i 
 EXPOSE 8065
 # To transfer env variables of current shell to start.sh
-CMD ["source", "start.sh"]
+CMD [".", "start.sh"]
