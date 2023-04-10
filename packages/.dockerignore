@@ -1,0 +1,4 @@
+# Ignore node modules and form manager
+
+node_modules
+form-manager
