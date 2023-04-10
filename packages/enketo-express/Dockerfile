@@ -9,5 +9,8 @@ WORKDIR /app
 COPY enketo-core enketo-core
 COPY enketo-express enketo-express
 WORKDIR enketo-express
+# TODO: builds can be made faster if we only copy files needed to do pnpm i. pnpm i will be cached or explore multistage builds
 RUN pnpm i 
-CMD ["bash", "start.sh"]
+EXPOSE 8065
+# To transfer env variables of current shell to start.sh
+CMD ["source", "start.sh"]
