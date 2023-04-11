@@ -14,14 +14,12 @@ tasks:
     init: |
       gp sync-done dev-setup
       bash install-central.sh
-  - name: Setup Enketo Express
+  - name: Start Other Services
     openMode: tab-after
     init: |
       gp sync-done dev-setup
-      bash install-node.sh
-      nvm use 14
-      cd packages/enketo-express && pnpm i && pnpm i -g grunt
-      bash update-config.sh
+      sed -i~ "/^FORM_MANAGER_BASE_URI=/s/=.*/=3006-${GITPOD_WORKSPACE_URL:8}/" .env
+      docker-compose up -d
       gp sync-done setup
     command: |
       grunt develop
