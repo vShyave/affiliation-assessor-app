@@ -20,7 +20,6 @@ services:
 
   search:
     image: docker.elastic.co/elasticsearch/elasticsearch:7.17.0
-    container_name: search
     environment:
       cluster.name: fusionauth
       bootstrap.memory_lock: "true"
@@ -83,14 +82,12 @@ services:
   redis_main:
     image: redis:5
     volumes:
-      - ../redis/conf/redis-enketo-main.conf:/etc/redis/redis.conf:ro
       - ./redis_main_data/:/data/
     restart: unless-stopped
 
   redis_cache:
     image: redis:5
     volumes:
-      - ../redis/conf/redis-enketo-cache.conf:/etc/redis/redis.conf:ro
       - ./redis_cache_data/:/data/
     restart: unless-stopped
 
@@ -168,7 +165,28 @@ services:
       REDIS_CACHE_HOST: redis_cache
       REDIS_CACHE_PORT: 6379
       FORM_MANAGER_BASE_URI: https://enketo-manager-ratings-tech.samagra.io/
-      
+  
+  fm-cache:
+    image: redis:7
+    volumes:
+      - ./fm_redis_data/:/data/
+    restart: unless-stopped
+
+  form-manager:
+    image: form-manager
+    build: packages/form-manager
+    depends_on:
+      - fm-cache
+      - minio
+    ports: 
+      - 3006:3006
+    environment:
+      MINIO_USERNAME: ${MINIO_USERNAME}
+      MINIO_PASSWORD: ${MINIO_PASSWORD}
+      MINIO_BUCKETNAME: ${MINIO_BUCKETNAME} 
+      REDIS_HOST: ${REDIS_HOST}
+      REDIS_PORT: ${REDIS_PORT}
+
 networks:
   db_net:
     driver: bridge
