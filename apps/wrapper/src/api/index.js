@@ -1,8 +1,9 @@
-const GITPOD_URL = process.env.REACT_APP_GITPOD_WORKSPACE_URL
+const HASURA_URL = process.env.REACT_APP_HASURA_URL_URL
+const FORM_MANAGER_URL = process.env.REACT_APP_FORM_MANAGER_URL
 
 const makeHasuraCalls = async (query) => {
     // const userData = getCookie("userData");
-    return fetch(`${GITPOD_URL.slice(0, GITPOD_URL.indexOf('/') + 2) + "8080-" + GITPOD_URL.slice(GITPOD_URL.indexOf('/') + 2)}/v1/graphql`, {
+    return fetch(`${HASURA_URL}/v1/graphql`, {
         method: "POST",
         headers: {
             Accept: "application/json",
@@ -43,7 +44,7 @@ export const saveFormSubmission = (data) => {
 
 export const getPrefillXML = async (form, onFormSuccessData, prefillXML, imageUrls) => {
     try {
-        let res = await fetch(`${GITPOD_URL.slice(0, GITPOD_URL.indexOf('/') + 2) + "3006-" + GITPOD_URL.slice(GITPOD_URL.indexOf('/') + 2)}/prefillXML?form=${form}&onFormSuccessData=${encodeURI(
+        let res = await fetch(`${FORM_MANAGER_URL}/prefillXML?form=${form}&onFormSuccessData=${encodeURI(
             JSON.stringify(onFormSuccessData)
         )}`, {
             method: 'POST',
