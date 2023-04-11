@@ -47,6 +47,7 @@ export class AppController {
     private configService: ConfigService,
   ) { }
 
+  MINIO_ENDPOINT = this.configService.get('MINIO_ENDPOINT');
   MINIO_URL = this.configService.get('MINIO_URL');
   FORM_MANAGER_URL = this.configService.get('FORM_MANAGER_URL');
 
@@ -270,8 +271,9 @@ export class AppController {
     // console.log('sessionRes', sessionRes);
 
     const minioClient: Client = new Minio.Client({
-      endPoint: this.MINIO_URL,
-      useSSL: true,
+      endPoint: this.MINIO_ENDPOINT,
+      port: parseInt(this.configService.get('MINIO_PORT')),
+      useSSL: this.configService.get('MINIO_USE_SSL') === true,
       accessKey: this.configService.get('MINIO_USERNAME'),
       secretKey: this.configService.get('MINIO_PASSWORD')
     });

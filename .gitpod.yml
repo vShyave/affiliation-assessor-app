@@ -20,6 +20,9 @@ tasks:
       gp sync-done dev-setup
       sed -i~ "/^FORM_MANAGER_URL=/s/=.*/=https\:\/\/3006-${GITPOD_WORKSPACE_URL:8}/" .env
       sed -i~ "/^MINIO_URL=/s/=.*/=https\:\/\/9000-${GITPOD_WORKSPACE_URL:8}/" .env
+      sed -i~ "/^MINIO_ENDPOINT=/s/=.*/=9000-${GITPOD_WORKSPACE_URL:8}/" .env
+      sed -i~ "/^MINIO_PORT=/s/=.*/=80/" .env
+      sed -i~ "/^MINIO_USE_SSL=/s/=.*/=true/" .env
       docker-compose up -d
       gp sync-done setup
   - name: Setup React Wrapper
