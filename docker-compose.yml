@@ -100,8 +100,8 @@ services:
     volumes:
       - ./pgdata:/var/lib/postgresql/data
     environment:
-      POSTGRES_USER: timescaledb
-      POSTGRES_PASSWORD: postgrespassword
+      POSTGRES_USER: ${TSDB_POSTGRES_USER}
+      POSTGRES_PASSWORD: ${TSDB_POSTGRES_PASSWORD}
 
   gql:
     image: hasura/graphql-engine:latest
@@ -111,17 +111,18 @@ services:
       - ./data/migrations:/hasura-migrations
       - ./data/metadata:/hasura-metadata
     depends_on:
-      - "tsdb"
+      - tsdb
+      - fusionauth
     restart: always
     environment:
-      - HASURA_GRAPHQL_DATABASE_URL=postgres://timescaledb:postgrespassword@tsdb:5432/postgres?sslmode=disable
+      - HASURA_GRAPHQL_DATABASE_URL=${HASURA_GRAPHQL_DATABASE_URL}
       - HASURA_GRAPHQL_ENABLE_CONSOLE=true # set to "false" to disable console
       - HASURA_GRAPHQL_DEV_MODE=true
       - HASURA_GRAPHQL_ENABLED_LOG_TYPES=startup,http-log,webhook-log,websocket-log,query-log
       - HASURA_GRAPHQL_MIGRATIONS_DISABLE_TRANSACTION=true
       - HASURA_GRAPHQL_CONSOLE_ASSETS_DIR=/srv/console-assets
-      - HASURA_GRAPHQL_ADMIN_SECRET=myadminsecretkey
-      - HASURA_GRAPHQL_JWT_SECRET={"type":"RS256","jwk_url":"http://fusionauth:9011/.well-known/jwks.json"}
+      - HASURA_GRAPHQL_ADMIN_SECRET=${HASURA_GRAPHQL_ADMIN_SECRET}
+      - HASURA_GRAPHQL_JWT_SECRET=${HASURA_GRAPHQL_JWT_SECRET}
 
   minio:
     image: minio/minio
@@ -147,6 +148,7 @@ services:
       /usr/bin/mc anonymous set public myminio/${MINIO_BUCKETNAME};
       exit 0;
       "
+
   enketo-express:
     image: enketo-express
     build:
@@ -164,7 +166,7 @@ services:
       REDIS_MAIN_PORT: 6379
       REDIS_CACHE_HOST: redis_cache
       REDIS_CACHE_PORT: 6379
-      FORM_MANAGER_BASE_URI: https://enketo-manager-ratings-tech.samagra.io/
+      FORM_MANAGER_BASE_URI: ${FORM_MANAGER_BASE_URI}
   
   fm-cache:
     image: redis:7
@@ -178,6 +180,7 @@ services:
     depends_on:
       - fm-cache
       - minio
+      - createbuckets
     ports: 
       - 3006:3006
     environment:
