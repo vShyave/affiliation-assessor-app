@@ -21,8 +21,6 @@ tasks:
       sed -i~ "/^FORM_MANAGER_BASE_URI=/s/=.*/=3006-${GITPOD_WORKSPACE_URL:8}/" .env
       docker-compose up -d
       gp sync-done setup
-    command: |
-      grunt develop
   - name: Setup Form Manager
     openMode: tab-after
     init: |
