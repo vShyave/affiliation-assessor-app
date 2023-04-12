@@ -3,7 +3,7 @@ import styles from './index.module.css';
 import beautify from "xml-beautifier";
 import { getPrefillXML, saveFormSubmission } from '../../api';
 
-const EKETO_URL = process.env.REACT_APP_EKETO_URL
+const ENKETO_URL = process.env.REACT_APP_ENKETO_URL
 const FORM_MANAGER_URL = process.env.REACT_APP_FORM_MANAGER_URL
 const HASURA_URL = process.env.REACT_APP_HASURA_URL
 
@@ -122,7 +122,7 @@ const GenericForm = (props) => {
         <iframe title='current-form'
           className={styles.odkForm}
           src={
-            `${EKETO_URL}/preview?formSpec=${encodedFormSpec}&xform=${encodedFormURI}`
+            `${ENKETO_URL}/preview?formSpec=${encodedFormSpec}&xform=${encodedFormURI}`
           }
         />
         <div className={styles.jsonResponse}>

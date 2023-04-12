@@ -1,4 +1,4 @@
-const HASURA_URL = process.env.REACT_APP_HASURA_URL_URL
+const HASURA_URL = process.env.REACT_APP_HASURA_URL
 const FORM_MANAGER_URL = process.env.REACT_APP_FORM_MANAGER_URL
 
 const makeHasuraCalls = async (query) => {

@@ -272,7 +272,8 @@ export class AppController {
 
     const minioClient: Client = new Minio.Client({
       endPoint: this.MINIO_ENDPOINT,
-      useSSL: true,
+      port: parseInt(this.configService.get('MINIO_PORT')),
+      useSSL: this.configService.get('MINIO_USE_SSL') === true,
       accessKey: this.configService.get('MINIO_USERNAME'),
       secretKey: this.configService.get('MINIO_PASSWORD')
     });
