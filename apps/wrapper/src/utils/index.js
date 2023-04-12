@@ -68,7 +68,6 @@ export const setCookie = (cname, cvalue) => {
 export const getCookie = (cname) => {
   try {
     let cookie = Cookies.get(cname);
-    console.log(JSON.parse(cookie));
     if (cookie) return JSON.parse(cookie);
   } catch (error) {
     return false;

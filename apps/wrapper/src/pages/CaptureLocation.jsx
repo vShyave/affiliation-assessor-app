@@ -171,15 +171,14 @@ const CaptureLocation = () => {
   };
 
   useEffect(() => {
+    console.log('state - ', state);
     if (lat != 0 && long != 0) {
       getLocationPermissions();
     }
   }, [lat, long]);
 
   useEffect(() => {
-    const {
-      user: { registrations },
-    } = getCookie("userData");
+    const { user: { registrations } } = getCookie("userData");
     const roles = registrations[0]?.roles[0];
     setRole(roles);
     getLocationPermissions();

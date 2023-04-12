@@ -25,7 +25,8 @@ const AssessmentType = () => {
   const [accordionData, setAccordionData] = useState(null);
   const [formNames, setFormNames] = useState([]);
   const [completedForms, setCompletedForms] = useState([]);
-  const { state, setState } = useContext(StateContext);
+  const [error, setError] = useState("");
+  // const { state, setState } = useContext(StateContext);
 
   const [open, setOpen] = useState(1);
   const handleOpen = (value) => {
@@ -62,7 +63,6 @@ const AssessmentType = () => {
         return str1.substr(0, str1.indexOf('-') - 4);
       });
   
-      console.log('form_names - ', form_names);
       setFormNames(form_names);
     }
     getCourses();
@@ -81,7 +81,7 @@ const AssessmentType = () => {
       });
       setTabs(tabs);
       setActiveTabValue(tabs[0].value);
-      getAccordionsData(tabs[0].value);
+      // getAccordionsData(tabs[0].value);
     } catch (error) {
       alert(error);
     }
@@ -103,6 +103,7 @@ const AssessmentType = () => {
               obj.formObject = obj.formObject?.replace(/\\/g, "");
               obj.formObject = JSON.parse(obj.formObject);
               obj.formObject.forEach((eachObj) => {
+
                 if ( formNames.includes(eachObj.path.trim()) ) {
                   eachObj.status = 'continue';
                 } else if (completedForms.includes(eachObj.path.trim())) {
@@ -132,6 +133,11 @@ const AssessmentType = () => {
   const handleNavigateToForms = (formObj) => {
     if (formObj?.status !== 'completed' || !formObj?.status) {
       navigate(`${ROUTE_MAP.otherforms_param_formName}${formObj.path?.trim()}`);
+    } else {
+      setError("The form has already completed!");
+      setTimeout(() => {
+        setError("");
+      }, 3000);
     }
   }
 
@@ -147,6 +153,10 @@ const AssessmentType = () => {
   useEffect(() => {
     getFormStatus();
   }, []);
+
+  useEffect(() => {
+    getAccordionsData();
+  }, [activeTabValue && formNames && completedForms]);
 
   return (
     <CommonLayout back={ROUTE_MAP.medical_assessments}
@@ -170,6 +180,14 @@ const AssessmentType = () => {
         <div className="my-6">
           <hr className="border-slate-300" />
         </div>
+
+        {
+          error && (
+            <span className="text-white animate__animated animate__headShake bg-red-500 w-80 font-medium px-4 py-3 text-center mx-auto mb-6">
+              { error }
+            </span>
+          )
+        }
 
         {
           tabs?.length > 0 && (
