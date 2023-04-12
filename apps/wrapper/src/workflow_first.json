@@ -1,6 +1,6 @@
 {
   "forms": {
-    "jumping_form_1": {
+    "test_form": {
       "skipOnSuccessMessage": true,
       "prefill": {},
       "submissionURL": "",
@@ -49,6 +49,6 @@
       }
     }
   },
-  "startingForm": "jumping_form_1",
+  "startingForm": "test_form",
   "metaData": {}
 }

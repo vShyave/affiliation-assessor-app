@@ -28,6 +28,8 @@ tasks:
       sed -i~ "/^REACT_APP_ENKETO_URL=/s/=.*/=https\:\/\/8065-${GITPOD_WORKSPACE_URL:8}/" .env
       sed -i~ "/^REACT_APP_FORM_MANAGER_URL=/s/=.*/=https\:\/\/3006-${GITPOD_WORKSPACE_URL:8}/" .env
       sed -i~ "/^REACT_APP_HASURA_URL=/s/=.*/=https\:\/\/8080-${GITPOD_WORKSPACE_URL:8}/" .env
+      # for enketo-express
+      sed -i~ "/^FORM_MANAGER_BASE_URI=/s/=.*/=https\:\/\/3006-${GITPOD_WORKSPACE_URL:8}/" .env
       
       docker-compose up -d
       gp sync-done setup
