@@ -1,0 +1,5 @@
+# Ignore node modules and form manager
+
+enketo-express/node_modules
+enketo-core/node_modules
+form-manager

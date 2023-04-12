@@ -3,7 +3,9 @@ import styles from './index.module.css';
 import beautify from "xml-beautifier";
 import { getPrefillXML, saveFormSubmission } from '../../api';
 
-const GITPOD_URL = process.env.REACT_APP_GITPOD_WORKSPACE_URL
+const ENKETO_URL = process.env.REACT_APP_ENKETO_URL
+const FORM_MANAGER_URL = process.env.REACT_APP_FORM_MANAGER_URL
+const HASURA_URL = process.env.REACT_APP_HASURA_URL
 
 const GenericForm = (props) => {
   const { selectedFlow, setSelectedFlow } = props;
@@ -77,7 +79,7 @@ const GenericForm = (props) => {
   }
 
   const parseFormData = async (formData) => {
-    let jsonRes = await fetch(`${GITPOD_URL.slice(0, GITPOD_URL.indexOf('/') + 2) + "3006-" + GITPOD_URL.slice(GITPOD_URL.indexOf('/') + 2)}/parse`, {
+    let jsonRes = await fetch(`${FORM_MANAGER_URL}/parse`, {
       method: 'POST',
       body: JSON.stringify({
         xml: formData,
@@ -114,13 +116,13 @@ const GenericForm = (props) => {
         selectedFlow.offline && <p className='animate__animated animate__fadeIn' style={{ color: '#fff', fontSize: '1.5rem' }}>Disable internet and try submitting the form</p>
       }
       {
-        selectedFlow.submitToHasura && <p className='animate__animated animate__fadeIn' style={{ color: '#fff', fontSize: '1.5rem' }}>Submit the form and check <a style={{color: '#ffc119'}} target="_blank" href={`${GITPOD_URL.slice(0, GITPOD_URL.indexOf('/') + 2) + "8080-" + GITPOD_URL.slice(GITPOD_URL.indexOf('/') + 2)}`}>Hasura</a></p>
+        selectedFlow.submitToHasura && <p className='animate__animated animate__fadeIn' style={{ color: '#fff', fontSize: '1.5rem' }}>Submit the form and check <a style={{ color: '#ffc119' }} target="_blank" href={`${HASURA_URL}`}>Hasura</a></p>
       }
       <div className={styles.formContainer}>
         <iframe title='current-form'
           className={styles.odkForm}
           src={
-            `${GITPOD_URL.slice(0, GITPOD_URL.indexOf('/') + 2) + "8065-" + GITPOD_URL.slice(GITPOD_URL.indexOf('/') + 2)}/preview?formSpec=${encodedFormSpec}&xform=${encodedFormURI}`
+            `${ENKETO_URL}/preview?formSpec=${encodedFormSpec}&xform=${encodedFormURI}`
           }
         />
         <div className={styles.jsonResponse}>

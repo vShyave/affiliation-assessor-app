@@ -1,1 +1,699 @@
-<?xml version="1.0"?><h:html xmlns="http://www.w3.org/2002/xforms" xmlns:ev="http://www.w3.org/2001/xml-events" xmlns:h="http://www.w3.org/1999/xhtml" xmlns:jr="http://openrosa.org/javarosa" xmlns:odk="http://www.opendatakit.org/xforms" xmlns:orx="http://openrosa.org/xforms" xmlns:xsd="http://www.w3.org/2001/XMLSchema"><h:head><h:title>Nursing Form-Medical (Academic Section)</h:title><model odk:xforms-version="1.0.0"><instance><data id="Nursing Form-Medical (Academic Section)" version="1"><username/><start/><end/><today/><deviceid/><subscriberid/><part2><notea/><notec/><p_2/><p_6/><p_6.1/><p_6.2/><p_6.3/><p_6.4/><p_7/><p_7.1/><p_7.2/><p_7.3/><p_7.4/><p_10/><p_10_1/><p_10_2/><img_p_10_2/><url7/><p_10_3/><img_p_10_3/><url8/><p_10_4/><img_p_10_4/><url9/><p_10_5/><img_p_10_5/><url10/><p_10_6/><img_p_10_6/><url11/><p_10_7/><img_p_10_7/><url12/><p_10_8/><img_p_10_8/><url13/><p_11/><p_11_1/><p_11_2/><p_12/><p_12_1/><img_p_12_1/><url14/></part2><meta><instanceID/></meta></data></instance><bind jr:preload="property" jr:preloadParams="username" nodeset="/data/username" type="string"/><bind jr:preload="timestamp" jr:preloadParams="start" nodeset="/data/start" type="dateTime"/><bind jr:preload="timestamp" jr:preloadParams="end" nodeset="/data/end" type="dateTime"/><bind jr:preload="date" jr:preloadParams="today" nodeset="/data/today" type="date"/><bind jr:preload="property" jr:preloadParams="deviceid" nodeset="/data/deviceid" type="string"/><bind jr:preload="property" jr:preloadParams="subscriberid" nodeset="/data/subscriberid" type="string"/><bind nodeset="/data/part2/notea" readonly="true()" type="string"/><bind nodeset="/data/part2/notec" readonly="true()" type="string"/><bind nodeset="/data/part2/p_2" required="true()" type="string"/><bind nodeset="/data/part2/p_6" readonly="true()" type="string"/><bind nodeset="/data/part2/p_6.1" required="true()" type="string"/><bind nodeset="/data/part2/p_6.2" required="true()" type="string"/><bind nodeset="/data/part2/p_6.3" required="true()" type="string"/><bind nodeset="/data/part2/p_6.4" required="true()" type="string"/><bind nodeset="/data/part2/p_7" readonly="true()" type="string"/><bind nodeset="/data/part2/p_7.1" required="true()" type="string"/><bind nodeset="/data/part2/p_7.2" required="true()" type="string"/><bind nodeset="/data/part2/p_7.3" required="true()" type="string"/><bind nodeset="/data/part2/p_7.4" required="true()" type="string"/><bind nodeset="/data/part2/p_10" readonly="true()" type="string"/><bind nodeset="/data/part2/p_10_1" required="true()" type="string"/><bind nodeset="/data/part2/p_10_2" required="true()" type="string"/><bind nodeset="/data/part2/img_p_10_2" relevant=" /data/part2/p_10_2 ='yes'" required="true()" type="binary"/><bind nodeset="/data/part2/url7" relevant=" /data/part2/p_10_2 ='yes'" type="string"/><bind nodeset="/data/part2/p_10_3" required="true()" type="string"/><bind nodeset="/data/part2/img_p_10_3" relevant=" /data/part2/p_10_3 ='yes'" required="true()" type="binary"/><bind nodeset="/data/part2/url8" relevant=" /data/part2/p_10_3 ='yes'" type="string"/><bind nodeset="/data/part2/p_10_4" required="true()" type="string"/><bind nodeset="/data/part2/img_p_10_4" relevant=" /data/part2/p_10_4 ='yes'" required="true()" type="binary"/><bind nodeset="/data/part2/url9" relevant=" /data/part2/p_10_4 ='yes'" type="string"/><bind nodeset="/data/part2/p_10_5" required="true()" type="string"/><bind nodeset="/data/part2/img_p_10_5" relevant=" /data/part2/p_10_5 ='yes'" required="true()" type="binary"/><bind nodeset="/data/part2/url10" relevant=" /data/part2/p_10_5 ='yes'" type="string"/><bind nodeset="/data/part2/p_10_6" required="true()" type="string"/><bind nodeset="/data/part2/img_p_10_6" relevant=" /data/part2/p_10_6 ='yes'" required="true()" type="binary"/><bind nodeset="/data/part2/url11" relevant=" /data/part2/p_10_6 ='yes'" type="string"/><bind nodeset="/data/part2/p_10_7" required="true()" type="string"/><bind nodeset="/data/part2/img_p_10_7" relevant=" /data/part2/p_10_7 ='yes'" required="true()" type="binary"/><bind nodeset="/data/part2/url12" relevant=" /data/part2/p_10_7 ='yes'" type="string"/><bind nodeset="/data/part2/p_10_8" required="true()" type="string"/><bind nodeset="/data/part2/img_p_10_8" relevant=" /data/part2/p_10_8 ='yes'" required="true()" type="binary"/><bind nodeset="/data/part2/url13" relevant=" /data/part2/p_10_8 ='yes'" type="string"/><bind nodeset="/data/part2/p_11" readonly="true()" type="string"/><bind nodeset="/data/part2/p_11_1" required="true()" type="string"/><bind nodeset="/data/part2/p_11_2" required="true()" type="string"/><bind nodeset="/data/part2/p_12" readonly="true()" type="string"/><bind nodeset="/data/part2/p_12_1" required="true()" type="string"/><bind nodeset="/data/part2/img_p_12_1" relevant=" /data/part2/p_12_1 ='yes'" required="true()" type="binary"/><bind nodeset="/data/part2/url14" relevant=" /data/part2/p_12_1 ='yes'" type="string"/><bind jr:preload="uid" nodeset="/data/meta/instanceID" readonly="true()" type="string"/></model></h:head><h:body class="pages"><group appearance="field-list" ref="/data/part2"><input ref="/data/part2/notea"><label>To be observed at Institute</label></input><input ref="/data/part2/notec"><label>###Academic Section</label></input><select1 ref="/data/part2/p_2"><label>Academic Policy for institution is available with regards to student attendance in theory and practical, dress code, professional conduct and disciplinary actions of students in clinic and classroom, a policy for students to file grievances regarding results exists</label><item><label>Yes</label><value>yes</value></item><item><label>No</label><value>no</value></item></select1><input ref="/data/part2/p_6"><label>Attend any of the ongoing classes and observe if faculty uses effective facilitation skills in the classroom</label></input><select1 ref="/data/part2/p_6.1"><label>Faculty specifies which unit/topic is being taught</label><item><label>Yes</label><value>yes</value></item><item><label>No</label><value>no</value></item></select1><select1 ref="/data/part2/p_6.2"><label>Faculty uses lesson plan</label><item><label>Yes</label><value>yes</value></item><item><label>No</label><value>no</value></item></select1><select1 ref="/data/part2/p_6.3"><label>Faculty discussed learning objectives with students</label><item><label>Yes</label><value>yes</value></item><item><label>No</label><value>no</value></item></select1><select1 ref="/data/part2/p_6.4"><label>AV aids like projector/overhead projector, white/black board, etc. are being used for classroom facilitation</label><item><label>Yes</label><value>yes</value></item><item><label>No</label><value>no</value></item></select1><input ref="/data/part2/p_7"><label>Attend any ongoing skill demonstration classes and observe if skills demonstrations are conducted efficiently in the learning lab</label></input><select1 ref="/data/part2/p_7.1"><label>Teachers utilized the learning labs regularly for skills demonstration</label><item><label>Yes</label><value>yes</value></item><item><label>No</label><value>no</value></item></select1><select1 ref="/data/part2/p_7.2"><label>Procedure checklist is available with students and faculty for demonstration</label><item><label>Yes</label><value>yes</value></item><item><label>No</label><value>no</value></item></select1><select1 ref="/data/part2/p_7.3"><label>Opportunities are given to the students for practice of the skills demonstrated</label><item><label>Yes</label><value>yes</value></item><item><label>No</label><value>no</value></item></select1><select1 ref="/data/part2/p_7.4"><label>Return demonstration/skill evaluations from students are taken for each skill demonstrated</label><item><label>Yes</label><value>yes</value></item><item><label>No</label><value>no</value></item></select1><input ref="/data/part2/p_10"><label>Evaluation criteria &amp; examination records</label></input><select1 ref="/data/part2/p_10_1"><label>Minimum two internal exams are conducted in a year for each batch</label><item><label>Yes</label><value>yes</value></item><item><label>No</label><value>no</value></item></select1><select1 ref="/data/part2/p_10_2"><label>Document/notice shows that students are informed at least 1 week before internal exams</label><item><label>Yes</label><value>yes</value></item><item><label>No</label><value>no</value></item></select1><upload mediatype="image/*" ref="/data/part2/img_p_10_2"><label>Upload</label></upload><input appearance="url" ref="/data/part2/url7"><label>URL Link</label></input><select1 ref="/data/part2/p_10_3"><label>Question paper has composition of MCQ, Short questions and long questions</label><item><label>Yes</label><value>yes</value></item><item><label>No</label><value>no</value></item></select1><upload mediatype="image/*" ref="/data/part2/img_p_10_3"><label>Upload</label></upload><input appearance="url" ref="/data/part2/url8"><label>URL Link</label></input><select1 ref="/data/part2/p_10_4"><label>Exams are structured so that they can be scored blindly (student names are not mentioned)</label><item><label>Yes</label><value>yes</value></item><item><label>No</label><value>no</value></item></select1><upload mediatype="image/*" ref="/data/part2/img_p_10_4"><label>Upload</label></upload><input appearance="url" ref="/data/part2/url9"><label>URL Link</label></input><select1 ref="/data/part2/p_10_5"><label>Structured practical examinations are held for each student at the end of each term that includes skill related objectives</label><item><label>Yes</label><value>yes</value></item><item><label>No</label><value>no</value></item></select1><upload mediatype="image/*" ref="/data/part2/img_p_10_5"><label>Upload</label></upload><input appearance="url" ref="/data/part2/url10"><label>URL Link</label></input><select1 ref="/data/part2/p_10_6"><label>Checklists or other tools are used to document observations of students in structured practical examinations</label><item><label>Yes</label><value>yes</value></item><item><label>No</label><value>no</value></item></select1><upload mediatype="image/*" ref="/data/part2/img_p_10_6"><label>Upload</label></upload><input appearance="url" ref="/data/part2/url11"><label>URL Link</label></input><select1 ref="/data/part2/p_10_7"><label>Sessional marks register/record is maintained</label><item><label>Yes</label><value>yes</value></item><item><label>No</label><value>no</value></item></select1><upload mediatype="image/*" ref="/data/part2/img_p_10_7"><label>Upload</label></upload><input appearance="url" ref="/data/part2/url12"><label>URL Link</label></input><select1 ref="/data/part2/p_10_8"><label>A document exists to track students from the entrance to exit</label><item><label>Yes</label><value>yes</value></item><item><label>No</label><value>no</value></item></select1><upload mediatype="image/*" ref="/data/part2/img_p_10_8"><label>Upload</label></upload><input appearance="url" ref="/data/part2/url13"><label>URL Link</label></input><input ref="/data/part2/p_11"><label>Meeting records</label></input><select1 ref="/data/part2/p_11_1"><label>Faculty meetings are conducted and minutes are recorded in registers/file in the last 1 month</label><item><label>Yes</label><value>yes</value></item><item><label>No</label><value>no</value></item></select1><select1 ref="/data/part2/p_11_2"><label>Regular meetings of faculty and clinical site staff are conducted and minutes are recorded (minimum thrice a year)</label><item><label>Yes</label><value>yes</value></item><item><label>No</label><value>no</value></item></select1><input ref="/data/part2/p_12"><label>CNE exists for faculty</label></input><select1 ref="/data/part2/p_12_1"><label>A record of Seminars/Webinar/Continue Education meeting minutes (last 6 months) for the teachers</label><item><label>Yes</label><value>yes</value></item><item><label>No</label><value>no</value></item></select1><upload mediatype="image/*" ref="/data/part2/img_p_12_1"><label>Upload</label></upload><input appearance="url" ref="/data/part2/url14"><label>URL Link</label></input></group></h:body></h:html>
+<?xml version="1.0"?>
+<h:html xmlns="http://www.w3.org/2002/xforms" xmlns:ev="http://www.w3.org/2001/xml-events"
+    xmlns:h="http://www.w3.org/1999/xhtml" xmlns:jr="http://openrosa.org/javarosa"
+    xmlns:odk="http://www.opendatakit.org/xforms" xmlns:orx="http://openrosa.org/xforms"
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <h:head>
+        <h:title>Nursing Form-Medical (CRP)</h:title>
+        <model odk:xforms-version="1.0.0">
+            <instance>
+                <data id="Nursing Form-Medical (CRP)" version="1">
+                    <username />
+                    <start />
+                    <end />
+                    <today />
+                    <deviceid />
+                    <subscriberid />
+                    <part1_9>
+                        <notea />
+                        <notek />
+                        <course />
+                        <anm />
+                        <crp1>
+                            <a_8_1 />
+                            <img_a_8_1 />
+                            <url3 />
+                            <a_8_2 />
+                            <a_8_3 />
+                            <a_8_4 />
+                            <a_8_5 />
+                            <a_8_6 />
+                            <a_8_7 />
+                            <a_8_8 />
+                        </crp1>
+                        <gnm />
+                        <crp2>
+                            <g_8_1 />
+                            <img_g_8_1 />
+                            <url3 />
+                            <g_8_2 />
+                            <g_8_3 />
+                            <g_8_4 />
+                            <g_8_5 />
+                            <g_8_6 />
+                            <g_8_7 />
+                            <g_8_8 />
+                        </crp2>
+                        <bsc />
+                        <crp3>
+                            <b_8_1 />
+                            <img_b_8_1 />
+                            <url3 />
+                            <b_8_2 />
+                            <b_8_3 />
+                            <b_8_4 />
+                            <b_8_5 />
+                            <b_8_6 />
+                            <b_8_7 />
+                            <b_8_8 />
+                        </crp3>
+                        <pbbsc />
+                        <p_8.1>
+                            <p_8_1 />
+                            <img_p_8_1 />
+                            <url3 />
+                            <p_8_2 />
+                            <p_8_3 />
+                            <p_8_4 />
+                            <p_8_5 />
+                            <p_8_6 />
+                            <p_8_7 />
+                            <p_8_8 />
+                        </p_8.1>
+                        <msc />
+                        <m_8.1>
+                            <m_8_1 />
+                            <img_m_8_1 />
+                            <url3 />
+                            <m_8_2 />
+                            <m_8_3 />
+                            <m_8_4 />
+                            <m_8_5 />
+                            <m_8_6 />
+                            <m_8_7 />
+                            <m_8_8 />
+                        </m_8.1>
+                    </part1_9>
+                    <meta>
+                        <instanceID />
+                    </meta>
+                </data>
+            </instance>
+            <bind jr:preload="property" jr:preloadParams="username" nodeset="/data/username"
+                type="string" />
+            <bind jr:preload="timestamp" jr:preloadParams="start" nodeset="/data/start"
+                type="dateTime" />
+            <bind jr:preload="timestamp" jr:preloadParams="end" nodeset="/data/end" type="dateTime" />
+            <bind jr:preload="date" jr:preloadParams="today" nodeset="/data/today" type="date" />
+            <bind jr:preload="property" jr:preloadParams="deviceid" nodeset="/data/deviceid"
+                type="string" />
+            <bind jr:preload="property" jr:preloadParams="subscriberid" nodeset="/data/subscriberid"
+                type="string" />
+            <bind nodeset="/data/part1_9/notea" readonly="true()" type="string" />
+            <bind nodeset="/data/part1_9/notek" readonly="true()" type="string" />
+            <bind nodeset="/data/part1_9/course" type="string" />
+            <bind nodeset="/data/part1_9/anm" required="true()" type="string" />
+            <bind nodeset="/data/part1_9/crp1" relevant=" /data/part1_9/anm ='yes'" />
+            <bind nodeset="/data/part1_9/crp1/a_8_1" required="true()" type="string" />
+            <bind nodeset="/data/part1_9/crp1/img_a_8_1" relevant=" /data/part1_9/crp1/a_8_1 ='yes'"
+                required="true()" type="binary" />
+            <bind nodeset="/data/part1_9/crp1/url3" relevant=" /data/part1_9/crp1/a_8_1 ='yes'"
+                type="string" />
+            <bind nodeset="/data/part1_9/crp1/a_8_2" required="true()" type="string" />
+            <bind nodeset="/data/part1_9/crp1/a_8_3" readonly="true()" type="string" />
+            <bind nodeset="/data/part1_9/crp1/a_8_4" required="true()" type="string" />
+            <bind nodeset="/data/part1_9/crp1/a_8_5" required="true()" type="string" />
+            <bind nodeset="/data/part1_9/crp1/a_8_6" required="true()" type="string" />
+            <bind nodeset="/data/part1_9/crp1/a_8_7" required="true()" type="string" />
+            <bind nodeset="/data/part1_9/crp1/a_8_8" required="true()" type="string" />
+            <bind nodeset="/data/part1_9/gnm" required="true()" type="string" />
+            <bind nodeset="/data/part1_9/crp2" relevant=" /data/part1_9/gnm ='yes'" />
+            <bind nodeset="/data/part1_9/crp2/g_8_1" required="true()" type="string" />
+            <bind nodeset="/data/part1_9/crp2/img_g_8_1" relevant=" /data/part1_9/crp2/g_8_1 ='yes'"
+                required="true()" type="binary" />
+            <bind nodeset="/data/part1_9/crp2/url3" relevant=" /data/part1_9/crp2/g_8_1 ='yes'"
+                type="string" />
+            <bind nodeset="/data/part1_9/crp2/g_8_2" required="true()" type="string" />
+            <bind nodeset="/data/part1_9/crp2/g_8_3" readonly="true()" type="string" />
+            <bind nodeset="/data/part1_9/crp2/g_8_4" required="true()" type="string" />
+            <bind nodeset="/data/part1_9/crp2/g_8_5" required="true()" type="string" />
+            <bind nodeset="/data/part1_9/crp2/g_8_6" required="true()" type="string" />
+            <bind nodeset="/data/part1_9/crp2/g_8_7" required="true()" type="string" />
+            <bind nodeset="/data/part1_9/crp2/g_8_8" required="true()" type="string" />
+            <bind nodeset="/data/part1_9/bsc" required="true()" type="string" />
+            <bind nodeset="/data/part1_9/crp3" relevant=" /data/part1_9/bsc ='yes'" />
+            <bind nodeset="/data/part1_9/crp3/b_8_1" required="true()" type="string" />
+            <bind nodeset="/data/part1_9/crp3/img_b_8_1" relevant=" /data/part1_9/crp3/b_8_1 ='yes'"
+                required="true()" type="binary" />
+            <bind nodeset="/data/part1_9/crp3/url3" relevant=" /data/part1_9/crp3/b_8_1 ='yes'"
+                type="string" />
+            <bind nodeset="/data/part1_9/crp3/b_8_2" required="true()" type="string" />
+            <bind nodeset="/data/part1_9/crp3/b_8_3" readonly="true()" type="string" />
+            <bind nodeset="/data/part1_9/crp3/b_8_4" required="true()" type="string" />
+            <bind nodeset="/data/part1_9/crp3/b_8_5" required="true()" type="string" />
+            <bind nodeset="/data/part1_9/crp3/b_8_6" required="true()" type="string" />
+            <bind nodeset="/data/part1_9/crp3/b_8_7" required="true()" type="string" />
+            <bind nodeset="/data/part1_9/crp3/b_8_8" required="true()" type="string" />
+            <bind nodeset="/data/part1_9/pbbsc" required="true()" type="string" />
+            <bind nodeset="/data/part1_9/p_8.1" relevant=" /data/part1_9/pbbsc ='yes'" />
+            <bind nodeset="/data/part1_9/p_8.1/p_8_1" required="true()" type="string" />
+            <bind nodeset="/data/part1_9/p_8.1/img_p_8_1"
+                relevant=" /data/part1_9/p_8.1/p_8_1 ='yes'" required="true()" type="binary" />
+            <bind nodeset="/data/part1_9/p_8.1/url3" relevant=" /data/part1_9/p_8.1/p_8_1 ='yes'"
+                type="string" />
+            <bind nodeset="/data/part1_9/p_8.1/p_8_2" required="true()" type="string" />
+            <bind nodeset="/data/part1_9/p_8.1/p_8_3" readonly="true()" type="string" />
+            <bind nodeset="/data/part1_9/p_8.1/p_8_4" required="true()" type="string" />
+            <bind nodeset="/data/part1_9/p_8.1/p_8_5" required="true()" type="string" />
+            <bind nodeset="/data/part1_9/p_8.1/p_8_6" required="true()" type="string" />
+            <bind nodeset="/data/part1_9/p_8.1/p_8_7" required="true()" type="string" />
+            <bind nodeset="/data/part1_9/p_8.1/p_8_8" required="true()" type="string" />
+            <bind nodeset="/data/part1_9/msc" required="true()" type="string" />
+            <bind nodeset="/data/part1_9/m_8.1" relevant=" /data/part1_9/msc ='yes'" />
+            <bind nodeset="/data/part1_9/m_8.1/m_8_1" required="true()" type="string" />
+            <bind nodeset="/data/part1_9/m_8.1/img_m_8_1"
+                relevant=" /data/part1_9/m_8.1/m_8_1 ='yes'" required="true()" type="binary" />
+            <bind nodeset="/data/part1_9/m_8.1/url3" relevant=" /data/part1_9/m_8.1/m_8_1 ='yes'"
+                type="string" />
+            <bind nodeset="/data/part1_9/m_8.1/m_8_2" required="true()" type="string" />
+            <bind nodeset="/data/part1_9/m_8.1/m_8_3" readonly="true()" type="string" />
+            <bind nodeset="/data/part1_9/m_8.1/m_8_4" required="true()" type="string" />
+            <bind nodeset="/data/part1_9/m_8.1/m_8_5" required="true()" type="string" />
+            <bind nodeset="/data/part1_9/m_8.1/m_8_6" required="true()" type="string" />
+            <bind nodeset="/data/part1_9/m_8.1/m_8_7" required="true()" type="string" />
+            <bind nodeset="/data/part1_9/m_8.1/m_8_8" required="true()" type="string" />
+            <bind jr:preload="uid" nodeset="/data/meta/instanceID" readonly="true()" type="string" />
+        </model>
+    </h:head>
+    <h:body class="pages">
+        <group appearance="field-list" ref="/data/part1_9">
+            <input ref="/data/part1_9/notea">
+                <label>Please visit the parent/affiliated hospital and observe the following</label>
+            </input>
+            <input ref="/data/part1_9/notek">
+                <label>####CRP(Clinical Rotation Plan)</label>
+            </input>
+            <select1 appearance="label" ref="/data/part1_9/course">
+                <label>Courses</label>
+                <item>
+                    <label>Yes</label>
+                    <value>yes</value>
+                </item>
+                <item>
+                    <label>No</label>
+                    <value>no</value>
+                </item>
+            </select1>
+            <select1 appearance="list-nolabel" ref="/data/part1_9/anm">
+                <label>ANM</label>
+                <item>
+                    <label>Yes</label>
+                    <value>yes</value>
+                </item>
+                <item>
+                    <label>No</label>
+                    <value>no</value>
+                </item>
+            </select1>
+            <group appearance="field-list" ref="/data/part1_9/crp1">
+                <label>Clinical Rotation Plan/Clinical Duty Roster</label>
+                <select1 ref="/data/part1_9/crp1/a_8_1">
+                    <label>CRP/Clinical Duty Roster for each class of students exists</label>
+                    <item>
+                        <label>Yes</label>
+                        <value>yes</value>
+                    </item>
+                    <item>
+                        <label>No</label>
+                        <value>no</value>
+                    </item>
+                </select1>
+                <upload mediatype="image/*" ref="/data/part1_9/crp1/img_a_8_1">
+                    <label>Upload</label>
+                </upload>
+                <input appearance="url" ref="/data/part1_9/crp1/url3">
+                    <label>URL Link</label>
+                </input>
+                <select1 ref="/data/part1_9/crp1/a_8_2">
+                    <label>Developed clinical objective and shared with clinical site staff</label>
+                    <item>
+                        <label>Yes</label>
+                        <value>yes</value>
+                    </item>
+                    <item>
+                        <label>No</label>
+                        <value>no</value>
+                    </item>
+                </select1>
+                <input ref="/data/part1_9/crp1/a_8_3">
+                    <label>CRP /Clinical Duty Roster has :</label>
+                </input>
+                <select1 ref="/data/part1_9/crp1/a_8_4">
+                    <label>Student distribution</label>
+                    <item>
+                        <label>Yes</label>
+                        <value>yes</value>
+                    </item>
+                    <item>
+                        <label>No</label>
+                        <value>no</value>
+                    </item>
+                </select1>
+                <select1 ref="/data/part1_9/crp1/a_8_5">
+                    <label>Area of posting as per curriculum</label>
+                    <item>
+                        <label>Yes</label>
+                        <value>yes</value>
+                    </item>
+                    <item>
+                        <label>No</label>
+                        <value>no</value>
+                    </item>
+                </select1>
+                <select1 ref="/data/part1_9/crp1/a_8_6">
+                    <label>Faculty responsible for each block</label>
+                    <item>
+                        <label>Yes</label>
+                        <value>yes</value>
+                    </item>
+                    <item>
+                        <label>No</label>
+                        <value>no</value>
+                    </item>
+                </select1>
+                <select1 ref="/data/part1_9/crp1/a_8_7">
+                    <label>Procedure checklist is available with faculty</label>
+                    <item>
+                        <label>Yes</label>
+                        <value>yes</value>
+                    </item>
+                    <item>
+                        <label>No</label>
+                        <value>no</value>
+                    </item>
+                </select1>
+                <select1 ref="/data/part1_9/crp1/a_8_8">
+                    <label>Procedure checklist is available with students</label>
+                    <item>
+                        <label>Yes</label>
+                        <value>yes</value>
+                    </item>
+                    <item>
+                        <label>No</label>
+                        <value>no</value>
+                    </item>
+                </select1>
+            </group>
+            <select1 appearance="list-nolabel" ref="/data/part1_9/gnm">
+                <label>GNM</label>
+                <item>
+                    <label>Yes</label>
+                    <value>yes</value>
+                </item>
+                <item>
+                    <label>No</label>
+                    <value>no</value>
+                </item>
+            </select1>
+            <group appearance="field-list" ref="/data/part1_9/crp2">
+                <label>Clinical Rotation Plan/Clinical Duty Roster</label>
+                <select1 ref="/data/part1_9/crp2/g_8_1">
+                    <label>CRP/Clinical Duty Roster for each class of students exists</label>
+                    <item>
+                        <label>Yes</label>
+                        <value>yes</value>
+                    </item>
+                    <item>
+                        <label>No</label>
+                        <value>no</value>
+                    </item>
+                </select1>
+                <upload mediatype="image/*" ref="/data/part1_9/crp2/img_g_8_1">
+                    <label>Upload</label>
+                </upload>
+                <input appearance="url" ref="/data/part1_9/crp2/url3">
+                    <label>URL Link</label>
+                </input>
+                <select1 ref="/data/part1_9/crp2/g_8_2">
+                    <label>Developed clinical objective and shared with clinical site staff</label>
+                    <item>
+                        <label>Yes</label>
+                        <value>yes</value>
+                    </item>
+                    <item>
+                        <label>No</label>
+                        <value>no</value>
+                    </item>
+                </select1>
+                <input ref="/data/part1_9/crp2/g_8_3">
+                    <label>CRP /Clinical Duty Roster has :</label>
+                </input>
+                <select1 ref="/data/part1_9/crp2/g_8_4">
+                    <label>Student distribution</label>
+                    <item>
+                        <label>Yes</label>
+                        <value>yes</value>
+                    </item>
+                    <item>
+                        <label>No</label>
+                        <value>no</value>
+                    </item>
+                </select1>
+                <select1 ref="/data/part1_9/crp2/g_8_5">
+                    <label>Area of posting as per curriculum</label>
+                    <item>
+                        <label>Yes</label>
+                        <value>yes</value>
+                    </item>
+                    <item>
+                        <label>No</label>
+                        <value>no</value>
+                    </item>
+                </select1>
+                <select1 ref="/data/part1_9/crp2/g_8_6">
+                    <label>Faculty responsible for each block</label>
+                    <item>
+                        <label>Yes</label>
+                        <value>yes</value>
+                    </item>
+                    <item>
+                        <label>No</label>
+                        <value>no</value>
+                    </item>
+                </select1>
+                <select1 ref="/data/part1_9/crp2/g_8_7">
+                    <label>Procedure checklist is available with faculty</label>
+                    <item>
+                        <label>Yes</label>
+                        <value>yes</value>
+                    </item>
+                    <item>
+                        <label>No</label>
+                        <value>no</value>
+                    </item>
+                </select1>
+                <select1 ref="/data/part1_9/crp2/g_8_8">
+                    <label>Procedure checklist is available with students</label>
+                    <item>
+                        <label>Yes</label>
+                        <value>yes</value>
+                    </item>
+                    <item>
+                        <label>No</label>
+                        <value>no</value>
+                    </item>
+                </select1>
+            </group>
+            <select1 appearance="list-nolabel" ref="/data/part1_9/bsc">
+                <label>BSc. Nursing</label>
+                <item>
+                    <label>Yes</label>
+                    <value>yes</value>
+                </item>
+                <item>
+                    <label>No</label>
+                    <value>no</value>
+                </item>
+            </select1>
+            <group appearance="field-list" ref="/data/part1_9/crp3">
+                <label>Clinical Rotation Plan/Clinical Duty Roster</label>
+                <select1 ref="/data/part1_9/crp3/b_8_1">
+                    <label>CRP/Clinical Duty Roster for each class of students exists</label>
+                    <item>
+                        <label>Yes</label>
+                        <value>yes</value>
+                    </item>
+                    <item>
+                        <label>No</label>
+                        <value>no</value>
+                    </item>
+                </select1>
+                <upload mediatype="image/*" ref="/data/part1_9/crp3/img_b_8_1">
+                    <label>Upload</label>
+                </upload>
+                <input appearance="url" ref="/data/part1_9/crp3/url3">
+                    <label>URL Link</label>
+                </input>
+                <select1 ref="/data/part1_9/crp3/b_8_2">
+                    <label>Developed clinical objective and shared with clinical site staff</label>
+                    <item>
+                        <label>Yes</label>
+                        <value>yes</value>
+                    </item>
+                    <item>
+                        <label>No</label>
+                        <value>no</value>
+                    </item>
+                </select1>
+                <input ref="/data/part1_9/crp3/b_8_3">
+                    <label>CRP /Clinical Duty Roster has :</label>
+                </input>
+                <select1 ref="/data/part1_9/crp3/b_8_4">
+                    <label>Student distribution</label>
+                    <item>
+                        <label>Yes</label>
+                        <value>yes</value>
+                    </item>
+                    <item>
+                        <label>No</label>
+                        <value>no</value>
+                    </item>
+                </select1>
+                <select1 ref="/data/part1_9/crp3/b_8_5">
+                    <label>Area of posting as per curriculum</label>
+                    <item>
+                        <label>Yes</label>
+                        <value>yes</value>
+                    </item>
+                    <item>
+                        <label>No</label>
+                        <value>no</value>
+                    </item>
+                </select1>
+                <select1 ref="/data/part1_9/crp3/b_8_6">
+                    <label>Faculty responsible for each block</label>
+                    <item>
+                        <label>Yes</label>
+                        <value>yes</value>
+                    </item>
+                    <item>
+                        <label>No</label>
+                        <value>no</value>
+                    </item>
+                </select1>
+                <select1 ref="/data/part1_9/crp3/b_8_7">
+                    <label>Procedure checklist is available with faculty</label>
+                    <item>
+                        <label>Yes</label>
+                        <value>yes</value>
+                    </item>
+                    <item>
+                        <label>No</label>
+                        <value>no</value>
+                    </item>
+                </select1>
+                <select1 ref="/data/part1_9/crp3/b_8_8">
+                    <label>Procedure checklist is available with students</label>
+                    <item>
+                        <label>Yes</label>
+                        <value>yes</value>
+                    </item>
+                    <item>
+                        <label>No</label>
+                        <value>no</value>
+                    </item>
+                </select1>
+            </group>
+            <select1 appearance="list-nolabel" ref="/data/part1_9/pbbsc">
+                <label>Post Basic BSc. Nursing</label>
+                <item>
+                    <label>Yes</label>
+                    <value>yes</value>
+                </item>
+                <item>
+                    <label>No</label>
+                    <value>no</value>
+                </item>
+            </select1>
+            <group appearance="field-list" ref="/data/part1_9/p_8.1">
+                <label>Clinical Rotation Plan/Clinical Duty Roster</label>
+                <select1 ref="/data/part1_9/p_8.1/p_8_1">
+                    <label>CRP/Clinical Duty Roster for each class of students exists</label>
+                    <item>
+                        <label>Yes</label>
+                        <value>yes</value>
+                    </item>
+                    <item>
+                        <label>No</label>
+                        <value>no</value>
+                    </item>
+                </select1>
+                <upload mediatype="image/*" ref="/data/part1_9/p_8.1/img_p_8_1">
+                    <label>Upload</label>
+                </upload>
+                <input appearance="url" ref="/data/part1_9/p_8.1/url3">
+                    <label>URL Link</label>
+                </input>
+                <select1 ref="/data/part1_9/p_8.1/p_8_2">
+                    <label>Developed clinical objective and shared with clinical site staff</label>
+                    <item>
+                        <label>Yes</label>
+                        <value>yes</value>
+                    </item>
+                    <item>
+                        <label>No</label>
+                        <value>no</value>
+                    </item>
+                </select1>
+                <input ref="/data/part1_9/p_8.1/p_8_3">
+                    <label>CRP /Clinical Duty Roster has :</label>
+                </input>
+                <select1 ref="/data/part1_9/p_8.1/p_8_4">
+                    <label>Student distribution</label>
+                    <item>
+                        <label>Yes</label>
+                        <value>yes</value>
+                    </item>
+                    <item>
+                        <label>No</label>
+                        <value>no</value>
+                    </item>
+                </select1>
+                <select1 ref="/data/part1_9/p_8.1/p_8_5">
+                    <label>Area of posting as per curriculum</label>
+                    <item>
+                        <label>Yes</label>
+                        <value>yes</value>
+                    </item>
+                    <item>
+                        <label>No</label>
+                        <value>no</value>
+                    </item>
+                </select1>
+                <select1 ref="/data/part1_9/p_8.1/p_8_6">
+                    <label>Faculty responsible for each block</label>
+                    <item>
+                        <label>Yes</label>
+                        <value>yes</value>
+                    </item>
+                    <item>
+                        <label>No</label>
+                        <value>no</value>
+                    </item>
+                </select1>
+                <select1 ref="/data/part1_9/p_8.1/p_8_7">
+                    <label>Procedure checklist is available with faculty</label>
+                    <item>
+                        <label>Yes</label>
+                        <value>yes</value>
+                    </item>
+                    <item>
+                        <label>No</label>
+                        <value>no</value>
+                    </item>
+                </select1>
+                <select1 ref="/data/part1_9/p_8.1/p_8_8">
+                    <label>Procedure checklist is available with students</label>
+                    <item>
+                        <label>Yes</label>
+                        <value>yes</value>
+                    </item>
+                    <item>
+                        <label>No</label>
+                        <value>no</value>
+                    </item>
+                </select1>
+            </group>
+            <select1 appearance="list-nolabel" ref="/data/part1_9/msc">
+                <label>MSc. Nursing</label>
+                <item>
+                    <label>Yes</label>
+                    <value>yes</value>
+                </item>
+                <item>
+                    <label>No</label>
+                    <value>no</value>
+                </item>
+            </select1>
+            <group appearance="field-list" ref="/data/part1_9/m_8.1">
+                <label>Clinical Rotation Plan/Clinical Duty Roster</label>
+                <select1 ref="/data/part1_9/m_8.1/m_8_1">
+                    <label>CRP/Clinical Duty Roster for each class of students exists</label>
+                    <item>
+                        <label>Yes</label>
+                        <value>yes</value>
+                    </item>
+                    <item>
+                        <label>No</label>
+                        <value>no</value>
+                    </item>
+                </select1>
+                <upload mediatype="image/*" ref="/data/part1_9/m_8.1/img_m_8_1">
+                    <label>Upload</label>
+                </upload>
+                <input appearance="url" ref="/data/part1_9/m_8.1/url3">
+                    <label>URL Link</label>
+                </input>
+                <select1 ref="/data/part1_9/m_8.1/m_8_2">
+                    <label>Developed clinical objective and shared with clinical site staff</label>
+                    <item>
+                        <label>Yes</label>
+                        <value>yes</value>
+                    </item>
+                    <item>
+                        <label>No</label>
+                        <value>no</value>
+                    </item>
+                </select1>
+                <input ref="/data/part1_9/m_8.1/m_8_3">
+                    <label>CRP /Clinical Duty Roster has :</label>
+                </input>
+                <select1 ref="/data/part1_9/m_8.1/m_8_4">
+                    <label>Student distribution</label>
+                    <item>
+                        <label>Yes</label>
+                        <value>yes</value>
+                    </item>
+                    <item>
+                        <label>No</label>
+                        <value>no</value>
+                    </item>
+                </select1>
+                <select1 ref="/data/part1_9/m_8.1/m_8_5">
+                    <label>Area of posting as per curriculum</label>
+                    <item>
+                        <label>Yes</label>
+                        <value>yes</value>
+                    </item>
+                    <item>
+                        <label>No</label>
+                        <value>no</value>
+                    </item>
+                </select1>
+                <select1 ref="/data/part1_9/m_8.1/m_8_6">
+                    <label>Faculty responsible for each block</label>
+                    <item>
+                        <label>Yes</label>
+                        <value>yes</value>
+                    </item>
+                    <item>
+                        <label>No</label>
+                        <value>no</value>
+                    </item>
+                </select1>
+                <select1 ref="/data/part1_9/m_8.1/m_8_7">
+                    <label>Procedure checklist is available with faculty</label>
+                    <item>
+                        <label>Yes</label>
+                        <value>yes</value>
+                    </item>
+                    <item>
+                        <label>No</label>
+                        <value>no</value>
+                    </item>
+                </select1>
+                <select1 ref="/data/part1_9/m_8.1/m_8_8">
+                    <label>Procedure checklist is available with students</label>
+                    <item>
+                        <label>Yes</label>
+                        <value>yes</value>
+                    </item>
+                    <item>
+                        <label>No</label>
+                        <value>no</value>
+                    </item>
+                </select1>
+            </group>
+        </group>
+    </h:body>
+</h:html>

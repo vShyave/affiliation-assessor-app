@@ -14,41 +14,25 @@ tasks:
     init: |
       gp sync-done dev-setup
       bash install-central.sh
-  - name: Setup Enketo Express
+  - name: Start Services
     openMode: tab-after
     init: |
       gp sync-done dev-setup
-      bash install-node.sh
-      nvm use 14
-      cd packages/enketo-express && pnpm i && pnpm i -g grunt
-      bash update-config.sh
+      # Not needed now, we can use docker-compose networking.. but one can use this in a script to repalce env vars at runtime in .env
+      # sed -i~ "/^FORM_MANAGER_URL=/s/=.*/=https\:\/\/3006-${GITPOD_WORKSPACE_URL:8}/" .env
+      sed -i~ "/^MINIO_URL=/s/=.*/=https\:\/\/9000-${GITPOD_WORKSPACE_URL:8}/" .env
+      # sed -i~ "/^MINIO_ENDPOINT=/s/=.*/=9000-${GITPOD_WORKSPACE_URL:8}/" .env
+      # sed -i~ "/^MINIO_PORT=/s/=.*/=80/" .env
+      # sed -i~ "/^MINIO_USE_SSL=/s/=.*/=true/" .env
+      # Replace env vars for react wrapper
+      sed -i~ "/^REACT_APP_ENKETO_URL=/s/=.*/=https\:\/\/8065-${GITPOD_WORKSPACE_URL:8}/" .env
+      sed -i~ "/^REACT_APP_FORM_MANAGER_URL=/s/=.*/=https\:\/\/3006-${GITPOD_WORKSPACE_URL:8}/" .env
+      sed -i~ "/^REACT_APP_HASURA_URL=/s/=.*/=https\:\/\/8080-${GITPOD_WORKSPACE_URL:8}/" .env
+      # for enketo-express
+      sed -i~ "/^FORM_MANAGER_BASE_URI=/s/=.*/=https\:\/\/3006-${GITPOD_WORKSPACE_URL:8}/" .env
+      
+      docker-compose up -d
       gp sync-done setup
-    command: |
-      grunt develop
-  - name: Setup Form Manager
-    openMode: tab-after
-    init: |
-      gp sync-await setup
-      source .env
-      docker run --name enketo-redis-main -p 6369:6379 -d redis 
-      cd packages/form-manager
-      echo "MINIO_USERNAME=$MINIO_USERNAME"  >> .env
-      echo "MINIO_PASSWORD=$MINIO_PASSWORD"  >> .env
-      echo "MINIO_BUCKETNAME=$MINIO_BUCKETNAME"  >> .env
-      nvm use 16
-      pnpm install
-    command: |
-      npm run start:dev
-  - name: Setup React Wrapper
-    openMode: tab-after
-    init: |
-      gp sync-await setup
-      cd apps/wrapper
-      nvm use 16
-      pnpm install
-      bash make-envs-for-react.sh
-    command: |
-      npm run start
       
 ports:
   - port: 8065

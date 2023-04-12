@@ -221,3 +221,10 @@ TODO: Add details on the specifications
 ## Possible Attack Vectors
 1. XSS (High Priority) - Simple form
 2. SQL Injection (High Priority) - needs to be fixed.
+
+NOTE:
+-----
+```
+For local development enketo-express needs node 14 and pnpm@7
+Run nvm use 14 && npm i -g pnpm@7 if developing in enketo-express
+```
