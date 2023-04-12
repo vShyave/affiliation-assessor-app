@@ -83,7 +83,7 @@ const ForgotPassword = () => {
   };
 
   return (
-    <CommonLayout back={"/"} logoutDisabled pageTitle="Reset Password">
+   <CommonLayout back={ROUTE_MAP.login} logoutDisabled pageTitle="Reset Password">
       {!otpPage && !changePassPage && !passChanged && (
         <div className="flex flex-col px-10 py-8 h-100 justify-between h-[90%]">
           <div className="w-full">

@@ -139,28 +139,27 @@ const CaptureLocation = () => {
     return (Value * Math.PI) / 180;
   }
 
-  const handleSubmit = () => {
+const handleSubmit = () => {
+
     if ( !state?.todayAssessment?.latitude || !state?.todayAssessment?.longitude ) {
-      setError(
-        `Institute co-ordinates are missing. Please try again from start`
-      );
+      navigate(`${ROUTE_MAP.capture_selfie}/${state.userData.lat}/${state.userData.long}`);
 
       setTimeout(() => {
         setError(false);
       }, 5000);
       return;
+    } else{
+      if (distance > 500) {
+        setError(`Please ensure you are within the institute premises`);
+        setTimeout(() => {
+          setError(false);
+        }, 5000);
+        return;
+      }
     }
 
     if (!lat || !long) {
       setError(`Please capture location before continuing`);
-      setTimeout(() => {
-        setError(false);
-      }, 5000);
-      return;
-    }
-
-    if (distance > 500) {
-      setError(`Please ensure you are within the institute premises`);
       setTimeout(() => {
         setError(false);
       }, 5000);
