@@ -49,7 +49,7 @@ function App() {
   const [state, setState] = useState();
   useEffect(() => {
     const user = getCookie("userData");
-    if (user) console.log(user, "this is user");
+    // if (user) console.log(user, "this is user");
   }, []);
   return (
     <div className="App">

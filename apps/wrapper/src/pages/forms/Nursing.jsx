@@ -60,7 +60,7 @@ const Nursing = () => {
     const data = typeof e.data === "string" ? JSON.parse(e.data) : e.data;
     try {
       const { nextForm, formData, onSuccessData, onFailureData } = data;
-      if (data?.state == "ON_FORM_SUCCESS_COMPLETED") {
+      if (data?.state === "ON_FORM_SUCCESS_COMPLETED") {
         const updatedFormData = updateFormData(
           startingForm + "Images",
           formData
@@ -102,7 +102,7 @@ const Nursing = () => {
     console.log(e);
     console.log("------------------------------------");
     if (
-      e.origin == ENKETO_URL &&
+      e.origin === ENKETO_URL &&
       JSON.parse(e?.data)?.state !== "ON_FORM_SUCCESS_COMPLETED"
     ) {
       var xml = new XMLParser().parseFromString(JSON.parse(e.data).formXML);
@@ -152,7 +152,7 @@ const Nursing = () => {
         for (const key in data) {
           if (data[key]) {
             if (images) {
-              let foundImage = images.filter((el) => el.name == data[key]);
+              let foundImage = images.filter((el) => el.name === data[key]);
               if (foundImage?.length) {
                 formSpec.forms[formId].prefill[key] =
                   "`" + `${foundImage[0].url}` + "`";

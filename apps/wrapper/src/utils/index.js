@@ -68,7 +68,6 @@ export const setCookie = (cname, cvalue) => {
 export const getCookie = (cname) => {
   try {
     let cookie = Cookies.get(cname);
-    console.log(JSON.parse(cookie));
     if (cookie) return JSON.parse(cookie);
   } catch (error) {
     return false;
@@ -107,6 +106,14 @@ export const getFromLocalForage = async (key) => {
     console.log(err);
     return null;
   }
+}
+
+export const getAllKeysFromForage = async () => {
+  let keys = [];
+  await localforage.keys().then((keysOfArray) => {
+    keys = keysOfArray
+  });
+  return keys;
 }
 
 export const setToLocalForage = async (key, value) => {

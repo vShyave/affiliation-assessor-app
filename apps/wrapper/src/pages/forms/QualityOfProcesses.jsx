@@ -54,7 +54,7 @@ const QualityOfProcesses = () => {
     const data = typeof e.data === "string" ? JSON.parse(e.data) : e.data;
     try {
       const { nextForm, formData, onSuccessData, onFailureData } = data;
-      if (data?.state == "ON_FORM_SUCCESS_COMPLETED") {
+      if (data?.state === "ON_FORM_SUCCESS_COMPLETED") {
         const userData = getCookie("userData");
 
         saveFormSubmission({
@@ -88,7 +88,7 @@ const QualityOfProcesses = () => {
 
   const eventTriggered = (e) => {
     if (
-      e.origin == "https://enketo-ratings-tech.samagra.io" &&
+      e.origin === "https://enketo-ratings-tech.samagra.io" &&
       JSON.parse(e?.data)?.state !== "ON_FORM_SUCCESS_COMPLETED"
     ) {
       var xml = new XMLParser().parseFromString(JSON.parse(e.data).formXML);

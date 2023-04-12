@@ -18,8 +18,9 @@ const MedicalAssessments = () => {
   const { state, setState } = useContext(StateContext);
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
-  const isMobile = window.innerWidth < 500;
   const [role, setRole] = useState('');
+  // const [validation, setValidation] = useState(false);
+  const [buttonText, setButtonText] = useState('Start Assessing');
   const [data, setData] = useState({
     district: "",
     instituteName: "",
@@ -29,29 +30,26 @@ const MedicalAssessments = () => {
     latitude: null,
     longitude: null,
   });
-  const [validation, setValidation] = useState(false);
+
   const handleStartAssessment = () => {
     setState({ ...state, todayAssessment: { ...data } });
-    if(buttonText==="Continue")
-    {
+    // navigate(ROUTE_MAP.capture_location);
+    if (buttonText === "Continue") {
       navigate(ROUTE_MAP.assessment_type);
-    }
-    else{
+    } else {
       navigate(ROUTE_MAP.capture_location);
-   
     }
-  //  navigate(ROUTE_MAP.capture_location);
-   
-    // navigate(role === 'Medical' ? ROUTE_MAP.assessment_type : ROUTE_MAP.capture_location);
   };
-  const [buttonText, setButtonText] = useState('Start Assessing');
+  
   function handleClick() {
     setButtonText('Continue');
   }
-  const storedData = localStorage.getItem('required_data');
-  const assessor_user_id = JSON.parse(storedData)?.assessor_user_id;
+
   const getTodayAssessments = async () => {
     setLoading(true);
+    const storedData = localStorage.getItem('required_data');
+    const assessor_user_id = JSON.parse(storedData)?.assessor_user_id;
+
     const postData = {
       "date" : new Date().toJSON().slice(0, 10),
       "assessor_id": assessor_user_id
@@ -59,13 +57,12 @@ const MedicalAssessments = () => {
     
     const validateData = {
       "assessor_id":assessor_user_id
-      //"ID-92752"
-      //"3f1af8c4-f97e-40d8-8bc4-94ce3a7069ed"
     };
+
     const res = await getTodaysAssessment(postData);
     const check = await getValidatedAssessor(validateData);
-    console.log("Check",check.data.assessor_validation.length);
-    if(check.data.assessor_validation.length>0) {
+    
+    if (check?.data.assessor_validation?.length > 0) {
       handleClick();
     }
    
@@ -86,7 +83,7 @@ const MedicalAssessments = () => {
 
       const required_data = {
         institute_id: ass.institute.id,
-        schedule_id:ass.id
+        schedule_id: ass.id
       };
      
       StoreToLocalStorage(required_data, 'required_data');
@@ -102,9 +99,7 @@ const MedicalAssessments = () => {
   useEffect(() => {
    
     getTodayAssessments();
-    const {
-      user: { registrations },
-    } = getCookie("userData");
+    const { user: { registrations } } = getCookie("userData");
     const roles = registrations[0]?.roles[0];
     setRole(roles);
   }, []);

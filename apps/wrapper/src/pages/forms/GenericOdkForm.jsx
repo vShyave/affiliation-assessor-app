@@ -1,12 +1,11 @@
 import React, { useState, useEffect, useContext, useRef } from "react";
 import { Routes, useNavigate, useParams } from "react-router-dom";
 import ROUTE_MAP from "../../routing/routeMap";
-// import { getFromLocalForage } from "../../utils";
 
 
 import { StateContext } from "../../App";
-import { getMedicalAssessments, getPrefillXML, saveFormSubmission } from "../../api";
-import { getCookie, getFormData, getFromLocalForage, handleFormEvents, isImage, makeDataForPrefill, setCookie, setToLocalForage, updateFormData, removeItemFromLocalForage } from "../../utils";
+import { saveFormSubmission } from "../../api";
+import { getCookie, getFormData, handleFormEvents, updateFormData, removeItemFromLocalForage } from "../../utils";
 
 import CommonLayout from "../../components/CommonLayout";
 
@@ -89,7 +88,7 @@ const GenericOdkForm = () => {
 
     try {
       const { nextForm, formData, onSuccessData, onFailureData } = data;
-      if (data?.state == "ON_FORM_SUCCESS_COMPLETED") {
+      if (data?.state === "ON_FORM_SUCCESS_COMPLETED") {
         const updatedFormData = await updateFormData(formSpec.start);
 
         const assessor_id = JSON.parse(localStorage.getItem('required_data'))?.assessor_user_id;
@@ -100,7 +99,8 @@ const GenericOdkForm = () => {
           assessment_type: formName.startsWith('hospital') ? 'hospital' : 'institute',
           form_name: formSpec.start,
           status: true,
-          assessor_id: assessor_id
+          assessor_id: assessor_id,
+          submitted_on: new Date().toJSON().slice(0, 10)
         });
 
         // Delete the data from the Local Forage

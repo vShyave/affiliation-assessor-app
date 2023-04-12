@@ -139,16 +139,23 @@ const CaptureLocation = () => {
     return (Value * Math.PI) / 180;
   }
 
-  const handleSubmit = () => {
+const handleSubmit = () => {
+
     if ( !state?.todayAssessment?.latitude || !state?.todayAssessment?.longitude ) {
-      setError(
-        `Institute co-ordinates are missing. Please try again from start`
-      );
+      navigate(`${ROUTE_MAP.capture_selfie}/${state.userData.lat}/${state.userData.long}`);
 
       setTimeout(() => {
         setError(false);
       }, 5000);
       return;
+    } else{
+      if (distance > 500) {
+        setError(`Please ensure you are within the institute premises`);
+        setTimeout(() => {
+          setError(false);
+        }, 5000);
+        return;
+      }
     }
 
     if (!lat || !long) {
@@ -159,27 +166,18 @@ const CaptureLocation = () => {
       return;
     }
 
-    if (distance > 500) {
-      setError(`Please ensure you are within the institute premises`);
-      setTimeout(() => {
-        setError(false);
-      }, 5000);
-      return;
-    }
-
     navigate(`${ROUTE_MAP.capture_selfie}/${state.todayAssessment.latitude}/${state.todayAssessment.longitude}`);
   };
 
   useEffect(() => {
+    console.log('state - ', state);
     if (lat != 0 && long != 0) {
       getLocationPermissions();
     }
   }, [lat, long]);
 
   useEffect(() => {
-    const {
-      user: { registrations },
-    } = getCookie("userData");
+    const { user: { registrations } } = getCookie("userData");
     const roles = registrations[0]?.roles[0];
     setRole(roles);
     getLocationPermissions();
