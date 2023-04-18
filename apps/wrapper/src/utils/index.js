@@ -1,6 +1,7 @@
-import Cookies from "js-cookie";
 import XMLParser from "react-xml-parser";
 import localforage from "localforage";
+import Cookies from "js-cookie";
+
 import { getMedicalAssessments, getPrefillXML, getSubmissionXML } from "../api";
 
 const ENKETO_URL = process.env.REACT_APP_ENKETO_URL;
@@ -117,7 +118,17 @@ export const getAllKeysFromForage = async () => {
 }
 
 export const setToLocalForage = async (key, value) => {
-  await localforage.setItem(key, value);
+  const storedData = await getSpecificDataFromForage(key);
+  if (storedData) {
+    const newData = {...storedData, ...value};
+    await localforage.setItem(key, newData);
+  } else {
+    await localforage.setItem(key, value);
+  }
+}
+
+export const getSpecificDataFromForage = async (key) => {
+  return await localforage.getItem(key);
 }
 
 export const removeItemFromLocalForage = (key) => {
@@ -127,11 +138,13 @@ export const removeItemFromLocalForage = (key) => {
 export const handleFormEvents = async (startingForm, afterFormSubmit, e) => {
   const user = getCookie("userData");
   if (
-    e.origin == ENKETO_URL &&
-    JSON.parse(e?.data)?.state !== "ON_FORM_SUCCESS_COMPLETED"
+    e.origin === ENKETO_URL && 
+    e.type ? true : (JSON.parse(e?.data)?.state !== "ON_FORM_SUCCESS_COMPLETED")
   ) {
-    console.log("Form Change Event------->", e)
-    var formData = new XMLParser().parseFromString(JSON.parse(e.data).formData);
+    console.log("Form Change Event------->", e);
+    // if (!e.type) {
+      var formData = new XMLParser().parseFromString(JSON.parse(e.data).formData);
+    // }
     if (formData) {
       let images = JSON.parse(e.data).fileURLs;
       let prevData = await getFromLocalForage(startingForm + `${new Date().toISOString().split("T")[0]}`);

@@ -5,7 +5,7 @@ import ROUTE_MAP from "../../routing/routeMap";
 
 import { StateContext } from "../../App";
 import { saveFormSubmission } from "../../api";
-import { getCookie, getFormData, handleFormEvents, updateFormData, removeItemFromLocalForage } from "../../utils";
+import { getCookie, getFormData, handleFormEvents, updateFormData, removeItemFromLocalForage, getSpecificDataFromForage } from "../../utils";
 
 import CommonLayout from "../../components/CommonLayout";
 
@@ -91,7 +91,7 @@ const GenericOdkForm = () => {
       if (data?.state === "ON_FORM_SUCCESS_COMPLETED") {
         const updatedFormData = await updateFormData(formSpec.start);
 
-        const assessor_id = JSON.parse(localStorage.getItem('required_data'))?.assessor_user_id;
+        const assessor_id = await getSpecificDataFromForage('required_data');
 
         saveFormSubmission({
           schedule_id: scheduleId.current,
@@ -99,7 +99,7 @@ const GenericOdkForm = () => {
           assessment_type: formName.startsWith('hospital') ? 'hospital' : 'institute',
           form_name: formSpec.start,
           status: true,
-          assessor_id: assessor_id,
+          assessor_id: assessor_id?.assessor_user_id,
           submitted_on: new Date().toJSON().slice(0, 10)
         });
 

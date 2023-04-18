@@ -11,6 +11,7 @@ import Button from '../components/Button';
 
 import { ConvertB64toFormData } from "./../utils/common";
 import { UploadImage, ValidateAssessor } from '../api';
+import { getSpecificDataFromForage } from "./../utils";
 
 const videoConstraints = {
     aspectRatio: 0.8,
@@ -51,7 +52,7 @@ const CaptureSelfie = () => {
     }
 
     const postAssessorValidations = async (minioUrl) => {
-        const storedObj = JSON.parse(localStorage.getItem('required_data'));
+        const storedObj = await getSpecificDataFromForage('required_data')
 
         const postData = {
             assessorUserId: storedObj.assessor_user_id,

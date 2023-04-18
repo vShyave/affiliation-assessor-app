@@ -25,7 +25,6 @@ const OsceOptions = () => {
   const userData = getCookie("userData");
   const [disableStudentForms, setDisableStudentForms] = useState(false);
   const [disableTeacherForms, setDisableTeacherForms] = useState(false);
-  // const userData = JSON.parse(localStorage.getItem("userData"));
   const scheduleId = useRef();
 
   const navigate = useNavigate();
