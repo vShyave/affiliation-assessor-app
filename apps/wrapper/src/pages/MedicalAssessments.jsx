@@ -31,6 +31,16 @@ const MedicalAssessments = () => {
 
   const handleStartAssessment = () => {
     setState({ ...state, todayAssessment: { ...data } });
+    let obj = {
+      todayAssessment: { ...data }
+    };
+    console.log('obj - ', obj);
+    
+    // console.log('newData - ', todayAssessment: {data});
+    // setToLocalForage( 'todayAssessment', { todayAssessment : data }  );    
+
+    console.log('state - ', state);
+
     if (buttonText?.toLowerCase() === "continue") {
       navigate(ROUTE_MAP.assessment_type);
     } else {

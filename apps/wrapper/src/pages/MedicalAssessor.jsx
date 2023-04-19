@@ -56,15 +56,6 @@ const MedicalAssessor = () => {
             <p className="text-center text-gray-500"> Please check your assigned inspection </p>
           </div>
 
-          {/* <div className="gap-3">
-            <hr className="border-slate-300" />
-            <div className="gap-3 py-3 px-2">
-              <div className="text-[12px]">Hello,</div>
-              <div className="text-secondary font-semibold text-[18px]">{ data?.name }</div>
-            </div>
-            <hr className="border-slate-300" />
-          </div> */}
-
           <div className="gap-6 flex flex-col">
             <Button text="Today's Inspections" styles="w-full bg-primary text-white border-primary animate__animated animate__fadeInDown" onClick={() => handleClick(ROUTE_MAP.medical_assessments)} />
             <Button text="Upcoming Inspections" styles="w-full bg-white text-primary border-primary border-[1px] animate__animated animate__fadeInDown" onClick={() => handleClick(ROUTE_MAP.upcoming_medical_assessments)} />
