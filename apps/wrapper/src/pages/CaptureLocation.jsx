@@ -25,6 +25,7 @@ const CaptureLocation = () => {
   const isMobile = window.innerWidth < 769;
 
   const getLocationPermissions = () => {
+    getGeolocationCoordinates();
     navigator.permissions && navigator.permissions.query({name: 'geolocation'})
     .then(function(PermissionStatus) {
       PermissionStatus.addEventListener('change', function (e) {
@@ -43,7 +44,7 @@ const CaptureLocation = () => {
       } else if (PermissionStatus.state == 'prompt') {
         setError(`Please allow location access to continue`);
       } else {
-        setError(`Please allow location access && reload the page to continue`);
+        setError(`Please allow location access and reload the page to continue`);
       }
     })
   }

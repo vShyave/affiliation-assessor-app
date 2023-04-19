@@ -225,7 +225,7 @@ const AssessmentType = () => {
                                             </AccordionHeader>
                                             <AccordionBody className="border-b-[1px] border-l-[1px] border-r-[1px] border-primary px-4 bg-orange-500/10 py-0">
                                               {
-                                                course?.formName && course?.formObject?.length && course.formObject.map(
+                                                course?.formObject?.length && course.formObject.map(
                                                   (form, idx) => {
                                                     return (
                                                       <div key={idx} onClick={() => handleNavigateToForms(form)}>
@@ -234,7 +234,6 @@ const AssessmentType = () => {
                                                             <div className="text-[14px] font-medium">{ form.name }</div>
                                                           </div>
                                                           <div className="flex flex-row grow-0 items-center gap-4">
-                                                            {/* <div> abc = { form?.status } </div> */}
                                                             {
                                                               form.status === 'completed' && (
                                                                 <div className="w-[auto] bg-[#009A2B] text-white border-[#009A2B] py-1 px-3 text-[12px] rounded-[24px] capitalize font-semibold">{ form.status }</div>
