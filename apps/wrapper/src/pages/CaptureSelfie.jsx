@@ -28,7 +28,6 @@ const CaptureSelfie = () => {
     const navigate = useNavigate();
     
     const handleCapture = useCallback(() => {
-        console.log('webcamRef - ', webcamRef);
         const imageSrc = webcamRef.current.getScreenshot();
         setImg(imageSrc);
     }, [webcamRef]);
@@ -63,7 +62,6 @@ const CaptureSelfie = () => {
 
         try {
             const res = await ValidateAssessor(postData);
-            console.log('res - ', res);
             if (res.statusText.toLowerCase() === "ok") {
                 navigate(ROUTE_MAP.assessment_type);
             }

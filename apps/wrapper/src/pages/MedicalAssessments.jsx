@@ -34,13 +34,9 @@ const MedicalAssessments = () => {
     let obj = {
       todayAssessment: { ...data }
     };
-    console.log('obj - ', obj);
     
-    // console.log('newData - ', todayAssessment: {data});
-    // setToLocalForage( 'todayAssessment', { todayAssessment : data }  );    
-
-    console.log('state - ', state);
-
+    setToLocalForage( 'todayAssessment', obj );    
+    
     if (buttonText?.toLowerCase() === "continue") {
       navigate(ROUTE_MAP.assessment_type);
     } else {
@@ -111,7 +107,7 @@ const MedicalAssessments = () => {
   }, []);
 
   return (
-    <CommonLayout back={ROUTE_MAP.root} pageTitle="Today's Inspection" logoutDisabled>
+    <CommonLayout back={ROUTE_MAP.root} pageTitle="Today's Inspection">
       <div className={`flex flex-col px-6 min-h-[calc(100vh-214px)] overflow-y-scroll pb-6 ${!data?.id ? 'justify-center' : '' }` }>
         {
           loading && (

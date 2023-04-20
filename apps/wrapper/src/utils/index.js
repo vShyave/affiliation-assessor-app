@@ -78,6 +78,7 @@ export const getCookie = (cname) => {
 export const logout = () => {
   localStorage.clear();
   sessionStorage.clear();
+  localforage.clear();
   window.location = "/";
   removeCookie("userData");
 };

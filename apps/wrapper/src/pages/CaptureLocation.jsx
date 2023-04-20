@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import ROUTE_MAP from "../routing/routeMap";
 
 import { StateContext } from "../App";
-import { getCookie } from "../utils";
+import { getCookie, getSpecificDataFromForage, setToLocalForage } from "../utils";
 
 import Button from "../components/Button";
 import CommonLayout from "../components/CommonLayout";
@@ -16,11 +16,11 @@ const CaptureLocation = () => {
   const [loading, setLoading] = useState(true);
   const [showContinue, setShowContinue ] = useState(false);
   const [captureLocation, setLocationCapture] = useState('');
-  // const [disabled, setDisabled] = useState(true);
   const [role, setRole] = useState('');
-  const { state, setState } = useContext(StateContext);
   const [distance, setDistance] = useState(9999);
   const [error, setError] = useState(false);
+  const { state, setState } = useContext(StateContext);
+  const [ assessmentObj, setAssessmentObj] = useState({});
   const navigate = useNavigate();
   const isMobile = window.innerWidth < 769;
 
@@ -69,7 +69,7 @@ const CaptureLocation = () => {
   const handleCaptureLocation = (flag) => {
     setLoading(true);
     if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition((p) => {
+      navigator.geolocation.getCurrentPosition(async (p) => {
         setLat(p.coords.latitude);
         setLong(p.coords.longitude);
         setShowMap(true);
@@ -78,18 +78,31 @@ const CaptureLocation = () => {
         setState({
           ...state,
           userData: {
-            ...state.userData,
+            ...state?.userData,
             lat: p.coords.latitude,
             long: p.coords.longitude,
           },
         });
 
+        // Stored the assessment info, helps on reload...
+        let assessment_obj = await getSpecificDataFromForage('todayAssessment');
+        const userData = {
+          userData : {
+            lat: p.coords.latitude,
+            long: p.coords.longitude
+          }
+        }
+
+        assessment_obj = { ...assessment_obj, ...userData };
+        setAssessmentObj(assessment_obj);
+        setToLocalForage('todayAssessment', assessment_obj);
+
         setDistance(
           calcDistance(
             p.coords.latitude,
             p.coords.longitude,
-            state.todayAssessment.latitude,
-            state.todayAssessment.longitude
+            assessment_obj.todayAssessment.latitude,
+            assessment_obj.todayAssessment.longitude
           )
         );
 
@@ -142,8 +155,8 @@ const CaptureLocation = () => {
 
 const handleSubmit = () => {
 
-    if ( !state?.todayAssessment?.latitude || !state?.todayAssessment?.longitude ) {
-      navigate(`${ROUTE_MAP.capture_selfie}/${state.userData.lat}/${state.userData.long}`);
+    if ( !assessmentObj?.todayAssessment?.latitude || !assessmentObj?.todayAssessment?.longitude ) {
+      navigate(`${ROUTE_MAP.capture_selfie}/${assessmentObj.userData.lat}/${assessmentObj.userData.long}`);
 
       setTimeout(() => {
         setError(false);
@@ -167,11 +180,10 @@ const handleSubmit = () => {
       return;
     }
 
-    navigate(`${ROUTE_MAP.capture_selfie}/${state.todayAssessment.latitude}/${state.todayAssessment.longitude}`);
+    navigate(`${ROUTE_MAP.capture_selfie}/${assessmentObj.todayAssessment.latitude}/${assessmentObj.todayAssessment.longitude}`);
   };
 
   useEffect(() => {
-    console.log('state - ', state);
     if (lat != 0 && long != 0) {
       getLocationPermissions();
     }
