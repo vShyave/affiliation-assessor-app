@@ -44,7 +44,7 @@ const CaptureLocation = () => {
       } else if (PermissionStatus.state === 'prompt') {
         setError(`Please allow location access to continue`);
       } else {
-        setError(`Please allow location access & reload the page to continue`);
+        setError(`Please allow location access and reload the page to continue`);
       }
     })
   }
