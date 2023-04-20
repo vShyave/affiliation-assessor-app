@@ -52,7 +52,7 @@ const LoginMedical = ({ handleStepChangeForLogin }) => {
       return;
     }
 
-    setError("An internal server error occured");
+    setError("An internal server error occurred");
     setTimeout(() => {
       setError("");
     }, 3000);

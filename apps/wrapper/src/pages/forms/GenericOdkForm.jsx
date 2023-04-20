@@ -83,7 +83,6 @@ const GenericOdkForm = () => {
   });
 
   async function afterFormSubmit(e) {
-    console.log("Form Submit Event ----->", e.data);
     const data = typeof e.data === "string" ? JSON.parse(e.data) : e.data;
 
     try {
@@ -104,7 +103,8 @@ const GenericOdkForm = () => {
         });
 
         // Delete the data from the Local Forage
-        const key = `${assessor_id}_${formSpec.start}${new Date().toISOString().split("T")[0]}`;
+        const key = `${assessor_id?.assessor_user_id}_${formSpec.start}${new Date().toISOString().split("T")[0]}`;
+        console.log('key - ', key);
         removeItemFromLocalForage(key);
 
         setTimeout(() => navigate(`${ROUTE_MAP.thank_you}${formName}`), 2000);
