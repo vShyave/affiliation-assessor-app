@@ -8,7 +8,7 @@ import { faChevronRight } from "@fortawesome/free-solid-svg-icons";
 
 import { StateContext } from "../App";
 import { getCoursesForAccordions, getCoursesOfInstitutes, getStatusOfForms } from '../api';
-import { getAllKeysFromForage, getCookie } from "../utils";
+import { getAllKeysFromForage, getCookie, getSpecificDataFromForage } from "../utils";
 
 import CommonLayout from "../components/CommonLayout";
 import Button from "../components/Button";
@@ -16,8 +16,6 @@ import Button from "../components/Button";
 const AssessmentType = () => {
   
   const navigate = useNavigate();
-  const storedData = localStorage.getItem('required_data');
-  const instituteId = JSON.parse(storedData)?.institute_id;
   const [tabs, setTabs] = useState([]);
   const [activeTabValue, setActiveTabValue] = useState('');
   const [activeButtonValue, setActiveButtonValue] = useState('Degree');
@@ -26,7 +24,6 @@ const AssessmentType = () => {
   const [formNames, setFormNames] = useState([]);
   const [completedForms, setCompletedForms] = useState([]);
   const [error, setError] = useState("");
-  // const { state, setState } = useContext(StateContext);
 
   const [open, setOpen] = useState(1);
   const handleOpen = (value) => {
@@ -69,6 +66,9 @@ const AssessmentType = () => {
   };
  
   const getCourses = async () => {
+    const storedData = await getSpecificDataFromForage('required_data');
+    const instituteId = storedData?.institute_id;
+    
     const postData = {
       institute_id: instituteId
     };
@@ -99,7 +99,7 @@ const AssessmentType = () => {
         let courses_data = response?.data?.courses;
         if (courses_data.length) {
           courses_data = courses_data.map((obj) => {
-            if (obj.formObject) {
+            if (obj?.formObject) {
               obj.formObject = obj.formObject?.replace(/\\/g, "");
               obj.formObject = JSON.parse(obj.formObject);
               obj.formObject.forEach((eachObj) => {
@@ -116,6 +116,8 @@ const AssessmentType = () => {
             return obj;
           });
         }
+
+        console.log('courses_data - ', courses_data);
   
         setActiveAccordionValue(courses_data?.[0]?.course_id);
         setAccordionData(courses_data);
@@ -172,7 +174,7 @@ const AssessmentType = () => {
               Basic information
             </div>
             <div className="grow-0 flex justify-center items-center">
-              <FontAwesomeIcon icon={faChevronRight} className="text-1xl lg:text-4xl text-white" />
+              <FontAwesomeIcon icon={faChevronRight} className="text-1xl text-white" />
             </div>  
           </div>
         </div>

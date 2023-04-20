@@ -7,6 +7,7 @@ import Button from "../components/Button";
 import OtpInput from "react-otp-input";
 
 import { sendOtpToMobile, verifyOtpSavePassword } from "../api";
+import { logout } from "./../utils/index"; 
 
 const ForgotPassword = () => {
   const navigate = useNavigate();
@@ -22,6 +23,10 @@ const ForgotPassword = () => {
   const handleMobileInput = (val) => {
     if (/^[0-9]*$/.test(val) && val.length <= 10) setMobile(val);
   };
+
+  const handleResetToLogin = () => {
+    logout();
+  }
 
   const showPassScreen = () => {
     if (mobile.length != 10) {
@@ -195,7 +200,7 @@ const ForgotPassword = () => {
             </p>
             <p
               className="text-primary text-xl py-8 font-bold"
-              onClick={() => navigate(ROUTE_MAP.root)}
+              onClick={() => handleResetToLogin()}
             >
               Click here to login
             </p>

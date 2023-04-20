@@ -5,7 +5,7 @@ import ROUTE_MAP from "../../routing/routeMap";
 
 import { StateContext } from "../../App";
 import { saveFormSubmission } from "../../api";
-import { getCookie, getFormData, handleFormEvents, updateFormData, removeItemFromLocalForage } from "../../utils";
+import { getCookie, getFormData, handleFormEvents, updateFormData, removeItemFromLocalForage, getSpecificDataFromForage } from "../../utils";
 
 import CommonLayout from "../../components/CommonLayout";
 
@@ -83,7 +83,6 @@ const GenericOdkForm = () => {
   });
 
   async function afterFormSubmit(e) {
-    console.log("Form Submit Event ----->", e.data);
     const data = typeof e.data === "string" ? JSON.parse(e.data) : e.data;
 
     try {
@@ -91,7 +90,7 @@ const GenericOdkForm = () => {
       if (data?.state === "ON_FORM_SUCCESS_COMPLETED") {
         const updatedFormData = await updateFormData(formSpec.start);
 
-        const assessor_id = JSON.parse(localStorage.getItem('required_data'))?.assessor_user_id;
+        const assessor_id = await getSpecificDataFromForage('required_data');
 
         saveFormSubmission({
           schedule_id: scheduleId.current,
@@ -99,12 +98,13 @@ const GenericOdkForm = () => {
           assessment_type: formName.startsWith('hospital') ? 'hospital' : 'institute',
           form_name: formSpec.start,
           status: true,
-          assessor_id: assessor_id,
+          assessor_id: assessor_id?.assessor_user_id,
           submitted_on: new Date().toJSON().slice(0, 10)
         });
 
         // Delete the data from the Local Forage
-        const key = `${assessor_id}_${formSpec.start}${new Date().toISOString().split("T")[0]}`;
+        const key = `${assessor_id?.assessor_user_id}_${formSpec.start}${new Date().toISOString().split("T")[0]}`;
+        console.log('key - ', key);
         removeItemFromLocalForage(key);
 
         setTimeout(() => navigate(`${ROUTE_MAP.thank_you}${formName}`), 2000);

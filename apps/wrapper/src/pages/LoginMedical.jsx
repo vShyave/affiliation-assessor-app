@@ -52,7 +52,7 @@ const LoginMedical = ({ handleStepChangeForLogin }) => {
       return;
     }
 
-    setError("An internal server error occured");
+    setError("An internal server error occurred");
     setTimeout(() => {
       setError("");
     }, 3000);
@@ -109,7 +109,7 @@ const LoginMedical = ({ handleStepChangeForLogin }) => {
 
         <Button
           text={"Reset Password"}
-          styles="bg-white border-[#DBDBDB] border-1 text-[#535461] hover:text-[#535461] w-80 mx-auto mt-2"
+          styles="w-80 lg:w-[70%] bg-white border-[#DBDBDB] border-1 text-[#535461] hover:text-[#535461] mx-auto mt-2"
           onClick={() => navigate(ROUTE_MAP.forgot_password)}
         />
 

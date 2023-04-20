@@ -60,7 +60,7 @@ const CommonLayout = (props) => {
                 }
               </div>
               <div className="flex grow items-center flex-col gap-4">
-                <div className="text-secondary tracking-wide text-[25px] font-bold lg:text-[45px] items-center">{ props.pageTitle }</div>
+                <div className="text-secondary tracking-wide text-[25px] font-bold lg:text-[36px] items-center">{ props.pageTitle }</div>
               </div>    
               <div className="flex grow-0">
                 {
