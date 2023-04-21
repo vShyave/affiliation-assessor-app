@@ -21,7 +21,6 @@
     "start-web": "cd wrapper && npm start"
   },
   "workspaces": [
-    "docs",
     "apps/*",
     "packages/*"
   ],

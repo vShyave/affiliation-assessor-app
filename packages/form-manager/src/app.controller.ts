@@ -47,7 +47,9 @@ export class AppController {
     private configService: ConfigService,
   ) { }
 
-  GITPOD_URL = this.configService.get('GITPOD_WORKSPACE_URL');
+  MINIO_ENDPOINT = this.configService.get('MINIO_ENDPOINT');
+  MINIO_URL = this.configService.get('MINIO_URL');
+  FORM_MANAGER_URL = this.configService.get('FORM_MANAGER_URL');
 
   getLoginToken = () => {
     try {
@@ -190,7 +192,7 @@ export class AppController {
         );
         const instanceId = uuidv4();
         await this.cacheManager.set(instanceId, prefilledForm, 86400 * 10);
-        return `${this.GITPOD_URL.slice(0, this.GITPOD_URL.indexOf('/') + 2) + "3006-" + this.GITPOD_URL.slice(this.GITPOD_URL.indexOf('/') + 2)}/form/instance/${instanceId}`;
+        return `${this.FORM_MANAGER_URL}/form/instance/${instanceId}`;
       } else {
         return 'OK';
       }
@@ -269,8 +271,9 @@ export class AppController {
     // console.log('sessionRes', sessionRes);
 
     const minioClient: Client = new Minio.Client({
-      endPoint: "9000-"+this.GITPOD_URL.slice(8),
-      useSSL: true,
+      endPoint: this.MINIO_ENDPOINT,
+      port: parseInt(this.configService.get('MINIO_PORT')),
+      useSSL: this.configService.get('MINIO_USE_SSL') === true,
       accessKey: this.configService.get('MINIO_USERNAME'),
       secretKey: this.configService.get('MINIO_PASSWORD')
     });
@@ -296,7 +299,7 @@ export class AppController {
       },
     );
 
-    const fileURL = `${this.GITPOD_URL.slice(0, this.GITPOD_URL.indexOf('/') + 2) + "9000-" + this.GITPOD_URL.slice(this.GITPOD_URL.indexOf('/') + 2)}/${this.configService.get('MINIO_BUCKETNAME')}/${fileName}`;
+    const fileURL = `${this.MINIO_URL}/${this.configService.get('MINIO_BUCKETNAME')}/${fileName}`;
 
     console.log('Uploaded File:', fileURL);
 
