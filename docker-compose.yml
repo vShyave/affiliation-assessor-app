@@ -1,4 +1,4 @@
-version: '3'
+version: "3"
 
 services:
   db:
@@ -8,7 +8,7 @@ services:
       POSTGRES_USER: ${POSTGRES_USER}
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
     healthcheck:
-      test: [ "CMD-SHELL", "pg_isready -U postgres" ]
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
       interval: 5s
       timeout: 5s
       retries: 5
@@ -36,7 +36,7 @@ services:
           "--silent",
           "--output",
           "/dev/null",
-          "http://localhost:9200/"
+          "http://localhost:9200/",
         ]
       interval: 5s
       timeout: 5s
@@ -167,7 +167,7 @@ services:
       REDIS_CACHE_HOST: redis_cache
       REDIS_CACHE_PORT: 6379
       FORM_MANAGER_BASE_URI: ${FORM_MANAGER_BASE_URI}
-  
+
   fm-cache:
     image: redis:7
     volumes:
@@ -181,7 +181,7 @@ services:
       - fm-cache
       - minio
       - createbuckets
-    ports: 
+    ports:
       - 3006:3006
     environment:
       MINIO_USERNAME: ${MINIO_USERNAME}
@@ -189,17 +189,16 @@ services:
       MINIO_PORT: ${MINIO_PORT}
       MINIO_URL: ${MINIO_URL}
       MINIO_PASSWORD: ${MINIO_PASSWORD}
-      MINIO_BUCKETNAME: ${MINIO_BUCKETNAME} 
+      MINIO_BUCKETNAME: ${MINIO_BUCKETNAME}
       REDIS_HOST: ${REDIS_HOST}
       REDIS_PORT: ${REDIS_PORT}
       FORM_MANAGER_URL: ${FORM_MANAGER_URL}
       MINIO_USE_SSL: ${MINIO_USE_SSL}
 
-
-  wrapper:
-    image: wrapper
+  assessor-wrapper:
+    image: assessor-app
     build:
-      context: apps/wrapper
+      context: apps/wrapper/assessor-app
       # env vars to be passed at build time as it will build a static file
       args:
         REACT_APP_ENKETO_URL: ${REACT_APP_ENKETO_URL}
@@ -207,7 +206,19 @@ services:
         REACT_APP_HASURA_URL: ${REACT_APP_HASURA_URL}
     ports:
       - 3000:80
-      
+
+  admin-wrapper:
+    image: web-portal
+    build:
+      context: apps/wrapper/web-portal
+      # env vars to be passed at build time as it will build a static file
+      args:
+        REACT_APP_ENKETO_URL: ${REACT_APP_ENKETO_URL}
+        REACT_APP_FORM_MANAGER_URL: ${REACT_APP_FORM_MANAGER_URL}
+        REACT_APP_HASURA_URL: ${REACT_APP_HASURA_URL}
+    ports:
+      - 3001:80
+
 networks:
   db_net:
     driver: bridge
