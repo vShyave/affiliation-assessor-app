@@ -62,7 +62,7 @@ const CaptureSelfie = () => {
 
         try {
             const res = await ValidateAssessor(postData);
-            if (res.statusText.toLowerCase() === "ok") {
+            if (res?.data?.insert_assessor_validation_one?.assessorUserId) {
                 navigate(ROUTE_MAP.assessment_type);
             }
         } catch (error) {
