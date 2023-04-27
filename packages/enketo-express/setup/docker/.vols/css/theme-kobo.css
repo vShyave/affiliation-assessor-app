@@ -2355,6 +2355,7 @@ input, select, textarea {
   top: 0;
   right: 0;
   bottom: 0;
+  display: none;
   left: 0; }
 
 .vex-overlay.vex-closing, .show-side-slider .vex-closing.slider-overlay {
