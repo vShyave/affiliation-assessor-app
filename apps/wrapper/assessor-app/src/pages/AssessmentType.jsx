@@ -116,8 +116,6 @@ const AssessmentType = () => {
             return obj;
           });
         }
-
-        console.log('courses_data - ', courses_data);
   
         setActiveAccordionValue(courses_data?.[0]?.course_id);
         setAccordionData(courses_data);
