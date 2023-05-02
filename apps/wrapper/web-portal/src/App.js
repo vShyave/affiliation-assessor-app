@@ -1,23 +1,19 @@
-import logo from './logo.svg';
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+// import { createContext, useEffect, useState } from "react";
+
+import ADMIN_ROUTE_MAP from "./routes/adminRouteMap";
 import './App.css';
+
+import AdminLogin from "./login/AdminLogin";
 
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <BrowserRouter>
+        <Routes>
+          <Route path={ADMIN_ROUTE_MAP.loginModule.logIn} element={ <AdminLogin /> } />
+        </Routes>
+      </BrowserRouter>
     </div>
   );
 }

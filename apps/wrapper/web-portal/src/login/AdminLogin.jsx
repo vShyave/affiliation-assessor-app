@@ -1,6 +1,5 @@
-import React, { useState,useEffect } from "react";
-import Group from "../utils/assets/Group.png";
-import Nirmaya from "../utils/assets/Nirmaya.png";
+import React, { useState, useEffect } from "react";
+
 
 
 
@@ -69,11 +68,11 @@ import Nirmaya from "../utils/assets/Nirmaya.png";
                                           <div className="flex flex-col container items-center mx-auto">
                                               <div className="flex flex-col py-20">
                                               <div className="flex flex-row gap-4">
-                                                <img className="logo" src={Group} alt="logo1" />
+                                                <img className="logo" src="/images/upsmfLogo.png" alt="logo1" />
                                                 <div
                                                   className="inline-block h-[72px] min-h-[1em] w-0.5 border opacity-100 dark:opacity-50">                                             
                                                 </div>
-                                                <img className="logo" src={Nirmaya} alt="logo2" />
+                                                <img className="logo" src="/images/niramyaLogo.png" alt="logo2" />
                                             </div>
                                               </div>
                                               <div className="flex container justify-center mx-auto">
