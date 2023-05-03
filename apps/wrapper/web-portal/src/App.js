@@ -1,23 +1,24 @@
-import logo from './logo.svg';
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+// import { createContext, useEffect, useState } from "react";
+
+import ADMIN_ROUTE_MAP from "./routes/adminRouteMap";
 import './App.css';
+
+import Authenticate from "./login/Authenticate";
+import AdminLogin from "./login/AdminLogin";
+import EnterOtp from "./login/EnterOtp";
 
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <BrowserRouter>
+        <Routes>
+          <Route path={ADMIN_ROUTE_MAP.auth} element={ <Authenticate /> }>
+            <Route path={ADMIN_ROUTE_MAP.loginModule.otp} element={ <EnterOtp /> }></Route>
+            <Route path={ADMIN_ROUTE_MAP.loginModule.logIn} element={ <AdminLogin /> }></Route>
+          </Route>
+        </Routes>
+      </BrowserRouter>
     </div>
   );
 }
