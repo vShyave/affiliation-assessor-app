@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 
-import Card from "../components/Card";
-import Label from "../components/Label";
-import Button from "../components/Button";
-import Input from "../components/Input";
+import ADMIN_ROUTE_MAP from "../routes/adminRouteMap";
+
+import { Card, Label, Button, Input } from "../components";
 
 const AdminLogin = () => {
   const initialValue = { email : "" };
@@ -56,29 +56,23 @@ const AdminLogin = () => {
 
   return ( 
     <>
-      {
-        Object.keys(formErrors).length === 0 && isSubmit ? (
-          <div className="border-2 border-green-800 bg-green-100 text-green-800 font-bold p-4">Logged in Successfully</div>
-        ) : (
-          <Card moreClass="shadow-md w-screen sm:px-16 sm:w-[480px] py-12">
-            <form onSubmit={handleSubmit}>
-              <div className="flex flex-col">
-                <h1 className="text-2xl font-medium text-center mb-8">Login</h1>
-                <div className="flex flex-col gap-2">
-                  <Label htmlFor="email" text="Email id" required></Label>
-                  <Input type="email" name="email" id="email" placeholder="name@email.com" value={formValue.email} onChange={handleChange}></Input>
-                  <p className="text-red-500 text-sm" >{formErrors.email}</p>
-                </div>
-                <Button moreClass="uppercase w-[100%] mt-7" text="Sign in"></Button>
-                  <p className="flex justify-center py-6 text-gray-600">
-                    Create an account,
-                    <a href="/signup" className="text-blue-700 ml-2">Sign up</a>
-                  </p>
-              </div>
-            </form>
-          </Card>
-        ) 
-      }
+      <Card moreClass="shadow-md w-screen sm:px-24 sm:w-[480px] md:w-[600px] py-16">
+        <form onSubmit={handleSubmit}>
+          <div className="flex flex-col">
+            <h1 className="text-2xl font-medium text-center mb-8">Login</h1>
+            <div className="flex flex-col gap-2">
+              <Label htmlFor="email" text="Email id" required></Label>
+              <Input type="email" name="email" id="email" placeholder="name@email.com" value={formValue.email} onChange={handleChange}></Input>
+              <p className="text-error-500 text-sm" >{formErrors.email}</p>
+            </div>
+            <Button moreClass="uppercase w-full mt-7" text="Sign in"></Button>
+            <p className="flex justify-center my-6">
+              <span className="text-gray-400">Create an account, </span>&nbsp;
+              <Link to={ADMIN_ROUTE_MAP.loginModule.otp} className="text-primary-700">Sign up</Link>
+            </p>
+          </div>
+        </form>
+      </Card>
     </>
   )
 }
