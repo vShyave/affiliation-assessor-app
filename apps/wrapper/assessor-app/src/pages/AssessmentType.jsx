@@ -17,8 +17,9 @@ const AssessmentType = () => {
   
   const navigate = useNavigate();
   const [tabs, setTabs] = useState([]);
+  // const [courseLevel, setCourseLevel] = useState([]);
   const [activeTabValue, setActiveTabValue] = useState('');
-  const [activeButtonValue, setActiveButtonValue] = useState('Degree');
+  const [activeButtonValue, setActiveButtonValue] = useState('');
   const [activeAccordionValue, setActiveAccordionValue] = useState();
   const [accordionData, setAccordionData] = useState(null);
   const [formNames, setFormNames] = useState([]);
@@ -75,13 +76,24 @@ const AssessmentType = () => {
 
     try {
       const response = await getCoursesOfInstitutes(postData);
-      const courses = response?.data?.institute_course?.[0].courses;
-      const tabs = courses.map((course) => { 
-        return { label: course, value: course };
+      let courses = response?.data?.institute_course?.[0].institute_type;
+      courses = JSON.parse(courses);
+      let tabs = [];
+      courses.forEach((obj) => {
+        let indexValue = tabs.findIndex(x => x?.value === obj?.courseType?.toLowerCase());
+        if ( indexValue === -1 ) {
+          let _obj = { label: obj?.courseType?.toLowerCase(), value: obj?.courseType?.toLowerCase(), level: [obj?.courseLevel?.toLowerCase()] }
+          tabs.push(_obj);
+        } 
+        
+        if ( indexValue > -1 && tabs[indexValue]?.level?.indexOf(obj?.courseLevel?.toLowerCase()) === -1) {
+          tabs[indexValue]?.level?.push(obj?.courseLevel?.toLowerCase());
+        }
       });
       setTabs(tabs);
       setActiveTabValue(tabs[0].value);
-      // getAccordionsData(tabs[0].value);
+      setActiveButtonValue(tabs[0].level[0]);
+      getAccordionsData(tabs[0].value);
     } catch (error) {
       alert(error);
     }
@@ -89,9 +101,14 @@ const AssessmentType = () => {
 
   const getAccordionsData = async (tabValue) => {
     if (activeButtonValue && (tabValue || activeTabValue)) {
+      const storedData = await getSpecificDataFromForage('required_data');
+      const instituteId = storedData?.institute_id;
+
+      let course_type = tabValue || activeTabValue;
       const postData = {
-        courseType: tabValue || activeTabValue,
-        courseLevel: activeButtonValue
+        courseType: course_type.charAt(0).toUpperCase() + course_type.substr(1),
+        courseLevel: activeButtonValue.charAt(0).toUpperCase() + activeButtonValue.substr(1),
+        institute_id: instituteId
       };
   
       try {
@@ -116,8 +133,6 @@ const AssessmentType = () => {
             return obj;
           });
         }
-
-        console.log('courses_data - ', courses_data);
   
         setActiveAccordionValue(courses_data?.[0]?.course_id);
         setAccordionData(courses_data);
@@ -199,7 +214,7 @@ const AssessmentType = () => {
                   {
                     tabs.map(
                       ({ label, value }) => ( 
-                        <Tab key={value} value={value} className={`p-3 font-bold border-b- border-b-2 ${(value === activeTabValue) ? 'text-primary border-b-primary' : 'text-gray-500 border-[#DBDBDB]'}`} onClick={() => handleChangeTabValue(value)}> {label} </Tab> 
+                        <Tab key={value} value={value} className={`p-3 font-bold border-b- border-b-2 ${(value === activeTabValue) ? 'text-primary border-b-primary' : 'text-gray-500 border-[#DBDBDB]'}`} onClick={() => handleChangeTabValue(value)}> { label.toUpperCase() } </Tab> 
                       )
                     )
                   }
@@ -207,13 +222,18 @@ const AssessmentType = () => {
                 <TabsBody className="p-0">
                   {
                     tabs.map(
-                      ({value}, idx) => (
-                          <TabPanel key={idx} value={value} className="flex flex-col gap-5 px-0 py-5"> 
+                      (obj, idx) => (
+                          <TabPanel key={idx} value={obj.value} className="flex flex-col gap-5 px-0 py-5"> 
                             {
                               <>
                                 <div className="flex flex-row gap-4 justify-center">
-                                  <Button styles={`border-[#535461] p-2 w-[120px] rounded-[28px] animate__animated animate__fadeInDown hover:bg-[#535461] hover:text-white ${ (activeButtonValue === 'Degree') ? 'text-white bg-[#535461]' : 'text-[#535461] bg-white' }`} css={{fontSize: '16px'}} text="Degree" onClick={() => setActiveButtonValue('Degree')}></Button>
-                                  <Button styles={`border-[#535461] p-2 w-[120px] rounded-[28px] animate__animated animate__fadeInDown hover:bg-[#535461] hover:text-white ${ (activeButtonValue === 'Diploma') ? 'text-white bg-[#535461]' : 'text-[#535461] bg-white' }`} css={{fontSize: '16px'}} text="Diploma" onClick={() => setActiveButtonValue('Diploma')}></Button>
+                                  {
+                                    obj?.level?.map(
+                                      ( level ) => ( 
+                                        <Button key={level} styles={`border-[#535461] p-2 w-[120px] rounded-[28px] capitalize animate__animated animate__fadeInDown hover:bg-[#535461] hover:text-white ${ (activeButtonValue === level) ? 'text-white bg-[#535461]' : 'text-[#535461] bg-white' }`} css={{fontSize: '16px'}} text={level} onClick={() => setActiveButtonValue(level)}></Button>
+                                      )
+                                    )
+                                  }
                                 </div>
 
                                 <div className="flex flex-col gap-4">
