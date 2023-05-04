@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import ROUTE_MAP from "../routing/routeMap";
 import { Tabs, TabsHeader, TabsBody, Tab, TabPanel, Accordion, AccordionHeader, AccordionBody } from "@material-tailwind/react";
@@ -6,7 +6,6 @@ import { Tabs, TabsHeader, TabsBody, Tab, TabPanel, Accordion, AccordionHeader, 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronRight } from "@fortawesome/free-solid-svg-icons";
 
-import { StateContext } from "../App";
 import { getCoursesForAccordions, getCoursesOfInstitutes, getStatusOfForms } from '../api';
 import { getAllKeysFromForage, getCookie, getSpecificDataFromForage } from "../utils";
 
@@ -17,7 +16,6 @@ const AssessmentType = () => {
   
   const navigate = useNavigate();
   const [tabs, setTabs] = useState([]);
-  // const [courseLevel, setCourseLevel] = useState([]);
   const [activeTabValue, setActiveTabValue] = useState('');
   const [activeButtonValue, setActiveButtonValue] = useState('');
   const [activeAccordionValue, setActiveAccordionValue] = useState();
@@ -93,7 +91,6 @@ const AssessmentType = () => {
       setTabs(tabs);
       setActiveTabValue(tabs[0].value);
       setActiveButtonValue(tabs[0].level[0]);
-      getAccordionsData(tabs[0].value);
     } catch (error) {
       alert(error);
     }
@@ -164,16 +161,12 @@ const AssessmentType = () => {
   }
 
   useEffect(() => {
-    getAccordionsData();
-  }, [activeButtonValue]);
-
-  useEffect(() => {
     getFormStatus();
   }, []);
 
   useEffect(() => {
     getAccordionsData();
-  }, [activeTabValue && formNames && completedForms]);
+  }, [activeTabValue && formNames && completedForms && activeButtonValue]);
 
   return (
     <CommonLayout back={ROUTE_MAP.medical_assessments}
@@ -293,8 +286,6 @@ const AssessmentType = () => {
             </>
           )
         }
-
-        
       </div>
     </CommonLayout>
   );
