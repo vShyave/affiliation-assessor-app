@@ -97,7 +97,7 @@ const GenericOdkForm = () => {
           form_data: updatedFormData,
           assessment_type: formName.startsWith('hospital') ? 'hospital' : 'institute',
           form_name: formSpec.start,
-          status: true,
+          submission_status: true,
           assessor_id: assessor_id?.assessor_user_id,
           submitted_on: new Date().toJSON().slice(0, 10)
         });
