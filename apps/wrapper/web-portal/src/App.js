@@ -7,6 +7,8 @@ import './App.css';
 import Authenticate from "./login/Authenticate";
 import AdminLogin from "./login/AdminLogin";
 import EnterOtp from "./login/EnterOtp";
+import AdminSingUp from "./login/AdminSignUp";
+import LoginEnterOtp from "./login/LoginEnterOtp";
 
 function App() {
   return (
@@ -14,8 +16,10 @@ function App() {
       <BrowserRouter>
         <Routes>
           <Route path={ADMIN_ROUTE_MAP.auth} element={ <Authenticate /> }>
-            <Route path={ADMIN_ROUTE_MAP.loginModule.otp} element={ <EnterOtp /> }></Route>
-            <Route path={ADMIN_ROUTE_MAP.loginModule.logIn} element={ <AdminLogin /> }></Route>
+            <Route path={ADMIN_ROUTE_MAP.loginModule.registerotp} element={ <EnterOtp /> }></Route>
+            <Route path={ADMIN_ROUTE_MAP.loginModule.login} element={ <AdminLogin /> }></Route>
+            <Route path={ADMIN_ROUTE_MAP.loginModule.signup} element={ <AdminSingUp /> }></Route>
+            <Route path={ADMIN_ROUTE_MAP.loginModule.loginotp} element={ <LoginEnterOtp /> }></Route>
           </Route>
         </Routes>
       </BrowserRouter>
