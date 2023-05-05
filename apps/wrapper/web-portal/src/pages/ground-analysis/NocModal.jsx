@@ -2,6 +2,8 @@ import React from 'react'
 
 function NocModal({closeModal}) {
   return (
+    <>
+    <div className='flex w-full h-full bg-blur-sm justify-center items-center'>
     <div className='flex justify-center p-2 rounded-xl shadow-xl border border-gray-400 w-[580px] h-[380px]'>
         <div className='flex flex-col gap-4'>
             <div className='title flex font-bold'>
@@ -17,8 +19,9 @@ function NocModal({closeModal}) {
             </div>
 
         </div>
-      
+      </div>
     </div>
+    </>
   )
 }
 
