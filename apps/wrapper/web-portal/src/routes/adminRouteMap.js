@@ -4,9 +4,10 @@ let ADMIN_ROUTE_MAP = {
 };
 
 ADMIN_ROUTE_MAP.loginModule = {
-    logIn: `${ADMIN_ROUTE_MAP.auth}/login`,
-    otp: `${ADMIN_ROUTE_MAP.auth}/otp`,
+    login: `${ADMIN_ROUTE_MAP.auth}/login`,
+    registerotp: `${ADMIN_ROUTE_MAP.auth}/registerotp`,
     signup: `${ADMIN_ROUTE_MAP.auth}/register`,
+    loginotp: `${ADMIN_ROUTE_MAP.auth}/loginotp`,
 }
 
 export default ADMIN_ROUTE_MAP;
