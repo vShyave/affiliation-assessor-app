@@ -13,7 +13,7 @@ const GlobalFilter = ({filter,setFilter}) => {
     },1000)
 
   return (
-    <div class="mb-3">
+    <div className="mb-3">
        <div className='flex flex-wrap gap-8'> 
   <div className="relative mb-4 bg-white flex w-1/4  items-stretch">
     <input
