@@ -2,10 +2,16 @@ import React, { useState, useEffect, useContext, useRef } from "react";
 import { Routes, useNavigate, useParams } from "react-router-dom";
 import ROUTE_MAP from "../../routing/routeMap";
 
-
 import { StateContext } from "../../App";
 import { saveFormSubmission } from "../../api";
-import { getCookie, getFormData, handleFormEvents, updateFormData, removeItemFromLocalForage, getSpecificDataFromForage } from "../../utils";
+import {
+  getCookie,
+  getFormData,
+  handleFormEvents,
+  updateFormData,
+  removeItemFromLocalForage,
+  getSpecificDataFromForage,
+} from "../../utils";
 
 import CommonLayout from "../../components/CommonLayout";
 
@@ -90,21 +96,26 @@ const GenericOdkForm = () => {
       if (data?.state === "ON_FORM_SUCCESS_COMPLETED") {
         const updatedFormData = await updateFormData(formSpec.start);
 
-        const assessor_id = await getSpecificDataFromForage('required_data');
+        const storedData = await getSpecificDataFromForage("required_data");
 
         saveFormSubmission({
           schedule_id: scheduleId.current,
           form_data: updatedFormData,
-          assessment_type: formName.startsWith('hospital') ? 'hospital' : 'institute',
+          assessment_type: formName.startsWith("hospital")
+            ? "hospital"
+            : "institute",
           form_name: formSpec.start,
           submission_status: true,
-          assessor_id: assessor_id?.assessor_user_id,
-          submitted_on: new Date().toJSON().slice(0, 10)
+          assessor_id: storedData?.assessor_user_id,
+          applicant_id: storedData?.institute_id,
+          submitted_on: new Date().toJSON().slice(0, 10),
         });
 
         // Delete the data from the Local Forage
-        const key = `${assessor_id?.assessor_user_id}_${formSpec.start}${new Date().toISOString().split("T")[0]}`;
-        console.log('key - ', key);
+        const key = `${storedData?.assessor_user_id}_${formSpec.start}${
+          new Date().toISOString().split("T")[0]
+        }`;
+        console.log("key - ", key);
         removeItemFromLocalForage(key);
 
         setTimeout(() => navigate(`${ROUTE_MAP.thank_you}${formName}`), 2000);
@@ -125,8 +136,12 @@ const GenericOdkForm = () => {
             formSpec.forms[nextForm.id].prefill
           )
         );
-        navigate(formName.startsWith('hospital') ? ROUTE_MAP.hospital_forms : ROUTE_MAP.medical_assessment_options)
-      } else if (nextForm?.type === 'url') {
+        navigate(
+          formName.startsWith("hospital")
+            ? ROUTE_MAP.hospital_forms
+            : ROUTE_MAP.medical_assessment_options
+        );
+      } else if (nextForm?.type === "url") {
         window.location.href = nextForm.url;
       }
     } catch (e) {
@@ -135,8 +150,8 @@ const GenericOdkForm = () => {
   }
 
   const handleEventTrigger = async (e) => {
-    handleFormEvents(startingForm, afterFormSubmit, e)
-  }
+    handleFormEvents(startingForm, afterFormSubmit, e);
+  };
 
   const bindEventListener = () => {
     window.addEventListener("message", handleEventTrigger);
@@ -147,7 +162,16 @@ const GenericOdkForm = () => {
 
   useEffect(() => {
     bindEventListener();
-    getFormData({ loading, scheduleId, formSpec, startingForm, formId, setData, setEncodedFormSpec, setEncodedFormURI });
+    getFormData({
+      loading,
+      scheduleId,
+      formSpec,
+      startingForm,
+      formId,
+      setData,
+      setEncodedFormSpec,
+      setEncodedFormURI,
+    });
     return () => {
       detachEventBinding();
       setData(null);
