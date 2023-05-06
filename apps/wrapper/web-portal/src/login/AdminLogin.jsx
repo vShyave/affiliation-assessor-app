@@ -26,8 +26,7 @@ const AdminLogin = () => {
 
   useEffect(() => {
     console.log(formErrors)
-    if(Object.keys(formErrors).length === 0 && isSubmit){
-    }
+    if(Object.keys(formErrors).length === 0 && isSubmit){ }
   },[formErrors])
 
   const validate = (values) => {
@@ -68,7 +67,7 @@ const AdminLogin = () => {
             <Button moreClass="uppercase w-full mt-7" text="Sign in"></Button>
             <p className="flex justify-center my-6">
               <span className="text-gray-400">Create an account, </span>&nbsp;
-              <Link to={ADMIN_ROUTE_MAP.loginModule.signup} className="text-primary-700">Sign up</Link>
+              <Link to={ADMIN_ROUTE_MAP.loginModule.register} className="text-primary-700">Sign up</Link>
             </p>
           </div>
         </form>

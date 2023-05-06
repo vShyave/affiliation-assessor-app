@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from "react";
-import { AiOutlineClose,AiOutlineCheck } from "react-icons/ai";
+import { AiOutlineClose, AiOutlineCheck } from "react-icons/ai";
 
 import NocModal from "./NocModal";
 import StatusLogModal from "./StatusLogModal";

@@ -15,29 +15,31 @@ export default function AdminSingUp() {
   // const [ formErrors, setFormErrors ] = useState({})
   // const [ isSubmit,setIsSubmit ] = useState(false)
 
-// const  FormValues = {
-//   fullName: String,
-//   email: String
-// }
-const {
-  register,
-  handleSubmit,
-  watch,
-  formState: { errors }
-} = useForm();
+  // const  FormValues = {
+  //   fullName: String,
+  //   email: String
+  // }
 
-const onSubmit = (data) => {
-  alert(JSON.stringify(data));
-}; 
+  const {
+    register,
+    handleSubmit,
+    watch,
+    formState: { errors }
+  } = useForm();
+
+  const onSubmit = (data) => {
+    alert(JSON.stringify(data));
+  }; 
   // const{register,handleSubmit,formState: {errors}} = useForm();
   //   ,
   //   watch,
   //   
   // } 
-// console.log(errors)
-//   const onSubmit = (data) => {
-// console.log("form submitted",data,FormValues);
-//   }; 
+
+  // console.log(errors)
+  //   const onSubmit = (data) => {
+  // console.log("form submitted",data,FormValues);
+  //   }; 
   // console.log(watch("fullname"));
 
   // const handleChange =(e) =>{}
@@ -89,29 +91,26 @@ const onSubmit = (data) => {
   //   return errors;
   //   }
 
-
-return (
-  <>
-    <Card moreClass="shadow-md w-screen sm:px-24 sm:w-[480px] md:w-[600px] py-16">
-    <form onSubmit={handleSubmit((data)=>{console.log(data)})}>
-      <div className="flex flex-col">
-        <h1 className="text-2xl font-medium text-center mb-8">Sign Up</h1>
-        <div className="flex flex-col gap-4">
-          <div className="flex flex-col gap-2">
-          <label className="block mt-6 text-left leading-6 text-gray-800">
-            Full name
-          </label>
-            <div>
-                    <input
-                  type="text"
-                  id="fullname"                                                           
-                  placeholder="Type here"
-                  className="w-full rounded-[4px] p-4 py-3 text-gray-900 ring-1  ring-gray-300 placeholder:text-gray-400 focus:ring-1 focus:ring-inset focus:ring-primary-600 sm:text-sm sm:leading-6"
-                  {...register("fullname", {
-                    required: true,
-                    maxLength: 20,
-                    pattern: /^[A-Za-z]+$/i
-                  })}
+  return (
+    <>
+      <Card moreClass="shadow-md w-screen sm:px-24 sm:w-[480px] md:w-[600px] py-16">
+        <form onSubmit={handleSubmit((data)=>{console.log(data)})}>
+          <div className="flex flex-col">
+            <h1 className="text-2xl font-medium text-center mb-8">Sign Up</h1>
+            <div className="flex flex-col gap-4">
+              <div className="flex flex-col gap-2">
+                <label className="block text-left leading-6 text-gray-800">Full name</label>
+                <div>
+                  <input
+                    type="text"
+                    id="fullname"                                                           
+                    placeholder="Type here"
+                    className="w-full rounded-[4px] p-4 py-3 text-gray-900 ring-1  ring-gray-300 placeholder:text-gray-400 focus:ring-1 focus:ring-inset focus:ring-primary-600 sm:text-sm sm:leading-6"
+                    {...register("fullname", {
+                      required: true,
+                      maxLength: 20,
+                      pattern: /^[A-Za-z]+$/i
+                    })}
                   />
                   {errors?.fullname?.type === "required" && <p className="text-red-500 mt-2 text-sm">This field is required</p>}
                   {errors?.fullname?.type === "maxLength" && (
@@ -120,36 +119,12 @@ return (
                   {errors?.fullname?.type === "pattern" && (
                     <p className="text-red-500 mt-2 text-sm">Alphabetical characters only</p>
                   )}
-                  </div>
-           
-           
-           
-           
-           
-           
-            {/* <Label htmlFor="fullname" text="Fullname"></Label> */}
-            {/* <Input 
-            // type="text"              
-            // id="fullName" 
-            placeholder="Type here" 
-            {...register("fullname",{required:true})}/> */}
-
-            {/* {errors?.fullName?.type === "required" && <p className="text-error-500 text-sm">This field is required</p>}
-            {errors?.fullName?.type === "maxLength" && (
-            <p className="text-error-500 text-sm">First name cannot exceed 20 characters</p>
-            )}
-           {errors?.fullName?.type === "pattern" && (
-           <p className="text-error-500 text-sm">Alphabetical characters only</p>
-           )}
-           
-            {/* <p className="text-error-500 text-sm" >{formErrors.fullname}</p> */}
-          </div> 
-          <div className="flex flex-col gap-2">
-          <label htmlFor="email" className="block mt-6 text-left leading-6 text-gray-800">
-            Email id
-          </label>
-            <div >
-                    <input
+                </div>
+              </div> 
+              <div className="flex flex-col gap-2">
+                <label htmlFor="email" className="block text-left leading-6 text-gray-800">Email id</label>
+                <div>
+                  <input
                     type="email"
                     id="email"
                     placeholder="name@email.com"
@@ -158,43 +133,22 @@ return (
                       required: true,
                       pattern: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/i
                     })}
-                    />
-                    {errors?.email?.type === "required" && <p className="text-red-500 mt-2 text-sm">This field is required</p>}
-                    {errors?.email?.type === "pattern" && (
-                      <p className="text-red-500 mt-2 text-sm">This is not a valid email format</p>
-                    )}
+                  />
+                  {errors?.email?.type === "required" && <p className="text-red-500 mt-2 text-sm">This field is required</p>}
+                  {errors?.email?.type === "pattern" && (
+                    <p className="text-red-500 mt-2 text-sm">This is not a valid email format</p>
+                  )}
+                </div>
+              </div>
             </div>
-            
-            
-            
-            
-            
-            
-            
-            {/* <Label htmlFor="email" text="Email id"></Label>
-            < Input
-            // type="email" 
-            // name="email" 
-            // id="email" 
-            placeholder="name@email.com" 
-            
-            {...register("email",{required:true})} */}
-            {/* /> */}
-            {/* {errors?.email?.type === "required" && <p className="text-error-500 text-sm">This field is required</p>} */}
-            {/* {errors?.email?.type === "pattern" && ( */}
-           {/* <p className="text-error-500 text-sm">This is not a valid email format</p> */}
-           {/* )} */}
-            {/* <p className="text-error-500 text-sm" >{formErrors.email}</p> */}
+            <Button moreClass="uppercase w-full mt-7" text="Continue"></Button>
+            <p className="flex justify-center my-6">
+              <span className="text-gray-400">Have an account, </span>&nbsp;
+              <Link to={ADMIN_ROUTE_MAP.loginModule.login} className="text-primary-700">Login</Link>
+            </p>
           </div>
-        </div>
-        <Button moreClass="uppercase w-full mt-7" text="Continue"></Button>
-        <p className="flex justify-center my-6">
-          <span className="text-gray-400">Have an account, </span>&nbsp;
-          <Link to={ADMIN_ROUTE_MAP.loginModule.login} className="text-primary-700">Login</Link>
-        </p>
-      </div>
-    </form>
-  </Card>
-  </>
+        </form>
+      </Card>
+    </>
   )
 }

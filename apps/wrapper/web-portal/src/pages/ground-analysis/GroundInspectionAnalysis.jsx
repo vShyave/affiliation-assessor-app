@@ -1,10 +1,12 @@
 import React from "react";
 import { MdDashboard , MdOutlineStickyNote2 , MdLibraryBooks , MdPlaylistAddCheck , MdBook} from "react-icons/md";
 import { FaUserFriends } from "react-icons/fa"
+
 // import Header from "./Header";
-import Table from "./Table";
-import FilteringTable from "./FilteringTable";
-import PaginationTable from "./PaginationTable";
+
+import Table from "./../../components/table/Table";
+import FilteringTable from "./../../components/table/FilteringTable";
+import PaginationTable from "./../../components/table/PaginationTable";
 
 
 export default function OnGroundInspectionAnalysis() {
@@ -69,10 +71,7 @@ export default function OnGroundInspectionAnalysis() {
                                         Select Round
                                     </label>
                                     <div className="mt-2">
-                                        <select
-                                        id="role"
-                                        name="role"
-                                        className="block w-full rounded-md border-0 py-3 p-2 bg-white text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6">
+                                        <select id="role" name="role" className="block w-full rounded-md border-0 py-3 p-2 bg-white text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6">
                                             <option >Round one</option>
                                             <option>Round two</option>
                                         </select>
