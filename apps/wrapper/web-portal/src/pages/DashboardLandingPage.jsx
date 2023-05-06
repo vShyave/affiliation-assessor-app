@@ -1,9 +1,10 @@
 import React from 'react'
+import Header from "./../components/Header";
 
 const DashboardLandingPage = () => {
     return (
         <div>
-            <h2 className='text-2xl'>Hi Shyave!</h2>
+            <Header></Header>
         </div>
     )
 }

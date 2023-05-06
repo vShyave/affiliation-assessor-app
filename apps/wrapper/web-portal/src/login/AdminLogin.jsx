@@ -11,11 +11,9 @@ const AdminLogin = () => {
   const [ formErrors, setFormErrors ] = useState({})
   const [ isSubmit,setIsSubmit ] = useState(false)
 
-  const handleChange =(e) =>{
-    // console.log(e.target)
+  const handleChange = (e) => {
     const { name , value } = e.target;
     setFormValue({...formValue, [name]: value})
-    // console.log(formValue)
   }
 
   const handleSubmit = (e) => {
