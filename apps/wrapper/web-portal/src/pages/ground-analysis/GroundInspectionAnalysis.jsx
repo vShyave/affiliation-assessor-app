@@ -7,6 +7,7 @@ import { FaUserFriends } from "react-icons/fa"
 import Table from "./../../components/table/Table";
 import FilteringTable from "./../../components/table/FilteringTable";
 import PaginationTable from "./../../components/table/PaginationTable";
+import Card from "./../../components/Card";
 
 
 export default function OnGroundInspectionAnalysis() {
@@ -22,20 +23,18 @@ export default function OnGroundInspectionAnalysis() {
                     </div>
                     <div className="container mx-auto">
                         <div className="flex flex-wrap gap-4">
-                            <div className="flex flex-col gap-8 border shadow-md p-2 bg-white w-[200px] h-[100px] rounded-[4px]">
+                            <Card moreClass="shadow-md w-[200px] h-[100px]">
                                 <div className="flex flex-col place-items-start justify-center gap-2">
-                                    
-                                    <h3 className="text-xl mt-2 font-medium">12</h3>
-                                    <p className="text-sm font- text-gray-700">Total pending</p>
+                                    <h3 className="text-xl font-semibold">12</h3>
+                                    <p className="text-sm font-medium text-gray-700">Total pending</p>
                                 </div>
-                            </div>
-                            <div className="flex flex-col gap-8 border shadow-md p-2 bg-white w-[200px] h-[100px] rounded-[4px]">
+                            </Card>
+                            <Card moreClass="shadow-md w-[200px] h-[100px]">
                                 <div className="flex flex-col place-items-start justify-center gap-2">
-                                    
-                                    <h3 className="text-xl mt-2 font-medium">8</h3>
-                                    <p className="text-sm font-normal text-gray-700">Received today</p>
+                                    <h3 className="text-xl font-semibold">8</h3>
+                                    <p className="text-sm font-medium text-gray-700">Received today</p>
                                 </div>
-                            </div>
+                            </Card>
                             <div className="flex flex-col gap-8 border shadow-md p-2 bg-white w-[200px] h-[100px] rounded-[4px]">
                                 <div className="flex flex-col place-items-start justify-center gap-2">
                                     

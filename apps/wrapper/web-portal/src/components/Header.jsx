@@ -42,8 +42,8 @@ export default function Header() {
                                 <img src="/images/upsmf.png" alt="logo" className="h-[84px]" />
                             </div>
                             <div className="flex grow justify-end items-center">
-                                <div className="border bg-green-800 w-[36px] h-[36px] p-1 rounded-[4px]">
-                                    <p className="text-white text-center">{userInfoChars}</p>
+                                <div className="border bg-green-800 w-[36px] h-[32px] p-1 rounded-[4px] font-bold text-[14px]">
+                                    <p className="text-white text-center tracking-[1px]">{userInfoChars}</p>
                                 </div>
                             </div>
                         </div>
