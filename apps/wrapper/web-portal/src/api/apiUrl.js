@@ -3,7 +3,7 @@ const API_URL = {
         register: 'user/registration'
     },
     groundAnalysis: {
-
+        viewForm: 'rest/getFormData'
     },
     manageUsers: {
         
