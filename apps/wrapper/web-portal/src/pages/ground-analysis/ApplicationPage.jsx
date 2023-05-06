@@ -1,5 +1,4 @@
-import React,{useState} from "react";
-import Header from "./Header";
+import React,{useEffect, useState} from "react";
 import NocModal from "./NocModal";
 import StatusLogModal from "./StatusLogModal";
 import { AiOutlineClose,AiOutlineCheck } from "react-icons/ai";
@@ -40,4 +39,4 @@ export default function ApplicationPage({ closeModal,closeStatusModal }) {
     </div>  
     </>
     )
-    }
+}
