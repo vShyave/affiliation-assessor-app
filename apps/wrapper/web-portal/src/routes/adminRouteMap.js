@@ -11,9 +11,24 @@ ADMIN_ROUTE_MAP.loginModule = {
 
 ADMIN_ROUTE_MAP.adminModule = {
     dashboard: '/',
+    manageUsers: {
+        list: 'manageUsers/list'
+    },
+    manageForms: {
+        list: 'manageForms/list'
+    },
+    desktopAnalysis: {
+        list: 'desktopAnalysis/list'
+    },
     onGroundInspection: {
-        list: '/groundInspection/list',
-        viewForm: '/groundInspection/view'
+        list: 'groundInspection/list',
+        viewForm: 'groundInspection/view'
+    },
+    certificateManagement: {
+        list: 'certificate/list',
+    },
+    scheduleManagement: {
+        list: 'schedule/list'
     }
 }
 

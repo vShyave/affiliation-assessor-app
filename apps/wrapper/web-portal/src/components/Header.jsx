@@ -4,6 +4,8 @@ import "./Header.css"
 
 import { AiOutlineMenu, AiOutlineClose,AiFillHome } from "react-icons/ai";
 
+import ADMIN_ROUTE_MAP from "../routes/adminRouteMap";
+
 // import SelfRegistration from "./SelfRegistration";
 // import Congratulations from "./Congratulations";
 // import Cards from "./Cards";
@@ -32,8 +34,8 @@ export default function Header() {
       
     return (
         <>
-            <div className="relative bg-white min-h-[148px]">
-                <div className="top-0 fixed left-0 right-0">
+            <div className="relative min-h-[148px] z-10">
+                <div className="top-0 fixed left-0 right-0 bg-white">
                     <div className="container py-2 px-3 mx-auto">
                         <div className="flex flex-row">
                             <div className="flex grow">
@@ -52,28 +54,28 @@ export default function Header() {
                             {/* <div className="flex bg-white hidden md:contents"> */}
                             <ul className="flex md nav-items text-gray-500 text-[14px] font-bold uppercase gap-4 justify-center align-center menus">
                                 <li className="flex bg-primary-800 rounded-md items-center justify-center h-8 w-8 hover:cursor-pointer">
-                                    <Link to="/"><AiFillHome className="text-white text-xl"/></Link>
+                                    <Link to={ADMIN_ROUTE_MAP.adminModule.dashboard}><AiFillHome className="text-white text-xl"/></Link>
                                 </li>
                                 <li className="flex hover:text-primary-600 hover:cursor-pointer">
-                                    <Link>Dashboard</Link>
+                                    <Link to="/">Dashboard</Link>
                                 </li>
                                 <li className="flex hover:text-primary-600 hover:cursor-pointer">
-                                    <Link to="/manageUsers">Manage Users</Link>
+                                    <Link to={ADMIN_ROUTE_MAP.adminModule.manageUsers.list}>Manage Users</Link>
                                 </li>
                                 <li className="flex hover:text-primary-600 hover:cursor-pointer">
-                                    <Link to="/manageForms">Manage Forms</Link>
+                                    <Link to={ADMIN_ROUTE_MAP.adminModule.manageForms.list}>Manage Forms</Link>
                                 </li>
                                 <li className="flex hover:text-primary-600 hover:cursor-pointer">
-                                    <Link to="/desktopAnalysis">Desktop Analysis</Link>
+                                    <Link to={ADMIN_ROUTE_MAP.adminModule.desktopAnalysis.list}>Desktop Analysis</Link>
                                 </li>
                                 <li className="flex hover:text-primary-600 hover:cursor-pointer">
-                                    <Link to="/groundInspectionAnalysis">On Ground Inspection Analysis</Link>
+                                    <Link to={ADMIN_ROUTE_MAP.adminModule.onGroundInspection.list}>On Ground Inspection Analysis</Link>
                                 </li>
                                 <li className="flex hover:text-primary-600 hover:cursor-pointer">
-                                    <Link to="/">Certificate Management</Link>
+                                    <Link to={ADMIN_ROUTE_MAP.adminModule.certificateManagement.list}>Certificate Management</Link>
                                 </li>
                                 <li className="flex hover:text-primary-600 hover:cursor-pointer">
-                                    <Link to="/">Schedule Management</Link>
+                                    <Link to={ADMIN_ROUTE_MAP.adminModule.scheduleManagement.list}>Schedule Management</Link>
                                 </li>
                             </ul>
                             {/* </div> */}
