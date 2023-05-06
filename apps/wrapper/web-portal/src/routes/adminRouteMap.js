@@ -3,9 +3,9 @@ let ADMIN_ROUTE_MAP = {};
 
 ADMIN_ROUTE_MAP.loginModule = {
     login: `auth/login`,
-    registerotp: `auth/registerotp`,
+    registerOtp: `auth/registerOtp`,
     signup: `auth/register`,
-    loginotp: `auth/loginotp`,
+    loginOtp: `auth/loginOtp`,
 }
 
 ADMIN_ROUTE_MAP.adminModule = {

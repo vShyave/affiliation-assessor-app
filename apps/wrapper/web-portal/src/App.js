@@ -1,16 +1,19 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-// import { createContext, useEffect, useState } from "react";
+import { createContext, useEffect, useState } from "react";
 
 import ADMIN_ROUTE_MAP from "./routes/adminRouteMap";
 import './App.css';
 
+// login...
 import Authenticate from "./login/Authenticate";
 import AdminLogin from "./login/AdminLogin";
 import EnterOtp from "./login/EnterOtp";
 import AdminSingUp from "./login/AdminSignUp";
 import LoginEnterOtp from "./login/LoginEnterOtp";
-import AdminOnGroundInspectionAnalysis from "./pages/ground-analysis/AdminOnGroundInspectionAnalysis";
+
+
 import ApplicationPage from "./pages/ground-analysis/ApplicationPage";
+import AdminOnGroundInspectionAnalysis from "./pages/ground-analysis/AdminOnGroundInspectionAnalysis";
 
 function App() {
   return (
