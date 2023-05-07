@@ -11,11 +11,9 @@ const AdminLogin = () => {
   const [ formErrors, setFormErrors ] = useState({})
   const [ isSubmit,setIsSubmit ] = useState(false)
 
-  const handleChange =(e) =>{
-    // console.log(e.target)
+  const handleChange = (e) => {
     const { name , value } = e.target;
     setFormValue({...formValue, [name]: value})
-    // console.log(formValue)
   }
 
   const handleSubmit = (e) => {
@@ -26,8 +24,7 @@ const AdminLogin = () => {
 
   useEffect(() => {
     console.log(formErrors)
-    if(Object.keys(formErrors).length === 0 && isSubmit){
-    }
+    if(Object.keys(formErrors).length === 0 && isSubmit){ }
   },[formErrors])
 
   const validate = (values) => {
@@ -41,7 +38,7 @@ const AdminLogin = () => {
     return errors; 
   }
 
-  // async function Adminlogin() {
+  // async function handleLogin() {
   //   console.log(formValue);
   //   let item = {formValue};
   //   let logindata = await fetch("https://hasura.upsmfac.org/api/rest/getAdminData"),{
@@ -68,7 +65,7 @@ const AdminLogin = () => {
             <Button moreClass="uppercase w-full mt-7" text="Sign in"></Button>
             <p className="flex justify-center my-6">
               <span className="text-gray-400">Create an account, </span>&nbsp;
-              <Link to={ADMIN_ROUTE_MAP.loginModule.otp} className="text-primary-700">Sign up</Link>
+              <Link to={ADMIN_ROUTE_MAP.loginModule.register} className="text-primary-700">Sign up</Link>
             </p>
           </div>
         </form>

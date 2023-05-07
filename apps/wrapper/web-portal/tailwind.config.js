@@ -25,7 +25,7 @@ module.exports = withMT({
           900: '#1e3a8a',
           950: '#172554'
         },
-        secondary: '#1D8923',
+        secondary: '#009A2B;',
         gray: {
           100: '#f3f4f6',
           200: '#e5e7eb',
