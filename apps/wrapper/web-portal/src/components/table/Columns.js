@@ -1,30 +1,31 @@
 export const COLUMNS = [
-    {
-        Header: 'Applicant',
-        accessor: 'Applicant'
-    },
-    {
-        Header: 'Form name',
-        accessor: 'Form name'
-    },
-    {
-        Header: 'Assessor',
-        accessor: 'Assessor'
-    },
-    {
-        Header: 'Assisting Assessor',
-        accessor: 'Assisting Assessor'
-    },
-    {
-        Header: 'Published on',
-        accessor: 'Published on'
-    },
-    {
-        Header: 'Status',
-        accessor: 'Status'
-    },
-    {
-        Header: 'NOC Recommendation',
-        accessor: 'NOC Recommendation'
-    },
-]
+  {
+    Header: "Applicant",
+    accessor: "applicant",
+  },
+  {
+    Header: "Form name",
+    accessor: "form_name",
+  },
+  {
+    Header: "Assessor",
+    accessor: "assessor",
+  },
+  {
+    Header: "Assisting Assessor",
+    accessor: "assisting_assessor",
+  },
+  {
+    Header: "Published on",
+    accessor: "published_on",
+  },
+  // ,
+  // {
+  //     Header: 'Status',
+  //     accessor: 'Status'
+  // },
+  // {
+  //     Header: 'NOC Recommendation',
+  //     accessor: 'NOC Recommendation'
+  // },
+];
