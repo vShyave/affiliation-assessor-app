@@ -1,11 +1,15 @@
-// import customPost from "./customPost";
+import axios from "axios";
+import adminCustomApi from "./adminCustomApi";
 import API_URL from "./apiUrl";
 
 export const registerUser = async (postData) => {
-    const res = await fetch.post(API_URL.auth.register, postData);
-    return res;
-}
-
+  const res = await fetch.post(API_URL.auth.register, postData);
+  return res;
+};
+export const getOnGroundAssessorData = async () => {
+  const res = await adminCustomApi.get(API_URL.groundAnalysis.list);
+  return res;
+};
 
 // export const getAssessorDetails = async (postData) => {
 //     const res = await customPost.post(API_URL.auth.register, postData);

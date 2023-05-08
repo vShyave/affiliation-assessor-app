@@ -34,7 +34,7 @@ function App() {
               element={<LoginEnterOtp />}
             ></Route>
             <Route
-              path={ADMIN_ROUTE_MAP.adminModule.onGroundInspectionAnalysis.list}
+              path={ADMIN_ROUTE_MAP.adminModule.onGroundInspection.list}
               element={<AdminOnGroundInspectionAnalysis />}
             ></Route>
           </Route>
