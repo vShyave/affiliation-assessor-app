@@ -176,7 +176,10 @@ export default function OnGroundInspectionAnalysis() {
                   <div className="flex flex-col">
                     <div className="text-2xl mt-4 font-medium">
                       {/* <Table/> */}
-                      <FilteringTable formsList={resData} />
+                      <FilteringTable
+                        formsList={resData}
+                        setNavigation={setNavigate}
+                      />
                       {/* <PaginationTable/> */}
                     </div>
                   </div>
