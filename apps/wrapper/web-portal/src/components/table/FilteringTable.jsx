@@ -11,7 +11,7 @@ const FilteringTable = (props) => {
   //const data = useMemo(() => props?.formsList?.formsDataList, []);
   const data = props?.formsList?.formsDataList;
   console.log("Data", data);
-
+  const onFormHandler = () => {};
   const {
     getTableProps,
     getTableBodyProps,

@@ -1,6 +1,5 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { createContext, useEffect, useState } from "react";
-
 import ADMIN_ROUTE_MAP from "./routes/adminRouteMap";
 import "./App.css";
 
@@ -14,6 +13,7 @@ import LoginEnterOtp from "./login/LoginEnterOtp";
 // Dashboard pages...
 import DashboardLandingPage from "./pages/DashboardLandingPage";
 import GroundInspectionAnalysis from "./pages/ground-analysis/GroundInspectionAnalysis";
+import GroundInspectionListForms from "./pages/ground-analysis/GroundInspectionListForms";
 import GroundInspectionViewForm from "./pages/ground-analysis/GroundInspectionViewForm";
 import ManageUsersList from "./pages/manage-users/ManageUsersList";
 import ManageFormsList from "./pages/manage-forms/ManageFormsList";
@@ -61,13 +61,19 @@ function App() {
               element={<DesktopAnalysisList />}
             ></Route>
             <Route
-              path={ADMIN_ROUTE_MAP.adminModule.onGroundInspection.list}
+              path={ADMIN_ROUTE_MAP.onGroundInspection.home}
               element={<GroundInspectionAnalysis />}
-            ></Route>
-            <Route
-              path={`${ADMIN_ROUTE_MAP.adminModule.onGroundInspection.viewForm}/:formName/:formId`}
-              element={<GroundInspectionViewForm />}
-            ></Route>
+            >
+              <Route
+                path={ADMIN_ROUTE_MAP.onGroundInspection.list}
+                element={<GroundInspectionListForms />}
+              ></Route>
+              <Route
+                path={`${ADMIN_ROUTE_MAP.onGroundInspection.viewForm}/:formName/:formId`}
+                element={<GroundInspectionViewForm />}
+              ></Route>
+            </Route>
+
             <Route
               path={ADMIN_ROUTE_MAP.adminModule.certificateManagement.list}
               element={<CertificateManagementList />}
