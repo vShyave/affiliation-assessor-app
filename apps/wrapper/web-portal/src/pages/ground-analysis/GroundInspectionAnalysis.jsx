@@ -14,14 +14,12 @@ export default function OnGroundInspectionAnalysis() {
   return (
         <>
             {/* <Header/> */}
-            <div className="bg-gray-100 flex flex-col w-full h-full">
-                <div className="container mx-auto">
-                    <div className="flex flex-col py-8">
-                        <h1 className="text-2xl font-medium">
+            <div className="bg-gray-100 flex flex-col w-full h-full gap">
+                <div className="container mx-auto flex flex-col gap-8">
+                       <h1 className="text-2xl font-medium">
                             Your activity
                         </h1>
-                    </div>
-                    <div className="container mx-auto">
+                    <div>
                         <div className="flex flex-wrap gap-4">
                             <Card moreClass="shadow-md w-[200px] h-[100px]">
                                 <div className="flex flex-col place-items-start justify-center gap-2">
@@ -35,30 +33,27 @@ export default function OnGroundInspectionAnalysis() {
                                     <p className="text-sm font-medium text-gray-700">Received today</p>
                                 </div>
                             </Card>
-                            <div className="flex flex-col gap-8 border shadow-md p-2 bg-white w-[200px] h-[100px] rounded-[4px]">
+                            <Card moreClass="shadow-md w-[200px] h-[100px]">
                                 <div className="flex flex-col place-items-start justify-center gap-2">
-                                    
-                                    <h3 className="text-xl mt-2 font-medium">2</h3>
-                                    <p className="text-sm text-gray-700">In progress</p>
+                                    <h3 className="text-xl font-semibold">2</h3>
+                                    <p className="text-sm font-medium text-gray-700">In Progress</p>
                                 </div>
-                            </div>
-                            <div className="flex flex-col gap-8 border shadow-md p-2 bg-white w-[200px] h-[100px] rounded-[4px]">
+                            </Card>
+                            <Card moreClass="shadow-md w-[200px] h-[100px]">
                                 <div className="flex flex-col place-items-start justify-center gap-2">
-                                    
-                                    <h3 className="text-xl mt-2 font-medium">3</h3>
-                                    <p className="text-sm text-gray-700">Reviewed today</p>
+                                    <h3 className="text-xl font-semibold">3</h3>
+                                    <p className="text-sm font-medium text-gray-700">Review today</p>
                                 </div>
-                            </div>
-                            <div className="flex flex-col gap-8 border shadow-md p-2 bg-white w-[200px] h-[100px] rounded-[4px]">
+                            </Card>
+                            <Card moreClass="shadow-md w-[200px] h-[100px]">
                                 <div className="flex flex-col place-items-start justify-center gap-2">
-                                    
-                                    <h3 className="text-xl mt-2 font-medium">312</h3>
-                                    <p className="text-sm text-gray-700">Reviewed in total</p>
+                                    <h3 className="text-xl font-semibold">312</h3>
+                                    <p className="text-sm font-medium text-gray-700">Reviewed in total</p>
                                 </div>
-                            </div>
+                            </Card>
                         </div>
-                        <div className="container mx-auto">
-                            <div className="flex flex-col py-6">
+                        <div className="flex flex-col gap-8 py-8">
+                            <div className="">
                                 <h1 className="text-2xl font-medium">
                                     All applications
                                 </h1>
