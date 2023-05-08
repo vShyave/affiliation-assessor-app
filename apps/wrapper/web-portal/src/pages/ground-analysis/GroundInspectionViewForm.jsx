@@ -6,15 +6,16 @@ import NocModal from "./NocModal";
 import StatusLogModal from "./StatusLogModal";
 
 import { getFormData } from "../../api";
-
+const ENKETO_URL = process.env.REACT_APP_ENKETO_URL || 'https://enketo.upsmfac.org/';
 
 export default function ApplicationPage({ closeModal,closeStatusModal }) {
 
     const[openModel, setOpenModel] = useState(false)
     const[openStatusModel, setOpenStatusModel] = useState(false)
+    const userId = "427d473d-d8ea-4bb3-b317-f230f1c9b2f7";
 
     const fetchFormData = async () => {
-        const postData = {"date":"2023-05-05","assessor_id":"427d473d-d8ea-4bb3-b317-f230f1c9b2f7","applicant_id": 11};
+        const postData = {"date":"2023-05-05", "assessor_id":"427d473d-d8ea-4bb3-b317-f230f1c9b2f7", "applicant_id": 11};
         const res = await getFormData(postData);
         console.log('res - ', res);
     };
@@ -48,7 +49,13 @@ export default function ApplicationPage({ closeModal,closeStatusModal }) {
                                 The field visit is complete, no flaws found. Please approve.
                             </div>
                         </Card>
-                        <Card moreClass="shadow-md"></Card>
+                        <Card moreClass="shadow-md">
+                            {/* <iframe
+                                title="form"
+                                src={`${ENKETO_URL}/preview?formSpec=${encodedFormSpec}&xform=${encodedFormURI}&userId=${userId}`}
+                                style={{ minHeight: "80vh", width: "100%" }}
+                            /> */}
+                        </Card>
                     </div>
                 </div>
             </div>
