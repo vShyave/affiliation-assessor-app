@@ -6,23 +6,51 @@ import NocModal from "./NocModal";
 import StatusLogModal from "./StatusLogModal";
 
 import { getFormData } from "../../api";
-const ENKETO_URL = process.env.REACT_APP_ENKETO_URL || 'https://enketo.upsmfac.org/';
+import { getPrefillXML } from "./../../api/formApi";
+const ENKETO_URL = process.env.REACT_APP_ENKETO_URL || 'https://enketo.upsmfac.org';
 
 export default function ApplicationPage({ closeModal,closeStatusModal }) {
 
-    const[openModel, setOpenModel] = useState(false)
-    const[openStatusModel, setOpenStatusModel] = useState(false)
+    const [openModel, setOpenModel] = useState(false);
+    const [openStatusModel, setOpenStatusModel] = useState(false);
+    const [encodedFormURI, setEncodedFormURI] = useState('');
+
     const userId = "427d473d-d8ea-4bb3-b317-f230f1c9b2f7";
+    const formSpec = {
+        "skipOnSuccessMessage": true,
+        "prefill": {},
+        "submissionURL": "",
+        "name": "",
+        "successCheck": "async (formData) => { return true; }",
+        "onSuccess": {
+            "notificationMessage": "Form submitted successfully",
+            "sideEffect": "async (formData) => { console.log(formData); }"
+        },
+        "onFailure": {
+            "message": "Form submission failed",
+            "sideEffect": "async (formData) => { console.log(formData); }",
+            "next": {
+                "type": "url",
+                "id": "google"
+            }
+        }
+    };
 
     const fetchFormData = async () => {
-        const postData = {"date":"2023-05-05", "assessor_id":"427d473d-d8ea-4bb3-b317-f230f1c9b2f7", "applicant_id": 11};
+        // const postData = {"date":"2023-05-08", "assessor_id":"5e093a46-b3f5-4896-b81b-9bd09bd9f27f", "applicant_id": 28};
+        const postData = {"form_id": 22}
         const res = await getFormData(postData);
-        console.log('res - ', res);
+        console.log('res.data - ', res.data);
+        const formData = res.data.form_submissions[0];
+        formSpec.name = formData?.form_name;
+        console.log('formData - ', formData);
+        let formURI = await getPrefillXML(formData?.form_name, '', formData.form_data, formData.imageUrls);
+        setEncodedFormURI(formURI);
     };
 
     useEffect(() => {
         fetchFormData();
-    });
+    }, []);
 
     return (
         <>
@@ -50,11 +78,11 @@ export default function ApplicationPage({ closeModal,closeStatusModal }) {
                             </div>
                         </Card>
                         <Card moreClass="shadow-md">
-                            {/* <iframe
-                                title="form"
-                                src={`${ENKETO_URL}/preview?formSpec=${encodedFormSpec}&xform=${encodedFormURI}&userId=${userId}`}
-                                style={{ minHeight: "80vh", width: "100%" }}
-                            /> */}
+                            <iframe
+                                title = "form"
+                                src = {`${ENKETO_URL}/preview?formSpec=${encodeURI(JSON.stringify(formSpec))}&xform=${encodedFormURI}&userId=${userId}`}
+                                style = {{ minHeight: "100vh", width: "100%" }}
+                                />
                         </Card>
                     </div>
                 </div>
