@@ -303,7 +303,7 @@ export const getAssessmentStatus = () => {
         form_submissions(where: {assessment_schedule: {date: {_eq: "${
           new Date().toISOString().split("T")[0]
         }"}}}) {
-          id
+          form_id
           form_name
           created_at
         }
