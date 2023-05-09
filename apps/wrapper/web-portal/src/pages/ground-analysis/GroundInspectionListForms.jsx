@@ -1,21 +1,13 @@
 import React, { useEffect, useState } from "react";
-import {
-  MdDashboard,
-  MdOutlineStickyNote2,
-  MdLibraryBooks,
-  MdPlaylistAddCheck,
-  MdBook,
-} from "react-icons/md";
-import { FaUserFriends } from "react-icons/fa";
-import ADMIN_ROUTE_MAP from "../../routes/adminRouteMap";
-// import Header from "./Header";
 import { useNavigate } from "react-router-dom";
-import Table from "../../components/table/Table";
+// import Table from "../../components/table/Table";
 import FilteringTable from "../../components/table/FilteringTable";
-import PaginationTable from "../../components/table/PaginationTable";
+// import PaginationTable from "../../components/table/PaginationTable";
 import Card from "../../components/Card";
-import { getOnGroundAssessorData } from "../../api";
+
 import { readableDate } from "../../utils/common";
+import { getOnGroundAssessorData } from "../../api";
+import ADMIN_ROUTE_MAP from "../../routes/adminRouteMap";
 
 export default function OnGroundInspectionAnalysis() {
   const navigation = useNavigate();
@@ -24,21 +16,18 @@ export default function OnGroundInspectionAnalysis() {
   resData.formsDataList = formsDataList;
   const [formsList, setFormsList] = useState();
 
-  const [navigate, setNavigate] = useState();
-  useEffect(() => {
-    const navigationURL = `${ADMIN_ROUTE_MAP.adminModule.onGroundInspection.viewForm}/${navigate?.original?.form_name}/${navigate?.original?.id}`;
-    console.log("Navigate:", navigationURL);
-    // navigation(navigationURL);
-  }, [navigate]);
+  const navigateToView = (formObj) => {
+    const navigationURL = `${ADMIN_ROUTE_MAP.onGroundInspection.viewForm}/${formObj?.original?.form_name}/${formObj?.original?.id}`;
+    navigation(navigationURL);
+  }
 
   useEffect(() => {
     fetchOnGroundAssessorData();
-  }, [!navigate]);
+  }, []);
 
   const fetchOnGroundAssessorData = async () => {
     try {
       const res = await getOnGroundAssessorData();
-      console.log("res", res);
       setFormsList(res?.data?.form_submissions);
     } catch (error) {
       console.log("error - ", error);
@@ -64,7 +53,6 @@ export default function OnGroundInspectionAnalysis() {
 
   return (
     <>
-      {/* <Header/> */}
       <div className="bg-gray-100 flex flex-col w-full h-full">
         <div className="container mx-auto">
           <div className="flex flex-col py-8">
@@ -88,24 +76,30 @@ export default function OnGroundInspectionAnalysis() {
                   </p>
                 </div>
               </Card>
-              <div className="flex flex-col gap-8 border shadow-md p-2 bg-white w-[200px] h-[100px] rounded-[4px]">
+              <Card moreClass="shadow-md w-[200px] h-[100px]">
                 <div className="flex flex-col place-items-start justify-center gap-2">
-                  <h3 className="text-xl mt-2 font-medium">2</h3>
-                  <p className="text-sm text-gray-700">In progress</p>
+                  <h3 className="text-xl font-semibold">2</h3>
+                  <p className="text-sm font-medium text-gray-700">
+                    In Progress
+                  </p>
                 </div>
-              </div>
-              <div className="flex flex-col gap-8 border shadow-md p-2 bg-white w-[200px] h-[100px] rounded-[4px]">
+              </Card>
+              <Card moreClass="shadow-md w-[200px] h-[100px]">
                 <div className="flex flex-col place-items-start justify-center gap-2">
-                  <h3 className="text-xl mt-2 font-medium">3</h3>
-                  <p className="text-sm text-gray-700">Reviewed today</p>
+                  <h3 className="text-xl font-semibold">3</h3>
+                  <p className="text-sm font-medium text-gray-700">
+                    Review
+                  </p>
                 </div>
-              </div>
-              <div className="flex flex-col gap-8 border shadow-md p-2 bg-white w-[200px] h-[100px] rounded-[4px]">
+              </Card>
+              <Card moreClass="shadow-md w-[200px] h-[100px]">
                 <div className="flex flex-col place-items-start justify-center gap-2">
-                  <h3 className="text-xl mt-2 font-medium">312</h3>
-                  <p className="text-sm text-gray-700">Reviewed in total</p>
+                  <h3 className="text-xl font-semibold">312</h3>
+                  <p className="text-sm font-medium text-gray-700">
+                    Reviewed in total
+                  </p>
                 </div>
-              </div>
+              </Card>
             </div>
             <div className="container mx-auto">
               <div className="flex flex-col py-6">
@@ -141,7 +135,7 @@ export default function OnGroundInspectionAnalysis() {
                     <li className="mr-2">
                       <a
                         href="#"
-                        className="inline-block p-4 border-b-2 border-transparent rounded-t-lg hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300"
+                        className="inline-block p-4 border-b-2 border-transparent rounded-t-lg active hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300"
                       >
                         New
                       </a>
@@ -149,7 +143,7 @@ export default function OnGroundInspectionAnalysis() {
                     <li className="mr-2">
                       <a
                         href="#"
-                        className="inline-block p-4 text-blue-600 border-b-2 border-blue-600 rounded-t-lg active dark:text-blue-500 dark:border-blue-600"
+                        className="inline-block p-4 text-blue-600 border-b-2 border-blue-600 rounded-t-lg dark:text-blue-500 dark:border-blue-600"
                         aria-current="page"
                       >
                         Approved
@@ -163,10 +157,6 @@ export default function OnGroundInspectionAnalysis() {
                         Rejected
                       </a>
                     </li>
-
-                    {/* <li>
-                                            <a className="inline-block p-4 text-gray-400 rounded-t-lg cursor-not-allowed dark:text-gray-500">Disabled</a>
-                                        </li> */}
                   </ul>
                 </div>
                 {/* <div>create a search bar and filter component here</div> */}
@@ -178,7 +168,7 @@ export default function OnGroundInspectionAnalysis() {
                       {/* <Table/> */}
                       <FilteringTable
                         formsList={resData}
-                        setNavigation={setNavigate}
+                        navigateFunc={navigateToView}
                       />
                       {/* <PaginationTable/> */}
                     </div>
