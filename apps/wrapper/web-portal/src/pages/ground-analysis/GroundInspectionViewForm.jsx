@@ -37,13 +37,10 @@ export default function ApplicationPage({ closeModal,closeStatusModal }) {
     };
 
     const fetchFormData = async () => {
-        // const postData = {"date":"2023-05-08", "assessor_id":"5e093a46-b3f5-4896-b81b-9bd09bd9f27f", "applicant_id": 28};
         const postData = {"form_id": 22}
         const res = await getFormData(postData);
-        console.log('res.data - ', res.data);
         const formData = res.data.form_submissions[0];
         formSpec.name = formData?.form_name;
-        console.log('formData - ', formData);
         let formURI = await getPrefillXML(formData?.form_name, '', formData.form_data, formData.imageUrls);
         setEncodedFormURI(formURI);
     };
