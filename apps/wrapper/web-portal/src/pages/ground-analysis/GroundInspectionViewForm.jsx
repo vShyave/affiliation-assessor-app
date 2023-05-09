@@ -9,6 +9,7 @@ import RejectNocModal from "./RejectNocModal";
 
 
 import { getFormData } from "../../api";
+import Sidebar from "../../components/Sidebar";
 
 
 export default function ApplicationPage({ closeModal,closeRejectModal,closeStatusModal,closeCertificateModal }) {
@@ -44,7 +45,7 @@ export default function ApplicationPage({ closeModal,closeRejectModal,closeStatu
                     </div>
                 </div>
                 <div className="flex flex-row gap-4">
-                    <div className="flex w-[30%]">Menu's here</div>
+                    <div className="flex w-[30%]"><Sidebar/></div>
                     <div className="flex w-full flex-col gap-4">
                         <Card moreClass="flex flex-col shadow-md border border-[#F5F5F5] gap-4" styles={{backgroundColor: '#F5F5F5'}}>
                             <div className="p-1 flex justify-center border border-[#D9D9D9] rounded-[4px]" style={{backgroundColor: '#EBEBEB'}}>
