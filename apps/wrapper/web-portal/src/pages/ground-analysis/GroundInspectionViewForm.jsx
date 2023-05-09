@@ -62,7 +62,7 @@ export default function ApplicationPage({ closeModal,closeRejectModal,closeStatu
             <div className="flex flex-col gap-12">
                 <div className="flex flex-row">
                     <div className="flex grow justify-start items-center">
-                        <h1 className="text-2xl font-bold">{ formName }</h1>
+                        <h1 className="text-2xl font-bold uppercase">{ formName.split('_').join(' ') }</h1>
                     </div>
                     <div className="flex grow gap-4 justify-end items-center">
                         <button onClick={()=>{setRejectModel(true)}} className="flex flex-wrap items-center justify-center gap-2 border border-gray-500 bg-white text-gray-500 w-[140px] h-[40px] font-medium rounded-[4px]">Reject <span><AiOutlineClose/></span> </button>
