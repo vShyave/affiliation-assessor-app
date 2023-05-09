@@ -1,7 +1,11 @@
 import React, { useMemo } from "react";
-import { useTable, useGlobalFilter } from "react-table";
+import { useTable, useGlobalFilter, useSortBy } from "react-table";
+import MOCK_DATA from "./MOCK_DATA .json";
 import { COLUMNS } from "./Columns";
 import GlobalFilter from "./GlobalFilter";
+
+import { AiOutlineArrowUp,AiOutlineArrowDown } from "react-icons/ai";
+
 
 const FilteringTable = (props) => {
   const columns = useMemo(() => COLUMNS, []);
@@ -16,7 +20,7 @@ const FilteringTable = (props) => {
     prepareRow,
     state,
     setGlobalFilter,
-  } = useTable({ columns, data }, useGlobalFilter);
+  } = useTable({ columns, data }, useGlobalFilter,useSortBy);
 
   const { globalFilter } = state;
 
@@ -32,13 +36,12 @@ const FilteringTable = (props) => {
             {headerGroups.map((headerGroup) => (
               <tr {...headerGroup.getHeaderGroupProps()}>
                 {headerGroup.headers.map((column) => (
-                  <th
-                    {...column.getHeaderProps()}
-                    scope="col"
-                    className="px-6 py-3"
-                  >
-                    {column.render("Header")}
-                  </th>
+                  <th{...column.getHeaderProps(column.getSortByToggleProps())} scope="col" className="px-6 py-3">
+                   {column.render('Header')}
+                   <span>
+                       {column.isSorted ? (column.isSortedDesc ?  <AiOutlineArrowUp/> : <AiOutlineArrowDown/>):""}
+                   </span>
+               </th>
                 ))}
               </tr>
             ))}

@@ -1,9 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-
-import Table from "../../components/table/Table";
+// import Table from "../../components/table/Table";
 import FilteringTable from "../../components/table/FilteringTable";
-import PaginationTable from "../../components/table/PaginationTable";
+// import PaginationTable from "../../components/table/PaginationTable";
 import Card from "../../components/Card";
 
 import { readableDate } from "../../utils/common";
@@ -77,24 +76,30 @@ export default function OnGroundInspectionAnalysis() {
                   </p>
                 </div>
               </Card>
-              <div className="flex flex-col gap-8 border shadow-md p-2 bg-white w-[200px] h-[100px] rounded-[4px]">
+              <Card moreClass="shadow-md w-[200px] h-[100px]">
                 <div className="flex flex-col place-items-start justify-center gap-2">
-                  <h3 className="text-xl mt-2 font-medium">2</h3>
-                  <p className="text-sm text-gray-700">In progress</p>
+                  <h3 className="text-xl font-semibold">2</h3>
+                  <p className="text-sm font-medium text-gray-700">
+                    In Progress
+                  </p>
                 </div>
-              </div>
-              <div className="flex flex-col gap-8 border shadow-md p-2 bg-white w-[200px] h-[100px] rounded-[4px]">
+              </Card>
+              <Card moreClass="shadow-md w-[200px] h-[100px]">
                 <div className="flex flex-col place-items-start justify-center gap-2">
-                  <h3 className="text-xl mt-2 font-medium">3</h3>
-                  <p className="text-sm text-gray-700">Reviewed today</p>
+                  <h3 className="text-xl font-semibold">3</h3>
+                  <p className="text-sm font-medium text-gray-700">
+                    Review
+                  </p>
                 </div>
-              </div>
-              <div className="flex flex-col gap-8 border shadow-md p-2 bg-white w-[200px] h-[100px] rounded-[4px]">
+              </Card>
+              <Card moreClass="shadow-md w-[200px] h-[100px]">
                 <div className="flex flex-col place-items-start justify-center gap-2">
-                  <h3 className="text-xl mt-2 font-medium">312</h3>
-                  <p className="text-sm text-gray-700">Reviewed in total</p>
+                  <h3 className="text-xl font-semibold">312</h3>
+                  <p className="text-sm font-medium text-gray-700">
+                    Reviewed in total
+                  </p>
                 </div>
-              </div>
+              </Card>
             </div>
             <div className="container mx-auto">
               <div className="flex flex-col py-6">
@@ -128,7 +133,9 @@ export default function OnGroundInspectionAnalysis() {
                 <div className="text-sm font-medium text-center text-gray-500 border-b border-gray-200 dark:text-gray-400 dark:border-gray-700">
                   <ul className="flex flex-wrap -mb-px">
                     <li className="mr-2">
-                      <a href="#" className="inline-block p-4 border-b-2 border-transparent rounded-t-lg hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300"
+                      <a
+                        href="#"
+                        className="inline-block p-4 border-b-2 border-transparent rounded-t-lg active hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300"
                       >
                         New
                       </a>
@@ -136,7 +143,7 @@ export default function OnGroundInspectionAnalysis() {
                     <li className="mr-2">
                       <a
                         href="#"
-                        className="inline-block p-4 text-blue-600 border-b-2 border-blue-600 rounded-t-lg active dark:text-blue-500 dark:border-blue-600"
+                        className="inline-block p-4 text-blue-600 border-b-2 border-blue-600 rounded-t-lg dark:text-blue-500 dark:border-blue-600"
                         aria-current="page"
                       >
                         Approved
