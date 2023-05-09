@@ -3,17 +3,14 @@ import { useTable, useGlobalFilter, useSortBy } from "react-table";
 import MOCK_DATA from "./MOCK_DATA .json";
 import { COLUMNS } from "./Columns";
 import GlobalFilter from "./GlobalFilter";
-// import './table.css'
 
 import { AiOutlineArrowUp,AiOutlineArrowDown } from "react-icons/ai";
 
 
 const FilteringTable = (props) => {
   const columns = useMemo(() => COLUMNS, []);
-  console.log("Props", props);
   //const data = useMemo(() => props?.formsList?.formsDataList, []);
   const data = props?.formsList?.formsDataList;
-  console.log("Data", data);
   const onFormHandler = () => {};
   const {
     getTableProps,
@@ -56,7 +53,7 @@ const FilteringTable = (props) => {
                 <tr
                   {...row.getRowProps()}
                   className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 cursor-pointer"
-                  onClick={() => props.setNavigation(row)}
+                  onClick={() => props.navigateFunc(row)}
                 >
                   {row.cells.map((cell) => {
                     return (

@@ -1,21 +1,13 @@
 import React, { useEffect, useState } from "react";
-import {
-  MdDashboard,
-  MdOutlineStickyNote2,
-  MdLibraryBooks,
-  MdPlaylistAddCheck,
-  MdBook,
-} from "react-icons/md";
-import { FaUserFriends } from "react-icons/fa";
-import ADMIN_ROUTE_MAP from "../../routes/adminRouteMap";
-// import Header from "./Header";
 import { useNavigate } from "react-router-dom";
 // import Table from "../../components/table/Table";
 import FilteringTable from "../../components/table/FilteringTable";
 // import PaginationTable from "../../components/table/PaginationTable";
 import Card from "../../components/Card";
-import { getOnGroundAssessorData } from "../../api";
+
 import { readableDate } from "../../utils/common";
+import { getOnGroundAssessorData } from "../../api";
+import ADMIN_ROUTE_MAP from "../../routes/adminRouteMap";
 
 export default function OnGroundInspectionAnalysis() {
   const navigation = useNavigate();
@@ -24,21 +16,18 @@ export default function OnGroundInspectionAnalysis() {
   resData.formsDataList = formsDataList;
   const [formsList, setFormsList] = useState();
 
-  const [navigate, setNavigate] = useState();
-  useEffect(() => {
-    const navigationURL = `${ADMIN_ROUTE_MAP.adminModule.onGroundInspection.viewForm}/${navigate?.original?.form_name}/${navigate?.original?.id}`;
-    console.log("Navigate:", navigationURL);
-    // navigation(navigationURL);
-  }, [navigate]);
+  const navigateToView = (formObj) => {
+    const navigationURL = `${ADMIN_ROUTE_MAP.onGroundInspection.viewForm}/${formObj?.original?.form_name}/${formObj?.original?.id}`;
+    navigation(navigationURL);
+  }
 
   useEffect(() => {
     fetchOnGroundAssessorData();
-  }, [!navigate]);
+  }, []);
 
   const fetchOnGroundAssessorData = async () => {
     try {
       const res = await getOnGroundAssessorData();
-      console.log("res", res);
       setFormsList(res?.data?.form_submissions);
     } catch (error) {
       console.log("error - ", error);
@@ -64,7 +53,6 @@ export default function OnGroundInspectionAnalysis() {
 
   return (
     <>
-      {/* <Header/> */}
       <div className="bg-gray-100 flex flex-col w-full h-full">
         <div className="container mx-auto">
           <div className="flex flex-col py-8">
@@ -169,10 +157,6 @@ export default function OnGroundInspectionAnalysis() {
                         Rejected
                       </a>
                     </li>
-
-                    {/* <li>
-                                            <a className="inline-block p-4 text-gray-400 rounded-t-lg cursor-not-allowed dark:text-gray-500">Disabled</a>
-                                        </li> */}
                   </ul>
                 </div>
                 {/* <div>create a search bar and filter component here</div> */}
@@ -184,7 +168,7 @@ export default function OnGroundInspectionAnalysis() {
                       {/* <Table/> */}
                       <FilteringTable
                         formsList={resData}
-                        setNavigation={setNavigate}
+                        navigateFunc={navigateToView}
                       />
                       {/* <PaginationTable/> */}
                     </div>

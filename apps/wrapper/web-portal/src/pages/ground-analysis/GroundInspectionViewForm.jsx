@@ -11,24 +11,50 @@ import RejectNocModal from "./RejectNocModal";
 import { getFormData } from "../../api";
 import Sidebar from "../../components/Sidebar";
 
+import { getPrefillXML } from "./../../api/formApi";
+const ENKETO_URL = process.env.REACT_APP_ENKETO_URL || 'https://enketo.upsmfac.org';
 
 export default function ApplicationPage({ closeModal,closeRejectModal,closeStatusModal,closeCertificateModal }) {
 
-    const[openModel, setOpenModel] = useState(false)
-    const[rejectModel, setRejectModel] = useState(false)
-    const[openStatusModel, setOpenStatusModel] = useState(false)
-    const[openCertificateModel,setOpenCertificateModel] = useState(false)
+    const [rejectModel, setRejectModel] = useState(false)
+    const [openCertificateModel, setOpenCertificateModel] = useState(false)
+    const [openModel, setOpenModel] = useState(false);
+    const [openStatusModel, setOpenStatusModel] = useState(false);
+    const [encodedFormURI, setEncodedFormURI] = useState('');
 
+    const userId = "427d473d-d8ea-4bb3-b317-f230f1c9b2f7";
+    const formSpec = {
+        "skipOnSuccessMessage": true,
+        "prefill": {},
+        "submissionURL": "",
+        "name": "",
+        "successCheck": "async (formData) => { return true; }",
+        "onSuccess": {
+            "notificationMessage": "Form submitted successfully",
+            "sideEffect": "async (formData) => { console.log(formData); }"
+        },
+        "onFailure": {
+            "message": "Form submission failed",
+            "sideEffect": "async (formData) => { console.log(formData); }",
+            "next": {
+                "type": "url",
+                "id": "google"
+            }
+        }
+    };
 
     const fetchFormData = async () => {
-        const postData = {"date":"2023-05-05","assessor_id":"427d473d-d8ea-4bb3-b317-f230f1c9b2f7","applicant_id": 11};
+        const postData = {"form_id": 22}
         const res = await getFormData(postData);
-        console.log('res - ', res);
+        const formData = res.data.form_submissions[0];
+        formSpec.name = formData?.form_name;
+        let formURI = await getPrefillXML(formData?.form_name, '', formData.form_data, formData.imageUrls);
+        setEncodedFormURI(formURI);
     };
 
     useEffect(() => {
         fetchFormData();
-    });
+    }, []);
 
     return (
         <>
@@ -55,7 +81,13 @@ export default function ApplicationPage({ closeModal,closeRejectModal,closeStatu
                                 The field visit is complete, no flaws found. Please approve.
                             </div>
                         </Card>
-                        <Card moreClass="shadow-md"></Card>
+                        <Card moreClass="shadow-md">
+                            <iframe
+                                title = "form"
+                                src = {`${ENKETO_URL}/preview?formSpec=${encodeURI(JSON.stringify(formSpec))}&xform=${encodedFormURI}&userId=${userId}`}
+                                style = {{ minHeight: "100vh", width: "100%" }}
+                                />
+                        </Card>
                     </div>
                 </div>
             </div>
