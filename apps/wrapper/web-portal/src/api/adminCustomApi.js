@@ -11,7 +11,6 @@ const adminCustomPost = axios.create({
 
 adminCustomPost.interceptors.request.use(
   (request) => {
-    console.log('baseurl - ', BASE_URL);
     // const user_data = getCookie('userData');
     request.headers['Accept'] = 'application/json';
     request.headers['Content-Type'] = 'application/json';

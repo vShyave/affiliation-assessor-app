@@ -1,5 +1,4 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import { createContext, useEffect, useState } from "react";
 import ADMIN_ROUTE_MAP from "./routes/adminRouteMap";
 import "./App.css";
 

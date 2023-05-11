@@ -1,21 +1,13 @@
 import React, { useEffect, useState } from "react";
-import {
-  MdDashboard,
-  MdOutlineStickyNote2,
-  MdLibraryBooks,
-  MdPlaylistAddCheck,
-  MdBook,
-} from "react-icons/md";
-import { FaUserFriends } from "react-icons/fa";
-import ADMIN_ROUTE_MAP from "../../routes/adminRouteMap";
-// import Header from "./Header";
 import { useNavigate } from "react-router-dom";
 // import Table from "../../components/table/Table";
 import FilteringTable from "../../components/table/FilteringTable";
 // import PaginationTable from "../../components/table/PaginationTable";
 import Card from "../../components/Card";
-import { getOnGroundAssessorData } from "../../api";
+
 import { readableDate } from "../../utils/common";
+import { getOnGroundAssessorData } from "../../api";
+import ADMIN_ROUTE_MAP from "../../routes/adminRouteMap";
 
 export default function OnGroundInspectionAnalysis() {
   const navigation = useNavigate();
@@ -24,26 +16,24 @@ export default function OnGroundInspectionAnalysis() {
   resData.formsDataList = formsDataList;
   const [formsList, setFormsList] = useState();
 
-  const [navigate, setNavigate] = useState();
-  useEffect(() => {
-    const navigationURL = `${ADMIN_ROUTE_MAP.adminModule.onGroundInspection.viewForm}/${navigate?.original?.form_name}/${navigate?.original?.id}`;
-    console.log("Navigate:", navigationURL);
-    // navigation(navigationURL);
-  }, [navigate]);
+  const navigateToView = (formObj) => {
+    const navigationURL = `${ADMIN_ROUTE_MAP.onGroundInspection.viewForm}/${formObj?.original?.form_name}/${formObj?.original?.id}`;
+    navigation(navigationURL);
+  }
 
   useEffect(() => {
     fetchOnGroundAssessorData();
-  }, [!navigate]);
+  }, []);
 
   const fetchOnGroundAssessorData = async () => {
     try {
       const res = await getOnGroundAssessorData();
-      console.log("res", res);
       setFormsList(res?.data?.form_submissions);
     } catch (error) {
       console.log("error - ", error);
     }
   };
+
   formsList?.forEach((e) => {
     var formsData = {
       applicant:
@@ -64,7 +54,6 @@ export default function OnGroundInspectionAnalysis() {
 
   return (
     <>
-      {/* <Header/> */}
       <div className="bg-gray-100 flex flex-col w-full h-full">
         <div className="container mx-auto">
           <div className="flex flex-col py-4">
@@ -136,59 +125,55 @@ export default function OnGroundInspectionAnalysis() {
                     </div>
                   </div>
                 </div>
-            </div>
+          </div>
 
-            <div className=" mx-auto">
-              <div className="flex flex-col mt-8">
-                <div className="text-sm font-medium text-center text-gray-500 border-b border-gray-200 dark:text-gray-400 dark:border-gray-700">
-                  <ul className="flex flex-wrap -mb-px">
-                    <li className="mr-2">
-                      <a
-                        href="#"
-                        className="inline-block p-4 text-blue-600 border-b-2 border-blue-600 rounded-t-lg dark:text-blue-500 dark:border-blue-600">
-                        New
-                      </a>
-                    </li>
-                    <li className="mr-2">
-                      <a
-                        href="#"
-                        className="inline-block p-4 border-b-2 border-transparent rounded-t-lg active hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300"
-                        aria-current="page">
-                        Approved
-                      </a>
-                    </li>
-                    <li className="mr-2">
-                      <a
-                        href="#"
-                        className="inline-block p-4 border-b-2 border-transparent rounded-t-lg hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300">
-                        Rejected
-                      </a>
-                    </li>
+          <div className=" mx-auto">
+            <div className="flex flex-col mt-8">
+              <div className="text-sm font-medium text-center text-gray-500 border-b border-gray-200 dark:text-gray-400 dark:border-gray-700">
+                <ul className="flex flex-wrap -mb-px">
+                  <li className="mr-2">
+                    <a
+                      href="#"
+                      className="inline-block p-4 text-blue-600 border-b-2 border-blue-600 rounded-t-lg dark:text-blue-500 dark:border-blue-600">
+                      New
+                    </a>
+                  </li>
+                  <li className="mr-2">
+                    <a
+                      href="#"
+                      className="inline-block p-4 border-b-2 border-transparent rounded-t-lg active hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300"
+                      aria-current="page">
+                      Approved
+                    </a>
+                  </li>
+                  <li className="mr-2">
+                    <a
+                      href="#"
+                      className="inline-block p-4 border-b-2 border-transparent rounded-t-lg hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300">
+                      Rejected
+                    </a>
+                  </li>
+                </ul>
+              </div>
+              {/* <div>create a search bar and filter component here</div> */}
+              {/* table creation starts here */}
 
-                    {/* <li>
-                        <a className="inline-block p-4 text-gray-400 rounded-t-lg cursor-not-allowed dark:text-gray-500">Disabled</a>
-                      </li> */}
-                  </ul>
-                </div>
-                {/* <div>create a search bar and filter component here</div> */}
-                {/* table creation starts here */}
-
-                <div className="container mt-8 mx-auto">
-                  <div className="flex flex-col">
-                    <div className="text-2xl mt-4 font-medium">
-                      {/* <Table/> */}
-                      <FilteringTable
-                        formsList={resData}
-                        setNavigation={setNavigate}
-                      />
-                      {/* <PaginationTable/> */}
-                    </div>
+              <div className="container mt-8 mx-auto">
+                <div className="flex flex-col">
+                  <div className="text-2xl mt-4 font-medium">
+                    {/* <Table/> */}
+                    <FilteringTable
+                      formsList={resData}
+                      navigateFunc={navigateToView}
+                    />
+                    {/* <PaginationTable/> */}
                   </div>
                 </div>
               </div>
             </div>
           </div>
         </div>
-      </>
-     );
-   }
+      </div>
+    </>
+  );
+}
