@@ -7,9 +7,9 @@ import NocModal from "./NocModal";
 import StatusLogModal from "./StatusLogModal";
 import IssueCertificateModal from "./IssueCertificationModal";
 import RejectNocModal from "./RejectNocModal";
+import Sidebar from "../../components/Sidebar";
 
 import { getFormData } from "../../api";
-import Sidebar from "../../components/Sidebar";
 
 import { getPrefillXML } from "./../../api/formApi";
 const ENKETO_URL = process.env.REACT_APP_ENKETO_URL || 'https://enketo.upsmfac.org';
