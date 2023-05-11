@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+
 import { Select, Option } from "@material-tailwind/react";
 
 import FilteringTable from "../../components/table/FilteringTable";
-
 import Card from "../../components/Card";
 
 import { readableDate } from "../../utils/common";
@@ -16,6 +16,34 @@ export default function OnGroundInspectionAnalysis() {
   var formsDataList = [];
   resData.formsDataList = formsDataList;
   const [formsList, setFormsList] = useState();
+
+  const cardArray = [
+    {
+      value: 12,
+      key: 'total_pending',
+      text: 'Total pending'
+    },
+    {
+      value: 8,
+      key: 'received_today',
+      text: 'Received today'
+    },
+    {
+      value: 2,
+      key: 'in_progress',
+      text: 'In progress'
+    },
+    {
+      value: 3,
+      key: 'review',
+      text: 'Review'
+    },
+    {
+      value: 312,
+      key: 'reviewed_in_total',
+      text: 'Reviewed in total'
+    }
+  ]
 
   const navigateToView = (formObj) => {
     const navigationURL = `${ADMIN_ROUTE_MAP.onGroundInspection.viewForm}/${formObj?.original?.form_name}/${formObj?.original?.id}`;
@@ -61,87 +89,47 @@ export default function OnGroundInspectionAnalysis() {
   });
 
   return (
-    <>
-      
-        <div className="flex flex-col">
-          <h1 className="text-2xl font-medium">Your activity</h1>
+  <>
+    <div className="flex flex-col gap-8">
+
+        <div className="flex flex-col gap-4">
           <div>
-          <div className="flex flex-wrap gap-4">
-            <Card moreClass="shadow-md w-[200px] h-[100px]">
-              <div className="flex flex-col place-items-start justify-center gap-2">
-                <h3 className="text-xl font-semibold">12</h3>
-                <p className="text-sm font-medium text-gray-700">
-                  Total pending
-                </p>
-              </div>
-            </Card>
-            <Card moreClass="shadow-md w-[200px] h-[100px]">
-              <div className="flex flex-col place-items-start justify-center gap-2">
-                <h3 className="text-xl font-semibold">8</h3>
-                <p className="text-sm font-medium text-gray-700">
-                  Received today
-                </p>
-              </div>
-            </Card>
-            <Card moreClass="shadow-md w-[200px] h-[100px]">
-              <div className="flex flex-col place-items-start justify-center gap-2">
-                <h3 className="text-xl font-semibold">2</h3>
-                <p className="text-sm font-medium text-gray-700">
-                  In Progress
-                </p>
-              </div>
-            </Card>
-            <Card moreClass="shadow-md w-[200px] h-[100px]">
-              <div className="flex flex-col place-items-start justify-center gap-2">
-                <h3 className="text-xl font-semibold">3</h3>
-                <p className="text-sm font-medium text-gray-700">
-                  Review
-                </p>
-              </div>
-            </Card>
-            <Card moreClass="shadow-md w-[200px] h-[100px]">
-              <div className="flex flex-col place-items-start justify-center gap-2">
-                <h3 className="text-xl font-semibold">312</h3>
-                <p className="text-sm font-medium text-gray-700">
-                  Reviewed in total
-                </p>
-              </div>
-            </Card>
+            <h1 className="text-2xl font-medium">Your activity</h1>
           </div>
-          
-            <div className="flex flex-col py-8">
+          <div className="flex flex-wrap">
+            {
+              cardArray.map(
+                (obj) => (
+                  <Card moreClass="shadow-md w-[200px] h-[100px] m-3 first:ml-0">
+                    <div className="flex flex-col place-items-start justify-center gap-2">
+                      <h3 className="text-xl font-semibold">{obj.value}</h3>
+                      <p className="text-sm font-medium text-gray-700">{obj.text}</p>
+                    </div>
+                  </Card>
+                )
+              )
+            }
+          </div>
+        </div>
+
+       <div className="flex flex-col gap-4">
+            <div>
               <h1 className="text-2xl font-medium">All applications</h1>
             </div>
 
-            <div className=" grid grid-cols-1 gap-x-6 gap-y-6 sm:grid-cols-6">
-                <div className="sm:col-span-3">
-                  {/* <label
-                      htmlFor="role"
-                      className="block text-sm font-medium leading-6 text-gray-900">
-                      Select Round
-                  </label> */}
-                  <div>
-                    <Select label="Select Round">
-                      <Option>Round one</Option>
-                      <Option>Round two</Option>
-                    </Select>
-                      {/* <select
-                        id="role"
-                        name="role"
-                        className="rounded-[4px] p-3 border-y-3 rtl border-transparent">
-                        <option>Round one</option>
-                        <option>Round two</option>
-                      </select> */}
-
-                  </div>
+            <div className="grid grid-cols-1 gap-x-6 gap-y-6 sm:grid-cols-6">
+              <div className="sm:col-span-3">              
+                <div className="w-72 bg-white">
+                  <Select label="Select round">
+                    <Option>Round one</Option>
+                    <Option>Round two</Option>
+                  </Select>
                 </div>
               </div>
-        </div>
-        </div>
-        
+            </div>
+          </div>
 
-        <div>
-          <div className="flex flex-col mt-8">
+        <div className="flex flex-col">
             <div className="text-sm font-medium text-center text-gray-500 border-b border-gray-200 dark:text-gray-400 dark:border-gray-700">
               <ul className="flex flex-wrap -mb-px">
                 <li className="mr-2">
@@ -167,24 +155,18 @@ export default function OnGroundInspectionAnalysis() {
                   </a>
                 </li>
               </ul>
-            </div>
-            {/* <div>create a search bar and filter component here</div> */}
-            {/* table creation starts here */}
+              {/* <div>create a search bar and filter component here</div> */}
+              {/* table creation starts here */}
 
-            <div className="container mt-8 mx-auto">
-              <div className="flex flex-col">
-                <div className="text-2xl mt-4 font-medium">
-                  {/* <Table/> */}
-                  <FilteringTable
-                    formsList={resData}
-                    navigateFunc={navigateToView}
-                  />
-                  {/* <PaginationTable/> */}
-                </div>
+              <div className="text-2xl mt-4 font-medium">
+                <FilteringTable
+                  formsList={resData}
+                  navigateFunc={navigateToView}
+                />
               </div>
-            </div>
           </div>
-        </div>
-    </>
+       </div>
+    </div>
+  </>
   );
 }
