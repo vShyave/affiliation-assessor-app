@@ -1,5 +1,8 @@
 import React, { useMemo } from "react";
 import { useTable, useGlobalFilter, useSortBy, usePagination } from "react-table";
+
+
+
 // import MOCK_DATA from "./MOCK_DATA .json";
 import { COLUMNS } from "./Columns";
 import GlobalFilter from "./GlobalFilter";
@@ -99,15 +102,19 @@ const FilteringTable = (props) => {
                     }}
                   />
                 </span>
-                  <select className="border text-gray-300 p-2 bg-blue-700 w-[140px] h-[40px] font-medium rounded-[4px]" value={pageSize} onChange={e => setPageSize(Number(e.target.value))}>
-                      {
+
+               
+              
+
+                   <select className="border text-gray-300 p-2 bg-blue-700 w-[140px] h-[40px] font-medium rounded-[4px]" value={pageSize} onChange={e => setPageSize(Number(e.target.value))}>
+                       {
                           [10,25,50].map((pageSize) => (
                               <option key={pageSize} value={pageSize}>
                                   Show {pageSize}
                               </option>
                           ))
-                      }
-                   </select>
+                        }
+                   </select> 
                 <button className="border text-gray-300 bg-blue-700 w-[140px] h-[40px] font-medium rounded-[4px]" onClick={() => nextPage()} disabled={!canNextPage}>Next</button>
                 <button onClick={()=> gotoPage(pageCount - 1)} disabled={!canNextPage}>{'>>'}</button>
           </div>
