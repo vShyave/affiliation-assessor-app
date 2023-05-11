@@ -89,9 +89,8 @@ export default function OnGroundInspectionAnalysis() {
   });
 
   return (
-  <>
-    <div className="flex flex-col gap-8">
-
+    <>
+      <div className="flex flex-col gap-8">
         <div className="flex flex-col gap-4">
           <div>
             <h1 className="text-2xl font-medium">Your activity</h1>
@@ -112,61 +111,61 @@ export default function OnGroundInspectionAnalysis() {
           </div>
         </div>
 
-       <div className="flex flex-col gap-4">
-            <div>
-              <h1 className="text-2xl font-medium">All applications</h1>
-            </div>
+        <div className="flex flex-col gap-4">
+          <div>
+            <h1 className="text-2xl font-medium">All applications</h1>
+          </div>
 
-            <div className="grid grid-cols-1 gap-x-6 gap-y-6 sm:grid-cols-6">
-              <div className="sm:col-span-3">              
-                <div className="w-72 bg-white">
-                  <Select label="Select round">
-                    <Option>Round one</Option>
-                    <Option>Round two</Option>
-                  </Select>
-                </div>
+          <div className="grid grid-cols-1 gap-x-6 gap-y-6 sm:grid-cols-6">
+            <div className="sm:col-span-3">              
+              <div className="w-72 bg-white">
+                <Select label="Select round">
+                  <Option>Round one</Option>
+                  <Option>Round two</Option>
+                </Select>
               </div>
             </div>
           </div>
+        </div>
 
         <div className="flex flex-col">
-            <div className="text-sm font-medium text-center text-gray-500 border-b border-gray-200 dark:text-gray-400 dark:border-gray-700">
-              <ul className="flex flex-wrap -mb-px">
-                <li className="mr-2">
-                  <a
-                    href="#"
-                    className="inline-block p-4 text-blue-600 border-b-2 border-blue-600 rounded-t-lg dark:text-blue-500 dark:border-blue-600">
-                    New
-                  </a>
-                </li>
-                <li className="mr-2">
-                  <a
-                    href="#"
-                    className="inline-block p-4 border-b-2 border-transparent rounded-t-lg active hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300"
-                    aria-current="page">
-                    Approved
-                  </a>
-                </li>
-                <li className="mr-2">
-                  <a
-                    href="#"
-                    className="inline-block p-4 border-b-2 border-transparent rounded-t-lg hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300">
-                    Rejected
-                  </a>
-                </li>
-              </ul>
-              {/* <div>create a search bar and filter component here</div> */}
-              {/* table creation starts here */}
+          <div className="text-sm font-medium text-center text-gray-500 border-b border-gray-200 dark:text-gray-400 dark:border-gray-700">
+            <ul className="flex flex-wrap -mb-px">
+              <li className="mr-2">
+                <a
+                  href="#"
+                  className="inline-block p-4 text-blue-600 border-b-2 border-blue-600 rounded-t-lg dark:text-blue-500 dark:border-blue-600">
+                  New
+                </a>
+              </li>
+              <li className="mr-2">
+                <a
+                  href="#"
+                  className="inline-block p-4 border-b-2 border-transparent rounded-t-lg active hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300"
+                  aria-current="page">
+                  Approved
+                </a>
+              </li>
+              <li className="mr-2">
+                <a
+                  href="#"
+                  className="inline-block p-4 border-b-2 border-transparent rounded-t-lg hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300">
+                  Rejected
+                </a>
+              </li>
+            </ul>
+            {/* <div>create a search bar and filter component here</div> */}
+            {/* table creation starts here */}
 
-              <div className="text-2xl mt-4 font-medium">
-                <FilteringTable
-                  formsList={resData}
-                  navigateFunc={navigateToView}
-                />
-              </div>
+            <div className="text-2xl mt-4 font-medium">
+              <FilteringTable
+                formsList={resData}
+                navigateFunc={navigateToView}
+              />
+            </div>
           </div>
-       </div>
-    </div>
-  </>
+        </div>
+      </div>
+    </>
   );
 }
