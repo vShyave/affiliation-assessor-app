@@ -3,10 +3,7 @@ import { useNavigate } from "react-router-dom";
 
 import { Select, Option } from "@material-tailwind/react";
 
-
-// import Table from "../../components/table/Table";
 import FilteringTable from "../../components/table/FilteringTable";
-// import PaginationTable from "../../components/table/PaginationTable";
 import Card from "../../components/Card";
 
 import { readableDate } from "../../utils/common";
@@ -66,6 +63,13 @@ export default function OnGroundInspectionAnalysis() {
     }
   };
 
+  const getFormName = (formName) => {
+    let splitValues = formName.split('_');
+    const capitalizedStr = splitValues[0].charAt(0).toUpperCase() + splitValues[0].substr(1, splitValues.substr);
+    splitValues[0] = capitalizedStr;
+    return splitValues.join(' ');
+  }
+
   formsList?.forEach((e) => {
     var formsData = {
       applicant:
@@ -74,7 +78,7 @@ export default function OnGroundInspectionAnalysis() {
         ", " +
         e.institute.district.charAt(0).toUpperCase() +
         e.institute.district.substring(1).toLowerCase(),
-      form_name: e.form_name,
+      form_name: getFormName(e.form_name), 
       assessor: e.assessor.name,
       assisting_assessor:
         e.assessor.assisstant == null ? "None" : e.assessor.assisstant,
