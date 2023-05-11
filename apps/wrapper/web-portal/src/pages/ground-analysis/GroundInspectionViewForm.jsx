@@ -6,10 +6,10 @@ import NocModal from "./NocModal";
 import StatusLogModal from "./StatusLogModal";
 import IssueCertificateModal from "./IssueCertificationModal";
 import RejectNocModal from "./RejectNocModal";
+import Sidebar from "../../components/Sidebar";
 
 
 import { getFormData } from "../../api";
-import Sidebar from "../../components/Sidebar";
 
 
 export default function ApplicationPage({ closeModal,closeRejectModal,closeStatusModal,closeCertificateModal }) {
