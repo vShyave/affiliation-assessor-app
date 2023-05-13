@@ -48,11 +48,11 @@ const FilteringTable = (props) => {
             {headerGroups.map((headerGroup) => (
               <tr {...headerGroup.getHeaderGroupProps()}>
                 {headerGroup.headers.map((column) => (
-                  <th{...column.getHeaderProps(column.getSortByToggleProps())} scope="col" className="px-6 py-3">
-                   {column.render('Header')}
-                   <span >
-                       {column.isSorted ? (column.isSortedDesc ?  <AiOutlineArrowUp/> : <AiOutlineArrowDown/>):""}
-                   </span>
+                  <th{...column.getHeaderProps(column.getSortByToggleProps())} className="px-6 py-3">
+                    <span className="inline-block">{column.render('Header')}</span>
+                    <span className="inline-block ml-[8px]">
+                      {column.isSorted ? (column.isSortedDesc ?  <AiOutlineArrowUp/> : <AiOutlineArrowDown/>):""}
+                    </span>
                </th>
                 ))}
               </tr>

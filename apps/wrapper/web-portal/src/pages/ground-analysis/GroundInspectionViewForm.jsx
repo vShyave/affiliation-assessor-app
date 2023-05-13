@@ -1,4 +1,5 @@
 import React, {useEffect, useState} from "react";
+import { useParams } from "react-router-dom";
 import { AiOutlineClose, AiOutlineCheck } from "react-icons/ai";
 
 import Card from "./../../components/Card";
@@ -7,7 +8,6 @@ import StatusLogModal from "./StatusLogModal";
 import IssueCertificateModal from "./IssueCertificationModal";
 import RejectNocModal from "./RejectNocModal";
 import Sidebar from "../../components/Sidebar";
-
 
 import { getFormData, getAcceptApplicant,getRejectApplicant,getOnGroundInspectionAnalysis } from "../../api";
 
@@ -21,13 +21,14 @@ export default function ApplicationPage({ closeModal,closeRejectModal,closeStatu
     const [openModel, setOpenModel] = useState(false);
     const [openStatusModel, setOpenStatusModel] = useState(false);
     const [encodedFormURI, setEncodedFormURI] = useState('');
+    let { formName, formId } = useParams();
 
     const userId = "427d473d-d8ea-4bb3-b317-f230f1c9b2f7";
     const formSpec = {
         "skipOnSuccessMessage": true,
         "prefill": {},
         "submissionURL": "",
-        "name": "",
+        "name": formName,
         "successCheck": "async (formData) => { return true; }",
         "onSuccess": {
             "notificationMessage": "Form submitted successfully",
@@ -44,11 +45,11 @@ export default function ApplicationPage({ closeModal,closeRejectModal,closeStatu
     };
 
     const fetchFormData = async () => {
-        const postData = {"form_id": 22}
+        const postData = {"form_id": formId}
         const res = await getFormData(postData);
         const formData = res.data.form_submissions[0];
-        formSpec.name = formData?.form_name;
-        let formURI = await getPrefillXML(formData?.form_name, '', formData.form_data, formData.imageUrls);
+        console.log('formData - ', formData);
+        let formURI = await getPrefillXML(`disabled_${formData?.form_name}`, '', formData.form_data, formData.imageUrls);
         setEncodedFormURI(formURI);
     };
 
@@ -98,7 +99,7 @@ export default function ApplicationPage({ closeModal,closeRejectModal,closeStatu
             <div className="flex flex-col gap-12">
                 <div className="flex flex-row">
                     <div className="flex grow justify-start items-center">
-                        <h1 className="text-2xl font-bold">New Institute - BSC GNM</h1>
+                        <h1 className="text-2xl font-bold uppercase">{ formName.split('_').join(' ') }</h1>
                     </div>
                     <div className="flex grow gap-4 justify-end items-center">
                         <button onClick={onClickHandlerReject} className="flex flex-wrap items-center justify-center gap-2 border border-gray-500 bg-white text-gray-500 w-[140px] h-[40px] font-medium rounded-[4px]">Reject <span><AiOutlineClose/></span> </button>
@@ -113,9 +114,6 @@ export default function ApplicationPage({ closeModal,closeRejectModal,closeStatu
                         <Card moreClass="flex flex-col shadow-md border border-[#F5F5F5] gap-4" styles={{backgroundColor: '#F5F5F5'}}>
                             <div className="p-1 flex justify-center border border-[#D9D9D9] rounded-[4px]" style={{backgroundColor: '#EBEBEB'}}>
                                 <h4 className="text-secondary font-medium">Status: Inspection completed</h4>
-                            </div>
-                            <div className="flex justify-center">
-                                The field visit is complete, no flaws found. Please approve.
                             </div>
                         </Card>
                         <Card moreClass="shadow-md">

@@ -29,8 +29,8 @@ const SortingTable = () => {
                                 {
                                     headerGroup.headers.map(
                                         (column) =>(
-                                            <th {...column.getHeaderProps(column.getSortByToggleProps())} scope="col" className="px-6 py-3">
-                                                { column.render('Header') }
+                                            <th {...column.getHeaderProps(column.getSortByToggleProps())} scope="col" className="flex flex-row px-6 py-3 gap-1">
+                                                <span>{ column.render('Header') }</span>
                                                 <span>{column.isSorted ? (column.isSortedDesc ?  <AiOutlineArrowUp/> : <AiOutlineArrowDown/>):""}</span>
                                             </th>
                                         )
