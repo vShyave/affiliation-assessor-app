@@ -18,3 +18,24 @@ export const getOnGroundAssessorData = async () => {
   const res = await adminCustomPost.get(API_URL.groundAnalysis.list);
   return res;
 };
+
+export const getAcceptApplicant = async (postData) => {
+  const res = await adminCustomPost.post(
+    API_URL.acceptApplication.acceptApplicant,
+    postData
+  );
+  return res;
+};
+
+export const getRejectApplicant = async (postData) => {
+  const res = await adminCustomPost.post(
+    API_URL.rejectApplication.rejectApplicant,
+    postData
+  );
+  return res;
+};
+
+export const getOnGroundInspectionAnalysis = async () => {
+  const res = await adminCustomPost.get(API_URL.groundInspectionAnalysis.getGroundInspectionAnalysis);
+  return res;
+};

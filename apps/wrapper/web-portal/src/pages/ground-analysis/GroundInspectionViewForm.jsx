@@ -9,7 +9,7 @@ import RejectNocModal from "./RejectNocModal";
 import Sidebar from "../../components/Sidebar";
 
 
-import { getFormData } from "../../api";
+import { getFormData, getAcceptApplicant,getRejectApplicant,getOnGroundInspectionAnalysis } from "../../api";
 
 import { getPrefillXML } from "./../../api/formApi";
 const ENKETO_URL = process.env.REACT_APP_ENKETO_URL || 'https://enketo.upsmfac.org';
@@ -52,9 +52,46 @@ export default function ApplicationPage({ closeModal,closeRejectModal,closeStatu
         setEncodedFormURI(formURI);
     };
 
+    const handleAcceptApplicant = async() => {
+        const postData = {"form_id": 23}
+        const res = await getAcceptApplicant(postData)
+        console.log('res',res)
+    }
+
+    const handleRejectApplicant = async() => {
+        const postData = {"form_id": 22}
+        const res = await getRejectApplicant(postData)
+        console.log('res',res)
+    }
+    
+    const fetchOnGroundInspectionAnalysis = async () => {
+        try {
+          const res = await getOnGroundInspectionAnalysis();
+            console.log(res)
+        } catch (error) {
+          console.log("error - ", error);
+        }
+      };
+
     useEffect(() => {
         fetchFormData();
+        // fetchOnGroundInspectionAnalysis();
     }, []);
+
+    const onClickHandlerReject = () =>{
+        setRejectModel(true)
+        if(!setRejectModel){
+        }else{
+            handleRejectApplicant()
+        }
+    }
+    const onClickHandlerAccept = () =>{
+        setOpenModel(true)
+        if(!setOpenModel){
+        }else{
+            handleRejectApplicant()
+        }
+    }
 
     return (
         <>
@@ -64,8 +101,8 @@ export default function ApplicationPage({ closeModal,closeRejectModal,closeStatu
                         <h1 className="text-2xl font-bold">New Institute - BSC GNM</h1>
                     </div>
                     <div className="flex grow gap-4 justify-end items-center">
-                        <button onClick={()=>{setRejectModel(true)}} className="flex flex-wrap items-center justify-center gap-2 border border-gray-500 bg-white text-gray-500 w-[140px] h-[40px] font-medium rounded-[4px]">Reject <span><AiOutlineClose/></span> </button>
-                        <button onClick={()=>{setOpenModel(true)}} className="flex flex-wrap items-center justify-center gap-2 border border-gray-500 text-gray-500 bg-white w-[140px] h-[40px] font-medium rounded-[4px]">Approve <span><AiOutlineCheck/></span></button>
+                        <button onClick={onClickHandlerReject} className="flex flex-wrap items-center justify-center gap-2 border border-gray-500 bg-white text-gray-500 w-[140px] h-[40px] font-medium rounded-[4px]">Reject <span><AiOutlineClose/></span> </button>
+                        <button onClick={onClickHandlerAccept} className="flex flex-wrap items-center justify-center gap-2 border border-gray-500 text-gray-500 bg-white w-[140px] h-[40px] font-medium rounded-[4px]">Approve <span><AiOutlineCheck/></span></button>
                         <div className="inline-block h-[40px] min-h-[1em] w-0.5 border opacity-100 dark:opacity-50"></div>
                         <button onClick={()=>{setOpenStatusModel(true)}} className="border border-gray-500 text-blue-600 bg-gray-100 w-[140px] h-[40px] font-medium rounded-[4px]">View status log</button>
                     </div>

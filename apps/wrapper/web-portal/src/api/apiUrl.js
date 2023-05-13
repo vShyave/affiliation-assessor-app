@@ -6,7 +6,18 @@ const API_URL = {
     viewForm: "rest/getFormData",
     list: "rest/getGroundInspectionAnalysis",
   },
-  manageUsers: {},
+  manageUsers: {
+
+  },
+  acceptApplication:{
+    acceptApplicant: "rest/acceptApplicant"
+  },
+  rejectApplication:{
+    rejectApplicant: "rest/rejectApplicant"
+  },
+  groundInspectionAnalysis:{
+    getGroundInspectionAnalysis: "rest/getGroundInspectionAnalysis"
+  }
 };
 
 export default API_URL;
