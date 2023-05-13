@@ -6,6 +6,9 @@ import APPLICANT_ROUTE_MAP from "./routes/ApplicantRoute";
 import Authenticate from "./login/Authenticate";
 import ApplicantLogin from "./login/ApplicantLogin";
 import LoginOTP from "./login/LoginOTP";
+import Register from "./login/Register";
+
+import Dashboard from "./pages/Dashboard";
 
 function App() {
   return (
@@ -20,6 +23,13 @@ function App() {
             <Route
               path={APPLICANT_ROUTE_MAP.loginModule.loginOTP}
               element={<LoginOTP />}
+            ></Route>
+          </Route>
+
+          <Route path={APPLICANT_ROUTE_MAP.dashboard} element={<Dashboard />}>
+            <Route
+              path={APPLICANT_ROUTE_MAP.dashboardModule.register}
+              element={<Register />}
             ></Route>
           </Route>
         </Routes>
