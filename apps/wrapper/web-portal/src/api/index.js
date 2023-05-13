@@ -18,3 +18,11 @@ export const getOnGroundAssessorData = async () => {
   const res = await adminCustomPost.get(API_URL.groundAnalysis.list);
   return res;
 };
+
+export const markReviewStatus = async (postData) => {
+  const res = await adminCustomPost.post(
+    API_URL.groundAnalysis.markStatus,
+    postData
+  );
+  return res;
+};

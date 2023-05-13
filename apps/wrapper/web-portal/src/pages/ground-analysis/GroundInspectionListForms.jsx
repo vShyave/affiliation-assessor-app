@@ -6,7 +6,11 @@ import FilteringTable from "../../components/table/FilteringTable";
 import Card from "../../components/Card";
 
 import { readableDate } from "../../utils/common";
-import { getOnGroundAssessorData } from "../../api";
+import {
+  getOnGroundAssessorData,
+  markReviewStatus,
+  getKpiDetails,
+} from "../../api";
 import ADMIN_ROUTE_MAP from "../../routes/adminRouteMap";
 
 export default function OnGroundInspectionAnalysis() {
@@ -15,12 +19,20 @@ export default function OnGroundInspectionAnalysis() {
   var formsDataList = [];
   resData.formsDataList = formsDataList;
   const [formsList, setFormsList] = useState();
-
+  var postData = {};
   const navigateToView = (formObj) => {
     const navigationURL = `${ADMIN_ROUTE_MAP.onGroundInspection.viewForm}/${formObj?.original?.form_name}/${formObj?.original?.id}`;
+    postData = { form_id: formObj?.original?.id };
+    markStatus(postData);
     navigation(navigationURL);
-  }
-
+  };
+  const markStatus = async (postData) => {
+    try {
+      const res = await markReviewStatus(postData);
+    } catch (error) {
+      console.log("error - ", error);
+    }
+  };
   useEffect(() => {
     fetchOnGroundAssessorData();
   }, []);
@@ -33,6 +45,10 @@ export default function OnGroundInspectionAnalysis() {
       console.log("error - ", error);
     }
   };
+  var submittedToday = 0;
+  var inProgress = 0;
+  var reviewing = 0;
+  var pending = 0;
   formsList?.forEach((e) => {
     var formsData = {
       applicant:
@@ -49,8 +65,18 @@ export default function OnGroundInspectionAnalysis() {
       id: e.form_id,
     };
     resData.formsDataList.push(formsData);
+    if (e.submitted_on === new Date().toJSON().slice(0, 10)) {
+      submittedToday++;
+    }
+    if (e.review_status === null) {
+      pending++;
+    } else if (e.review_status === "In Progress") {
+      inProgress++;
+    } else if (e.review_status === "Reviewed") {
+      reviewing++;
+    }
   });
-
+  var allReviwed = resData?.formsDataList.length;
   return (
     <>
       <div className="bg-gray-100 flex flex-col w-full h-full">
@@ -62,15 +88,14 @@ export default function OnGroundInspectionAnalysis() {
             <div className="flex flex-wrap gap-4">
               <Card moreClass="shadow-md w-[200px] h-[100px]">
                 <div className="flex flex-col place-items-start justify-center gap-2">
-                  <h3 className="text-xl font-semibold">12</h3>
-                  <p className="text-sm font-medium text-gray-700">
-                    Total pending
-                  </p>
+                  <h3 className="text-xl font-semibold">{allReviwed}</h3>
+                  <p className="text-sm font-medium text-gray-700">Total</p>
                 </div>
               </Card>
+
               <Card moreClass="shadow-md w-[200px] h-[100px]">
                 <div className="flex flex-col place-items-start justify-center gap-2">
-                  <h3 className="text-xl font-semibold">8</h3>
+                  <h3 className="text-xl font-semibold">{submittedToday}</h3>
                   <p className="text-sm font-medium text-gray-700">
                     Received today
                   </p>
@@ -78,7 +103,7 @@ export default function OnGroundInspectionAnalysis() {
               </Card>
               <Card moreClass="shadow-md w-[200px] h-[100px]">
                 <div className="flex flex-col place-items-start justify-center gap-2">
-                  <h3 className="text-xl font-semibold">2</h3>
+                  <h3 className="text-xl font-semibold">{inProgress}</h3>
                   <p className="text-sm font-medium text-gray-700">
                     In Progress
                   </p>
@@ -86,17 +111,15 @@ export default function OnGroundInspectionAnalysis() {
               </Card>
               <Card moreClass="shadow-md w-[200px] h-[100px]">
                 <div className="flex flex-col place-items-start justify-center gap-2">
-                  <h3 className="text-xl font-semibold">3</h3>
-                  <p className="text-sm font-medium text-gray-700">
-                    Review
-                  </p>
+                  <h3 className="text-xl font-semibold">{reviewing}</h3>
+                  <p className="text-sm font-medium text-gray-700">Review</p>
                 </div>
               </Card>
               <Card moreClass="shadow-md w-[200px] h-[100px]">
                 <div className="flex flex-col place-items-start justify-center gap-2">
-                  <h3 className="text-xl font-semibold">312</h3>
+                  <h3 className="text-xl font-semibold">{pending}</h3>
                   <p className="text-sm font-medium text-gray-700">
-                    Reviewed in total
+                    Total pending
                   </p>
                 </div>
               </Card>
