@@ -10,13 +10,16 @@ const API_URL = {
 
   },
   acceptApplication:{
-    acceptApplicant: "rest/acceptApplicant"
+    acceptApplicant: "rest/acceptForm"
   },
   rejectApplication:{
-    rejectApplicant: "rest/rejectApplicant"
+    rejectApplicant: "rest/rejectForm"
   },
   groundInspectionAnalysis:{
     getGroundInspectionAnalysis: "rest/getGroundInspectionAnalysis"
+  },
+    ViewStatus:{
+    getViewStatus: "rest/getStatusLog"
   }
 };
 
