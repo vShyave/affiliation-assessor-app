@@ -5,11 +5,11 @@ import { AiOutlineClose, AiOutlineCheck } from "react-icons/ai";
 import Card from "./../../components/Card";
 import NocModal from "./NocModal";
 import StatusLogModal from "./StatusLogModal";
-import IssueCertificateModal from "./IssueCertificationModal";
+// import IssueCertificateModal from "./IssueCertificationModal";
 import RejectNocModal from "./RejectNocModal";
 import Sidebar from "../../components/Sidebar";
 
-import { getFormData } from "../../api";
+import { getFormData, getAcceptApplicant,getRejectApplicant,getOnGroundInspectionAnalysis, getOnGroundInspectionViewStatus } from "../../api";
 
 import { getPrefillXML } from "./../../api/formApi";
 const ENKETO_URL = process.env.REACT_APP_ENKETO_URL || 'https://enketo.upsmfac.org';
@@ -53,9 +53,42 @@ export default function ApplicationPage({ closeModal,closeRejectModal,closeStatu
         setEncodedFormURI(formURI);
     };
 
-    useEffect(() => {
-        fetchFormData();
-    }, []);
+   
+
+  
+    
+    // const handleOnGroundAnalysisGetStatus = async() => {
+    //     const postData = {"form_id": 34}
+    //     const res = await getOnGroundInspectionViewStatus(postData)
+    //     console.log('res',res)
+    // }
+    // const fetchOnGroundInspectionAnalysis = async () => {
+    //     try {
+    //       const res = await getOnGroundInspectionAnalysis();
+    //         console.log(res)
+    //     } catch (error) {
+    //       console.log("error - ", error);
+    //     }
+    //   };
+    
+ 
+
+    // useEffect(() => {
+    //     // fetchFormData();
+    //     // fetchOnGroundInspectionAnalysis();
+        
+    // }, []);
+
+    const onClickHandlerReject = () =>{
+        setRejectModel(true)
+        }
+    const onClickHandlerAccept = () =>{
+        setOpenModel(true)
+    }
+    const onClickViewStatus = () =>{
+        setOpenStatusModel(true)
+       
+    }
 
     return (
         <>
@@ -65,10 +98,10 @@ export default function ApplicationPage({ closeModal,closeRejectModal,closeStatu
                         <h1 className="text-2xl font-bold uppercase">{ formName.split('_').join(' ') }</h1>
                     </div>
                     <div className="flex grow gap-4 justify-end items-center">
-                        <button onClick={()=>{setRejectModel(true)}} className="flex flex-wrap items-center justify-center gap-2 border border-gray-500 bg-white text-gray-500 w-[140px] h-[40px] font-medium rounded-[4px]">Reject <span><AiOutlineClose/></span> </button>
-                        <button onClick={()=>{setOpenModel(true)}} className="flex flex-wrap items-center justify-center gap-2 border border-gray-500 text-gray-500 bg-white w-[140px] h-[40px] font-medium rounded-[4px]">Approve <span><AiOutlineCheck/></span></button>
+                        <button onClick={onClickHandlerReject} className="flex flex-wrap items-center justify-center gap-2 border border-gray-500 bg-white text-gray-500 w-[140px] h-[40px] font-medium rounded-[4px]">Reject <span><AiOutlineClose/></span> </button>
+                        <button onClick={onClickHandlerAccept} className="flex flex-wrap items-center justify-center gap-2 border border-gray-500 text-gray-500 bg-white w-[140px] h-[40px] font-medium rounded-[4px]">Approve <span><AiOutlineCheck/></span></button>
                         <div className="inline-block h-[40px] min-h-[1em] w-0.5 border opacity-100 dark:opacity-50"></div>
-                        <button onClick={()=>{setOpenStatusModel(true)}} className="border border-gray-500 text-blue-600 bg-gray-100 w-[140px] h-[40px] font-medium rounded-[4px]">View status log</button>
+                        <button onClick={onClickViewStatus} className="border border-gray-500 text-blue-600 bg-gray-100 w-[140px] h-[40px] font-medium rounded-[4px]">View status log</button>
                     </div>
                 </div>
                 <div className="flex flex-row gap-4">
