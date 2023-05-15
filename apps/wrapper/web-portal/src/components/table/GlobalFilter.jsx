@@ -11,7 +11,7 @@ const GlobalFilter = ({filter,setFilter}) => {
 
   return (
     <div className="mb-3">
-      <div className='flex flex-wrap gap-8'> 
+      <div className='flex flex-row justify-between'> 
         <div className="relative mb-4 bg-white flex w-1/4  items-stretch">
           <input value={value || ''} onChange={(e) => {
             setValue(e.target.value) 

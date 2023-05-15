@@ -5,6 +5,7 @@ const API_URL = {
   groundAnalysis: {
     viewForm: "rest/getFormData",
     list: "rest/getGroundInspectionAnalysis",
+    markStatus: "rest/inProgress"
   },
   manageUsers: {},
 };
