@@ -18,7 +18,7 @@ const Header = () => {
                                 <Button moreClass="px-4 text-primary-600" style={{backgroundColor: '#fff'}} text="Self Registration"></Button>
                             </Link>
                             <Link to={APPLICANT_ROUTE_MAP.loginModule.login}>
-                                <Button moreClass="px-6" text="Login"></Button>
+                                <Button moreClass="px-6 text-white" text="Login"></Button>
                             </Link>
                         </div>
                     </div>
