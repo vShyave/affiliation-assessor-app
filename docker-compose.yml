@@ -219,6 +219,18 @@ services:
     ports:
       - 3001:80
 
+  applicant-wrapper:
+    image: applicant-portal
+    build:
+      context: apps/wrapper/applicant-portal
+      # env vars to be passed at build time as it will build a static file
+      args:
+        REACT_APP_ENKETO_URL: ${REACT_APP_ENKETO_URL}
+        REACT_APP_FORM_MANAGER_URL: ${REACT_APP_FORM_MANAGER_URL}
+        REACT_APP_HASURA_URL: ${REACT_APP_HASURA_URL}
+    ports:
+      - 3002:80
+
 networks:
   db_net:
     driver: bridge
