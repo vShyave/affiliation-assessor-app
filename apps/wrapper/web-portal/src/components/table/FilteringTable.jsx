@@ -42,10 +42,10 @@ const FilteringTable = (props) => {
           className="w-full text-sm text-left text-gray-500 dark:text-gray-400"
         >
           <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
-            {headerGroups.map((headerGroup) => (
-              <tr {...headerGroup.getHeaderGroupProps()}>
-                {headerGroup.headers.map((column) => (
-                  <th{...column.getHeaderProps(column.getSortByToggleProps())} className="px-6 py-3">
+            {headerGroups.map((headerGroup, index) => (
+              <tr {...headerGroup.getHeaderGroupProps()} key={index}>
+                {headerGroup.headers.map((column, idx) => (
+                  <th{...column.getHeaderProps(column.getSortByToggleProps())} className="px-6 py-3" key={`${index}_${idx}`}>
                     <span className="inline-block">{column.render('Header')}</span>
                     <span className="inline-block ml-[8px]">
                       {column.isSorted ? (column.isSortedDesc ?  <AiOutlineArrowUp/> : <AiOutlineArrowDown/>):""}
@@ -56,17 +56,18 @@ const FilteringTable = (props) => {
             ))}
           </thead>
           <tbody {...getTableBodyProps()}>
-            {page.map((row) => {
+            {page.map((row, index) => {
               prepareRow(row);
               return (
                 <tr
                   {...row.getRowProps()}
                   className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 cursor-pointer"
                   onClick={() => props.navigateFunc(row)}
+                  key={index}
                 >
-                  {row.cells.map((cell) => {
+                  {row.cells.map((cell, idx) => {
                     return (
-                      <td {...cell.getCellProps()} className="px-6 py-4">
+                      <td {...cell.getCellProps()} className="px-6 py-4" key={`${index}_${idx}`}>
                         {cell.render("Cell")}
                       </td>
                     );

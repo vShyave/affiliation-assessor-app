@@ -7,7 +7,7 @@ import FilteringTable from "../../components/table/FilteringTable";
 import Card from "../../components/Card";
 
 import { readableDate } from "../../utils/common";
-import { getOnGroundAssessorData } from "../../api";
+import { getOnGroundAssessorData, markReviewStatus } from "../../api";
 import ADMIN_ROUTE_MAP from "../../routes/adminRouteMap";
 
 export default function OnGroundInspectionAnalysis() {
@@ -19,36 +19,46 @@ export default function OnGroundInspectionAnalysis() {
 
   const cardArray = [
     {
-      value: 12,
-      key: 'total_pending',
-      text: 'Total pending'
+      value: 0,
+      key: 'total',
+      text: 'Total'
     },
     {
-      value: 8,
-      key: 'received_today',
+      value: 0,
+      key: 'submitted_today',
       text: 'Received today'
     },
     {
-      value: 2,
+      value: 0,
       key: 'in_progress',
       text: 'In progress'
     },
     {
-      value: 3,
-      key: 'review',
-      text: 'Review'
+      value: 0,
+      key: 'reviewed',
+      text: 'Reviewed'
     },
     {
-      value: 312,
-      key: 'reviewed_in_total',
-      text: 'Reviewed in total'
+      value: 0,
+      key: 'pending',
+      text: 'Total pending'
     }
   ]
 
   const navigateToView = (formObj) => {
     const navigationURL = `${ADMIN_ROUTE_MAP.onGroundInspection.viewForm}/${formObj?.original?.form_name}/${formObj?.original?.id}`;
     navigation(navigationURL);
+    const postData = { form_id: formObj?.original?.id };
+    markStatus(postData);
   }
+
+  const markStatus = async (postData) => {
+    try {
+      const res = await markReviewStatus(postData);
+    } catch (error) {
+      console.log("error - ", error);
+    }
+  };
 
   useEffect(() => {
     fetchOnGroundAssessorData();
@@ -70,22 +80,44 @@ export default function OnGroundInspectionAnalysis() {
     return splitValues.join(' ');
   }
 
+  const status_obj = {
+    total: formsList?.length,
+    submitted_today: 0,
+    in_progress: 0,
+    reviewed: 0,
+    pending: 0 
+  }
+
   formsList?.forEach((e) => {
     var formsData = {
       applicant:
-        e.institute.name.charAt(0).toUpperCase() +
-        e.institute.name.substring(1).toLowerCase() +
+        e?.institute?.name?.charAt(0).toUpperCase() +
+        e?.institute?.name?.substring(1).toLowerCase() +
         ", " +
-        e.institute.district.charAt(0).toUpperCase() +
-        e.institute.district.substring(1).toLowerCase(),
-      form_name: getFormName(e.form_name), 
-      assessor: e.assessor.name,
+        e?.institute?.district?.charAt(0).toUpperCase() +
+        e?.institute?.district?.substring(1).toLowerCase(),
+      form_name: getFormName(e?.form_name),
+      assessor: e?.assessor?.name,
       assisting_assessor:
-        e.assessor.assisstant == null ? "None" : e.assessor.assisstant,
-      published_on: readableDate(e.submitted_on),
+        e?.assessor?.assisstant == null ? "None" : e?.assessor?.assisstant,
+      published_on: readableDate(e?.submitted_on),
       id: e.form_id,
     };
     resData.formsDataList.push(formsData);
+    if (e.submitted_on === new Date().toJSON().slice(0, 10)) {
+      status_obj.submitted_today++;
+    }
+    if (e.review_status === null) {
+      status_obj.pending++;
+    } else if (e.review_status?.toLowerCase() === "in progress") {
+      status_obj.in_progress++;
+    } else if (e.review_status?.toLowerCase() === "reviewed") {
+      status_obj.reviewed++;
+    }
+  });
+
+  cardArray.forEach((obj) => {
+    obj.value = status_obj[obj.key]
   });
 
   return (
@@ -98,8 +130,8 @@ export default function OnGroundInspectionAnalysis() {
           <div className="flex flex-wrap">
             {
               cardArray.map(
-                (obj) => (
-                  <Card moreClass="shadow-md w-[200px] h-[100px] m-3 first:ml-0">
+                (obj, index) => (
+                  <Card moreClass="shadow-md w-[200px] h-[100px] m-3 first:ml-0" key={index}>
                     <div className="flex flex-col place-items-start justify-center gap-2">
                       <h3 className="text-xl font-semibold">{obj.value}</h3>
                       <p className="text-sm font-medium text-gray-700">{obj.text}</p>
@@ -118,7 +150,7 @@ export default function OnGroundInspectionAnalysis() {
 
           <div className="grid grid-cols-1 gap-x-6 gap-y-6 sm:grid-cols-6">
             <div className="sm:col-span-3">              
-              <div className="w-72 bg-white">
+              <div className="w-72 bg-white rounded-[8px]">
                 <Select label="Select round">
                   <Option>Round one</Option>
                   <Option>Round two</Option>
