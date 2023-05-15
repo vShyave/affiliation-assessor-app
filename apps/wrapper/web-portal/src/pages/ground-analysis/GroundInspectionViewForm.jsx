@@ -7,9 +7,9 @@ import NocModal from "./NocModal";
 import StatusLogModal from "./StatusLogModal";
 import IssueCertificateModal from "./IssueCertificationModal";
 import RejectNocModal from "./RejectNocModal";
+import Sidebar from "../../components/Sidebar";
 
 import { getFormData } from "../../api";
-import Sidebar from "../../components/Sidebar";
 
 import { getPrefillXML } from "./../../api/formApi";
 const ENKETO_URL = process.env.REACT_APP_ENKETO_URL || 'https://enketo.upsmfac.org';
@@ -49,7 +49,7 @@ export default function ApplicationPage({ closeModal,closeRejectModal,closeStatu
         const res = await getFormData(postData);
         const formData = res.data.form_submissions[0];
         console.log('formData - ', formData);
-        let formURI = await getPrefillXML(formData?.form_name, '', formData.form_data, formData.imageUrls);
+        let formURI = await getPrefillXML(`disabled_${formData?.form_name}`, '', formData.form_data, formData.imageUrls);
         setEncodedFormURI(formURI);
     };
 
@@ -77,9 +77,6 @@ export default function ApplicationPage({ closeModal,closeRejectModal,closeStatu
                         <Card moreClass="flex flex-col shadow-md border border-[#F5F5F5] gap-4" styles={{backgroundColor: '#F5F5F5'}}>
                             <div className="p-1 flex justify-center border border-[#D9D9D9] rounded-[4px]" style={{backgroundColor: '#EBEBEB'}}>
                                 <h4 className="text-secondary font-medium">Status: Inspection completed</h4>
-                            </div>
-                            <div className="flex justify-center">
-                                The field visit is complete, no flaws found. Please approve.
                             </div>
                         </Card>
                         <Card moreClass="shadow-md">
