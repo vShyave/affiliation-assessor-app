@@ -8,7 +8,10 @@ APPLICANT_ROUTE_MAP.loginModule = {
 
 APPLICANT_ROUTE_MAP.dashboard = '/';
 APPLICANT_ROUTE_MAP.dashboardModule = {
-    register: `${APPLICANT_ROUTE_MAP.dashboard}register`
+    register: `${APPLICANT_ROUTE_MAP.dashboard}register`,
+    my_applications: `${APPLICANT_ROUTE_MAP.dashboard}my_applications`,
+    all_applications: `${APPLICANT_ROUTE_MAP.dashboard}all_applications`
+
 };
 
 export default APPLICANT_ROUTE_MAP;

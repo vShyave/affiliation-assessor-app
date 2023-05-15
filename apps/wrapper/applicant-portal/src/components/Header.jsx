@@ -6,7 +6,7 @@ import APPLICANT_ROUTE_MAP from '../routes/ApplicantRoute'
 
 const Header = () => {
     return (
-        <div className="relative min-h-[80px] z-10">
+        <div className="relative min-h-[80px] z-10 drop-shadow-md">
             <div className="top-0 fixed left-0 right-0 bg-white">
                 <div className="container py-2 px-3 mx-auto">
                     <div className="flex flex-row">
@@ -15,10 +15,10 @@ const Header = () => {
                         </div>
                         <div className="flex grow justify-end items-center gap-4">
                             <Link to={APPLICANT_ROUTE_MAP.dashboardModule.register}>
-                                <Button moreClass="text-[14px] px-4 text-primary-600" style={{backgroundColor: '#fff'}} text="Self Registration"></Button>
+                                <Button moreClass="px-4 text-primary-600" style={{backgroundColor: '#fff'}} text="Self Registration"></Button>
                             </Link>
                             <Link to={APPLICANT_ROUTE_MAP.loginModule.login}>
-                                <Button moreClass="text-[14px] px-6" text="Login"></Button>
+                                <Button moreClass="px-6" text="Login"></Button>
                             </Link>
                         </div>
                     </div>
