@@ -1,14 +1,11 @@
 import React, { useMemo } from "react";
 import { useTable, useGlobalFilter, useSortBy, usePagination } from "react-table";
+import { Select, Option } from "@material-tailwind/react";
 
-
-
-// import MOCK_DATA from "./MOCK_DATA .json";
 import { COLUMNS } from "./Columns";
 import GlobalFilter from "./GlobalFilter";
 
-import { AiOutlineArrowUp,AiOutlineArrowDown } from "react-icons/ai";
-
+import { AiOutlineArrowUp, AiOutlineArrowDown } from "react-icons/ai";
 
 const FilteringTable = (props) => {
   const columns = useMemo(() => COLUMNS, []);
@@ -45,10 +42,10 @@ const FilteringTable = (props) => {
           className="w-full text-sm text-left text-gray-500 dark:text-gray-400"
         >
           <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
-            {headerGroups.map((headerGroup) => (
-              <tr {...headerGroup.getHeaderGroupProps()}>
-                {headerGroup.headers.map((column) => (
-                  <th{...column.getHeaderProps(column.getSortByToggleProps())} className="px-6 py-3">
+            {headerGroups.map((headerGroup, index) => (
+              <tr {...headerGroup.getHeaderGroupProps()} key={index}>
+                {headerGroup.headers.map((column, idx) => (
+                  <th{...column.getHeaderProps(column.getSortByToggleProps())} className="px-6 py-3" key={`${index}_${idx}`}>
                     <span className="inline-block">{column.render('Header')}</span>
                     <span className="inline-block ml-[8px]">
                       {column.isSorted ? (column.isSortedDesc ?  <AiOutlineArrowUp/> : <AiOutlineArrowDown/>):""}
@@ -59,17 +56,18 @@ const FilteringTable = (props) => {
             ))}
           </thead>
           <tbody {...getTableBodyProps()}>
-            {page.map((row) => {
+            {page.map((row, index) => {
               prepareRow(row);
               return (
                 <tr
                   {...row.getRowProps()}
                   className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 cursor-pointer"
                   onClick={() => props.navigateFunc(row)}
+                  key={index}
                 >
-                  {row.cells.map((cell) => {
+                  {row.cells.map((cell, idx) => {
                     return (
-                      <td {...cell.getCellProps()} className="px-6 py-4">
+                      <td {...cell.getCellProps()} className="px-6 py-4" key={`${index}_${idx}`}>
                         {cell.render("Cell")}
                       </td>
                     );
@@ -80,44 +78,56 @@ const FilteringTable = (props) => {
           </tbody>
         </table>
       </div>
+
       <div className="flex flex-col font-normal text-[16px] py-8 gap-8">
-         <span className="font-medium flex justify-center">
-             Page{' '}
-            <strong>
-                {pageIndex + 1} of {pageOptions.length}
-            </strong>{' '}
-         </span>
-         <div className="flex justify-between ">
-            <button className="" onClick={()=> gotoPage(0)} disabled={!canPreviousPage}>{'<<'}</button>
-              <button className="border text-gray-300 bg-blue-700 w-[140px] h-[40px] font-medium rounded-[4px]" onClick={() => previousPage()} disabled={!canPreviousPage}>Previous</button>
-                <span className="font-medium">
-                   Go to page: {' '}
-                  <input  
-                    className="rounded-md border-0 p-2 w-[70px] h-[40px]  text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                    type="text" 
-                    defaultValue={pageIndex + 1}
-                    onChange={(e) =>{
-                        const pageNumber = e.target.value ? Number(e.target.value) - 1 : 0
-                        gotoPage(pageNumber)
-                    }}
-                  />
-                </span>
+        <span className="font-medium flex justify-center">
+          Page{' '}
+          <strong>
+            {pageIndex + 1} of {pageOptions.length}
+          </strong>
+          {' '}
+        </span>
+        <div className="flex justify-between ">
+          <button className="" onClick={()=> gotoPage(0)} disabled={!canPreviousPage}>{'<<'}</button>
+          <button className="border text-gray-300 bg-blue-700 w-[140px] h-[40px] font-medium rounded-[4px]" onClick={() => previousPage()} disabled={!canPreviousPage}>Previous</button>
+          <span className="font-medium">
+            Go to page: {' '}
+            <input  
+              className="rounded-md border-0 p-2 w-[70px] h-[40px]  text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+              type="text" 
+              defaultValue={pageIndex + 1}
+              onChange={(e) =>{
+                const pageNumber = e.target.value ? Number(e.target.value) - 1 : 0
+                gotoPage(pageNumber)
+              }}
+            />
+          </span>
+          
+          <select className="border text-gray-300 p-2 bg-blue-700 w-[140px] h-[40px] font-medium rounded-[4px]" value={pageSize} onChange={e => setPageSize(Number(e.target.value))}>
+            {
+              [10,25,50].map((pageSize) => (
+                  <option key={pageSize} value={pageSize}>
+                    Show {pageSize}
+                  </option>
+              ))
+            }
+          </select> 
 
-               
-              
-
-                   <select className="border text-gray-300 p-2 bg-blue-700 w-[140px] h-[40px] font-medium rounded-[4px]" value={pageSize} onChange={e => setPageSize(Number(e.target.value))}>
-                       {
-                          [10,25,50].map((pageSize) => (
-                              <option key={pageSize} value={pageSize}>
-                                  Show {pageSize}
-                              </option>
-                          ))
-                        }
-                   </select> 
-                <button className="border text-gray-300 bg-blue-700 w-[140px] h-[40px] font-medium rounded-[4px]" onClick={() => nextPage()} disabled={!canNextPage}>Next</button>
-                <button onClick={()=> gotoPage(pageCount - 1)} disabled={!canNextPage}>{'>>'}</button>
-          </div>
+          {/* Do not remove the following comment code, need it for later */}
+          {/* <div className="w-60 bg-blue-700">
+            <Select label="Select page size">
+              {
+                [10,25,50].map((pageSize) => (
+                    <Option key={pageSize} value={pageSize}>
+                      Show {pageSize}
+                    </Option>
+                ))
+              }
+            </Select>
+          </div> */}
+          <button className="border text-gray-300 bg-blue-700 w-[140px] h-[40px] font-medium rounded-[4px]" onClick={() => nextPage()} disabled={!canNextPage}>Next</button>
+          <button onClick={()=> gotoPage(pageCount - 1)} disabled={!canNextPage}>{'>>'}</button>
+        </div>
       </div>
     </>
   );

@@ -1,7 +1,7 @@
 import axios from 'axios';
 // import { getCookie } from '../utils';
 
-const BASE_URL = process.env.WEB_PORTAL_HASURA_API_URL || 'https://hasura.upsmfac.org/api/';
+const BASE_URL = process.env.REACT_APP_HASURA_SERVICE_URL;
 const HASURA_CLIENT_NAME = process.env.HASURA_CLIENT_NAME || 'hasura-console';
 const X_HASURA_ADMIN_SECRET_KEY = process.env.X_HASURA_ADMIN_SECRET_KEY || 'myadminsecretkey';
 

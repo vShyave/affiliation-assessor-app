@@ -1,12 +1,11 @@
 import axios from 'axios';
 
-const ENKETO_MANAGER_URL = process.env.REACT_APP_ENKETO_MANAGER_URL || 'https://formmanager.upsmfac.org';
+const ENKETO_MANAGER_URL = process.env.REACT_APP_ENKETO_MANAGER_URL;
 
 export const getPrefillXML = async (form, onFormSuccessData, prefillXML, imageUrls) => {
-
     try {
         const res = await axios.post(
-            `${ENKETO_MANAGER_URL}/prefillXML?form=${form}&onFormSuccessData=${encodeURI(
+            `${ENKETO_MANAGER_URL}prefillXML?form=${form}&onFormSuccessData=${encodeURI(
                 JSON.stringify(onFormSuccessData)
             )}`,
             {

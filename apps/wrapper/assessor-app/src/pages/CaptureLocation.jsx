@@ -20,7 +20,7 @@ const CaptureLocation = () => {
   const [distance, setDistance] = useState(9999);
   const [error, setError] = useState(false);
   const { state, setState } = useContext(StateContext);
-  const [ assessmentObj, setAssessmentObj] = useState({});
+  const [assessmentObj, setAssessmentObj] = useState({});
   const navigate = useNavigate();
   const isMobile = window.innerWidth < 769;
 

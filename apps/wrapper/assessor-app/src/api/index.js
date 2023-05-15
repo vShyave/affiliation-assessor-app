@@ -56,57 +56,61 @@ export const verifyOtpSavePassword = async (mobile, pass, otp) => {
 };
 
 export const getAssessor = async (postData) => {
-  const res = await customPost.post('rest/getAssessor', postData);
+  const res = await customPost.post("rest/getAssessor", postData);
   return res;
-}
+};
 
 export const getTodaysAssessment = async (postData) => {
-  const res = await customPost.post('rest/getTodaysInspections', postData);
+  const res = await customPost.post("rest/getTodaysInspections", postData);
   return res;
-}
+};
 
 export const getValidatedAssessor = async (postData) => {
-  const res = await customPost.post('rest/getValidation', postData);
+  const res = await customPost.post("rest/getValidation", postData);
   return res;
-}
+};
 
 export const getCoursesOfInstitutes = async (postData) => {
-  const res = await customPost.post('rest/getCourseType', postData);
+  const res = await customPost.post("rest/getCourseType", postData);
   return res;
-}
+};
 
 export const getCoursesForAccordions = async (postData) => {
-  const res = await customPost.post('rest/getCourses', postData);
+  const res = await customPost.post("rest/getCourses", postData);
   return res;
-}
+};
 
 export const getUpcomingAssessments = async (postData) => {
-  const res = await customPost.post('rest/getUpcomingInspections', postData);
+  const res = await customPost.post("rest/getUpcomingInspections", postData);
   return res;
-}
+};
 
 export const getPastInspections = async (postData) => {
-  const res = await customPost.post('rest/getPastInspections', postData);
+  const res = await customPost.post("rest/getPastInspections", postData);
   return res;
-}
+};
 
 export const UploadImage = async (postData) => {
-  const res = await axios.post(`${ENKETO_MANAGER_URL}/form/uploadFile`, postData, {
-    "Accept": "*/*",
-    "Content-Type": "multipart/form-data",
-  });
+  const res = await axios.post(
+    `${ENKETO_MANAGER_URL}/form/uploadFile`,
+    postData,
+    {
+      Accept: "*/*",
+      "Content-Type": "multipart/form-data",
+    }
+  );
   return res;
-}
+};
 
 export const getStatusOfForms = async (postData) => {
-  const res = await customPost.post('rest/getFormStatus', postData);
+  const res = await customPost.post("rest/getFormStatus", postData);
   return res;
-}
+};
 
 export const ValidateAssessor = async (postData) => {
-  const res = await customPost.post('rest/validateAssessor', postData);
+  const res = await customPost.post("rest/validateAssessor", postData);
   return res;
-}
+};
 
 export const getMedicalAssessments = () => {
   const query = {
@@ -148,8 +152,9 @@ export const getMedicalAssessmentsUpcoming = () => {
   const query = {
     query: `
       query {
-        assessment_schedule(where: {date: {_gt: "${new Date().toISOString().split("T")[0]
-      }"}}, order_by: {date: asc}){
+        assessment_schedule(where: {date: {_gt: "${
+          new Date().toISOString().split("T")[0]
+        }"}}, order_by: {date: asc}){
           id
           date
           institute{
@@ -164,7 +169,12 @@ export const getMedicalAssessmentsUpcoming = () => {
   return makeHasuraCalls(query);
 };
 
-export const getPrefillXML = async (form, onFormSuccessData, prefillXML, imageUrls) => {
+export const getPrefillXML = async (
+  form,
+  onFormSuccessData,
+  prefillXML,
+  imageUrls
+) => {
   try {
     const res = await axios.post(
       `${ENKETO_MANAGER_URL}/prefillXML?form=${form}&onFormSuccessData=${encodeURI(
@@ -172,7 +182,7 @@ export const getPrefillXML = async (form, onFormSuccessData, prefillXML, imageUr
       )}`,
       {
         prefillXML,
-        imageUrls
+        imageUrls,
       },
       { headers: {} }
     );
@@ -189,7 +199,7 @@ export const getSubmissionXML = async (form, prefillXML, imageUrls) => {
       `${ENKETO_MANAGER_URL}/submissionXML?form=${form}`,
       {
         prefillXML,
-        imageUrls
+        imageUrls,
       },
       { headers: {} }
     );
@@ -276,7 +286,7 @@ export const saveFormSubmission = (data) => {
     query: `mutation ($object: [form_submissions_insert_input!] = {}) {
       insert_form_submissions(objects: $object) {
         returning {
-          id
+          form_id
           created_at
         }
       }
@@ -290,9 +300,10 @@ export const getAssessmentStatus = () => {
   const query = {
     query: `
       {
-        form_submissions(where: {assessment_schedule: {date: {_eq: "${new Date().toISOString().split("T")[0]
-      }"}}}) {
-          id
+        form_submissions(where: {assessment_schedule: {date: {_eq: "${
+          new Date().toISOString().split("T")[0]
+        }"}}}) {
+          form_id
           form_name
           created_at
         }
@@ -307,8 +318,9 @@ export const getAssignedForms = (course, assType) => {
   const query = {
     query: `
       {
-        osce_assignment(where: {assessment_schedule: {date: {_eq: "${new Date().toISOString().split("T")[0]
-      }"}}, _and: {assessment_type: {_eq: "${assType}"}, _and: {course_type: {_eq: "${course}"}}}}) {
+        osce_assignment(where: {assessment_schedule: {date: {_eq: "${
+          new Date().toISOString().split("T")[0]
+        }"}}, _and: {assessment_type: {_eq: "${assType}"}, _and: {course_type: {_eq: "${course}"}}}}) {
           assessment_type
           course_type
           id

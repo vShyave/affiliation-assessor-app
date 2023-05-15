@@ -46,3 +46,8 @@ export const getOnGroundViewStatus = async (postData) => {
     console.log("in api call", res)
   return res.data;
 };
+
+export const markReviewStatus = async (postData) => {
+  const res = await adminCustomPost.post(API_URL.groundAnalysis.markStatus, postData);
+  return res;
+}
