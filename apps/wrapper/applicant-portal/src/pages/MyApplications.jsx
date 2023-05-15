@@ -9,7 +9,7 @@ const MyApplications = () => {
         <>
             <div className="h-[48px] bg-white drop-shadow-sm">
                 <div className='container mx-auto px-3 py-3'>
-                    <div className='text-primary-400 uppercase font-medium'>My Application</div>
+                    <div className='text-primary-400 font-bold'>My Application</div>
                 </div>
             </div>
 
