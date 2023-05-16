@@ -195,7 +195,7 @@ export default function SelfRegistration() {
                             </div>
                         </div> 
                             
-                        <div className="mt-4 gap-2">
+                        <div className="flex flex-row justify-end h-1/2 my-auto mb-0 gap-2">
                             <Button moreClass="px-6 text-primary-600" style={{backgroundColor: '#fff'}} text="Cancel"></Button>
                             <Button moreClass="px-6 text-white" text="Submit"></Button>
                         </div>
