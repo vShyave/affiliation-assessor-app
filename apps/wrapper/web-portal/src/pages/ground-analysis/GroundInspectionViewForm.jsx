@@ -2,22 +2,21 @@ import React, {useEffect, useState} from "react";
 import { useParams } from "react-router-dom";
 import { AiOutlineClose, AiOutlineCheck } from "react-icons/ai";
 
-import Card from "./../../components/Card";
+import { Card, Button } from "./../../components";
+
 import NocModal from "./NocModal";
 import StatusLogModal from "./StatusLogModal";
-import IssueCertificateModal from "./IssueCertificationModal";
 import RejectNocModal from "./RejectNocModal";
 import Sidebar from "../../components/Sidebar";
 
 import { getFormData } from "../../api";
-
 import { getPrefillXML } from "./../../api/formApi";
-const ENKETO_URL = process.env.REACT_APP_ENKETO_URL || 'https://enketo.upsmfac.org';
 
-export default function ApplicationPage({ closeModal,closeRejectModal,closeStatusModal,closeCertificateModal }) {
+const ENKETO_URL = process.env.REACT_APP_ENKETO_URL;
+
+export default function ApplicationPage({ closeModal, closeRejectModal, closeStatusModal, closeCertificateModal }) {
 
     const [rejectModel, setRejectModel] = useState(false)
-    const [openCertificateModel, setOpenCertificateModel] = useState(false)
     const [openModel, setOpenModel] = useState(false);
     const [openStatusModel, setOpenStatusModel] = useState(false);
     const [encodedFormURI, setEncodedFormURI] = useState('');
@@ -49,13 +48,9 @@ export default function ApplicationPage({ closeModal,closeRejectModal,closeStatu
         const res = await getFormData(postData);
         const formData = res.data.form_submissions[0];
         console.log('formData - ', formData);
-        let formURI = await getPrefillXML(`disabled_${formData?.form_name}`, '', formData.form_data, formData.imageUrls);
+        let formURI = await getPrefillXML(`${formData?.form_name}`, '', formData.form_data, formData.imageUrls);
         setEncodedFormURI(formURI);
     };
-
-    useEffect(() => {
-        fetchFormData();
-    }, []);
 
     return (
         <>
@@ -65,10 +60,10 @@ export default function ApplicationPage({ closeModal,closeRejectModal,closeStatu
                         <h1 className="text-2xl font-bold uppercase">{ formName.split('_').join(' ') }</h1>
                     </div>
                     <div className="flex grow gap-4 justify-end items-center">
-                        <button onClick={()=>{setRejectModel(true)}} className="flex flex-wrap items-center justify-center gap-2 border border-gray-500 bg-white text-gray-500 w-[140px] h-[40px] font-medium rounded-[4px]">Reject <span><AiOutlineClose/></span> </button>
-                        <button onClick={()=>{setOpenModel(true)}} className="flex flex-wrap items-center justify-center gap-2 border border-gray-500 text-gray-500 bg-white w-[140px] h-[40px] font-medium rounded-[4px]">Approve <span><AiOutlineCheck/></span></button>
+                        <button onClick={() => setRejectModel(true)} className="flex flex-wrap items-center justify-center gap-2 border border-gray-500 bg-white text-gray-500 w-[140px] h-[40px] font-medium rounded-[4px]">Reject <span><AiOutlineClose/></span> </button>
+                        <button onClick={() => setOpenModel(true)} className="flex flex-wrap items-center justify-center gap-2 border border-gray-500 text-gray-500 bg-white w-[140px] h-[40px] font-medium rounded-[4px]">Approve <span><AiOutlineCheck/></span></button>
                         <div className="inline-block h-[40px] min-h-[1em] w-0.5 border opacity-100 dark:opacity-50"></div>
-                        <button onClick={()=>{setOpenStatusModel(true)}} className="border border-gray-500 text-blue-600 bg-gray-100 w-[140px] h-[40px] font-medium rounded-[4px]">View status log</button>
+                        <button onClick={() => setOpenStatusModel(true)} className="border border-gray-500 text-blue-600 bg-gray-100 w-[140px] h-[40px] font-medium rounded-[4px]">View status log</button>
                     </div>
                 </div>
                 <div className="flex flex-row gap-4">
@@ -82,7 +77,7 @@ export default function ApplicationPage({ closeModal,closeRejectModal,closeStatu
                         <Card moreClass="shadow-md">
                             <iframe
                                 title = "form"
-                                src = {`${ENKETO_URL}/preview?formSpec=${encodeURI(JSON.stringify(formSpec))}&xform=${encodedFormURI}&userId=${userId}`}
+                                src = {`${ENKETO_URL}preview?formSpec=${encodeURI(JSON.stringify(formSpec))}&xform=${encodedFormURI}&userId=${userId}`}
                                 style = {{ minHeight: "100vh", width: "100%" }}
                                 />
                         </Card>

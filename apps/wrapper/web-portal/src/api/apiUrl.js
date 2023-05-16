@@ -7,7 +7,21 @@ const API_URL = {
     list: "rest/getGroundInspectionAnalysis",
     markStatus: "rest/inProgress"
   },
-  manageUsers: {},
+  manageUsers: {
+
+  },
+  acceptApplication:{
+    acceptApplicant: "rest/acceptForm"
+  },
+  rejectApplication:{
+    rejectApplicant: "rest/rejectForm"
+  },
+  groundInspectionAnalysis:{
+    getGroundInspectionAnalysis: "rest/getGroundInspectionAnalysis"
+  },
+    ViewStatus:{
+    getViewStatus: "rest/getStatusLog"
+  }
 };
 
 export default API_URL;
