@@ -5,7 +5,7 @@ export const COLUMNS = [
   },
   {
     Header: "Form name",
-    accessor: "form_name",
+    accessor: "display_form_name",
   },
   {
     Header: "Assessor",
@@ -19,13 +19,8 @@ export const COLUMNS = [
     Header: "Published on",
     accessor: "published_on",
   },
-  // ,
-  // {
-  //     Header: 'Status',
-  //     accessor: 'Status'
-  // },
-  // {
-  //     Header: 'NOC Recommendation',
-  //     accessor: 'NOC Recommendation'
-  // },
+  {
+    Header: 'Status',
+    accessor: 'status'
+  }
 ];

@@ -96,12 +96,14 @@ export default function OnGroundInspectionAnalysis() {
         ", " +
         e?.institute?.district?.charAt(0).toUpperCase() +
         e?.institute?.district?.substring(1).toLowerCase(),
-      form_name: getFormName(e?.form_name),
+      display_form_name: getFormName(e?.form_name),
+      form_name: e?.form_name,
       assessor: e?.assessor?.name,
       assisting_assessor:
         e?.assessor?.assisstant == null ? "None" : e?.assessor?.assisstant,
       published_on: readableDate(e?.submitted_on),
       id: e.form_id,
+      status: e?.review_status || 'NA'
     };
     resData.formsDataList.push(formsData);
     if (e.submitted_on === new Date().toJSON().slice(0, 10)) {

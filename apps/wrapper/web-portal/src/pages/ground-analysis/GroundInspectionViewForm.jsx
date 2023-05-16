@@ -49,7 +49,7 @@ export default function ApplicationPage({ closeModal,closeRejectModal,closeStatu
         const res = await getFormData(postData);
         const formData = res.data.form_submissions[0];
         console.log('formData - ', formData);
-        let formURI = await getPrefillXML(`disabled_${formData?.form_name}`, '', formData.form_data, formData.imageUrls);
+        let formURI = await getPrefillXML(`${formData?.form_name}`, '', formData.form_data, formData.imageUrls);
         setEncodedFormURI(formURI);
     };
 
@@ -82,7 +82,7 @@ export default function ApplicationPage({ closeModal,closeRejectModal,closeStatu
                         <Card moreClass="shadow-md">
                             <iframe
                                 title = "form"
-                                src = {`${ENKETO_URL}/preview?formSpec=${encodeURI(JSON.stringify(formSpec))}&xform=${encodedFormURI}&userId=${userId}`}
+                                src = {`${ENKETO_URL}preview?formSpec=${encodeURI(JSON.stringify(formSpec))}&xform=${encodedFormURI}&userId=${userId}`}
                                 style = {{ minHeight: "100vh", width: "100%" }}
                                 />
                         </Card>
