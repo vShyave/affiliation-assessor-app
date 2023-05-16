@@ -40,7 +40,7 @@ function StatusLogModal({closeStatusModal}) {
               </div>
             </div>
             <div className='footer flex flex-row justify-end'>
-              <Button onClick={() => {closeStatusModal(false)}} moreClass="border border-blue-500 bg-white text-blue-500" text="Close"></Button>
+              <Button onClick={() => {closeStatusModal(false)}} moreClass="border border-blue-500 bg-white text-blue-500 w-[140px]"  text="Close"></Button>
               {/* <button onClick={() => {closeStatusModal(false)}} className="border border-blue-500 bg-white text-blue-500 w-[140px] h-[40px] font-medium rounded-[4px]">Close</button> */}
             </div>
           </div>
