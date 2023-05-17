@@ -15,16 +15,22 @@ import GroundInspectionAnalysis from "./pages/ground-analysis/GroundInspectionAn
 import GroundInspectionListForms from "./pages/ground-analysis/GroundInspectionListForms";
 import GroundInspectionViewForm from "./pages/ground-analysis/GroundInspectionViewForm";
 import ManageUsersList from "./pages/manage-users/ManageUsersList";
-import ManageFormsList from "./pages/manage-forms/ManageFormsList";
+
+import ManageForms from "./pages/manage-forms/ManageForms";
+import FormsOverview from "./pages/manage-forms/FormsOverview";
+import CreateForm from "./pages/manage-forms/CreateForm";
+
 import DesktopAnalysisList from "./pages/desktop-analysis/DesktopAnalysisList";
 import CertificateManagementList from "./pages/certificate-management/CertificateManagementList";
 import ScheduleManagementList from "./pages/schedule-management/ScheduleManagementList";
+
 
 function App() {
   return (
     <div className="App">
       <BrowserRouter>
         <Routes>
+          {/* Register and Login Routes */}
           <Route path={ADMIN_ROUTE_MAP.auth} element={<Authenticate />}>
             <Route
               path={ADMIN_ROUTE_MAP.loginModule.login}
@@ -43,6 +49,8 @@ function App() {
               element={<EnterOtp />}
             ></Route>
           </Route>
+
+          {/* Dashboard routing starts here */}
           <Route
             path={ADMIN_ROUTE_MAP.adminModule.dashboard}
             element={<DashboardLandingPage />}
@@ -52,23 +60,32 @@ function App() {
               element={<ManageUsersList />}
             ></Route>
             <Route
-              path={ADMIN_ROUTE_MAP.adminModule.manageForms.list}
-              element={<ManageFormsList />}
-            ></Route>
+              path={ADMIN_ROUTE_MAP.adminModule.manageForms.home}
+              element={<ManageForms />}
+            >
+              <Route
+                path={ADMIN_ROUTE_MAP.adminModule.manageForms.overview}
+                element={<FormsOverview />}
+              ></Route>
+              <Route
+                path={ADMIN_ROUTE_MAP.adminModule.manageForms.createForm}
+                element={<CreateForm />}
+              ></Route>
+            </Route>
             <Route
               path={ADMIN_ROUTE_MAP.adminModule.desktopAnalysis.list}
               element={<DesktopAnalysisList />}
             ></Route>
             <Route
-              path={ADMIN_ROUTE_MAP.onGroundInspection.home}
+              path={ADMIN_ROUTE_MAP.adminModule.onGroundInspection.home}
               element={<GroundInspectionAnalysis />}
             >
               <Route
-                path={ADMIN_ROUTE_MAP.onGroundInspection.list}
+                path={ADMIN_ROUTE_MAP.adminModule.onGroundInspection.list}
                 element={<GroundInspectionListForms />}
               ></Route>
               <Route
-                path={`${ADMIN_ROUTE_MAP.onGroundInspection.viewForm}/:formName/:formId`}
+                path={`${ADMIN_ROUTE_MAP.adminModule.onGroundInspection.viewForm}/:formName/:formId`}
                 element={<GroundInspectionViewForm />}
               ></Route>
             </Route>

@@ -46,7 +46,7 @@ export default function OnGroundInspectionAnalysis() {
   ]
 
   const navigateToView = (formObj) => {
-    const navigationURL = `${ADMIN_ROUTE_MAP.onGroundInspection.viewForm}/${formObj?.original?.form_name}/${formObj?.original?.id}`;
+    const navigationURL = `${ADMIN_ROUTE_MAP.adminModule.onGroundInspection.viewForm}/${formObj?.original?.form_name}/${formObj?.original?.id}`;
     navigation(navigationURL);
     const postData = { form_id: formObj?.original?.id };
     markStatus(postData);
@@ -61,6 +61,7 @@ export default function OnGroundInspectionAnalysis() {
   };
 
   useEffect(() => {
+    console.log('am here');
     fetchOnGroundAssessorData();
   }, []);
 
@@ -98,7 +99,7 @@ export default function OnGroundInspectionAnalysis() {
         e?.institute?.district?.substring(1).toLowerCase(),
       display_form_name: getFormName(e?.form_name),
       form_name: e?.form_name,
-      assessor: e?.assessor?.name,
+      assessor: e?.assessor?.name || 'NA',
       assisting_assessor:
         e?.assessor?.assisstant == null ? "None" : e?.assessor?.assisstant,
       published_on: readableDate(e?.submitted_on),
@@ -153,9 +154,9 @@ export default function OnGroundInspectionAnalysis() {
           <div className="grid grid-cols-1 gap-x-6 gap-y-6 sm:grid-cols-6">
             <div className="sm:col-span-3">              
               <div className="w-72 bg-white rounded-[8px]">
-                <Select label="Select round">
-                  <Option>Round one</Option>
-                  <Option>Round two</Option>
+                <Select value="1" label="Select round" onChange={(value)=>(console.log(value))}>
+                  <Option value="1">Round one</Option>
+                  <Option value="2">Round two</Option>
                 </Select>
               </div>
             </div>
