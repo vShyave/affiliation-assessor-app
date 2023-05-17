@@ -11,6 +11,7 @@ import Register from "./login/Register";
 import Dashboard from "./pages/Dashboard";
 import MyApplications from "./pages/MyApplications";
 import AllApplications from "./pages/AllApplications";
+import Congratulations from "./pages/Congratulation";
 
 function App() {
   return (
@@ -40,6 +41,10 @@ function App() {
             <Route
               path={APPLICANT_ROUTE_MAP.dashboardModule.all_applications}
               element={<AllApplications />}
+            ></Route>
+             <Route
+              path={APPLICANT_ROUTE_MAP.dashboardModule.congratulations}
+              element={<Congratulations />}
             ></Route>
           </Route>
         </Routes>
