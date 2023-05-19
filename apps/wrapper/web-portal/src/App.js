@@ -15,8 +15,10 @@ import GroundInspectionAnalysis from "./pages/ground-analysis/GroundInspectionAn
 import GroundInspectionListForms from "./pages/ground-analysis/GroundInspectionListForms";
 import GroundInspectionViewForm from "./pages/ground-analysis/GroundInspectionViewForm";
 import ManageUsersList from "./pages/manage-users/ManageUsersList";
+import CreateUser from "./pages/manage-users/ManageUsersList";
 import ManageFormsList from "./pages/manage-forms/ManageFormsList";
 import DesktopAnalysisList from "./pages/desktop-analysis/DesktopAnalysisList";
+import DesktopAnalysisView from "./pages/desktop-analysis/DesktopAnalysisView"
 import CertificateManagementList from "./pages/certificate-management/CertificateManagementList";
 import ScheduleManagementList from "./pages/schedule-management/ScheduleManagementList";
 
@@ -51,6 +53,10 @@ function App() {
               path={ADMIN_ROUTE_MAP.adminModule.manageUsers.list}
               element={<ManageUsersList />}
             ></Route>
+              <Route
+              path={ADMIN_ROUTE_MAP.adminModule.manageUsers.view}
+              element={<CreateUser />}
+            ></Route>
             <Route
               path={ADMIN_ROUTE_MAP.adminModule.manageForms.list}
               element={<ManageFormsList />}
@@ -58,6 +64,10 @@ function App() {
             <Route
               path={ADMIN_ROUTE_MAP.adminModule.desktopAnalysis.list}
               element={<DesktopAnalysisList />}
+            ></Route>
+            <Route
+              path={ADMIN_ROUTE_MAP.adminModule.desktopAnalysis.viewForm}
+              element={<DesktopAnalysisView />}
             ></Route>
             <Route
               path={ADMIN_ROUTE_MAP.onGroundInspection.home}

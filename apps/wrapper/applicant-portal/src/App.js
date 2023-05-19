@@ -13,6 +13,7 @@ import MyApplications from "./pages/MyApplications";
 import AllApplications from "./pages/AllApplications";
 import Congratulations from "./pages/Congratulation";
 
+
 function App() {
   return (
     <div className="App">

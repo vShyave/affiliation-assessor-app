@@ -17,6 +17,33 @@ export default function OnGroundInspectionAnalysis() {
   resData.formsDataList = formsDataList;
   const [formsList, setFormsList] = useState();
 
+  const COLUMN = [
+    {
+      Header: "Applicant",
+      accessor: "applicant",
+    },
+    {
+      Header: "Form name",
+      accessor: "display_form_name",
+    },
+    {
+      Header: "Assessor",
+      accessor: "assessor",
+    },
+    {
+      Header: "Assisting Assessor",
+      accessor: "assisting_assessor",
+    },
+    {
+      Header: "Published on",
+      accessor: "published_on",
+    },
+    {
+      Header: 'Status',
+      accessor: 'status'
+    }
+  ];
+
   const cardArray = [
     {
       value: 0,
@@ -195,6 +222,7 @@ export default function OnGroundInspectionAnalysis() {
               <FilteringTable
                 formsList={resData}
                 navigateFunc={navigateToView}
+                column={COLUMN}
               />
             </div>
           </div>

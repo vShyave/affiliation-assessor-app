@@ -8,8 +8,8 @@ import GlobalFilter from "./GlobalFilter";
 import { AiOutlineArrowUp, AiOutlineArrowDown } from "react-icons/ai";
 
 const FilteringTable = (props) => {
+  // const columns = props.column
   const columns = useMemo(() => COLUMNS, []);
-  //const data = useMemo(() => props?.formsList?.formsDataList, []);
   const data = props?.formsList?.formsDataList;
   const onFormHandler = () => {};
   const {
