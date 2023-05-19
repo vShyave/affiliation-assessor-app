@@ -26,6 +26,10 @@ const AllApplications = () => {
         setLoadingForms(false);
     }
 
+    const applyFormHandler = () => {
+        console.log("Apply Form clicked")
+    }
+
     return (
         <>
             <div className="h-[48px] bg-white drop-shadow-sm">
@@ -52,7 +56,7 @@ const AllApplications = () => {
                             <div className='flex flex-wrap'>
                                 {
                                    availableForms.map((form, index) => (
-                                    <FormCard form={form} key={index}/>
+                                    <FormCard form={form} key={index} onApply={applyFormHandler}/>
                                     ))
                                 }
                             </div>

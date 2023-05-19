@@ -38,6 +38,14 @@ const MyApplications = () => {
         setLoadingForms(false);
     }
 
+    const viewApplicationHandler = (appId) => {
+        console.log("View Application clicked", appId)
+    }
+
+    const applyFormHandler = () => {
+        console.log("Apply Form clicked")
+    }
+
     return (
         <>
             <div className="h-[48px] bg-white drop-shadow-sm">
@@ -54,7 +62,7 @@ const MyApplications = () => {
                         <div className='flex flex-wrap'>
                         {
                             applications.map((application) => (
-                                <ApplicationCard application={application} />
+                                <ApplicationCard application={application} key={application.form_id} onView={viewApplicationHandler}/>
                             ))
                         }
                     </div>
@@ -84,7 +92,7 @@ const MyApplications = () => {
                             <div className='flex flex-wrap'>
                                 {
                                     availableForms.map((form, index) => (
-                                        <FormCard form={form} key={index}/>
+                                        <FormCard form={form} key={index} onApply={applyFormHandler}/>
                                     ))
                                 }
                             </div>

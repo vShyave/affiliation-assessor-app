@@ -7,7 +7,7 @@ const FormCard = (props) => {
             <div className='text-xl font-medium'>{props.form.course_name}</div>
             <div className='text-sm'>Lorem ipsum dolor sit amet consectetur adipisicing elit. Aliquam, quibusdam?</div>
             <div className='flex'>
-                <Button moreClass="text-primary-500 font-bold uppercase border-gray-500 text-primary-400" style={{backgroundColor: '#fff' }} text="Apply"></Button>
+                <Button moreClass="text-primary-500 font-bold uppercase border-gray-500 text-primary-400" style={{backgroundColor: '#fff' }} text="Apply" onClick={props.onApply ? ()  => props.onApply() : null}></Button>
             </div>
         </Card>
     )
