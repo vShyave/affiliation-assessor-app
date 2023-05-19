@@ -15,6 +15,7 @@ ADMIN_ROUTE_MAP.adminModule = {
   dashboard: "/",
   manageUsers: {
     list: "manageUsers/list",
+    viewForm:"manageUsers/view-form"
   },
   manageForms: {
     home: `/${MANAGE_FORMS}`,
@@ -24,6 +25,7 @@ ADMIN_ROUTE_MAP.adminModule = {
   },
   desktopAnalysis: {
     list: "desktopAnalysis/list",
+    viewForm: "desktopAnalysis/view"
   },
   onGroundInspection: {
     home: `/${GROUND_INSPECTION}`,
@@ -38,5 +40,26 @@ ADMIN_ROUTE_MAP.adminModule = {
   },
 };
 
+
+// Desktop Analysis Routes
+ADMIN_ROUTE_MAP.desktopAnalysis = {
+  home: "/desktopAnalysis",
+};
+
+ADMIN_ROUTE_MAP.desktopAnalysis= {
+  list: `${ADMIN_ROUTE_MAP.desktopAnalysis.home}/list`,
+  viewForm: `${ADMIN_ROUTE_MAP.desktopAnalysis.home}/view`,
+};
+
+//Manage Users Routes
+ADMIN_ROUTE_MAP.manageUsers = {
+  home: "/manageUsers",
+  
+};
+
+ADMIN_ROUTE_MAP.manageUsers = {
+  // list: `${ADMIN_ROUTE_MAP.manageUsers.home}/list`,
+  viewForm: `${ADMIN_ROUTE_MAP.manageUsers.home}/view`,
+};
 
 export default ADMIN_ROUTE_MAP;
