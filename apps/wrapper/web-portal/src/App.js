@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import ADMIN_ROUTE_MAP from "./routes/adminRouteMap";
 import "./App.css";
 
@@ -19,6 +19,7 @@ import ManageUsersList from "./pages/manage-users/ManageUsersList";
 import ManageForms from "./pages/manage-forms/ManageForms";
 import FormsOverview from "./pages/manage-forms/FormsOverview";
 import CreateForm from "./pages/manage-forms/CreateForm";
+import UploadForm from "./pages/manage-forms/UploadForm";
 
 import DesktopAnalysisList from "./pages/desktop-analysis/DesktopAnalysisList";
 import CertificateManagementList from "./pages/certificate-management/CertificateManagementList";
@@ -71,6 +72,10 @@ function App() {
                 path={ADMIN_ROUTE_MAP.adminModule.manageForms.createForm}
                 element={<CreateForm />}
               ></Route>
+              <Route
+                path={ADMIN_ROUTE_MAP.adminModule.manageForms.upload}
+                element={<UploadForm />}
+              ></Route>
             </Route>
             <Route
               path={ADMIN_ROUTE_MAP.adminModule.desktopAnalysis.list}
@@ -81,7 +86,7 @@ function App() {
               element={<GroundInspectionAnalysis />}
             >
               <Route
-                path={ADMIN_ROUTE_MAP.adminModule.onGroundInspection.list}
+                index
                 element={<GroundInspectionListForms />}
               ></Route>
               <Route

@@ -61,7 +61,6 @@ export default function OnGroundInspectionAnalysis() {
   };
 
   useEffect(() => {
-    console.log('am here');
     fetchOnGroundAssessorData();
   }, []);
 
