@@ -11,8 +11,8 @@ APPLICANT_ROUTE_MAP.dashboardModule = {
     register: `${APPLICANT_ROUTE_MAP.dashboard}register`,
     my_applications: `${APPLICANT_ROUTE_MAP.dashboard}my_applications`,
     all_applications: `${APPLICANT_ROUTE_MAP.dashboard}all_applications`,
-    congratulations: `${APPLICANT_ROUTE_MAP.dashboard}congratulations`
-
+    congratulations: `${APPLICANT_ROUTE_MAP.dashboard}congratulations`,
+   
 };
 
 export default APPLICANT_ROUTE_MAP;

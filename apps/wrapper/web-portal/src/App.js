@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import ADMIN_ROUTE_MAP from "./routes/adminRouteMap";
 import "./App.css";
 
@@ -15,14 +15,19 @@ import GroundInspectionAnalysis from "./pages/ground-analysis/GroundInspectionAn
 import GroundInspectionListForms from "./pages/ground-analysis/GroundInspectionListForms";
 import GroundInspectionViewForm from "./pages/ground-analysis/GroundInspectionViewForm";
 import ManageUsersList from "./pages/manage-users/ManageUsersList";
+import AdminCreateUser from "./pages/manage-users/AdminCreateUser";
+// import ManageFormsList from "./pages/manage-forms/ManageFormsList";
 
 import ManageForms from "./pages/manage-forms/ManageForms";
 import FormsOverview from "./pages/manage-forms/FormsOverview";
 import CreateForm from "./pages/manage-forms/CreateForm";
+import UploadForm from "./pages/manage-forms/UploadForm";
 
 import DesktopAnalysisList from "./pages/desktop-analysis/DesktopAnalysisList";
+import DesktopAnalysisView from "./pages/desktop-analysis/DesktopAnalysisView"
 import CertificateManagementList from "./pages/certificate-management/CertificateManagementList";
 import ScheduleManagementList from "./pages/schedule-management/ScheduleManagementList";
+import ManageUser from "./pages/manage-users/ManageUser";
 
 
 function App() {
@@ -56,9 +61,20 @@ function App() {
             element={<DashboardLandingPage />}
           >
             <Route
-              path={ADMIN_ROUTE_MAP.adminModule.manageUsers.list}
-              element={<ManageUsersList />}
-            ></Route>
+              path={ADMIN_ROUTE_MAP.adminModule.manageUsers.home}
+              element={<ManageUser />}
+            >
+              <Route
+                index
+                element={<ManageUsersList />}
+              ></Route>
+              <Route
+                path={`${ADMIN_ROUTE_MAP.adminModule.manageUsers.createUser}/:userId`}
+                element={<AdminCreateUser />}
+              ></Route>
+            </Route>
+            
+              
             <Route
               path={ADMIN_ROUTE_MAP.adminModule.manageForms.home}
               element={<ManageForms />}
@@ -71,17 +87,27 @@ function App() {
                 path={ADMIN_ROUTE_MAP.adminModule.manageForms.createForm}
                 element={<CreateForm />}
               ></Route>
+              <Route
+                path={ADMIN_ROUTE_MAP.adminModule.manageForms.upload}
+                element={<UploadForm />}
+              ></Route>
             </Route>
+
             <Route
               path={ADMIN_ROUTE_MAP.adminModule.desktopAnalysis.list}
               element={<DesktopAnalysisList />}
             ></Route>
             <Route
+              path={ADMIN_ROUTE_MAP.adminModule.desktopAnalysis.viewForm}
+              element={<DesktopAnalysisView />}
+            ></Route>
+            
+            <Route
               path={ADMIN_ROUTE_MAP.adminModule.onGroundInspection.home}
               element={<GroundInspectionAnalysis />}
             >
               <Route
-                path={ADMIN_ROUTE_MAP.adminModule.onGroundInspection.list}
+                index
                 element={<GroundInspectionListForms />}
               ></Route>
               <Route
