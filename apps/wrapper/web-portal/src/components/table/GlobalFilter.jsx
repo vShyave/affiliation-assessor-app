@@ -11,7 +11,7 @@ const GlobalFilter = ({filter,setFilter}) => {
 
   return (
     <div className="mb-3">
-      <div className='flex flex-row justify-between'> 
+      <div className='flex flex-row'> 
         <div className="relative mb-4 bg-white flex w-1/4  items-stretch">
           <input value={value || ''} onChange={(e) => {
             setValue(e.target.value) 
@@ -21,8 +21,10 @@ const GlobalFilter = ({filter,setFilter}) => {
             placeholder="Search"
           />
         </div>
+        <MdFilterList className='ml-8 mt-2 text-gray-500 '/>
+        <h6 className='text-base mt-2 ml-2 text-gray-500 font-semibold'>Filter</h6>
         <div>
-          <MdFilterList className='ml-2 mt-1'/>
+          
           {/* <!--Search icon--> */}
           {/* <svg
               xmlns="http://www.w3.org/2000/svg"
