@@ -16,7 +16,7 @@ import GroundInspectionListForms from "./pages/ground-analysis/GroundInspectionL
 import GroundInspectionViewForm from "./pages/ground-analysis/GroundInspectionViewForm";
 import ManageUsersList from "./pages/manage-users/ManageUsersList";
 import AdminCreateUser from "./pages/manage-users/AdminCreateUser";
-import ManageFormsList from "./pages/manage-forms/ManageFormsList";
+// import ManageFormsList from "./pages/manage-forms/ManageFormsList";
 
 import ManageForms from "./pages/manage-forms/ManageForms";
 import FormsOverview from "./pages/manage-forms/FormsOverview";
@@ -25,6 +25,7 @@ import DesktopAnalysisList from "./pages/desktop-analysis/DesktopAnalysisList";
 import DesktopAnalysisView from "./pages/desktop-analysis/DesktopAnalysisView"
 import CertificateManagementList from "./pages/certificate-management/CertificateManagementList";
 import ScheduleManagementList from "./pages/schedule-management/ScheduleManagementList";
+import ManageUser from "./pages/manage-users/ManageUser";
 
 
 function App() {
@@ -58,13 +59,20 @@ function App() {
             element={<DashboardLandingPage />}
           >
             <Route
-              path={ADMIN_ROUTE_MAP.adminModule.manageUsers.list}
-              element={<ManageUsersList />}
-            ></Route>
+              path={ADMIN_ROUTE_MAP.adminModule.manageUsers.home}
+              element={<ManageUser />}
+            >
               <Route
-              path={ADMIN_ROUTE_MAP.adminModule.manageUsers.viewForm}
-              element={<AdminCreateUser />}
-            ></Route>
+                index
+                element={<ManageUsersList />}
+              ></Route>
+              <Route
+                path={ADMIN_ROUTE_MAP.adminModule.manageUsers.createUser}
+                element={<AdminCreateUser />}
+              ></Route>
+            </Route>
+            
+              
             <Route
               path={ADMIN_ROUTE_MAP.adminModule.manageForms.home}
               element={<ManageForms />}

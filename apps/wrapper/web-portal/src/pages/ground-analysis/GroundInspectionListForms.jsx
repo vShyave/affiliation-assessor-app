@@ -223,7 +223,7 @@ export default function OnGroundInspectionAnalysis() {
               <FilteringTable
                 formsList={resData}
                 navigateFunc={navigateToView}
-                column={COLUMN}
+                columns={COLUMN}
               />
             </div>
           </div>
