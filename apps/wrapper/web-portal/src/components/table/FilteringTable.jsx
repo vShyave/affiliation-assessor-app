@@ -8,8 +8,7 @@ import { AiOutlineArrowUp, AiOutlineArrowDown } from "react-icons/ai";
 
 const FilteringTable = (props) => {
   const columns = props.columns
-  // const columns = useMemo(() => COLUMNS, []);
-  const data = props?.formsList?.formsDataList;
+  const data = props?.dataList;
   const onFormHandler = () => {};
   const {
     getTableProps,

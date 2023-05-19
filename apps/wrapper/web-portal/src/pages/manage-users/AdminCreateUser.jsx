@@ -1,14 +1,9 @@
 import React from "react";
-
 import { Link } from 'react-router-dom'
 
 import { Select, Option } from "@material-tailwind/react";
 import { useForm } from "react-hook-form";
 import { Button } from "../../components";
-
-import { FaAngleRight } from "react-icons/fa";
-
-// import ADMIN_ROUTE_MAP from "../../routes/adminRouteMap";
 
 export default function AdminCreateUser() {
 
@@ -16,26 +11,25 @@ export default function AdminCreateUser() {
         register,
         handleSubmit,
         formState: { errors }
-      } = useForm();
+    } = useForm();
       
-      const onSubmit = (data) => {
+    const onSubmit = (data) => {
         alert(JSON.stringify(data));
-      };  
+    };  
 
-  return (
-    <>
-
-        {/* <div className="h-[48px] bg-white drop-shadow-sm">
-            <div className='container mx-auto px-3 py-3'>
-                <div className='flex flex-row font-bold gap-2 items-center'>
-                    <Link to={APPLICANT_ROUTE_MAP.dashboardModule.create_user}>
-                        <span className='text-primary-400 cursor-pointer'>Manage user</span>
-                    </Link>
-                    <FaAngleRight className='text-[16px]'/>
-                    <span className='text-gray-500'>Create user</span>
+    return (
+        <>
+            {/* <div className="h-[48px] bg-white drop-shadow-sm">
+                <div className='container mx-auto px-3 py-3'>
+                    <div className='flex flex-row font-bold gap-2 items-center'>
+                        <Link to={APPLICANT_ROUTE_MAP.dashboardModule.create_user}>
+                            <span className='text-primary-400 cursor-pointer'>Manage user</span>
+                        </Link>
+                        <FaAngleRight className='text-[16px]'/>
+                        <span className='text-gray-500'>Create user</span>
+                    </div>
                 </div>
-            </div>
-        </div> */}
+            </div> */}
 
             <div className="container mx-auto py-12 px-3 min-h-[40vh]">
                 <form onSubmit={handleSubmit((data)=>{console.log(data)})}>
@@ -156,7 +150,8 @@ export default function AdminCreateUser() {
                                     </div>
                                 </div>
                             </div>
-                           <div className="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
+
+                            <div className="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
                                 <div className="sm:col-span-3 ">
                                     <label htmlFor="role" className="block text-sm font-medium leading-6 text-gray-900">
                                         Role
@@ -173,8 +168,6 @@ export default function AdminCreateUser() {
                     </div>  
                 </form>
             </div>
-        
-
-    </>
-  );
+        </>
+    );
 }
