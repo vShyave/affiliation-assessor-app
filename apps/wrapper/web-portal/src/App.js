@@ -15,7 +15,7 @@ import GroundInspectionAnalysis from "./pages/ground-analysis/GroundInspectionAn
 import GroundInspectionListForms from "./pages/ground-analysis/GroundInspectionListForms";
 import GroundInspectionViewForm from "./pages/ground-analysis/GroundInspectionViewForm";
 import ManageUsersList from "./pages/manage-users/ManageUsersList";
-import CreateUser from "./pages/manage-users/ManageUsersList";
+import AdminCreateUser from "./pages/manage-users/AdminCreateUser";
 import ManageFormsList from "./pages/manage-forms/ManageFormsList";
 import DesktopAnalysisList from "./pages/desktop-analysis/DesktopAnalysisList";
 import DesktopAnalysisView from "./pages/desktop-analysis/DesktopAnalysisView"
@@ -54,8 +54,8 @@ function App() {
               element={<ManageUsersList />}
             ></Route>
               <Route
-              path={ADMIN_ROUTE_MAP.adminModule.manageUsers.view}
-              element={<CreateUser />}
+              path={ADMIN_ROUTE_MAP.adminModule.manageUsers.viewForm}
+              element={<AdminCreateUser />}
             ></Route>
             <Route
               path={ADMIN_ROUTE_MAP.adminModule.manageForms.list}
