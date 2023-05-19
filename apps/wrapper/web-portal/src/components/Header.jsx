@@ -63,13 +63,12 @@ export default function Header() {
                                     <Link to={ADMIN_ROUTE_MAP.adminModule.manageUsers.home}>Manage Users</Link>
                                 </li>
                                 <li className="flex hover:text-primary-600 hover:cursor-pointer">
-                                    <Link to={ADMIN_ROUTE_MAP.adminModule.manageForms.list}>Manage Forms</Link>
+                                    <Link to={ADMIN_ROUTE_MAP.adminModule.manageForms.home}>Manage Forms</Link>
                                 </li>
                                 <li className="flex hover:text-primary-600 hover:cursor-pointer">
                                     <Link to={ADMIN_ROUTE_MAP.adminModule.desktopAnalysis.list}>Desktop Analysis</Link>
                                 </li>
                                 <li className="flex hover:text-primary-600 hover:cursor-pointer">
-                                    {/* <NavLink to={ADMIN_ROUTE_MAP.adminModule.onGroundInspection.list} exact activeClassName="text-primary-600">On Ground Inspection Analysis</NavLink> */}
                                     <Link to={ADMIN_ROUTE_MAP.adminModule.onGroundInspection.list}>On Ground Inspection Analysis</Link>
                                 </li>
                                 <li className="flex hover:text-primary-600 hover:cursor-pointer">
