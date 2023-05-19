@@ -1,4 +1,6 @@
 let ADMIN_ROUTE_MAP = {};
+let GROUND_INSPECTION = 'groundInspection';
+let MANAGE_FORMS = 'manage-forms';
 
 ADMIN_ROUTE_MAP.auth = "/auth";
 ADMIN_ROUTE_MAP.loginModule = {
@@ -8,6 +10,7 @@ ADMIN_ROUTE_MAP.loginModule = {
   registerOtp: `${ADMIN_ROUTE_MAP.auth}/registerOtp`,
 };
 
+
 ADMIN_ROUTE_MAP.adminModule = {
   dashboard: "/",
   manageUsers: {
@@ -15,15 +18,19 @@ ADMIN_ROUTE_MAP.adminModule = {
     viewForm:"manageUsers/view-form"
   },
   manageForms: {
-    list: "manageForms/list",
+    home: `/${MANAGE_FORMS}`,
+    overview: `/${MANAGE_FORMS}/overview`,
+    createForm: `/${MANAGE_FORMS}/create-form`,
+    uploadCSV: `/${MANAGE_FORMS}/upload`
   },
   desktopAnalysis: {
     list: "desktopAnalysis/list",
     viewForm: "desktopAnalysis/view"
   },
   onGroundInspection: {
-    list: "groundInspection/list",
-    viewForm: "groundInspection/view",
+    home: `/${GROUND_INSPECTION}`,
+    list: `/${GROUND_INSPECTION}/list`,
+    viewForm: `/${GROUND_INSPECTION}/view`,
   },
   certificateManagement: {
     list: "certificate/list",
@@ -33,15 +40,6 @@ ADMIN_ROUTE_MAP.adminModule = {
   },
 };
 
-//Ground Inspection Routes
-ADMIN_ROUTE_MAP.onGroundInspection = {
-  home: "/groundInspection",
-};
-
-ADMIN_ROUTE_MAP.onGroundInspection = {
-  list: `${ADMIN_ROUTE_MAP.onGroundInspection.home}/list`,
-  viewForm: `${ADMIN_ROUTE_MAP.onGroundInspection.home}/view`,
-};
 
 // Desktop Analysis Routes
 ADMIN_ROUTE_MAP.desktopAnalysis = {
