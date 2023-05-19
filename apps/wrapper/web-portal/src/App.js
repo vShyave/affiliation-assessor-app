@@ -21,6 +21,7 @@ import DesktopAnalysisList from "./pages/desktop-analysis/DesktopAnalysisList";
 import DesktopAnalysisView from "./pages/desktop-analysis/DesktopAnalysisView"
 import CertificateManagementList from "./pages/certificate-management/CertificateManagementList";
 import ScheduleManagementList from "./pages/schedule-management/ScheduleManagementList";
+import ManageUser from "./pages/manage-users/ManageUser";
 
 function App() {
   return (
@@ -50,13 +51,20 @@ function App() {
             element={<DashboardLandingPage />}
           >
             <Route
-              path={ADMIN_ROUTE_MAP.adminModule.manageUsers.list}
-              element={<ManageUsersList />}
-            ></Route>
+              path={ADMIN_ROUTE_MAP.adminModule.manageUsers.home}
+              element={<ManageUser />}
+            >
               <Route
-              path={ADMIN_ROUTE_MAP.adminModule.manageUsers.viewForm}
-              element={<AdminCreateUser />}
-            ></Route>
+                index
+                element={<ManageUsersList />}
+              ></Route>
+              <Route
+                path={ADMIN_ROUTE_MAP.adminModule.manageUsers.viewForm}
+                element={<AdminCreateUser />}
+              ></Route>
+            </Route>
+            
+              
             <Route
               path={ADMIN_ROUTE_MAP.adminModule.manageForms.list}
               element={<ManageFormsList />}

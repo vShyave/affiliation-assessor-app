@@ -60,7 +60,7 @@ export default function Header() {
                                     <Link to="/">Dashboard</Link>
                                 </li>
                                 <li className="flex hover:text-primary-600 hover:cursor-pointer">
-                                    <Link to={ADMIN_ROUTE_MAP.adminModule.manageUsers.list}>Manage Users</Link>
+                                    <Link to={ADMIN_ROUTE_MAP.adminModule.manageUsers.home}>Manage Users</Link>
                                 </li>
                                 <li className="flex hover:text-primary-600 hover:cursor-pointer">
                                     <Link to={ADMIN_ROUTE_MAP.adminModule.manageForms.list}>Manage Forms</Link>

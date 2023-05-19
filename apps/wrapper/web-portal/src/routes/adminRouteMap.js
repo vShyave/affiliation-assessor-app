@@ -1,4 +1,5 @@
 let ADMIN_ROUTE_MAP = {};
+let MANAGE_USERS = 'manageUsers'
 
 ADMIN_ROUTE_MAP.auth = "/auth";
 ADMIN_ROUTE_MAP.loginModule = {
@@ -11,8 +12,9 @@ ADMIN_ROUTE_MAP.loginModule = {
 ADMIN_ROUTE_MAP.adminModule = {
   dashboard: "/",
   manageUsers: {
-    list: "manageUsers/list",
-    viewForm:"manageUsers/view-form"
+    home: `/${MANAGE_USERS}`,
+    list: `/${MANAGE_USERS}/list`,
+    createUser:`/${MANAGE_USERS}/create-update-user`
   },
   manageForms: {
     list: "manageForms/list",

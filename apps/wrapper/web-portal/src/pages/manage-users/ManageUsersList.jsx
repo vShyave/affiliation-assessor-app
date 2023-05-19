@@ -15,6 +15,32 @@ const ManageUsersList = () => {
     var formsDataList = [];
     resData.formsDataList = formsDataList;
     const [formsList, setFormsList] = useState();
+    const COLUMNS = [
+        {
+          Header: "Applicant",
+          accessor: "applicant",
+        },
+        {
+          Header: "Form name",
+          accessor: "display_form_name",
+        },
+        {
+          Header: "Assessor",
+          accessor: "assessor",
+        },
+        {
+          Header: "Assisting Assessor",
+          accessor: "assisting_assessor",
+        },
+        {
+          Header: "Published on",
+          accessor: "published_on",
+        },
+        {
+          Header: 'Status',
+          accessor: 'status'
+        }
+      ];
   
     const navigateToView = (formObj) => {
       const navigationURL = `${ADMIN_ROUTE_MAP.manageUsers.viewForm}/${formObj?.original?.form_name}/${formObj?.original?.id}`;
@@ -104,10 +130,11 @@ const ManageUsersList = () => {
                     </div>
                 <div className="flex flex-row items-center"> 
                 
-                    <div className="text-2xl mt-4 font-medium">
+                    <div className="text-2xl w-full mt-4 font-medium">
                         <FilteringTable
                             formsList={resData}
                             navigateFunc={navigateToView}
+                            columns={COLUMNS}
                         />
                     </div>
                 </div>
