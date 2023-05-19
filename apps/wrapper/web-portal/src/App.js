@@ -16,7 +16,6 @@ import GroundInspectionListForms from "./pages/ground-analysis/GroundInspectionL
 import GroundInspectionViewForm from "./pages/ground-analysis/GroundInspectionViewForm";
 import ManageUsersList from "./pages/manage-users/ManageUsersList";
 import AdminCreateUser from "./pages/manage-users/AdminCreateUser";
-import ManageFormsList from "./pages/manage-forms/ManageFormsList";
 
 import ManageForms from "./pages/manage-forms/ManageForms";
 import FormsOverview from "./pages/manage-forms/FormsOverview";
