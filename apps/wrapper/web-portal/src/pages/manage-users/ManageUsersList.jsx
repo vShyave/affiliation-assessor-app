@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 
 import { Button } from "../../components";
 import FilteringTable from "../../components/table/FilteringTable";
@@ -42,7 +42,6 @@ const ManageUsersList = () => {
     ];
   
     const navigateToUpdate = (userObj) => {
-      console.log('userObj - ', userObj);
       const navigationURL = `${ADMIN_ROUTE_MAP.adminModule.manageUsers.createUser}/${userObj?.original?.id}`;
       navigation(navigationURL);
     }
@@ -57,8 +56,8 @@ const ManageUsersList = () => {
             full_name: (e.fname || e.lname) ? e.fname + e.lname : e.name,
             email: e.email.toLowerCase(),
             mobile_number: e.phonenumber,
-            role: e.role,
-            status: e.workingstatus,
+            role: e.role || 'Assessor',
+            status: e.workingstatus || 'Active',
             id: e.user_id
           }
           resUserData.push(usersData);
@@ -76,10 +75,15 @@ const ManageUsersList = () => {
     return (
       <>
         <div className='flex flex-col justify-center align-center'>
-          <div className="flex flex-row ">
-            <h1 className="text-xl font-semibold">
-              Manage Users
-            </h1>
+          <div className="flex flex-row">
+            <div className="flex grow">
+              <h1 className="text-xl font-semibold">Manage Users</h1>
+            </div>
+            {/* <div className="flex grow justify-end">
+              <Link to={ ADMIN_ROUTE_MAP.adminModule.manageUsers.createUser}>
+                <Button moreClass="text-white" text="Add User"></Button>
+              </Link>
+            </div> */}
           </div>
           <div className="flex flex-row items-center">     
             <div className="text-2xl w-full mt-4 font-medium">

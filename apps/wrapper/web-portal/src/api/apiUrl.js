@@ -10,7 +10,8 @@ const API_URL = {
     markStatus: `${rest}inProgress`
   },
   manageUsers: {
-    userList: `${rest}getAllUsers`
+    userList: `${rest}getAllUsers`,
+    specificUser: `${rest}getSpecificUser`
   },
   acceptApplication:{
     acceptApplicant: `${rest}acceptForm`

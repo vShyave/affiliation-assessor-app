@@ -58,3 +58,8 @@ export const getAllUsers = async () => {
   const res = await adminCustomPost.get(API_URL.manageUsers.userList);
   return res;
 }
+
+export const getSpecificUser = async (postData) => {
+  const res = await adminCustomPost.post(API_URL.manageUsers.specificUser, postData);
+  return res;
+}
