@@ -50,4 +50,12 @@ export const getOnGroundViewStatus = async (postData) => {
 export const markReviewStatus = async (postData) => {
   const res = await adminCustomPost.post(API_URL.groundAnalysis.markStatus, postData);
   return res;
-}
+};
+
+export const getUsersForScheduling = async (postData) => {
+  const res = await adminCustomPost.post(
+    API_URL.UsersForSchedulingAssessment.getUsersForSchedulingAssessment,
+    postData
+  );
+  return res;
+};

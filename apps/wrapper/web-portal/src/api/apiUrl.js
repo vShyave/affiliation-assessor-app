@@ -19,9 +19,14 @@ const API_URL = {
   groundInspectionAnalysis:{
     getGroundInspectionAnalysis: "rest/getGroundInspectionAnalysis"
   },
-    ViewStatus:{
+  ViewStatus:{
     getViewStatus: "rest/getStatusLog"
+  },
+  
+  UsersForSchedulingAssessment:{
+    getUsersForSchedulingAssessment:"rest/getUsersForSchedulingAssessment"
   }
+
 };
 
 export default API_URL;

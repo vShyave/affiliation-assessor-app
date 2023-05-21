@@ -5,7 +5,7 @@ import { BsArrowLeft, BsArrowRight } from "react-icons/bs";
 import { Card, Button } from "./../../components";
 
 // import NocModal from "./NocModal";
-// import StatusLogModal from "./StatusLogModal";
+import ScheduleInspectionModal from "./ScheduleInspectionModal";
 // import RejectNocModal from "./RejectNocModal";
 import Sidebar from "../../components/Sidebar";
 
@@ -18,7 +18,7 @@ export default function DesktopAnalysisView() {
 
     // const [rejectModel, setRejectModel] = useState(false)
     // const [openModel, setOpenModel] = useState(false);
-    // const [openStatusModel, setOpenStatusModel] = useState(false);
+    const [openScheduleInspectionModel, setOpenSheduleInspectionModel] = useState(false);
     const [encodedFormURI, setEncodedFormURI] = useState('');
     let { formName, formId } = useParams();
 
@@ -61,7 +61,7 @@ export default function DesktopAnalysisView() {
                     </div> */}
                     <div className="flex grow gap-4 justify-end items-center">
                         <button  className="flex flex-wrap items-center justify-center gap-2 border border-gray-500 bg-white text-gray-500 w-1/6 h-[40px] font-semibold rounded-[4px]"><span><BsArrowLeft/></span>Return to institute  </button>
-                        <button  className="flex flex-wrap items-center justify-center gap-2 border border-gray-500 text-gray-500 bg-white w-1/6 h-[40px] font-semibold rounded-[4px]">Send for inspection <span><BsArrowRight/></span></button>
+                        <button onClick={() => setOpenSheduleInspectionModel(true)} className="flex flex-wrap items-center justify-center gap-2 border border-gray-500 text-gray-500 bg-white w-1/6 h-[40px] font-semibold rounded-[4px]">Send for inspection <span><BsArrowRight/></span></button>
                         <div className="inline-block h-[40px] min-h-[1em] w-0.5 border opacity-100 dark:opacity-50"></div>
                         <button  className="border border-gray-500 text-blue-600 bg-gray-100 w-[140px] h-[40px] font-medium rounded-[4px]">View status log</button>
                     </div>
@@ -94,7 +94,7 @@ export default function DesktopAnalysisView() {
             {/* { openModel && <NocModal closeModal={setOpenModel}/> } */}
             {/* { rejectModel && <RejectNocModal closeRejectModal={setRejectModel}/> } */}
             {/* {openCertificateModel && <IssueCertificateModal closeCertificateModal={setOpenCertificateModel}/>} */}
-            {/* { openStatusModel && <StatusLogModal closeStatusModal={setOpenStatusModel}/> } */}
+            { openScheduleInspectionModel && <ScheduleInspectionModal closeSchedule={setOpenSheduleInspectionModel}/> }
         </>
     )
 }
