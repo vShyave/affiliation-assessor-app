@@ -14,7 +14,7 @@ export default function OnGroundInspectionAnalysis() {
   const navigation = useNavigate();
   var resData = {};
   var formsDataList = [];
-  resData.formsDataList = formsDataList;
+  resData = formsDataList;
   const [formsList, setFormsList] = useState();
 
   const COLUMN = [
@@ -132,7 +132,8 @@ export default function OnGroundInspectionAnalysis() {
       id: e.form_id,
       status: e?.review_status || 'NA'
     };
-    resData.formsDataList.push(formsData);
+
+    resData.push(formsData);
     if (e.submitted_on === new Date().toJSON().slice(0, 10)) {
       status_obj.submitted_today++;
     }
@@ -216,11 +217,11 @@ export default function OnGroundInspectionAnalysis() {
               </li>
             </ul>
             {/* <div>create a search bar and filter component here</div> */}
-            {/* table creation starts here */}
 
+            {/* table creation starts here */}
             <div className="text-2xl mt-4 font-medium">
               <FilteringTable
-                formsList={resData}
+                dataList={resData}
                 navigateFunc={navigateToView}
                 columns={COLUMN}
               />

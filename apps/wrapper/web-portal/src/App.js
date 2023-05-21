@@ -69,7 +69,7 @@ function App() {
                 element={<ManageUsersList />}
               ></Route>
               <Route
-                path={ADMIN_ROUTE_MAP.adminModule.manageUsers.createUser}
+                path={`${ADMIN_ROUTE_MAP.adminModule.manageUsers.createUser}/:userId?`}
                 element={<AdminCreateUser />}
               ></Route>
             </Route>
@@ -92,6 +92,7 @@ function App() {
                 element={<UploadForm />}
               ></Route>
             </Route>
+
             <Route
               path={ADMIN_ROUTE_MAP.adminModule.desktopAnalysis.list}
               element={<DesktopAnalysisList />}
@@ -100,6 +101,7 @@ function App() {
               path={ADMIN_ROUTE_MAP.adminModule.desktopAnalysis.viewForm}
               element={<DesktopAnalysisView />}
             ></Route>
+            
             <Route
               path={ADMIN_ROUTE_MAP.adminModule.onGroundInspection.home}
               element={<GroundInspectionAnalysis />}
