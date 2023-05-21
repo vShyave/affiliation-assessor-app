@@ -52,6 +52,10 @@ export default function ApplicationPage({ closeModal, closeRejectModal, closeSta
         setEncodedFormURI(formURI);
     };
 
+    useEffect(() => {
+        fetchFormData();
+    }, []);
+
     return (
         <>
             <div className="flex flex-col gap-12">

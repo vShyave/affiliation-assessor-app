@@ -2,14 +2,13 @@ import React, { useMemo } from "react";
 import { useTable, useGlobalFilter, useSortBy, usePagination } from "react-table";
 import { Select, Option } from "@material-tailwind/react";
 
-import { COLUMNS } from "./Columns";
 import GlobalFilter from "./GlobalFilter";
 
 import { AiOutlineArrowUp, AiOutlineArrowDown } from "react-icons/ai";
 
 const FilteringTable = (props) => {
-  const columns = useMemo(() => COLUMNS, []);
-  //const data = useMemo(() => props?.formsList?.formsDataList, []);
+  const columns = props.columns
+  // const columns = useMemo(() => COLUMNS, []);
   const data = props?.formsList?.formsDataList;
   const onFormHandler = () => {};
   const {

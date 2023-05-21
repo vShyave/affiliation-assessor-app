@@ -54,34 +54,33 @@ export default function Header() {
                             {/* <div className="flex bg-white hidden md:contents"> */}
                             <ul className="flex md nav-items text-gray-500 text-[14px] font-bold uppercase gap-4 justify-center align-center menus">
                                 <li className="flex bg-primary-800 rounded-md items-center justify-center h-8 w-8 hover:cursor-pointer">
-                                    <Link to={ADMIN_ROUTE_MAP.adminModule.dashboard}><AiFillHome className="text-white text-xl"/></Link>
+                                    <NavLink to={ADMIN_ROUTE_MAP.adminModule.dashboard}><AiFillHome className="text-white text-xl"/></NavLink>
                                 </li>
                                 <li className="flex hover:text-primary-600 hover:cursor-pointer">
-                                    <Link to="/">Dashboard</Link>
+                                    <NavLink to="/">Dashboard</NavLink>
                                 </li>
                                 <li className="flex hover:text-primary-600 hover:cursor-pointer">
-                                    <Link to={ADMIN_ROUTE_MAP.adminModule.manageUsers.list}>Manage Users</Link>
+                                    <NavLink to={ADMIN_ROUTE_MAP.adminModule.manageUsers.home}>Manage Users</NavLink>
                                 </li>
                                 <li className="flex hover:text-primary-600 hover:cursor-pointer">
-                                    <Link to={ADMIN_ROUTE_MAP.adminModule.manageForms.list}>Manage Forms</Link>
+                                    <NavLink to={ADMIN_ROUTE_MAP.adminModule.manageForms.home}>Manage Forms</NavLink>
                                 </li>
                                 <li className="flex hover:text-primary-600 hover:cursor-pointer">
-                                    <Link to={ADMIN_ROUTE_MAP.adminModule.desktopAnalysis.list}>Desktop Analysis</Link>
+                                    <NavLink to={ADMIN_ROUTE_MAP.adminModule.desktopAnalysis.list}>Desktop Analysis</NavLink>
                                 </li>
                                 <li className="flex hover:text-primary-600 hover:cursor-pointer">
-                                    {/* <NavLink to={ADMIN_ROUTE_MAP.adminModule.onGroundInspection.list} exact activeClassName="text-primary-600">On Ground Inspection Analysis</NavLink> */}
-                                    <Link to={ADMIN_ROUTE_MAP.adminModule.onGroundInspection.list}>On Ground Inspection Analysis</Link>
+                                    <NavLink to={ADMIN_ROUTE_MAP.adminModule.onGroundInspection.home}>On Ground Inspection Analysis</NavLink>
                                 </li>
                                 <li className="flex hover:text-primary-600 hover:cursor-pointer">
-                                    <Link to={ADMIN_ROUTE_MAP.adminModule.certificateManagement.list}>Certificate Management</Link>
+                                    <NavLink to={ADMIN_ROUTE_MAP.adminModule.certificateManagement.list}>Certificate Management</NavLink>
                                 </li>
                                 <li className="flex hover:text-primary-600 hover:cursor-pointer">
-                                    <Link to={ADMIN_ROUTE_MAP.adminModule.scheduleManagement.list}>Schedule Management</Link>
+                                    <NavLink to={ADMIN_ROUTE_MAP.adminModule.scheduleManagement.list}>Schedule Management</NavLink>
                                 </li>
                             </ul>
                             {/* </div> */}
 
-                            <ul className={`nav-items duration-500 font-bold md:hidden flex flex-col text-gray-600 p-4 bg-gray-200 fixed w-4/5 h-screen left-0 top-[100px] gap-10 ${toggle ? "left-[0%]" : "left-[-100%]"} `}>
+                            {/* <ul className={`nav-items duration-500 font-bold md:hidden flex flex-col text-gray-600 p-4 bg-gray-200 fixed w-4/5 h-screen left-0 top-[100px] gap-10 ${toggle ? "left-[0%]" : "left-[-100%]"} `}>
                                 <Link to="/">
                                     <li className="bg-primary-800 rounded-md flex items-center justify-center h-8 w-8 hover:cursor-pointer"><AiFillHome className="text-white text-xl"/></li>
                                 </Link>
@@ -110,7 +109,7 @@ export default function Header() {
                                 ) : (
                                     <AiOutlineMenu onClick={() => { setToggle(!toggle) }} className="flex mx-auto mr-5 text-2xl text-gray-800  md:hidden block" />
                                 )
-                            }
+                            } */}
                         </div>
                     </div>
                 </div>
