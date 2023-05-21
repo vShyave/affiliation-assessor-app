@@ -1,7 +1,8 @@
-import React from 'react'
-import { Outlet } from 'react-router-dom'
+import React from 'react';
+import { Outlet } from 'react-router-dom';
 
 const Authenticate = () => {
+    
     return (
         <div className='container m-auto'>
             <div className="flex flex-col h-screen items-center justify-center gap-16 p-4">

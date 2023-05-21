@@ -4,6 +4,7 @@ APPLICANT_ROUTE_MAP.auth = '/auth';
 APPLICANT_ROUTE_MAP.loginModule = {
     login: `${APPLICANT_ROUTE_MAP.auth}/login`,
     loginOTP: `${APPLICANT_ROUTE_MAP.auth}/loginOTP`,
+    
 };
 
 APPLICANT_ROUTE_MAP.dashboard = '/';
