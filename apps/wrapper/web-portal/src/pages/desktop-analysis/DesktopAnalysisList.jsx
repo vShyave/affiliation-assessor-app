@@ -24,9 +24,7 @@ import ADMIN_ROUTE_MAP from "../../routes/adminRouteMap";
 
 const DesktopAnalysisList = () => {
   const navigation = useNavigate();
-  var resData = {};
   var formsDataList = [];
-  resData.formsDataList = formsDataList;
   const [formsList, setFormsList] = useState();
 
   const COLUMNS = [
@@ -144,7 +142,7 @@ const DesktopAnalysisList = () => {
       id: e.form_id,
       status: e?.review_status || 'NA'
     };
-    resData.formsDataList.push(formsData);
+    formsDataList.push(formsData);
     if (e.submitted_on === new Date().toJSON().slice(0, 10)) {
       status_obj.submitted_today++;
     }
@@ -240,7 +238,7 @@ const DesktopAnalysisList = () => {
 
             <div className="text-2xl mt-4 font-medium">
               <FilteringTable
-                formsList={resData}
+                dataList={formsDataList}
                 navigateFunc={navigateToView}
                 columns={COLUMNS}
               />
