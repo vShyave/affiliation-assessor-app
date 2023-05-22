@@ -41,7 +41,7 @@ export const getOnGroundInspectionAnalysis = async () => {
 };
 
 export const getOnGroundViewStatus = async (postData) => {
-  const res = await adminCustomPost.post(API_URL.ViewStatus.getViewStatus,
+  const res = await adminCustomPost.post(API_URL.UsersForSchedulingAssessment.ViewStatus.getViewStatus,
     postData);
     console.log("in api call", res)
   return res.data;
@@ -50,7 +50,7 @@ export const getOnGroundViewStatus = async (postData) => {
 export const markReviewStatus = async (postData) => {
   const res = await adminCustomPost.post(API_URL.groundAnalysis.markStatus, postData);
   return res;
-}
+};
 
 // Manage users API's...
 export const getAllUsers = async () => {
