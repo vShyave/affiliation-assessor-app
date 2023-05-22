@@ -65,3 +65,8 @@ export const getUsersForScheduling = async (postData) => {
   );
   return res;
 };
+
+export const getSpecificUser = async (postData) => {
+  const res = await adminCustomPost.post(API_URL.manageUsers.specificUser, postData);
+  return res;
+}

@@ -69,7 +69,7 @@ function App() {
                 element={<ManageUsersList />}
               ></Route>
               <Route
-                path={`${ADMIN_ROUTE_MAP.adminModule.manageUsers.createUser}/:userId`}
+                path={`${ADMIN_ROUTE_MAP.adminModule.manageUsers.createUser}/:userId?`}
                 element={<AdminCreateUser />}
               ></Route>
             </Route>
