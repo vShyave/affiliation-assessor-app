@@ -52,9 +52,16 @@ export const markReviewStatus = async (postData) => {
   return res;
 }
 
-
 // Manage users API's...
 export const getAllUsers = async () => {
   const res = await adminCustomPost.get(API_URL.manageUsers.userList);
   return res;
 }
+
+export const getUsersForScheduling = async (postData) => {
+  const res = await adminCustomPost.post(
+    API_URL.UsersForSchedulingAssessment.getUsersForSchedulingAssessment,
+    postData
+  );
+  return res;
+};
