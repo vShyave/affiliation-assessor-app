@@ -1,4 +1,5 @@
 let ADMIN_ROUTE_MAP = {};
+let MANAGE_USERS = 'manageUsers'
 let GROUND_INSPECTION = 'groundInspection';
 let MANAGE_FORMS = 'manage-forms';
 
@@ -14,16 +15,19 @@ ADMIN_ROUTE_MAP.loginModule = {
 ADMIN_ROUTE_MAP.adminModule = {
   dashboard: "/",
   manageUsers: {
-    list: "manageUsers/list",
+    home: `/${MANAGE_USERS}`,
+    list: `/${MANAGE_USERS}/list`,
+    createUser:`/${MANAGE_USERS}/create-update-user`
   },
   manageForms: {
     home: `/${MANAGE_FORMS}`,
     overview: `/${MANAGE_FORMS}/overview`,
     createForm: `/${MANAGE_FORMS}/create-form`,
-    uploadCSV: `/${MANAGE_FORMS}/upload`
+    upload: `/${MANAGE_FORMS}/upload`
   },
   desktopAnalysis: {
     list: "desktopAnalysis/list",
+    viewForm: "desktopAnalysis/view"
   },
   onGroundInspection: {
     home: `/${GROUND_INSPECTION}`,
@@ -38,5 +42,26 @@ ADMIN_ROUTE_MAP.adminModule = {
   },
 };
 
+
+// Desktop Analysis Routes
+ADMIN_ROUTE_MAP.desktopAnalysis = {
+  home: "/desktopAnalysis",
+};
+
+ADMIN_ROUTE_MAP.desktopAnalysis= {
+  list: `${ADMIN_ROUTE_MAP.desktopAnalysis.home}/list`,
+  viewForm: `${ADMIN_ROUTE_MAP.desktopAnalysis.home}/view`,
+};
+
+//Manage Users Routes
+ADMIN_ROUTE_MAP.manageUsers = {
+  home: "/manageUsers",
+  
+};
+
+ADMIN_ROUTE_MAP.manageUsers = {
+  // list: `${ADMIN_ROUTE_MAP.manageUsers.home}/list`,
+  viewForm: `${ADMIN_ROUTE_MAP.manageUsers.home}/view`,
+};
 
 export default ADMIN_ROUTE_MAP;

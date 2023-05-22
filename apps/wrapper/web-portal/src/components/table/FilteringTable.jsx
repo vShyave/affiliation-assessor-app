@@ -2,15 +2,13 @@ import React, { useMemo } from "react";
 import { useTable, useGlobalFilter, useSortBy, usePagination } from "react-table";
 import { Select, Option } from "@material-tailwind/react";
 
-import { COLUMNS } from "./Columns";
 import GlobalFilter from "./GlobalFilter";
 
 import { AiOutlineArrowUp, AiOutlineArrowDown } from "react-icons/ai";
 
 const FilteringTable = (props) => {
-  const columns = useMemo(() => COLUMNS, []);
-  //const data = useMemo(() => props?.formsList?.formsDataList, []);
-  const data = props?.formsList?.formsDataList;
+  const columns = props?.columns
+  const data = props?.dataList;
   const onFormHandler = () => {};
   const {
     getTableProps,
@@ -42,9 +40,9 @@ const FilteringTable = (props) => {
           className="w-full text-sm text-left text-gray-500 dark:text-gray-400"
         >
           <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
-            {headerGroups.map((headerGroup, index) => (
+            {headerGroups?.map((headerGroup, index) => (
               <tr {...headerGroup.getHeaderGroupProps()} key={index}>
-                {headerGroup.headers.map((column, idx) => (
+                {headerGroup.headers?.map((column, idx) => (
                   <th{...column.getHeaderProps(column.getSortByToggleProps())} className="px-6 py-3" key={`${index}_${idx}`}>
                     <span className="inline-block">{column.render('Header')}</span>
                     <span className="inline-block ml-[8px]">
@@ -56,7 +54,7 @@ const FilteringTable = (props) => {
             ))}
           </thead>
           <tbody {...getTableBodyProps()}>
-            {page.map((row, index) => {
+            {page?.map((row, index) => {
               prepareRow(row);
               return (
                 <tr
@@ -65,7 +63,7 @@ const FilteringTable = (props) => {
                   onClick={() => props.navigateFunc(row)}
                   key={index}
                 >
-                  {row.cells.map((cell, idx) => {
+                  {row.cells?.map((cell, idx) => {
                     return (
                       <td {...cell.getCellProps()} className="px-6 py-4" key={`${index}_${idx}`}>
                         {cell.render("Cell")}

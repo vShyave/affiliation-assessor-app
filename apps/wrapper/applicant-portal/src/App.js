@@ -14,6 +14,7 @@ import AllApplications from "./pages/AllApplications";
 import Congratulations from "./pages/Congratulation";
 import PrivateRoute from "./routes/PrivateRoute";
 
+
 function App() {
   return (
     <div className="App">

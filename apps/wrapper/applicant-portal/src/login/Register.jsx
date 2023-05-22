@@ -18,7 +18,7 @@ export default function SelfRegistration() {
     const {
         register,
         handleSubmit,
-        watch,
+        // watch,
         formState: { errors }
       } = useForm();
       
@@ -141,7 +141,20 @@ export default function SelfRegistration() {
                                             name="phonenumber"
                                             id="phonenumber"
                                             className="block w-full rounded-md border-0 p-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                                            {...register("phonenumber", {
+                                                required: true,
+                                                maxLength: 10,
+                                                pattern: /^([+]\d{2})?\d{10}$/
+
+                                            })}
                                         />
+                                            {errors?.phonenumber?.type === "required" && <p className="text-red-500 mt-2 text-sm">This field is required</p>}
+                                            {errors?.phonenumber?.type === "maxLength" && (
+                                            <p className="text-red-500 mt-2 text-sm">Phonenumber cannot exceed 10 characters</p>
+                                            )}
+                                            {errors?.phonenumber?.type === "pattern" && (
+                                            <p className="text-red-500 mt-2 text-sm">Please provide valid phone number</p>
+                                            )}
                                     </div>
                                 </div>
                             </div>
@@ -161,7 +174,7 @@ export default function SelfRegistration() {
                                             {...register("applicantname", {
                                                 required: true,
                                                 maxLength: 20,
-                                                pattern: /^[A-Za-z]+$/i
+                                                pattern: /^[a-zA-Z ]*$/
                                             })}
                                         />
                                             {errors?.applicantname?.type === "required" && <p className="text-red-500 mt-2 text-sm">This field is required</p>}
@@ -178,10 +191,20 @@ export default function SelfRegistration() {
                                         Application type
                                     </label>
                                     <div className="mt-2">
-                                    <Select label="Select here">
+                                    <Select 
+                                        label="Select here"
+                                        name="applicationtype"
+                                        // {...register("applicationtype", {
+                                        //     required: true,
+                                        
+                                        // })}
+                                    >
+                                
                                     <Option>Admin</Option>
                                     <Option>Applicant</Option>
                                     </Select>
+                                    {/* {errors?.applicationtype?.type === "required" && <p className="text-red-500 mt-2 text-sm">This field is required</p>} */}
+
                                     </div>
                                 </div> 
                             </div> 
@@ -193,8 +216,8 @@ export default function SelfRegistration() {
                                     </label>
                                     <div className="mt-2">
                                     <Select label="Select here">
-                                    <Option>ANM</Option>
-                                    <Option>GNM</Option>
+                                    <Option>Nursing</Option>
+                                    <Option>Paramedical</Option>
                                     </Select>
                                     </div>
                                 </div>
