@@ -1,8 +1,9 @@
 import React from "react";
 import { Outlet } from "react-router-dom";
+
 const GroundInspectionAnalysis = () => {
   return (
-    <div className="gia">
+    <div>
       <Outlet />
     </div>
   );
