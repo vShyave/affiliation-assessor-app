@@ -1,18 +1,20 @@
 import React from "react";
 
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom';
 
 import { Select, Option } from "@material-tailwind/react";
-import { useForm } from "react-hook-form";import { Button} from '../components'
+import { useForm } from "react-hook-form";
+import { Button} from '../components'
 
 import { FaAngleRight } from "react-icons/fa";
 
-import APPLICANT_ROUTE_MAP from '../routes/ApplicantRoute'
+import APPLICANT_ROUTE_MAP from '../routes/ApplicantRoute';
+
 
 
 
 export default function SelfRegistration() {
-
+    const navigate = useNavigate();
     const {
         register,
         handleSubmit,
@@ -20,9 +22,13 @@ export default function SelfRegistration() {
         formState: { errors }
       } = useForm();
       
-      const onSubmit = (data) => {
-        alert(JSON.stringify(data));
-      };  
+    //   const onSubmit = (data) => {
+    //     alert(JSON.stringify(data));
+    //   };  
+
+  const goBack = () => {
+    navigate(-1);
+  };
 
   return (
     <>
@@ -218,9 +224,9 @@ export default function SelfRegistration() {
                             </div>
                         </div> 
                             
-                        <div className="flex flex-row justify-end h-1/2 my-auto mb-0 gap-4">
-                            <Button moreClass="px-6 text-primary-600" style={{backgroundColor: '#fff'}} text="Cancel"></Button>
-                            <Button moreClass="px-6 text-white" text="Submit"></Button>
+                        <div className="flex flex-row justify-end h-1/2 my-auto mb-0 gap-2">
+                            <Button moreClass="px-6 text-primary-600" style={{backgroundColor: '#fff'}} text="Cancel" onClick={goBack}></Button>
+                            <Button moreClass="px-6 text-white" text="Submit" type="submit"></Button>
                         </div>
                     </div>  
                 </form>
