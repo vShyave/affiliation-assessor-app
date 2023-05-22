@@ -69,12 +69,6 @@ export default function DesktopAnalysisView() {
                 <div className="flex flex-row gap-4">
                     <div className="flex w-[30%]"><Sidebar/></div>
                             <div className="flex w-full flex-col gap-4">
-                                {/* <Card moreClass="flex flex-col shadow-md border border-[#F5F5F5] gap-4" styles={{backgroundColor: '#F5F5F5'}}>
-                                    <div className="p-1 flex justify-center border border-[#D9D9D9] rounded-[4px]" style={{backgroundColor: '#EBEBEB'}}>
-                                        <h4 className="text-secondary font-medium">Status: New</h4>
-                                    </div>
-                                    <p className="flex text-gray-500 justify-center">Received this application on 23/03/2023</p>
-                                </Card> */}
                                 <Card moreClass="flex flex-col shadow-md border border-[#F5F5F5] gap-4" styles={{backgroundColor: '#F5F5F5'}}>
                                     <div className="p-1 flex justify-center border border-[#D9D9D9] rounded-[4px]" style={{backgroundColor: '#EBEBEB'}}>
                                         <h4 className="text-secondary font-medium">Status: New</h4>

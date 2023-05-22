@@ -1,15 +1,3 @@
-// import React from 'react'
-
-// const DesktopAnalysisList = () => {
-//     return (
-//         <div className='flex justify-center align-center'>
-//             <h2 className='text-3xl'>Coming Soon!</h2>        
-//         </div>
-//     )
-// }
-
-// export default DesktopAnalysisList
-
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
@@ -83,7 +71,7 @@ const DesktopAnalysisList = () => {
   ]
 
   const navigateToView = (formObj) => {
-    const navigationURL = `${ADMIN_ROUTE_MAP.onGroundInspection.viewForm}/${formObj?.original?.form_name}/${formObj?.original?.id}`;
+    const navigationURL = `${ADMIN_ROUTE_MAP.adminModule.onGroundInspection.viewForm}/${formObj?.original?.form_name}/${formObj?.original?.id}`;
     navigation(navigationURL);
     const postData = { form_id: formObj?.original?.id };
     markStatus(postData);
