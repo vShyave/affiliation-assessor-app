@@ -10,7 +10,8 @@ const API_URL = {
     markStatus: `${rest}inProgress`
   },
   manageUsers: {
-    userList: `${rest}getAllUsers`
+    userList: `${rest}getAllUsers`,
+    specificUser: `${rest}getSpecificUser`
   },
   acceptApplication:{
     acceptApplicant: `${rest}acceptForm`
@@ -21,9 +22,12 @@ const API_URL = {
   groundInspectionAnalysis:{
     getGroundInspectionAnalysis: `${rest}getGroundInspectionAnalysis`
   },
+  UsersForSchedulingAssessment:{
+    getUsersForSchedulingAssessment:"rest/getUsersForSchedulingAssessment",
     ViewStatus:{
-    getViewStatus: `${rest}getStatusLog`
+      getViewStatus: `${rest}getStatusLog`
+    }
   }
-};
+}
 
 export default API_URL;

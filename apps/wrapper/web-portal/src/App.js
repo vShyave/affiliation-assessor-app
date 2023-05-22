@@ -69,7 +69,7 @@ function App() {
                 element={<ManageUsersList />}
               ></Route>
               <Route
-                path={`${ADMIN_ROUTE_MAP.adminModule.manageUsers.createUser}/:userId`}
+                path={`${ADMIN_ROUTE_MAP.adminModule.manageUsers.createUser}/:userId?`}
                 element={<AdminCreateUser />}
               ></Route>
             </Route>
@@ -79,10 +79,7 @@ function App() {
               path={ADMIN_ROUTE_MAP.adminModule.manageForms.home}
               element={<ManageForms />}
             >
-              <Route
-                path={ADMIN_ROUTE_MAP.adminModule.manageForms.overview}
-                element={<FormsOverview />}
-              ></Route>
+              <Route index element={<FormsOverview />}></Route>
               <Route
                 path={ADMIN_ROUTE_MAP.adminModule.manageForms.createForm}
                 element={<CreateForm />}

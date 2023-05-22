@@ -1,15 +1,3 @@
-// import React from 'react'
-
-// const DesktopAnalysisList = () => {
-//     return (
-//         <div className='flex justify-center align-center'>
-//             <h2 className='text-3xl'>Coming Soon!</h2>        
-//         </div>
-//     )
-// }
-
-// export default DesktopAnalysisList
-
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
@@ -24,9 +12,7 @@ import ADMIN_ROUTE_MAP from "../../routes/adminRouteMap";
 
 const DesktopAnalysisList = () => {
   const navigation = useNavigate();
-  var resData = {};
   var formsDataList = [];
-  resData.formsDataList = formsDataList;
   const [formsList, setFormsList] = useState();
 
   const COLUMNS = [
@@ -85,7 +71,7 @@ const DesktopAnalysisList = () => {
   ]
 
   const navigateToView = (formObj) => {
-    const navigationURL = `${ADMIN_ROUTE_MAP.onGroundInspection.viewForm}/${formObj?.original?.form_name}/${formObj?.original?.id}`;
+    const navigationURL = `${ADMIN_ROUTE_MAP.adminModule.onGroundInspection.viewForm}/${formObj?.original?.form_name}/${formObj?.original?.id}`;
     navigation(navigationURL);
     const postData = { form_id: formObj?.original?.id };
     markStatus(postData);
@@ -144,7 +130,7 @@ const DesktopAnalysisList = () => {
       id: e.form_id,
       status: e?.review_status || 'NA'
     };
-    resData.formsDataList.push(formsData);
+    formsDataList.push(formsData);
     if (e.submitted_on === new Date().toJSON().slice(0, 10)) {
       status_obj.submitted_today++;
     }
@@ -240,7 +226,7 @@ const DesktopAnalysisList = () => {
 
             <div className="text-2xl mt-4 font-medium">
               <FilteringTable
-                formsList={resData}
+                dataList={formsDataList}
                 navigateFunc={navigateToView}
                 columns={COLUMNS}
               />
