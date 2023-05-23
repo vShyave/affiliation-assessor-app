@@ -1,9 +1,9 @@
 import axios from 'axios';
-const BASE_URL = "http://localhost:3001/user"
+const BASE_URL = process.env.WEB_PORTAL_USER_SERVICE_URL || "http://35.207.216.26:3003/user/";
 
 const login = async (phone) => {
     try {
-        const res = await axios.get(BASE_URL + "/otpSend?phone="+phone);
+        const res = await axios.get(BASE_URL + "otpSend?phone="+phone);
         return res;
       } catch (err) {
         console.log(err);
@@ -13,7 +13,7 @@ const login = async (phone) => {
 
 const verifyOtp = async (phone, otp) => {
     try {
-        const res = await axios.get(BASE_URL + "/otpVerify?phone="+phone+"&otp="+otp);
+        const res = await axios.get(BASE_URL + "otpVerify?phone="+phone+"&otp="+otp);
         return res;
       } catch (err) {
         console.log(err);
