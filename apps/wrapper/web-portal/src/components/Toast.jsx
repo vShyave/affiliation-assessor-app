@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import "./Toast.css";
 
 const Toast = (props) => {
   const { toastMsg, toastType } = props;
