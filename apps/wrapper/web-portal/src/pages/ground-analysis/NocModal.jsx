@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { getAcceptApplicant } from "../../api";
 
 
-function NocModal({closeModal}) {
+function NocModal({closeModal,setToast}) {
 
     const handleChange = (e) =>{
             setComment(e.target.value)
@@ -14,6 +14,9 @@ function NocModal({closeModal}) {
         
         const postData = {"form_id": 23, "remarks": comment,"date": new Date().toISOString().substring(0,10)}
         const res = await getAcceptApplicant(postData)
+        
+        setToast((prevState)=>({...prevState,toastOpen:true,toastMsg:"The form is successfully approved!",toastType:"success"}))
+        setTimeout(()=>(setToast((prevState)=>({...prevState,toastOpen:false,toastMsg:"",toastType:""}))),3000)
         console.log('res',res)
         closeModal(false)
     

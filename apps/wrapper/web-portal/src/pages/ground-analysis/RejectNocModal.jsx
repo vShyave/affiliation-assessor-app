@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { getRejectApplicant } from "../../api";
 
 
-function RejectNocModal({closeRejectModal}) {
+function RejectNocModal({closeRejectModal,setToast}) {
    const handleChange = (e) =>{
          setComment(e.target.value)
    }
@@ -15,6 +15,8 @@ function RejectNocModal({closeRejectModal}) {
         }else{
         const postData = {"form_id": 22, "remarks": comment,"date": new Date().toISOString().substring(0,10)}
         const res = await getRejectApplicant(postData)
+        setToast((prevState)=>({...prevState,toastOpen:true,toastMsg:"The form is rejected!",toastType:"success"}))
+        setTimeout(()=>(setToast((prevState)=>({...prevState,toastOpen:false,toastMsg:"",toastType:""}))),3000)
         console.log('res',res)
         closeRejectModal(false)
     }

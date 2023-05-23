@@ -1,15 +1,3 @@
-// import React from 'react'
-
-// const DesktopAnalysisList = () => {
-//     return (
-//         <div className='flex justify-center align-center'>
-//             <h2 className='text-3xl'>Coming Soon!</h2>        
-//         </div>
-//     )
-// }
-
-// export default DesktopAnalysisList
-
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
@@ -26,6 +14,9 @@ const DesktopAnalysisList = () => {
   const navigation = useNavigate();
   var formsDataList = [];
   const [formsList, setFormsList] = useState();
+  const [state, setState] = useState({
+    menu_selected: "new"
+  })
 
   const COLUMNS = [
     {
@@ -49,45 +40,49 @@ const DesktopAnalysisList = () => {
       accessor: "published_on",
     },
     {
-      Header: 'Status',
-      accessor: 'status'
-    }
+      Header: "Status",
+      accessor: "status",
+    },
   ];
 
   const cardArray = [
     {
       value: 0,
-      key: 'total_pending',
-      text: 'Total pending'
+      key: "total_pending",
+      text: "Total pending",
     },
     {
       value: 0,
-      key: 'submitted_today',
-      text: 'Received today'
+      key: "submitted_today",
+      text: "Received today",
     },
     {
       value: 0,
-      key: 'in_progress',
-      text: 'In progress'
+      key: "in_progress",
+      text: "In progress",
     },
     {
       value: 0,
-      key: 'reviewed_today',
-      text: 'Reviewed today'
+      key: "reviewed_today",
+      text: "Reviewed today",
     },
     {
       value: 0,
-      key: 'reviewed_in_total',
-      text: 'Reviewed in total'
-    }
-  ]
+      key: "reviewed_in_total",
+      text: "Reviewed in total",
+    },
+  ];
+
+  const handleSelectMenu = (menuItem) => {
+    setState((prevState)=>({...prevState,menu_selected:menuItem}))
+}
 
   const navigateToView = (formObj) => {
-    const navigationURL = `${ADMIN_ROUTE_MAP.onGroundInspection.viewForm}/${formObj?.original?.form_name}/${formObj?.original?.id}`;
+    const navigationURL = `${ADMIN_ROUTE_MAP.adminModule.desktopAnalysis.viewForm}/${formObj?.original?.form_name}/${formObj?.original?.id}`;
     navigation(navigationURL);
     const postData = { form_id: formObj?.original?.id };
     markStatus(postData);
-  }
+  };
 
   const markStatus = async (postData) => {
     try {
@@ -111,19 +106,21 @@ const DesktopAnalysisList = () => {
   };
 
   const getFormName = (formName) => {
-    let splitValues = formName.split('_');
-    const capitalizedStr = splitValues[0].charAt(0).toUpperCase() + splitValues[0].substr(1, splitValues.substr);
+    let splitValues = formName.split("_");
+    const capitalizedStr =
+      splitValues[0].charAt(0).toUpperCase() +
+      splitValues[0].substr(1, splitValues.substr);
     splitValues[0] = capitalizedStr;
-    return splitValues.join(' ');
-  }
+    return splitValues.join(" ");
+  };
 
   const status_obj = {
     total_pending: formsList?.length,
     submitted_today: 0,
     in_progress: 0,
     reviewed_today: 0,
-    reviewed_in_total: 0 
-  }
+    reviewed_in_total: 0,
+  };
 
   formsList?.forEach((e) => {
     var formsData = {
@@ -140,7 +137,7 @@ const DesktopAnalysisList = () => {
         e?.assessor?.assisstant == null ? "None" : e?.assessor?.assisstant,
       published_on: readableDate(e?.submitted_on),
       id: e.form_id,
-      status: e?.review_status || 'NA'
+      status: e?.review_status || "NA",
     };
     formsDataList.push(formsData);
     if (e.submitted_on === new Date().toJSON().slice(0, 10)) {
@@ -156,7 +153,7 @@ const DesktopAnalysisList = () => {
   });
 
   cardArray.forEach((obj) => {
-    obj.value = status_obj[obj.key]
+    obj.value = status_obj[obj.key];
   });
 
   return (
@@ -167,18 +164,19 @@ const DesktopAnalysisList = () => {
             <h1 className="text-2xl font-medium">Your activity</h1>
           </div>
           <div className="flex flex-wrap">
-            {
-              cardArray.map(
-                (obj, index) => (
-                  <Card moreClass="shadow-md w-[200px] h-[100px] m-3 first:ml-0" key={index}>
-                    <div className="flex flex-col place-items-start justify-center gap-2">
-                      <h3 className="text-xl font-semibold">{obj.value}</h3>
-                      <p className="text-sm font-medium text-gray-700">{obj.text}</p>
-                    </div>
-                  </Card>
-                )
-              )
-            }
+            {cardArray.map((obj, index) => (
+              <Card
+                moreClass="shadow-md w-[200px] h-[100px] m-3 first:ml-0"
+                key={index}
+              >
+                <div className="flex flex-col place-items-start justify-center gap-2">
+                  <h3 className="text-xl font-semibold">{obj.value}</h3>
+                  <p className="text-sm font-medium text-gray-700">
+                    {obj.text}
+                  </p>
+                </div>
+              </Card>
+            ))}
           </div>
         </div>
 
@@ -188,11 +186,11 @@ const DesktopAnalysisList = () => {
           </div>
 
           <div className="grid grid-cols-1 gap-x-6 gap-y-6 sm:grid-cols-6">
-            <div className="sm:col-span-3">              
+            <div className="sm:col-span-3">
               <div className="w-72 bg-white rounded-[8px]">
-                <Select label="Select round">
-                  <Option>Round one</Option>
-                  <Option>Round two</Option>
+                <Select value="1" label="Select round" onChange={(value)=>{console.log(value)}}>
+                  <Option value="1">Round one</Option>
+                  <Option value="2">Round two</Option>
                 </Select>
               </div>
             </div>
@@ -202,36 +200,39 @@ const DesktopAnalysisList = () => {
         <div className="flex flex-col">
           <div className="text-sm font-medium text-center text-gray-500 border-b border-gray-200 dark:text-gray-400 dark:border-gray-700">
             <ul className="flex flex-wrap -mb-px">
-              <li className="mr-2">
+              <li className="mr-2" onClick={()=>(handleSelectMenu("new"))}>
                 <a
                   href="#"
-                  className="inline-block p-4 text-blue-600 border-b-2 border-blue-600 rounded-t-lg dark:text-blue-500 dark:border-blue-600">
+                  className={`inline-block p-4 rounded-t-lg dark:text-blue-500 dark:border-blue-600 ${(state.menu_selected === 'new') ? 'text-blue-600 border-b-2 border-blue-600' : ''}`}
+                >
                   New
                 </a>
               </li>
-              <li className="mr-2">
+              <li className="mr-2" onClick={()=>(handleSelectMenu("rejected"))}>
                 <a
                   href="#"
-                  className="inline-block p-4 border-b-2 border-transparent rounded-t-lg active hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300"
-                  aria-current="page">
+                  className={`inline-block p-4 rounded-t-lg dark:text-blue-500 dark:border-blue-600 ${(state.menu_selected === 'rejected') ? 'text-blue-600 border-b-2 border-blue-600' : ''}`}
+                  aria-current="page"
+                >
                   Rejected
                 </a>
               </li>
-              <li className="mr-2">
+              <li className="mr-2" onClick={()=>(handleSelectMenu("resubmitted"))}>
                 <a
                   href="#"
-                  className="inline-block p-4 border-b-2 border-transparent rounded-t-lg hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300">
+                  className={`inline-block p-4 rounded-t-lg dark:text-blue-500 dark:border-blue-600 ${(state.menu_selected === 'resubmitted') ? 'text-blue-600 border-b-2 border-blue-600' : ''}`}
+                >
                   Resubmitted
                 </a>
               </li>
-              <li className="mr-2">
+              <li className="mr-2" onClick={()=>(handleSelectMenu("sent_for_inspection"))}>
                 <a
                   href="#"
-                  className="inline-block p-4 border-b-2 border-transparent rounded-t-lg hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300">
+                  className={`inline-block p-4 rounded-t-lg dark:text-blue-500 dark:border-blue-600 ${(state.menu_selected === 'sent_for_inspection') ? 'text-blue-600 border-b-2 border-blue-600' : ''}`}
+                >
                   Sent for inspection
                 </a>
               </li>
-              
             </ul>
             {/* <div>create a search bar and filter component here</div> */}
             {/* table creation starts here */}
@@ -248,5 +249,5 @@ const DesktopAnalysisList = () => {
       </div>
     </>
   );
-}
-export default DesktopAnalysisList
+};
+export default DesktopAnalysisList;
