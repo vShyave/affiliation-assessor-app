@@ -2,13 +2,14 @@ import React from "react";
 
 import { Link, useNavigate } from 'react-router-dom';
 
-import { Select, Option } from "@material-tailwind/react";
+import { Select,     } from "@material-tailwind/react";
 import { useForm } from "react-hook-form";
 import { Button} from '../components'
 
 import { FaAngleRight } from "react-icons/fa";
 
 import APPLICANT_ROUTE_MAP from '../routes/ApplicantRoute';
+import { userService } from '../services';
 
 
 
@@ -18,13 +19,34 @@ export default function SelfRegistration() {
     const {
         register,
         handleSubmit,
-        // watch,
         formState: { errors }
       } = useForm();
       
-    //   const onSubmit = (data) => {
-    //     alert(JSON.stringify(data));
-    //   };  
+    const signupHandler = async (data) => {
+        console.log("signup data" ,data)
+        const { firstName, lastName, applicantName, applicantType, courseType, email, mobilePhone} = data;
+        let userDetails = {
+            applicationId:  process.env.REACT_APP_APPLICATION_ID || "d3d06e4b-40d3-4b5d-87c5-81afda76d135",
+            usernameStatus: "ACTIVE",
+            roles: [
+                applicantType
+            ],
+            user: {
+                firstName,
+                lastName,
+                mobilePhone,
+                email,
+                fullName: `${firstName} ${lastName}`,
+                username: `${firstName.toLowerCase()}_${lastName.toLowerCase()}`,
+                password: mobilePhone
+            }
+        }
+        // const signupRes = await userService.signup(userDetails);
+
+        console.log("userDetails", userDetails);
+        navigate(APPLICANT_ROUTE_MAP.dashboardModule.congratulations);
+
+    };  
 
   const goBack = () => {
     navigate(-1);
@@ -48,7 +70,7 @@ export default function SelfRegistration() {
                     <h1 className="text-xl font-semibold">
                         Self Registration
                     </h1>
-                <form onSubmit={handleSubmit((data)=>{console.log(data)})}>
+                <form onSubmit={handleSubmit((data)=>{ signupHandler(data)})}>
                     <div className="flex flex-row justify-between bg-white rounded-[4px] w-full p-8 mx-auto">
                         <div className="w-1/2">
                             <h1 className="text-xl font-semibold">Basic Details</h1>
@@ -62,19 +84,19 @@ export default function SelfRegistration() {
                                         type="text"
                                         placeholder="Type here"
                                         id="firstname"
-                                        name="firstname"
+                                        name="firstName"
                                         className="block w-full rounded-md border-0 p-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                                        {...register("firstname", {
+                                        {...register("firstName", {
                                             required: true,
                                             maxLength: 20,
                                             pattern: /^[A-Za-z]+$/i
                                         })}
                                         />
-                                            {errors?.firstname?.type === "required" && <p className="text-red-500 mt-2 text-sm">This field is required</p>}
-                                            {errors?.firstname?.type === "maxLength" && (
+                                            {errors?.firstName?.type === "required" && <p className="text-red-500 mt-2 text-sm">This field is required</p>}
+                                            {errors?.firstName?.type === "maxLength" && (
                                             <p className="text-red-500 mt-2 text-sm">First name cannot exceed 20 characters</p>
                                             )}
-                                            {errors?.firstname?.type === "pattern" && (
+                                            {errors?.firstName?.type === "pattern" && (
                                             <p className="text-red-500 mt-2 text-sm">Alphabetical characters only</p>
                                             )}
                                     </div>
@@ -87,20 +109,20 @@ export default function SelfRegistration() {
                                         <input
                                             type="text"
                                             placeholder="Type here"
-                                            name="lastname"
+                                            name="lastName"
                                             id="lastname"
                                             className="block w-full rounded-md border-0 p-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                                            {...register("lastname", {
+                                            {...register("lastName", {
                                                 required: true,
                                                 maxLength: 20,
                                                 pattern: /^[A-Za-z]+$/i
                                             })}
                                         />
-                                            {errors?.lastname?.type === "required" && <p className="text-red-500 mt-2 text-sm">This field is required</p>}
-                                            {errors?.lastname?.type === "maxLength" && (
+                                            {errors?.lastName?.type === "required" && <p className="text-red-500 mt-2 text-sm">This field is required</p>}
+                                            {errors?.lastName?.type === "maxLength" && (
                                             <p className="text-red-500 mt-2 text-sm">First name cannot exceed 20 characters</p>
                                             )}
-                                            {errors?.lastname?.type === "pattern" && (
+                                            {errors?.lastName?.type === "pattern" && (
                                             <p className="text-red-500 mt-2 text-sm">Alphabetical characters only</p>
                                             )}
                                     </div>
@@ -138,21 +160,21 @@ export default function SelfRegistration() {
                                         <input
                                             type="tel"
                                             placeholder="Type here"
-                                            name="phonenumber"
+                                            name="mobilePhone"
                                             id="phonenumber"
                                             className="block w-full rounded-md border-0 p-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                                            {...register("phonenumber", {
+                                            {...register("mobilePhone", {
                                                 required: true,
                                                 maxLength: 10,
                                                 pattern: /^([+]\d{2})?\d{10}$/
 
                                             })}
                                         />
-                                            {errors?.phonenumber?.type === "required" && <p className="text-red-500 mt-2 text-sm">This field is required</p>}
-                                            {errors?.phonenumber?.type === "maxLength" && (
+                                            {errors?.mobilePhone?.type === "required" && <p className="text-red-500 mt-2 text-sm">This field is required</p>}
+                                            {errors?.mobilePhone?.type === "maxLength" && (
                                             <p className="text-red-500 mt-2 text-sm">Phonenumber cannot exceed 10 characters</p>
                                             )}
-                                            {errors?.phonenumber?.type === "pattern" && (
+                                            {errors?.mobilePhone?.type === "pattern" && (
                                             <p className="text-red-500 mt-2 text-sm">Please provide valid phone number</p>
                                             )}
                                     </div>
@@ -161,7 +183,7 @@ export default function SelfRegistration() {
                                         
                             <div className="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
                                 <div className="sm:col-span-3">
-                                    <label className="block text-sm font-medium leading-6 text-gray-900">
+                                    <label htmlFor="applicantname"  className="block text-sm font-medium leading-6 text-gray-900">
                                         Applicant name
                                     </label>
                                     <div className="mt-2">
@@ -169,41 +191,41 @@ export default function SelfRegistration() {
                                             type="text"
                                             placeholder="Type here"
                                             id="applicantname"
-                                            name="applicantname"
+                                            name="applicantName"
                                             className="block w-full rounded-md border-0 p-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                                            {...register("applicantname", {
+                                            {...register("applicantName", {
                                                 required: true,
-                                                maxLength: 20,
+                                                maxLength: 50,
                                                 pattern: /^[a-zA-Z ]*$/
                                             })}
                                         />
-                                            {errors?.applicantname?.type === "required" && <p className="text-red-500 mt-2 text-sm">This field is required</p>}
-                                            {errors?.applicantname?.type === "maxLength" && (
-                                            <p className="text-red-500 mt-2 text-sm">First name cannot exceed 20 characters</p>
+                                            {errors?.applicantName?.type === "required" && <p className="text-red-500 mt-2 text-sm">This field is required</p>}
+                                            {errors?.applicantName?.type === "maxLength" && (
+                                            <p className="text-red-500 mt-2 text-sm">Applicant  name cannot exceed 50 characters</p>
                                             )}
-                                            {errors?.applicantname?.type === "pattern" && (
+                                            {errors?.applicantName?.type === "pattern" && (
                                             <p className="text-red-500 mt-2 text-sm">Alphabetical characters only</p>
                                             )}
                                     </div>
                                 </div>
                                 <div className="sm:col-span-3 ">
-                                    <label htmlFor="role" className="block text-sm font-medium leading-6 text-gray-900">
-                                        Application type
+                                    <label htmlFor="applicanttype" className="block text-sm font-medium leading-6 text-gray-900">
+                                        Applicant type
                                     </label>
                                     <div className="mt-2">
-                                    <Select 
-                                        label="Select here"
-                                        name="applicationtype"
-                                        // {...register("applicationtype", {
-                                        //     required: true,
-                                        
-                                        // })}
-                                    >
-                                
-                                    <Option>Admin</Option>
-                                    <Option>Applicant</Option>
-                                    </Select>
-                                    {/* {errors?.applicationtype?.type === "required" && <p className="text-red-500 mt-2 text-sm">This field is required</p>} */}
+                                        <select 
+                                            className="block w-full rounded-md border-0 p-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                                            label="Select here"
+                                            id= "applicanttype"
+                                            name="applicantType"
+                                            {...register("applicantType", {
+                                                required: true,
+                                            
+                                            })}
+                                        >
+                                            <option value="Institute">Institute</option>
+                                        </select>
+                                        {errors?.applicantType?.type === "required" && <p className="text-red-500 mt-2 text-sm">This field is required</p>}
 
                                     </div>
                                 </div> 
@@ -211,14 +233,24 @@ export default function SelfRegistration() {
                                         
                             <div className="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
                                 <div className="sm:col-span-3 ">
-                                    <label htmlFor="role" className="block text-sm font-medium leading-6 text-gray-900">
+                                    <label htmlFor="coursetype" className="block text-sm font-medium leading-6 text-gray-900">
                                         Course name
                                     </label>
                                     <div className="mt-2">
-                                    <Select label="Select here">
-                                    <Option>Nursing</Option>
-                                    <Option>Paramedical</Option>
-                                    </Select>
+                                        <select 
+                                            className="block w-full rounded-md border-0 p-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                                            label="Select here"
+                                            id="coursetype"
+                                            name="courseType"
+                                            {...register("courseType", {
+                                                required: true,
+                                            
+                                            })}
+                                        >
+                                            <option value="Nursing">Nursing</option>
+                                            <option value="Paramedical">Paramedical</option>
+                                        </select>
+                                        {errors?.courseType?.type === "required" && <p className="text-red-500 mt-2 text-sm">This field is required</p>}
                                     </div>
                                 </div>
                             </div>
