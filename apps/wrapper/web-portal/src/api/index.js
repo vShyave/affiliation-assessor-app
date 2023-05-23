@@ -1,5 +1,6 @@
 import API_URL from "./apiUrl";
 import adminCustomPost from "./adminCustomApi";
+import fileConversionCustomPost from "./fileConversionCustomApi";
 
 export const registerUser = async (postData) => {
   const res = await fetch.post(API_URL.auth.register, postData);
@@ -51,6 +52,12 @@ export const markReviewStatus = async (postData) => {
   const res = await adminCustomPost.post(API_URL.groundAnalysis.markStatus, postData);
   return res;
 }
+
+export const convertODKtoXML = async (postData) => {
+  const res = await fileConversionCustomPost.post(API_URL.manageForms.convertODKtoXML, postData);
+  return res;
+}
+
 
 
 // Manage users API's...
