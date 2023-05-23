@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react";
 import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
+import { formatDate } from "../../utils/common";
 
-import { getUsersForScheduling } from "../../api";
-// import { getOnGroundViewStatus } from "../../api";
+import { getUsersForScheduling,getScheduleAssessment } from "../../api";
 
-import { Button } from "../../components";
+import { Button , Label} from "../../components";
 import { Select, Option } from "@material-tailwind/react";
 
 function ScheduleInspectionModal({ closeSchedule }) {
@@ -21,9 +21,7 @@ function ScheduleInspectionModal({ closeSchedule }) {
  
  
   const onChangeDate = async(date) => {
-    let tempDate = date.toJSON().slice(0, 10)
-    setDate(tempDate);
-    console.log(tempDate)
+    let tempDate = formatDate(date)
     const postData = {"todayDate": tempDate}
     
     const res = await getUsersForScheduling(postData);
@@ -34,20 +32,33 @@ function ScheduleInspectionModal({ closeSchedule }) {
 
   };
 
+  const handleScheduleAssessment = async() => {
+        
+    const postData = { 
+      "date": "2023-05-24", 
+      "instituteId": 1, 
+      "assessorCode": "Demo12"
+      }
+    const res = await getScheduleAssessment(postData)
+    console.log('res',res)
+    closeSchedule(false)
+  }
+
   return (
     <>
       <div className="flex flex-col justify-center items-center fixed inset-0 bg-opacity-25 backdrop-blur-sm">
         <div className="flex bg-white rounded-xl shadow-xl border border-gray-400 w-[560px] h-[600px] p-8">
           <div className="flex flex-col gap-4 w-full">
             <div className="flex text-xl font-semibold">
-              <h1>Select Assessor</h1>
+              <h1>Schedule Assessment</h1>
             </div>
             <div className="flex flex-col gap-2 overflow-auto">
               <div className="flex flex-col items-center bg-white p-8">
-                <Calendar onChange={onChangeDate} value={date} />
+                <Calendar onChange={onChangeDate} minDate={new Date()} />
               </div>
 
-              <div className="flex flex-col rounded-xl gap-1 bg-white px-8">
+              <div className="flex flex-col rounded-xl gap-1 bg-white px-14">
+                <Label required text="Select Assessor"></Label>
                 <Select
                   key={"assessor_name"}
                   label="Assessor Name"
@@ -63,9 +74,10 @@ function ScheduleInspectionModal({ closeSchedule }) {
                   }
                   
                 </Select>
+                
               </div>
             </div>
-            <div className="footer flex flex-row justify-end mt-8">
+            <div className="footer flex flex-row justify-between mt-8">
               <Button
                 onClick={() => {
                   closeSchedule(false);
@@ -73,13 +85,13 @@ function ScheduleInspectionModal({ closeSchedule }) {
                 moreClass="border border-gray-500 bg-white text-gray-500 w-[140px]"
                 text="Close"
               ></Button>
-              {/* <button
-                onClick={() => console.log("clicked submit")}
-                className="border border-blue-500 bg-blue-500 text-white w-[140px]"
-                text="Schedule"
-                // disabled={!selectedAssessorId?true:false}
-                
-              ></button> */}
+              <Button
+                  onClick={handleScheduleAssessment}
+                  moreClass="border text-white w-[140px]"
+                  text="Schedule"
+                  disabled={!selectedAssessorId?true:false}
+                  >
+               </Button>
             </div>
           </div>
         </div>
