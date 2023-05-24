@@ -2,6 +2,7 @@ let ADMIN_ROUTE_MAP = {};
 let MANAGE_USERS = 'manageUsers'
 let GROUND_INSPECTION = 'groundInspection';
 let MANAGE_FORMS = 'manage-forms';
+let DESKTOP_ANALYSIS = 'desktopAnalysis';
 
 ADMIN_ROUTE_MAP.auth = "/auth";
 ADMIN_ROUTE_MAP.loginModule = {
@@ -26,8 +27,9 @@ ADMIN_ROUTE_MAP.adminModule = {
     upload: `/${MANAGE_FORMS}/upload`
   },
   desktopAnalysis: {
-    list: "desktopAnalysis/list",
-    viewForm: "desktopAnalysis/view"
+    home: `/${DESKTOP_ANALYSIS}`,
+    list: `/${DESKTOP_ANALYSIS}/list`,
+    viewForm: `/${DESKTOP_ANALYSIS}/view`
   },
   onGroundInspection: {
     home: `/${GROUND_INSPECTION}`,

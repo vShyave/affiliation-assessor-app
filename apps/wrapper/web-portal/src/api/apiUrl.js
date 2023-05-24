@@ -9,6 +9,9 @@ const API_URL = {
     list: `${rest}getGroundInspectionAnalysis`,
     markStatus: `${rest}inProgress`
   },
+  manageForms: {
+    convertODKtoXML: `user/convert`
+  },
   manageUsers: {
     userList: `${rest}getAllUsers`,
     specificUser: `${rest}getSpecificUser`
