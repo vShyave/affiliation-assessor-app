@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { getRejectApplicant } from "../../api";
 
+import { Button } from '../../components';
+
 
 function RejectNocModal({closeRejectModal}) {
    const handleChange = (e) =>{
@@ -33,7 +35,7 @@ function RejectNocModal({closeRejectModal}) {
                         </div>
                      <div className='footer flex flex-row justify-between'>
                         <button onClick={() => {closeRejectModal(false)}} className="border border-blue-500 bg-white text-blue-500 w-[140px] h-[40px] font-medium rounded-[4px]">Close</button>
-                        <button onClick={handleRejectApplicant} className="border text-gray-200 bg-blue-500 w-[140px] h-[40px] font-medium rounded-[4px]" disabled={!comment?true:false} >Submit</button>
+                        <button onClick={handleRejectApplicant} className={`${comment?"bg-blue-500 text-white":"bg-gray-400 text-gray-700 cursor-not-allowed"} border w-[140px] h-[40px] font-medium rounded-[4px] `} disabled={!comment?true:false} >Submit</button>
                     </div>
                 </div>
             </div>

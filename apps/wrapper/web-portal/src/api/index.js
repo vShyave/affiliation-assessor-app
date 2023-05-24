@@ -21,7 +21,7 @@ export const getOnGroundAssessorData = async () => {
 
 export const getAcceptApplicant = async (postData) => {
   const res = await adminCustomPost.post(
-    API_URL.acceptApplication.acceptApplicant,
+    API_URL.groundAnalysis.acceptApplicant,
     postData
   );
   return res;
@@ -29,7 +29,7 @@ export const getAcceptApplicant = async (postData) => {
 
 export const getRejectApplicant = async (postData) => {
   const res = await adminCustomPost.post(
-    API_URL.rejectApplication.rejectApplicant,
+    API_URL.groundAnalysis.rejectApplicant,
     postData
   );
   return res;
@@ -41,7 +41,7 @@ export const getOnGroundInspectionAnalysis = async () => {
 };
 
 export const getOnGroundViewStatus = async (postData) => {
-  const res = await adminCustomPost.post(API_URL.UsersForSchedulingAssessment.ViewStatus.getViewStatus,
+  const res = await adminCustomPost.post(API_URL.groundAnalysis.ViewStatus.getViewStatus,
     postData);
     console.log("in api call", res)
   return res.data;
@@ -60,7 +60,7 @@ export const getAllUsers = async () => {
 
 export const getUsersForScheduling = async (postData) => {
   const res = await adminCustomPost.post(
-    API_URL.UsersForSchedulingAssessment.getUsersForSchedulingAssessment,
+    API_URL.desktopAnalysis.getUsersForSchedulingAssessment,
     postData
   );
   return res;
@@ -68,5 +68,11 @@ export const getUsersForScheduling = async (postData) => {
 
 export const getSpecificUser = async (postData) => {
   const res = await adminCustomPost.post(API_URL.manageUsers.specificUser, postData);
+  return res;
+}
+
+export const getScheduleAssessment = async (postData) => {
+  const res = await adminCustomPost.post(API_URL.desktopAnalysis.scheduleAssessment, postData);
+  console.log(res)
   return res;
 }
