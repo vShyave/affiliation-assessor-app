@@ -12,6 +12,7 @@ import Dashboard from "./pages/Dashboard";
 import MyApplications from "./pages/MyApplications";
 import AllApplications from "./pages/AllApplications";
 import Congratulations from "./pages/Congratulation";
+import PrivateRoute from "./routes/PrivateRoute";
 
 
 function App() {
@@ -37,11 +38,20 @@ function App() {
             ></Route>
             <Route
               path={APPLICANT_ROUTE_MAP.dashboardModule.my_applications}
-              element={<MyApplications />}
+              element={
+                <PrivateRoute>
+                    <MyApplications />
+                </PrivateRoute>
+              }
             ></Route>
             <Route
               path={APPLICANT_ROUTE_MAP.dashboardModule.all_applications}
-              element={<AllApplications />}
+              element={
+                <PrivateRoute>
+                  <AllApplications />
+                </PrivateRoute>
+                
+              }
             ></Route>
              <Route
               path={APPLICANT_ROUTE_MAP.dashboardModule.congratulations}
