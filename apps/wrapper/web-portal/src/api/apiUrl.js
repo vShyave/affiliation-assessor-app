@@ -16,6 +16,9 @@ const API_URL = {
     }
   
   },
+  manageForms: {
+    convertODKtoXML: `user/convert`
+  },
   manageUsers: {
     userList: `${rest}getAllUsers`,
     specificUser: `${rest}getSpecificUser`
