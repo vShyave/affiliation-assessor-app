@@ -8,12 +8,13 @@ import Button from "../../components/Button";
 
 import { FaAngleRight } from "react-icons/fa";
 import UploadForm from "./UploadForm";
-import { convertODKtoXML } from "../../api";
+import { convertODKtoXML, createForm } from "../../api";
 import Toast from "../../components/Toast";
 
 const CreateForm = () => {
   const [formStage, setFormStage] = useState(1);
   const [xmlData, setXmlData] = useState(null);
+  const [formData, setFormData] = useState({});
   const {
     register,
     // handleSubmit,
@@ -28,10 +29,11 @@ const CreateForm = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     const formData = new FormData(e.currentTarget);
-    console.log([...formData.entries()]);
-    const newData = Object.fromEntries(formData);
-    console.log(formData.get("institute"));
-    console.log(newData);
+    const newForm = Object.fromEntries(formData)
+    setFormData(newForm)
+    console.log(newForm)
+    // TODO: add form validations
+    setFormStage(2)
   };
 
   const handleFile = (file) => {
@@ -40,6 +42,8 @@ const CreateForm = () => {
     const formData = new FormData();
     formData.append("file", file);
     uploadOdkForm(formData);
+
+
   };
 
   const uploadOdkForm = async (postData) => {
@@ -47,6 +51,10 @@ const CreateForm = () => {
       const res = await convertODKtoXML(postData);
       console.log(res);
       setXmlData(res.data);
+      //TODO: function call to invoke API for uploading xml file and get the remote path
+      //TODO: add remote path to formData (state).
+      // TODO:  uncomment below API call to create form
+      // const createFormResponse = await createForm(formData)
       setToast((prevState) => ({
         ...prevState,
         toastOpen: true,
@@ -139,22 +147,22 @@ const CreateForm = () => {
                         <input
                           type="text"
                           placeholder="Type here"
-                          id="formtitle"
-                          name="formtitle"
+                          id="title"
+                          name="title"
                           required
                           className="block w-full rounded-md border-0 p-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                         />
-                        {errors?.formtitle?.type === "required" && (
+                        {errors?.title?.type === "required" && (
                           <p className="text-red-500 mt-2 text-sm">
                             This field is required
                           </p>
                         )}
-                        {errors?.formtitle?.type === "maxLength" && (
+                        {errors?.title?.type === "maxLength" && (
                           <p className="text-red-500 mt-2 text-sm">
                             First name cannot exceed 20 characters
                           </p>
                         )}
-                        {errors?.formtitle?.type === "pattern" && (
+                        {errors?.title?.type === "pattern" && (
                           <p className="text-red-500 mt-2 text-sm">
                             Alphabetical characters only
                           </p>
@@ -184,33 +192,33 @@ const CreateForm = () => {
                     </div>
                     <div className="sm:col-span-3 ">
                       <label
-                        htmlFor="round"
+                        htmlFor="round_no"
                         className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-400"
                       >
                         Round No.
                       </label>
                       <select
                         required
-                        name="round"
-                        id="round"
+                        name="round_no"
+                        id="round_no"
                         className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                       >
                         <option value="">Select here</option>
-                        <option value="round_1">Round 1</option>
-                        <option value="round_2">Round 2</option>
+                        <option value={1}>Round 1</option>
+                        <option value={2}>Round 2</option>
                       </select>
                     </div>
                     <div className="sm:col-span-3">
                       <label
-                        htmlFor="course"
+                        htmlFor="course_type"
                         className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-400"
                       >
                         Course name
                       </label>
                       <select
                         required
-                        name="course"
-                        id="course"
+                        name="course_type"
+                        id="course_type"
                         className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                       >
                         <option value="">Select here</option>
@@ -221,15 +229,15 @@ const CreateForm = () => {
 
                     <div className="sm:col-span-3 ">
                       <label
-                        htmlFor="formlabel"
+                        htmlFor="labels"
                         className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-400"
                       >
                         Form labels
                       </label>
                       <select
                         required
-                        name="formlabel"
-                        id="formlabel"
+                        name="labels"
+                        id="labels"
                         className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                       >
                         <option value="">Select here</option>
@@ -274,7 +282,7 @@ const CreateForm = () => {
                     moreClass="px-6 text-white bg-primary-500 border border-primary-500"
                     style={{ backgroundColor: "" }}
                     text="Next"
-                    onClick={() => setFormStage(2)}
+                    type="submit"
                   ></Button>
                 </div>
               </div>
@@ -286,6 +294,8 @@ const CreateForm = () => {
               setFormStage={setFormStage}
               handleFile={handleFile}
               xmlData={xmlData}
+              formData={formData}
+              setFormData={setFormData}
             />
           )}
         </div>
