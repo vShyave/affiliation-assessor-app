@@ -8,17 +8,22 @@ import Button from "../../components/Button";
 
 import { FaAngleRight } from "react-icons/fa";
 import UploadForm from "./UploadForm";
-
-// import APPLICANT_ROUTE_MAP from '../routes/ApplicantRoute'
+import { convertODKtoXML } from "../../api";
+import Toast from "../../components/Toast";
 
 const CreateForm = () => {
   const [formStage, setFormStage] = useState(1);
+  const [xmlData, setXmlData] = useState(null);
   const {
     register,
     // handleSubmit,
     formState: { errors },
   } = useForm();
-
+  const [toast, setToast] = useState({
+    toastOpen: false,
+    toastMsg: "",
+    toastType: "",
+  });
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -32,9 +37,58 @@ const CreateForm = () => {
   const handleFile = (file) => {
     console.log(file);
     console.log(file.type);
+    const formData = new FormData();
+    formData.append("file", file);
+    uploadOdkForm(formData);
   };
+
+  const uploadOdkForm = async (postData) => {
+    try {
+      const res = await convertODKtoXML(postData);
+      console.log(res);
+      setXmlData(res.data);
+      setToast((prevState) => ({
+        ...prevState,
+        toastOpen: true,
+        toastMsg: "File successfully converted to XML format!",
+        toastType: "success",
+      }));
+      setTimeout(
+        () =>
+          setToast((prevState) => ({
+            ...prevState,
+            toastOpen: false,
+            toastMsg: "",
+            toastType: "",
+          })),
+        3000
+      );
+    } catch (error) {
+      console.log("error - ", error);
+      setToast((prevState) => ({
+        ...prevState,
+        toastOpen: true,
+        toastMsg: "Error occured while uploading!",
+        toastType: "error",
+      }));
+      setTimeout(
+        () =>
+          setToast((prevState) => ({
+            ...prevState,
+            toastOpen: false,
+            toastMsg: "",
+            toastType: "",
+          })),
+        3000
+      );
+    }
+  };
+
   return (
     <>
+      {toast.toastOpen && (
+        <Toast toastMsg={toast.toastMsg} toastType={toast.toastType} />
+      )}
       <div className="container mx-auto px-3 min-h-[40vh]">
         <div className="flex flex-col gap-8">
           <div className="flex flex-row justify-between">
@@ -44,7 +98,6 @@ const CreateForm = () => {
                 moreClass="px-6 text-primary-600 bg-white border border-primary-600"
                 style={{ backgroundColor: "" }}
                 text="Cancel"
-                
               ></Button>
               <Button
                 moreClass="px-6 text-gray-500 bg-white border border-gray-300"
@@ -52,7 +105,7 @@ const CreateForm = () => {
               ></Button>
             </div>
           </div>
-        
+
           <div className="flex flex-row gap-4 justify-center">
             <div
               className={`${
@@ -70,167 +123,171 @@ const CreateForm = () => {
             </div>
           </div>
 
-          {
-            formStage === 1 && (
-              <form onSubmit={handleSubmit}>
-                <div className="flex flex-col bg-white rounded-[4px] p-8 gap-8">
-                  <div className="flex">
-                    <h1 className="text-xl font-semibold">Add attributes</h1>
-                  </div>
-                  <div className="flex flex-grow">
-                    <div className="grid grid-rows-3 grid-cols-6 gap-8">
-                      <div className="sm:col-span-3">
-                        <label className="block text-sm font-medium leading-6 text-gray-900">
-                          Form title
-                        </label>
-                        <div className="mt-2">
-                          <input
-                            type="text"
-                            placeholder="Type here"
-                            id="formtitle"
-                            name="formtitle"
-                            required
-                            className="block w-full rounded-md border-0 p-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                          />
-                          {errors?.formtitle?.type === "required" && (
-                            <p className="text-red-500 mt-2 text-sm">
-                              This field is required
-                            </p>
-                          )}
-                          {errors?.formtitle?.type === "maxLength" && (
-                            <p className="text-red-500 mt-2 text-sm">
-                              First name cannot exceed 20 characters
-                            </p>
-                          )}
-                          {errors?.formtitle?.type === "pattern" && (
-                            <p className="text-red-500 mt-2 text-sm">
-                              Alphabetical characters only
-                            </p>
-                          )}
-                        </div>
-                      </div>
-                      <div className="sm:col-span-3 ">
-                        <label
-                          htmlFor="institute"
-                          className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-400"
-                        >
-                          Application type
-                        </label>
-                        <select
+          {formStage === 1 && (
+            <form onSubmit={handleSubmit}>
+              <div className="flex flex-col bg-white rounded-[4px] p-8 gap-8">
+                <div className="flex">
+                  <h1 className="text-xl font-semibold">Add attributes</h1>
+                </div>
+                <div className="flex flex-grow">
+                  <div className="grid grid-rows-3 grid-cols-6 gap-8">
+                    <div className="sm:col-span-3">
+                      <label className="block text-sm font-medium leading-6 text-gray-900">
+                        Form title
+                      </label>
+                      <div className="mt-2">
+                        <input
+                          type="text"
+                          placeholder="Type here"
+                          id="formtitle"
+                          name="formtitle"
                           required
-                          name="institute"
-                          id="institute"
-                          className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                        >
-                          <option value="">Select here</option>
-                          <option value="new_institute">New Institute</option>
-                          <option value="new_course">New Course</option>
-                          <option value="seat_enhancement">Seat Enhancement</option>
-                        </select>
-                      </div>
-                      <div className="sm:col-span-3 ">
-                        <label
-                          htmlFor="round"
-                          className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-400"
-                        >
-                          Round No.
-                        </label>
-                        <select
-                          required
-                          name="round"
-                          id="round"
-                          className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                        >
-                          <option value="">Select here</option>
-                          <option value="round_1">Round 1</option>
-                          <option value="round_2">Round 2</option>
-                        </select>
-                      </div>
-                      <div className="sm:col-span-3">
-                        <label
-                          htmlFor="course"
-                          className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-400"
-                        >
-                          Course name
-                        </label>
-                        <select
-                          required
-                          name="course"
-                          id="course"
-                          className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                        >
-                          <option value="">Select here</option>
-                          <option value="nursing">Nursing</option>
-                          <option value="paramedical">Paramedical</option>
-                        </select>
-                      </div>
-
-                      <div className="sm:col-span-3 ">
-                        <label
-                          htmlFor="formlabel"
-                          className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-400"
-                        >
-                          Form labels
-                        </label>
-                        <select
-                          required
-                          name="formlabel"
-                          id="formlabel"
-                          className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                        >
-                          <option value="">Select here</option>
-                          <option value="infrastructure">Infrastructure</option>
-                          <option value="teaching_learning_process">
-                            Teaching Learning Process
-                          </option>
-                          <option value="objective_structured_clinical_examination">
-                            Objective Structured Clinical Examincation
-                          </option>
-                        </select>
-                      </div>
-                      <div className="sm:col-span-3">
-                        <label
-                          htmlFor="assignee"
-                          className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-400"
-                        >
-                          Assignee
-                        </label>
-                        <select
-                          required
-                          name="assignee"
-                          id="assignee"
-                          className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                        >
-                          <option value="">Select here</option>
-                          <option value="applicant">Applicant</option>
-                          <option value="admin">Admin</option>
-                          <option value="government">Government</option>
-                          <option value="desktop_assessor">Desktop Assessor</option>
-                          <option value="onground_assessor">
-                            On-ground Assessor
-                          </option>
-                        </select>
+                          className="block w-full rounded-md border-0 p-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                        />
+                        {errors?.formtitle?.type === "required" && (
+                          <p className="text-red-500 mt-2 text-sm">
+                            This field is required
+                          </p>
+                        )}
+                        {errors?.formtitle?.type === "maxLength" && (
+                          <p className="text-red-500 mt-2 text-sm">
+                            First name cannot exceed 20 characters
+                          </p>
+                        )}
+                        {errors?.formtitle?.type === "pattern" && (
+                          <p className="text-red-500 mt-2 text-sm">
+                            Alphabetical characters only
+                          </p>
+                        )}
                       </div>
                     </div>
-                  </div>
-                  <div className="flex justify-end">
-                    <Button
-                      moreClass="px-6 text-white bg-primary-500 border border-primary-500"
-                      style={{ backgroundColor: "" }}
-                      text="Next"
-                      onClick={() => setFormStage(2)}
-                    ></Button>
+                    <div className="sm:col-span-3 ">
+                      <label
+                        htmlFor="institute"
+                        className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-400"
+                      >
+                        Application type
+                      </label>
+                      <select
+                        required
+                        name="institute"
+                        id="institute"
+                        className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                      >
+                        <option value="">Select here</option>
+                        <option value="new_institute">New Institute</option>
+                        <option value="new_course">New Course</option>
+                        <option value="seat_enhancement">
+                          Seat Enhancement
+                        </option>
+                      </select>
+                    </div>
+                    <div className="sm:col-span-3 ">
+                      <label
+                        htmlFor="round"
+                        className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-400"
+                      >
+                        Round No.
+                      </label>
+                      <select
+                        required
+                        name="round"
+                        id="round"
+                        className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                      >
+                        <option value="">Select here</option>
+                        <option value="round_1">Round 1</option>
+                        <option value="round_2">Round 2</option>
+                      </select>
+                    </div>
+                    <div className="sm:col-span-3">
+                      <label
+                        htmlFor="course"
+                        className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-400"
+                      >
+                        Course name
+                      </label>
+                      <select
+                        required
+                        name="course"
+                        id="course"
+                        className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                      >
+                        <option value="">Select here</option>
+                        <option value="nursing">Nursing</option>
+                        <option value="paramedical">Paramedical</option>
+                      </select>
+                    </div>
+
+                    <div className="sm:col-span-3 ">
+                      <label
+                        htmlFor="formlabel"
+                        className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-400"
+                      >
+                        Form labels
+                      </label>
+                      <select
+                        required
+                        name="formlabel"
+                        id="formlabel"
+                        className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                      >
+                        <option value="">Select here</option>
+                        <option value="infrastructure">Infrastructure</option>
+                        <option value="teaching_learning_process">
+                          Teaching Learning Process
+                        </option>
+                        <option value="objective_structured_clinical_examination">
+                          Objective Structured Clinical Examincation
+                        </option>
+                      </select>
+                    </div>
+                    <div className="sm:col-span-3">
+                      <label
+                        htmlFor="assignee"
+                        className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-400"
+                      >
+                        Assignee
+                      </label>
+                      <select
+                        required
+                        name="assignee"
+                        id="assignee"
+                        className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                      >
+                        <option value="">Select here</option>
+                        <option value="applicant">Applicant</option>
+                        <option value="admin">Admin</option>
+                        <option value="government">Government</option>
+                        <option value="desktop_assessor">
+                          Desktop Assessor
+                        </option>
+                        <option value="onground_assessor">
+                          On-ground Assessor
+                        </option>
+                      </select>
+                    </div>
                   </div>
                 </div>
-              </form>
-            )
-          }
+                <div className="flex justify-end">
+                  <Button
+                    moreClass="px-6 text-white bg-primary-500 border border-primary-500"
+                    style={{ backgroundColor: "" }}
+                    text="Next"
+                    onClick={() => setFormStage(2)}
+                  ></Button>
+                </div>
+              </div>
+            </form>
+          )}
 
-          {
-            formStage === 2 && (
-              <UploadForm setFormStage={setFormStage} handleFile={handleFile} />
-            )
-          }
+          {formStage === 2 && (
+            <UploadForm
+              setFormStage={setFormStage}
+              handleFile={handleFile}
+              xmlData={xmlData}
+            />
+          )}
         </div>
       </div>
     </>
