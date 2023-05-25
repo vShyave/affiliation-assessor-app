@@ -7,26 +7,26 @@ const API_URL = {
   groundAnalysis: {
     viewForm: `${rest}getFormData`,
     list: `${rest}getGroundInspectionAnalysis`,
-    markStatus: `${rest}inProgress`
+    markStatus: `${rest}inProgress`,
+    acceptApplicant: `${rest}acceptForm`,
+    rejectApplicant: `${rest}rejectForm`,
+    getGroundInspectionAnalysis: `${rest}getGroundInspectionAnalysis`,
+    ViewStatus:{
+      getViewStatus: `${rest}getStatusLog`
+    }
+  
+  },
+  manageForms: {
+    convertODKtoXML: `user/convert`
   },
   manageUsers: {
     userList: `${rest}getAllUsers`,
     specificUser: `${rest}getSpecificUser`
   },
-  acceptApplication:{
-    acceptApplicant: `${rest}acceptForm`
-  },
-  rejectApplication:{
-    rejectApplicant: `${rest}rejectForm`
-  },
-  groundInspectionAnalysis:{
-    getGroundInspectionAnalysis: `${rest}getGroundInspectionAnalysis`
-  },
-  UsersForSchedulingAssessment:{
+
+  desktopAnalysis:{
     getUsersForSchedulingAssessment:"rest/getUsersForSchedulingAssessment",
-    ViewStatus:{
-      getViewStatus: `${rest}getStatusLog`
-    }
+    scheduleAssessment: `rest/scheduleAssessment`
   }
 }
 
