@@ -11,6 +11,7 @@ import Sidebar from "../../components/Sidebar";
 
 import { getFormData } from "../../api";
 import { getPrefillXML } from "./../../api/formApi";
+import Toast from "../../components/Toast";
 
 const ENKETO_URL = process.env.REACT_APP_ENKETO_URL;
 
@@ -21,6 +22,11 @@ export default function ApplicationPage({ closeModal, closeRejectModal, closeSta
     const [openStatusModel, setOpenStatusModel] = useState(false);
     const [encodedFormURI, setEncodedFormURI] = useState('');
     let { formName, formId } = useParams();
+    const [toast,setToast] =useState({
+        toastOpen: false,
+        toastMsg: "",
+        toastType: ""
+    })
 
     const userId = "427d473d-d8ea-4bb3-b317-f230f1c9b2f7";
     const formSpec = {
@@ -58,6 +64,7 @@ export default function ApplicationPage({ closeModal, closeRejectModal, closeSta
 
     return (
         <>
+        {toast.toastOpen && <Toast toastMsg={toast.toastMsg} toastType={toast.toastType} />  }
             <div className="flex flex-col gap-12">
                 <div className="flex flex-row">
                     <div className="flex grow justify-start items-center">
@@ -88,8 +95,8 @@ export default function ApplicationPage({ closeModal, closeRejectModal, closeSta
                     </div>
                 </div>
             </div>
-            { openModel && <NocModal closeModal={setOpenModel}/> }
-            { rejectModel && <RejectNocModal closeRejectModal={setRejectModel}/> }
+            { openModel && <NocModal closeModal={setOpenModel} setToast={setToast}/> }
+            { rejectModel && <RejectNocModal closeRejectModal={setRejectModel} setToast={setToast} /> }
             {/* {openCertificateModel && <IssueCertificateModal closeCertificateModal={setOpenCertificateModel}/>} */}
             { openStatusModel && <StatusLogModal closeStatusModal={setOpenStatusModel}/> }
         </>

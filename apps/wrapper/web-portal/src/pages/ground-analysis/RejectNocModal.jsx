@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
 import { getRejectApplicant } from "../../api";
 
+import { Button } from '../../components';
 
-function RejectNocModal({closeRejectModal}) {
+
+function RejectNocModal({closeRejectModal,setToast}) {
    const handleChange = (e) =>{
          setComment(e.target.value)
    }
@@ -15,6 +17,8 @@ function RejectNocModal({closeRejectModal}) {
         }else{
         const postData = {"form_id": 22, "remarks": comment,"date": new Date().toISOString().substring(0,10)}
         const res = await getRejectApplicant(postData)
+        setToast((prevState)=>({...prevState,toastOpen:true,toastMsg:"The form is rejected!",toastType:"success"}))
+        setTimeout(()=>(setToast((prevState)=>({...prevState,toastOpen:false,toastMsg:"",toastType:""}))),3000)
         console.log('res',res)
         closeRejectModal(false)
     }
@@ -33,7 +37,7 @@ function RejectNocModal({closeRejectModal}) {
                         </div>
                      <div className='footer flex flex-row justify-between'>
                         <button onClick={() => {closeRejectModal(false)}} className="border border-blue-500 bg-white text-blue-500 w-[140px] h-[40px] font-medium rounded-[4px]">Close</button>
-                        <button onClick={handleRejectApplicant} className="border text-gray-200 bg-blue-500 w-[140px] h-[40px] font-medium rounded-[4px]" disabled={!comment?true:false} >Submit</button>
+                        <button onClick={handleRejectApplicant} className={`${comment?"bg-blue-500 text-white":"bg-gray-400 text-gray-700 cursor-not-allowed"} border w-[140px] h-[40px] font-medium rounded-[4px] `} disabled={!comment?true:false} >Submit</button>
                     </div>
                 </div>
             </div>

@@ -160,7 +160,7 @@ const FormsOverview = () => {
                     <Card moreClass="flex h-[50vh]">
                         <div className="flex flex-col gap-4 m-auto items-center">
                             <div className='font-semibold text-xl'>Select the option to a create a form</div>
-                            <Button moreClass="text-white w-3/5" text="Upload CSV" onClick={()=>(navigation("/manage-forms/create-form"))} />
+                            <Button moreClass="text-white w-3/5" text="Upload ODK" onClick={()=>(navigation("/manage-forms/create-form"))} />
                             Or
                             <Button moreClass="text-white w-3/5" text="Configure Manually" />
                         </div>
