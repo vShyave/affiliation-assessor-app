@@ -1,5 +1,6 @@
 import API_URL from "./apiUrl";
 import adminCustomPost from "./adminCustomApi";
+import fileConversionCustomPost from "./fileConversionCustomApi";
 
 export const registerUser = async (postData) => {
   const res = await fetch.post(API_URL.auth.register, postData);
@@ -21,7 +22,7 @@ export const getOnGroundAssessorData = async () => {
 
 export const getAcceptApplicant = async (postData) => {
   const res = await adminCustomPost.post(
-    API_URL.acceptApplication.acceptApplicant,
+    API_URL.groundAnalysis.acceptApplicant,
     postData
   );
   return res;
@@ -29,7 +30,7 @@ export const getAcceptApplicant = async (postData) => {
 
 export const getRejectApplicant = async (postData) => {
   const res = await adminCustomPost.post(
-    API_URL.rejectApplication.rejectApplicant,
+    API_URL.groundAnalysis.rejectApplicant,
     postData
   );
   return res;
@@ -44,7 +45,7 @@ export const getOnGroundInspectionAnalysis = async () => {
 
 export const getOnGroundViewStatus = async (postData) => {
   const res = await adminCustomPost.post(
-    API_URL.UsersForSchedulingAssessment.ViewStatus.getViewStatus,
+    API_URL.groundAnalysis.ViewStatus.getViewStatus,
     postData
   );
   console.log("in api call", res);
@@ -59,6 +60,14 @@ export const markReviewStatus = async (postData) => {
   return res;
 };
 
+export const convertODKtoXML = async (postData) => {
+  const res = await fileConversionCustomPost.post(
+    API_URL.manageForms.convertODKtoXML,
+    postData
+  );
+  return res;
+};
+
 // Manage users API's...
 export const getAllUsers = async () => {
   const res = await adminCustomPost.get(API_URL.manageUsers.userList);
@@ -67,7 +76,7 @@ export const getAllUsers = async () => {
 
 export const getUsersForScheduling = async (postData) => {
   const res = await adminCustomPost.post(
-    API_URL.UsersForSchedulingAssessment.getUsersForSchedulingAssessment,
+    API_URL.desktopAnalysis.getUsersForSchedulingAssessment,
     postData
   );
   return res;
@@ -78,5 +87,14 @@ export const getSpecificUser = async (postData) => {
     API_URL.manageUsers.specificUser,
     postData
   );
+  return res;
+};
+
+export const getScheduleAssessment = async (postData) => {
+  const res = await adminCustomPost.post(
+    API_URL.desktopAnalysis.scheduleAssessment,
+    postData
+  );
+  console.log(res);
   return res;
 };

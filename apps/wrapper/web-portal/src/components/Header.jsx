@@ -66,7 +66,7 @@ export default function Header() {
                                     <NavLink to={ADMIN_ROUTE_MAP.adminModule.manageForms.home}>Manage Forms</NavLink>
                                 </li>
                                 <li className="flex hover:text-primary-600 hover:cursor-pointer">
-                                    <NavLink to={ADMIN_ROUTE_MAP.adminModule.desktopAnalysis.list}>Desktop Analysis</NavLink>
+                                    <NavLink to={ADMIN_ROUTE_MAP.adminModule.desktopAnalysis.home}>Desktop Analysis</NavLink>
                                 </li>
                                 <li className="flex hover:text-primary-600 hover:cursor-pointer">
                                     <NavLink to={ADMIN_ROUTE_MAP.adminModule.onGroundInspection.home}>On Ground Inspection Analysis</NavLink>
