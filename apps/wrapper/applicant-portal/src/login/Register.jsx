@@ -26,22 +26,24 @@ export default function SelfRegistration() {
         console.log("signup data" ,data)
         const { firstName, lastName, applicantName, applicantType, courseType, email, mobilePhone} = data;
         let userDetails = {
-            applicationId:  process.env.REACT_APP_APPLICATION_ID || "d3d06e4b-40d3-4b5d-87c5-81afda76d135",
-            usernameStatus: "ACTIVE",
-            roles: [
-                applicantType
-            ],
+            registration: {
+                applicationId:  process.env.REACT_APP_APPLICATION_ID,
+                usernameStatus: "ACTIVE",
+                roles: [
+                    applicantType
+                ],
+            },
             user: {
                 firstName,
                 lastName,
                 mobilePhone,
                 email,
                 fullName: `${firstName} ${lastName}`,
-                username: `${firstName.toLowerCase()}_${lastName.toLowerCase()}`,
+                username: mobilePhone,
                 password: mobilePhone
             }
         }
-        // const signupRes = await userService.signup(userDetails);
+        const signupRes = await userService.signup(userDetails);    
 
         console.log("userDetails", userDetails);
         navigate(APPLICANT_ROUTE_MAP.dashboardModule.congratulations);
