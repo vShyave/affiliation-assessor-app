@@ -64,6 +64,16 @@ export const createForm = async (postData) => {
   return res;
 }
 
+export const getForms = async () => {
+  const res = await adminCustomPost.get(API_URL.manageForms.getForms);
+  return res;
+}
+
+export const publishForms = async (postData) => {
+  const res = await adminCustomPost.put(API_URL.manageForms.publishForms,postData);
+  return res;
+}
+
 // Manage users API's...
 export const getAllUsers = async () => {
   const res = await adminCustomPost.get(API_URL.manageUsers.userList);

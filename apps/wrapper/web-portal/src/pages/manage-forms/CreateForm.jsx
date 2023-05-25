@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 import { Select, Option } from "@material-tailwind/react";
 import { set, useForm } from "react-hook-form";
@@ -10,30 +10,30 @@ import { FaAngleRight } from "react-icons/fa";
 import UploadForm from "./UploadForm";
 import { convertODKtoXML, createForm } from "../../api";
 import Toast from "../../components/Toast";
+import { Label } from "../../components";
+import ADMIN_ROUTE_MAP from "../../routes/adminRouteMap";
 
 const CreateForm = () => {
+  const navigate = useNavigate();
   const [formStage, setFormStage] = useState(1);
   const [xmlData, setXmlData] = useState(null);
   const [formData, setFormData] = useState({});
-  const {
-    register,
-    // handleSubmit,
-    formState: { errors },
-  } = useForm();
   const [toast, setToast] = useState({
     toastOpen: false,
     toastMsg: "",
     toastType: "",
   });
 
+  const handleChange = (e) => {
+    setFormData((prevState) => ({
+      ...prevState,
+      [e.target.name]: e.target.value,
+    }));
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
-    const formData = new FormData(e.currentTarget);
-    const newForm = Object.fromEntries(formData)
-    setFormData(newForm)
-    console.log(newForm)
-    // TODO: add form validations
-    setFormStage(2)
+    setFormStage(2);
   };
 
   const handleFile = (file) => {
@@ -42,8 +42,54 @@ const CreateForm = () => {
     const formData = new FormData();
     formData.append("file", file);
     uploadOdkForm(formData);
+  };
 
-
+  const handleSaveDraft = async () => {
+    setFormData((prevState) => ({
+      ...prevState,
+      user_id: "53c57d13-d33d-439a-bd72-1f56b189642d",
+      form_status: "Draft",
+    })); //TODO:path to be added
+    let newForm = new FormData();
+    Object.keys(formData).forEach((key) => newForm.append(key, formData[key]));
+    newForm.append("user_id", "53c57d13-d33d-439a-bd72-1f56b189642d");
+    newForm.append("form_status", "Draft");
+    try {
+      const createFormResponse = await createForm(newForm);
+      setToast((prevState) => ({
+        ...prevState,
+        toastOpen: true,
+        toastMsg: "Form successfully saved as draft!",
+        toastType: "success",
+      }));
+      setTimeout(() => {
+        setToast((prevState) => ({
+          ...prevState,
+          toastOpen: false,
+          toastMsg: "",
+          toastType: "",
+        }));
+        navigate(ADMIN_ROUTE_MAP.adminModule.manageForms.home);
+      }, 3000);
+    } catch (error) {
+      console.log("error - ", error);
+      setToast((prevState) => ({
+        ...prevState,
+        toastOpen: true,
+        toastMsg: "Error occured while saving form!",
+        toastType: "error",
+      }));
+      setTimeout(
+        () =>
+          setToast((prevState) => ({
+            ...prevState,
+            toastOpen: false,
+            toastMsg: "",
+            toastType: "",
+          })),
+        3000
+      );
+    }
   };
 
   const uploadOdkForm = async (postData) => {
@@ -53,8 +99,6 @@ const CreateForm = () => {
       setXmlData(res.data);
       //TODO: function call to invoke API for uploading xml file and get the remote path
       //TODO: add remote path to formData (state).
-      // TODO:  uncomment below API call to create form
-      // const createFormResponse = await createForm(formData)
       setToast((prevState) => ({
         ...prevState,
         toastOpen: true,
@@ -106,10 +150,19 @@ const CreateForm = () => {
                 moreClass="px-6 text-primary-600 bg-white border border-primary-600"
                 style={{ backgroundColor: "" }}
                 text="Cancel"
+                onClick={() =>
+                  navigate(ADMIN_ROUTE_MAP.adminModule.manageForms.home)
+                }
               ></Button>
               <Button
-                moreClass="px-6 text-gray-500 bg-white border border-gray-300"
+                moreClass={`${
+                  Object.values(formData).length !== 6
+                    ? "cursor-not-allowed"
+                    : ""
+                } px-6 text-gray-500 bg-white border border-gray-300`}
                 text="Save as draft"
+                onClick={handleSaveDraft}
+                otherProps={{ disabled: Object.values(formData).length !== 6 }}
               ></Button>
             </div>
           </div>
@@ -140,67 +193,62 @@ const CreateForm = () => {
                 <div className="flex flex-grow">
                   <div className="grid grid-rows-3 grid-cols-6 gap-8">
                     <div className="sm:col-span-3">
-                      <label className="block text-sm font-medium leading-6 text-gray-900">
-                        Form title
-                      </label>
+                      <Label
+                        required
+                        text="Form title"
+                        moreClass="block text-sm font-medium leading-6 text-gray-900"
+                      />
                       <div className="mt-2">
                         <input
+                          required
+                          value={formData.title}
                           type="text"
                           placeholder="Type here"
                           id="title"
                           name="title"
-                          required
+                          onChange={handleChange}
                           className="block w-full rounded-md border-0 p-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                         />
-                        {errors?.title?.type === "required" && (
-                          <p className="text-red-500 mt-2 text-sm">
-                            This field is required
-                          </p>
-                        )}
-                        {errors?.title?.type === "maxLength" && (
-                          <p className="text-red-500 mt-2 text-sm">
-                            First name cannot exceed 20 characters
-                          </p>
-                        )}
-                        {errors?.title?.type === "pattern" && (
-                          <p className="text-red-500 mt-2 text-sm">
-                            Alphabetical characters only
-                          </p>
-                        )}
                       </div>
                     </div>
                     <div className="sm:col-span-3 ">
-                      <label
-                        htmlFor="institute"
-                        className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-400"
-                      >
-                        Application type
-                      </label>
+                      <Label
+                        required={true}
+                        text="Application type"
+                        htmlFor="application_type"
+                        moreClass="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-400"
+                      />
+
                       <select
                         required
-                        name="institute"
-                        id="institute"
+                        value={formData.application_type}
+                        name="application_type"
+                        id="application_type"
+                        onChange={handleChange}
                         className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                       >
                         <option value="">Select here</option>
-                        <option value="new_institute">New Institute</option>
-                        <option value="new_course">New Course</option>
-                        <option value="seat_enhancement">
+                        <option value="New Institute">New Institute</option>
+                        <option value="New Course">New Course</option>
+                        <option value="Seat Enhancement">
                           Seat Enhancement
                         </option>
                       </select>
                     </div>
                     <div className="sm:col-span-3 ">
-                      <label
+                      <Label
+                        required
+                        text="Round No."
                         htmlFor="round_no"
-                        className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-400"
-                      >
-                        Round No.
-                      </label>
+                        moreClass="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-400"
+                      />
+
                       <select
                         required
+                        value={formData.round_no}
                         name="round_no"
                         id="round_no"
+                        onChange={handleChange}
                         className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                       >
                         <option value="">Select here</option>
@@ -209,68 +257,77 @@ const CreateForm = () => {
                       </select>
                     </div>
                     <div className="sm:col-span-3">
-                      <label
+                      <Label
+                        required
+                        text="Course name"
                         htmlFor="course_type"
-                        className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-400"
-                      >
-                        Course name
-                      </label>
+                        moreClass="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-400"
+                      />
+
                       <select
                         required
+                        value={formData.course_type}
                         name="course_type"
                         id="course_type"
+                        onChange={handleChange}
                         className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                       >
                         <option value="">Select here</option>
-                        <option value="nursing">Nursing</option>
-                        <option value="paramedical">Paramedical</option>
+                        <option value="Nursing">Nursing</option>
+                        <option value="Paramedical">Paramedical</option>
                       </select>
                     </div>
 
                     <div className="sm:col-span-3 ">
-                      <label
+                      <Label
+                        required
+                        text="Form labels"
                         htmlFor="labels"
-                        className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-400"
-                      >
-                        Form labels
-                      </label>
+                        moreClass="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-400"
+                      />
+
                       <select
                         required
+                        value={formData.labels}
                         name="labels"
                         id="labels"
+                        onChange={handleChange}
                         className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                       >
                         <option value="">Select here</option>
-                        <option value="infrastructure">Infrastructure</option>
-                        <option value="teaching_learning_process">
+                        <option value="Infrastructure">Infrastructure</option>
+                        <option value="Teaching Learning Process">
                           Teaching Learning Process
                         </option>
-                        <option value="objective_structured_clinical_examination">
+                        <option value="Objective Structured Clinical Examincation">
                           Objective Structured Clinical Examincation
                         </option>
                       </select>
                     </div>
                     <div className="sm:col-span-3">
-                      <label
+                      <Label
+                        required
+                        text="Assignee"
                         htmlFor="assignee"
-                        className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-400"
-                      >
-                        Assignee
-                      </label>
+                        moreClass="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-400"
+                      />
+
                       <select
                         required
+                        value={formData.assignee}
                         name="assignee"
                         id="assignee"
+                        onChange={handleChange}
                         className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                       >
                         <option value="">Select here</option>
-                        <option value="applicant">Applicant</option>
-                        <option value="admin">Admin</option>
-                        <option value="government">Government</option>
-                        <option value="desktop_assessor">
+                        <option value="Applicant">Applicant</option>
+                        <option value="Admin">Admin</option>
+                        <option value="Government">Government</option>
+                        <option value="Desktop Assessor">
                           Desktop Assessor
                         </option>
-                        <option value="onground_assessor">
+                        <option value="On-ground Assessor">
                           On-ground Assessor
                         </option>
                       </select>
@@ -278,12 +335,20 @@ const CreateForm = () => {
                   </div>
                 </div>
                 <div className="flex justify-end">
-                  <Button
-                    moreClass="px-6 text-white bg-primary-500 border border-primary-500"
+                  <button
+                    className={`${
+                      Object.values(formData).length !== 6
+                        ? "bg-gray-400 text-gray-700 cursor-not-allowed"
+                        : "px-6 text-white bg-primary-500 border border-primary-500"
+                    } border w-[140px] h-[40px] font-medium rounded-[4px] `}
                     style={{ backgroundColor: "" }}
-                    text="Next"
                     type="submit"
-                  ></Button>
+                    disabled={
+                      Object.values(formData).length !== 6 ? true : false
+                    }
+                  >
+                    Next
+                  </button>
                 </div>
               </div>
             </form>

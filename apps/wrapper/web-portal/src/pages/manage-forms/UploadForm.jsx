@@ -92,15 +92,6 @@ const UploadForm = ({ setFormStage, handleFile, xmlData,formData }) => {
                     onClick={handleClick}
                   />
                 </div>
-                {xmlData && (
-                  <div className="flex flex-col m-auto">
-                    <Button 
-                      moreClass="text-white w-full px-6"
-                      text="Download XML file"
-                      onClick={downloadXmlFile}
-                    />
-                  </div>
-                )}
                 <div className="">
                   <Button
                     moreClass="text-gray-500 w-1/6 bg-white border border-gray-500"
