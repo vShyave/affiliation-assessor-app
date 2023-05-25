@@ -40,7 +40,7 @@ const ApplicantLogin = () => {
 
     
     const login = async (data) => {
-        const loginRes = await userService.login(data.phone);
+        const loginRes = await userService.sendOtp(data.phone);
         //below logic will be modified with real login api
         if(Object.keys(loginRes.data).length === 0 ) {
             setEnableOtp(true);
@@ -53,10 +53,14 @@ const ApplicantLogin = () => {
     const verifyOtp = async (data) => {
         const verifyOtpRes = await userService.verifyOtp(data.phone, data.otp);
         //below logic will be modified with real login api
+        console.log("Verify Otp response", verifyOtpRes)
         if(verifyOtpRes?.data?.data?.Status === "Success") {
-            setCookie("userData", {id: 11, name: "NIMHANS Hospital"});
-            navigate(APPLICANT_ROUTE_MAP.dashboardModule.my_applications);
-
+            const loginDetails  = { loginId: data.phone, password: data.phone, noJWT: false };
+            const loginResult = await userService.login(loginDetails);
+            if(loginResult.data.user) {
+                setCookie("userData", loginResult.data);
+                navigate(APPLICANT_ROUTE_MAP.dashboardModule.my_applications);
+            }   
         } else {
             console.log("Something went wrong", verifyOtpRes?.data?.status);
         }
