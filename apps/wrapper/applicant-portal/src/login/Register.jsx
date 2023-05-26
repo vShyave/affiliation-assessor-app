@@ -1,15 +1,14 @@
 import React from "react";
 
 import { Link, useNavigate } from 'react-router-dom';
-
-import { Select,     } from "@material-tailwind/react";
 import { useForm } from "react-hook-form";
 import { Button} from '../components'
 
 import { FaAngleRight } from "react-icons/fa";
 
 import APPLICANT_ROUTE_MAP from '../routes/ApplicantRoute';
-import { userService } from '../services';
+import { userService, applicantService } from '../services';
+import { forkJoin , lastValueFrom } from 'rxjs';
 
 
 
@@ -23,7 +22,6 @@ export default function SelfRegistration() {
       } = useForm();
       
     const signupHandler = async (data) => {
-        console.log("signup data" ,data)
         const { firstName, lastName, applicantName, applicantType, courseType, email, mobilePhone} = data;
         let userDetails = {
             registration: {
@@ -43,11 +41,34 @@ export default function SelfRegistration() {
                 password: mobilePhone
             }
         }
-        const signupRes = await userService.signup(userDetails);    
 
-        console.log("userDetails", userDetails);
-        navigate(APPLICANT_ROUTE_MAP.dashboardModule.congratulations);
+        const instituteDetails = {
+            instituteName: applicantName,
+            district: "Varanasi", // Capture it from UI once field is added
+            email: email,
+            address: "Shivpur, Varanasi" // Capture it from UI once field is added
+        }
 
+        const institutePocDetils  = {
+            fname: firstName,
+            lname: lastName,
+            name: `${firstName} ${lastName}`,
+            phoneNumber: mobilePhone,
+            user_id: "",
+            institute_id: ""
+        }
+
+        try  {
+            const fusionAuthSignupReq =  userService.signup(userDetails);  
+            const addInstituteReq = applicantService.addInstitute(instituteDetails);
+            const [fusionAuthSignupRes, addInstituteRes] = await lastValueFrom(forkJoin([fusionAuthSignupReq, addInstituteReq]));
+            institutePocDetils.user_id = fusionAuthSignupRes.data.user.id;
+            institutePocDetils.institute_id = addInstituteRes.data.insert_institutes_one.id;
+            await applicantService.addInstitutePoc(institutePocDetils);
+            navigate(APPLICANT_ROUTE_MAP.dashboardModule.congratulations);
+        }  catch (error) {
+            console.error('Registration failed due to some error:', error);
+        }
     };  
 
   const goBack = () => {
