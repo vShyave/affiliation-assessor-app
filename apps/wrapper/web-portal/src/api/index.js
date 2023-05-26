@@ -53,8 +53,24 @@ export const markReviewStatus = async (postData) => {
   return res;
 }
 
+// Manage forms APIs
 export const convertODKtoXML = async (postData) => {
   const res = await fileConversionCustomPost.post(API_URL.manageForms.convertODKtoXML, postData);
+  return res;
+}
+
+export const createForm = async (postData) => {
+  const res = await adminCustomPost.post(API_URL.manageForms.createForm,postData);
+  return res;
+}
+
+export const getForms = async () => {
+  const res = await adminCustomPost.get(API_URL.manageForms.getForms);
+  return res;
+}
+
+export const publishForms = async (postData) => {
+  const res = await adminCustomPost.put(API_URL.manageForms.publishForms,postData);
   return res;
 }
 
