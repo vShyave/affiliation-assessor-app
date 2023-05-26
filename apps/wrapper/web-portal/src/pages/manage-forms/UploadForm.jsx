@@ -1,15 +1,16 @@
 import React, { useState } from "react";
 import { Select, Option } from "@material-tailwind/react";
+import { Link } from "react-router-dom";
 import "./UploadForm.css";
 
 import { HiOutlineInformationCircle } from "react-icons/hi";
 import { Card, Button, Label, Input } from "./../../components";
 import { MdEventBusy } from "react-icons/md";
 
-const UploadForm = ({ setFormStage, handleFile, xmlData,formData }) => {
-  const [fileName, setFileName] = useState("")
+const UploadForm = ({ setFormStage, handleFile, xmlData, formData }) => {
+  const [fileName, setFileName] = useState("");
   const hiddenFileInput = React.useRef(null);
-  console.log(formData)
+  console.log(formData);
 
   const handleClick = (e) => {
     hiddenFileInput.current.click();
@@ -17,7 +18,9 @@ const UploadForm = ({ setFormStage, handleFile, xmlData,formData }) => {
 
   const handleChange = (e) => {
     const fileUploaded = e.target.files[0];
-    setFileName(fileUploaded.name.substring(0,fileUploaded.name.lastIndexOf(".")))
+    setFileName(
+      fileUploaded.name.substring(0, fileUploaded.name.lastIndexOf("."))
+    );
     handleFile(fileUploaded);
   };
 
@@ -29,7 +32,11 @@ const UploadForm = ({ setFormStage, handleFile, xmlData,formData }) => {
     element.setAttribute("href", window.URL.createObjectURL(file));
     element.setAttribute("download", filename);
 
-    element.dataset.downloadurl = ["text/plain", element.download, element.href].join(":");
+    element.dataset.downloadurl = [
+      "text/plain",
+      element.download,
+      element.href,
+    ].join(":");
     element.draggable = true;
     element.classList.add("dragout");
 
@@ -67,10 +74,16 @@ const UploadForm = ({ setFormStage, handleFile, xmlData,formData }) => {
                   </ul>
                 </div>
                 <div className="flex justify-center p-6">
-                  <Button
-                    moreClass="text-primary-600 border border-primary-600 bg-white"
-                    text="Download Template"
-                  />
+                  <Link
+                    to="/files/Template_Form_Creation.xlsx"
+                    target="_blank"
+                    download
+                  >
+                    <Button
+                      moreClass="text-primary-600 border border-primary-600 bg-white"
+                      text="Download Template"
+                    />
+                  </Link>
                 </div>
               </div>
             </div>
