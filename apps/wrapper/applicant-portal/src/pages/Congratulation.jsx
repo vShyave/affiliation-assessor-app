@@ -1,5 +1,5 @@
 import React from "react";
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 
 import { Button} from '../components'
 
@@ -11,6 +11,16 @@ import APPLICANT_ROUTE_MAP from '../routes/ApplicantRoute'
 
 
 export default function Congratulations() {
+    const navigate = useNavigate();
+
+    const goBack = () => {
+        navigate(-1);
+    };
+
+    const goToLogin = () => {
+        navigate(APPLICANT_ROUTE_MAP.loginModule.login);
+    };
+
   return (
         <>
             <div className="h-[48px] bg-white drop-shadow-sm">
@@ -39,8 +49,8 @@ export default function Congratulations() {
                         Self Registration process is completed.
                     </p>
                     <div className="flex place-items-end mx-auto gap-4">
-                        <Button moreClass="px-6 text-primary-600" style={{backgroundColor: '#fff'}} text="Back to home"></Button>
-                        <Button moreClass="px-6 text-white" text="Login"></Button>
+                        <Button moreClass="px-6 text-primary-600" style={{backgroundColor: '#fff'}} text="Back to home" onClick={goBack}></Button>
+                        <Button moreClass="px-6 text-white" text="Login" onClick={goToLogin}></Button>
                     </div>
                 </div>
             </div>

@@ -4,13 +4,14 @@ import { Link } from 'react-router-dom';
 import { Button, Card, ApplicationCard, FormCard } from '../components';
 import APPLICANT_ROUTE_MAP from '../routes/ApplicantRoute';
 import { applicationService, formService } from '../services';
-
+import { getCookie } from "../utils";
 
 const MyApplications = () => {
     const [loadingApplications, setLoadingApplications] = useState(false);
     const [loadingForms, setLoadingForms] = useState(false);
     const [applications, setApplications]  =  useState([])
     const [availableForms, setAvailableForms] = useState([]);
+    const instituteDetails  = getCookie("institutes");
 
     useEffect(() => {
         getApplications();
@@ -29,8 +30,11 @@ const MyApplications = () => {
     }
 
     const getAvailableForms= async () => {
+        if(!instituteDetails || !instituteDetails?.length) {
+            return;
+        }
         setLoadingForms(true);
-        const requestPayoad = {instituteId: 11};   
+        const requestPayoad = {instituteId: instituteDetails[0].id};   
         const formsResponse = await formService.getData(requestPayoad);
         if(formsResponse?.data?.courses) {
             setAvailableForms(formsResponse?.data?.courses);
