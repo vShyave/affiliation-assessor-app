@@ -74,6 +74,10 @@ export const publishForms = async (postData) => {
   return res;
 }
 
+export const unpublishForms = async (postData) => {
+  const res = await adminCustomPost.put(API_URL.manageForms.unpublishForms,postData);
+}
+
 // Manage users API's...
 export const getAllUsers = async () => {
   const res = await adminCustomPost.get(API_URL.manageUsers.userList);

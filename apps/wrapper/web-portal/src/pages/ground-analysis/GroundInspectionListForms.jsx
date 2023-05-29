@@ -6,7 +6,7 @@ import { Select, Option } from "@material-tailwind/react";
 import FilteringTable from "../../components/table/FilteringTable";
 import Card from "../../components/Card";
 
-import { readableDate } from "../../utils/common";
+import { getFieldName, readableDate } from "../../utils/common";
 import { getOnGroundAssessorData, markReviewStatus } from "../../api";
 import ADMIN_ROUTE_MAP from "../../routes/adminRouteMap";
 
@@ -107,13 +107,6 @@ export default function OnGroundInspectionAnalysis() {
     }
   };
 
-  const getFormName = (formName) => {
-    let splitValues = formName.split('_');
-    const capitalizedStr = splitValues[0].charAt(0).toUpperCase() + splitValues[0].substr(1, splitValues.substr);
-    splitValues[0] = capitalizedStr;
-    return splitValues.join(' ');
-  }
-
   const status_obj = {
     total: formsList?.length,
     submitted_today: 0,
@@ -130,7 +123,7 @@ export default function OnGroundInspectionAnalysis() {
         ", " +
         e?.institute?.district?.charAt(0).toUpperCase() +
         e?.institute?.district?.substring(1).toLowerCase(),
-      display_form_name: getFormName(e?.form_name),
+      display_form_name: getFieldName(e?.form_name),
       form_name: e?.form_name,
       assessor: e?.assessor?.name || 'NA',
       assisting_assessor:

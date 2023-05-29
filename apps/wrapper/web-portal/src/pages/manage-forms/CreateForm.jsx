@@ -17,7 +17,9 @@ const CreateForm = () => {
   const navigate = useNavigate();
   const [formStage, setFormStage] = useState(1);
   const [xmlData, setXmlData] = useState(null);
-  const [formData, setFormData] = useState({});
+  const [formData, setFormData] = useState({
+    title: ""
+  });
   const [toast, setToast] = useState({
     toastOpen: false,
     toastMsg: "",
@@ -45,11 +47,7 @@ const CreateForm = () => {
   };
 
   const handleSaveDraft = async () => {
-    setFormData((prevState) => ({
-      ...prevState,
-      user_id: "53c57d13-d33d-439a-bd72-1f56b189642d",
-      form_status: "Draft",
-    })); //TODO:path to be added
+    //TODO:path to be added
     let newForm = new FormData();
     Object.keys(formData).forEach((key) => newForm.append(key, formData[key]));
     newForm.append("user_id", "53c57d13-d33d-439a-bd72-1f56b189642d");
@@ -157,9 +155,9 @@ const CreateForm = () => {
               <Button
                 moreClass={`${
                   Object.values(formData).length !== 6
-                    ? "cursor-not-allowed"
-                    : ""
-                } px-6 text-gray-500 bg-white border border-gray-300`}
+                    ? "text-gray-500 bg-white border border-gray-300 cursor-not-allowed"
+                    : "text-white bg-primary-500 border border-primary-500"
+                } px-6`}
                 text="Save as draft"
                 onClick={handleSaveDraft}
                 otherProps={{ disabled: Object.values(formData).length !== 6 }}
@@ -228,9 +226,9 @@ const CreateForm = () => {
                         className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                       >
                         <option value="">Select here</option>
-                        <option value="New Institute">New Institute</option>
-                        <option value="New Course">New Course</option>
-                        <option value="Seat Enhancement">
+                        <option value="new_institute">New Institute</option>
+                        <option value="new_course">New Course</option>
+                        <option value="seat_enhancement">
                           Seat Enhancement
                         </option>
                       </select>
@@ -273,8 +271,8 @@ const CreateForm = () => {
                         className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                       >
                         <option value="">Select here</option>
-                        <option value="Nursing">Nursing</option>
-                        <option value="Paramedical">Paramedical</option>
+                        <option value="nursing">Nursing</option>
+                        <option value="paramedical">Paramedical</option>
                       </select>
                     </div>
 
@@ -295,12 +293,12 @@ const CreateForm = () => {
                         className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                       >
                         <option value="">Select here</option>
-                        <option value="Infrastructure">Infrastructure</option>
-                        <option value="Teaching Learning Process">
+                        <option value="infrastructure">Infrastructure</option>
+                        <option value="teaching_learning_process">
                           Teaching Learning Process
                         </option>
-                        <option value="Objective Structured Clinical Examincation">
-                          Objective Structured Clinical Examincation
+                        <option value="objective_structured_clinical_examination">
+                          Objective Structured Clinical Examination
                         </option>
                       </select>
                     </div>
@@ -321,13 +319,13 @@ const CreateForm = () => {
                         className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                       >
                         <option value="">Select here</option>
-                        <option value="Applicant">Applicant</option>
-                        <option value="Admin">Admin</option>
-                        <option value="Government">Government</option>
-                        <option value="Desktop Assessor">
+                        <option value="applicant">Applicant</option>
+                        <option value="admin">Admin</option>
+                        <option value="government">Government</option>
+                        <option value="desktop_assessor">
                           Desktop Assessor
                         </option>
-                        <option value="On-ground Assessor">
+                        <option value="on-ground_assessor">
                           On-ground Assessor
                         </option>
                       </select>

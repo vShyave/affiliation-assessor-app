@@ -24,7 +24,8 @@ ADMIN_ROUTE_MAP.adminModule = {
     home: `/${MANAGE_FORMS}`,
     overview: `/${MANAGE_FORMS}/overview`,
     createForm: `/${MANAGE_FORMS}/create-form`,
-    upload: `/${MANAGE_FORMS}/upload`
+    upload: `/${MANAGE_FORMS}/upload`,
+    viewForm: `/${MANAGE_FORMS}/view`
   },
   desktopAnalysis: {
     home: `/${DESKTOP_ANALYSIS}`,
