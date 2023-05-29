@@ -17,7 +17,9 @@ const CreateForm = () => {
   const navigate = useNavigate();
   const [formStage, setFormStage] = useState(1);
   const [xmlData, setXmlData] = useState(null);
-  const [formData, setFormData] = useState({});
+  const [formData, setFormData] = useState({
+    title: ""
+  });
   const [toast, setToast] = useState({
     toastOpen: false,
     toastMsg: "",
@@ -45,11 +47,6 @@ const CreateForm = () => {
   };
 
   const handleSaveDraft = async () => {
-    setFormData((prevState) => ({
-      ...prevState,
-      user_id: "53c57d13-d33d-439a-bd72-1f56b189642d",
-      form_status: "Draft",
-    })); //TODO:path to be added
     let newForm = new FormData();
     Object.keys(formData).forEach((key) => newForm.append(key, formData[key]));
     newForm.append("user_id", "53c57d13-d33d-439a-bd72-1f56b189642d");
@@ -157,9 +154,9 @@ const CreateForm = () => {
               <Button
                 moreClass={`${
                   Object.values(formData).length !== 6
-                    ? "cursor-not-allowed"
-                    : ""
-                } px-6 text-gray-500 bg-white border border-gray-300`}
+                    ? "text-gray-500 bg-white border border-gray-300 cursor-not-allowed"
+                    : "text-white bg-primary-500 border border-primary-500"
+                } px-6`}
                 text="Save as draft"
                 onClick={handleSaveDraft}
                 otherProps={{ disabled: Object.values(formData).length !== 6 }}
@@ -299,8 +296,8 @@ const CreateForm = () => {
                         <option value="Teaching Learning Process">
                           Teaching Learning Process
                         </option>
-                        <option value="Objective Structured Clinical Examincation">
-                          Objective Structured Clinical Examincation
+                        <option value="objective_structured_clinical_examination">
+                          Objective Structured Clinical Examination
                         </option>
                       </select>
                     </div>
@@ -327,7 +324,7 @@ const CreateForm = () => {
                         <option value="Desktop Assessor">
                           Desktop Assessor
                         </option>
-                        <option value="On-ground Assessor">
+                        <option value="on-ground_assessor">
                           On-ground Assessor
                         </option>
                       </select>
