@@ -32,7 +32,7 @@ fusionAuthAxiosService.interceptors.response.use(
         // window.location.href = “https://example.com/login”;
       }
       console.error("Looks like there was a problem. Status Code: " + res.status);
-      return Promise.reject(error);
+      return Promise.reject(res?.data?.error);
     }
   );
 

@@ -12,6 +12,7 @@ const Header = () => {
 
     const logout = () => {
         removeCookie("userData");
+        removeCookie("institutes");
         navigate(APPLICANT_ROUTE_MAP.loginModule.login);
     }
 
