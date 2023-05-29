@@ -13,7 +13,7 @@ APPLICANT_ROUTE_MAP.dashboardModule = {
     my_applications: `${APPLICANT_ROUTE_MAP.dashboard}my_applications`,
     all_applications: `${APPLICANT_ROUTE_MAP.dashboard}all_applications`,
     congratulations: `${APPLICANT_ROUTE_MAP.dashboard}congratulations`,
-   
+    createForm: `${APPLICANT_ROUTE_MAP.dashboard}create-form`
 };
 
 export default APPLICANT_ROUTE_MAP;
