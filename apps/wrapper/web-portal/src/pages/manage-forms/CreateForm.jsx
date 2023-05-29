@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 import { Link, useNavigate } from "react-router-dom";
 
@@ -8,7 +8,7 @@ import Button from "../../components/Button";
 
 import { FaAngleRight } from "react-icons/fa";
 import UploadForm from "./UploadForm";
-import { convertODKtoXML, createForm } from "../../api";
+import { convertODKtoXML, createForm, viewForm } from "../../api";
 import Toast from "../../components/Toast";
 import { Label } from "../../components";
 import ADMIN_ROUTE_MAP from "../../routes/adminRouteMap";
@@ -18,7 +18,7 @@ const CreateForm = () => {
   const [formStage, setFormStage] = useState(1);
   const [xmlData, setXmlData] = useState(null);
   const [formData, setFormData] = useState({
-    title: ""
+    title: "",
   });
   const [toast, setToast] = useState({
     toastOpen: false,
@@ -39,8 +39,6 @@ const CreateForm = () => {
   };
 
   const handleFile = (file) => {
-    console.log(file);
-    console.log(file.type);
     const formData = new FormData();
     formData.append("file", file);
     uploadOdkForm(formData);
@@ -50,8 +48,10 @@ const CreateForm = () => {
     //TODO:path to be added
     let newForm = new FormData();
     Object.keys(formData).forEach((key) => newForm.append(key, formData[key]));
-    newForm.append("user_id", "53c57d13-d33d-439a-bd72-1f56b189642d");
-    newForm.append("form_status", "Draft");
+    if (!window.location.pathname.includes("view")) {
+      newForm.append("user_id", "53c57d13-d33d-439a-bd72-1f56b189642d");
+      newForm.append("form_status", "Draft");
+    }
     try {
       const createFormResponse = await createForm(newForm);
       setToast((prevState) => ({
@@ -93,8 +93,8 @@ const CreateForm = () => {
   const uploadOdkForm = async (postData) => {
     try {
       const res = await convertODKtoXML(postData);
-      console.log(res);
       setXmlData(res.data);
+      setFormData((prevState) => ({ ...prevState, path: "www.google.com" }));
       //TODO: function call to invoke API for uploading xml file and get the remote path
       //TODO: add remote path to formData (state).
       setToast((prevState) => ({
@@ -134,6 +134,48 @@ const CreateForm = () => {
     }
   };
 
+  const getFormDetails = async (formData) => {
+    try {
+      const response = await viewForm(formData);
+      const formDetail = response.data.forms[0];
+      setFormData({
+        application_type: formDetail?.application_type,
+        assignee: formDetail?.assignee,
+        course_type: formDetail?.course_type,
+        labels: formDetail?.labels,
+        round_no: formDetail?.round,
+        title: formDetail?.title,
+      });
+    } catch (error) {
+      console.log("error - ", error);
+      setToast((prevState) => ({
+        ...prevState,
+        toastOpen: true,
+        toastMsg: "Error occured while uploading!",
+        toastType: "error",
+      }));
+      setTimeout(
+        () =>
+          setToast((prevState) => ({
+            ...prevState,
+            toastOpen: false,
+            toastMsg: "",
+            toastType: "",
+          })),
+        3000
+      );
+    }
+  };
+
+  useEffect(() => {
+    if (window.location.pathname.includes("view")) {
+      let form_id = window.location.pathname.split("/")[4];
+      let formData = new FormData();
+      formData.append("form_id", form_id);
+      getFormDetails(formData);
+    }
+  }, []);
+
   return (
     <>
       {toast.toastOpen && (
@@ -154,13 +196,13 @@ const CreateForm = () => {
               ></Button>
               <Button
                 moreClass={`${
-                  Object.values(formData).length !== 6
+                  Object.values(formData).length !== 7
                     ? "text-gray-500 bg-white border border-gray-300 cursor-not-allowed"
                     : "text-white bg-primary-500 border border-primary-500"
                 } px-6`}
                 text="Save as draft"
                 onClick={handleSaveDraft}
-                otherProps={{ disabled: Object.values(formData).length !== 6 }}
+                otherProps={{ disabled: Object.values(formData).length !== 7 }}
               ></Button>
             </div>
           </div>
