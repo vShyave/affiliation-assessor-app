@@ -47,7 +47,6 @@ const CreateForm = () => {
   };
 
   const handleSaveDraft = async () => {
-    //TODO:path to be added
     let newForm = new FormData();
     Object.keys(formData).forEach((key) => newForm.append(key, formData[key]));
     newForm.append("user_id", "53c57d13-d33d-439a-bd72-1f56b189642d");
@@ -226,9 +225,9 @@ const CreateForm = () => {
                         className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                       >
                         <option value="">Select here</option>
-                        <option value="new_institute">New Institute</option>
-                        <option value="new_course">New Course</option>
-                        <option value="seat_enhancement">
+                        <option value="New Institute">New Institute</option>
+                        <option value="New Course">New Course</option>
+                        <option value="Seat Enhancement">
                           Seat Enhancement
                         </option>
                       </select>
@@ -271,8 +270,8 @@ const CreateForm = () => {
                         className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                       >
                         <option value="">Select here</option>
-                        <option value="nursing">Nursing</option>
-                        <option value="paramedical">Paramedical</option>
+                        <option value="Nursing">Nursing</option>
+                        <option value="Paramedical">Paramedical</option>
                       </select>
                     </div>
 
@@ -293,8 +292,8 @@ const CreateForm = () => {
                         className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                       >
                         <option value="">Select here</option>
-                        <option value="infrastructure">Infrastructure</option>
-                        <option value="teaching_learning_process">
+                        <option value="Infrastructure">Infrastructure</option>
+                        <option value="Teaching Learning Process">
                           Teaching Learning Process
                         </option>
                         <option value="objective_structured_clinical_examination">
@@ -319,10 +318,10 @@ const CreateForm = () => {
                         className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                       >
                         <option value="">Select here</option>
-                        <option value="applicant">Applicant</option>
-                        <option value="admin">Admin</option>
-                        <option value="government">Government</option>
-                        <option value="desktop_assessor">
+                        <option value="Applicant">Applicant</option>
+                        <option value="Admin">Admin</option>
+                        <option value="Government">Government</option>
+                        <option value="Desktop Assessor">
                           Desktop Assessor
                         </option>
                         <option value="on-ground_assessor">
