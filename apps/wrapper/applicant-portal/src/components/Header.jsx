@@ -12,6 +12,7 @@ const Header = () => {
 
     const logout = () => {
         removeCookie("userData");
+        removeCookie("institutes");
         navigate(APPLICANT_ROUTE_MAP.loginModule.login);
     }
 
@@ -30,11 +31,11 @@ const Header = () => {
                             <Link to={APPLICANT_ROUTE_MAP.loginModule.login}>
                                 <Button moreClass="px-6 text-white" text="Login"></Button>
                             </Link> */}
-                            {userData && (
+                            {userData?.user && (
                                 <div className="relative inline-block text-left">
                                     <div>
                                         <button type="button" className="border-green-500 bg-green-500 inline-flex w-full justify-center gap-x-1.5 rounded-md px-2 py-2 text-sm font-semibold text-white-500 shadow-sm hover:bg-green-400" id="menu-button" aria-expanded="true" aria-haspopup="true" onClick={() => {setShowProfileDropdown(!showProfileDropdown)}}>
-                                            {getInitials(userData.name)}
+                                            {getInitials(userData.user.fullName)}
                                         </button>
                                     </div>
                                     {showProfileDropdown && (

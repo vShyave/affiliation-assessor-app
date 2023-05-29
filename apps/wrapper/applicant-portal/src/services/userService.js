@@ -1,27 +1,42 @@
 import axios from 'axios';
-const BASE_URL = "http://localhost:3001/user"
+import fusionAuthAxiosService from "./fusionAuthAxiosService";
+import { APIS } from "../constants";
 
-const login = async (phone) => {
-    try {
-        const res = await axios.get(BASE_URL + "/otpSend?phone="+phone);
-        return res;
-      } catch (err) {
-        console.log(err);
-        return err;
-      }
+const BASE_URL = process.env.WEB_PORTAL_USER_SERVICE_URL || "http://35.207.216.26:3003/";
+// const BASE_URL = "http://localhost:3001/";
+const REGISTRATION_BASE_URL = process.env.FUSION_AUTH_URL  || "http://35.207.216.26:9011/api/";
+const AUTH_KEY = process.env.FUSION_AUTH_API_KEY || "testkeytestkeytestkey";
+
+const sendOtp = (phone) => {
+    return axios.get(`${BASE_URL}${APIS.LOGIN.OTP_SEND}?phone=${phone}`);
+        
 }
 
-const verifyOtp = async (phone, otp) => {
-    try {
-        const res = await axios.get(BASE_URL + "/otpVerify?phone="+phone+"&otp="+otp);
-        return res;
-      } catch (err) {
-        console.log(err);
-        return err;
-      }
+const verifyOtp = (phone, otp) => {
+    // const otpDetails ={
+    //   phone,
+    //   otp,
+    //   applicationId: process.env.REACT_APP_APPLICATION_ID
+    // }
+        // const res = await axios.post(BASE_URL + "user/otpVerify", otpDetails);
+        return axios.get(`${BASE_URL}${APIS.LOGIN.OTP_VERIFY}?phone=${phone}&otp=${otp}`);
+       
 }
+
+const signup  = (userDetails) => {
+  return fusionAuthAxiosService.post(APIS.SIGNUP.FUSION_AUTH_REGISTRATION, userDetails);
+  
+}
+
+const login =  (userDetails) => {
+  return fusionAuthAxiosService.post(APIS.LOGIN.USERLOGIN, userDetails);
+}
+
+
 
 export const userService = {
+  sendOtp,
   login,
-  verifyOtp
+  verifyOtp,
+  signup,
 };

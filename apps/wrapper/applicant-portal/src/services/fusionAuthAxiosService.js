@@ -1,22 +1,19 @@
 import axios from 'axios';
 // import { getCookie } from '../utils';
 
-const BASE_URL = process.env.REACT_APP_HASURA_SERVICE_URL;
-const HASURA_CLIENT_NAME = process.env.HASURA_CLIENT_NAME || 'hasura-console';
-const X_HASURA_ADMIN_SECRET_KEY = process.env.X_HASURA_ADMIN_SECRET_KEY || 'myadminsecretkey';
+const BASE_URL = process.env.FUSION_AUTH_URL  || "http://35.207.216.26:9011/api/";
+const AUTH_KEY = process.env.FUSION_AUTH_API_KEY || "testkeytestkeytestkey";
 
-const axiosService = axios.create({
+const fusionAuthAxiosService = axios.create({
   baseURL: BASE_URL,
 });
 
-axiosService.interceptors.request.use(
+fusionAuthAxiosService.interceptors.request.use(
   (request) => {
     // const user_data = getCookie('userData');
     request.headers['Accept'] = 'application/json';
     request.headers['Content-Type'] = 'application/json';
-    request.headers['Hasura-Client-Name'] = HASURA_CLIENT_NAME;
-    request.headers['x-hasura-admin-secret'] = X_HASURA_ADMIN_SECRET_KEY;
-    // request.headers['Authorization'] = `Bearer ${user_data.token}`;
+    request.headers['Authorization'] = AUTH_KEY;
     return request;
   },
   (error) => {
@@ -24,7 +21,7 @@ axiosService.interceptors.request.use(
   }
 );
 
-axiosService.interceptors.response.use(
+fusionAuthAxiosService.interceptors.response.use(
     function (response) {
       return response;
     }, 
@@ -39,5 +36,5 @@ axiosService.interceptors.response.use(
     }
   );
 
-export default axiosService;
+export default fusionAuthAxiosService;
 

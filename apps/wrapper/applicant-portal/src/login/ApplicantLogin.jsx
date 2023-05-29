@@ -4,8 +4,10 @@ import { Link, useNavigate } from "react-router-dom";
 
 import { Card, Label, Button} from "../components";
 import APPLICANT_ROUTE_MAP from '../routes/ApplicantRoute';
-import { userService } from '../services';
-import { setCookie, getCookie } from "../utils";
+import { userService, applicantService } from '../services';
+import { setCookie, getCookie, removeCookie } from "../utils";
+import { forkJoin , lastValueFrom, from } from 'rxjs';
+import { mergeMap } from 'rxjs/operators';
 
 
 
@@ -40,25 +42,61 @@ const ApplicantLogin = () => {
 
     
     const login = async (data) => {
-        const loginRes = await userService.login(data.phone);
-        //below logic will be modified with real login api
-        if(Object.keys(loginRes.data).length === 0 ) {
-            setEnableOtp(true);
-            setPhoneNumber(data.phone);
-        } else {
-            console.log("Something went wrong", loginRes);
+        try {
+            const loginRes = await userService.sendOtp(data.phone);
+            //below logic will be modified with real login api
+            if(Object.keys(loginRes.data).length === 0 ) {
+                setEnableOtp(true);
+                setPhoneNumber(data.phone);
+            } else {
+                console.log("Something went wrong", loginRes);
+            }
+        } catch(error) {
+            console.log("Otp not sent due to some error", error);
         }
+        
+        
     }
 
     const verifyOtp = async (data) => {
-        const verifyOtpRes = await userService.verifyOtp(data.phone, data.otp);
-        //below logic will be modified with real login api
-        if(verifyOtpRes?.data?.data?.Status === "Success") {
-            setCookie("userData", {id: 11, name: "NIMHANS Hospital"});
-            navigate(APPLICANT_ROUTE_MAP.dashboardModule.my_applications);
+        try {
+            // const verifyOtpRes = await userService.verifyOtp(data.phone, data.otp);
+            // //below logic will be modified with real login api
+            // console.log("Verify Otp response", verifyOtpRes)
+            // if(verifyOtpRes?.data?.data?.Status === "Success") {
+            //     const loginDetails  = { loginId: data.phone, password: data.phone, noJWT: false };
+            //     const fusionAuthLoginReq = userService.login(loginDetails);
+            //     const applicantDetailsReq = applicantService.getApplicantDetails({user_id: });
+            //     const loginResult = await userService.login(loginDetails);
+            //     if(loginResult.data.user) {
+            //         setCookie("userData", loginResult.data);
+            //         navigate(APPLICANT_ROUTE_MAP.dashboardModule.my_applications);
+            //     }   
+            // } else {
+            //     console.log("Something went wrong", verifyOtpRes?.data?.status);
+            // }
+            const loginDetails  = { loginId: data.phone, password: data.phone, noJWT: false };
+            const verifyOtpReq = userService.verifyOtp(data.phone, data.otp);
+            const fusionAuthLoginReq = from(verifyOtpReq).pipe(
+                mergeMap(verifyOtpRes => {
+                    return userService.login(loginDetails);
+                })
+            );
 
-        } else {
-            console.log("Something went wrong", verifyOtpRes?.data?.status);
+            const applicantDetailsReq= from(fusionAuthLoginReq).pipe(
+                mergeMap(fusionAuthLoginRes  => {
+                        setCookie("userData", fusionAuthLoginRes.data);
+                        return applicantService.getApplicantDetails({user_id: fusionAuthLoginRes.data.user.id});
+                })
+            );
+
+            const [verifyOtpRes,fusionAuthLoginRes, applicantDetailsRes ] = await lastValueFrom(forkJoin([verifyOtpReq, fusionAuthLoginReq, applicantDetailsReq]));
+            setCookie("institutes", applicantDetailsRes.data.institutes);
+            navigate(APPLICANT_ROUTE_MAP.dashboardModule.my_applications);
+        } catch(error) {
+            console.log("Otp veriification and login failed due to some error", error);
+            removeCookie("institutes");
+            removeCookie("userData");
         }
     }
     
