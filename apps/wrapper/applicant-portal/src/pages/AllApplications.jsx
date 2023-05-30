@@ -4,20 +4,26 @@ import { Link } from "react-router-dom";
 import { FormCard } from "../components";
 import { FaAngleRight } from "react-icons/fa";
 import { formService } from "../services";
-
+import { getCookie } from "../utils";
 import APPLICANT_ROUTE_MAP from "../routes/ApplicantRoute";
 
 const AllApplications = () => {
   const [loadingForms, setLoadingForms] = useState(false);
   const [availableForms, setAvailableForms] = useState([]);
+  const instituteDetails = getCookie("institutes");
 
   useEffect(() => {
     getAvailableForms();
   }, []);
 
   const getAvailableForms = async () => {
+    if (!instituteDetails || !instituteDetails?.length) {
+      return;
+    }
     setLoadingForms(true);
-    const requestPayload = { instituteId: 11 };
+    const requestPayload = {
+      course_applied: instituteDetails[0].course_applied,
+    };
     const formsResponse = await formService.getData(requestPayload);
     if (formsResponse?.data?.courses) {
       setAvailableForms(formsResponse?.data?.courses);

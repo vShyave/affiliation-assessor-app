@@ -20,11 +20,14 @@ const MyApplications = () => {
   }, []);
 
   const getApplications = async () => {
+    if (!instituteDetails || !instituteDetails?.length) {
+      return;
+    }
     setLoadingApplications(true);
-    const postData = {
-      applicant_id: 47,
-    };
-    const applicationsResponse = await applicationService.getData(postData);
+    const requestPayload = { applicant_id: instituteDetails[0].id };
+    const applicationsResponse = await applicationService.getData(
+      requestPayload
+    );
     if (applicationsResponse?.data?.form_submissions) {
       setApplications(applicationsResponse?.data?.form_submissions);
     }
@@ -36,17 +39,18 @@ const MyApplications = () => {
       return;
     }
     setLoadingForms(true);
-    const requestPayload = { instituteId: instituteDetails[0].id };
+    const requestPayload = {
+      course_applied: instituteDetails[0].course_applied,
+    };
     const formsResponse = await formService.getData(requestPayload);
     if (formsResponse?.data?.courses) {
-      setAvailableForms(formsResponse?.data?.courses);
+      setAvailableForms(formsResponse?.data?.courses.slice(0, 4));
     }
     setLoadingForms(false);
   };
 
   const viewApplicationHandler = (appId) => {
     console.log("View Application clicked", appId);
-    navigate(APPLICANT_ROUTE_MAP.dashboardModule.createForm);
   };
 
   const applyFormHandler = () => {

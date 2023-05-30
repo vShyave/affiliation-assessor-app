@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { Link, useParams } from "react-router-dom";
 import { FaAngleRight } from "react-icons/fa";
 import XMLParser from "react-xml-parser";
@@ -20,6 +20,7 @@ const ENKETO_URL = process.env.REACT_APP_ENKETO_URL;
 const CreateForm = () => {
   let { formName, formId } = useParams();
   const [encodedFormURI, setEncodedFormURI] = useState("");
+  const scheduleId = useRef();
 
   const userId = "427d473d-d8ea-4bb3-b317-f230f1c9b2f7";
   const formSpec = {

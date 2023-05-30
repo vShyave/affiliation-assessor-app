@@ -93,7 +93,6 @@ export default function OnGroundInspectionAnalysis() {
       console.log("error - ", error);
     }
   };
-
   useEffect(() => {
     fetchOnGroundAssessorData();
   }, []);
@@ -150,7 +149,7 @@ export default function OnGroundInspectionAnalysis() {
   cardArray.forEach((obj) => {
     obj.value = status_obj[obj.key];
   });
-
+  var allReviwed = resData?.formsDataList.length;
   return (
     <>
       <div className="flex flex-col gap-8">
@@ -202,22 +201,37 @@ export default function OnGroundInspectionAnalysis() {
               <li className="mr-2" onClick={() => handleSelectMenu("new")}>
                 <a
                   href="#"
-                  className={`inline-block p-4 rounded-t-lg dark:text-blue-500 dark:border-blue-600 ${(state.menu_selected === 'new') ? 'text-blue-600 border-b-2 border-blue-600' : ''}`}>
+                  className={`inline-block p-4 rounded-t-lg dark:text-blue-500 dark:border-blue-600 ${
+                    state.menu_selected === "new"
+                      ? "text-blue-600 border-b-2 border-blue-600"
+                      : ""
+                  }`}
+                >
                   New
                 </a>
               </li>
               <li className="mr-2" onClick={() => handleSelectMenu("approved")}>
                 <a
                   href="#"
-                  className={`inline-block p-4 rounded-t-lg dark:text-blue-500 dark:border-blue-600 ${(state.menu_selected === 'approved') ? 'text-blue-600 border-b-2 border-blue-600' : ''}`}
-                  aria-current="page">
+                  className={`inline-block p-4 rounded-t-lg dark:text-blue-500 dark:border-blue-600 ${
+                    state.menu_selected === "approved"
+                      ? "text-blue-600 border-b-2 border-blue-600"
+                      : ""
+                  }`}
+                  aria-current="page"
+                >
                   Approved
                 </a>
               </li>
               <li className="mr-2" onClick={() => handleSelectMenu("rejected")}>
                 <a
                   href="#"
-                  className={`inline-block p-4 rounded-t-lg dark:text-blue-500 dark:border-blue-600 ${(state.menu_selected === 'rejected') ? 'text-blue-600 border-b-2 border-blue-600' : ''}`}>
+                  className={`inline-block p-4 rounded-t-lg dark:text-blue-500 dark:border-blue-600 ${
+                    state.menu_selected === "rejected"
+                      ? "text-blue-600 border-b-2 border-blue-600"
+                      : ""
+                  }`}
+                >
                   Rejected
                 </a>
               </li>
