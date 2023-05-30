@@ -24,11 +24,11 @@ import CreateForm from "./pages/manage-forms/CreateForm";
 import UploadForm from "./pages/manage-forms/UploadForm";
 
 import DesktopAnalysisList from "./pages/desktop-analysis/DesktopAnalysisList";
-import DesktopAnalysisView from "./pages/desktop-analysis/DesktopAnalysisView"
+import DesktopAnalysisView from "./pages/desktop-analysis/DesktopAnalysisView";
 import CertificateManagementList from "./pages/certificate-management/CertificateManagementList";
 import ScheduleManagementList from "./pages/schedule-management/ScheduleManagementList";
 import ManageUser from "./pages/manage-users/ManageUser";
-
+import DesktopAnalysis from "./pages/desktop-analysis/DesktopAnalysis";
 
 function App() {
   return (
@@ -64,17 +64,13 @@ function App() {
               path={ADMIN_ROUTE_MAP.adminModule.manageUsers.home}
               element={<ManageUser />}
             >
-              <Route
-                index
-                element={<ManageUsersList />}
-              ></Route>
+              <Route index element={<ManageUsersList />}></Route>
               <Route
                 path={`${ADMIN_ROUTE_MAP.adminModule.manageUsers.createUser}/:userId?`}
                 element={<AdminCreateUser />}
               ></Route>
             </Route>
-            
-              
+
             <Route
               path={ADMIN_ROUTE_MAP.adminModule.manageForms.home}
               element={<ManageForms />}
@@ -89,24 +85,22 @@ function App() {
                 element={<UploadForm />}
               ></Route>
             </Route>
-
             <Route
               path={ADMIN_ROUTE_MAP.adminModule.desktopAnalysis.home}
-              element={<DesktopAnalysisList />}
-            ></Route>
-            <Route
-              path={ADMIN_ROUTE_MAP.adminModule.desktopAnalysis.viewForm}
-              element={<DesktopAnalysisView />}
-            ></Route>
-            
+              element={<DesktopAnalysis />}
+            >
+              <Route index element={<DesktopAnalysisList />}></Route>
+              <Route
+                path={`${ADMIN_ROUTE_MAP.adminModule.desktopAnalysis.viewForm}/:formName/:formId`}
+                element={<DesktopAnalysisView />}
+              ></Route>
+            </Route>
+
             <Route
               path={ADMIN_ROUTE_MAP.adminModule.onGroundInspection.home}
               element={<GroundInspectionAnalysis />}
             >
-              <Route
-                index
-                element={<GroundInspectionListForms />}
-              ></Route>
+              <Route index element={<GroundInspectionListForms />}></Route>
               <Route
                 path={`${ADMIN_ROUTE_MAP.adminModule.onGroundInspection.viewForm}/:formName/:formId`}
                 element={<GroundInspectionViewForm />}
