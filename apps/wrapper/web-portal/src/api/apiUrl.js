@@ -11,10 +11,9 @@ const API_URL = {
     acceptApplicant: `${rest}acceptForm`,
     rejectApplicant: `${rest}rejectForm`,
     getGroundInspectionAnalysis: `${rest}getGroundInspectionAnalysis`,
-    ViewStatus:{
-      getViewStatus: `${rest}getStatusLog`
-    }
-  
+    ViewStatus: {
+      getViewStatus: `${rest}getStatusLog`,
+    },
   },
   manageForms: {
     getForms: `${rest}getForms`,
@@ -26,13 +25,13 @@ const API_URL = {
   },
   manageUsers: {
     userList: `${rest}getAllUsers`,
-    specificUser: `${rest}getSpecificUser`
+    specificUser: `${rest}getSpecificUser`,
   },
 
-  desktopAnalysis:{
-    getUsersForSchedulingAssessment:"rest/getUsersForSchedulingAssessment",
-    scheduleAssessment: `rest/scheduleAssessment`
-  }
-}
+  desktopAnalysis: {
+    getUsersForSchedulingAssessment: "rest/getUsersForSchedulingAssessment",
+    scheduleAssessment: `rest/scheduleAssessment`,
+  },
+};
 
 export default API_URL;

@@ -1,10 +1,10 @@
 import { APIS } from "../constants";
-import  axiosService  from "./axiosService";
+import axiosService from "./axiosService";
 
-const getData = () => {
-  return axiosService.get(APIS.APPLICATIONS.STATUS_LIST);
-}
+const getData = (requestPayoad) => {
+  return axiosService.post(APIS.APPLICATIONS.STATUS_LIST, requestPayoad);
+};
 
 export const applicationService = {
-  getData
+  getData,
 };
