@@ -1,10 +1,221 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { Link, useParams } from "react-router-dom";
 import { FaAngleRight } from "react-icons/fa";
+import XMLParser from "react-xml-parser";
+import Cookies from "js-cookie";
+import localforage from "localforage";
 
 import APPLICANT_ROUTE_MAP from "../routes/ApplicantRoute";
+import { Card } from "../components";
+
+import { getFormData } from "../api";
+import {
+  getPrefillXML,
+  saveFormSubmission,
+  getSubmissionXML,
+} from "../api/formApi";
+
+const ENKETO_URL = process.env.REACT_APP_ENKETO_URL;
 
 const CreateForm = () => {
+  let { formName, formId } = useParams();
+  const [encodedFormURI, setEncodedFormURI] = useState("");
+
+  const userId = "427d473d-d8ea-4bb3-b317-f230f1c9b2f7";
+  const formSpec = {
+    skipOnSuccessMessage: true,
+    prefill: {},
+    submissionURL: "",
+    name: "bsc_nursing",
+    successCheck: "async (formData) => { return true; }",
+    onSuccess: {
+      notificationMessage: "Form submitted successfully",
+      sideEffect: "async (formData) => { console.log(formData); }",
+    },
+    onFailure: {
+      message: "Form submission failed",
+      sideEffect: "async (formData) => { console.log(formData); }",
+      next: {
+        type: "url",
+        id: "google",
+      },
+    },
+    start: formName,
+  };
+
+  const startingForm = formSpec.start;
+  // const [formId, setFormId] = useState(startingForm);
+
+  const fetchFormData = async () => {
+    const postData = { form_id: formId || 16 };
+    const res = await getFormData(postData);
+    const formData = res.data.form_submissions[0];
+    console.log("formData - ", formData);
+    let formURI = await getPrefillXML(
+      `${formData?.form_name || "bsc_nursing"}`,
+      "",
+      formData.form_data,
+      formData.imageUrls
+    );
+    setEncodedFormURI(formURI);
+  };
+
+  const updateFormData = async (startingForm) => {
+    try {
+      let data = await getFromLocalForage(
+        startingForm + `${new Date().toISOString().split("T")[0]}`
+      );
+      let prefilledForm = await getSubmissionXML(
+        startingForm,
+        data.formData,
+        data.imageUrls
+      );
+      return prefilledForm;
+    } catch (err) {}
+  };
+
+  const afterFormSubmit = async (e) => {
+    const data = typeof e.data === "string" ? JSON.parse(e.data) : e.data;
+    console.log("data - ", data);
+
+    try {
+      const { nextForm, formData, onSuccessData, onFailureData } = data;
+      if (data?.state === "ON_FORM_SUCCESS_COMPLETED") {
+        const updatedFormData = await updateFormData(formSpec.start);
+
+        const storedData = await getSpecificDataFromForage("required_data");
+
+        saveFormSubmission({
+          schedule_id: scheduleId.current,
+          form_data: updatedFormData,
+          assessment_type: formName.startsWith("hospital")
+            ? "hospital"
+            : "institute",
+          form_name: formSpec.start,
+          submission_status: true,
+          assessor_id: storedData?.assessor_user_id,
+          applicant_id: storedData?.institute_id,
+          submitted_on: new Date().toJSON().slice(0, 10),
+        });
+
+        // Delete the data from the Local Forage
+        const key = `${storedData?.assessor_user_id}_${formSpec.start}${
+          new Date().toISOString().split("T")[0]
+        }`;
+        console.log("key - ", key);
+        removeItemFromLocalForage(key);
+
+        setTimeout(() => navigate(`${ROUTE_MAP.thank_you}${formName}`), 2000);
+        // setTimeout(() => navigate(formName.startsWith('hospital') ? ROUTE_MAP.hospital_forms : ROUTE_MAP.medical_assessment_options), 2000);
+        // setCookie(startingForm + `${new Date().toISOString().split("T")[0]}`, '');
+        // setCookie(startingForm + `Images${new Date().toISOString().split("T")[0]}`, '');
+      }
+
+      if (nextForm?.type === "form") {
+        setFormId(nextForm.id);
+        setOnFormSuccessData(onSuccessData);
+        setOnFormFailureData(onFailureData);
+        setEncodedFormSpec(encodeURI(JSON.stringify(formSpec.forms[formId])));
+        setEncodedFormURI(
+          getFormURI(
+            nextForm.id,
+            onSuccessData,
+            formSpec.forms[nextForm.id].prefill
+          )
+        );
+        navigate(
+          formName.startsWith("hospital")
+            ? ROUTE_MAP.hospital_forms
+            : ROUTE_MAP.medical_assessment_options
+        );
+      } else if (nextForm?.type === "url") {
+        window.location.href = nextForm.url;
+      }
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
+  const handleEventTrigger = async (e) => {
+    handleFormEvents(startingForm, afterFormSubmit, e);
+  };
+
+  const bindEventListener = () => {
+    window.addEventListener("message", handleEventTrigger);
+  };
+
+  const detachEventBinding = () => {
+    window.removeEventListener("message", handleEventTrigger);
+  };
+
+  const handleFormEvents = async (startingForm, afterFormSubmit, e) => {
+    const user = getCookie("userData");
+    if (
+      e.origin === ENKETO_URL &&
+      typeof e?.data === "string" &&
+      JSON.parse(e?.data)?.state !== "ON_FORM_SUCCESS_COMPLETED"
+    ) {
+      var formData = new XMLParser().parseFromString(
+        JSON.parse(e.data).formData
+      );
+      if (formData) {
+        let images = JSON.parse(e.data).fileURLs;
+        let prevData = await getFromLocalForage(
+          startingForm + `${new Date().toISOString().split("T")[0]}`
+        );
+        await setToLocalForage(
+          user.user.id +
+            "_" +
+            startingForm +
+            `${new Date().toISOString().split("T")[0]}`,
+          {
+            formData: JSON.parse(e.data).formData,
+            imageUrls: { ...prevData?.imageUrls, ...images },
+          }
+        );
+      }
+    }
+    afterFormSubmit(e);
+  };
+
+  const getFromLocalForage = async (key) => {
+    const user = getCookie("userData");
+    try {
+      return await localforage.getItem(user.user.id + "_" + key);
+    } catch (err) {
+      console.log(err);
+      return null;
+    }
+  };
+
+  const setToLocalForage = async (key, value) => {
+    const storedData = await getSpecificDataFromForage(key);
+    if (storedData) {
+      const newData = { ...storedData, ...value };
+      await localforage.setItem(key, newData);
+    } else {
+      await localforage.setItem(key, value);
+    }
+  };
+
+  const getSpecificDataFromForage = async (key) => {
+    return await localforage.getItem(key);
+  };
+
+  const getCookie = (cname) => {
+    try {
+      let cookie = Cookies.get(cname);
+      if (cookie) return JSON.parse(cookie);
+    } catch (error) {
+      return false;
+    }
+  };
+
+  useEffect(() => {
+    fetchFormData();
+    bindEventListener();
+  }, []);
+
   return (
     <div>
       <div className="h-[48px] bg-white drop-shadow-sm">
@@ -22,7 +233,16 @@ const CreateForm = () => {
       </div>
 
       <div className="container mx-auto py-12 px-3 min-h-[40vh]">
-        <div className="bg-white min-h-[40vh]"></div>
+        <Card moreClass="shadow-md">
+          <iframe
+            title="form"
+            src={`${ENKETO_URL}preview?formSpec=${encodeURI(
+              JSON.stringify(formSpec)
+            )}&xform=${encodedFormURI}&userId=${userId}`}
+            style={{ minHeight: "100vh", width: "100%" }}
+          />
+        </Card>
+        {/* <div className="bg-white min-h-[40vh]"></div> */}
       </div>
     </div>
   );

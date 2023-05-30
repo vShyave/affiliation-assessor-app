@@ -17,6 +17,9 @@ export const APIS = {
       ADD_INSTITUTE: "rest/addInstitute",
       ADD_INSTITUTE_POC: "rest/addInstitutePoc",
       GET_APPLICANT_DETAILS: "rest/getApplicant"
+    },
+    FORM: {
+      VIEW_FORM: "rest/getFormData"
     }
 
   };
