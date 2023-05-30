@@ -11,23 +11,22 @@ const API_URL = {
     acceptApplicant: `${rest}acceptForm`,
     rejectApplicant: `${rest}rejectForm`,
     getGroundInspectionAnalysis: `${rest}getGroundInspectionAnalysis`,
-    ViewStatus:{
-      getViewStatus: `${rest}getStatusLog`
-    }
-  
+    ViewStatus: {
+      getViewStatus: `${rest}getStatusLog`,
+    },
   },
   manageForms: {
-    convertODKtoXML: `user/convert`
+    convertODKtoXML: `user/convert`,
   },
   manageUsers: {
     userList: `${rest}getAllUsers`,
-    specificUser: `${rest}getSpecificUser`
+    specificUser: `${rest}getSpecificUser`,
   },
 
-  desktopAnalysis:{
-    getUsersForSchedulingAssessment:"rest/getUsersForSchedulingAssessment",
-    scheduleAssessment: `rest/scheduleAssessment`
-  }
-}
+  desktopAnalysis: {
+    getUsersForSchedulingAssessment: "rest/getUsersForSchedulingAssessment",
+    scheduleAssessment: `rest/scheduleAssessment`,
+  },
+};
 
 export default API_URL;
