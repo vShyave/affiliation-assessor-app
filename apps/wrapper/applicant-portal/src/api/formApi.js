@@ -25,6 +25,7 @@ export const getPrefillXML = async (form, onFormSuccessData, prefillXML, imageUr
 };
 
 export const saveFormSubmission = (data) => {
+    console.log('saveFormSubmission data - ', data);
     const query = {
         query: `mutation ($object: [form_submissions_insert_input!] = {}) {
             insert_form_submissions(objects: $object) {
@@ -81,3 +82,13 @@ export const getSubmissionXML = async (form, prefillXML, imageUrls) => {
         return null;
     }
 };
+
+const encodeFunction = (func) => encodeURIComponent(JSON.stringify(func));
+
+export const getFormURI = (form, ofsd, prefillSpec) => {
+    return encodeURIComponent(
+      `${ENKETO_MANAGER_URL}/prefillXML?form=${form}&onFormSuccessData=${encodeFunction(
+        ofsd
+      )}&prefillSpec=${encodeFunction(prefillSpec)}`
+    );
+  };

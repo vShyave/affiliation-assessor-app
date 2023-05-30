@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useRef } from "react";
-import { Link, useParams } from "react-router-dom";
+import { Link, useParams, useNavigate } from "react-router-dom";
 import { FaAngleRight } from "react-icons/fa";
 import XMLParser from "react-xml-parser";
 import Cookies from "js-cookie";
@@ -13,47 +13,95 @@ import {
   getPrefillXML,
   saveFormSubmission,
   getSubmissionXML,
+  getFormURI,
 } from "../api/formApi";
 
 const ENKETO_URL = process.env.REACT_APP_ENKETO_URL;
+// const ENKETO_URL = "https://enketo.upsmfac.org";
 
 const CreateForm = () => {
   let { formName, formId } = useParams();
   const [encodedFormURI, setEncodedFormURI] = useState("");
   const scheduleId = useRef();
+  const navigate = useNavigate();
+  const [onFormSuccessData, setOnFormSuccessData] = useState(undefined);
+  const [onFormFailureData, setOnFormFailureData] = useState(undefined);
+  const [assData, setData] = useState({
+    district: "",
+    instituteName: "",
+    nursing: "",
+    paramedical: "",
+    type: "",
+    latitude: null,
+    longitude: null,
+  });
+  const [prefilledFormData, setPrefilledFormData] = useState();
 
   const userId = "427d473d-d8ea-4bb3-b317-f230f1c9b2f7";
   const formSpec = {
-    skipOnSuccessMessage: true,
-    prefill: {},
-    submissionURL: "",
-    name: "bsc_nursing",
-    successCheck: "async (formData) => { return true; }",
-    onSuccess: {
-      notificationMessage: "Form submitted successfully",
-      sideEffect: "async (formData) => { console.log(formData); }",
-    },
-    onFailure: {
-      message: "Form submission failed",
-      sideEffect: "async (formData) => { console.log(formData); }",
-      next: {
-        type: "url",
-        id: "google",
+    forms: {
+      [formName]: {
+        skipOnSuccessMessage: true,
+        prefill: {},
+        submissionURL: "",
+        name: "bsc_nursing",
+        successCheck: "async (formData) => { return true; }",
+        onSuccess: {
+          notificationMessage: "Form submitted successfully",
+          sideEffect: "async (formData) => { console.log(formData); }",
+        },
+        onFailure: {
+          message: "Form submission failed",
+          sideEffect: "async (formData) => { console.log(formData); }",
+          next: {
+            type: "url",
+            id: "google",
+          },
+        },
       },
     },
     start: formName,
   };
 
+  // const formSpec = {
+  //   skipOnSuccessMessage: true,
+  //   prefill: {},
+  //   submissionURL: "",
+  //   name: "bsc_nursing",
+  //   successCheck: "async (formData) => { return true; }",
+  //   onSuccess: {
+  //     notificationMessage: "Form submitted successfully",
+  //     sideEffect: "async (formData) => { console.log(formData); }",
+  //   },
+  //   onFailure: {
+  //     message: "Form submission failed",
+  //     sideEffect: "async (formData) => { console.log(formData); }",
+  //     next: {
+  //       type: "url",
+  //       id: "google",
+  //     },
+  //   },
+  //   start: formName,
+  // };
+
+  const [encodedFormSpec, setEncodedFormSpec] = useState(
+    encodeURI(JSON.stringify(formSpec.forms[formId]))
+  );
+
   const startingForm = formSpec.start;
   // const [formId, setFormId] = useState(startingForm);
 
+  const removeItemFromLocalForage = (key) => {
+    localforage.removeItem(key);
+  };
+
   const fetchFormData = async () => {
-    const postData = { form_id: formId || 16 };
+    const postData = { form_id: formId || 14 };
     const res = await getFormData(postData);
     const formData = res.data.form_submissions[0];
     console.log("formData - ", formData);
     let formURI = await getPrefillXML(
-      `${formData?.form_name || "bsc_nursing"}`,
+      `${formData?.form_name}`,
       "",
       formData.form_data,
       formData.imageUrls
@@ -83,7 +131,7 @@ const CreateForm = () => {
       const { nextForm, formData, onSuccessData, onFailureData } = data;
       if (data?.state === "ON_FORM_SUCCESS_COMPLETED") {
         const updatedFormData = await updateFormData(formSpec.start);
-
+        console.log("updatedFormData - ", updatedFormData);
         const storedData = await getSpecificDataFromForage("required_data");
 
         saveFormSubmission({
@@ -105,15 +153,10 @@ const CreateForm = () => {
         }`;
         console.log("key - ", key);
         removeItemFromLocalForage(key);
-
-        setTimeout(() => navigate(`${ROUTE_MAP.thank_you}${formName}`), 2000);
-        // setTimeout(() => navigate(formName.startsWith('hospital') ? ROUTE_MAP.hospital_forms : ROUTE_MAP.medical_assessment_options), 2000);
-        // setCookie(startingForm + `${new Date().toISOString().split("T")[0]}`, '');
-        // setCookie(startingForm + `Images${new Date().toISOString().split("T")[0]}`, '');
       }
 
       if (nextForm?.type === "form") {
-        setFormId(nextForm.id);
+        // setFormId(nextForm.id);
         setOnFormSuccessData(onSuccessData);
         setOnFormFailureData(onFailureData);
         setEncodedFormSpec(encodeURI(JSON.stringify(formSpec.forms[formId])));
@@ -124,11 +167,11 @@ const CreateForm = () => {
             formSpec.forms[nextForm.id].prefill
           )
         );
-        navigate(
-          formName.startsWith("hospital")
-            ? ROUTE_MAP.hospital_forms
-            : ROUTE_MAP.medical_assessment_options
-        );
+        // navigate(
+        //   formName.startsWith("hospital")
+        //     ? ROUTE_MAP.hospital_forms
+        //     : ROUTE_MAP.medical_assessment_options
+        // );
       } else if (nextForm?.type === "url") {
         window.location.href = nextForm.url;
       }
@@ -138,6 +181,7 @@ const CreateForm = () => {
   };
 
   const handleEventTrigger = async (e) => {
+    console.log("e - ", e);
     handleFormEvents(startingForm, afterFormSubmit, e);
   };
 
@@ -151,6 +195,7 @@ const CreateForm = () => {
 
   const handleFormEvents = async (startingForm, afterFormSubmit, e) => {
     const user = getCookie("userData");
+    console.log("ENKETO_URL - ", ENKETO_URL);
     if (
       e.origin === ENKETO_URL &&
       typeof e?.data === "string" &&
@@ -215,6 +260,11 @@ const CreateForm = () => {
   useEffect(() => {
     fetchFormData();
     bindEventListener();
+    return () => {
+      detachEventBinding();
+      setData(null);
+      setPrefilledFormData(null);
+    };
   }, []);
 
   return (
@@ -237,7 +287,7 @@ const CreateForm = () => {
         <Card moreClass="shadow-md">
           <iframe
             title="form"
-            src={`${ENKETO_URL}preview?formSpec=${encodeURI(
+            src={`${ENKETO_URL}/preview?formSpec=${encodeURI(
               JSON.stringify(formSpec)
             )}&xform=${encodedFormURI}&userId=${userId}`}
             style={{ minHeight: "100vh", width: "100%" }}
