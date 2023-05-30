@@ -21,7 +21,8 @@ const API_URL = {
     convertODKtoXML: `user/convert`,
     createForm: `${rest}createForm`,
     publishForms: `${rest}publishForms`,
-    unpublishForms: `${rest}unpublishForms`
+    unpublishForms: `${rest}unpublishForms`,
+    viewForm: `${rest}viewForm`
   },
   manageUsers: {
     userList: `${rest}getAllUsers`,
