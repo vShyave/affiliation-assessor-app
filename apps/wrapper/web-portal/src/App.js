@@ -91,7 +91,7 @@ function App() {
             </Route>
 
             <Route
-              path={ADMIN_ROUTE_MAP.adminModule.desktopAnalysis.list}
+              path={ADMIN_ROUTE_MAP.adminModule.desktopAnalysis.home}
               element={<DesktopAnalysisList />}
             ></Route>
             <Route

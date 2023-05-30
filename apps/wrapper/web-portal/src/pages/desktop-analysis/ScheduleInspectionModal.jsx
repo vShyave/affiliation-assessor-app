@@ -1,48 +1,79 @@
 import React, { useEffect, useState } from "react";
+
 import Calendar from "react-calendar";
+
 import "react-calendar/dist/Calendar.css";
+
 import { formatDate } from "../../utils/common";
 
-import { getUsersForScheduling,getScheduleAssessment } from "../../api";
+import { getUsersForScheduling, getScheduleAssessment } from "../../api";
 
-import { Button , Label} from "../../components";
+import { Button, Label } from "../../components";
+
 import { Select, Option } from "@material-tailwind/react";
 
 function ScheduleInspectionModal({ closeSchedule }) {
   // const [formStatus, setFormStatus] = useState({});
+
   const [date, setDate] = useState(new Date());
 
-  const [assessorList, setAssessorList] = useState([])
-  const [selectedAssessorId, setSelectedAssessor] = useState(null)
+  const [payload, setPayload] = useState({});
 
-  const onAssessorSelect = (value) => {
-    setSelectedAssessor(value);
-  }
- 
- 
-  const onChangeDate = async(date) => {
-    let tempDate = formatDate(date)
-    const postData = {"todayDate": tempDate}
-    
-    const res = await getUsersForScheduling(postData);
-    console.log('res',res)
-    setAssessorList(()=>
-      (res.data.assessors.map((item) => ({user_id:item.user_id,name:item.name})))
-    )
+  const [assessorList, setAssessorList] = useState([]);
 
+  const [selectedAssessorId, setSelectedAssessor] = useState(null);
+
+  const onAssessorSelect = (e) => {
+    setPayload((prevState) => ({ ...prevState, assessorCode: e.target.value }));
   };
 
-  const handleScheduleAssessment = async() => {
-        
-    const postData = { 
-      "date": "2023-05-24", 
-      "instituteId": 1, 
-      "assessorCode": "Demo12"
-      }
-    const res = await getScheduleAssessment(postData)
-    console.log('res',res)
-    closeSchedule(false)
-  }
+  const onChangeDate = async (date) => {
+    let tempDate = formatDate(date);
+
+    setPayload((prevState) => ({ ...prevState, date: tempDate }));
+
+    const postData = { todayDate: tempDate };
+
+    const res = await getUsersForScheduling(postData);
+
+    console.log("res", res);
+
+    setAssessorList(() =>
+      res.data.assessors.map((item) => ({
+        user_id: item.user_id,
+
+        name: item.name,
+
+        code: item.code,
+      }))
+    );
+  };
+
+  const handleScheduleAssessment = async () => {
+    const postData = {
+      date: "2023-05-24",
+
+      instituteId: 1,
+
+      assessorCode: "Demo12",
+    };
+
+    const formData = new FormData();
+
+    formData.append("instituteId", 1);
+
+    Object.keys(payload).forEach((key) => {
+      formData.append(key, payload[key]);
+    });
+
+    console.log(Object.fromEntries(formData));
+
+    const res = await getScheduleAssessment(formData);
+
+    console.log("res", res);
+
+    closeSchedule(false);
+  };
 
   return (
     <>
@@ -52,31 +83,41 @@ function ScheduleInspectionModal({ closeSchedule }) {
             <div className="flex text-xl font-semibold">
               <h1>Schedule Assessment</h1>
             </div>
+
             <div className="flex flex-col gap-2 overflow-auto">
               <div className="flex flex-col items-center bg-white p-8">
                 <Calendar onChange={onChangeDate} minDate={new Date()} />
               </div>
 
               <div className="flex flex-col rounded-xl gap-1 bg-white px-14">
-                <Label required text="Select Assessor"></Label>
-                <Select
+                <Label
+                  htmlFor={"assessor_name"}
+                  required
+                  text="Select Assessor"
+                  moreClass="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-400"
+                ></Label>
+
+                <select
                   key={"assessor_name"}
+                  name="assessor_name"
                   label="Assessor Name"
-                  onChange={(value) => onAssessorSelect(value)}
+                  onChange={onAssessorSelect}
+                  className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                 >
                   {/* <Option value='' >Select Assessor</Option> */}
+
+                  <option value="">Select here</option>
+
                   {assessorList &&
                     assessorList.map((item) => (
-                      <Option key={item.user_id} value={item.user_id}>
+                      <option key={item.user_id} value={item.code}>
                         {item.name}
-                      </Option>
-                    ))
-                  }
-                  
-                </Select>
-                
+                      </option>
+                    ))}
+                </select>
               </div>
             </div>
+
             <div className="footer flex flex-row justify-between mt-8">
               <Button
                 onClick={() => {
@@ -85,13 +126,13 @@ function ScheduleInspectionModal({ closeSchedule }) {
                 moreClass="border border-gray-500 bg-white text-gray-500 w-[140px]"
                 text="Close"
               ></Button>
+
               <Button
-                  onClick={handleScheduleAssessment}
-                  moreClass="border text-white w-[140px]"
-                  text="Schedule"
-                  disabled={!selectedAssessorId?true:false}
-                  >
-               </Button>
+                onClick={handleScheduleAssessment}
+                moreClass="border text-white w-[140px]"
+                text="Schedule"
+                disabled={!selectedAssessorId ? true : false}
+              ></Button>
             </div>
           </div>
         </div>

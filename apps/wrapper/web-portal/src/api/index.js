@@ -73,6 +73,6 @@ export const getSpecificUser = async (postData) => {
 
 export const getScheduleAssessment = async (postData) => {
   const res = await adminCustomPost.post(API_URL.desktopAnalysis.scheduleAssessment, postData);
-  console.log(res)
+  // console.log(res)
   return res;
 }
