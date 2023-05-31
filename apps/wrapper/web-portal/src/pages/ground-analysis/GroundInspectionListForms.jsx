@@ -149,7 +149,7 @@ export default function OnGroundInspectionAnalysis() {
   cardArray.forEach((obj) => {
     obj.value = status_obj[obj.key];
   });
-  var allReviwed = resData?.formsDataList.length;
+  
   return (
     <>
       <div className="flex flex-col gap-8">
