@@ -33,7 +33,7 @@ const Header = () => {
             </div>
             <div className="flex grow justify-end items-center gap-4">
               {!showButtons && (
-                <div>
+                <div className="flex space-x-4">
                   <Link to={APPLICANT_ROUTE_MAP.dashboardModule.register}>
                     <Button
                       moreClass="px-4 text-primary-600"
