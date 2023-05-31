@@ -23,10 +23,11 @@ const API_URL = {
     specificUser: `${rest}getSpecificUser`,
   },
 
-  desktopAnalysis: {
-    getUsersForSchedulingAssessment: "rest/getUsersForSchedulingAssessment",
-    scheduleAssessment: `rest/scheduleAssessment`,
-  },
-};
+  desktopAnalysis:{
+    getUsersForSchedulingAssessment:`${rest}getUsersForSchedulingAssessment`,
+    scheduleAssessment: `${rest}scheduleAssessment`,
+    getDesktopAnalysisForms: `${rest}getDesktopAnalysis`
+  }
+}
 
 export default API_URL;

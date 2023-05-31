@@ -6,22 +6,26 @@ import "react-calendar/dist/Calendar.css";
 
 import { formatDate } from "../../utils/common";
 
-import { getUsersForScheduling, getScheduleAssessment } from "../../api";
+import {
+  getUsersForScheduling,
+  getScheduleAssessment,
+  getDesktopAnalysisForms,
+} from "../../api";
 
 import { Button, Label } from "../../components";
 
 import { Select, Option } from "@material-tailwind/react";
+import Toast from "../../components/Toast";
 
-function ScheduleInspectionModal({ closeSchedule }) {
+function ScheduleInspectionModal({ closeSchedule,setToast }) {
   // const [formStatus, setFormStatus] = useState({});
 
   const [date, setDate] = useState(new Date());
-
   const [payload, setPayload] = useState({});
-
   const [assessorList, setAssessorList] = useState([]);
+  const instituteId = window.location.pathname.split("/")[4];
 
-  const [selectedAssessorId, setSelectedAssessor] = useState(null);
+ 
 
   const onAssessorSelect = (e) => {
     setPayload((prevState) => ({ ...prevState, assessorCode: e.target.value }));
@@ -31,52 +35,75 @@ function ScheduleInspectionModal({ closeSchedule }) {
     let tempDate = formatDate(date);
 
     setPayload((prevState) => ({ ...prevState, date: tempDate }));
-
     const postData = { todayDate: tempDate };
-
     const res = await getUsersForScheduling(postData);
-
     console.log("res", res);
 
     setAssessorList(() =>
       res.data.assessors.map((item) => ({
         user_id: item.user_id,
-
         name: item.name,
-
         code: item.code,
       }))
     );
   };
 
   const handleScheduleAssessment = async () => {
-    const postData = {
-      date: "2023-05-24",
-
-      instituteId: 1,
-
-      assessorCode: "Demo12",
-    };
-
     const formData = new FormData();
 
-    formData.append("instituteId", 1);
+    formData.append("instituteId", instituteId);
 
     Object.keys(payload).forEach((key) => {
       formData.append(key, payload[key]);
     });
 
     console.log(Object.fromEntries(formData));
+    try {
+      const res = await getScheduleAssessment(formData);
 
-    const res = await getScheduleAssessment(formData);
+      console.log("res", res);
 
-    console.log("res", res);
-
-    closeSchedule(false);
+      setToast((prevState) => ({
+        ...prevState,
+        toastOpen: true,
+        toastMsg: "Inspection scheduled successfully!",
+        toastType: "success",
+      }));
+      setTimeout(
+        () =>
+          setToast((prevState) => ({
+            ...prevState,
+            toastOpen: false,
+            toastMsg: "",
+            toastType: "",
+          })),
+        3000
+      );
+      closeSchedule(false)
+    } catch (error) {
+      console.log("error - ", error);
+      setToast((prevState) => ({
+        ...prevState,
+        toastOpen: true,
+        toastMsg: "Error occured while scheduling inspection!",
+        toastType: "error",
+      }));
+      setTimeout(
+        () =>
+          setToast((prevState) => ({
+            ...prevState,
+            toastOpen: false,
+            toastMsg: "",
+            toastType: "",
+          })),
+        3000
+      );
+    } 
   };
 
   return (
     <>
+     
       <div className="flex flex-col justify-center items-center fixed inset-0 bg-opacity-25 backdrop-blur-sm">
         <div className="flex bg-white rounded-xl shadow-xl border border-gray-400 w-[560px] h-[600px] p-8">
           <div className="flex flex-col gap-4 w-full">
@@ -123,16 +150,17 @@ function ScheduleInspectionModal({ closeSchedule }) {
                 onClick={() => {
                   closeSchedule(false);
                 }}
-                moreClass="border border-gray-500 bg-white text-gray-500 w-[140px]"
+                moreClass="border border-gray-500 bg-white text-gray-500 p-0 w-[140px]"
                 text="Close"
               ></Button>
 
-              <Button
+              <button
                 onClick={handleScheduleAssessment}
-                moreClass="border text-white w-[140px]"
-                text="Schedule"
-                disabled={!selectedAssessorId ? true : false}
-              ></Button>
+                // moreClass="border text-white w-[140px]"
+                // text=""
+                // disabled={!selectedAssessorId ? true : false}
+                className={`${Object.keys(payload).length==2?"bg-blue-500 text-white":"bg-gray-200 text-gray-500 cursor-not-allowed"} border w-[140px] p-2 h-[40px] font-medium rounded-[4px] `} disabled={!Object.keys(payload).length==2?true:false}
+              >Schedule</button>
             </div>
           </div>
         </div>
