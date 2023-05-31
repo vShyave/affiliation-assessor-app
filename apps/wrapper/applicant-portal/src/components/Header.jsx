@@ -17,11 +17,11 @@ const Header = () => {
     navigate(APPLICANT_ROUTE_MAP.loginModule.login);
   };
 
-  useEffect(()=>{
- if (instituteData != null) {
-   setshowButtons(true);
- }
-  },[instituteData]);
+  useEffect(() => {
+    if (instituteData != null) {
+      setshowButtons(true);
+    }
+  }, [instituteData]);
 
   return (
     <div className="relative min-h-[80px] z-10 drop-shadow-md">
