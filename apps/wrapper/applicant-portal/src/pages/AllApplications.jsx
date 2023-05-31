@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 import { FormCard } from "../components";
 import { FaAngleRight } from "react-icons/fa";
@@ -11,6 +11,7 @@ const AllApplications = () => {
   const [loadingForms, setLoadingForms] = useState(false);
   const [availableForms, setAvailableForms] = useState([]);
   const instituteDetails = getCookie("institutes");
+  const navigate = useNavigate();
 
   useEffect(() => {
     getAvailableForms();
@@ -20,10 +21,12 @@ const AllApplications = () => {
     if (!instituteDetails || !instituteDetails?.length) {
       return;
     }
+
     setLoadingForms(true);
     const requestPayload = {
       course_applied: instituteDetails[0].course_applied,
     };
+
     const formsResponse = await formService.getData(requestPayload);
     if (formsResponse?.data?.courses) {
       setAvailableForms(formsResponse?.data?.courses);
@@ -31,8 +34,10 @@ const AllApplications = () => {
     setLoadingForms(false);
   };
 
-  const applyFormHandler = () => {
-    console.log("Apply Form clicked");
+  const applyFormHandler = (formObj) => {
+    console.log("formObj - ", formObj);
+    const path = formObj.course_name.toLowerCase().split(" ").join("_");
+    navigate(`${APPLICANT_ROUTE_MAP.dashboardModule.createForm}${path}`);
   };
 
   return (

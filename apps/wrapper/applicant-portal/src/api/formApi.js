@@ -26,6 +26,7 @@ export const getPrefillXML = async (form, onFormSuccessData, prefillXML, imageUr
 
 export const saveFormSubmission = (data) => {
     console.log('saveFormSubmission data - ', data);
+    
     const query = {
         query: `mutation ($object: [form_submissions_insert_input!] = {}) {
             insert_form_submissions(objects: $object) {
@@ -71,7 +72,7 @@ const validateResponse = async (response) => {
 export const getSubmissionXML = async (form, prefillXML, imageUrls) => {
     try {
         const res = await axios.post(
-            `${ENKETO_MANAGER_URL}/submissionXML?form=${form}`, {
+            `${ENKETO_MANAGER_URL}submissionXML?form=${form}`, {
                 prefillXML,
                 imageUrls,
             }, { headers: {} }
@@ -87,7 +88,7 @@ const encodeFunction = (func) => encodeURIComponent(JSON.stringify(func));
 
 export const getFormURI = (form, ofsd, prefillSpec) => {
     return encodeURIComponent(
-      `${ENKETO_MANAGER_URL}/prefillXML?form=${form}&onFormSuccessData=${encodeFunction(
+      `${ENKETO_MANAGER_URL}prefillXML?form=${form}&onFormSuccessData=${encodeFunction(
         ofsd
       )}&prefillSpec=${encodeFunction(prefillSpec)}`
     );

@@ -53,8 +53,10 @@ const MyApplications = () => {
     console.log("View Application clicked", appId);
   };
 
-  const applyFormHandler = () => {
-    console.log("Apply Form clicked");
+  const applyFormHandler = (formObj) => {
+    console.log("formObj - ", formObj);
+    const path = formObj.course_name.toLowerCase().split(" ").join("_");
+    navigate(`${APPLICANT_ROUTE_MAP.dashboardModule.createForm}/${path}`);
   };
 
   return (
