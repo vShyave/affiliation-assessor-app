@@ -16,7 +16,12 @@ const API_URL = {
     },
   },
   manageForms: {
+    getForms: `${rest}getForms`,
     convertODKtoXML: `user/convert`,
+    createForm: `${rest}createForm`,
+    publishForms: `${rest}publishForms`,
+    unpublishForms: `${rest}unpublishForms`,
+    viewForm: `${rest}viewForm`
   },
   manageUsers: {
     userList: `${rest}getAllUsers`,

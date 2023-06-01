@@ -6,8 +6,8 @@ import { Select, Option } from "@material-tailwind/react";
 import FilteringTable from "../../components/table/FilteringTable";
 import Card from "../../components/Card";
 
-import { readableDate } from "../../utils/common";
 import { getDesktopAnalysisForms, getOnGroundAssessorData, markReviewStatus } from "../../api";
+import { getFieldName, readableDate } from "../../utils/common";
 import ADMIN_ROUTE_MAP from "../../routes/adminRouteMap";
 
 const DesktopAnalysisList = () => {
@@ -105,15 +105,6 @@ const DesktopAnalysisList = () => {
     }
   };
 
-  const getFormName = (formName) => {
-    let splitValues = formName.split("_");
-    const capitalizedStr =
-      splitValues[0].charAt(0).toUpperCase() +
-      splitValues[0].substr(1, splitValues.substr);
-    splitValues[0] = capitalizedStr;
-    return splitValues.join(" ");
-  };
-
   const status_obj = {
     total_pending: formsList?.length,
     submitted_today: 0,
@@ -130,11 +121,11 @@ const DesktopAnalysisList = () => {
         ", " +
         e?.institute?.district?.charAt(0).toUpperCase() +
         e?.institute?.district?.substring(1).toLowerCase(),
-      course_name: getFormName(e?.form_name),
-      form_title: e?.institute?.name,
-    //   application_type: e?.assessor?.name,
-    //   assisting_assessor:
-    //     e?.assessor?.assisstant == null ? "None" : e?.assessor?.assisstant,
+      display_form_name: getFieldName(e?.form_name),
+      form_name: e?.form_name,
+      assessor: e?.assessor?.name,
+      assisting_assessor:
+        e?.assessor?.assisstant == null ? "None" : e?.assessor?.assisstant,
       published_on: readableDate(e?.submitted_on),
       id: e.form_id,
       status: e?.review_status || "NA",
