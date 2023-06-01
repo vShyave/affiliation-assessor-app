@@ -6,8 +6,8 @@ import { Select, Option } from "@material-tailwind/react";
 import FilteringTable from "../../components/table/FilteringTable";
 import Card from "../../components/Card";
 
+import { getDesktopAnalysisForms, getOnGroundAssessorData, markReviewStatus } from "../../api";
 import { getFieldName, readableDate } from "../../utils/common";
-import { getOnGroundAssessorData, markReviewStatus } from "../../api";
 import ADMIN_ROUTE_MAP from "../../routes/adminRouteMap";
 
 const DesktopAnalysisList = () => {
@@ -20,20 +20,16 @@ const DesktopAnalysisList = () => {
 
   const COLUMNS = [
     {
-      Header: "Applicant",
-      accessor: "applicant",
+      Header: "Form title",
+      accessor: "form_title",
     },
     {
-      Header: "Form name",
-      accessor: "display_form_name",
+      Header: "Application type",
+      accessor: "application_type",
     },
     {
-      Header: "Assessor",
-      accessor: "assessor",
-    },
-    {
-      Header: "Assisting Assessor",
-      accessor: "assisting_assessor",
+      Header: "Course name",
+      accessor: "course_name",
     },
     {
       Header: "Published on",
@@ -43,6 +39,10 @@ const DesktopAnalysisList = () => {
       Header: "Status",
       accessor: "status",
     },
+    {
+        Header: '',
+        accessor: 'schedule'
+    }
   ];
 
   const cardArray = [
@@ -93,12 +93,12 @@ const DesktopAnalysisList = () => {
   };
 
   useEffect(() => {
-    fetchOnGroundAssessorData();
-  }, []);
+    fetchDesktopAnalysisForms() 
+ }, []);
 
-  const fetchOnGroundAssessorData = async () => {
+  const fetchDesktopAnalysisForms = async () => {
     try {
-      const res = await getOnGroundAssessorData();
+      const res = await getDesktopAnalysisForms();
       setFormsList(res?.data?.form_submissions);
     } catch (error) {
       console.log("error - ", error);

@@ -130,3 +130,8 @@ export const getScheduleAssessment = async (postData) => {
   );
   return res;
 };
+
+export const getDesktopAnalysisForms = async () => {
+  const res = await adminCustomPost.get(API_URL.desktopAnalysis.getDesktopAnalysisForms);
+  return res;
+};
