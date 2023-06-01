@@ -38,7 +38,7 @@ const ForgotPassword = () => {
   };
 
   const verifyOtpAndChangePassword = async () => {
-    if (otp.length != 4) {
+    if (otp.length != 6) {
       setError("Please enter a valid OTP");
       setTimeout(() => setError(false), 3000);
       return;
@@ -169,7 +169,7 @@ const ForgotPassword = () => {
             <OtpInput
               value={otp}
               onChange={setOtp}
-              numInputs={4}
+              numInputs={6}
               containerStyle={"w-full py-6"}
               inputStyle={{
                 border: "1px solid #9b9b9b",
