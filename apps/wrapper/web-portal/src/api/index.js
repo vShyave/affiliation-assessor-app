@@ -3,7 +3,12 @@ import adminCustomPost from "./adminCustomApi";
 import fileConversionCustomPost from "./fileConversionCustomApi";
 
 export const registerUser = async (postData) => {
-  const res = await fetch.post(API_URL.auth.register, postData);
+  const res = await adminCustomPost.post(API_URL.auth.register, postData);
+  return res;
+};
+
+export const getRegulator = async (postData) => {
+  const res = await adminCustomPost.post(API_URL.auth.getRegulator, postData);
   return res;
 };
 
@@ -48,7 +53,6 @@ export const getOnGroundViewStatus = async (postData) => {
     API_URL.groundAnalysis.ViewStatus.getViewStatus,
     postData
   );
-  console.log("in api call", res);
   return res.data;
 };
 
@@ -60,11 +64,45 @@ export const markReviewStatus = async (postData) => {
   return res;
 };
 
+// Manage forms APIs
 export const convertODKtoXML = async (postData) => {
   const res = await fileConversionCustomPost.post(
     API_URL.manageForms.convertODKtoXML,
     postData
   );
+  return res;
+};
+
+export const createForm = async (postData) => {
+  const res = await adminCustomPost.post(
+    API_URL.manageForms.createForm,
+    postData
+  );
+  return res;
+};
+
+export const getForms = async () => {
+  const res = await adminCustomPost.get(API_URL.manageForms.getForms);
+  return res;
+};
+
+export const publishForms = async (postData) => {
+  const res = await adminCustomPost.put(
+    API_URL.manageForms.publishForms,
+    postData
+  );
+  return res;
+};
+
+export const unpublishForms = async (postData) => {
+  const res = await adminCustomPost.put(
+    API_URL.manageForms.unpublishForms,
+    postData
+  );
+};
+
+export const viewForm = async (postData) => {
+  const res = await adminCustomPost.post(API_URL.manageForms.viewForm, postData);
   return res;
 };
 
@@ -95,6 +133,10 @@ export const getScheduleAssessment = async (postData) => {
     API_URL.desktopAnalysis.scheduleAssessment,
     postData
   );
-  console.log(res);
+  return res;
+};
+
+export const getDesktopAnalysisForms = async () => {
+  const res = await adminCustomPost.get(API_URL.desktopAnalysis.getDesktopAnalysisForms);
   return res;
 };
