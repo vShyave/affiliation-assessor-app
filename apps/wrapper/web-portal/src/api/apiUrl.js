@@ -17,16 +17,22 @@ const API_URL = {
     },
   },
   manageForms: {
+    getForms: `${rest}getForms`,
     convertODKtoXML: `user/convert`,
+    createForm: `${rest}createForm`,
+    publishForms: `${rest}publishForms`,
+    unpublishForms: `${rest}unpublishForms`,
+    viewForm: `${rest}viewForm`
   },
   manageUsers: {
     userList: `${rest}getAllUsers`,
     specificUser: `${rest}getSpecificUser`,
   },
 
-  desktopAnalysis: {
-    getUsersForSchedulingAssessment: "rest/getUsersForSchedulingAssessment",
-    scheduleAssessment: `rest/scheduleAssessment`,
+desktopAnalysis:{
+    getUsersForSchedulingAssessment:`${rest}getUsersForSchedulingAssessment`,
+    scheduleAssessment: `${rest}scheduleAssessment`,
+    getDesktopAnalysisForms: `${rest}getDesktopAnalysis`
   },
   SIGNUP: {
     FUSION_AUTH_REGISTRATION: "user/registration",
