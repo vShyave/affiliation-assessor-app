@@ -33,7 +33,8 @@ export default function Header() {
 
   useEffect(() => {
     const isAuthenticated = getCookie("regulator");
-    const name = isAuthenticated[0].full_name;
+    if (!isAuthenticated) return;
+    const name = isAuthenticated[0]?.full_name;
     const firstName = name?.split(" ")[0].charAt(0).toUpperCase();
     const lastName = name
       ?.split(" ")
@@ -103,7 +104,7 @@ export default function Header() {
                   </NavLink>
                 </li>
                 <li className="flex hover:text-primary-600 hover:cursor-pointer">
-                  <NavLink to="/">Dashboard</NavLink>
+                  {/* <NavLink to="/">Dashboard</NavLink> */}
                 </li>
                 <li className="flex hover:text-primary-600 hover:cursor-pointer">
                   <NavLink to={ADMIN_ROUTE_MAP.adminModule.manageUsers.home}>
