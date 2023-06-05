@@ -148,7 +148,7 @@ const AdminLogin = () => {
                     )}
                   </div>
                   <Button
-                    moreClass="uppercase w-full mt-7"
+                    moreClass="uppercase text-white w-full mt-7"
                     text="Get Otp"
                     type="submit"
                   ></Button>
