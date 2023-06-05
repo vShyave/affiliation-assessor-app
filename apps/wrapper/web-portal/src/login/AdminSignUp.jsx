@@ -154,18 +154,12 @@ export default function AdminSingUp() {
                     className="w-full rounded-[4px] p-4 py-3 text-gray-900 ring-1  ring-gray-300 placeholder:text-gray-400 focus:ring-1 focus:ring-inset focus:ring-primary-600 sm:text-sm sm:leading-6"
                     {...register("fullName", {
                       required: true,
-                      maxLength: 20,
                       pattern: /^[A-Za-z ]+$/i,
                     })}
                   />
                   {errors?.fullName?.type === "required" && (
                     <p className="text-red-500 mt-2 text-sm">
                       This field is required
-                    </p>
-                  )}
-                  {errors?.fullName?.type === "maxLength" && (
-                    <p className="text-red-500 mt-2 text-sm">
-                      First name cannot exceed 20 characters
                     </p>
                   )}
                   {errors?.fullName?.type === "pattern" && (

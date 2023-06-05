@@ -35,6 +35,9 @@ function App() {
     <div className="App">
       <BrowserRouter>
         <Routes>
+          {/* Default landing page */}
+          <Route path="/" element={<Navigate to="/auth/login" />} />
+
           {/* Register and Login Routes */}
           <Route path={ADMIN_ROUTE_MAP.auth} element={<Authenticate />}>
             <Route
