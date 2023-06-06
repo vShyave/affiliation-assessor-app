@@ -32,9 +32,9 @@ export default function Header() {
   };
 
   useEffect(() => {
-    const getRegulator = getCookie("regulator");
-    console.log(getRegulator);
-    const name = getRegulator[0]?.full_name;
+    const isAuthenticated = getCookie("regulator");
+    if (!isAuthenticated) return;
+    const name = isAuthenticated[0]?.full_name;
     const firstName = name?.split(" ")[0].charAt(0).toUpperCase();
     const lastName = name
       ?.split(" ")
