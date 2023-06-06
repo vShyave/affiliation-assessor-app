@@ -1,15 +1,14 @@
 import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 
 // import customPost from "../api/adminCustomApi";
 import ADMIN_ROUTE_MAP from "../routes/adminRouteMap";
-// import { registerUser } from "../api";
-
+import { registerUser } from "../api";
+import { userService } from "../api/userService";
 import { Card, Label, Button, Input } from "../components";
-
+import { forkJoin, lastValueFrom } from "rxjs";
 export default function AdminSingUp() {
-
   // const initialValues = {fullname:"" , email:""}
   // const [ formValues,setFormValues ] = useState(initialValues)
   // const [ formErrors, setFormErrors ] = useState({})
@@ -19,27 +18,27 @@ export default function AdminSingUp() {
   //   fullName: String,
   //   email: String
   // }
-
+  const navigate = useNavigate();
   const {
     register,
     handleSubmit,
     watch,
-    formState: { errors }
+    formState: { errors },
   } = useForm();
 
   const onSubmit = (data) => {
     alert(JSON.stringify(data));
-  }; 
+  };
   // const{register,handleSubmit,formState: {errors}} = useForm();
   //   ,
   //   watch,
-  //   
-  // } 
+  //
+  // }
 
   // console.log(errors)
   //   const onSubmit = (data) => {
   // console.log("form submitted",data,FormValues);
-  //   }; 
+  //   };
   // console.log(watch("fullname"));
 
   // const handleChange =(e) =>{}
@@ -81,62 +80,124 @@ export default function AdminSingUp() {
   //     errors.fullname = "Username is required"
   //   }else if(!regui.test(values.fullname)){
   //     errors.fullname = "Username can contain only letters"
-  //   }  
+  //   }
   //   if(!values.email){
   //     errors.email = "Email is required"
   //   }
   //   else if(!regex.test(values.email)){
   //     errors.email = "This is not a valid email format"
-  //   }  
+  //   }
   //   return errors;
   //   }
+  const signupHandler = async (data) => {
+    const { fullName, mobilePhone } = data;
+    var firstName = fullName?.split(" ").slice(0, -1).join(" ");
+    var lastName = fullName?.split(" ").slice(-1).join(" ");
+    console.log(data.fullname);
+    console.log(firstName);
+    console.log(lastName);
+    let userDetails = {
+      registration: {
+        applicationId: process.env.REACT_APP_APPLICATION_ID,
+        usernameStatus: "ACTIVE",
+        roles: ["Admin"],
+      },
+      user: {
+        firstName: `${firstName}`,
+        lastName: `${lastName}`,
+        fullName: `${fullName}`,
+        username: mobilePhone,
+        password: mobilePhone,
+        mobilePhone: mobilePhone,
+      },
+    };
 
+    try {
+      const res = await userService.signup(userDetails);
+      console.log(res);
+
+      const adminDetails = {
+        user_id: res.data.user.id,
+        fname: firstName,
+        lname: lastName,
+        fullName: fullName,
+        phoneNumber: mobilePhone,
+      };
+      const addAdimRes = await registerUser(adminDetails);
+      console.log(addAdimRes);
+      navigate(ADMIN_ROUTE_MAP.loginModule.login);
+    } catch (error) {
+      console.error("Registration failed due to some error:", error);
+    }
+  };
   return (
     <>
       <Card moreClass="shadow-md w-screen sm:px-24 sm:w-[480px] md:w-[600px] py-16">
-        <form onSubmit={handleSubmit((data)=>{console.log(data)})}>
+        <form
+          onSubmit={handleSubmit((data) => {
+            console.log(data);
+            signupHandler(data);
+          })}
+        >
           <div className="flex flex-col">
             <h1 className="text-2xl font-medium text-center mb-8">Sign Up</h1>
             <div className="flex flex-col gap-4">
               <div className="flex flex-col gap-2">
-                <label className="block text-left leading-6 text-gray-800">Full name</label>
+                <label className="block text-left leading-6 text-gray-800">
+                  Full name
+                </label>
                 <div>
                   <input
                     type="text"
-                    id="fullname"                                                           
+                    id="fullName"
                     placeholder="Type here"
                     className="w-full rounded-[4px] p-4 py-3 text-gray-900 ring-1  ring-gray-300 placeholder:text-gray-400 focus:ring-1 focus:ring-inset focus:ring-primary-600 sm:text-sm sm:leading-6"
-                    {...register("fullname", {
+                    {...register("fullName", {
                       required: true,
-                      maxLength: 20,
-                      pattern: /^[A-Za-z]+$/i
+                      pattern: /^[A-Za-z ]+$/i,
                     })}
                   />
-                  {errors?.fullname?.type === "required" && <p className="text-red-500 mt-2 text-sm">This field is required</p>}
-                  {errors?.fullname?.type === "maxLength" && (
-                    <p className="text-red-500 mt-2 text-sm">First name cannot exceed 20 characters</p>
+                  {errors?.fullName?.type === "required" && (
+                    <p className="text-red-500 mt-2 text-sm">
+                      This field is required
+                    </p>
                   )}
-                  {errors?.fullname?.type === "pattern" && (
-                    <p className="text-red-500 mt-2 text-sm">Alphabetical characters only</p>
+                  {errors?.fullName?.type === "pattern" && (
+                    <p className="text-red-500 mt-2 text-sm">
+                      Alphabetical characters only
+                    </p>
                   )}
                 </div>
-              </div> 
+              </div>
               <div className="flex flex-col gap-2">
-                <label htmlFor="email" className="block text-left leading-6 text-gray-800">Email id</label>
+                <label
+                  htmlFor="phone"
+                  className="block text-left leading-6 text-gray-800"
+                >
+                  Mobile Number
+                </label>
                 <div>
                   <input
-                    type="email"
-                    id="email"
-                    placeholder="name@email.com"
+                    type="tel"
+                    placeholder="Type here"
+                    name="mobilePhone"
+                    id="phoneNumber"
                     className="block rounded-[4px] w-full p-4 border-0 py-3 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                    {...register("email", {
+                    {...register("mobilePhone", {
                       required: true,
-                      pattern: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/i
+                      maxLength: 10,
+                      pattern: /^([+]\d{2})?\d{10}$/,
                     })}
                   />
-                  {errors?.email?.type === "required" && <p className="text-red-500 mt-2 text-sm">This field is required</p>}
-                  {errors?.email?.type === "pattern" && (
-                    <p className="text-red-500 mt-2 text-sm">This is not a valid email format</p>
+                  {errors?.mobilePhone?.type === "required" && (
+                    <p className="text-red-500 mt-2 text-sm">
+                      This field is required
+                    </p>
+                  )}
+                  {errors?.mobilePhone?.type === "pattern" && (
+                    <p className="text-red-500 mt-2 text-sm">
+                      This is not a valid mobile number
+                    </p>
                   )}
                 </div>
               </div>
@@ -144,11 +205,16 @@ export default function AdminSingUp() {
             <Button moreClass="uppercase w-full mt-7" text="Continue"></Button>
             <p className="flex justify-center my-6">
               <span className="text-gray-400">Have an account, </span>&nbsp;
-              <Link to={ADMIN_ROUTE_MAP.loginModule.login} className="text-primary-700">Login</Link>
+              <Link
+                to={ADMIN_ROUTE_MAP.loginModule.login}
+                className="text-primary-700"
+              >
+                Login
+              </Link>
             </p>
           </div>
         </form>
       </Card>
     </>
-  )
+  );
 }

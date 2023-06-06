@@ -35,6 +35,9 @@ function App() {
     <div className="App">
       <BrowserRouter>
         <Routes>
+          {/* Default landing page */}
+          <Route path="/" element={<Navigate to="/auth/login" />} />
+
           {/* Register and Login Routes */}
           <Route path={ADMIN_ROUTE_MAP.auth} element={<Authenticate />}>
             <Route
@@ -71,6 +74,7 @@ function App() {
               ></Route>
             </Route>
 
+            {/*Manage forms routing starts here */}
             <Route
               path={ADMIN_ROUTE_MAP.adminModule.manageForms.home}
               element={<ManageForms />}
@@ -83,6 +87,10 @@ function App() {
               <Route
                 path={ADMIN_ROUTE_MAP.adminModule.manageForms.upload}
                 element={<UploadForm />}
+              ></Route>
+              <Route
+                path={`${ADMIN_ROUTE_MAP.adminModule.manageForms.viewForm}/:formName/:formId`}
+                element={<CreateForm/>}
               ></Route>
             </Route>
             <Route

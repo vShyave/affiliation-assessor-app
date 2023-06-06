@@ -6,7 +6,7 @@ import { Select, Option } from "@material-tailwind/react";
 import FilteringTable from "../../components/table/FilteringTable";
 import Card from "../../components/Card";
 
-import { readableDate } from "../../utils/common";
+import { getFieldName, readableDate } from "../../utils/common";
 import { getOnGroundAssessorData, markReviewStatus } from "../../api";
 import ADMIN_ROUTE_MAP from "../../routes/adminRouteMap";
 
@@ -106,15 +106,6 @@ export default function OnGroundInspectionAnalysis() {
     }
   };
 
-  const getFormName = (formName) => {
-    let splitValues = formName.split("_");
-    const capitalizedStr =
-      splitValues[0].charAt(0).toUpperCase() +
-      splitValues[0].substr(1, splitValues.substr);
-    splitValues[0] = capitalizedStr;
-    return splitValues.join(" ");
-  };
-
   const status_obj = {
     total: formsList?.length,
     submitted_today: 0,
@@ -131,7 +122,7 @@ export default function OnGroundInspectionAnalysis() {
         ", " +
         e?.institute?.district?.charAt(0).toUpperCase() +
         e?.institute?.district?.substring(1).toLowerCase(),
-      display_form_name: getFormName(e?.form_name),
+      display_form_name: getFieldName(e?.form_name),
       form_name: e?.form_name,
       assessor: e?.assessor?.name || "NA",
       assisting_assessor:
@@ -139,6 +130,7 @@ export default function OnGroundInspectionAnalysis() {
       published_on: readableDate(e?.submitted_on),
       id: e.form_id,
       status: e?.review_status || "NA",
+      noc_recommendation: e?.noc_recommendation,
     };
 
     resData.push(formsData);
@@ -157,7 +149,7 @@ export default function OnGroundInspectionAnalysis() {
   cardArray.forEach((obj) => {
     obj.value = status_obj[obj.key];
   });
-  var allReviwed = resData?.formsDataList?.length;
+  
   return (
     <>
       <div className="flex flex-col gap-8">
@@ -247,13 +239,39 @@ export default function OnGroundInspectionAnalysis() {
             {/* <div>create a search bar and filter component here</div> */}
 
             {/* table creation starts here */}
-            <div className="text-2xl mt-4 font-medium">
-              <FilteringTable
-                dataList={resData}
-                navigateFunc={navigateToView}
-                columns={COLUMN}
-              />
-            </div>
+            {state.menu_selected === "new" && (
+              <div className="text-2xl mt-4 font-medium">
+                <FilteringTable
+                  dataList={resData.filter(
+                    (item) => item.noc_recommendation === null
+                  )}
+                  navigateFunc={navigateToView}
+                  columns={COLUMN}
+                />
+              </div>
+            )}
+            {state.menu_selected === "approved" && (
+              <div className="text-2xl mt-4 font-medium">
+                <FilteringTable
+                  dataList={resData.filter(
+                    (item) => item.noc_recommendation === "Recommended"
+                  )}
+                  navigateFunc={navigateToView}
+                  columns={COLUMN}
+                />
+              </div>
+            )}
+            {state.menu_selected === "rejected" && (
+              <div className="text-2xl mt-4 font-medium">
+                <FilteringTable
+                  dataList={resData.filter(
+                    (item) => item.noc_recommendation === "Not recommended"
+                  )}
+                  navigateFunc={navigateToView}
+                  columns={COLUMN}
+                />
+              </div>
+            )}
           </div>
         </div>
       </div>
