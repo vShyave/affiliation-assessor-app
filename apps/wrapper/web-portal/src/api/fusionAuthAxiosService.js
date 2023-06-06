@@ -1,7 +1,6 @@
 import axios from "axios";
 
-const BASE_URL =
-  process.env.FUSION_AUTH_URL || "http://35.207.216.26:9011/api/";
+const BASE_URL = process.env.FUSION_AUTH_URL || "https://api.upsmfac.org/api/";
 const AUTH_KEY = process.env.FUSION_AUTH_API_KEY || "testkeytestkeytestkey";
 
 const fusionAuthAxiosService = axios.create({
