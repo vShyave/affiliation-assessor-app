@@ -2,12 +2,13 @@ import axios from "axios";
 import fusionAuthAxiosService from "./fusionAuthAxiosService";
 import API_URL from "./apiUrl";
 
-const BASE_URL = "https://api.upsmfac.org/";
-// process.env.WEB_PORTAL_USER_SERVICE_URL || "http://35.207.216.26:3003/";
-// const BASE_URL = "http://localhost:3001/";
+const BASE_URL =
+  process.env.REACT_APP_WEB_PORTAL_USER_SERVICE_URL ||
+  "https://api.upsmfac.org/";
 const REGISTRATION_BASE_URL =
-  process.env.FUSION_AUTH_URL || "https://api.upsmfac.org/api/";
-const AUTH_KEY = process.env.FUSION_AUTH_API_KEY || "testkeytestkeytestkey";
+  process.env.REACT_APP_FUSION_AUTH_URL || "https://api.upsmfac.org/api/";
+const AUTH_KEY =
+  process.env.REACT_APP_FUSION_AUTH_API_KEY || "testkeytestkeytestkey";
 
 const sendOtp = (phone) => {
   return axios.get(`${BASE_URL}${API_URL.LOGIN.OTP_SEND}?phone=${phone}`);

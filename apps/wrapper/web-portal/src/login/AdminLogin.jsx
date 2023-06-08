@@ -26,10 +26,10 @@ const AdminLogin = () => {
     // Check if user is already logged in (e.g., using your authentication logic)
     const checkLoggedInStatus = () => {
       const isAuthenticated = getCookie("userData");
-
+      console.log("test");
       if (isAuthenticated) {
         setIsLoggedIn(true);
-        navigate(ADMIN_ROUTE_MAP.adminModule.dashboard); // Redirect to home page
+        navigate(ADMIN_ROUTE_MAP.adminModule.manageUsers.home); // Redirect to home page
       }
     };
 
@@ -94,7 +94,7 @@ const AdminLogin = () => {
           forkJoin([verifyOtpReq, fusionAuthLoginReq, adminDetailsReq])
         );
       setCookie("regulator", adminDetailsRes.data.regulator);
-      navigate(ADMIN_ROUTE_MAP.adminModule.dashboard);
+      navigate(ADMIN_ROUTE_MAP.adminModule.manageUsers.home);
     } catch (error) {
       console.log(
         "Otp veriification and login failed due to some error",
