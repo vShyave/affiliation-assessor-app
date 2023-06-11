@@ -2,8 +2,9 @@ import axios from "axios";
 // import { getCookie } from '../utils';
 
 const BASE_URL =
-  process.env.FUSION_AUTH_URL || "http://35.207.216.26:8081/api/";
-const AUTH_KEY = process.env.FUSION_AUTH_API_KEY || "testkeytestkeytestkey";
+  process.env.REACT_APP_FUSION_AUTH_URL || "https://api.upsmfac.org/api/";
+const AUTH_KEY =
+  process.env.REACT_APP_FUSION_AUTH_API_KEY || "testkeytestkeytestkey";
 
 const fusionAuthAxiosService = axios.create({
   baseURL: BASE_URL,

@@ -7,10 +7,9 @@ import { HiOutlineInformationCircle } from "react-icons/hi";
 import { Card, Button, Label, Input } from "./../../components";
 import { MdEventBusy } from "react-icons/md";
 
-const UploadForm = ({ setFormStage, handleFile, xmlData,formData }) => {
-  const [fileName, setFileName] = useState("")
+const UploadForm = ({ setFormStage, handleFile, xmlData, formData }) => {
+  const [fileName, setFileName] = useState("");
   const hiddenFileInput = React.useRef(null);
-  console.log(formData)
 
   const handleClick = (e) => {
     hiddenFileInput.current.click();

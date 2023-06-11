@@ -13,7 +13,7 @@ ADMIN_ROUTE_MAP.loginModule = {
 };
 
 ADMIN_ROUTE_MAP.adminModule = {
-  // dashboard: "/",
+  //dashboard: "/",
   manageUsers: {
     home: `/${MANAGE_USERS}`,
     list: `/${MANAGE_USERS}/list`,
