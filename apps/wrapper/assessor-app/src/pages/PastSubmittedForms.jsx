@@ -1,88 +1,52 @@
 import React, { useState } from "react";
 import ROUTE_MAP from "../routing/routeMap";
-
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faLocationDot,
-  faCalendarAlt,
-  faBuilding,
-} from "@fortawesome/free-solid-svg-icons";
-
 import { faChevronRight } from "@fortawesome/free-solid-svg-icons";
 import CommonLayout from "../components/CommonLayout";
-
-import { getPastInspections } from "../api";
 import { getFieldName, readableDate } from "../utils/common";
 import { getSpecificDataFromForage, setToLocalForage } from "../utils";
-import Button from "../components/Button";
 import { useNavigate, useParams } from "react-router-dom";
 
-const PastApplicationForms = () => {
+const PastSubmittedForms = () => {
   const [applicationData, setApplicationData] = useState([]);
   const navigate = useNavigate();
   const [error, setError] = useState("");
-  let { date } = useParams();
+  let { date, institute } = useParams();
 
   const handleNavigateToForms = (formObj) => {
-    if (formObj?.status !== "completed" || !formObj?.status) {
-      navigate(`${ROUTE_MAP.otherforms_param_formName+formObj?.form_name.trim()+"/"+date}`);
-    } else {
-      setError("The form has already completed!");
-      setTimeout(() => {
-        setError("");
-      }, 3000);
-    }
-    setToLocalForage("selected_assessment_form",formObj)
-  };
-
-  const getPastInspectionData = async () => {
-    const assessor_id = await getSpecificDataFromForage("required_data");
-    const postData = {
-      //       date: new Date().toJSON().slice(0, 10),
-      date: new Date("2023-06-15").toJSON().slice(0, 10),
-      assessor_id: assessor_id?.assessor_user_id,
-    };
-
-    try {
-      const res = await getPastInspections(postData);
-      // console.log(res?.data?.assessment_schedule);
-      if (res?.data?.assessment_schedule?.length) {
-        setApplicationData(
-          res.data.assessment_schedule.filter(
-            (item) => item.date === window.location.pathname.split("/")[2]
-          )
-        );
-      } else {
-        setApplicationData([]);
-      }
-    } catch (error) {
-      console.log("error - ", error);
-      alert(error);
-    }
+    navigate(
+      `${
+        ROUTE_MAP.otherforms_param_formName +
+        formObj?.form_name.trim() +
+        "/" +
+        date
+      }`
+    );
+    setToLocalForage("selected_assessment_form", formObj);
   };
 
   const getPastInspectionForms = async () => {
-    const forms = (await getSpecificDataFromForage("past_inspections"))['assessment_schedule']
-    setApplicationData(
-      forms.filter(  
-        (item) => item.date === date
-      )
-    );
-  }
+    const forms = (await getSpecificDataFromForage("past_inspections"))[
+      "assessment_schedule"
+    ];
+    setApplicationData(forms.filter((item) => item.date === date));
+  };
 
   useState(() => {
-    // getPastInspectionData();
     getPastInspectionForms();
-    
   }, []);
 
   return (
     <CommonLayout
       back={ROUTE_MAP.past_inspections}
       logoutDisabled
-      pageTitle="Applications List"
+      pageTitle="Past Inspection List"
+      pageDesc={`Following are the forms submitted on ${readableDate(
+        date
+      )} to the ${institute}`}
     >
       <div className="w-full flex flex-col px-6">
+        <div className="font-medium text-xl mb-4">Submitted forms:</div>
         {error && (
           <span className="text-white animate__animated animate__headShake bg-red-500 w-80 font-medium px-4 py-3 text-center mx-auto mb-6">
             {error}
@@ -101,9 +65,9 @@ const PastApplicationForms = () => {
                   className="border-b-[1px] border-t-[1px] border-l-[1px] border-r-[1px] border-primary px-4 bg-orange-500/10 py-0"
                 >
                   <div key={idx} onClick={() => handleNavigateToForms(form)}>
-                    <div className="flex flex-row gap-2 border-1 border-black py-4">
+                    <div className="flex flex-row gap-3 border-1 border-black py-4">
                       <div className="flex grow items-center">
-                        <div className="text-[14px] font-medium">
+                        <div className="text-[14px] font-medium uppercase">
                           {getFieldName(form.form_name)}
                         </div>
                       </div>
@@ -124,4 +88,4 @@ const PastApplicationForms = () => {
   );
 };
 
-export default PastApplicationForms;
+export default PastSubmittedForms;

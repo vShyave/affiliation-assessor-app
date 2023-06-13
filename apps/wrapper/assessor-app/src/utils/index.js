@@ -186,7 +186,7 @@ export const getFormData = async ({
   setEncodedFormSpec,
   setEncodedFormURI,
 }) => {
-  const res = await getMedicalAssessments();
+  const res = await getMedicalAssessments(formSpec.date);
   let formData, prefillXMLArgs;
   if (res?.data?.assessment_schedule?.[0]) {
     loading.current = true;
@@ -206,7 +206,6 @@ export const getFormData = async ({
     });
 
     if (formSpec.date) {
-      // formData = (await getSpecificDataFromForage("selected_assessment_form"))['form_data'];
       formData = await getSpecificDataFromForage("selected_assessment_form");
       prefillXMLArgs = [
         `${formData?.form_name}`,
@@ -218,34 +217,20 @@ export const getFormData = async ({
       formData = await getFromLocalForage(
         startingForm + `${new Date().toISOString().split("T")[0]}`
       );
-      prefillXMLArgs = [
-        startingForm,
-        formSpec.forms[formId].onSuccess,
-        formData.formData,
-        formData.imageUrls,
-      ];
+      if (formData) {
+        setEncodedFormSpec(encodeURI(JSON.stringify(formSpec.forms[formId])));
+        prefillXMLArgs = [
+          startingForm,
+          formSpec.forms[formId].onSuccess,
+          formData.formData,
+          formData.imageUrls,
+        ];
+      } else {
+        prefillXMLArgs = [startingForm, formSpec.forms[formId].onSuccess];
+      }
     }
-    console.log("Form Data Local Forage --->", formData);
-    if (formData) {
-      setEncodedFormSpec(encodeURI(JSON.stringify(formSpec.forms[formId])));
-      let prefilledForm = await getPrefillXML(...prefillXMLArgs);
-      console.log("Prefilled Form:", prefilledForm);
-      setEncodedFormURI(prefilledForm);
-      // setEncodedFormURI(
-      //   getFormURI(
-      //     formId,
-      //     formSpec.forms[formId].onSuccess,
-      //     formData
-      //   )
-      // );
-    } else {
-      let prefilledForm = await getPrefillXML(
-        startingForm,
-        formSpec.forms[formId].onSuccess
-      );
-      console.log("Prefilled Form Empty:", prefilledForm);
-      setEncodedFormURI(prefilledForm);
-    }
+    let prefilledForm = await getPrefillXML(...prefillXMLArgs);
+    setEncodedFormURI(prefilledForm);
   } else setData(null);
   loading.current = false;
 };

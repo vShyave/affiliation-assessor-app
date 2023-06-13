@@ -180,12 +180,10 @@ const GenericOdkForm = (props) => {
   }, []);
 
   return (
-    // <CommonLayout back={formName.startsWith('hospital') ? ROUTE_MAP.hospital_forms : ROUTE_MAP.medical_assessment_options}>
     <CommonLayout {...props.commonLayoutProps}>
       <div className="flex flex-col items-center">
         {encodedFormURI && assData && (
           <>
-            {/* {console.log("ENCODED FROM", encodedFormURI)} */}
             <iframe
               title="form"
               src={`${ENKETO_URL}/preview?formSpec=${encodedFormSpec}&xform=${encodedFormURI}&userId=${user.user.id}`}
