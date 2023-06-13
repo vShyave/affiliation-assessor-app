@@ -17,8 +17,7 @@ import { getFormData } from "../../api";
 import { getPrefillXML } from "./../../api/formApi";
 import Toast from "../../components/Toast";
 
-// const ENKETO_URL = process.env.REACT_APP_ENKETO_URL;
-const ENKETO_URL = "http://localhost:8065/";
+const ENKETO_URL = process.env.REACT_APP_ENKETO_URL;
 
 export default function ApplicationPage({
   closeModal,
@@ -94,68 +93,11 @@ export default function ApplicationPage({
     var wrapper = document.createElement("div");
     wrapper.innerHTML = innerHTML;
 
-    console.log("wrapper - ", wrapper);
-    console.log("formElem - ", formElem);
-
-    // var url = window.URL || window.webkitURL;
-    // const link = url.createObjectURL(pdfBlobOutput);
-    // var a = document.createElement("a");
-    // a.setAttribute("download", "sample.pdf");
-    // a.setAttribute("href", link);
-    // document.body.appendChild(a);
-    // a.click();
-    // document.body.removeChild(a);
-
     doc.html(wrapper, {
       async callback(doc) {
         await doc.save("document");
       },
     });
-
-    // let canvas = await html2canvas(innerDoc.body, {});
-
-    // // Convert the iframe into a PNG image using canvas.
-    // let imgData = canvas.toDataURL("image/png");
-
-    // // Create a PDF document and add the image as a page.
-    // const doc = new JsPDF({
-    //   format: "a4",
-    //   unit: "mm",
-    // });
-    // doc.addImage(imgData, "PNG", 0, 0, 210, 297);
-
-    // // Get the file as blob output.
-    // let blob = doc.output("blob");
-    // console.log("blob - ", blob);
-
-    // html2canvas(
-    //   document
-    //     .getElementById("enketo_form_preview")
-    //     .contentWindow.document.querySelector("form")
-    // ).then((canvas) => {
-    //   let base64image = canvas.toDataURL("image/png");
-    //   console.log(base64image);
-    //   let pdf = new jsPDF("p", "px", [1600, 1131]);
-    //   pdf.addImage(base64image, "PNG", 15, 15, 1110, 360);
-    //   pdf.save("enketo-form.pdf");
-    // });
-
-    // var script = innerDoc.createElement("script");
-    // script.append(`
-    //   window.onload = function() {
-    //     document.getElementById("enketo_form_preview").addEventListener('click', function() {
-    //       const text = document.getElementById('form-title').innerText;
-    //       alert(text);
-    //     })
-    //   }
-    // `);
-    // innerDoc.documentElement.appendChild(script);
-
-    // html2canvas(innerDoc, {
-    //   onrendered: function (canvas) {
-    //     document.body.appendChild(canvas);
-    //   },
-    // });
   };
 
   const handleHtml2Canvas = async (htmlString) => {
@@ -189,21 +131,6 @@ export default function ApplicationPage({
     return blob;
   };
 
-  const testPDF = async () => {
-    let htmlString =
-      "<!DOCTYPE html><html><body><p><b>This text is bold</b></p><p><i>This text is italic</i></p><p>This is<sub> subscript</sub> and <sup>superscript</sup></p></body></html>";
-    handleHtml2Canvas(htmlString);
-
-    var url = window.URL || window.webkitURL;
-    // const link = url.createObjectURL(pdfBlobOutput);
-    // var a = document.createElement("a");
-    // a.setAttribute("download", "sample.pdf");
-    // a.setAttribute("href", link);
-    // document.body.appendChild(a);
-    // a.click();
-    // document.body.removeChild(a);
-  };
-
   const handlePrintPdf = () => {
     const URL = `${ENKETO_URL}preview?formSpec=${encodeURI(
       JSON.stringify(formSpec)
@@ -213,6 +140,9 @@ export default function ApplicationPage({
 
     // const MutationObserver = window.MutationObserver || window.WebKitMutationObserver;
     console.log("win.document - ", win);
+    setTimeout(() => {
+      win.print();
+    }, 2000);
 
     let targetNode = win.document.getElementsByTagName("form");
     const interval = setInterval(() => {
@@ -316,6 +246,7 @@ export default function ApplicationPage({
               </div>
             </Card>
             <Card moreClass="shadow-md">
+              {console.log("ENKETO_URL - ", ENKETO_URL)}
               <div ref={reportTemplateRef}>
                 <iframe
                   id="enketo_form_preview"
