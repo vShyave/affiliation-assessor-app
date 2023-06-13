@@ -12,38 +12,40 @@ import { faChevronRight } from "@fortawesome/free-solid-svg-icons";
 import CommonLayout from "../components/CommonLayout";
 
 import { getPastInspections } from "../api";
-import { getFieldName, readableDate } from "./../utils/common";
-import { getSpecificDataFromForage } from "./../utils";
+import { getFieldName, readableDate } from "../utils/common";
+import { getSpecificDataFromForage, setToLocalForage } from "../utils";
 import Button from "../components/Button";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
-const PastApplicationList = () => {
+const PastApplicationForms = () => {
   const [applicationData, setApplicationData] = useState([]);
   const navigate = useNavigate();
   const [error, setError] = useState("");
+  let { date } = useParams();
 
   const handleNavigateToForms = (formObj) => {
     if (formObj?.status !== "completed" || !formObj?.status) {
-      navigate(`${ROUTE_MAP.past_application_list_view+"/"+formObj?.form_name.trim()+"/"+window.location.pathname.split("/")[2]}`);
+      navigate(`${ROUTE_MAP.otherforms_param_formName+formObj?.form_name.trim()+"/"+date}`);
     } else {
       setError("The form has already completed!");
       setTimeout(() => {
         setError("");
       }, 3000);
     }
+    setToLocalForage("selected_assessment_form",formObj)
   };
 
   const getPastInspectionData = async () => {
     const assessor_id = await getSpecificDataFromForage("required_data");
     const postData = {
       //       date: new Date().toJSON().slice(0, 10),
-      date: new Date("2023-06-13").toJSON().slice(0, 10),
+      date: new Date("2023-06-15").toJSON().slice(0, 10),
       assessor_id: assessor_id?.assessor_user_id,
     };
 
     try {
       const res = await getPastInspections(postData);
-      console.log(res?.data?.assessment_schedule);
+      // console.log(res?.data?.assessment_schedule);
       if (res?.data?.assessment_schedule?.length) {
         setApplicationData(
           res.data.assessment_schedule.filter(
@@ -59,8 +61,19 @@ const PastApplicationList = () => {
     }
   };
 
+  const getPastInspectionForms = async () => {
+    const forms = (await getSpecificDataFromForage("past_inspections"))['assessment_schedule']
+    setApplicationData(
+      forms.filter(  
+        (item) => item.date === date
+      )
+    );
+  }
+
   useState(() => {
-    getPastInspectionData();
+    // getPastInspectionData();
+    getPastInspectionForms();
+    
   }, []);
 
   return (
@@ -111,4 +124,4 @@ const PastApplicationList = () => {
   );
 };
 
-export default PastApplicationList;
+export default PastApplicationForms;

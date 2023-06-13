@@ -12,7 +12,7 @@ import CommonLayout from "../components/CommonLayout";
 
 import { getPastInspections } from "../api";
 import { readableDate } from "./../utils/common";
-import { getSpecificDataFromForage } from "./../utils";
+import { getSpecificDataFromForage, setToLocalForage } from "./../utils";
 import Button from "../components/Button";
 import { useNavigate } from "react-router-dom";
 
@@ -25,7 +25,7 @@ const PastInspections = () => {
     const assessor_id = await getSpecificDataFromForage("required_data");
     const postData = {
       // date: new Date().toJSON().slice(0, 10),
-      date: new Date("2023-06-13").toJSON().slice(0,10),
+      date: new Date("2023-06-15").toJSON().slice(0,10),
       assessor_id: assessor_id?.assessor_user_id,
     };
     current_assessor_id=assessor_id?.assessor_user_id
@@ -34,6 +34,7 @@ const PastInspections = () => {
       const res = await getPastInspections(postData);
       if (res?.data?.assessment_schedule?.length) {
         setInspectionData(res.data.assessment_schedule);
+        setToLocalForage("past_inspections",{"assessment_schedule":res.data.assessment_schedule})
       } else {
         setInspectionData([]);
       }

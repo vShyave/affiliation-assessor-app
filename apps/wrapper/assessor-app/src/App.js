@@ -42,7 +42,7 @@ import CaptureSelfie from "./pages/CaptureSelfie";
 import Form from "./pages/Form";
 
 import "./App.css";
-import PastApplicationList from "./pages/PastApplicationList";
+import PastApplicationForms from "./pages/PastApplicationForms";
 
 export const StateContext = createContext();
 
@@ -95,15 +95,15 @@ function App() {
               path={`${ROUTE_MAP.past_application_list}/:date`}
               element={
                 <PrivateRoute>
-                  <PastApplicationList />
+                  <PastApplicationForms />
                 </PrivateRoute>
               }
             />
            <Route
-              path={`${ROUTE_MAP.past_application_list_view}/:formName/:date`}
+              path={`${ROUTE_MAP.otherforms_param_formName}:formName/:date`}
               element={
                 <PrivateRoute>
-                  <GenericOdkForm commonLayoutProps={{back:`${ROUTE_MAP.past_application_list+"/"+window.location.pathname.split("/")[4]}`,logoutDisabled:true, downloadFile: true }} />
+                  <GenericOdkForm commonLayoutProps={{back:-1,logoutDisabled:true, downloadFile: true }} />
                 </PrivateRoute>
               }
             />

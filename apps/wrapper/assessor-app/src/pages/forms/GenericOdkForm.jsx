@@ -20,7 +20,7 @@ const ENKETO_URL = process.env.REACT_APP_ENKETO_URL;
 
 const GenericOdkForm = (props) => {
   const user = getCookie("userData");
-  let { formName } = useParams();
+  let { formName, date } = useParams();
   const scheduleId = useRef();
   const formSpec = {
     forms: {
@@ -45,6 +45,7 @@ const GenericOdkForm = (props) => {
       },
     },
     start: formName,
+    date: date,
     metaData: {},
   };
 
@@ -115,7 +116,6 @@ const GenericOdkForm = (props) => {
         const key = `${storedData?.assessor_user_id}_${formSpec.start}${
           new Date().toISOString().split("T")[0]
         }`;
-        console.log("key - ", key);
         removeItemFromLocalForage(key);
 
         setTimeout(() => navigate(`${ROUTE_MAP.thank_you}${formName}`), 2000);
@@ -181,11 +181,11 @@ const GenericOdkForm = (props) => {
 
   return (
     // <CommonLayout back={formName.startsWith('hospital') ? ROUTE_MAP.hospital_forms : ROUTE_MAP.medical_assessment_options}>
-    <CommonLayout {...props.commonLayoutProps} >
+    <CommonLayout {...props.commonLayoutProps}>
       <div className="flex flex-col items-center">
         {encodedFormURI && assData && (
           <>
-            {console.log("ENCODED FROM", encodedFormURI)}
+            {/* {console.log("ENCODED FROM", encodedFormURI)} */}
             <iframe
               title="form"
               src={`${ENKETO_URL}/preview?formSpec=${encodedFormSpec}&xform=${encodedFormURI}&userId=${user.user.id}`}
