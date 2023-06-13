@@ -42,6 +42,7 @@ import CaptureSelfie from "./pages/CaptureSelfie";
 import Form from "./pages/Form";
 
 import "./App.css";
+import PastApplicationList from "./pages/PastApplicationList";
 
 export const StateContext = createContext();
 
@@ -87,6 +88,22 @@ function App() {
               element={
                 <PrivateRoute>
                   <PastInspections />
+                </PrivateRoute>
+              }
+            />
+            <Route
+              path={`${ROUTE_MAP.past_application_list}/:date`}
+              element={
+                <PrivateRoute>
+                  <PastApplicationList />
+                </PrivateRoute>
+              }
+            />
+           <Route
+              path={`${ROUTE_MAP.past_application_list_view}/:formName/:date`}
+              element={
+                <PrivateRoute>
+                  <GenericOdkForm commonLayoutProps={{back:`${ROUTE_MAP.past_application_list+"/"+window.location.pathname.split("/")[4]}`,logoutDisabled:true, downloadFile: true }} />
                 </PrivateRoute>
               }
             />
@@ -274,7 +291,7 @@ function App() {
               path={`${ROUTE_MAP.otherforms_param_formName}:formName`}
               element={
                 <PrivateRoute>
-                  <GenericOdkForm />
+                  <GenericOdkForm commonLayoutProps={{back:ROUTE_MAP.assessment_type,logoutDisabled:true }} />
                 </PrivateRoute>
               }
             />

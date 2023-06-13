@@ -4,6 +4,15 @@ export const readableDate = (dateStr) => {
     return date.getDate() + ' ' + month[date.getMonth()] + ' ' + date.getFullYear();
 }
 
+export const getFieldName = (formName) => {
+    if(formName){
+      let splitValues = formName.split('_')
+      const capitalizedStr = splitValues[0].charAt(0).toUpperCase() + splitValues[0].substr(1, splitValues.substr);
+      splitValues[0] = capitalizedStr;
+      return splitValues.join(' ');
+    }
+  }
+
 export const StoreToLocalStorage = (dataToStore, storageKey) => {
     const storedData = localStorage.getItem(storageKey);
     if (storedData) {
