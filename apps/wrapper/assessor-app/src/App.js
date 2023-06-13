@@ -92,7 +92,7 @@ function App() {
               }
             />
             <Route
-              path={`${ROUTE_MAP.past_application_list}/:date`}
+              path={`${ROUTE_MAP.past_application_list}/:date/:institute`}
               element={
                 <PrivateRoute>
                   <PastApplicationList />

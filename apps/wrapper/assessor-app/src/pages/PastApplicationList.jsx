@@ -15,16 +15,25 @@ import { getPastInspections } from "../api";
 import { getFieldName, readableDate } from "./../utils/common";
 import { getSpecificDataFromForage } from "./../utils";
 import Button from "../components/Button";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 const PastApplicationList = () => {
   const [applicationData, setApplicationData] = useState([]);
   const navigate = useNavigate();
   const [error, setError] = useState("");
+  const { date, institute } = useParams();
 
   const handleNavigateToForms = (formObj) => {
     if (formObj?.status !== "completed" || !formObj?.status) {
-      navigate(`${ROUTE_MAP.past_application_list_view+"/"+formObj?.form_name.trim()+"/"+window.location.pathname.split("/")[2]}`);
+      navigate(
+        `${
+          ROUTE_MAP.past_application_list_view +
+          "/" +
+          formObj?.form_name.trim() +
+          "/" +
+          window.location.pathname.split("/")[2]
+        }`
+      );
     } else {
       setError("The form has already completed!");
       setTimeout(() => {
@@ -36,7 +45,6 @@ const PastApplicationList = () => {
   const getPastInspectionData = async () => {
     const assessor_id = await getSpecificDataFromForage("required_data");
     const postData = {
-      //       date: new Date().toJSON().slice(0, 10),
       date: new Date("2023-06-13").toJSON().slice(0, 10),
       assessor_id: assessor_id?.assessor_user_id,
     };
@@ -67,7 +75,10 @@ const PastApplicationList = () => {
     <CommonLayout
       back={ROUTE_MAP.past_inspections}
       logoutDisabled
-      pageTitle="Applications List"
+      pageTitle="Past Inspection List"
+      pageDesc={`Following are the forms submitted on ${readableDate(
+        date
+      )} to the ${institute}`}
     >
       <div className="w-full flex flex-col px-6">
         {error && (

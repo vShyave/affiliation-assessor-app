@@ -19,16 +19,16 @@ import { useNavigate } from "react-router-dom";
 const PastInspections = () => {
   const navigate = useNavigate();
   const [inspectionData, setInspectionData] = useState([]);
-  let current_assessor_id = ""
+  let current_assessor_id = "";
 
   const getPastInspectionData = async () => {
     const assessor_id = await getSpecificDataFromForage("required_data");
     const postData = {
       // date: new Date().toJSON().slice(0, 10),
-      date: new Date("2023-06-13").toJSON().slice(0,10),
+      date: new Date("2023-06-13").toJSON().slice(0, 10),
       assessor_id: assessor_id?.assessor_user_id,
     };
-    current_assessor_id=assessor_id?.assessor_user_id
+    current_assessor_id = assessor_id?.assessor_user_id;
 
     try {
       const res = await getPastInspections(postData);
@@ -43,9 +43,9 @@ const PastInspections = () => {
     }
   };
 
-  const handleClick = (route) =>{
-    navigate(route)
-  }
+  const handleClick = (route) => {
+    navigate(route);
+  };
 
   useState(() => {
     getPastInspectionData();
@@ -90,8 +90,8 @@ const PastInspections = () => {
                     />
                     <div className="text-gray-500">Applicant name</div>
                   </div>
-                  <div className="text-secondary text-[18px] font-medium">
-                    {el.institute.name || "NA"}
+                  <div className="text-secondary text-[18px] font-medium capitalize">
+                    {el.institute.name?.toLowerCase() || "NA"}
                   </div>
                 </div>
                 <hr className="border-slate-300" />
@@ -103,16 +103,32 @@ const PastInspections = () => {
                     />
                     <div className="text-gray-500">District</div>
                   </div>
-                  <div className="text-secondary text-[18px] font-medium">
-                    {el.institute.district || "NA"}
+                  <div className="text-secondary text-[18px] font-medium capitalize">
+                    {el.institute.district?.toLowerCase() || "NA"}
                   </div>
                 </div>
                 <hr className="border-slate-300" />
-                {el?.form_submissions.length? <Button
-                  text={"View Details"}
-                  styles="border-primary text-white bg-primary"
-                  onClick={() => handleClick(`${ROUTE_MAP.past_application_list}/${el.date}`)}
-                />: "No Form Submitted"}
+                {el?.form_submissions.length ? (
+                  <Button
+                    text={"View Details"}
+                    styles="border-primary text-white bg-primary"
+                    onClick={() =>
+                      handleClick(
+                        `${ROUTE_MAP.past_application_list}/${el.date}/${el.name}`
+                      )
+                    }
+                  />
+                ) : (
+                  <Button
+                    styles="border-secondary text-secondary"
+                    text={"No forms found!"}
+                    onClick={() =>
+                      handleClick(
+                        `${ROUTE_MAP.past_application_list}/2023-06-12/OMEGA COLLEGE`
+                      )
+                    }
+                  ></Button>
+                )}
               </div>
             );
           })
