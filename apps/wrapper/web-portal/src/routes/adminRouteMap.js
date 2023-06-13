@@ -13,7 +13,7 @@ ADMIN_ROUTE_MAP.loginModule = {
 };
 
 ADMIN_ROUTE_MAP.adminModule = {
-  // dashboard: "/",
+  
   manageUsers: {
     home: `/${MANAGE_USERS}`,
     list: `/${MANAGE_USERS}/list`,
@@ -42,6 +42,7 @@ ADMIN_ROUTE_MAP.adminModule = {
   scheduleManagement: {
     list: "schedule/list",
   },
+  
 };
 
 // Desktop Analysis Routes

@@ -34,12 +34,9 @@ export default function Header() {
   useEffect(() => {
     const isAuthenticated = getCookie("regulator");
     if (!isAuthenticated) return;
-    const name = isAuthenticated[0]?.full_name;
+    const name = isAuthenticated ? isAuthenticated[0]?.full_name:""
     const firstName = name?.split(" ")[0].charAt(0).toUpperCase();
-    const lastName = name
-      ?.split(" ")
-      [name.split(" ").length - 1].charAt(0)
-      .toUpperCase();
+    const lastName = name?.split(" ")[name.split(" ").length - 1].charAt(0).toUpperCase();
     const chars = firstName + lastName;
     setUserInfoChars(chars);
   }, []);
@@ -103,9 +100,9 @@ export default function Header() {
                     <AiFillHome className="text-white text-xl" />
                   </NavLink>
                 </li>
-                <li className="flex hover:text-primary-600 hover:cursor-pointer">
-                  {/* <NavLink to="/">Dashboard</NavLink> */}
-                </li>
+                {/* <li className="flex hover:text-primary-600 hover:cursor-pointer">
+                  <NavLink to={ADMIN_ROUTE_MAP.adminModule.dashboard}>Dashboard</NavLink>
+                </li> */}
                 <li className="flex hover:text-primary-600 hover:cursor-pointer">
                   <NavLink to={ADMIN_ROUTE_MAP.adminModule.manageUsers.home}>
                     Manage Users

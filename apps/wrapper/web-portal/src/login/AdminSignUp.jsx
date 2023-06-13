@@ -143,13 +143,17 @@ export default function AdminSingUp() {
             <h1 className="text-2xl font-medium text-center mb-8">Sign Up</h1>
             <div className="flex flex-col gap-4">
               <div className="flex flex-col gap-2">
-                <label className="block text-left leading-6 text-gray-800">
-                  Full name
-                </label>
+                <Label 
+                htmlFor="fullName"
+                text="Full name"
+                required
+                >
+                </Label>
                 <div>
                   <input
                     type="text"
                     id="fullName"
+                    name="fullName"
                     placeholder="Type here"
                     className="w-full rounded-[4px] p-4 py-3 text-gray-900 ring-1  ring-gray-300 placeholder:text-gray-400 focus:ring-1 focus:ring-inset focus:ring-primary-600 sm:text-sm sm:leading-6"
                     {...register("fullName", {
@@ -170,17 +174,17 @@ export default function AdminSingUp() {
                 </div>
               </div>
               <div className="flex flex-col gap-2">
-                <label
-                  htmlFor="phone"
-                  className="block text-left leading-6 text-gray-800"
+                <Label
+                  htmlFor="phoneNumber"
+                  text="Mobile Number"
+                  required
                 >
-                  Mobile Number
-                </label>
+                </Label>
                 <div>
                   <input
                     type="tel"
                     placeholder="Type here"
-                    name="mobilePhone"
+                    name="phoneNumber"
                     id="phoneNumber"
                     className="block rounded-[4px] w-full p-4 border-0 py-3 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                     {...register("mobilePhone", {
@@ -207,7 +211,7 @@ export default function AdminSingUp() {
               <span className="text-gray-400">Have an account, </span>&nbsp;
               <Link
                 to={ADMIN_ROUTE_MAP.loginModule.login}
-                className="text-primary-700"
+                className="text-primary-700 "
               >
                 Login
               </Link>

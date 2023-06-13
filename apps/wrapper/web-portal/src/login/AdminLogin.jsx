@@ -29,7 +29,7 @@ const AdminLogin = () => {
 
       if (isAuthenticated) {
         setIsLoggedIn(true);
-        navigate(ADMIN_ROUTE_MAP.adminModule.dashboard); // Redirect to home page
+        navigate(ADMIN_ROUTE_MAP.adminModule.dashboard.home); // Redirect to home page
       }
     };
 

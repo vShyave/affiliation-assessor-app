@@ -1,6 +1,6 @@
 import React, { useMemo } from "react";
-import { useTable, useGlobalFilter, useSortBy, usePagination } from "react-table";
-import { Select, Option } from "@material-tailwind/react";
+import { useTable, useGlobalFilter, useSortBy, usePagination, useRowSelect } from "react-table";
+import { Select, Option, Checkbox } from "@material-tailwind/react";
 
 import GlobalFilter from "./GlobalFilter";
 
@@ -27,7 +27,24 @@ const FilteringTable = (props) => {
     gotoPage,
     pageCount,
     setPageSize,
-  } = useTable({ columns, data }, useGlobalFilter,useSortBy, usePagination);
+    selectedFlatRows
+  } = useTable({ columns, data }, useGlobalFilter,useSortBy, usePagination, useRowSelect,
+      (hooks) => {
+      hooks.visibleColumns.push((columns) =>{
+        return[
+                {
+                  id: 'selection',
+                  Header: ({getToggleAllRowsSelectedProps}) =>(
+                    <Checkbox{...getToggleAllRowsSelectedProps()}/>
+                  ),
+                  Cell: ({ row }) =>
+                   (<Checkbox {...row.getToggleRowSelectedProps()}/>)
+                },
+                  ...columns
+              ]
+            })
+          }
+        );
 
   const { globalFilter, pageIndex,pageSize } = state;
 
@@ -76,8 +93,20 @@ const FilteringTable = (props) => {
           </tbody>
         </table>
       </div>
-
-      <div className="flex flex-col font-normal text-[16px] py-8 gap-8">
+      <pre>
+        <code>
+          {
+            JSON.stringify(
+              {
+                selectedFlatRows: selectedFlatRows.map((row) => row.original),
+              },
+              null,
+              2
+            )
+          }
+        </code>
+      </pre>
+       <div className="flex flex-col font-normal text-[16px] py-8 gap-8">
         <span className="font-medium flex justify-center">
           Page{' '}
           <strong>

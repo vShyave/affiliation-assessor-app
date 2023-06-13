@@ -91,7 +91,7 @@ const FormsOverview = () => {
       accessor: "unpublish",
     },
     {
-      Header: "Preview",
+      Header: "Preview",  
       accessor: "preview",
     },
   ];
@@ -102,7 +102,7 @@ const FormsOverview = () => {
     // const postData = { form_id: formObj?.form_id };
     // viewForm(postData);
   };
-  
+
   const viewForm = async (postData) => {
     try {
       const res = await markReviewStatus(postData);
@@ -148,7 +148,7 @@ const FormsOverview = () => {
   };
 
   formsList?.forEach((e) => {
-    console.log(e)
+    console.log(e);
     var formsData = {
       title: getFieldName(e?.title),
       application_type: getFieldName(e?.application_type),
@@ -170,7 +170,7 @@ const FormsOverview = () => {
                 alertMsg: "Are you sure to publish the form?",
                 actionButtonLabel: "Publish",
                 actionFunction: publish,
-                actionProps: [e?.form_id]
+                actionProps: [e?.form_id],
               },
             }));
           }}
@@ -190,7 +190,7 @@ const FormsOverview = () => {
                 alertMsg: "Are you sure to unpublish the form?",
                 actionButtonLabel: "Unpublish",
                 actionFunction: unpublish,
-                actionProps: [e?.form_id]
+                actionProps: [e?.form_id],
               },
             }));
           }}
