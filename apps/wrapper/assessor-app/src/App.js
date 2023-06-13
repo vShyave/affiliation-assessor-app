@@ -4,7 +4,6 @@ import { createContext, useEffect, useState } from "react";
 import ROUTE_MAP from "./routing/routeMap";
 import { getCookie } from "./utils";
 
-import Home from "./pages/Home";
 import MedicalAssessor from "./pages/MedicalAssessor";
 import MedicalAssessments from "./pages/MedicalAssessments";
 import UpcomingMedicalAssessments from "./pages/UpcomingMedicalAssessments";
@@ -42,7 +41,7 @@ import CaptureSelfie from "./pages/CaptureSelfie";
 import Form from "./pages/Form";
 
 import "./App.css";
-import PastApplicationList from "./pages/PastApplicationList";
+import PastSubmittedForms from "./pages/PastSubmittedForms";
 
 export const StateContext = createContext();
 
@@ -95,15 +94,15 @@ function App() {
               path={`${ROUTE_MAP.past_application_list}/:date/:institute`}
               element={
                 <PrivateRoute>
-                  <PastApplicationList />
+                  <PastSubmittedForms />
                 </PrivateRoute>
               }
             />
-           <Route
-              path={`${ROUTE_MAP.past_application_list_view}/:formName/:date`}
+            <Route
+              path={`${ROUTE_MAP.otherforms_param_formName}/:formName/:date`}
               element={
                 <PrivateRoute>
-                  <GenericOdkForm commonLayoutProps={{back:`${ROUTE_MAP.past_application_list+"/"+window.location.pathname.split("/")[4]}`,logoutDisabled:true, downloadFile: true }} />
+                  <GenericOdkForm commonLayoutProps={{ logoutDisabled:true, downloadFile: true }} />
                 </PrivateRoute>
               }
             />
@@ -272,29 +271,13 @@ function App() {
               }
             />
             {/* <Route
-              path={ROUTE_MAP.osce_unoccupied_beds}
-              element={
-                <PrivateRoute odk="osce_unoccupied_beds">
-                  <UnoccupiedBeds />
-                </PrivateRoute>
-              }
-            />
-            <Route
-              path={ROUTE_MAP.vital_signs}
-              element={
-                <PrivateRoute odk="vital-signs">
-                  <VitalSigns />
-                </PrivateRoute>
-              }
-            /> */}
-            <Route
               path={`${ROUTE_MAP.otherforms_param_formName}:formName`}
               element={
                 <PrivateRoute>
-                  <GenericOdkForm commonLayoutProps={{back:ROUTE_MAP.assessment_type,logoutDisabled:true }} />
+                  <GenericOdkForm commonLayoutProps={{back:ROUTE_MAP.assessment_type, logoutDisabled:true }} />
                 </PrivateRoute>
               }
-            />
+            /> */}
             <Route
               path={`${ROUTE_MAP.osceForm_param_osceName}:osceName`}
               element={
@@ -335,7 +318,7 @@ function App() {
                 </PrivateRoute>
               }
             />
-            <Route path={ROUTE_MAP.root_star} element={<Home />} />
+            <Route path={ROUTE_MAP.root_star} element={<MedicalAssessor />} />
           </Routes>
         </BrowserRouter>
       </StateContext.Provider>

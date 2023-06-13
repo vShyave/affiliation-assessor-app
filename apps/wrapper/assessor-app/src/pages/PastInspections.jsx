@@ -8,32 +8,35 @@ import {
   faBuilding,
 } from "@fortawesome/free-solid-svg-icons";
 
+import Button from "../components/Button";
+
 import CommonLayout from "../components/CommonLayout";
 
 import { getPastInspections } from "../api";
 import { readableDate } from "./../utils/common";
-import { getSpecificDataFromForage } from "./../utils";
-import Button from "../components/Button";
+import { getSpecificDataFromForage, setToLocalForage } from "./../utils";
+
 import { useNavigate } from "react-router-dom";
 
 const PastInspections = () => {
   const navigate = useNavigate();
   const [inspectionData, setInspectionData] = useState([]);
-  let current_assessor_id = "";
 
   const getPastInspectionData = async () => {
     const assessor_id = await getSpecificDataFromForage("required_data");
     const postData = {
-      // date: new Date().toJSON().slice(0, 10),
       date: new Date("2023-06-15").toJSON().slice(0, 10),
       assessor_id: assessor_id?.assessor_user_id,
     };
-    current_assessor_id = assessor_id?.assessor_user_id;
+    // let current_assessor_id = assessor_id?.assessor_user_id;
 
     try {
       const res = await getPastInspections(postData);
       if (res?.data?.assessment_schedule?.length) {
         setInspectionData(res.data.assessment_schedule);
+        setToLocalForage("past_inspections", {
+          assessment_schedule: res.data.assessment_schedule,
+        });
       } else {
         setInspectionData([]);
       }
@@ -122,11 +125,6 @@ const PastInspections = () => {
                   <Button
                     styles="border-secondary text-secondary"
                     text={"No forms found!"}
-                    onClick={() =>
-                      handleClick(
-                        `${ROUTE_MAP.past_application_list}/2023-06-12/OMEGA COLLEGE`
-                      )
-                    }
                   ></Button>
                 )}
               </div>

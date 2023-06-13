@@ -20,7 +20,7 @@ const ENKETO_URL = process.env.REACT_APP_ENKETO_URL;
 
 const GenericOdkForm = (props) => {
   const user = getCookie("userData");
-  let { formName } = useParams();
+  let { formName, date } = useParams();
   const scheduleId = useRef();
   const formSpec = {
     forms: {
@@ -45,6 +45,7 @@ const GenericOdkForm = (props) => {
       },
     },
     start: formName,
+    date: date,
     metaData: {},
   };
 
@@ -174,7 +175,6 @@ const GenericOdkForm = (props) => {
       <div className="flex flex-col items-center">
         {encodedFormURI && assData && (
           <>
-            {console.log("ENCODED FROM", encodedFormURI)}
             <iframe
               title="form"
               src={`${ENKETO_URL}/preview?formSpec=${encodedFormSpec}&xform=${encodedFormURI}&userId=${user.user.id}`}

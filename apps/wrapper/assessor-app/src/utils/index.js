@@ -157,6 +157,7 @@ export const handleFormEvents = async (startingForm, afterFormSubmit, e) => {
 
 export const getFormData = async ({ loading, scheduleId, formSpec, startingForm, formId, setData, setEncodedFormSpec, setEncodedFormURI }) => {
   const res = await getMedicalAssessments();
+  let formData, prefillXMLArgs;
   if (res?.data?.assessment_schedule?.[0]) {
     loading.current = true;
     let ass = res?.data?.assessment_schedule?.[0];
@@ -173,25 +174,56 @@ export const getFormData = async ({ loading, scheduleId, formSpec, startingForm,
       latitude: ass.institute.latitude,
       longitude: ass.institute.longitude,
     });
-    let formData = await getFromLocalForage(startingForm + `${new Date().toISOString().split("T")[0]}`);
-    console.log("Form Data Local Forage --->", formData)
-    if (formData) {
-      setEncodedFormSpec(encodeURI(JSON.stringify(formSpec.forms[formId])));
-      let prefilledForm = await getPrefillXML(startingForm, formSpec.forms[formId].onSuccess, formData.formData, formData.imageUrls);
-      console.log("Prefilled Form:", prefilledForm)
-      setEncodedFormURI(prefilledForm)
-      // setEncodedFormURI(
-      //   getFormURI(
-      //     formId,
-      //     formSpec.forms[formId].onSuccess,
-      //     formData
-      //   )
-      // );
+    if (formSpec.date) {
+      formData = await getSpecificDataFromForage("selected_assessment_form");
+      prefillXMLArgs = [
+        `${formData?.form_name}`,
+        "",
+        formData.form_data,
+        formData.imageUrls,
+      ];
     } else {
-      let prefilledForm = await getPrefillXML(startingForm, formSpec.forms[formId].onSuccess);
-      console.log("Prefilled Form Empty:", prefilledForm)
-      setEncodedFormURI(prefilledForm)
+      formData = await getFromLocalForage(startingForm + `${new Date().toISOString().split("T")[0]}`);
+      if (formData) {
+        setEncodedFormSpec(encodeURI(JSON.stringify(formSpec.forms[formId])));
+        prefillXMLArgs = [
+          startingForm,
+          formSpec.forms[formId].onSuccess,
+          formData.formData,
+          formData.imageUrls,
+        ];
+      } else {
+        prefillXMLArgs = [
+          startingForm,
+          formSpec.forms[formId].onSuccess
+        ]
+      }
     }
+    // setEncodedFormSpec(encodeURI(JSON.stringify(formSpec.forms[formId])));
+    let prefilledForm = await getPrefillXML(...prefillXMLArgs);
+    console.log("prefilledForm - ", prefilledForm);
+    setEncodedFormURI(prefilledForm)
+
+    // else {
+    //   formData = await getFromLocalForage(
+    //     startingForm + `${new Date().toISOString().split("T")[0]}`
+    //   );
+    //   console.log('formData - ', formData);
+    //   prefillXMLArgs = [
+    //     startingForm,
+    //     formSpec.forms[formId].onSuccess,
+    //     formData.formData,
+    //     formData.imageUrls,
+    //   ];
+    // }
+    // if (formData) {
+    //   setEncodedFormSpec(encodeURI(JSON.stringify(formSpec.forms[formId])));
+    //   let prefilledForm = await getPrefillXML(...prefillXMLArgs);
+    //   setEncodedFormURI(prefilledForm)
+    // } else {
+    //   let prefilledForm = await getPrefillXML(startingForm, formSpec.forms[formId].onSuccess);
+    //   setEncodedFormURI(prefilledForm)
+    // }
   } else setData(null);
   loading.current = false;
 };
