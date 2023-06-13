@@ -68,13 +68,6 @@ const GenericOdkForm = (props) => {
   const [onFormSuccessData, setOnFormSuccessData] = useState(undefined);
   const [onFormFailureData, setOnFormFailureData] = useState(undefined);
   const [encodedFormURI, setEncodedFormURI] = useState("");
-  // const [encodedFormURI, setEncodedFormURI] = useState(
-  //   getFormURI(
-  //     formId,
-  //     formSpec.forms[formId].onSuccess,
-  //     formSpec.forms[formId].prefill
-  //   )
-  // );
   const [prefilledFormData, setPrefilledFormData] = useState();
 
   const loading = useRef(false);
@@ -115,13 +108,9 @@ const GenericOdkForm = (props) => {
         const key = `${storedData?.assessor_user_id}_${formSpec.start}${
           new Date().toISOString().split("T")[0]
         }`;
-        console.log("key - ", key);
         removeItemFromLocalForage(key);
 
         setTimeout(() => navigate(`${ROUTE_MAP.thank_you}${formName}`), 2000);
-        // setTimeout(() => navigate(formName.startsWith('hospital') ? ROUTE_MAP.hospital_forms : ROUTE_MAP.medical_assessment_options), 2000);
-        // setCookie(startingForm + `${new Date().toISOString().split("T")[0]}`, '');
-        // setCookie(startingForm + `Images${new Date().toISOString().split("T")[0]}`, '');
       }
 
       if (nextForm?.type === "form") {
@@ -156,6 +145,7 @@ const GenericOdkForm = (props) => {
   const bindEventListener = () => {
     window.addEventListener("message", handleEventTrigger);
   };
+
   const detachEventBinding = () => {
     window.removeEventListener("message", handleEventTrigger);
   };
@@ -180,8 +170,7 @@ const GenericOdkForm = (props) => {
   }, []);
 
   return (
-    // <CommonLayout back={formName.startsWith('hospital') ? ROUTE_MAP.hospital_forms : ROUTE_MAP.medical_assessment_options}>
-    <CommonLayout {...props.commonLayoutProps} >
+    <CommonLayout {...props.commonLayoutProps}>
       <div className="flex flex-col items-center">
         {encodedFormURI && assData && (
           <>

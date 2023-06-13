@@ -25,7 +25,7 @@ const PastInspections = () => {
     const assessor_id = await getSpecificDataFromForage("required_data");
     const postData = {
       // date: new Date().toJSON().slice(0, 10),
-      date: new Date("2023-06-13").toJSON().slice(0, 10),
+      date: new Date("2023-06-15").toJSON().slice(0, 10),
       assessor_id: assessor_id?.assessor_user_id,
     };
     current_assessor_id = assessor_id?.assessor_user_id;
@@ -114,7 +114,7 @@ const PastInspections = () => {
                     styles="border-primary text-white bg-primary"
                     onClick={() =>
                       handleClick(
-                        `${ROUTE_MAP.past_application_list}/${el.date}/${el.name}`
+                        `${ROUTE_MAP.past_application_list}/${el.date}/${el.institute.name}`
                       )
                     }
                   />

@@ -45,7 +45,7 @@ const PastApplicationList = () => {
   const getPastInspectionData = async () => {
     const assessor_id = await getSpecificDataFromForage("required_data");
     const postData = {
-      date: new Date("2023-06-13").toJSON().slice(0, 10),
+      date: new Date("2023-06-15").toJSON().slice(0, 10),
       assessor_id: assessor_id?.assessor_user_id,
     };
 
@@ -81,6 +81,7 @@ const PastApplicationList = () => {
       )} to the ${institute}`}
     >
       <div className="w-full flex flex-col px-6">
+        <div className="font-medium text-xl mb-4">Submitted forms:</div>
         {error && (
           <span className="text-white animate__animated animate__headShake bg-red-500 w-80 font-medium px-4 py-3 text-center mx-auto mb-6">
             {error}
@@ -99,9 +100,9 @@ const PastApplicationList = () => {
                   className="border-b-[1px] border-t-[1px] border-l-[1px] border-r-[1px] border-primary px-4 bg-orange-500/10 py-0"
                 >
                   <div key={idx} onClick={() => handleNavigateToForms(form)}>
-                    <div className="flex flex-row gap-2 border-1 border-black py-4">
+                    <div className="flex flex-row gap-3 border-1 border-black py-4">
                       <div className="flex grow items-center">
-                        <div className="text-[14px] font-medium">
+                        <div className="text-[14px] font-medium uppercase">
                           {getFieldName(form.form_name)}
                         </div>
                       </div>
