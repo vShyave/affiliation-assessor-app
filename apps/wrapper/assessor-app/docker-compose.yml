@@ -2,6 +2,6 @@ version: "3"
 
 services:
   portal:
-    build: .      
+    build: .
     ports:
-      - "3000:3000"    
+      - "3008:3008"
