@@ -50,12 +50,16 @@ export const makeDataForPrefill = (prev, xmlDoc, key, finalObj, formName) => {
 
 export const updateFormData = async (startingForm) => {
   try {
-    let data = await getFromLocalForage(startingForm + `${new Date().toISOString().split("T")[0]}`)
-    let prefilledForm = await getSubmissionXML(startingForm, data.formData, data.imageUrls);
+    let data = await getFromLocalForage(
+      startingForm + `${new Date().toISOString().split("T")[0]}`
+    );
+    let prefilledForm = await getSubmissionXML(
+      startingForm,
+      data.formData,
+      data.imageUrls
+    );
     return prefilledForm;
-  } catch (err) {
-
-  }
+  } catch (err) {}
 };
 
 export const setCookie = (cname, cvalue) => {
@@ -93,12 +97,20 @@ export const removeCookie = (cname) => {
 };
 
 export const isImage = (key, filename) => {
-  if (filename.includes(".png") || filename.includes(".tif") || filename.includes(".tiff") || filename.includes(".jpg") || filename.includes(".jpeg") || filename.includes(".bmp") || filename.includes(".gif") || filename.includes(".eps"))
+  if (
+    filename.includes(".png") ||
+    filename.includes(".tif") ||
+    filename.includes(".tiff") ||
+    filename.includes(".jpg") ||
+    filename.includes(".jpeg") ||
+    filename.includes(".bmp") ||
+    filename.includes(".gif") ||
+    filename.includes(".eps")
+  )
     return true;
-  if (key.includes("img") || key.includes("image"))
-    return true;
+  if (key.includes("img") || key.includes("image")) return true;
   return false;
-}
+};
 
 export const getFromLocalForage = async (key) => {
   const user = getCookie("userData");
@@ -108,55 +120,74 @@ export const getFromLocalForage = async (key) => {
     console.log(err);
     return null;
   }
-}
+};
 
 export const getAllKeysFromForage = async () => {
   let keys = [];
   await localforage.keys().then((keysOfArray) => {
-    keys = keysOfArray
+    keys = keysOfArray;
   });
   return keys;
-}
+};
 
 export const setToLocalForage = async (key, value) => {
   const storedData = await getSpecificDataFromForage(key);
   if (storedData) {
-    const newData = {...storedData, ...value};
+    const newData = { ...storedData, ...value };
     await localforage.setItem(key, newData);
   } else {
     await localforage.setItem(key, value);
   }
-}
+};
 
 export const getSpecificDataFromForage = async (key) => {
   return await localforage.getItem(key);
-}
+};
 
 export const removeItemFromLocalForage = (key) => {
   localforage.removeItem(key);
-}
+};
 
 export const handleFormEvents = async (startingForm, afterFormSubmit, e) => {
   const user = getCookie("userData");
   if (
-    e.origin === ENKETO_URL && typeof(e?.data) === 'string' &&
+    e.origin === ENKETO_URL &&
+    typeof e?.data === "string" &&
     JSON.parse(e?.data)?.state !== "ON_FORM_SUCCESS_COMPLETED"
   ) {
     var formData = new XMLParser().parseFromString(JSON.parse(e.data).formData);
     if (formData) {
       let images = JSON.parse(e.data).fileURLs;
-      let prevData = await getFromLocalForage(startingForm + `${new Date().toISOString().split("T")[0]}`);
-      await setToLocalForage(user.user.id + "_" + startingForm + `${new Date().toISOString().split("T")[0]}`, {
-        formData: JSON.parse(e.data).formData,
-        imageUrls: { ...prevData?.imageUrls, ...images }
-      })
+      let prevData = await getFromLocalForage(
+        startingForm + `${new Date().toISOString().split("T")[0]}`
+      );
+      await setToLocalForage(
+        user.user.id +
+          "_" +
+          startingForm +
+          `${new Date().toISOString().split("T")[0]}`,
+        {
+          formData: JSON.parse(e.data).formData,
+          imageUrls: { ...prevData?.imageUrls, ...images },
+        }
+      );
     }
   }
   afterFormSubmit(e);
 };
 
-export const getFormData = async ({ loading, scheduleId, formSpec, startingForm, formId, setData, setEncodedFormSpec, setEncodedFormURI }) => {
-  const res = await getMedicalAssessments();
+export const getFormData = async ({
+  loading,
+  scheduleId,
+  formSpec,
+  startingForm,
+  formId,
+  setData,
+  setEncodedFormSpec,
+  setEncodedFormURI,
+}) => {
+  const res = await getMedicalAssessments(formSpec.date);
+  let formData, prefillXMLArgs;
   if (res?.data?.assessment_schedule?.[0]) {
     loading.current = true;
     let ass = res?.data?.assessment_schedule?.[0];
@@ -173,25 +204,33 @@ export const getFormData = async ({ loading, scheduleId, formSpec, startingForm,
       latitude: ass.institute.latitude,
       longitude: ass.institute.longitude,
     });
-    let formData = await getFromLocalForage(startingForm + `${new Date().toISOString().split("T")[0]}`);
-    console.log("Form Data Local Forage --->", formData)
-    if (formData) {
-      setEncodedFormSpec(encodeURI(JSON.stringify(formSpec.forms[formId])));
-      let prefilledForm = await getPrefillXML(startingForm, formSpec.forms[formId].onSuccess, formData.formData, formData.imageUrls);
-      console.log("Prefilled Form:", prefilledForm)
-      setEncodedFormURI(prefilledForm)
-      // setEncodedFormURI(
-      //   getFormURI(
-      //     formId,
-      //     formSpec.forms[formId].onSuccess,
-      //     formData
-      //   )
-      // );
+
+    if (formSpec.date) {
+      formData = await getSpecificDataFromForage("selected_assessment_form");
+      prefillXMLArgs = [
+        `${formData?.form_name}`,
+        "",
+        formData.form_data,
+        formData.imageUrls,
+      ];
     } else {
-      let prefilledForm = await getPrefillXML(startingForm, formSpec.forms[formId].onSuccess);
-      console.log("Prefilled Form Empty:", prefilledForm)
-      setEncodedFormURI(prefilledForm)
+      formData = await getFromLocalForage(
+        startingForm + `${new Date().toISOString().split("T")[0]}`
+      );
+      if (formData) {
+        setEncodedFormSpec(encodeURI(JSON.stringify(formSpec.forms[formId])));
+        prefillXMLArgs = [
+          startingForm,
+          formSpec.forms[formId].onSuccess,
+          formData.formData,
+          formData.imageUrls,
+        ];
+      } else {
+        prefillXMLArgs = [startingForm, formSpec.forms[formId].onSuccess];
+      }
     }
+    let prefilledForm = await getPrefillXML(...prefillXMLArgs);
+    setEncodedFormURI(prefilledForm);
   } else setData(null);
   loading.current = false;
 };
