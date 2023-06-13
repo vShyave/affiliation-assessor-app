@@ -91,7 +91,7 @@ function App() {
               ></Route>
               <Route
                 path={`${ADMIN_ROUTE_MAP.adminModule.manageForms.viewForm}/:formName/:formId`}
-                element={<CreateForm/>}
+                element={<CreateForm />}
               ></Route>
             </Route>
             <Route

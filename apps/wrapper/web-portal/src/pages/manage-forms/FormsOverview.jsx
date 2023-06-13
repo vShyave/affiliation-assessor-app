@@ -106,7 +106,6 @@ const FormsOverview = () => {
   const viewForm = async (postData) => {
     try {
       const res = await markReviewStatus(postData);
-      console.log(res);
     } catch (error) {
       console.log("error - ", error);
     }
@@ -148,7 +147,6 @@ const FormsOverview = () => {
   };
 
   formsList?.forEach((e) => {
-    console.log(e);
     var formsData = {
       title: getFieldName(e?.title),
       application_type: getFieldName(e?.application_type),

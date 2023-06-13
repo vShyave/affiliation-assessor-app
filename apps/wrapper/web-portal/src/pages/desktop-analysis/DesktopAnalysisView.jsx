@@ -54,7 +54,7 @@ export default function DesktopAnalysisView() {
     const postData = { form_id: formId };
     const res = await getFormData(postData);
     const formData = res.data.form_submissions[0];
-    console.log("formData - ", formData);
+
     let formURI = await getPrefillXML(
       `${formData?.form_name}`,
       "",

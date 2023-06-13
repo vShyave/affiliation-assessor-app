@@ -90,11 +90,10 @@ export default function AdminCreateUser() {
                   </div>
                 </div>
                 <div className="sm:col-span-3">
-                  <Label 
-                  htmlFor="lastname"
+                  <Label
+                   htmlFor="lastname"
                   text="Last name"
-                  required
-                  >
+                  required>
                   </Label>
                   <div className="mt-2">
                     <input
@@ -136,8 +135,7 @@ export default function AdminCreateUser() {
                   <Label 
                   htmlFor="email"
                   text="Email Id"
-                  required
-                  >
+                  required>
                   </Label>
                   <div className="mt-2">
                     <input
@@ -170,8 +168,8 @@ export default function AdminCreateUser() {
                 <div className="sm:col-span-3">
                   <Label
                     htmlFor="phonenumber"
-                    text="Phone number"
-                    required
+                  text="Phone number"
+                  required
                   >
                   </Label>
                   <div className="mt-2">
