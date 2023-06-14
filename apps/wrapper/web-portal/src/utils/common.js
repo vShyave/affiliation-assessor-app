@@ -12,6 +12,7 @@ export const getCookie = (cname) => {
   try {
     let cookie = Cookies.get(cname);
     if (cookie) return JSON.parse(cookie);
+    console.log('cookievalue', cookie)
   } catch (error) {
     return false;
   }
@@ -24,6 +25,17 @@ export const removeCookie = (cname) => {
   } catch (error) {
     return false;
   }
+};
+
+export const getInitials = (name) => {
+  const names = name.split(" ");
+
+  const firstInitial = names[0].charAt(0).toUpperCase();
+  let lastInitial = "";
+  if (names.length > 1) {
+    lastInitial = names[1].charAt(0).toUpperCase();
+  }
+  return firstInitial + lastInitial;
 };
 
 export const readableDate = (dateStr) => {

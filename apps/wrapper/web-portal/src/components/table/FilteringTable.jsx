@@ -70,7 +70,7 @@ const FilteringTable = (props) => {
       2
     );
     {
-      console.log(array);
+      // console.log(array);
     }
   }
   
