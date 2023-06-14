@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
-import { Button, Card, ApplicationCard, FormCard } from "../components";
+import { Button,  ApplicationCard, FormCard } from "../components";
 import APPLICANT_ROUTE_MAP from "../routes/ApplicantRoute";
 import { applicationService, formService } from "../services";
 import { getCookie } from "../utils";
