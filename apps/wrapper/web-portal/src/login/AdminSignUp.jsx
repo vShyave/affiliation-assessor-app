@@ -1,4 +1,6 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
+// import React, { useState, useEffect } from "react";
+
 import { Link, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 
@@ -6,8 +8,8 @@ import { useForm } from "react-hook-form";
 import ADMIN_ROUTE_MAP from "../routes/adminRouteMap";
 import { registerUser } from "../api";
 import { userService } from "../api/userService";
-import { Card, Label, Button, Input } from "../components";
-import { forkJoin, lastValueFrom } from "rxjs";
+import { Card, Label, Button } from "../components";
+// import { forkJoin, lastValueFrom } from "rxjs";
 export default function AdminSingUp() {
   // const initialValues = {fullname:"" , email:""}
   // const [ formValues,setFormValues ] = useState(initialValues)
@@ -22,7 +24,6 @@ export default function AdminSingUp() {
   const {
     register,
     handleSubmit,
-    watch,
     formState: { errors },
   } = useForm();
 
@@ -206,7 +207,7 @@ export default function AdminSingUp() {
                 </div>
               </div>
             </div>
-            <Button moreClass="uppercase w-full mt-7" text="Continue"></Button>
+            <Button moreClass="uppercase w-full mt-7 text-white" text="Continue"></Button>
             <p className="flex justify-center my-6">
               <span className="text-gray-400">Have an account, </span>&nbsp;
               <Link

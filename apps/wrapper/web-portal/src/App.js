@@ -29,6 +29,7 @@ import CertificateManagementList from "./pages/certificate-management/Certificat
 import ScheduleManagementList from "./pages/schedule-management/ScheduleManagementList";
 import ManageUser from "./pages/manage-users/ManageUser";
 import DesktopAnalysis from "./pages/desktop-analysis/DesktopAnalysis";
+import PrivateRoute from "./routes/PrivateRoute";
 
 
 function App() {
@@ -62,7 +63,11 @@ function App() {
           {/* Dashboard routing starts here */}
           <Route
             path={ADMIN_ROUTE_MAP.adminModule.dashboard}
-            element={<DashboardLandingPage />}
+            element={
+            <PrivateRoute>
+            <DashboardLandingPage />
+             </PrivateRoute>
+          }
           >
             <Route
               path={ADMIN_ROUTE_MAP.adminModule.manageUsers.home}

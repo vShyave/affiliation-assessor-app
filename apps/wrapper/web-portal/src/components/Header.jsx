@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from "react";
-import { Link, NavLink, useNavigate } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import "./Header.css";
 
-import { AiOutlineMenu, AiOutlineClose, AiFillHome } from "react-icons/ai";
+import { AiFillHome } from "react-icons/ai";
+// import { AiOutlineMenu, AiOutlineClose} from "react-icons/ai";
 
-import { setCookie, getCookie, removeCookie } from "../utils/common";
+
+import {  getCookie, removeCookie } from "../utils/common";
 import ADMIN_ROUTE_MAP from "../routes/adminRouteMap";
 
 // import SelfRegistration from "./SelfRegistration";
@@ -21,7 +23,7 @@ import ADMIN_ROUTE_MAP from "../routes/adminRouteMap";
 // import AdminCreateForm from "./AdminCreateForm";
 
 export default function Header() {
-  const [toggle, setToggle] = useState(false);
+  // const [toggle, setToggle] = useState(false);
   const [userInfoChars, setUserInfoChars] = useState("");
   const [showProfileDropdown, setShowProfileDropdown] = useState(false);
   const navigate = useNavigate();
@@ -33,12 +35,12 @@ export default function Header() {
 
   useEffect(() => {
     const isAuthenticated = getCookie("regulator");
-    if (!isAuthenticated) return;
-    const name = isAuthenticated ? isAuthenticated[0]?.full_name:""
-    const firstName = name?.split(" ")[0].charAt(0).toUpperCase();
-    const lastName = name?.split(" ")[name.split(" ").length - 1].charAt(0).toUpperCase();
-    const chars = firstName + lastName;
-    setUserInfoChars(chars);
+    if (isAuthenticated) ;
+    const name = isAuthenticated ? isAuthenticated[0]?.full_name : ""
+    const firstName = (name.split(" ")[0].charAt(0).toUpperCase())
+        const lastName = (name.split(" ")[name.split(" ").length-1].charAt(0).toUpperCase())
+        const chars = firstName + lastName;
+        setUserInfoChars(chars)
   }, []);
 
   return (

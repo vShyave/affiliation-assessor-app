@@ -11,18 +11,20 @@ const GlobalFilter = ({filter,setFilter}) => {
 
   return (
     <div className="mb-3">
-      <div className='flex flex-row'> 
-        <div className="mb-4 bg-white flex w-1/4  items-stretch">
-          <input value={value || ''} onChange={(e) => {
-            setValue(e.target.value) 
-            onChange(e.target.value)}}
-            type="search"
-            className="m-0 block w-[1px] min-w-0 flex-auto rounded border border-solid border-neutral-300 bg-transparent bg-clip-padding px-3 py-[0.25rem] text-base font-normal leading-[1.6] text-neutral-700 outline-none transition duration-200 ease-in-out focus:z-[3] focus:border-primary focus:text-neutral-700 focus:shadow-[inset_0_0_0_1px_rgb(59,113,202)] focus:outline-none dark:border-neutral-600 dark:text-neutral-200 dark:placeholder:text-neutral-200 dark:focus:border-primary"
-            placeholder="Search"
-          />
-        </div>
-        <MdFilterList className='ml-8 mt-2 text-gray-500 '/>
-        <h6 className='text-base mt-2 ml-2 text-gray-500 font-semibold'>Filter</h6>
+      <div className='flex flex-row justify-between'> 
+          <div className="mb-4 bg-white flex w-1/4 items-stretch">
+            <input value={value || ''} onChange={(e) => {
+              setValue(e.target.value) 
+              onChange(e.target.value)}}
+              type="search"
+              className="m-0 block w-[1px] min-w-0 flex-auto rounded border border-solid border-neutral-300 bg-transparent bg-clip-padding px-3 py-[0.25rem] text-base font-normal leading-[1.6] text-neutral-700 outline-none transition duration-200 ease-in-out focus:z-[3] focus:border-primary focus:text-neutral-700 focus:shadow-[inset_0_0_0_1px_rgb(59,113,202)] focus:outline-none dark:border-neutral-600 dark:text-neutral-200 dark:placeholder:text-neutral-200 dark:focus:border-primary"
+              placeholder="Search"
+            />
+          </div>
+          <div className='flex flex-row gap-2 mx-auto mr-0'>
+          <MdFilterList className=' mt-2 text-gray-500 '/>
+          <h6 className='text-base mt-2 text-gray-500 font-semibold'>Filter</h6>
+          </div>
         <div>
           
           {/* <!--Search icon--> */}

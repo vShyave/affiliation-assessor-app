@@ -28,31 +28,31 @@ function BulkUploadUsersModal({ closeBulkUploadUsersModal }) {
     },
   ];
 
-  // const fetchAllUsers = async () => {
-  //   try {
-  //     const res = await getAllUsers();
-  //     setUsersList(res?.data?.assessors);
-  //     const data = res?.data?.assessors;
-  //     data.forEach((e) => {
-  //       var usersData = {
-  //         full_name: e.fname || e.lname ? e.fname + e.lname : e.name,
-  //         email: e.email?.toLowerCase(),
-  //         mobile_number: e.phonenumber,
-  //         role: e.role || "Assessor",
-  //         status: e.workingstatus || "Active",
-  //         id: e.user_id,
-  //       };
-  //       resUserData.push(usersData);
-  //     });
-  //     setUserTableList(resUserData);
-  //   } catch (error) {
-  //     console.log("error - ", error);
-  //   }
-  // };
+  const fetchAllUsers = async () => {
+    try {
+      const res = await getAllUsers();
+      setUsersList(res?.data?.assessors);
+      const data = res?.data?.assessors;
+      data.forEach((e) => {
+        var usersData = {
+          full_name: e.fname || e.lname ? e.fname + e.lname : e.name,
+          email: e.email?.toLowerCase(),
+          mobile_number: e.phonenumber,
+          role: e.role || "Assessor",
+          status: e.workingstatus || "Active",
+          id: e.user_id,
+        };
+        resUserData.push(usersData);
+      });
+      setUserTableList(resUserData);
+    } catch (error) {
+      console.log("error - ", error);
+    }
+  };
 
-  // useEffect(() => {
-  //   fetchAllUsers();
-  // }, []);
+  useEffect(() => {
+    fetchAllUsers();
+  }, []);
 
   return (
     <>
@@ -64,15 +64,15 @@ function BulkUploadUsersModal({ closeBulkUploadUsersModal }) {
             </div>
 
             <div className="justify-center flex flex-col items-center gap-4">
-              <Button moreClass=" text-white" text="Browse for files" />
+              {/* <Button moreClass=" text-white" text="Browse for files" />
               <p className="text-gray-500 text-base">
                 Upload csv or excel here
-              </p>
-              {/* <FilteringTable
-                            // dataList={userTableList}
+              </p> */}
+              <FilteringTable
+                            dataList={userTableList}
                             columns={COLUMNS}
                             navigateFunc={() => {}}
-                          /> */}
+                          />
             </div>
             <div className="flex flex-col gap-4">
               <hr />
