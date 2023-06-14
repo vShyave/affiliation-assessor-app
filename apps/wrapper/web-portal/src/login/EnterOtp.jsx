@@ -23,7 +23,7 @@ export default function EnterOtp() {
             </p>
             {/* <p className="text-red-500 text-sm" >{formErrors.email}</p> */}
           </div>
-          <Button moreClass="uppercase w-full mt-7" text="Sign up"></Button>
+          <Button moreClass="uppercase w-full mt-7 text-white" text="Sign up"></Button>
           <Link
             className="text-primary-700 text-center font-medium my-6"
             to={ADMIN_ROUTE_MAP.loginModule.login}

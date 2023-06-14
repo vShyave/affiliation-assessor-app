@@ -2,7 +2,7 @@ import React from "react";
 
 import { Link, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
-import { Button } from "../components";
+import { Button , Label } from "../components";
 
 import { FaAngleRight } from "react-icons/fa";
 
@@ -87,7 +87,7 @@ export default function SelfRegistration() {
       <div className="h-[48px] bg-white drop-shadow-sm">
         <div className="container mx-auto px-3 py-3">
           <div className="flex flex-row font-bold gap-2 items-center">
-            <Link to={APPLICANT_ROUTE_MAP.dashboardModule.self_registration}>
+            <Link to={APPLICANT_ROUTE_MAP.dashboard}>
               <span className="text-primary-400 cursor-pointer">Home</span>
             </Link>
             <FaAngleRight className="text-[16px]" />
@@ -108,15 +108,18 @@ export default function SelfRegistration() {
                 <h1 className="text-xl font-semibold">Basic Details</h1>
                 <div className="mt-8 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
                   <div className="sm:col-span-3">
-                    <label className="block text-sm font-medium leading-6 text-gray-900">
-                      First name
-                    </label>
-                    <div className="mt-2">
+                    <Label 
+                    htmlFor="firstname"
+                    text="First name"
+                    required
+                    >
+                    </Label>
+                   <div className="mt-2">
                       <input
                         type="text"
                         placeholder="Type here"
                         id="firstname"
-                        name="firstName"
+                        name="firstname"
                         className="block w-full rounded-md border-0 p-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                         {...register("firstName", {
                           required: true,
@@ -142,14 +145,17 @@ export default function SelfRegistration() {
                     </div>
                   </div>
                   <div className="sm:col-span-3">
-                    <label className="block text-sm font-medium leading-6 text-gray-900">
-                      Last name
-                    </label>
+                    <Label 
+                      htmlFor="lastname"
+                      text="Last name"
+                      required
+                      >
+                    </Label>
                     <div className="mt-2">
                       <input
                         type="text"
                         placeholder="Type here"
-                        name="lastName"
+                        name="lastname"
                         id="lastname"
                         className="block w-full rounded-md border-0 p-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                         {...register("lastName", {
@@ -179,9 +185,12 @@ export default function SelfRegistration() {
 
                 <div className="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
                   <div className="sm:col-span-3">
-                    <label className="block text-sm font-medium leading-6 text-gray-900">
-                      Email Id
-                    </label>
+                    <Label 
+                    htmlFor="email"
+                    text="Email Id"
+                    required
+                    >
+                    </Label>
                     <div className="mt-2">
                       <input
                         type="email"
@@ -208,17 +217,17 @@ export default function SelfRegistration() {
                     </div>
                   </div>
                   <div className="sm:col-span-3">
-                    <label
+                    <Label
                       htmlFor="phonenumber"
-                      className="block text-sm font-medium leading-6 text-gray-900"
+                      text="phonenumber"
+                      required
                     >
-                      Phone number
-                    </label>
+                    </Label>
                     <div className="mt-2">
                       <input
                         type="tel"
                         placeholder="Type here"
-                        name="mobilePhone"
+                        name="phonenumber"
                         id="phonenumber"
                         className="block w-full rounded-md border-0 p-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                         {...register("mobilePhone", {
@@ -248,18 +257,18 @@ export default function SelfRegistration() {
 
                 <div className="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
                   <div className="sm:col-span-3">
-                    <label
+                    <Label
                       htmlFor="applicantname"
-                      className="block text-sm font-medium leading-6 text-gray-900"
+                      text="Applicant name"
+                      required
                     >
-                      Applicant name
-                    </label>
+                    </Label>
                     <div className="mt-2">
                       <input
                         type="text"
                         placeholder="Type here"
                         id="applicantname"
-                        name="applicantName"
+                        name="applicantname"
                         className="block w-full rounded-md border-0 p-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                         {...register("applicantName", {
                           required: true,
@@ -285,18 +294,18 @@ export default function SelfRegistration() {
                     </div>
                   </div>
                   <div className="sm:col-span-3 ">
-                    <label
+                    <Label
                       htmlFor="applicanttype"
-                      className="block text-sm font-medium leading-6 text-gray-900"
+                      text="Applicant type"
+                      required
                     >
-                      Applicant type
-                    </label>
+                    </Label>
                     <div className="mt-2">
                       <select
                         className="block w-full rounded-md border-0 p-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                         label="Select here"
                         id="applicanttype"
-                        name="applicantType"
+                        name="applicanttype"
                         {...register("applicantType", {
                           required: true,
                         })}
@@ -314,12 +323,12 @@ export default function SelfRegistration() {
 
                 <div className="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
                   <div className="sm:col-span-3 ">
-                    <label
+                    <Label
                       htmlFor="coursetype"
-                      className="block text-sm font-medium leading-6 text-gray-900"
+                      text="Course name"
+                      required
                     >
-                      Course name
-                    </label>
+                    </Label>
                     <div className="mt-2">
                       <select
                         className="block w-full rounded-md border-0 p-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"

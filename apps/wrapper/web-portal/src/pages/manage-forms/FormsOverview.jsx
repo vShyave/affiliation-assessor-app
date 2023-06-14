@@ -91,7 +91,7 @@ const FormsOverview = () => {
       accessor: "unpublish",
     },
     {
-      Header: "Preview",
+      Header: "Preview",  
       accessor: "preview",
     },
   ];
