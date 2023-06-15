@@ -180,7 +180,10 @@ const GenericOdkForm = (props) => {
   }, []);
 
   return (
-    <CommonLayout {...props.commonLayoutProps}>
+    <CommonLayout
+      {...props.commonLayoutProps}
+      formUrl={`${ENKETO_URL}/preview?formSpec=${encodedFormSpec}&xform=${encodedFormURI}&userId=${user.user.id}`}
+    >
       <div className="flex flex-col items-center">
         {encodedFormURI && assData && (
           <>
