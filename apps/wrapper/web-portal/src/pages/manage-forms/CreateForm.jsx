@@ -47,10 +47,9 @@ const CreateForm = () => {
   const handleSaveDraft = async () => {
     let newForm = new FormData();
     Object.keys(formData).forEach((key) => newForm.append(key, formData[key]));
-    if (!window.location.pathname.includes("view")) {
-      newForm.append("user_id", "53c57d13-d33d-439a-bd72-1f56b189642d");
-      newForm.append("form_status", "Draft");
-    }
+    // TODO: make user_id dynamic
+    newForm.append("user_id", "53c57d13-d33d-439a-bd72-1f56b189642d");
+    newForm.append("form_status", "Draft");
     try {
       const createFormResponse = await createForm(newForm);
       setToast((prevState) => ({
