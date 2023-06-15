@@ -13,11 +13,55 @@ import isOnline from "is-online";
 import { logout } from "../../utils/index.js";
 import { useEffect } from "react";
 
+
 const CommonLayout = (props) => {
   const navigate = useNavigate();
   const [logoutModal, showLogoutModal] = useState(false);
   const [online, setOnline] = useState(true);
   const onlineInterval = useRef();
+
+  const handleFormDownload = () =>{
+    let url = props.formUrl;
+    let win= window.open(url, "_blank","toolbar=yes,scrollbars=yes,resizable=yes");
+    setTimeout(()=>{
+      win.focus()
+      win.print();
+    },2000)
+
+    // const doc = new jsPDF({
+    //   format: "a4",
+    //   unit: "px",
+    // });
+
+    // // Adding the fonts.
+    // doc.setFont("Inter-Regular", "normal");
+
+    // let iframe = document.createElement("iframe");
+    // iframe.style.visibility = "hidden";
+    // document.body.appendChild(iframe);
+    // let iframedoc = iframe.contentDocument || iframe.contentWindow.document;
+    // let htmlItem = document.getElementsByClassName("container");
+    // iframedoc.body.innerHTML = htmlItem[0].innerHTML;
+
+    // html2canvas(
+      // window.document
+      //   .querySelector("iframe")
+      //   .contentWindow.document.querySelector(".main")
+    //   iframedoc
+    // ).then((canvas) => {
+    //   let base64image = canvas.toDataURL("image/png");
+    //   console.log(base64image);
+    //   let pdf = new jsPDF("p", "px", [1600, 1131]);
+    //   pdf.addImage(base64image, "PNG", 15, 15, 1110, 360);
+    //   pdf.save("enketo-form.pdf");
+    // });
+
+    // doc.html(reportTemplateRef.current, {
+    //   async callback(doc) {
+    //     await doc.save("document");
+    //   },
+    // });
+  }
 
   useEffect(() => {
     onlineInterval.current = setInterval(async () => {
@@ -88,7 +132,7 @@ const CommonLayout = (props) => {
                   <FontAwesomeIcon
                     icon={faDownload}
                     className="text-2xl lg:text-4xl"
-                    onClick={() => {}}
+                    onClick={handleFormDownload}
                   />
                 )}
               </div>
