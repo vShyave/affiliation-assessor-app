@@ -41,6 +41,13 @@ const FilteringTable = (props) => {
     useSortBy,
     usePagination,
     useRowSelect)
+  
+
+{/**
+    
+These lines of code are required , please don't delete
+ */}
+
   //   (hooks) => {
   //     hooks.visibleColumns.push((columns) => {
   //       return [
