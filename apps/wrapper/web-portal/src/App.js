@@ -30,6 +30,8 @@ import ScheduleManagementList from "./pages/schedule-management/ScheduleManageme
 import ManageUser from "./pages/manage-users/ManageUser";
 import DesktopAnalysis from "./pages/desktop-analysis/DesktopAnalysis";
 import PrivateRoute from "./routes/PrivateRoute";
+import ScheduleManagement from "./pages/schedule-management/ScheduleManagement";
+import ScheduledUploadForm from "./pages/schedule-management/ScheduledUploadForm"
 
 
 function App() {
@@ -64,9 +66,9 @@ function App() {
           <Route
             path={ADMIN_ROUTE_MAP.adminModule.dashboard}
             element={
-            <PrivateRoute>
+            // <PrivateRoute>
              <DashboardLandingPage />
-            </PrivateRoute>
+            // {/* </PrivateRoute> */}
           }
           >
             <Route
@@ -125,10 +127,21 @@ function App() {
               path={ADMIN_ROUTE_MAP.adminModule.certificateManagement.list}
               element={<CertificateManagementList />}
             ></Route>
+
             <Route
+              path={ADMIN_ROUTE_MAP.adminModule.scheduleManagement.home}
+              element={<ScheduleManagement />}
+            >
+            <Route
+              index
               path={ADMIN_ROUTE_MAP.adminModule.scheduleManagement.list}
               element={<ScheduleManagementList />}
             ></Route>
+            <Route
+                path={ADMIN_ROUTE_MAP.adminModule.scheduleManagement.uploadForm}
+                element={<ScheduledUploadForm />}
+              ></Route>
+            </Route>
           </Route>
         </Routes>
       </BrowserRouter>

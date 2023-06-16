@@ -1,0 +1,7 @@
+.inst_list ul {
+    list-style-position: inside;
+ }
+.inst_list li::marker{
+    content: "Step "counter(list-item) ": ";
+    word-wrap: break-word;
+}

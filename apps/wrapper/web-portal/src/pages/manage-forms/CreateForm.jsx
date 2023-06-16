@@ -16,6 +16,7 @@ import ADMIN_ROUTE_MAP from "../../routes/adminRouteMap";
 const CreateForm = () => {
   const navigate = useNavigate();
   const [formStage, setFormStage] = useState(1);
+  const [loading, setLoading] = useState(false);
   const [xmlData, setXmlData] = useState(null);
   const [formData, setFormData] = useState({
     title: "",
@@ -52,6 +53,7 @@ const CreateForm = () => {
       newForm.append("form_status", "Draft");
     }
     try {
+      setLoading(true) 
       const createFormResponse = await createForm(newForm);
       setToast((prevState) => ({
         ...prevState,
@@ -195,13 +197,13 @@ const CreateForm = () => {
               ></Button>
               <Button
                 moreClass={`${
-                  Object.values(formData).length !== 7
+                  Object.values(formData).length !== 7 || loading
                     ? "text-gray-500 bg-white border border-gray-300 cursor-not-allowed"
                     : "text-white bg-primary-500 border border-primary-500"
                 } px-6`}
                 text="Save as draft"
                 onClick={handleSaveDraft}
-                otherProps={{ disabled: Object.values(formData).length !== 7 }}
+                otherProps={{ disabled: Object.values(formData).length !== 7 || loading }}
               ></Button>
             </div>
           </div>

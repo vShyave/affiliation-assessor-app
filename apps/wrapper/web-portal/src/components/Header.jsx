@@ -83,7 +83,7 @@ export default function Header() {
                     }}
                   >
                     
-                    {getInitials(regulator[0].full_name)}
+                    {/* {getInitials(regulator[0].full_name)} */}
                   </button>
                   {showProfileDropdown && (
                     <div

@@ -28,7 +28,11 @@ export const removeCookie = (cname) => {
 };
 
 export const getInitials = (name) => {
-  if(!name)return;
+  if(!name)return(
+    <>
+    
+    </>
+  );
   const names = name.split(" ");
 
   const firstInitial = names[0].charAt(0).toUpperCase();
