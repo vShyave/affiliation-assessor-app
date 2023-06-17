@@ -34,7 +34,7 @@ const AdminLogin = () => {
       const isAuthenticated = getCookie("userData");
       if (isAuthenticated) {
         setIsLoggedIn(true);
-        navigate(ADMIN_ROUTE_MAP.adminModule.manageUsers.home); // Redirect to home page
+        navigate(ADMIN_ROUTE_MAP.adminModule.manageForms.home); // Redirect to home page
       }
     };
 

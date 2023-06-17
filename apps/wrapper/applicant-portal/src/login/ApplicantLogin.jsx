@@ -19,7 +19,6 @@ const ApplicantLogin = () => {
   const {
     register,
     handleSubmit,
-    watch,
     formState: { errors },
   } = useForm();
   const [toast, setToast] = useState({
@@ -244,7 +243,7 @@ const ApplicantLogin = () => {
                     )}
                   </div>
                   <Button
-                    moreClass="uppercase w-full mt-7"
+                    moreClass="uppercase w-full mt-7 text-white"
                     text="Get Otp"
                     type="submit"
                   ></Button>

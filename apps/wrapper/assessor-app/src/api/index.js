@@ -112,7 +112,7 @@ export const ValidateAssessor = async (postData) => {
   return res;
 };
 
-export const getMedicalAssessments = () => {
+export const getMedicalAssessments = (submittedDate) => {
   const query = {
     query: `
       query ($date: date) {
@@ -143,7 +143,7 @@ export const getMedicalAssessments = () => {
         }
       }
       `,
-    variables: { date: new Date().toISOString().split("T")[0] },
+    variables: { date: submittedDate || new Date().toISOString().split("T")[0] },
   };
   return makeHasuraCalls(query);
 };

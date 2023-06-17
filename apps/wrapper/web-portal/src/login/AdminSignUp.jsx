@@ -1,12 +1,15 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
+// import React, { useState, useEffect } from "react";
+
 import { Link, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 // import customPost from "../api/adminCustomApi";
 import ADMIN_ROUTE_MAP from "../routes/adminRouteMap";
 import { registerUser } from "../api";
 import { userService } from "../api/userService";
+
 import { Card, Label, Button, Input } from "../components";
-import { forkJoin, lastValueFrom } from "rxjs";
+//import { forkJoin, lastValueFrom } from "rxjs";
 import Toast from "../components/Toast";
 
 export default function AdminSingUp() {
@@ -23,7 +26,6 @@ export default function AdminSingUp() {
   const {
     register,
     handleSubmit,
-    watch,
     formState: { errors },
   } = useForm();
 
@@ -163,13 +165,12 @@ export default function AdminSingUp() {
             <h1 className="text-2xl font-medium text-center mb-8">Sign Up</h1>
             <div className="flex flex-col gap-4">
               <div className="flex flex-col gap-2">
-                <label className="block text-left leading-6 text-gray-800">
-                  Full name
-                </label>
+                <Label htmlFor="fullName" text="Full name" required></Label>
                 <div>
                   <input
                     type="text"
                     id="fullName"
+                    name="fullName"
                     placeholder="Type here"
                     className="w-full rounded-[4px] p-4 py-3 text-gray-900 ring-1  ring-gray-300 placeholder:text-gray-400 focus:ring-1 focus:ring-inset focus:ring-primary-600 sm:text-sm sm:leading-6"
                     {...register("fullName", {
@@ -190,17 +191,16 @@ export default function AdminSingUp() {
                 </div>
               </div>
               <div className="flex flex-col gap-2">
-                <label
-                  htmlFor="phone"
-                  className="block text-left leading-6 text-gray-800"
-                >
-                  Mobile Number
-                </label>
+                <Label
+                  htmlFor="phoneNumber"
+                  text="Mobile Number"
+                  required
+                ></Label>
                 <div>
                   <input
                     type="tel"
                     placeholder="Type here"
-                    name="mobilePhone"
+                    name="phoneNumber"
                     id="phoneNumber"
                     className="block rounded-[4px] w-full p-4 border-0 py-3 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                     {...register("mobilePhone", {
@@ -222,12 +222,15 @@ export default function AdminSingUp() {
                 </div>
               </div>
             </div>
-            <Button moreClass="uppercase w-full mt-7" text="Continue"></Button>
+            <Button
+              moreClass="uppercase w-full mt-7 text-white"
+              text="Continue"
+            ></Button>
             <p className="flex justify-center my-6">
               <span className="text-gray-400">Have an account, </span>&nbsp;
               <Link
                 to={ADMIN_ROUTE_MAP.loginModule.login}
-                className="text-primary-700"
+                className="text-primary-700 "
               >
                 Login
               </Link>
