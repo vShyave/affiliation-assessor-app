@@ -1,11 +1,9 @@
-import React from "react";
-
+import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { Button } from "../components";
-
 import { FaAngleRight } from "react-icons/fa";
-
+import Toast from "../components/Toast";
 import APPLICANT_ROUTE_MAP from "../routes/ApplicantRoute";
 import { userService, applicantService } from "../services";
 import { forkJoin, lastValueFrom } from "rxjs";
@@ -18,6 +16,11 @@ export default function SelfRegistration() {
     formState: { errors },
   } = useForm();
 
+  const [toast, setToast] = useState({
+    toastOpen: false,
+    toastMsg: "",
+    toastType: "",
+  });
   const signupHandler = async (data) => {
     const {
       firstName,
@@ -63,17 +66,34 @@ export default function SelfRegistration() {
     };
 
     try {
-      const fusionAuthSignupReq = userService.signup(userDetails);
-      const addInstituteReq = applicantService.addInstitute(instituteDetails);
-      const [fusionAuthSignupRes, addInstituteRes] = await lastValueFrom(
-        forkJoin([fusionAuthSignupReq, addInstituteReq])
+      const fusionAuthSignupRes = await userService.signup(userDetails);
+
+      const addInstituteRes = await applicantService.addInstitute(
+        instituteDetails
       );
+
       institutePocDetils.user_id = fusionAuthSignupRes.data.user.id;
       institutePocDetils.institute_id =
         addInstituteRes.data.insert_institutes_one.id;
       await applicantService.addInstitutePoc(institutePocDetils);
       navigate(APPLICANT_ROUTE_MAP.dashboardModule.congratulations);
     } catch (error) {
+      setToast((prevState) => ({
+        ...prevState,
+        toastOpen: true,
+        toastMsg: "User already registered.",
+        toastType: "error",
+      }));
+      setTimeout(
+        () =>
+          setToast((prevState) => ({
+            ...prevState,
+            toastOpen: false,
+            toastMsg: "",
+            toastType: "",
+          })),
+        3000
+      );
       console.error("Registration failed due to some error:", error);
     }
   };
@@ -84,6 +104,9 @@ export default function SelfRegistration() {
 
   return (
     <>
+      {toast.toastOpen && (
+        <Toast toastMsg={toast.toastMsg} toastType={toast.toastType} />
+      )}
       <div className="h-[48px] bg-white drop-shadow-sm">
         <div className="container mx-auto px-3 py-3">
           <div className="flex flex-row font-bold gap-2 items-center">
