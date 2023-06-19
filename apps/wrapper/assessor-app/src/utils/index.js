@@ -151,7 +151,7 @@ export const removeItemFromLocalForage = (key) => {
 export const handleFormEvents = async (startingForm, afterFormSubmit, e) => {
   const user = getCookie("userData");
   if (
-    e.origin === ENKETO_URL &&
+    (e.origin + '/enketo') === ENKETO_URL &&
     typeof e?.data === "string" &&
     JSON.parse(e?.data)?.state !== "ON_FORM_SUCCESS_COMPLETED"
   ) {

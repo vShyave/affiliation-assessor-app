@@ -69,13 +69,6 @@ const GenericOdkForm = (props) => {
   const [onFormSuccessData, setOnFormSuccessData] = useState(undefined);
   const [onFormFailureData, setOnFormFailureData] = useState(undefined);
   const [encodedFormURI, setEncodedFormURI] = useState("");
-  // const [encodedFormURI, setEncodedFormURI] = useState(
-  //   getFormURI(
-  //     formId,
-  //     formSpec.forms[formId].onSuccess,
-  //     formSpec.forms[formId].prefill
-  //   )
-  // );
   const [prefilledFormData, setPrefilledFormData] = useState();
 
   const loading = useRef(false);
@@ -91,12 +84,11 @@ const GenericOdkForm = (props) => {
 
   async function afterFormSubmit(e) {
     const data = typeof e.data === "string" ? JSON.parse(e.data) : e.data;
-
+    // console.log("formData - ", data?.formData);
     try {
       const { nextForm, formData, onSuccessData, onFailureData } = data;
       if (data?.state === "ON_FORM_SUCCESS_COMPLETED") {
         const updatedFormData = await updateFormData(formSpec.start);
-
         const storedData = await getSpecificDataFromForage("required_data");
 
         saveFormSubmission({
@@ -119,9 +111,6 @@ const GenericOdkForm = (props) => {
         removeItemFromLocalForage(key);
 
         setTimeout(() => navigate(`${ROUTE_MAP.thank_you}${formName}`), 2000);
-        // setTimeout(() => navigate(formName.startsWith('hospital') ? ROUTE_MAP.hospital_forms : ROUTE_MAP.medical_assessment_options), 2000);
-        // setCookie(startingForm + `${new Date().toISOString().split("T")[0]}`, '');
-        // setCookie(startingForm + `Images${new Date().toISOString().split("T")[0]}`, '');
       }
 
       if (nextForm?.type === "form") {
@@ -156,6 +145,7 @@ const GenericOdkForm = (props) => {
   const bindEventListener = () => {
     window.addEventListener("message", handleEventTrigger);
   };
+
   const detachEventBinding = () => {
     window.removeEventListener("message", handleEventTrigger);
   };
