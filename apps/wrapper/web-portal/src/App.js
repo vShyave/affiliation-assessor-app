@@ -66,9 +66,9 @@ function App() {
           <Route
             path={ADMIN_ROUTE_MAP.adminModule.dashboard}
             element={
-            // <PrivateRoute>
+             <PrivateRoute>
              <DashboardLandingPage />
-            // {/* </PrivateRoute> */}
+             </PrivateRoute> 
           }
           >
             <Route
