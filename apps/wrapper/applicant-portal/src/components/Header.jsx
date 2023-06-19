@@ -17,11 +17,11 @@ const Header = () => {
     navigate(APPLICANT_ROUTE_MAP.loginModule.login);
   };
 
-  useEffect(()=>{
- if (instituteData != null) {
-   setshowButtons(true);
- }
-  },[instituteData]);
+  useEffect(() => {
+    if (instituteData != null) {
+      setshowButtons(true);
+    }
+  }, [instituteData]);
 
   return (
     <div className="relative min-h-[80px] z-10 drop-shadow-md">
@@ -33,7 +33,7 @@ const Header = () => {
             </div>
             <div className="flex grow justify-end items-center gap-4">
               {!showButtons && (
-                <div>
+                <div className="flex space-x-4">
                   <Link to={APPLICANT_ROUTE_MAP.dashboardModule.register}>
                     <Button
                       moreClass="px-4 text-primary-600"

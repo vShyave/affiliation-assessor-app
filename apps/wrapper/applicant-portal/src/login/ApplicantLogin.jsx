@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { Link, useNavigate } from "react-router-dom";
-
+import Toast from "../components/Toast";
 import { Card, Label, Button } from "../components";
 import APPLICANT_ROUTE_MAP from "../routes/ApplicantRoute";
 import { userService, applicantService } from "../services";
@@ -13,15 +13,19 @@ const ApplicantLogin = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [enableOtp, setEnableOtp] = useState(false);
   const [phoneNumber, setPhoneNumber] = useState(null);
+  const [verifyEnteredOtp, setVerifyEnteredOtp] = useState(true);
   const navigate = useNavigate();
 
   const {
     register,
     handleSubmit,
-    watch,
     formState: { errors },
   } = useForm();
-
+  const [toast, setToast] = useState({
+    toastOpen: false,
+    toastMsg: "",
+    toastType: "",
+  });
   useEffect(() => {
     // Check if user is already logged in (e.g., using your authentication logic)
     const checkLoggedInStatus = () => {
@@ -38,16 +42,58 @@ const ApplicantLogin = () => {
 
   const login = async (data) => {
     try {
-      const loginRes = await userService.sendOtp(data.phone);
-      //below logic will be modified with real login api
-      if (Object.keys(loginRes.data).length === 0) {
-        setEnableOtp(true);
-        setPhoneNumber(data.phone);
+      const loginDetails = {
+        loginId: data.phone,
+        password: data.phone,
+        noJWT: false,
+      };
+      const checkUser = await userService.login(loginDetails);
+      console.log("user check", checkUser.data.user.mobilePhone);
+      if (checkUser.data.user.mobilePhone) {
+        console.log(checkUser.data.user.mobilePhone);
+        const loginRes = await userService.sendOtp(data.phone);
+        if (Object.keys(loginRes.data).length === 0) {
+          setEnableOtp(true);
+          setPhoneNumber(data.phone);
+        } else {
+          console.log("Something went wrong", loginRes);
+        }
       } else {
-        console.log("Something went wrong", loginRes);
+        setToast((prevState) => ({
+          ...prevState,
+          toastOpen: true,
+          toastMsg: "User not registered.",
+          toastType: "error",
+        }));
+        setTimeout(
+          () =>
+            setToast((prevState) => ({
+              ...prevState,
+              toastOpen: false,
+              toastMsg: "",
+              toastType: "",
+            })),
+          3000
+        );
       }
     } catch (error) {
       console.log("Otp not sent due to some error", error);
+      setToast((prevState) => ({
+        ...prevState,
+        toastOpen: true,
+        toastMsg: "User not registered.",
+        toastType: "error",
+      }));
+      setTimeout(
+        () =>
+          setToast((prevState) => ({
+            ...prevState,
+            toastOpen: false,
+            toastMsg: "",
+            toastType: "",
+          })),
+        3000
+      );
     }
   };
 
@@ -76,13 +122,17 @@ const ApplicantLogin = () => {
       const verifyOtpReq = userService.verifyOtp(data.phone, data.otp);
       const fusionAuthLoginReq = from(verifyOtpReq).pipe(
         mergeMap((verifyOtpRes) => {
-          return userService.login(loginDetails);
+          if (verifyOtpRes.data.data.Status === "Error") {
+            setVerifyEnteredOtp(false);
+          } else {
+            setVerifyEnteredOtp(true);
+            return userService.login(loginDetails);
+          }
         })
       );
 
       const applicantDetailsReq = from(fusionAuthLoginReq).pipe(
         mergeMap((fusionAuthLoginRes) => {
-          setCookie("userData", fusionAuthLoginRes.data);
           return applicantService.getApplicantDetails({
             user_id: fusionAuthLoginRes.data.user.id,
           });
@@ -93,10 +143,35 @@ const ApplicantLogin = () => {
         await lastValueFrom(
           forkJoin([verifyOtpReq, fusionAuthLoginReq, applicantDetailsReq])
         );
-      setCookie("institutes", applicantDetailsRes.data.institutes);
-      navigate(APPLICANT_ROUTE_MAP.dashboardModule.my_applications);
+      if (
+        fusionAuthLoginRes.data.user.registrations[0]?.roles[0] === "Institute"
+      ) {
+        setCookie("userData", fusionAuthLoginRes.data);
+        setCookie("institutes", applicantDetailsRes.data.institutes);
+        navigate(APPLICANT_ROUTE_MAP.dashboardModule.my_applications);
+      } else {
+        setToast((prevState) => ({
+          ...prevState,
+          toastOpen: true,
+          toastMsg: "Invalid user.",
+          toastType: "error",
+        }));
+        setTimeout(
+          () =>
+            setToast((prevState) => ({
+              ...prevState,
+              toastOpen: false,
+              toastMsg: "",
+              toastType: "",
+            })),
+          3000
+        );
+      }
     } catch (error) {
-      console.log("Otp verification and login failed due to some error", error);
+      console.log(
+        "Otp veriification and login failed due to some error",
+        error
+      );
       removeCookie("institutes");
       removeCookie("userData");
     }
@@ -105,28 +180,31 @@ const ApplicantLogin = () => {
   if (!isLoggedIn) {
     return (
       <>
+        {toast.toastOpen && (
+          <Toast toastMsg={toast.toastMsg} toastType={toast.toastType} />
+        )}
         <Card moreClass="shadow-md w-screen sm:px-24 sm:w-[480px] md:w-[600px] py-16">
           <div className="flex flex-col">
             <h1 className="text-2xl font-medium text-center mb-8">Login</h1>
             {/* <div className="flex flex-col gap-2">
-              <Label htmlFor="email" text="Email id" required></Label>
-              <input 
-                  type="email" 
-                  name="email" 
-                  id="email" 
-                  placeholder="name@email.com" 
-                  {...register("email", {
-                      required: true,
-                      pattern: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/i
-                  })}
-                  className="block w-full rounded-md border-0 p-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                  noValidate
-              />
-              {errors?.email?.type === "required" && <p className="text-red-500 mt-2 text-sm">This field is required</p>}
-              {errors?.email?.type === "pattern" && (
-                  <p className="text-red-500 mt-2 text-sm">This is not a valid email format</p>
-              )}     
-            </div> */}
+                                <Label htmlFor="email" text="Email id" required></Label>
+                                <input 
+                                    type="email" 
+                                    name="email" 
+                                    id="email" 
+                                    placeholder="name@email.com" 
+                                    {...register("email", {
+                                        required: true,
+                                        pattern: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/i
+                                    })}
+                                    className="block w-full rounded-md border-0 p-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                                    noValidate
+                                />
+                                {errors?.email?.type === "required" && <p className="text-red-500 mt-2 text-sm">This field is required</p>}
+                                {errors?.email?.type === "pattern" && (
+                                    <p className="text-red-500 mt-2 text-sm">This is not a valid email format</p>
+                                )}     
+                            </div> */}
             {!enableOtp && (
               <>
                 <form
@@ -165,7 +243,7 @@ const ApplicantLogin = () => {
                     )}
                   </div>
                   <Button
-                    moreClass="uppercase w-full mt-7"
+                    moreClass="uppercase w-full mt-7 text-white"
                     text="Get Otp"
                     type="submit"
                   ></Button>
@@ -214,9 +292,19 @@ const ApplicantLogin = () => {
                         Please enter 6 digit otp
                       </p>
                     )}
+                    {verifyEnteredOtp == false && (
+                      <p className="text-red-500 mt-2 text-sm">
+                        Please enter the correct OTP
+                      </p>
+                    )}
+                    {toast.toastOpen && (
+                      <p className="text-red-500 mt-2 text-sm">
+                        You are not a registered institute.
+                      </p>
+                    )}
                   </div>
                   <Button
-                    moreClass="uppercase w-full mt-7"
+                    moreClass="uppercase text-white w-full mt-7"
                     text="Sign in"
                     type="submit"
                   ></Button>

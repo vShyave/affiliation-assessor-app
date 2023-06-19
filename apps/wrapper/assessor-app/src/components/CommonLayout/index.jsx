@@ -2,14 +2,17 @@ import React, { useRef, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faArrowLeft,
+  faDownload,
+  faFileArrowDown,
   faRightFromBracket,
-  faXmark
+  faXmark,
 } from "@fortawesome/free-solid-svg-icons";
 import { useNavigate } from "react-router-dom";
 import CommonModal from "../Modal";
-import isOnline from 'is-online';
+import isOnline from "is-online";
 import { logout } from "../../utils/index.js";
 import { useEffect } from "react";
+
 
 const CommonLayout = (props) => {
   const navigate = useNavigate();
@@ -17,19 +20,74 @@ const CommonLayout = (props) => {
   const [online, setOnline] = useState(true);
   const onlineInterval = useRef();
 
+  const handleFormDownload = () =>{
+    let url = props.formUrl;
+    let win= window.open(url, "_blank","toolbar=yes,scrollbars=yes,resizable=yes");
+    setTimeout(()=>{
+      win.focus()
+      win.print();
+    },2000)
+
+    // const doc = new jsPDF({
+    //   format: "a4",
+    //   unit: "px",
+    // });
+
+    // // Adding the fonts.
+    // doc.setFont("Inter-Regular", "normal");
+
+    // let iframe = document.createElement("iframe");
+    // iframe.style.visibility = "hidden";
+    // document.body.appendChild(iframe);
+    // let iframedoc = iframe.contentDocument || iframe.contentWindow.document;
+    // let htmlItem = document.getElementsByClassName("container");
+    // iframedoc.body.innerHTML = htmlItem[0].innerHTML;
+
+    // html2canvas(
+      // window.document
+      //   .querySelector("iframe")
+      //   .contentWindow.document.querySelector(".main")
+    //   iframedoc
+    // ).then((canvas) => {
+    //   let base64image = canvas.toDataURL("image/png");
+    //   console.log(base64image);
+    //   let pdf = new jsPDF("p", "px", [1600, 1131]);
+    //   pdf.addImage(base64image, "PNG", 15, 15, 1110, 360);
+    //   pdf.save("enketo-form.pdf");
+    // });
+
+    // doc.html(reportTemplateRef.current, {
+    //   async callback(doc) {
+    //     await doc.save("document");
+    //   },
+    // });
+  }
+
   useEffect(() => {
     onlineInterval.current = setInterval(async () => {
       let status = await isOnline();
-      setOnline(status)
-    }, 1000)
-    return () => clearInterval(onlineInterval.current)
-  }, [])
+      setOnline(status);
+    }, 1000);
+    return () => clearInterval(onlineInterval.current);
+  }, []);
 
   return (
     <>
       <div className="flex flex-col bg-tertiary h-screen w-screen lg:w-[52vw] md:w-[80vw] md:m-auto lg:m-auto overflow-none">
         <div className="flex flex-row w-full justify-between relative">
-          <div style={{ height: 20, width: 20, borderRadius: '50%', position: 'absolute', top: 0, right: 0, background: online ? '#229225' : 'red', marginTop: 20, marginRight: 20 }}></div>
+          <div
+            style={{
+              height: 20,
+              width: 20,
+              borderRadius: "50%",
+              position: "absolute",
+              top: 0,
+              right: 0,
+              background: online ? "#229225" : "red",
+              marginTop: 20,
+              marginRight: 20,
+            }}
+          ></div>
           <img
             src="/assets/redGolLogo.png"
             className="p-5 h-[120px] w-[120px] lg:w-[170px] lg:h-[170px]"
@@ -45,40 +103,43 @@ const CommonLayout = (props) => {
           <div className="flex flex-col px-8 py-7 gap-1">
             <div className="flex flex-row w-full items-center cursor-pointer gap-4">
               <div className="flex grow-0">
-                {
-                  !props.backDisabled && (
-                    <FontAwesomeIcon
-                      icon={ props.iconType === 'close' ? faXmark : faArrowLeft }
-                      className="text-2xl lg:text-4xl"
-                      onClick={() => {
-                        props.backFunction
-                          ? props.backFunction()
-                          : navigate(props.back);
-                      }}
-                    />
-                  )
-                }
+                {!props.backDisabled && (
+                  <FontAwesomeIcon
+                    icon={props.iconType === "close" ? faXmark : faArrowLeft}
+                    className="text-2xl lg:text-4xl"
+                    onClick={() => {
+                      props.backFunction
+                        ? props.backFunction()
+                        : navigate(props.back);
+                    }}
+                  />
+                )}
               </div>
               <div className="flex grow items-center flex-col gap-4">
-                <div className="text-secondary tracking-wide text-[25px] font-bold lg:text-[36px] items-center">{ props.pageTitle }</div>
-              </div>    
+                <div className="text-secondary tracking-wide text-[25px] font-bold lg:text-[36px] items-center">
+                  {props.pageTitle}
+                </div>
+              </div>
               <div className="flex grow-0">
-                {
-                  !props.logoutDisabled && (
-                    <FontAwesomeIcon
-                      icon={faRightFromBracket}
-                      className="text-2xl lg:text-4xl"
-                      onClick={() => showLogoutModal(true)}
-                    />
-                  )
-                }
+                {!props.logoutDisabled && (
+                  <FontAwesomeIcon
+                    icon={faRightFromBracket}
+                    className="text-2xl lg:text-4xl"
+                    onClick={() => showLogoutModal(true)}
+                  />
+                )}
+                {props.downloadFile && (
+                  <FontAwesomeIcon
+                    icon={faDownload}
+                    className="text-2xl lg:text-4xl"
+                    onClick={handleFormDownload}
+                  />
+                )}
               </div>
             </div>
-            {
-              props.pageDesc && (
-                <div className="text-center text-gray-600">{ props.pageDesc }</div>
-              )
-            }
+            {props.pageDesc && (
+              <div className="text-center text-gray-600">{props.pageDesc}</div>
+            )}
           </div>
           {props.children}
         </div>

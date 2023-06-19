@@ -18,9 +18,9 @@ import CommonLayout from "../../components/CommonLayout";
 const ENKETO_MANAGER_URL = process.env.REACT_APP_ENKETO_MANAGER_URL;
 const ENKETO_URL = process.env.REACT_APP_ENKETO_URL;
 
-const GenericOdkForm = () => {
+const GenericOdkForm = (props) => {
   const user = getCookie("userData");
-  let { formName } = useParams();
+  let { formName, date } = useParams();
   const scheduleId = useRef();
   const formSpec = {
     forms: {
@@ -45,6 +45,7 @@ const GenericOdkForm = () => {
       },
     },
     start: formName,
+    date: date,
     metaData: {},
   };
 
@@ -68,13 +69,6 @@ const GenericOdkForm = () => {
   const [onFormSuccessData, setOnFormSuccessData] = useState(undefined);
   const [onFormFailureData, setOnFormFailureData] = useState(undefined);
   const [encodedFormURI, setEncodedFormURI] = useState("");
-  // const [encodedFormURI, setEncodedFormURI] = useState(
-  //   getFormURI(
-  //     formId,
-  //     formSpec.forms[formId].onSuccess,
-  //     formSpec.forms[formId].prefill
-  //   )
-  // );
   const [prefilledFormData, setPrefilledFormData] = useState();
 
   const loading = useRef(false);
@@ -90,12 +84,11 @@ const GenericOdkForm = () => {
 
   async function afterFormSubmit(e) {
     const data = typeof e.data === "string" ? JSON.parse(e.data) : e.data;
-
+    // console.log("formData - ", data?.formData);
     try {
       const { nextForm, formData, onSuccessData, onFailureData } = data;
       if (data?.state === "ON_FORM_SUCCESS_COMPLETED") {
         const updatedFormData = await updateFormData(formSpec.start);
-
         const storedData = await getSpecificDataFromForage("required_data");
 
         saveFormSubmission({
@@ -115,13 +108,9 @@ const GenericOdkForm = () => {
         const key = `${storedData?.assessor_user_id}_${formSpec.start}${
           new Date().toISOString().split("T")[0]
         }`;
-        console.log("key - ", key);
         removeItemFromLocalForage(key);
 
         setTimeout(() => navigate(`${ROUTE_MAP.thank_you}${formName}`), 2000);
-        // setTimeout(() => navigate(formName.startsWith('hospital') ? ROUTE_MAP.hospital_forms : ROUTE_MAP.medical_assessment_options), 2000);
-        // setCookie(startingForm + `${new Date().toISOString().split("T")[0]}`, '');
-        // setCookie(startingForm + `Images${new Date().toISOString().split("T")[0]}`, '');
       }
 
       if (nextForm?.type === "form") {
@@ -156,6 +145,7 @@ const GenericOdkForm = () => {
   const bindEventListener = () => {
     window.addEventListener("message", handleEventTrigger);
   };
+
   const detachEventBinding = () => {
     window.removeEventListener("message", handleEventTrigger);
   };
@@ -180,12 +170,13 @@ const GenericOdkForm = () => {
   }, []);
 
   return (
-    // <CommonLayout back={formName.startsWith('hospital') ? ROUTE_MAP.hospital_forms : ROUTE_MAP.medical_assessment_options}>
-    <CommonLayout back={ROUTE_MAP.assessment_type} logoutDisabled>
+    <CommonLayout
+      {...props.commonLayoutProps}
+      formUrl={`${ENKETO_URL}/preview?formSpec=${encodedFormSpec}&xform=${encodedFormURI}&userId=${user.user.id}`}
+    >
       <div className="flex flex-col items-center">
         {encodedFormURI && assData && (
           <>
-            {console.log("ENCODED FROM", encodedFormURI)}
             <iframe
               title="form"
               src={`${ENKETO_URL}/preview?formSpec=${encodedFormSpec}&xform=${encodedFormURI}&userId=${user.user.id}`}

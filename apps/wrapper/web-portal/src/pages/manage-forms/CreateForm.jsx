@@ -47,10 +47,9 @@ const CreateForm = () => {
   const handleSaveDraft = async () => {
     let newForm = new FormData();
     Object.keys(formData).forEach((key) => newForm.append(key, formData[key]));
-    if (!window.location.pathname.includes("view")) {
-      newForm.append("user_id", "53c57d13-d33d-439a-bd72-1f56b189642d");
-      newForm.append("form_status", "Draft");
-    }
+    // TODO: make user_id dynamic
+    newForm.append("user_id", "53c57d13-d33d-439a-bd72-1f56b189642d");
+    newForm.append("form_status", "Draft");
     try {
       const createFormResponse = await createForm(newForm);
       setToast((prevState) => ({
@@ -93,7 +92,7 @@ const CreateForm = () => {
     try {
       const res = await convertODKtoXML(postData);
       setXmlData(res.data);
-      setFormData((prevState) => ({ ...prevState, path: "www.google.com" }));
+      setFormData((prevState) => ({ ...prevState, path: res.data.fileUrl }));
       //TODO: function call to invoke API for uploading xml file and get the remote path
       //TODO: add remote path to formData (state).
       setToast((prevState) => ({
@@ -144,6 +143,7 @@ const CreateForm = () => {
         labels: formDetail?.labels,
         round_no: formDetail?.round,
         title: formDetail?.title,
+        path: formDetail?.path
       });
     } catch (error) {
       console.log("error - ", error);
@@ -267,9 +267,9 @@ const CreateForm = () => {
                         className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                       >
                         <option value="">Select here</option>
-                        <option value="New Institute">New Institute</option>
-                        <option value="New Course">New Course</option>
-                        <option value="Seat Enhancement">
+                        <option value="new_institute">New Institute</option>
+                        <option value="new_course">New Course</option>
+                        <option value="seat_enhancement">
                           Seat Enhancement
                         </option>
                       </select>
@@ -312,8 +312,8 @@ const CreateForm = () => {
                         className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                       >
                         <option value="">Select here</option>
-                        <option value="Nursing">Nursing</option>
-                        <option value="Paramedical">Paramedical</option>
+                        <option value="nursing">Nursing</option>
+                        <option value="paramedical">Paramedical</option>
                       </select>
                     </div>
 
@@ -334,8 +334,8 @@ const CreateForm = () => {
                         className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                       >
                         <option value="">Select here</option>
-                        <option value="Infrastructure">Infrastructure</option>
-                        <option value="Teaching Learning Process">
+                        <option value="infrastructure">Infrastructure</option>
+                        <option value="teaching_learning_process">
                           Teaching Learning Process
                         </option>
                         <option value="objective_structured_clinical_examination">
@@ -360,10 +360,10 @@ const CreateForm = () => {
                         className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                       >
                         <option value="">Select here</option>
-                        <option value="Applicant">Applicant</option>
-                        <option value="Admin">Admin</option>
-                        <option value="Government">Government</option>
-                        <option value="Desktop Assessor">
+                        <option value="applicant">Applicant</option>
+                        <option value="admin">Admin</option>
+                        <option value="government">Government</option>
+                        <option value="desktop_assessor">
                           Desktop Assessor
                         </option>
                         <option value="on-ground_assessor">
@@ -376,14 +376,14 @@ const CreateForm = () => {
                 <div className="flex justify-end">
                   <button
                     className={`${
-                      Object.values(formData).length !== 6
+                      Object.values(formData).length < 6
                         ? "bg-gray-400 text-gray-700 cursor-not-allowed"
                         : "px-6 text-white bg-primary-500 border border-primary-500"
                     } border w-[140px] h-[40px] font-medium rounded-[4px] `}
                     style={{ backgroundColor: "" }}
                     type="submit"
                     disabled={
-                      Object.values(formData).length !== 6 ? true : false
+                      Object.values(formData).length < 6 ? true : false
                     }
                   >
                     Next

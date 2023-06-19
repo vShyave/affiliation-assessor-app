@@ -29,12 +29,17 @@ import CertificateManagementList from "./pages/certificate-management/Certificat
 import ScheduleManagementList from "./pages/schedule-management/ScheduleManagementList";
 import ManageUser from "./pages/manage-users/ManageUser";
 import DesktopAnalysis from "./pages/desktop-analysis/DesktopAnalysis";
+import PrivateRoute from "./routes/PrivateRoute";
+
 
 function App() {
   return (
     <div className="App">
       <BrowserRouter>
         <Routes>
+          {/* Default landing page */}
+          <Route path="/" element={<Navigate to="/auth/login" />} />
+
           {/* Register and Login Routes */}
           <Route path={ADMIN_ROUTE_MAP.auth} element={<Authenticate />}>
             <Route
@@ -58,7 +63,11 @@ function App() {
           {/* Dashboard routing starts here */}
           <Route
             path={ADMIN_ROUTE_MAP.adminModule.dashboard}
-            element={<DashboardLandingPage />}
+            element={
+            // <PrivateRoute>
+            <DashboardLandingPage />
+            //  </PrivateRoute>
+          }
           >
             <Route
               path={ADMIN_ROUTE_MAP.adminModule.manageUsers.home}
@@ -87,7 +96,7 @@ function App() {
               ></Route>
               <Route
                 path={`${ADMIN_ROUTE_MAP.adminModule.manageForms.viewForm}/:formName/:formId`}
-                element={<CreateForm/>}
+                element={<CreateForm />}
               ></Route>
             </Route>
             <Route
