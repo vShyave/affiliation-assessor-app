@@ -42,6 +42,7 @@ const FilteringTable = (props) => {
     usePagination,
     useRowSelect,
     (hooks) => {
+      if(props.showCheckbox){
       hooks.visibleColumns.push((columns) => {
         return [
           {
@@ -55,7 +56,7 @@ const FilteringTable = (props) => {
           },
           ...columns,
         ];
-      });
+      });}
     }
   );
 

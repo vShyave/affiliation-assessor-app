@@ -82,7 +82,7 @@ const DesktopAnalysisList = () => {
   };
 
   const navigateToView = (formObj) => {
-    const navigationURL = `${ADMIN_ROUTE_MAP.adminModule.desktopAnalysis.viewForm}/${formObj?.original?.form_name}/${formObj?.original?.id}`;
+    const navigationURL = `${ADMIN_ROUTE_MAP.adminModule.desktopAnalysis.viewForm}/${formObj?.original?.form_title}/${formObj?.original?.id}`;
     navigation(navigationURL);
     const postData = { form_id: formObj?.original?.id };
     markStatus(postData);

@@ -17,13 +17,12 @@ import { Button, Label } from "../../components";
 import { Select, Option } from "@material-tailwind/react";
 import Toast from "../../components/Toast";
 
-function ScheduleInspectionModal({ closeSchedule,setToast }) {
+function ScheduleInspectionModal({ closeSchedule,setToast,instituteId }) {
   // const [formStatus, setFormStatus] = useState({});
 
   const [date, setDate] = useState(new Date());
   const [payload, setPayload] = useState({});
   const [assessorList, setAssessorList] = useState([]);
-  const instituteId = window.location.pathname.split("/")[4];
 
  
 
@@ -37,7 +36,6 @@ function ScheduleInspectionModal({ closeSchedule,setToast }) {
     setPayload((prevState) => ({ ...prevState, date: tempDate }));
     const postData = { todayDate: tempDate };
     const res = await getUsersForScheduling(postData);
-    console.log("res", res);
 
     setAssessorList(() =>
       res.data.assessors.map((item) => ({
@@ -57,11 +55,9 @@ function ScheduleInspectionModal({ closeSchedule,setToast }) {
       formData.append(key, payload[key]);
     });
 
-    console.log(Object.fromEntries(formData));
     try {
       const res = await getScheduleAssessment(formData);
 
-      console.log("res", res);
 
       setToast((prevState) => ({
         ...prevState,

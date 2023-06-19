@@ -100,7 +100,7 @@ const UploadForm = ({ setFormStage, handleFile, xmlData, formData }) => {
                   />
                   <Button
                     moreClass="text-white w-full px-6"
-                    text="Browse file"
+                    text="Browse file to upload"
                     onClick={handleClick}
                   />
                 </div>
