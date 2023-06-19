@@ -3,26 +3,15 @@ import { NavLink, useNavigate } from "react-router-dom";
 import "./Header.css";
 
 import { AiFillHome } from "react-icons/ai";
-// import { AiOutlineMenu, AiOutlineClose} from "react-icons/ai";
+
 
 
 import {  getCookie, removeCookie , getInitials} from "../utils/common";
+
 import ADMIN_ROUTE_MAP from "../routes/adminRouteMap";
 
-// import SelfRegistration from "./SelfRegistration";
-// import Congratulations from "./Congratulations";
-// import Cards from "./Cards";
-// import AdminDashboard from "./AdminHome";
-// import AdminLogin from "./AdminLogin";
-// import EnterOtp from "./EnterOtp";
-// import AdminCreateUser from "./AdminCreateUser";
-// import AdminUserDetails from "./AdminUserDetails";
-// import AdminSignUp from "./AdminSignUp";
-// import LoginEnterOpt from "./LoginEnterOtp";
-// import AdminManageForms from "./AdminManageForms";
-// import AdminCreateForm from "./AdminCreateForm";
-
 export default function Header() {
+
   const [showProfileDropdown, setShowProfileDropdown] = useState(false);
   const [showButtons, setshowButtons] = useState(false);
   const navigate = useNavigate();
@@ -36,30 +25,12 @@ export default function Header() {
   };
 
   useEffect(() => {
+<
     if (instituteData != null) {
       setshowButtons(true);
     }
   }, [instituteData]);
-  // const [toggle, setToggle] = useState(false);
-  // const [userInfoChars, setUserInfoChars] = useState("");
-  // const [showProfileDropdown, setShowProfileDropdown] = useState(false);
-  // const navigate = useNavigate();
-  // const logout = () => {
-  //   removeCookie("userData");
-  //   removeCookie("regulator");
-  //   navigate(ADMIN_ROUTE_MAP.loginModule.login);
-  // };
-
-  // useEffect(() => {
-  //   const isAuthenticated = getCookie("regulator");
-  //   console.log( "value" , isAuthenticated)
-  //   // if (isAuthenticated) {
-  //   // const name = isAuthenticated ? isAuthenticated[0]?.full_name : "akansh dhyani"
-  //   // const firstName = (name.split(" ")[0].charAt(0).toUpperCase())
-  //   //     const lastName = (name.split(" ")[name.split(" ").length-1].charAt(0).toUpperCase())
-  //   //     const chars = firstName + lastName;
-  //   //     setUserInfoChars(chars)}
-  // }, []);
+  
 
   return (
     <>
@@ -83,7 +54,7 @@ export default function Header() {
                     }}
                   >
                     
-                    {/* {getInitials(regulator[0].full_name)} */}
+                     {getInitials(regulator[0].full_name)} 
                   </button>
                   {showProfileDropdown && (
                     <div
