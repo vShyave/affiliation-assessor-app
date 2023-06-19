@@ -4,7 +4,7 @@ import "./Header.css";
 
 import { AiFillHome } from "react-icons/ai";
 
-import { getCookie, removeCookie } from "../utils/common";
+import { getCookie, getInitials, removeCookie } from "../utils/common";
 import ADMIN_ROUTE_MAP from "../routes/adminRouteMap";
 
 export default function Header() {
@@ -20,7 +20,7 @@ export default function Header() {
   useEffect(() => {
     const isAuthenticated = getCookie("regulator");
     if (isAuthenticated);
-    const name = isAuthenticated ? isAuthenticated[0]?.full_name : "";
+    const name = isAuthenticated ? isAuthenticated[0].full_name: "Test Admin";
     if (!name) return;
     const firstName = name.split(" ")[0].charAt(0).toUpperCase();
     const lastName = name
