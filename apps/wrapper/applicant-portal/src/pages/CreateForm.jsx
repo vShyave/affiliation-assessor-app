@@ -24,10 +24,11 @@ import {
 } from "../api/formApi";
 
 const ENKETO_URL = process.env.REACT_APP_ENKETO_URL;
+console.log("ENKETO_URL - ", ENKETO_URL);
 
 const CreateForm = () => {
   let { formName } = useParams();
-  const formId = 14;
+  const formId = 59;
   const [encodedFormURI, setEncodedFormURI] = useState("");
   const scheduleId = useRef();
   const navigate = useNavigate();
@@ -120,6 +121,7 @@ const CreateForm = () => {
       if (data?.state === "ON_FORM_SUCCESS_COMPLETED") {
         const updatedFormData = await updateFormData(formSpec.start);
         const storedData = await getSpecificDataFromForage("required_data");
+        console.log("updatedFormData - ", updatedFormData);
 
         saveFormSubmission({
           schedule_id: null,
@@ -128,7 +130,7 @@ const CreateForm = () => {
           form_name: formName,
           submission_status: true,
           assessor_id: null,
-          applicant_id: instituteDetails[0].id,
+          applicant_id: instituteDetails?.[0]?.id || 11,
         });
 
         // Delete the data from the Local Forage
@@ -158,8 +160,9 @@ const CreateForm = () => {
   };
 
   const handleFormEvents = async (startingForm, afterFormSubmit, e) => {
+    // console.log("ENKETO_URL - ", ENKETO_URL);
     if (
-      e.origin === ENKETO_URL &&
+      ENKETO_URL === "https://enketo.upsmfac.org/enketo" &&
       typeof e?.data === "string" &&
       JSON.parse(e?.data)?.state !== "ON_FORM_SUCCESS_COMPLETED"
     ) {
@@ -221,6 +224,11 @@ const CreateForm = () => {
       </div>
 
       <div className="container mx-auto py-12 px-3 min-h-[40vh]">
+        {console.log(
+          `${ENKETO_URL}/preview?formSpec=${encodeURI(
+            JSON.stringify(formSpec)
+          )}&xform=${encodedFormURI}&userId=${user.id}`
+        )}
         <Card moreClass="shadow-md">
           <iframe
             title="form"
