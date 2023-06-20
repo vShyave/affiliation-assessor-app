@@ -22,7 +22,8 @@ const API_URL = {
     createForm: `${rest}createForm`,
     publishForms: `${rest}publishForms`,
     unpublishForms: `${rest}unpublishForms`,
-    viewForm: `${rest}viewForm`
+    viewForm: `${rest}viewForm`,
+    deleteForm: `${rest}deleteForm`
   },
   manageUsers: {
     userList: `${rest}getAllUsers`,

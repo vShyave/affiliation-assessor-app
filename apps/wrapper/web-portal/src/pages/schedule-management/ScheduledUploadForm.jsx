@@ -3,13 +3,15 @@ import { Select, Option } from "@material-tailwind/react";
 import { Link } from "react-router-dom";
 
 import "./UploadForm.css";
+import { FaAngleRight } from "react-icons/fa";
 
 import { HiOutlineInformationCircle } from "react-icons/hi";
 import { Card, Button, Label, Input } from "../../components";
 import { MdEventBusy } from "react-icons/md";
 
-const UploadForm = ({ setFormStage, handleFile, xmlData, formData }) => {
+import ADMIN_ROUTE_MAP from "../../routes/adminRouteMap";
 
+const UploadForm = ({ setFormStage, handleFile, xmlData, formData }) => {
   const [fileName, setFileName] = useState("");
   const hiddenFileInput = React.useRef(null);
 
@@ -46,18 +48,29 @@ const UploadForm = ({ setFormStage, handleFile, xmlData, formData }) => {
 
   return (
     <>
+      {/* <div className="h-[48px] bg-white drop-shadow-sm ">
+        <div className="container mx-auto px-3 py-3">
+          <div className="flex flex-row font-bold gap-2 items-center">
+            <Link
+              to={ADMIN_ROUTE_MAP.adminModule.scheduleManagement.list}
+            >
+              <span className="text-primary-400 cursor-pointer">Schedule Management</span>
+            </Link>
+            <FaAngleRight className="text-[16px]" />
+            <span className="text-gray-500">Upload CSV</span>
+          </div>
+        </div>
+      </div> */}
       <div className="container">
         <div className="flex flex-col gap-4">
-        <div className="flex flex-row justify-between">   
-          <div>
-            <h1 className="text-2xl font-medium">Schedule management</h1>
-          </div>
-          <div className="flex justify-end">
-              <button 
-                  className="flex flex-wrap items-center justify-center gap-2 border border-blue-900 text-blue-900 bg-white w-[100px] h-[45px] text-md font-medium rounded-[4px]"
-                  >
+          <div className="flex flex-row justify-between">
+            <div>
+              <h1 className="text-2xl font-medium">Schedule management</h1>
+            </div>
+            <div className="flex justify-end">
+              <button className="flex flex-wrap items-center justify-center gap-2 border border-blue-900 text-blue-900 bg-white w-[100px] h-[45px] text-md font-medium rounded-[4px]">
                 Cancel
-                </button>
+              </button>
             </div>
           </div>
 
@@ -73,18 +86,18 @@ const UploadForm = ({ setFormStage, handleFile, xmlData, formData }) => {
 
                 <div className="inst_list flex flex-col p-6">
                   <ul className="flex flex-col gap-3">
-                    <li>Download ODK template (in .xlsx format)</li>
+                    <li>Download CSV Template</li>
                     <li>
-                      Create a new Form by refering{" "}
-                      <a
+                      Based on reference, Create a CSV file
+                      {/* <a
                         className="text-primary-600"
                         href="https://docs.getodk.org"
                         target="_blank"
                       >
                         https://docs.getodk.org
-                      </a>
+                      </a> */}
                     </li>
-                    <li>Upload ODK file to get XML file</li>
+                    <li>Upload CSV file</li>
                   </ul>
                 </div>
                 <div className="flex justify-center p-6">
