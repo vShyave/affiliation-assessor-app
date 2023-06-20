@@ -3,24 +3,10 @@ import { NavLink, useNavigate } from "react-router-dom";
 import "./Header.css";
 
 import { AiFillHome } from "react-icons/ai";
-// import { AiOutlineMenu, AiOutlineClose} from "react-icons/ai";
 
 
 import {  getCookie, removeCookie , getInitials} from "../utils/common";
 import ADMIN_ROUTE_MAP from "../routes/adminRouteMap";
-
-// import SelfRegistration from "./SelfRegistration";
-// import Congratulations from "./Congratulations";
-// import Cards from "./Cards";
-// import AdminDashboard from "./AdminHome";
-// import AdminLogin from "./AdminLogin";
-// import EnterOtp from "./EnterOtp";
-// import AdminCreateUser from "./AdminCreateUser";
-// import AdminUserDetails from "./AdminUserDetails";
-// import AdminSignUp from "./AdminSignUp";
-// import LoginEnterOpt from "./LoginEnterOtp";
-// import AdminManageForms from "./AdminManageForms";
-// import AdminCreateForm from "./AdminCreateForm";
 
 export default function Header() {
   const [showProfileDropdown, setShowProfileDropdown] = useState(false);

@@ -356,7 +356,7 @@ const FormsOverview = () => {
       setToast((prevState) => ({
         ...prevState,
         toastOpen: true,
-        toastMsg: "Error occured while publishing form!",
+        toastMsg: "Error occured while unpublishing form!",
         toastType: "error",
       }));
       setTimeout(

@@ -40,31 +40,25 @@ const FilteringTable = (props) => {
     useGlobalFilter,
     useSortBy,
     usePagination,
-    useRowSelect)
-  
-
-{/**
-    
-These lines of code are required , please don't delete
- */}
-
-  //   (hooks) => {
-  //     hooks.visibleColumns.push((columns) => {
-  //       return [
-  //         {
-  //           id: "selection",
-  //           Header: ({ getToggleAllRowsSelectedProps }) => (
-  //             <Checkbox {...getToggleAllRowsSelectedProps()} />
-  //           ),
-  //           Cell: ({ row }) => (
-  //             <Checkbox {...row.getToggleRowSelectedProps()} />
-  //           ),
-  //         },
-  //         ...columns,
-  //       ];
-  //     });
-  //   }
-  // );
+    useRowSelect,
+    (hooks) => {
+      if(props.showCheckbox){
+      hooks.visibleColumns.push((columns) => {
+        return [
+          {
+            id: "selection",
+            Header: ({ getToggleAllRowsSelectedProps }) => (
+              <Checkbox {...getToggleAllRowsSelectedProps()} />
+            ),
+            Cell: ({ row }) => (
+              <Checkbox {...row.getToggleRowSelectedProps()} />
+            ),
+          },
+          ...columns,
+        ];
+      });}
+    }
+  );
 
   const { globalFilter, pageIndex, pageSize } = state;
  
