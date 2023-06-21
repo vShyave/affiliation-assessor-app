@@ -760,27 +760,29 @@ function _setEventHandlers(survey) {
                         const lastPart = parts[parts.length - 1]
                         // if (typeof file === 'object' && file.name.includes(lastPart)) {
                         if (typeof file === 'object') {
-                            const fileURL = await formController.uploadFile(file);
-                            if (fileURL) {
-                                console.log({ fileURL });
-                                arrayOfFileURLs[e.target.name] = { url: fileURL, name: file.name, ref: e.target.name };
-                                // Broadcast File Remove
-                                olderFiles = JSON.parse(localStorage.getItem(keyToStorage)) || {};
-                                const arrayOfFileURLsNew = { ...olderFiles, ...arrayOfFileURLs };
-                                for (const [key, value] of Object.entries(olderFiles)) {
-                                    if (arrayOfFileURLs[key] !== undefined && value.url !== '') {
-                                        arrayOfFileURLsNew[key] = value;
-                                    }
-                                }
-                                if (olderFiles && olderFiles !== undefined) {
+                            if (file?.name?.includes(e?.target?.name?.slice(e?.target?.name?.lastIndexOf("/") + 1))) {
+                                const fileURL = await formController.uploadFile(file);
+                                if (fileURL) {
+                                    console.log({ fileURL });
+                                    arrayOfFileURLs[e.target.name] = { url: fileURL, name: file.name, ref: e.target.name };
+                                    // Broadcast File Remove
+                                    olderFiles = JSON.parse(localStorage.getItem(keyToStorage)) || {};
+                                    const arrayOfFileURLsNew = { ...olderFiles, ...arrayOfFileURLs };
                                     for (const [key, value] of Object.entries(olderFiles)) {
-                                        if (arrayOfFileURLsNew[key] === undefined) {
-                                            arrayOfFileURLsNew[key] = { url: '', name: '', ref: '' }
+                                        if (arrayOfFileURLs[key] !== undefined && value.url !== '') {
+                                            arrayOfFileURLsNew[key] = value;
                                         }
                                     }
+                                    if (olderFiles && olderFiles !== undefined) {
+                                        for (const [key, value] of Object.entries(olderFiles)) {
+                                            if (arrayOfFileURLsNew[key] === undefined) {
+                                                arrayOfFileURLsNew[key] = { url: '', name: '', ref: '' }
+                                            }
+                                        }
+                                    }
+                                    localStorage.setItem(keyToStorage, JSON.stringify(arrayOfFileURLsNew));
+                                    await formController.broadcastFormDataUpdate(form.getDataStr(), arrayOfFileURLsNew);
                                 }
-                                localStorage.setItem(keyToStorage, JSON.stringify(arrayOfFileURLsNew));
-                                await formController.broadcastFormDataUpdate(form.getDataStr(), arrayOfFileURLsNew);
                             }
                         } else {
                             if (file.includes("cdn.samagra.io")) {
