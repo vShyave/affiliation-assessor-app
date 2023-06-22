@@ -749,7 +749,7 @@ function _setEventHandlers(survey) {
         let olderFiles = JSON.parse(localStorage.getItem(keyToStorage)) || {};
         await formController.broadcastFormDataUpdate(form.getDataStr(), {});
         let arrayOfFileURLs = {};
-        if (e.target.nodeName === "INPUT" && e.target.accept === "image/*") {
+        if (e.target.nodeName === "INPUT") {
             const formFiles = await fileManager.getCurrentFiles();
             if (formFiles) {
                 console.log("formFiles: " + formFiles?.length)
