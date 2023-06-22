@@ -41,6 +41,7 @@ import CaptureSelfie from "./pages/CaptureSelfie";
 
 import "./App.css";
 import PastSubmittedForms from "./pages/PastSubmittedForms";
+import ComingSoon from "./pages/ComingSoon";
 
 export const StateContext = createContext();
 
@@ -168,7 +169,8 @@ function App() {
               path={ROUTE_MAP.hospital_forms}
               element={
                 <PrivateRoute>
-                  <HospitalOptions />
+                  {/* <HospitalOptions /> */}
+                  <ComingSoon />
                 </PrivateRoute>
               }
             />
