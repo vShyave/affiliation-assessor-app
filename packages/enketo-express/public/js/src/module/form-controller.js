@@ -114,7 +114,8 @@ export class FormController {
             const fd = new FormData();
             var newFile = new File([data], data.name, { type: data.type });
             // Compressing this file
-            newFile = await imageCompression(newFile, options)
+            if (data.type.includes("image"))
+                newFile = await imageCompression(newFile, options)
             fd.append('file', newFile, data.name);
             const response = await fetch(`${settings.formManagerBaseURI}/form/uploadFile`, {
                 method: 'POST',
