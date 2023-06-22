@@ -1,6 +1,7 @@
 import axios from "axios";
 import { getCookie, makeHasuraCalls } from "../utils";
 import customPost from "./customPost";
+import customPostPdf from "./customPostPdf";
 
 const BASE_URL = process.env.REACT_APP_USER_SERVICE_URL;
 const applicationId = process.env.REACT_APP_APPLICATION_ID;
@@ -38,19 +39,11 @@ export const sendOtpToMobile = async (mobile) => {
 };
 
 export const base64ToPdf = async (postData) => {
-  try {
-    const res = await axios.post(
-      "http://35.207.216.26:8000/convert-via-puppeteer/pdfpuppeteer",
-      {
-        url: postData
-      }
-    );
-    return res;
-  } catch (err) {
-    console.log(err);
-    return err;
-  }
-}
+  const res = await customPostPdf.post("/convert-via-puppeteer/pdfpuppeteer", {
+    url: postData,
+  });
+  return res;
+};
 
 export const verifyOtpSavePassword = async (mobile, pass, otp) => {
   try {
@@ -158,7 +151,9 @@ export const getMedicalAssessments = (submittedDate) => {
         }
       }
       `,
-    variables: { date: submittedDate || new Date().toISOString().split("T")[0] },
+    variables: {
+      date: submittedDate || new Date().toISOString().split("T")[0],
+    },
   };
   return makeHasuraCalls(query);
 };
