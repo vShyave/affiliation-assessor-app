@@ -32,7 +32,7 @@ const CommonLayout = (props) => {
     const fileName = "enketo_form.pdf";
     downloadLink.href = linkSource;
     downloadLink.download = fileName;
-    downloadLink.target = "_blank";
+    downloadLink.target = window.safari? "": "_blank";
     downloadLink.click();
     props.setIsLoading(false)
     }catch(error){
