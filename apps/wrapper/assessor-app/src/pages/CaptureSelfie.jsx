@@ -51,7 +51,7 @@ const CaptureSelfie = () => {
         }, 5000);
       }
     } catch (error) {
-      alert(error);
+     console.debug(error)
     }
   };
 
@@ -71,7 +71,7 @@ const CaptureSelfie = () => {
         navigate(ROUTE_MAP.assessment_type);
       }
     } catch (error) {
-      alert(error);
+      console.debug(error);
     }
   };
 
