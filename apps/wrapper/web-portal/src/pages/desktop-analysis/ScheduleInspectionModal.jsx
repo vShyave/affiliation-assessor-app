@@ -17,14 +17,12 @@ import { Button, Label } from "../../components";
 import { Select, Option } from "@material-tailwind/react";
 import Toast from "../../components/Toast";
 
-function ScheduleInspectionModal({ closeSchedule,setToast,instituteId }) {
+function ScheduleInspectionModal({ closeSchedule, setToast, instituteId }) {
   // const [formStatus, setFormStatus] = useState({});
 
   const [date, setDate] = useState(new Date());
   const [payload, setPayload] = useState({});
   const [assessorList, setAssessorList] = useState([]);
-
- 
 
   const onAssessorSelect = (e) => {
     setPayload((prevState) => ({ ...prevState, assessorCode: e.target.value }));
@@ -58,7 +56,6 @@ function ScheduleInspectionModal({ closeSchedule,setToast,instituteId }) {
     try {
       const res = await getScheduleAssessment(formData);
 
-
       setToast((prevState) => ({
         ...prevState,
         toastOpen: true,
@@ -75,31 +72,51 @@ function ScheduleInspectionModal({ closeSchedule,setToast,instituteId }) {
           })),
         3000
       );
-      closeSchedule(false)
+      closeSchedule(false);
     } catch (error) {
-      console.log("error - ", error);
-      setToast((prevState) => ({
-        ...prevState,
-        toastOpen: true,
-        toastMsg: "Error occured while scheduling inspection!",
-        toastType: "error",
-      }));
-      setTimeout(
-        () =>
-          setToast((prevState) => ({
-            ...prevState,
-            toastOpen: false,
-            toastMsg: "",
-            toastType: "",
-          })),
-        3000
-      );
-    } 
+      console.log("error - ", formData.get("date"));
+      let date = new Date(formData.get("date"));
+      if (error.response.data.code === "constraint-violation") {
+        setToast((prevState) => ({
+          ...prevState,
+          toastOpen: true,
+          toastMsg:
+            "Inspection already schduled for " + date.toDateString() + ".",
+          toastType: "error",
+        }));
+        setTimeout(
+          () =>
+            setToast((prevState) => ({
+              ...prevState,
+              toastOpen: false,
+              toastMsg: "",
+              toastType: "",
+            })),
+          3000
+        );
+      } else {
+        setToast((prevState) => ({
+          ...prevState,
+          toastOpen: true,
+          toastMsg: "Error occured while scheduling inspection!",
+          toastType: "error",
+        }));
+        setTimeout(
+          () =>
+            setToast((prevState) => ({
+              ...prevState,
+              toastOpen: false,
+              toastMsg: "",
+              toastType: "",
+            })),
+          3000
+        );
+      }
+    }
   };
 
   return (
     <>
-     
       <div className="flex flex-col justify-center items-center fixed inset-0 bg-opacity-25 backdrop-blur-sm">
         <div className="flex bg-white rounded-xl shadow-xl border border-gray-400 w-[560px] h-[600px] p-8">
           <div className="flex flex-col gap-4 w-full">
@@ -155,8 +172,15 @@ function ScheduleInspectionModal({ closeSchedule,setToast,instituteId }) {
                 // moreClass="border text-white w-[140px]"
                 // text=""
                 // disabled={!selectedAssessorId ? true : false}
-                className={`${Object.keys(payload).length==2?"bg-blue-500 text-white":"bg-gray-200 text-gray-500 cursor-not-allowed"} border w-[140px] p-2 h-[40px] font-medium rounded-[4px] `} disabled={!Object.keys(payload).length==2?true:false}
-              >Schedule</button>
+                className={`${
+                  Object.keys(payload).length == 2
+                    ? "bg-blue-500 text-white"
+                    : "bg-gray-200 text-gray-500 cursor-not-allowed"
+                } border w-[140px] p-2 h-[40px] font-medium rounded-[4px] `}
+                disabled={!Object.keys(payload).length == 2 ? true : false}
+              >
+                Schedule
+              </button>
             </div>
           </div>
         </div>
