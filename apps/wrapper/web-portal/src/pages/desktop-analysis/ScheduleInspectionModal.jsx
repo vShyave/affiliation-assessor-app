@@ -33,7 +33,6 @@ function ScheduleInspectionModal({ closeSchedule, setToast, instituteId }) {
   const [date, setDate] = useState(new Date());
   const [payload, setPayload] = useState({});
   const [assessorList, setAssessorList] = useState([]);
-  let formOptions = [];
 
   const onAssessorSelect = (e) => {
     setPayload((prevState) => ({ ...prevState, assessorCode: e.value }));
@@ -46,28 +45,12 @@ function ScheduleInspectionModal({ closeSchedule, setToast, instituteId }) {
     setPayload((prevState) => ({ ...prevState, date: tempDate }));
     const postData = { todayDate: tempDate };
     const res = await getUsersForScheduling(postData);
-    setAssessorList(() =>
-    {
-    
-      console.log(res.data.assessors)
-      formOptions =  res.data.assessors.map((assessor) => ({
-             user_id: assessor.user_id,
-            name: assessor.name,
-             code: assessor.code,
-           })
-      )
-    }
-   );
-    
-      // res.data.assessors.map((item) => ({
-      //   user_id: item.user_id,
-      //   name: item.name,
-      //   code: item.code,
-      // }))
-   // );
-   
   
-    
+   setAssessorList(res?.data?.assessors.map((item) => ({
+    value: item.code,
+    label: item.name
+      })));
+
   };
 
   const handleScheduleAssessment = async () => {
@@ -151,12 +134,13 @@ function ScheduleInspectionModal({ closeSchedule, setToast, instituteId }) {
                         moreClass="block mb-2 text-sm font-semibold text-gray-900 dark:text-gray-400"
                       ></Label>
                       <span className="flex flex-row gap-2">
-                        <Select
+                        
+                          <Select
                           key={"assessor_name"}
                           name="assessor_name"
                           label="Assessor Name"
                           onChange={onAssessorSelect}
-                          options={formOptions}
+                          options={assessorList}
                           className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                         >
                           {/* <Option value='' >Select Assessor</Option> */}
