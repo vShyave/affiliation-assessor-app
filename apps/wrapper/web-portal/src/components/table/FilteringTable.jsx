@@ -62,18 +62,18 @@ const FilteringTable = (props) => {
 
   const { globalFilter, pageIndex, pageSize } = state;
  
-  // {
-  //   array = JSON.stringify(
-  //     {
-  //       selectedFlatRows: selectedFlatRows.map((row) => row.original),
-  //     },
-  //     null,
-  //     2
-  //   );
-  //   {
-  //     console.log(array);
-  //   }
-  // }
+  {
+    array = JSON.stringify(
+      {
+        selectedFlatRows: selectedFlatRows.map((row) => row.original),
+      },
+      null,
+      2
+    );
+    {
+      console.log(array);
+    }
+  }
   
 
   return (

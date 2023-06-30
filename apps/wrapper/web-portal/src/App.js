@@ -31,8 +31,9 @@ import ManageUser from "./pages/manage-users/ManageUser";
 import DesktopAnalysis from "./pages/desktop-analysis/DesktopAnalysis";
 import PrivateRoute from "./routes/PrivateRoute";
 import ScheduleManagement from "./pages/schedule-management/ScheduleManagement";
-import ScheduledUploadForm from "./pages/schedule-management/ScheduledUploadForm"
-
+import ScheduledUploadForm from "./pages/schedule-management/ScheduledUploadForm";
+import Notification from "./pages/notifications/Notification";
+import NotificationsDetailedView from "./pages/notifications/NotificationsDetailedView";
 
 function App() {
   return (
@@ -82,6 +83,16 @@ function App() {
               ></Route>
             </Route>
 
+            {/* Notifications routing starts here */}
+            <Route
+              path={ADMIN_ROUTE_MAP.adminModule.notifications.home}
+              element={<Notification />}
+            >
+            <Route
+              index
+              element={<NotificationsDetailedView />}
+            ></Route>
+            </Route>
             {/*Manage forms routing starts here */}
             <Route
               path={ADMIN_ROUTE_MAP.adminModule.manageForms.home}

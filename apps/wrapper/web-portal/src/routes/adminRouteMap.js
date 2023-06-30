@@ -4,6 +4,7 @@ let GROUND_INSPECTION = "groundInspection";
 let MANAGE_FORMS = "manage-forms";
 let DESKTOP_ANALYSIS = "desktopAnalysis";
 let SCHEDULE_MANAGEMENT = "scheduleManagement";
+let NOTIFICATIONS = "notifications"
 
 ADMIN_ROUTE_MAP.auth = "/auth";
 ADMIN_ROUTE_MAP.loginModule = {
@@ -46,6 +47,10 @@ ADMIN_ROUTE_MAP.adminModule = {
     uploadForm: `/${SCHEDULE_MANAGEMENT}/upload-form`,
 
   },
+  notifications: {
+    home: `/${NOTIFICATIONS}`,
+    notificatonView: `/${NOTIFICATIONS}/notifications-view`
+  }
   
 };
 

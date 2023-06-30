@@ -172,10 +172,8 @@ const FormsOverview = () => {
   };
 
   const delete_Form = (formId) => {
-    // alert(formId);
     setShowAlert(false);
      deleteForms(formId);
-   console.log("formId",formId)
   };
 
   useEffect(() => {
@@ -309,6 +307,7 @@ const FormsOverview = () => {
           toastType: "",
         }));
       }, 3000);
+      // Notification.sendemail({"body":})
       fetchFormsList();
     } catch (error) {
       console.log("error - ", error);
@@ -373,25 +372,17 @@ const FormsOverview = () => {
   };
   const deleteForms = async (form_id) => {
     const formData = new FormData();
-    console.log("form Id",form_id);
     formData.append("form_id", form_id);
-    var abc = formData.get("form_id");
-    var xyz = parseInt(abc)
-      const postData = {"form_id":xyz};
-
-    // let newFormVal = {
-    //   "form_id": 22
-    // }
-    // console.log("newFormVal", newFormVal);
     try {
-      console.log("postData",postData)
-      const response = await deleteForm(postData);
-      setToast((prevState) => ({
-        ...prevState,
-        toastOpen: true,
-        toastMsg: "Form successfully Deleted!",
-        toastType: "success",
-      }));
+      await deleteForm(formData).then(
+        setToast((prevState) => ({
+          ...prevState,
+          toastOpen: true,
+          toastMsg: "Form successfully Deleted!",
+          toastType: "success",
+        }))
+      );
+      
       setTimeout(() => {
         setToast((prevState) => ({
           ...prevState,

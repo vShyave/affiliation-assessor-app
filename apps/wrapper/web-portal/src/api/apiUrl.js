@@ -43,6 +43,12 @@ desktopAnalysis:{
     OTP_VERIFY: "user/otpVerify",
     USERLOGIN: "login",
   },
+  NOTIFICATION: {
+    SEND_SMS: "",
+    SEND_EMAIL: "",
+    SAVE: "",
+    GET: "",
+  },
 };
 
 export default API_URL;
