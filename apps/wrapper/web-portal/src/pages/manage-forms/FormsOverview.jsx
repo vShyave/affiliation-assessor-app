@@ -91,7 +91,7 @@ const FormsOverview = () => {
       accessor: "unpublish",
     },
     {
-      Header: "Preview",
+      Header: "Preview",  
       accessor: "preview",
     },
   ];
@@ -266,7 +266,7 @@ const FormsOverview = () => {
       setToast((prevState) => ({
         ...prevState,
         toastOpen: true,
-        toastMsg: "Form successfully Published!",
+        toastMsg: "Form successfully Unpublished!",
         toastType: "success",
       }));
       setTimeout(() => {
@@ -283,7 +283,7 @@ const FormsOverview = () => {
       setToast((prevState) => ({
         ...prevState,
         toastOpen: true,
-        toastMsg: "Error occured while publishing form!",
+        toastMsg: "Error occured while unpublishing form!",
         toastType: "error",
       }));
       setTimeout(

@@ -5,6 +5,8 @@ const ROUTE_MAP = {
   medical_assessments: "/medical-assessments",
   upcoming_medical_assessments: "/upcoming-medical-assessments",
   past_inspections: "/past-inspections",
+  past_application_list: "/past-application-list",
+  past_application_list_view: "/past-application-list/view",
   capture_location: "/capture-location",
   capture_selfie: "/capture-selfie",
   medical_assessment_options: "/medical-assessment-options",

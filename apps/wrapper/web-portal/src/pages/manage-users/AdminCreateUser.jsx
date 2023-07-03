@@ -4,7 +4,7 @@ import { Select, Option } from "@material-tailwind/react";
 
 import { useForm } from "react-hook-form";
 
-import { Button } from "../../components";
+import { Button, Label } from "../../components";
 
 import { getSpecificUser } from "./../../api";
 
@@ -50,9 +50,12 @@ export default function AdminCreateUser() {
               <h1 className="text-xl font-semibold">User details</h1>
               <div className="mt-8 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
                 <div className="sm:col-span-3">
-                  <label className="block text-sm font-medium leading-6 text-gray-900">
-                    First name
-                  </label>
+                  <Label 
+                  htmlFor="firstname"
+                  text="First name"
+                  required
+                  >
+                  </Label>
                   <div className="mt-2">
                     <input
                       type="text"
@@ -87,9 +90,11 @@ export default function AdminCreateUser() {
                   </div>
                 </div>
                 <div className="sm:col-span-3">
-                  <label className="block text-sm font-medium leading-6 text-gray-900">
-                    Last name
-                  </label>
+                  <Label
+                   htmlFor="lastname"
+                  text="Last name"
+                  required>
+                  </Label>
                   <div className="mt-2">
                     <input
                       type="text"
@@ -127,9 +132,11 @@ export default function AdminCreateUser() {
 
               <div className="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
                 <div className="sm:col-span-3">
-                  <label className="block text-sm font-medium leading-6 text-gray-900">
-                    Email Id
-                  </label>
+                  <Label 
+                  htmlFor="email"
+                  text="Email Id"
+                  required>
+                  </Label>
                   <div className="mt-2">
                     <input
                       type="email"
@@ -159,12 +166,12 @@ export default function AdminCreateUser() {
                   </div>
                 </div>
                 <div className="sm:col-span-3">
-                  <label
+                  <Label
                     htmlFor="phonenumber"
-                    className="block text-sm font-medium leading-6 text-gray-900"
+                  text="Phone number"
+                  required
                   >
-                    Phone number
-                  </label>
+                  </Label>
                   <div className="mt-2">
                     <input
                       type="tel"
@@ -202,14 +209,16 @@ export default function AdminCreateUser() {
 
               <div className="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
                 <div className="sm:col-span-3 ">
-                  <label
+                  <Label
                     htmlFor="role"
-                    className="block text-sm font-medium leading-6 text-gray-900"
-                  >
-                    Role
-                  </label>
+                    text="Role"
+                    required
+                    >
+                  </Label>
                   <div className="mt-2">
                     <Select
+                      name="role"
+                      id="role"
                       label="Select here"
                       value="Assessor"
                       readOnly

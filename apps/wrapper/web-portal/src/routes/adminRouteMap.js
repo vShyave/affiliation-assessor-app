@@ -42,6 +42,7 @@ ADMIN_ROUTE_MAP.adminModule = {
   scheduleManagement: {
     list: "schedule/list",
   },
+  
 };
 
 // Desktop Analysis Routes

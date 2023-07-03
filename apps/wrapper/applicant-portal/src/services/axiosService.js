@@ -32,7 +32,7 @@ axiosService.interceptors.response.use(
   },
   function (error) {
     let res = error.response;
-    if (res.status == 401) {
+    if (res.status === 401) {
       console.error("Unauthorized  user. Status Code: " + res.status);
       // window.location.href = “https://example.com/login”;
     }
