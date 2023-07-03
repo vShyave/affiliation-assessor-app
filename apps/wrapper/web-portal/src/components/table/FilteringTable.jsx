@@ -79,7 +79,7 @@ const FilteringTable = (props) => {
   return (
     <>
       <GlobalFilter filter={globalFilter} setFilter={setGlobalFilter} />
-      <div className="overflow-x-auto">
+      <div className={`overflow-x-auto ${props.moreHeight}`} >
         <table
           {...getTableProps()}
           className="w-full text-sm text-left text-gray-500 dark:text-gray-400"

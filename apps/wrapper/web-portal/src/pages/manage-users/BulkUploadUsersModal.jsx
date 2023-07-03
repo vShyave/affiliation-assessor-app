@@ -1,59 +1,79 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 // import React, {  useEffect,useState } from "react";
 // import { getAllUsers } from "../../api";
-// import FilteringTable from "../../components/table/FilteringTable";
+import FilteringTable from "../../components/table/FilteringTable";
 
 import { Button } from "../../components";
 
 function BulkUploadUsersModal({ closeBulkUploadUsersModal }) {
-  // var resUserData = [];
-  // const [usersList, setUsersList] = useState();
-  // const [userTableList, setUserTableList] = useState([]);
 
-  // const COLUMNS = [
-  //   {
-  //     Header: "Full name",
-  //     accessor: "full_name",
-  //   },
-  //   {
-  //     Header: "Email",
-  //     accessor: "email",
-  //   },
-  //   {
-  //     Header: "Mobile number",
-  //     accessor: "mobile_number",
-  //   },
-  //   {
-  //     Header: "Role",
-  //     accessor: "role",
-  //   },
-  // ];
+  const [file, setFile] = useState();
+  const [tableUserList, setTableUserList] = useState([]);
+  const fileReader = new FileReader();
+  const hiddenFileInput = React.useRef(null);
+  const [tableDataReady, setTableDataReady] = useState(false);
 
-  // const fetchAllUsers = async () => {
-  //   try {
-  //     const res = await getAllUsers();
-  //     setUsersList(res?.data?.assessors);
-  //     const data = res?.data?.assessors;
-  //     data.forEach((e) => {
-  //       var usersData = {
-  //         full_name: e.fname || e.lname ? e.fname + e.lname : e.name,
-  //         email: e.email?.toLowerCase(),
-  //         mobile_number: e.phonenumber,
-  //         role: e.role || "Assessor",
-  //         status: e.workingstatus || "Active",
-  //         id: e.user_id,
-  //       };
-  //       resUserData.push(usersData);
-  //     });
-  //     setUserTableList(resUserData);
-  //   } catch (error) {
-  //     console.log("error - ", error);
-  //   }
-  // };
+  const COLUMNS = [
+    {
+      Header: "Full Name",
+      accessor: "full_name",
+    },
+    {
+      Header: "Email",
+      accessor: "email",
+    },
+    {
+      Header: "Mobile Number",
+      accessor: "mobile_number",
+    },
+    {
+      Header: "Role",
+      accessor: "role",
+    },
 
-  // useEffect(() => {
-  //   fetchAllUsers();
-  // }, []);
+  ];
+
+  const handleClick = (e) => {
+    hiddenFileInput.current.click();
+  };
+
+  const handleChange = (e) => {
+    const fileUploaded = e.target.files[0];
+    setFile(
+      fileUploaded.name.substring(0, fileUploaded.name.lastIndexOf("."))
+    );
+    handleFile(fileUploaded);
+  };
+
+  const handleFile = (file) => {
+    const formData = new FormData();
+    formData.append("file", file);
+    if (file) {
+      fileReader.onload = function (event) {
+        const text = event.target.result;
+        csvFileToArray(text);
+      };
+
+      fileReader.readAsText(file);
+    }
+  };
+
+  const csvFileToArray = string => {
+    const csvHeader = string.slice(0, string.indexOf("\n")).split(",");
+    const csvRows = string.slice(string.indexOf("\n") + 1).split("\n");
+
+    const tableUserList = csvRows.map(i => {
+      const values = i.split(",");
+      const obj = csvHeader.reduce((object, header, index) => {
+        console.log(values[index])
+        object[header] = values[index];
+        return object;
+      }, {});
+      return obj;
+    });
+    setTableUserList(tableUserList);
+    setTableDataReady(true)
+  };
 
   return (
     <>
@@ -65,15 +85,33 @@ function BulkUploadUsersModal({ closeBulkUploadUsersModal }) {
             </div>
 
             <div className="justify-center flex flex-col items-center gap-4">
-              <Button moreClass=" text-white" text="Browse for files" />
-              <p className="text-gray-500 text-base">
-                Upload csv or excel here
-              </p>
-              {/* <FilteringTable
-                            dataList={userTableList}
-                            columns={COLUMNS}
-                            navigateFunc={() => {}}
-                          /> */}
+
+              {!tableDataReady && (<div className="flex flex-row m-auto">
+                <input type={"file"}
+                  accept={".csv"}
+                  ref={hiddenFileInput}
+                  style={{ display: "none" }}
+                  onChange={handleChange}
+                />
+                <Button
+                  moreClass="text-white w-full px-6"
+                  text="Browse file to upload"
+                  onClick={handleClick}
+                />
+              </div>)}
+
+              {tableDataReady && (<div className="items-center">
+                <div className="text-2xl w-full mt-4 font-medium">
+                  <FilteringTable moreHeight="h-[160px]"
+                    dataList={tableUserList}
+                    columns={COLUMNS}
+                    navigateFunc={() => { }}
+                    showCheckbox={true}
+                  />
+                </div>
+              </div>
+              )}
+
             </div>
             <div className="flex flex-col gap-4">
               <hr />
@@ -92,12 +130,12 @@ function BulkUploadUsersModal({ closeBulkUploadUsersModal }) {
                   moreClass="border text-white w-[120px]"
                   text="Create users"
                 ></Button>
-                {/* <button onClick={() => {closeStatusModal(false)}} className="border border-blue-500 bg-white text-blue-500 w-[140px] h-[40px] font-medium rounded-[4px]">Close</button> */}
               </div>
             </div>
           </div>
         </div>
       </div>
+
     </>
   );
 }
