@@ -3,7 +3,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faArrowLeft,
   faDownload,
-  faFileArrowDown,
+  faEye,
   faRightFromBracket,
   faXmark,
 } from "@fortawesome/free-solid-svg-icons";
@@ -13,30 +13,32 @@ import isOnline from "is-online";
 import { logout } from "../../utils/index.js";
 import { useEffect } from "react";
 import { base64ToPdf } from "../../api";
+import { Tooltip } from "@material-tailwind/react";
+import ButtonLoader from "../ButtonLoader";
 
 const CommonLayout = (props) => {
   const navigate = useNavigate();
   const [logoutModal, showLogoutModal] = useState(false);
+  const [previewModal, showPreviewModal] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const [online, setOnline] = useState(true);
   const onlineInterval = useRef();
 
   const handleFormDownload = async () => {
+    try {
+      setIsLoading(true);
+      const res = await base64ToPdf(props.formUrl);
 
-    try{
-    props.setIsLoading(true)
-    const res = await base64ToPdf(props.formUrl)
-    console.log(res);
-
-    const linkSource = `data:application/pdf;base64,${res.data}`;
-    const downloadLink = document.createElement("a");
-    const fileName = "enketo_form.pdf";
-    downloadLink.href = linkSource;
-    downloadLink.download = fileName;
-    downloadLink.target = window.safari? "": "_blank";
-    downloadLink.click();
-    props.setIsLoading(false)
-    }catch(error){
-      console.log(error)
+      const linkSource = `data:application/pdf;base64,${res.data}`;
+      const downloadLink = document.createElement("a");
+      const fileName = "enketo_form.pdf";
+      downloadLink.href = linkSource;
+      downloadLink.download = fileName;
+      downloadLink.target = window.safari ? "" : "_blank";
+      downloadLink.click();
+      setIsLoading(false);
+    } catch (error) {
+      console.log(error);
     }
   };
 
@@ -97,21 +99,38 @@ const CommonLayout = (props) => {
                   {props.pageTitle}
                 </div>
               </div>
-              <div className="flex grow-0">
+              <div className="flex flex-row gap-3 grow-0">
                 {!props.logoutDisabled && (
-                  <FontAwesomeIcon
-                    icon={faRightFromBracket}
-                    className="text-2xl lg:text-4xl"
-                    onClick={() => showLogoutModal(true)}
-                  />
+                  <Tooltip content="Logout">
+                    <FontAwesomeIcon
+                      icon={faRightFromBracket}
+                      className="text-2xl lg:text-4xl"
+                      onClick={() => showLogoutModal(true)}
+                    />
+                  </Tooltip>
                 )}
-                {props.downloadFile && (
-                  <FontAwesomeIcon
-                    icon={faDownload}
-                    className="text-2xl lg:text-4xl"
-                    onClick={handleFormDownload}
-                  />
+                {props.formPreview && (
+                  <Tooltip content="Preview Form">
+                    <FontAwesomeIcon
+                      icon={faEye}
+                      className="text-xl lg:text-4xl"
+                      onClick={() => {
+                        props.setIsPreview(true);
+                        showPreviewModal(true);
+                      }}
+                    />
+                  </Tooltip>
                 )}
+                {props.downloadFile && !isLoading && (
+                  <Tooltip content="Download Pdf">
+                    <FontAwesomeIcon
+                      icon={faDownload}
+                      className="text-xl lg:text-4xl"
+                      onClick={handleFormDownload}
+                    />
+                  </Tooltip>
+                )}
+                {props.downloadFile && isLoading && <ButtonLoader />}
               </div>
             </div>
             {props.pageDesc && (
@@ -121,6 +140,33 @@ const CommonLayout = (props) => {
           {props.children}
         </div>
       </div>
+      {previewModal && (
+        <CommonModal  moreStyles={{padding: "1rem", maxWidth: "95%", minWidth: "90%", maxHeight: "90%"}}>
+          <div className="flex flex-row w-full items-center cursor-pointer gap-4">
+            <div className="flex flex-grow">Preview</div>
+            <div className="flex flex-grow justify-end">
+              <FontAwesomeIcon
+                icon={faXmark}
+                className="text-2xl lg:text-4xl"
+                onClick={() => {
+                  props.setIsPreview(false);
+                  showPreviewModal(false);
+                }}
+              />
+            </div>
+          </div>
+
+          <div className="flex flex-col justify-center w-full py-4">
+            <div className="flex flex-col items-center">
+              <iframe
+                title="form"
+                src={props.formUrl}
+                style={{ height: "80vh", width: "100%" }}
+              />
+            </div>
+          </div>
+        </CommonModal>
+      )}
       {logoutModal && (
         <CommonModal>
           <div>
