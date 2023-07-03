@@ -20,7 +20,7 @@ export default function Header() {
   useEffect(() => {
     const isAuthenticated = getCookie("regulator");
     if (isAuthenticated);
-    const name = isAuthenticated ? isAuthenticated[0].full_name: "Test Admin";
+    const name = isAuthenticated ? isAuthenticated[0].full_name : "Test Admin";
     if (!name) return;
     const firstName = name.split(" ")[0].charAt(0).toUpperCase();
     const lastName = name
@@ -40,8 +40,8 @@ export default function Header() {
               <div className="flex grow">
                 <img src="/images/upsmf.png" alt="logo" className="h-[84px]" />
               </div>
-              <div className="relative inline-block text-left">
-                <div>
+              <div className="flex flex-row flex-grow justify-end items-center">
+                <div className="relative inline-block text-left">
                   <button
                     type="button"
                     className="border-green-500 bg-green-500 inline-flex w-full justify-center gap-x-1.5 rounded-md px-2 py-2 text-sm font-semibold text-white-500 shadow-sm hover:bg-green-400"

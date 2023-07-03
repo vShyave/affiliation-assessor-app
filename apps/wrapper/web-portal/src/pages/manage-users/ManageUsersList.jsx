@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 
-import { MdFileUpload , MdEdit , MdDelete } from "react-icons/md";
+import { MdFileUpload, MdEdit, MdDelete } from "react-icons/md";
 
 import { Button } from "../../components";
 import FilteringTable from "../../components/table/FilteringTable";
@@ -14,15 +14,17 @@ import DeleteUsersModal from "./DeleteUsers";
 import Dropdown from "../../components/Dropdown";
 import BulkUploadUsersModal from "./BulkUploadUsersModal";
 
-
 import { scheduled } from "rxjs";
 
-export default function ManageUsersList({closeDeleteUsersModal,closeBulkUploadUsersModal}) {
+export default function ManageUsersList({
+  closeDeleteUsersModal,
+  closeBulkUploadUsersModal,
+}) {
   const navigation = useNavigate();
   var resUserData = [];
   const [deleteUsersModel, setDeleteUsersModel] = useState(false);
   const [bulkUploadUsersModel, setBulkUploadUsersModel] = useState(false);
-  const[dropdown,setDropdown] = useState(false)
+  const [dropdown, setDropdown] = useState(false);
   const [usersList, setUsersList] = useState();
   const [userTableList, setUserTableList] = useState([]);
   const [isOpen, setIsOpen] = useState(false);
@@ -57,27 +59,25 @@ export default function ManageUsersList({closeDeleteUsersModal,closeBulkUploadUs
       accessor: "more_actions",
     },
   ];
- 
+
   const list = [
     {
-        "icon": <MdEdit/>,
-        "functionality": "Edit"  
+      icon: <MdEdit />,
+      functionality: "Edit",
     },
     {
-        "icon": <MdEdit/>,
-        "functionality": "Deactive"
+      icon: <MdEdit />,
+      functionality: "Deactive",
     },
     {
-        "icon": <MdDelete/>,
-        "functionality": "Delete"
-    }
-]
- 
+      icon: <MdDelete />,
+      functionality: "Delete",
+    },
+  ];
 
   const navigateToUpdate = (userObj) => {
     const navigationURL = `${ADMIN_ROUTE_MAP.adminModule.manageUsers.createUser}/${userObj?.original?.id}`;
     navigation(navigationURL);
-    
   };
 
   const fetchAllUsers = async () => {
@@ -122,18 +122,12 @@ export default function ManageUsersList({closeDeleteUsersModal,closeBulkUploadUs
               //   }));
               // }}
             >
-             View Schedule
-            </a>),
-            more_actions: (
-              <div className="flex flex-row text-2xl font-semibold">
-                <button 
-                onClick={() => navigateToUpdate(e)}
-                >                  
-                ...
-                </button>
-              </div>
-            ),
-
+              View Schedule
+            </a>
+          ),
+          more_actions: (
+            <div className="flex flex-row font-semibold justify-center text-2xl"></div>
+          ),
         };
         resUserData.push(usersData);
       });
@@ -142,7 +136,7 @@ export default function ManageUsersList({closeDeleteUsersModal,closeBulkUploadUs
       console.log("error - ", error);
     }
   };
-     
+
   useEffect(() => {
     fetchAllUsers();
   }, []);
@@ -156,25 +150,24 @@ export default function ManageUsersList({closeDeleteUsersModal,closeBulkUploadUs
           </div>
           <div className="flex justify-end">
             <span className="flex gap-4">
-                  <Button moreClass="text-white" text="Make inactive">
-                  </Button>
-                  <Button 
-                    moreClass="text-white"              
-                    onClick={() => setDeleteUsersModel(true)}
-                    text="Delete user">
-                  </Button>
-                  <button 
-                   onClick={() => setBulkUploadUsersModel(true)}
-                  className="flex flex-wrap items-center justify-center gap-2 border border-gray-500 text-gray-500 bg-white w-[200px] h-[45px] text-md font-medium rounded-[4px]"
-                  >
-                    Bulk upload users
-                    <span className="text-xl">
-                      <MdFileUpload/>
-                    </span>
-                  </button>
-                  <Button moreClass="text-white" text="Add User"></Button>
-              </span>
-            </div>
+              <Button moreClass="text-white" text="Make inactive"></Button>
+              <Button
+                moreClass="text-white"
+                onClick={() => setDeleteUsersModel(true)}
+                text="Delete user"
+              ></Button>
+              <button
+                onClick={() => setBulkUploadUsersModel(true)}
+                className="flex flex-wrap items-center justify-center gap-2 border border-gray-500 text-gray-500 bg-white w-[200px] h-[45px] text-md font-medium rounded-[4px]"
+              >
+                Bulk upload users
+                <span className="text-xl">
+                  <MdFileUpload />
+                </span>
+              </button>
+              <Button moreClass="text-white" text="Add User"></Button>
+            </span>
+          </div>
         </div>
         <div className="flex flex-row items-center">
           <div className="text-2xl w-full mt-4 font-medium">
@@ -191,11 +184,10 @@ export default function ManageUsersList({closeDeleteUsersModal,closeBulkUploadUs
         <DeleteUsersModal closeDeleteUsersModal={setDeleteUsersModel} />
       )}
       {bulkUploadUsersModel && (
-        <BulkUploadUsersModal closeBulkUploadUsersModal={setBulkUploadUsersModel} />
+        <BulkUploadUsersModal
+          closeBulkUploadUsersModal={setBulkUploadUsersModel}
+        />
       )}
-       
-    <Dropdown/>
     </>
   );
-};
-
+}
