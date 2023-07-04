@@ -6,7 +6,11 @@ import { Select, Option } from "@material-tailwind/react";
 import FilteringTable from "../../components/table/FilteringTable";
 import Card from "../../components/Card";
 
-import { getDesktopAnalysisForms, getOnGroundAssessorData, markReviewStatus } from "../../api";
+import {
+  getDesktopAnalysisForms,
+  getOnGroundAssessorData,
+  markReviewStatus,
+} from "../../api";
 import { getFieldName, readableDate } from "../../utils/common";
 import ADMIN_ROUTE_MAP from "../../routes/adminRouteMap";
 
@@ -15,8 +19,8 @@ const DesktopAnalysisList = () => {
   var formsDataList = [];
   const [formsList, setFormsList] = useState();
   const [state, setState] = useState({
-    menu_selected: "new"
-  })
+    menu_selected: "new",
+  });
 
   const COLUMNS = [
     {
@@ -40,9 +44,9 @@ const DesktopAnalysisList = () => {
       accessor: "status",
     },
     {
-        Header: '',
-        accessor: 'schedule'
-    }
+      Header: "",
+      accessor: "schedule",
+    },
   ];
 
   const cardArray = [
@@ -74,11 +78,11 @@ const DesktopAnalysisList = () => {
   ];
 
   const handleSelectMenu = (menuItem) => {
-    setState((prevState)=>({...prevState,menu_selected:menuItem}))
-}
+    setState((prevState) => ({ ...prevState, menu_selected: menuItem }));
+  };
 
   const navigateToView = (formObj) => {
-    const navigationURL = `${ADMIN_ROUTE_MAP.adminModule.desktopAnalysis.viewForm}/${formObj?.original?.form_name}/${formObj?.original?.id}`;
+    const navigationURL = `${ADMIN_ROUTE_MAP.adminModule.desktopAnalysis.viewForm}/${formObj?.original?.form_title}/${formObj?.original?.id}`;
     navigation(navigationURL);
     const postData = { form_id: formObj?.original?.id };
     markStatus(postData);
@@ -93,8 +97,8 @@ const DesktopAnalysisList = () => {
   };
 
   useEffect(() => {
-    fetchDesktopAnalysisForms() 
- }, []);
+    fetchDesktopAnalysisForms();
+  }, []);
 
   const fetchDesktopAnalysisForms = async () => {
     try {
@@ -115,17 +119,13 @@ const DesktopAnalysisList = () => {
 
   formsList?.forEach((e) => {
     var formsData = {
-      applicant:
-        e?.institute?.name?.charAt(0).toUpperCase() +
-        e?.institute?.name?.substring(1).toLowerCase() +
-        ", " +
-        e?.institute?.district?.charAt(0).toUpperCase() +
-        e?.institute?.district?.substring(1).toLowerCase(),
-      display_form_name: getFieldName(e?.form_name),
-      form_name: e?.form_name,
-      assessor: e?.assessor?.name,
-      assisting_assessor:
-        e?.assessor?.assisstant == null ? "None" : e?.assessor?.assisstant,
+      form_title: getFieldName(e?.form_name),
+      application_type:
+        e?.assessment_type?.charAt(0).toUpperCase() +
+        e?.assessment_type?.substring(1).toLowerCase(),
+      course_name:
+        e?.institute?.course_applied?.charAt(0).toUpperCase() +
+          e?.institute?.course_applied?.substring(1).toLowerCase() || "NA",
       published_on: readableDate(e?.submitted_on),
       id: e.form_id,
       status: e?.review_status || "NA",
@@ -179,10 +179,10 @@ const DesktopAnalysisList = () => {
           <div className="grid grid-cols-1 gap-x-6 gap-y-6 sm:grid-cols-6">
             <div className="sm:col-span-3">
               <div className="w-72 bg-white rounded-[8px]">
-                <Select value="1" label="Select round" onChange={(value)=>{console.log(value)}}>
+                {/* <Select value="1" label="Select round" onChange={(value)=>{console.log(value)}}>
                   <Option value="1">Round one</Option>
                   <Option value="2">Round two</Option>
-                </Select>
+                </Select> */}
               </div>
             </div>
           </div>
@@ -191,35 +191,57 @@ const DesktopAnalysisList = () => {
         <div className="flex flex-col">
           <div className="text-sm font-medium text-center text-gray-500 border-b border-gray-200 dark:text-gray-400 dark:border-gray-700">
             <ul className="flex flex-wrap -mb-px">
-              <li className="mr-2" onClick={()=>(handleSelectMenu("new"))}>
+              <li className="mr-2" onClick={() => handleSelectMenu("new")}>
                 <a
                   href="#"
-                  className={`inline-block p-4 rounded-t-lg dark:text-blue-500 dark:border-blue-600 ${(state.menu_selected === 'new') ? 'text-blue-600 border-b-2 border-blue-600' : ''}`}
+                  className={`inline-block p-4 rounded-t-lg dark:text-blue-500 dark:border-blue-600 ${
+                    state.menu_selected === "new"
+                      ? "text-blue-600 border-b-2 border-blue-600"
+                      : ""
+                  }`}
                 >
                   New
                 </a>
               </li>
-              <li className="mr-2" onClick={()=>(handleSelectMenu("rejected"))}>
+              <li className="mr-2" onClick={() => handleSelectMenu("rejected")}>
                 <a
                   href="#"
-                  className={`inline-block p-4 rounded-t-lg dark:text-blue-500 dark:border-blue-600 ${(state.menu_selected === 'rejected') ? 'text-blue-600 border-b-2 border-blue-600' : ''}`}
+                  className={`inline-block p-4 rounded-t-lg dark:text-blue-500 dark:border-blue-600 ${
+                    state.menu_selected === "rejected"
+                      ? "text-blue-600 border-b-2 border-blue-600"
+                      : ""
+                  }`}
                   aria-current="page"
                 >
                   Rejected
                 </a>
               </li>
-              <li className="mr-2" onClick={()=>(handleSelectMenu("resubmitted"))}>
+              <li
+                className="mr-2"
+                onClick={() => handleSelectMenu("resubmitted")}
+              >
                 <a
                   href="#"
-                  className={`inline-block p-4 rounded-t-lg dark:text-blue-500 dark:border-blue-600 ${(state.menu_selected === 'resubmitted') ? 'text-blue-600 border-b-2 border-blue-600' : ''}`}
+                  className={`inline-block p-4 rounded-t-lg dark:text-blue-500 dark:border-blue-600 ${
+                    state.menu_selected === "resubmitted"
+                      ? "text-blue-600 border-b-2 border-blue-600"
+                      : ""
+                  }`}
                 >
                   Resubmitted
                 </a>
               </li>
-              <li className="mr-2" onClick={()=>(handleSelectMenu("sent_for_inspection"))}>
+              <li
+                className="mr-2"
+                onClick={() => handleSelectMenu("sent_for_inspection")}
+              >
                 <a
                   href="#"
-                  className={`inline-block p-4 rounded-t-lg dark:text-blue-500 dark:border-blue-600 ${(state.menu_selected === 'sent_for_inspection') ? 'text-blue-600 border-b-2 border-blue-600' : ''}`}
+                  className={`inline-block p-4 rounded-t-lg dark:text-blue-500 dark:border-blue-600 ${
+                    state.menu_selected === "sent_for_inspection"
+                      ? "text-blue-600 border-b-2 border-blue-600"
+                      : ""
+                  }`}
                 >
                   Sent for inspection
                 </a>

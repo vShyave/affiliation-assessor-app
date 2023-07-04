@@ -1,27 +1,13 @@
 import React, { useEffect, useState } from "react";
-import { Link, NavLink, useNavigate } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import "./Header.css";
 
-import { AiOutlineMenu, AiOutlineClose, AiFillHome } from "react-icons/ai";
+import { AiFillHome } from "react-icons/ai";
 
-import { setCookie, getCookie, removeCookie } from "../utils/common";
+import { getCookie, getInitials, removeCookie } from "../utils/common";
 import ADMIN_ROUTE_MAP from "../routes/adminRouteMap";
 
-// import SelfRegistration from "./SelfRegistration";
-// import Congratulations from "./Congratulations";
-// import Cards from "./Cards";
-// import AdminDashboard from "./AdminHome";
-// import AdminLogin from "./AdminLogin";
-// import EnterOtp from "./EnterOtp";
-// import AdminCreateUser from "./AdminCreateUser";
-// import AdminUserDetails from "./AdminUserDetails";
-// import AdminSignUp from "./AdminSignUp";
-// import LoginEnterOpt from "./LoginEnterOtp";
-// import AdminManageForms from "./AdminManageForms";
-// import AdminCreateForm from "./AdminCreateForm";
-
 export default function Header() {
-  const [toggle, setToggle] = useState(false);
   const [userInfoChars, setUserInfoChars] = useState("");
   const [showProfileDropdown, setShowProfileDropdown] = useState(false);
   const navigate = useNavigate();
@@ -33,11 +19,12 @@ export default function Header() {
 
   useEffect(() => {
     const isAuthenticated = getCookie("regulator");
-    if (!isAuthenticated) return;
-    const name = isAuthenticated[0]?.full_name;
-    const firstName = name?.split(" ")[0].charAt(0).toUpperCase();
+    if (isAuthenticated);
+    const name = isAuthenticated ? isAuthenticated[0].full_name: "Test Admin";
+    if (!name) return;
+    const firstName = name.split(" ")[0].charAt(0).toUpperCase();
     const lastName = name
-      ?.split(" ")
+      .split(" ")
       [name.split(" ").length - 1].charAt(0)
       .toUpperCase();
     const chars = firstName + lastName;
@@ -103,9 +90,9 @@ export default function Header() {
                     <AiFillHome className="text-white text-xl" />
                   </NavLink>
                 </li>
-                <li className="flex hover:text-primary-600 hover:cursor-pointer">
-                  {/* <NavLink to="/">Dashboard</NavLink> */}
-                </li>
+                {/* <li className="flex hover:text-primary-600 hover:cursor-pointer">
+                  <NavLink to={ADMIN_ROUTE_MAP.adminModule.dashboard}>Dashboard</NavLink>
+                </li> */}
                 <li className="flex hover:text-primary-600 hover:cursor-pointer">
                   <NavLink to={ADMIN_ROUTE_MAP.adminModule.manageUsers.home}>
                     Manage Users

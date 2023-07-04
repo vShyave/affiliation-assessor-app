@@ -1,11 +1,10 @@
-import React from "react";
-
+import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
-import { Button } from "../components";
+import { Button, Label } from "../components";
 
 import { FaAngleRight } from "react-icons/fa";
-
+import Toast from "../components/Toast";
 import APPLICANT_ROUTE_MAP from "../routes/ApplicantRoute";
 import { userService, applicantService } from "../services";
 import { forkJoin, lastValueFrom } from "rxjs";
@@ -18,6 +17,11 @@ export default function SelfRegistration() {
     formState: { errors },
   } = useForm();
 
+  const [toast, setToast] = useState({
+    toastOpen: false,
+    toastMsg: "",
+    toastType: "",
+  });
   const signupHandler = async (data) => {
     const {
       firstName,
@@ -63,17 +67,34 @@ export default function SelfRegistration() {
     };
 
     try {
-      const fusionAuthSignupReq = userService.signup(userDetails);
-      const addInstituteReq = applicantService.addInstitute(instituteDetails);
-      const [fusionAuthSignupRes, addInstituteRes] = await lastValueFrom(
-        forkJoin([fusionAuthSignupReq, addInstituteReq])
+      const fusionAuthSignupRes = await userService.signup(userDetails);
+
+      const addInstituteRes = await applicantService.addInstitute(
+        instituteDetails
       );
+
       institutePocDetils.user_id = fusionAuthSignupRes.data.user.id;
       institutePocDetils.institute_id =
         addInstituteRes.data.insert_institutes_one.id;
       await applicantService.addInstitutePoc(institutePocDetils);
       navigate(APPLICANT_ROUTE_MAP.dashboardModule.congratulations);
     } catch (error) {
+      setToast((prevState) => ({
+        ...prevState,
+        toastOpen: true,
+        toastMsg: "User already registered.",
+        toastType: "error",
+      }));
+      setTimeout(
+        () =>
+          setToast((prevState) => ({
+            ...prevState,
+            toastOpen: false,
+            toastMsg: "",
+            toastType: "",
+          })),
+        3000
+      );
       console.error("Registration failed due to some error:", error);
     }
   };
@@ -84,10 +105,13 @@ export default function SelfRegistration() {
 
   return (
     <>
+      {toast.toastOpen && (
+        <Toast toastMsg={toast.toastMsg} toastType={toast.toastType} />
+      )}
       <div className="h-[48px] bg-white drop-shadow-sm">
         <div className="container mx-auto px-3 py-3">
           <div className="flex flex-row font-bold gap-2 items-center">
-            <Link to={APPLICANT_ROUTE_MAP.dashboardModule.self_registration}>
+            <Link to={APPLICANT_ROUTE_MAP.dashboard}>
               <span className="text-primary-400 cursor-pointer">Home</span>
             </Link>
             <FaAngleRight className="text-[16px]" />
@@ -108,15 +132,17 @@ export default function SelfRegistration() {
                 <h1 className="text-xl font-semibold">Basic Details</h1>
                 <div className="mt-8 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
                   <div className="sm:col-span-3">
-                    <label className="block text-sm font-medium leading-6 text-gray-900">
-                      First name
-                    </label>
+                    <Label
+                      htmlFor="firstname"
+                      text="First name"
+                      required
+                    ></Label>
                     <div className="mt-2">
                       <input
                         type="text"
                         placeholder="Type here"
                         id="firstname"
-                        name="firstName"
+                        name="firstname"
                         className="block w-full rounded-md border-0 p-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                         {...register("firstName", {
                           required: true,
@@ -142,14 +168,12 @@ export default function SelfRegistration() {
                     </div>
                   </div>
                   <div className="sm:col-span-3">
-                    <label className="block text-sm font-medium leading-6 text-gray-900">
-                      Last name
-                    </label>
+                    <Label htmlFor="lastname" text="Last name" required></Label>
                     <div className="mt-2">
                       <input
                         type="text"
                         placeholder="Type here"
-                        name="lastName"
+                        name="lastname"
                         id="lastname"
                         className="block w-full rounded-md border-0 p-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                         {...register("lastName", {
@@ -179,9 +203,7 @@ export default function SelfRegistration() {
 
                 <div className="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
                   <div className="sm:col-span-3">
-                    <label className="block text-sm font-medium leading-6 text-gray-900">
-                      Email Id
-                    </label>
+                    <Label htmlFor="email" text="Email Id" required></Label>
                     <div className="mt-2">
                       <input
                         type="email"
@@ -208,17 +230,16 @@ export default function SelfRegistration() {
                     </div>
                   </div>
                   <div className="sm:col-span-3">
-                    <label
+                    <Label
                       htmlFor="phonenumber"
-                      className="block text-sm font-medium leading-6 text-gray-900"
-                    >
-                      Phone number
-                    </label>
+                      text="phonenumber"
+                      required
+                    ></Label>
                     <div className="mt-2">
                       <input
                         type="tel"
                         placeholder="Type here"
-                        name="mobilePhone"
+                        name="phonenumber"
                         id="phonenumber"
                         className="block w-full rounded-md border-0 p-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                         {...register("mobilePhone", {
@@ -248,18 +269,17 @@ export default function SelfRegistration() {
 
                 <div className="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
                   <div className="sm:col-span-3">
-                    <label
+                    <Label
                       htmlFor="applicantname"
-                      className="block text-sm font-medium leading-6 text-gray-900"
-                    >
-                      Applicant name
-                    </label>
+                      text="Applicant name"
+                      required
+                    ></Label>
                     <div className="mt-2">
                       <input
                         type="text"
                         placeholder="Type here"
                         id="applicantname"
-                        name="applicantName"
+                        name="applicantname"
                         className="block w-full rounded-md border-0 p-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                         {...register("applicantName", {
                           required: true,
@@ -285,18 +305,17 @@ export default function SelfRegistration() {
                     </div>
                   </div>
                   <div className="sm:col-span-3 ">
-                    <label
+                    <Label
                       htmlFor="applicanttype"
-                      className="block text-sm font-medium leading-6 text-gray-900"
-                    >
-                      Applicant type
-                    </label>
+                      text="Applicant type"
+                      required
+                    ></Label>
                     <div className="mt-2">
                       <select
                         className="block w-full rounded-md border-0 p-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                         label="Select here"
                         id="applicanttype"
-                        name="applicantType"
+                        name="applicanttype"
                         {...register("applicantType", {
                           required: true,
                         })}
@@ -314,12 +333,11 @@ export default function SelfRegistration() {
 
                 <div className="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
                   <div className="sm:col-span-3 ">
-                    <label
+                    <Label
                       htmlFor="coursetype"
-                      className="block text-sm font-medium leading-6 text-gray-900"
-                    >
-                      Course name
-                    </label>
+                      text="Course name"
+                      required
+                    ></Label>
                     <div className="mt-2">
                       <select
                         className="block w-full rounded-md border-0 p-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"

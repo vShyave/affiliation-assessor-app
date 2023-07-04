@@ -8,11 +8,13 @@ import { useForm } from "react-hook-form";
 import { setCookie, getCookie, removeCookie } from "../utils/common";
 import { forkJoin, lastValueFrom, from } from "rxjs";
 import { mergeMap } from "rxjs/operators";
-
+import Toast from "../components/Toast";
 const AdminLogin = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [phoneNumber, setPhoneNumber] = useState(null);
   const [enableOtp, setEnableOtp] = useState(false);
+  const [verifyEnteredOtp, setVerifyEnteredOtp] = useState(true);
+  const [verifyUser, setVerifyUser] = useState(true);
   const navigate = useNavigate();
 
   const {
@@ -21,15 +23,18 @@ const AdminLogin = () => {
     watch,
     formState: { errors },
   } = useForm();
-
+  const [toast, setToast] = useState({
+    toastOpen: false,
+    toastMsg: "",
+    toastType: "",
+  });
   useEffect(() => {
     // Check if user is already logged in (e.g., using your authentication logic)
     const checkLoggedInStatus = () => {
       const isAuthenticated = getCookie("userData");
-
       if (isAuthenticated) {
         setIsLoggedIn(true);
-        navigate(ADMIN_ROUTE_MAP.adminModule.dashboard); // Redirect to home page
+        navigate(ADMIN_ROUTE_MAP.adminModule.manageForms.home); // Redirect to home page
       }
     };
 
@@ -38,16 +43,58 @@ const AdminLogin = () => {
 
   const login = async (data) => {
     try {
-      const loginRes = await userService.sendOtp(data.phone);
-
-      if (Object.keys(loginRes.data).length === 0) {
-        setEnableOtp(true);
-        setPhoneNumber(data.phone);
+      const loginDetails = {
+        loginId: data.phone,
+        password: data.phone,
+        noJWT: false,
+      };
+      const checkUser = await userService.login(loginDetails);
+      console.log("user check", checkUser.data.user.mobilePhone);
+      if (checkUser.data.user.mobilePhone) {
+        console.log(checkUser.data.user.mobilePhone);
+        const loginRes = await userService.sendOtp(data.phone);
+        if (Object.keys(loginRes.data).length === 0) {
+          setEnableOtp(true);
+          setPhoneNumber(data.phone);
+        } else {
+          console.log("Something went wrong", loginRes);
+        }
       } else {
-        console.log("Something went wrong", loginRes);
+        setToast((prevState) => ({
+          ...prevState,
+          toastOpen: true,
+          toastMsg: "User not registered.",
+          toastType: "error",
+        }));
+        setTimeout(
+          () =>
+            setToast((prevState) => ({
+              ...prevState,
+              toastOpen: false,
+              toastMsg: "",
+              toastType: "",
+            })),
+          3000
+        );
       }
     } catch (error) {
       console.log("Otp not sent due to some error", error);
+      setToast((prevState) => ({
+        ...prevState,
+        toastOpen: true,
+        toastMsg: "User not registered.",
+        toastType: "error",
+      }));
+      setTimeout(
+        () =>
+          setToast((prevState) => ({
+            ...prevState,
+            toastOpen: false,
+            toastMsg: "",
+            toastType: "",
+          })),
+        3000
+      );
     }
   };
 
@@ -76,13 +123,17 @@ const AdminLogin = () => {
       const verifyOtpReq = userService.verifyOtp(data.phone, data.otp);
       const fusionAuthLoginReq = from(verifyOtpReq).pipe(
         mergeMap((verifyOtpRes) => {
-          return userService.login(loginDetails);
+          if (verifyOtpRes.data.data.Status === "Error") {
+            setVerifyEnteredOtp(false);
+          } else {
+            setVerifyEnteredOtp(true);
+            return userService.login(loginDetails);
+          }
         })
       );
 
       const adminDetailsReq = from(fusionAuthLoginReq).pipe(
         mergeMap((fusionAuthLoginRes) => {
-          setCookie("userData", fusionAuthLoginRes.data);
           return getRegulator({
             phoneNumber: data.phone,
           });
@@ -93,8 +144,29 @@ const AdminLogin = () => {
         await lastValueFrom(
           forkJoin([verifyOtpReq, fusionAuthLoginReq, adminDetailsReq])
         );
-      setCookie("regulator", adminDetailsRes.data.regulator);
-      navigate(ADMIN_ROUTE_MAP.adminModule.dashboard);
+
+      if (fusionAuthLoginRes.data.user.registrations[0]?.roles[0] === "Admin") {
+        setCookie("userData", fusionAuthLoginRes.data);
+        setCookie("regulator", adminDetailsRes.data.regulator);
+        navigate(ADMIN_ROUTE_MAP.adminModule.manageUsers.home);
+      } else {
+        setToast((prevState) => ({
+          ...prevState,
+          toastOpen: true,
+          toastMsg: "Invalid user.",
+          toastType: "error",
+        }));
+        setTimeout(
+          () =>
+            setToast((prevState) => ({
+              ...prevState,
+              toastOpen: false,
+              toastMsg: "",
+              toastType: "",
+            })),
+          3000
+        );
+      }
     } catch (error) {
       console.log(
         "Otp veriification and login failed due to some error",
@@ -107,6 +179,9 @@ const AdminLogin = () => {
   if (!isLoggedIn) {
     return (
       <>
+        {toast.toastOpen && (
+          <Toast toastMsg={toast.toastMsg} toastType={toast.toastType} />
+        )}
         <Card moreClass="shadow-md w-screen sm:px-24 sm:w-[480px] md:w-[600px] py-16">
           <div className="flex flex-col">
             <h1 className="text-2xl font-medium text-center mb-8">Login</h1>
@@ -197,9 +272,19 @@ const AdminLogin = () => {
                         Please enter 6 digit otp
                       </p>
                     )}
+                    {verifyEnteredOtp == false && (
+                      <p className="text-red-500 mt-2 text-sm">
+                        Please enter the correct OTP
+                      </p>
+                    )}
+                    {toast.toastOpen && (
+                      <p className="text-red-500 mt-2 text-sm">
+                        You are not a registered admin.
+                      </p>
+                    )}
                   </div>
                   <Button
-                    moreClass="uppercase w-full mt-7"
+                    moreClass="uppercase text-white w-full mt-7"
                     text="Sign in"
                     type="submit"
                   ></Button>
