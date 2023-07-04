@@ -185,6 +185,7 @@ export const getFormData = async ({
   setData,
   setEncodedFormSpec,
   setEncodedFormURI,
+  isPreview
 }) => {
   const res = await getMedicalAssessments(formSpec.date);
   let formData, prefillXMLArgs;
@@ -208,7 +209,7 @@ export const getFormData = async ({
     if (formSpec.date) {
       formData = await getSpecificDataFromForage("selected_assessment_form");
       prefillXMLArgs = [
-        `${formData?.form_name}`,
+        `readonly_${formData?.form_name}`,
         "",
         formData.form_data,
         formData.imageUrls,
@@ -220,13 +221,13 @@ export const getFormData = async ({
       if (formData) {
         setEncodedFormSpec(encodeURI(JSON.stringify(formSpec.forms[formId])));
         prefillXMLArgs = [
-          startingForm,
+          `${isPreview?"readonly_"+startingForm:startingForm}`,
           formSpec.forms[formId].onSuccess,
           formData.formData,
           formData.imageUrls,
         ];
       } else {
-        prefillXMLArgs = [startingForm, formSpec.forms[formId].onSuccess];
+        prefillXMLArgs = [`${isPreview?"readonly_"+startingForm:startingForm}`, formSpec.forms[formId].onSuccess];
       }
     }
     let prefilledForm = await getPrefillXML(...prefillXMLArgs);

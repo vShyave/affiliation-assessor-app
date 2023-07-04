@@ -61,7 +61,6 @@ function ScheduleInspectionModal({ closeSchedule, setToast, instituteId }) {
 
      setPayload((prevState) => ({ ...prevState, assessorCode: e.value }));
 
-
   };
 
   const onChangeDate = async (date) => {
@@ -118,23 +117,44 @@ function ScheduleInspectionModal({ closeSchedule, setToast, instituteId }) {
       );
       closeSchedule(false);
     } catch (error) {
-      console.log("error - ", error);
-      setToast((prevState) => ({
-        ...prevState,
-        toastOpen: true,
-        toastMsg: "Error occured while scheduling inspection!",
-        toastType: "error",
-      }));
-      setTimeout(
-        () =>
-          setToast((prevState) => ({
-            ...prevState,
-            toastOpen: false,
-            toastMsg: "",
-            toastType: "",
-          })),
-        3000
-      );
+      console.log("error - ", formData.get("date"));
+      let date = new Date(formData.get("date"));
+      if (error.response.data.code === "constraint-violation") {
+        setToast((prevState) => ({
+          ...prevState,
+          toastOpen: true,
+          toastMsg:
+            "Inspection already schduled for " + date.toDateString() + ".",
+          toastType: "error",
+        }));
+        setTimeout(
+          () =>
+            setToast((prevState) => ({
+              ...prevState,
+              toastOpen: false,
+              toastMsg: "",
+              toastType: "",
+            })),
+          3000
+        );
+      } else {
+        setToast((prevState) => ({
+          ...prevState,
+          toastOpen: true,
+          toastMsg: "Error occured while scheduling inspection!",
+          toastType: "error",
+        }));
+        setTimeout(
+          () =>
+            setToast((prevState) => ({
+              ...prevState,
+              toastOpen: false,
+              toastMsg: "",
+              toastType: "",
+            })),
+          3000
+        );
+      }
     }
   };
 

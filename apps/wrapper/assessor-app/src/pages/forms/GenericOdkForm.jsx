@@ -22,7 +22,8 @@ const GenericOdkForm = (props) => {
   const user = getCookie("userData");
   let { formName, date } = useParams();
   const scheduleId = useRef();
-  const formSpec = {
+  const [isPreview, setIsPreview] = useState(false);
+  let formSpec = {
     forms: {
       [formName]: {
         skipOnSuccessMessage: true,
@@ -169,22 +170,40 @@ const GenericOdkForm = (props) => {
     };
   }, []);
 
+  useEffect(() => {
+    getFormData({
+      loading,
+      scheduleId,
+      formSpec,
+      startingForm,
+      formId,
+      setData,
+      setEncodedFormSpec,
+      setEncodedFormURI,
+      isPreview
+    });
+  }, [isPreview]);
+
   return (
     <CommonLayout
       {...props.commonLayoutProps}
       formUrl={`${ENKETO_URL}/preview?formSpec=${encodedFormSpec}&xform=${encodedFormURI}&userId=${user.user.id}`}
+      formPreview={true}
+      setIsPreview={setIsPreview}
     >
-      <div className="flex flex-col items-center">
-        {encodedFormURI && assData && (
-          <>
-            <iframe
-              title="form"
-              src={`${ENKETO_URL}/preview?formSpec=${encodedFormSpec}&xform=${encodedFormURI}&userId=${user.user.id}`}
-              style={{ height: "80vh", width: "100%" }}
-            />
-          </>
-        )}
-      </div>
+      {!isPreview && (
+        <div className="flex flex-col items-center">
+          {encodedFormURI && assData && (
+            <>
+              <iframe
+                title="form"
+                src={`${ENKETO_URL}/preview?formSpec=${encodedFormSpec}&xform=${encodedFormURI}&userId=${user.user.id}`}
+                style={{ height: "80vh", width: "100%" }}
+              />
+            </>
+          )}
+        </div>
+      )}
     </CommonLayout>
   );
 };

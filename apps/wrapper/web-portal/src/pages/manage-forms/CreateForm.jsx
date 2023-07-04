@@ -94,7 +94,7 @@ const CreateForm = () => {
     try {
       const res = await convertODKtoXML(postData);
       setXmlData(res.data);
-      setFormData((prevState) => ({ ...prevState, path: res.data.fileUrl }));
+      setFormData((prevState) => ({ ...prevState, path: res.data.fileUrl,file_name:res.data.fileName }));
       //TODO: function call to invoke API for uploading xml file and get the remote path
       //TODO: add remote path to formData (state).
       setToast((prevState) => ({
@@ -145,7 +145,8 @@ const CreateForm = () => {
         labels: formDetail?.labels,
         round_no: formDetail?.round,
         title: formDetail?.title,
-        path: formDetail?.path
+        path: formDetail?.path,
+        file_name: formDetail?.file_name
       });
     } catch (error) {
       console.log("error - ", error);
@@ -197,13 +198,13 @@ const CreateForm = () => {
               ></Button>
               <Button
                 moreClass={`${
-                  Object.values(formData).length !== 7 || loading
+                  Object.values(formData).length !== 8
                     ? "text-gray-500 bg-white border border-gray-300 cursor-not-allowed"
                     : "text-white bg-primary-500 border border-primary-500"
                 } px-6`}
                 text="Save as draft"
                 onClick={handleSaveDraft}
-                otherProps={{ disabled: Object.values(formData).length !== 7 || loading }}
+                otherProps={{ disabled: Object.values(formData).length !== 8 }}
               ></Button>
             </div>
           </div>

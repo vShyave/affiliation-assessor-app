@@ -3,7 +3,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faArrowLeft,
   faDownload,
-  faFileArrowDown,
+  faEye,
   faRightFromBracket,
   faXmark,
 } from "@fortawesome/free-solid-svg-icons";
@@ -12,56 +12,35 @@ import CommonModal from "../Modal";
 import isOnline from "is-online";
 import { logout } from "../../utils/index.js";
 import { useEffect } from "react";
-
+import { base64ToPdf } from "../../api";
+import { Tooltip } from "@material-tailwind/react";
+import ButtonLoader from "../ButtonLoader";
 
 const CommonLayout = (props) => {
   const navigate = useNavigate();
   const [logoutModal, showLogoutModal] = useState(false);
+  const [previewModal, showPreviewModal] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const [online, setOnline] = useState(true);
   const onlineInterval = useRef();
 
-  const handleFormDownload = () =>{
-    let url = props.formUrl;
-    let win= window.open(url, "_blank","toolbar=yes,scrollbars=yes,resizable=yes");
-    setTimeout(()=>{
-      win.focus()
-      win.print();
-    },2000)
+  const handleFormDownload = async () => {
+    try {
+      setIsLoading(true);
+      const res = await base64ToPdf(props.formUrl);
 
-    // const doc = new jsPDF({
-    //   format: "a4",
-    //   unit: "px",
-    // });
-
-    // // Adding the fonts.
-    // doc.setFont("Inter-Regular", "normal");
-
-    // let iframe = document.createElement("iframe");
-    // iframe.style.visibility = "hidden";
-    // document.body.appendChild(iframe);
-    // let iframedoc = iframe.contentDocument || iframe.contentWindow.document;
-    // let htmlItem = document.getElementsByClassName("container");
-    // iframedoc.body.innerHTML = htmlItem[0].innerHTML;
-
-    // html2canvas(
-      // window.document
-      //   .querySelector("iframe")
-      //   .contentWindow.document.querySelector(".main")
-    //   iframedoc
-    // ).then((canvas) => {
-    //   let base64image = canvas.toDataURL("image/png");
-    //   console.log(base64image);
-    //   let pdf = new jsPDF("p", "px", [1600, 1131]);
-    //   pdf.addImage(base64image, "PNG", 15, 15, 1110, 360);
-    //   pdf.save("enketo-form.pdf");
-    // });
-
-    // doc.html(reportTemplateRef.current, {
-    //   async callback(doc) {
-    //     await doc.save("document");
-    //   },
-    // });
-  }
+      const linkSource = `data:application/pdf;base64,${res.data}`;
+      const downloadLink = document.createElement("a");
+      const fileName = "enketo_form.pdf";
+      downloadLink.href = linkSource;
+      downloadLink.download = fileName;
+      downloadLink.target = window.safari ? "" : "_blank";
+      downloadLink.click();
+      setIsLoading(false);
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   useEffect(() => {
     onlineInterval.current = setInterval(async () => {
@@ -120,21 +99,38 @@ const CommonLayout = (props) => {
                   {props.pageTitle}
                 </div>
               </div>
-              <div className="flex grow-0">
+              <div className="flex flex-row gap-3 grow-0">
                 {!props.logoutDisabled && (
-                  <FontAwesomeIcon
-                    icon={faRightFromBracket}
-                    className="text-2xl lg:text-4xl"
-                    onClick={() => showLogoutModal(true)}
-                  />
+                  <Tooltip content="Logout">
+                    <FontAwesomeIcon
+                      icon={faRightFromBracket}
+                      className="text-2xl lg:text-4xl"
+                      onClick={() => showLogoutModal(true)}
+                    />
+                  </Tooltip>
                 )}
-                {props.downloadFile && (
-                  <FontAwesomeIcon
-                    icon={faDownload}
-                    className="text-2xl lg:text-4xl"
-                    onClick={handleFormDownload}
-                  />
+                {props.formPreview && (
+                  <Tooltip content="Preview Form">
+                    <FontAwesomeIcon
+                      icon={faEye}
+                      className="text-xl lg:text-4xl"
+                      onClick={() => {
+                        props.setIsPreview(true);
+                        showPreviewModal(true);
+                      }}
+                    />
+                  </Tooltip>
                 )}
+                {props.downloadFile && !isLoading && (
+                  <Tooltip content="Download Pdf">
+                    <FontAwesomeIcon
+                      icon={faDownload}
+                      className="text-xl lg:text-4xl"
+                      onClick={handleFormDownload}
+                    />
+                  </Tooltip>
+                )}
+                {props.downloadFile && isLoading && <ButtonLoader />}
               </div>
             </div>
             {props.pageDesc && (
@@ -144,6 +140,33 @@ const CommonLayout = (props) => {
           {props.children}
         </div>
       </div>
+      {previewModal && (
+        <CommonModal  moreStyles={{padding: "1rem", maxWidth: "95%", minWidth: "90%", maxHeight: "90%"}}>
+          <div className="flex flex-row w-full items-center cursor-pointer gap-4">
+            <div className="flex flex-grow">Preview</div>
+            <div className="flex flex-grow justify-end">
+              <FontAwesomeIcon
+                icon={faXmark}
+                className="text-2xl lg:text-4xl"
+                onClick={() => {
+                  props.setIsPreview(false);
+                  showPreviewModal(false);
+                }}
+              />
+            </div>
+          </div>
+
+          <div className="flex flex-col justify-center w-full py-4">
+            <div className="flex flex-col items-center">
+              <iframe
+                title="form"
+                src={props.formUrl}
+                style={{ height: "80vh", width: "100%" }}
+              />
+            </div>
+          </div>
+        </CommonModal>
+      )}
       {logoutModal && (
         <CommonModal>
           <div>

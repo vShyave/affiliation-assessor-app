@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Select, Option } from "@material-tailwind/react";
 import { Link } from "react-router-dom";
 import "./UploadForm.css";
@@ -6,10 +6,15 @@ import "./UploadForm.css";
 import { HiOutlineInformationCircle } from "react-icons/hi";
 import { Card, Button, Label, Input } from "./../../components";
 import { MdEventBusy } from "react-icons/md";
+import axios from "axios";
+import { getPrefillXML } from "../../api/formApi";
+
+const ENKETO_URL = process.env.REACT_APP_ENKETO_URL;
 
 const UploadForm = ({ setFormStage, handleFile, xmlData, formData }) => {
   const [fileName, setFileName] = useState("");
   const hiddenFileInput = React.useRef(null);
+  const [encodedFormURI, setEncodedFormURI] = useState("");
 
   const handleClick = (e) => {
     hiddenFileInput.current.click();
@@ -41,6 +46,40 @@ const UploadForm = ({ setFormStage, handleFile, xmlData, formData }) => {
 
     element.click();
   };
+
+  const userId = "427d473d-d8ea-4bb3-b317-f230f1c9b2f7";
+  const formSpec = formData?.file_name?.split(".")[0]; //passing form name
+
+  const fetchFormData = async () => {
+    const res = await axios.get(formData?.path);
+    // console.log(res);
+
+    {/**removing the xml declaration from the response to just passs the <data></data> in prefillXml */}
+    // let xmlData = res.data.split("\n")
+    // xmlData.splice(0,1);
+    // xmlData=xmlData.join('\n')
+    // console.log(xmlData)
+
+    let formURI = await getPrefillXML(
+      formData?.file_name?.split(".")[0],
+      "",
+      res.data //tried passing xmlData here
+    );
+    setEncodedFormURI(formURI);
+  };
+
+  const handleFormPreview = () => {
+    console.log("inside handle preview- ", formData);
+    fetchFormData();
+    let src = `${ENKETO_URL}preview?formSpec=${encodeURI(
+      JSON.stringify(formSpec)
+    )}&xform=${encodedFormURI}&userId=${userId}`;
+    window.open(src, "_blank");
+  };
+
+  useEffect(() => {
+    console.log(formData);
+  }, [formData]);
 
   return (
     <>
@@ -90,7 +129,7 @@ const UploadForm = ({ setFormStage, handleFile, xmlData, formData }) => {
             <div className="w-full bg-white p-8">
               <div className="flex flex-col h-[48vh] gap-8 justify-between">
                 <div className="font-semibold text-xl">Upload ODK</div>
-                <div className="flex flex-col m-auto">
+                <div className="flex flex-row m-auto">
                   <input
                     type="file"
                     accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel"
@@ -103,6 +142,18 @@ const UploadForm = ({ setFormStage, handleFile, xmlData, formData }) => {
                     text="Browse file to upload"
                     onClick={handleClick}
                   />
+                  {formData?.path && (
+                    <>
+                      <div className="text-black px-6 flex items-center">
+                        OR
+                      </div>
+                      <Button
+                        moreClass="text-white w-full px-6"
+                        text="Form Preview"
+                        onClick={handleFormPreview}
+                      />
+                    </>
+                  )}
                 </div>
                 <div className="">
                   <Button
