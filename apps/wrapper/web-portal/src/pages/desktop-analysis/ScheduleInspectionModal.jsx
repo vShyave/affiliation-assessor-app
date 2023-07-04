@@ -46,26 +46,20 @@ function ScheduleInspectionModal({ closeSchedule, setToast, instituteId }) {
 
 
   const handleOnAssessorSelect = (e) => {
-    // console.log(e.phonenumber);
     setAssessorName((prevState) => ({ ...prevState, assessorCode: e.label }));
     setPayload((prevState) => ({ ...prevState, assessorCode: e.value }));
 
      setAssistingAssessorList1(assessorList.filter((el) => {
-      // console.log(el.phonenumber);
       return el.phonenumber != e.phonenumber;
     }));
   };
 
   const handleOnAssistingAssessorSelect = (e) => {
-    console.log("e",e[0]?.label);
-    console.log("e",e[1]?.label);
 
     setAssistingAssessorFirstName((prevState) => ({ ...prevState, assessorCode: e[0]?.label }));
     setAssistingAssessorSecondName((prevState) => ({ ...prevState, assessorCode: e[1]?.label }));
 
      setPayload((prevState) => ({ ...prevState, assessorCode: e.value }));
-     console.log("assessorname", assessorName)
-     console.log("payload", payload)
 
 
   };
@@ -146,10 +140,10 @@ function ScheduleInspectionModal({ closeSchedule, setToast, instituteId }) {
 
   return (
     <>
-      <div className="flex flex-col justify-center  items-center fixed inset-0 bg-opacity-25 backdrop-blur-sm">
-        <div className="flex bg-white rounded-xl shadow-xl border border-gray-400 w-[1224px] h-fit p-8">
+      <div className="flex flex-col justify-center  items-center fixed inset-0 bg-opacity-25 z-10 backdrop-blur-sm">
+        <div className="flex bg-white rounded-xl shadow-xl border border-gray-400 w-[1024px] h-fit p-8">
           <div className="flex flex-col justify-between gap-4 w-full">
-            <div className="w-1/3 mx-auto py-4 ">
+            <div className="w-1/3 mx-auto ">
               <Stepper
                 activeStep={activeStep}
                 isLastStep={(value) => setIsLastStep(value)}
@@ -158,12 +152,12 @@ function ScheduleInspectionModal({ closeSchedule, setToast, instituteId }) {
                 <Step onClick={() => setActiveStep(0)}>1</Step>
                 <Step onClick={() => setActiveStep(1)}>2</Step>
               </Stepper>
-              <div className="text-lg font-bold py-4 gap-32 flex flex-row justify-between">
-                <h1 className="mr-8">Schedule inspection</h1>
+              <div className="text-lg font-bold py-2 gap-20 flex flex-row justify-between">
+                <h1 className="mr-4">Schedule inspection</h1>
                 <h1 className="ml-16">Select the applications</h1>
               </div>
             </div>
-            <hr className="border-2 m-4" />
+            <hr className="border-2 m-" />
             {activeStep === 0 && (
               <>
                 <div className="flex text-2xl font-semibold">
@@ -187,7 +181,7 @@ function ScheduleInspectionModal({ closeSchedule, setToast, instituteId }) {
                           onChange={handleOnAssessorSelect}
                           options={assessorList}
                           // isOptionDisabled={(option) => option.isdisabled}
-                          className= "bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" 
+                          className= "bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-1 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" 
                         ></Select>
 
                         <Button
@@ -198,8 +192,8 @@ function ScheduleInspectionModal({ closeSchedule, setToast, instituteId }) {
                           }}
                           moreClass={`${
                             !initialDivision
-                              ? "border border-blue-400 bg-white text-blue-400 w-1/4"
-                              : "cursor-not-allowed border border-gray-500 bg-white text-gray-500 w-1/4"
+                              ? "border border-blue-400 bg-white text-blue-400 w-1/4 h-[45px] m-auto"
+                              : "cursor-not-allowed border border-gray-500 bg-white text-gray-500 w-1/4 h-[45px] m-auto"
                           }`}
                           text="Add"
                         ></Button>
@@ -208,7 +202,7 @@ function ScheduleInspectionModal({ closeSchedule, setToast, instituteId }) {
                         <>
                           <div className="bg-gray-100 items-center flex border border-gray-100 justify-between rounded-xl p-1 mt-4">
                             <div className="gap-2 flex items-center">
-                              <span className="border-green-500 w-[36px] h-3/4 items-center bg-green-500 inline-flex justify-center gap-x-1.5 rounded-md px-2 py-2 text-sm font-semibold text-white-500 shadow-sm hover:bg-green-400">
+                              <span className="border-green-500 w-[36px] h-fit items-center bg-green-500 inline-flex justify-center gap-x-1.5 rounded-md px-2 py-2 text-sm font-semibold text-white-500 shadow-sm hover:bg-green-400">
                                 {getInitials(assessorName.assessorCode)}
                               </span>
                               <span className="font-semibold">
@@ -243,7 +237,7 @@ function ScheduleInspectionModal({ closeSchedule, setToast, instituteId }) {
                           label="Assessor Name"
                           onChange={handleOnAssistingAssessorSelect}
                           options={assistingAssessorList1}
-                          className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                          className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-1 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                         />
 
                         <Button
@@ -254,15 +248,15 @@ function ScheduleInspectionModal({ closeSchedule, setToast, instituteId }) {
                           }}
                           moreClass={`${
                             !initialAssessorFirstDivision
-                              ? "border border-blue-400 bg-white text-blue-400 w-1/4"
-                              : "cursor-not-allowed border border-gray-500 bg-white text-gray-500 w-1/4"
+                              ? "border border-blue-400 bg-white text-blue-400 w-1/4 h-[45px] m-auto"
+                              : "cursor-not-allowed border border-gray-500 bg-white text-gray-500 w-1/4 h-[45px] m-auto"
                           }`}
                           text="Add"
                         ></Button>
                       </span>
                       {initialAssessorFirstDivision && assistingAssessorFirstName && (
                         <>
-                          <div className="bg-gray-100 items-center flex border border-gray-100 justify-between rounded-xl p-1 mt-4">
+                          <div className="bg-gray-100 items-center flex border border-gray-100 justify-between rounded-xl p-1 mt-2">
                             <div className="gap-2 flex items-center">
                               <span className="border-green-500 w-[36px] h-3/4 items-center bg-green-500 inline-flex justify-center gap-x-1.5 rounded-md px-2 py-2 text-sm font-semibold text-white-500 shadow-sm hover:bg-green-400">
                                 {getInitials(
@@ -287,9 +281,9 @@ function ScheduleInspectionModal({ closeSchedule, setToast, instituteId }) {
 
                       {initialAssessorSecondDivision && assistingAssessorSecondName && (
                         <>
-                          <div className="bg-gray-100 items-center flex border border-gray-100 h-[120px] justify-between rounded-xl p-1 mt-4">
+                          <div className="bg-gray-100 items-center flex border border-gray-100 h-[100px] justify-between rounded-xl p-1 mt-2">
                             <div className="gap-2 flex items-center">
-                              <span className="border-green-500 w-[36px] h-3/4 items-center bg-green-500 inline-flex justify-center gap-x-1.5 rounded-md px-2 py-2 text-sm font-semibold text-white-500 shadow-sm hover:bg-green-400">
+                              <span className="border-green-500 w-[36px] h-fit items-center bg-green-500 inline-flex justify-center gap-x-1.5 rounded-md px-2 py-2 text-sm font-semibold text-white-500 shadow-sm hover:bg-green-400">
                                 {getInitials(
                                   assistingAssessorSecondName.assessorCode
                                 )}
@@ -435,11 +429,14 @@ function ScheduleInspectionModal({ closeSchedule, setToast, instituteId }) {
               ></Button>
               <Button
                 onClick={handleNext}
-                disabled={isLastStep}
+                // disabled={isLastStep}
+                disabled={!Object.keys(payload).length == 2 ? true : false}
+
                 moreClass={`${
-                  activeStep === 0
+                  activeStep === 0 && Object.keys(payload).length === 2 && initialAssessorSecondDivision === true
                     ? "border border-blue-400 bg-blue-400 text-white w-1/6 "
                     : "invisible"
+                    // : "cursor-not-allowed border border-gray-500 bg-white text-gray-500 w-1/6"
                 }`}
                 text="Next"
               ></Button>

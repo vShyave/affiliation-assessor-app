@@ -380,7 +380,7 @@ const CreateForm = () => {
                     className={`${
                       Object.values(formData).length < 6
                         ? "bg-gray-400 text-gray-700 cursor-not-allowed"
-                        : "px-6 text-white bg-primary-500 border border-primary-500"
+                        : "px-6 text-white bg-primary-900 border border-primary-500"
                     } border w-[140px] h-[40px] font-medium rounded-[4px] `}
                     style={{ backgroundColor: "" }}
                     type="submit"
