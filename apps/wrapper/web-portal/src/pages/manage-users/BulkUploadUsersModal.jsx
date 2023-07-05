@@ -21,20 +21,27 @@ function BulkUploadUsersModal({ closeBulkUploadUsersModal }) {
 
   const isEmailValid = (email) => {
     const reqExp = /[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$/;
-    console.log(reqExp.test(email))
+    //console.log(reqExp.test(email))
     //return reqExp.test(email);
-    if (reqExp.test(email)) {
+    if (reqExp.test(email) && email.toString().length != 0) {
       return email
+    } else {
+      return (<span className="text-red-500 mt-2 text-sm"> {email} <br></br><small>Invalid Email ID</small>  </span>)
     }
   };
 
   const ismobileNumberValid = (mobileNumber) => {
     const expr = /^(0|91)?[6-9][0-9]{9}$/;
-    if (!expr.test(mobileNumber)) {
+    if (expr.test(parseInt(mobileNumber)) && mobileNumber.toString().length != 0) {
       return mobileNumber
+    }  else {
+     return (
+      mobileNumber.toString().length == 0 ?
+      <span className="text-red-500 mt-2 text-sm"> - <br></br>  <small>Missing phone number</small>  </span>
+            : <span className="text-red-500 mt-2 text-sm"> {mobileNumber} <br></br><small>Invalid phone number</small></span>
+        );
     }
   };
-
 
 
   const COLUMNS = [
@@ -52,9 +59,7 @@ function BulkUploadUsersModal({ closeBulkUploadUsersModal }) {
       accessor: "email",
       Cell: (props) => {
         return (
-          props.value ?
-            <p>{isEmailValid(props.value)}</p>
-            : <p style={{ background: statusColorMap["INVALID_EMAIL"], height: "25px", width: "50px" }}>{props.value}</p>
+          <p>{isEmailValid(props.value)}</p>
         );
       }
     },
@@ -63,9 +68,7 @@ function BulkUploadUsersModal({ closeBulkUploadUsersModal }) {
       accessor: "mobile_number",
       Cell: (props) => {
         return (
-          props.value ?
             <p>{ismobileNumberValid(props.value)}</p>
-            : <p style={{ background: statusColorMap["INVALID_MOBILE_NUMBER"], height: "25px", width: "50px" }}>{props.value}</p>
         );
       }
     },
@@ -103,8 +106,47 @@ function BulkUploadUsersModal({ closeBulkUploadUsersModal }) {
       };
 
       fileReader.readAsText(file);
+      csvToJSON(file);
     }
   };
+
+  const csvToJSON = (file) => {
+    try {
+      var reader = new FileReader();
+      reader.readAsBinaryString(file);
+      reader.onload = (e) => {
+        var UserToBulkUploadData = [];
+        var headers = [];
+        var rows = e.target.result.split("\r\n");
+        for (var i = 0; i < rows.length; i++) {
+          var cells = rows[i].split(",");
+          var rowData = {};
+          for (var j = 0; j < cells.length; j++) {
+            if (i == 0) {
+              var headerName = cells[j].trim();
+              headers.push(headerName);
+            } else {
+              var key = headers[j];
+              if (key) {
+                rowData[key] = cells[j].trim();
+              }
+            }
+          }
+
+          const isValidUserEntry = Object.values(rowData).every(value => !!value);
+          //skip the first row (header) data
+          if (i != 0 && isValidUserEntry) {
+            UserToBulkUploadData.push(rowData);
+          }
+        }
+
+        console.log(UserToBulkUploadData);
+      }
+    } catch (e) {
+      console.error(e);
+    }
+  }
+
 
   const csvFileToArray = string => {
     const csvHeader = string.slice(0, string.indexOf("\n")).split(",");
