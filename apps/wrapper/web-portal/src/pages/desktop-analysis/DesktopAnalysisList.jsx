@@ -255,6 +255,7 @@ const DesktopAnalysisList = () => {
                 dataList={formsDataList}
                 navigateFunc={navigateToView}
                 columns={COLUMNS}
+                pagination={true}
               />
             </div>
           </div>

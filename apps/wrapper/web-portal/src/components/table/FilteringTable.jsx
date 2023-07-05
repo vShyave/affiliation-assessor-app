@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState }  from "react";
 import {
   useTable,
   useGlobalFilter,
@@ -61,7 +61,11 @@ const FilteringTable = (props) => {
   );
 
   const { globalFilter, pageIndex, pageSize } = state;
- 
+/*   useEffect(() => {
+   if(props.pagination){
+      setPageSize(1000)
+   }
+  }, [data]); */
   {
     array = JSON.stringify(
       {
@@ -140,7 +144,8 @@ const FilteringTable = (props) => {
         </table>
       </div>
 
-      <div className="flex flex-col font-normal text-[16px] py-8 gap-8">
+      {props.pagination &&
+      (<div className="flex flex-col font-normal text-[16px] py-8 gap-8">
         <span className="font-medium flex justify-center">
           Page{" "}
           <strong>
@@ -153,7 +158,6 @@ const FilteringTable = (props) => {
             onClick={() => gotoPage(0)}
             disabled={!canPreviousPage}
           >
-            {"<<"}
           </button>
           <button
             className="border text-gray-300 bg-blue-700 w-[140px] h-[40px] font-medium rounded-[4px]"
@@ -212,10 +216,13 @@ const FilteringTable = (props) => {
             onClick={() => gotoPage(pageCount - 1)}
             disabled={!canNextPage}
           >
-            {">>"}
           </button>
         </div>
-      </div>
+      </div>) 
+     }
+
+
+
     </>
   );
 };

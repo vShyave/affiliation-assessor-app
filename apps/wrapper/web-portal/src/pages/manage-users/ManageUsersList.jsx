@@ -183,6 +183,7 @@ export default function ManageUsersList({closeDeleteUsersModal,closeBulkUploadUs
               columns={COLUMNS}
               navigateFunc={() => {}}
               showCheckbox={true}
+              pagination={true}
             />
           </div>
         </div>
