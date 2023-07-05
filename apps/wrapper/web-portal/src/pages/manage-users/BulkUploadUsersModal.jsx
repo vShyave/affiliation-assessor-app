@@ -12,21 +12,20 @@ function BulkUploadUsersModal({ closeBulkUploadUsersModal }) {
   const fileReader = new FileReader();
   const hiddenFileInput = React.useRef(null);
   const [tableDataReady, setTableDataReady] = useState(false);
-
-  const statusColorMap = {
-    "": "red",
-    "INVALID_EMAIL": "yellow",
-    "INVALID_MOBILE_NUMBER": "blue"
-  };
+  const [invalidTableUserList, setInvalidTableUserList] = useState([]);
+  const [invalidUserDataFlag, setInvalidUserDataFlag] = useState(true);
+  
 
   const isEmailValid = (email) => {
     const reqExp = /[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$/;
-    //console.log(reqExp.test(email))
-    //return reqExp.test(email);
-    if (reqExp.test(email) && email.toString().length != 0) {
+    if (reqExp.test(email.toString()) && email.toString().length != 0) {
       return email
     } else {
-      return (<span className="text-red-500 mt-2 text-sm"> {email} <br></br><small>Invalid Email ID</small>  </span>)
+      return (
+        email.toString().length === 0 ?
+          <span className="text-red-500 mt-2 text-sm"> - <br></br>  <small>Missing Email ID</small>  </span>
+          : <span className="text-red-500 mt-2 text-sm"> {email} <br></br><small>Invalid  Email ID</small></span>
+      );
     }
   };
 
@@ -34,12 +33,22 @@ function BulkUploadUsersModal({ closeBulkUploadUsersModal }) {
     const expr = /^(0|91)?[6-9][0-9]{9}$/;
     if (expr.test(parseInt(mobileNumber)) && mobileNumber.toString().length != 0) {
       return mobileNumber
-    }  else {
-     return (
-      mobileNumber.toString().length == 0 ?
-      <span className="text-red-500 mt-2 text-sm"> - <br></br>  <small>Missing phone number</small>  </span>
-            : <span className="text-red-500 mt-2 text-sm"> {mobileNumber} <br></br><small>Invalid phone number</small></span>
-        );
+    } else {
+      return (
+        mobileNumber.toString().length === 0 ?
+          <span className="text-red-500 mt-2 text-sm"> - <br></br>  <small>Missing mobile number</small>  </span>
+          : <span className="text-red-500 mt-2 text-sm"> {mobileNumber} <br></br><small>Invalid mobile number</small></span>
+      );
+    }
+  };
+
+  const isDataValid = (data) => {
+    if (data.toString().length != 0) {
+      return data
+    } else {
+      return (
+        <span className="text-red-500 mt-2 text-sm"> - <br></br>  <small>Missing Text</small>  </span>
+      );
     }
   };
 
@@ -50,7 +59,7 @@ function BulkUploadUsersModal({ closeBulkUploadUsersModal }) {
       accessor: "full_name",
       Cell: (props) => {
         return (
-          <p style={{ background: statusColorMap[props.value], height: "25px", width: "50px" }}>{props.value}</p>
+          <p>{isDataValid(props.value)}</p>
         );
       }
     },
@@ -68,7 +77,7 @@ function BulkUploadUsersModal({ closeBulkUploadUsersModal }) {
       accessor: "mobile_number",
       Cell: (props) => {
         return (
-            <p>{ismobileNumberValid(props.value)}</p>
+          <p>{ismobileNumberValid(props.value)}</p>
         );
       }
     },
@@ -77,7 +86,7 @@ function BulkUploadUsersModal({ closeBulkUploadUsersModal }) {
       accessor: "role",
       Cell: (props) => {
         return (
-          <p style={{ background: statusColorMap[props.value], height: "25px", width: "50px" }}>{props.value}</p>
+          <p>{isDataValid(props.value)}</p>
         );
       }
     },
@@ -122,7 +131,7 @@ function BulkUploadUsersModal({ closeBulkUploadUsersModal }) {
           var cells = rows[i].split(",");
           var rowData = {};
           for (var j = 0; j < cells.length; j++) {
-            if (i == 0) {
+            if (i == 0) {// start from i=1 to remove header aftrwards
               var headerName = cells[j].trim();
               headers.push(headerName);
             } else {
@@ -137,6 +146,9 @@ function BulkUploadUsersModal({ closeBulkUploadUsersModal }) {
           //skip the first row (header) data
           if (i != 0 && isValidUserEntry) {
             UserToBulkUploadData.push(rowData);
+          } else {
+            invalidTableUserList.push(rowData);
+            setInvalidTableUserList(invalidTableUserList)
           }
         }
 
@@ -164,6 +176,24 @@ function BulkUploadUsersModal({ closeBulkUploadUsersModal }) {
     setTableDataReady(true);
   };
 
+  
+
+  const handleToggleChange = e => {
+    console.log("at click ---value-"+invalidUserDataFlag)
+    if(JSON.stringify(invalidTableUserList[0]) === "{}")
+    {
+      invalidTableUserList.shift();
+    }
+     
+   
+    console.log(tableUserList)
+    console.log(invalidTableUserList)
+    {invalidUserDataFlag ?  (invalidTableUserList) : setTableUserList(tableUserList)}
+ 
+    setInvalidUserDataFlag(!invalidUserDataFlag);
+    console.log("after ---change-"+invalidUserDataFlag)
+  };
+
   return (
     <>
       <div className="flex flex-col justify-center items-center fixed inset-0 bg-opacity-25 backdrop-blur-sm">
@@ -172,7 +202,10 @@ function BulkUploadUsersModal({ closeBulkUploadUsersModal }) {
             <div className="flex text-xl font-semibold">
               <h1>Bulk upload users</h1>
               <div className="flex flex-row m-auto">
-                <Switch id="auto-update" label="Show with errors" />
+                <Switch id="show-with-errors" 
+                label="Show with errors" 
+                onChange={handleToggleChange}
+                />
               </div>
               <div className=" flex-row "><Link to='/download-template'>Download Template</Link></div>
             </div>
