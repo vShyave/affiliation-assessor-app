@@ -16,6 +16,7 @@ import ADMIN_ROUTE_MAP from "../../routes/adminRouteMap";
 const CreateForm = () => {
   const navigate = useNavigate();
   const [formStage, setFormStage] = useState(1);
+  const [loading, setLoading] = useState(false);
   const [xmlData, setXmlData] = useState(null);
   const [formData, setFormData] = useState({
     title: "",
@@ -51,6 +52,7 @@ const CreateForm = () => {
     newForm.append("user_id", "53c57d13-d33d-439a-bd72-1f56b189642d");
     newForm.append("form_status", "Draft");
     try {
+      setLoading(true) 
       const createFormResponse = await createForm(newForm);
       setToast((prevState) => ({
         ...prevState,
@@ -379,7 +381,7 @@ const CreateForm = () => {
                     className={`${
                       Object.values(formData).length < 6
                         ? "bg-gray-400 text-gray-700 cursor-not-allowed"
-                        : "px-6 text-white bg-primary-500 border border-primary-500"
+                        : "px-6 text-white bg-primary-900 border border-primary-500"
                     } border w-[140px] h-[40px] font-medium rounded-[4px] `}
                     style={{ backgroundColor: "" }}
                     type="submit"

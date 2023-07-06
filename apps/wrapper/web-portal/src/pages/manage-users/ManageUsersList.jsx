@@ -11,7 +11,6 @@ import { getAllUsers } from "../../api";
 import ADMIN_ROUTE_MAP from "../../routes/adminRouteMap";
 
 import DeleteUsersModal from "./DeleteUsers";
-import Dropdown from "../../components/Dropdown";
 import BulkUploadUsersModal from "./BulkUploadUsersModal";
 
 
@@ -22,7 +21,6 @@ export default function ManageUsersList({closeDeleteUsersModal,closeBulkUploadUs
   var resUserData = [];
   const [deleteUsersModel, setDeleteUsersModel] = useState(false);
   const [bulkUploadUsersModel, setBulkUploadUsersModel] = useState(false);
-  const[dropdown,setDropdown] = useState(false)
   const [usersList, setUsersList] = useState();
   const [userTableList, setUserTableList] = useState([]);
   const [isOpen, setIsOpen] = useState(false);
@@ -194,7 +192,6 @@ export default function ManageUsersList({closeDeleteUsersModal,closeBulkUploadUs
         <BulkUploadUsersModal closeBulkUploadUsersModal={setBulkUploadUsersModel} />
       )}
        
-    <Dropdown/>
     </>
   );
 };
