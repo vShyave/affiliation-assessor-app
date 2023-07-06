@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, {  useState } from "react";
 
 import Calendar from "react-calendar";
 import Select from "react-select";
@@ -10,23 +10,25 @@ import { formatDate, getInitials } from "../../utils/common";
 import {
   getUsersForScheduling,
   getScheduleAssessment,
-  getDesktopAnalysisForms,
+  // getDesktopAnalysisForms,
 } from "../../api";
 
 import { Label, Button } from "../../components";
 
-import { Option, Stepper, Step } from "@material-tailwind/react";
+import { Stepper, Step } from "@material-tailwind/react";
 import { GrDocumentPdf } from "react-icons/gr";
 import { AiOutlineClose } from "react-icons/ai";
 
-import Toast from "../../components/Toast";
+// import Toast from "../../components/Toast";
 import MultiSelect from "./SelectMultiple";
 
 function ScheduleInspectionModal({ closeSchedule, setToast, instituteId }) {
   // const [formStatus, setFormStatus] = useState({});
   const [initialDivision, setInitialDivision] = useState(false);
-  const [initialAssessorFirstDivision, setInitialAssessorFirstDivision] = useState(false);
-  const [initialAssessorSecondDivision, setInitialAssessorSecondDivision] = useState(false);
+  const [initialAssessorFirstDivision, setInitialAssessorFirstDivision] =
+    useState(false);
+  const [initialAssessorSecondDivision, setInitialAssessorSecondDivision] =
+    useState(false);
 
   const [activeStep, setActiveStep] = React.useState(0);
   const [isLastStep, setIsLastStep] = React.useState(false);
@@ -35,32 +37,39 @@ function ScheduleInspectionModal({ closeSchedule, setToast, instituteId }) {
   const handleNext = () => !isLastStep && setActiveStep((cur) => cur + 1);
   const handlePrev = () => !isFirstStep && setActiveStep((cur) => cur - 1);
 
-  const [date, setDate] = useState(new Date());
+  // const [date, setDate] = useState(new Date());
   const [payload, setPayload] = useState({});
   const [assessorName, setAssessorName] = useState("");
-  const [assistingAssessorFirstName, setAssistingAssessorFirstName] = useState("");
-  const [assistingAssessorSecondName, setAssistingAssessorSecondName] = useState("");
+  const [assistingAssessorFirstName, setAssistingAssessorFirstName] =
+    useState("");
+  const [assistingAssessorSecondName, setAssistingAssessorSecondName] =
+    useState("");
 
   const [assessorList, setAssessorList] = useState([]);
   let [assistingAssessorList1, setAssistingAssessorList1] = useState([{}]);
-
 
   const handleOnAssessorSelect = (e) => {
     setAssessorName((prevState) => ({ ...prevState, assessorCode: e.label }));
     setPayload((prevState) => ({ ...prevState, assessorCode: e.value }));
 
-     setAssistingAssessorList1(assessorList.filter((el) => {
-      return el.phonenumber != e.phonenumber;
-    }));
+    setAssistingAssessorList1(
+      assessorList.filter((el) => {
+        return el.phonenumber !== e.phonenumber;
+      })
+    );
   };
 
   const handleOnAssistingAssessorSelect = (e) => {
+    setAssistingAssessorFirstName((prevState) => ({
+      ...prevState,
+      assessorCode: e[0]?.label,
+    }));
+    setAssistingAssessorSecondName((prevState) => ({
+      ...prevState,
+      assessorCode: e[1]?.label,
+    }));
 
-    setAssistingAssessorFirstName((prevState) => ({ ...prevState, assessorCode: e[0]?.label }));
-    setAssistingAssessorSecondName((prevState) => ({ ...prevState, assessorCode: e[1]?.label }));
-
-     setPayload((prevState) => ({ ...prevState, assessorCode: e.value }));
-
+    setPayload((prevState) => ({ ...prevState, assessorCode: e.value }));
   };
 
   const onChangeDate = async (date) => {
@@ -76,16 +85,6 @@ function ScheduleInspectionModal({ closeSchedule, setToast, instituteId }) {
         phonenumber: item.phonenumber,
       }))
     );
-  };
-
-  const handleOnGroundAssessor = () => {
-    setInitialDivision(true);
-  };
-
-  const handleOnGroundAssistingAssessor = () => {
-    setInitialAssessorFirstDivision(true);
-    setInitialAssessorSecondDivision(true);
-
   };
 
   const handleScheduleAssessment = async () => {
@@ -177,7 +176,12 @@ function ScheduleInspectionModal({ closeSchedule, setToast, instituteId }) {
                 <h1 className="ml-16">Select the applications</h1>
               </div>
             </div>
+
+
             <hr className="border-2 m-" />
+
+           {/* For scheduling inspection */}
+
             {activeStep === 0 && (
               <>
                 <div className="flex text-2xl font-semibold">
@@ -201,13 +205,14 @@ function ScheduleInspectionModal({ closeSchedule, setToast, instituteId }) {
                           onChange={handleOnAssessorSelect}
                           options={assessorList}
                           // isOptionDisabled={(option) => option.isdisabled}
-                          className= "bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-1 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" 
+                          className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-1 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                         ></Select>
 
                         <Button
                           onClick={() => {
                             {
-                              handleOnGroundAssessor();
+                              setInitialDivision(true);
+
                             }
                           }}
                           moreClass={`${
@@ -263,7 +268,8 @@ function ScheduleInspectionModal({ closeSchedule, setToast, instituteId }) {
                         <Button
                           onClick={() => {
                             {
-                              handleOnGroundAssistingAssessor();
+                              setInitialAssessorFirstDivision(true);
+                              setInitialAssessorSecondDivision(true);
                             }
                           }}
                           moreClass={`${
@@ -274,55 +280,57 @@ function ScheduleInspectionModal({ closeSchedule, setToast, instituteId }) {
                           text="Add"
                         ></Button>
                       </span>
-                      {initialAssessorFirstDivision && assistingAssessorFirstName && (
-                        <>
-                          <div className="bg-gray-100 items-center flex border border-gray-100 justify-between rounded-xl p-1 mt-2">
-                            <div className="gap-2 flex items-center">
-                              <span className="border-green-500 w-[36px] h-3/4 items-center bg-green-500 inline-flex justify-center gap-x-1.5 rounded-md px-2 py-2 text-sm font-semibold text-white-500 shadow-sm hover:bg-green-400">
-                                {getInitials(
-                                  assistingAssessorFirstName.assessorCode
-                                )}
-                              </span>
-                              <span className="font-semibold">
-                                {assistingAssessorFirstName.assessorCode}
-                              </span>
+                      {initialAssessorFirstDivision &&
+                        assistingAssessorFirstName && (
+                          <>
+                            <div className="bg-gray-100 items-center flex border border-gray-100 justify-between rounded-xl p-1 mt-2">
+                              <div className="gap-2 flex items-center">
+                                <span className="border-green-500 w-[36px] h-3/4 items-center bg-green-500 inline-flex justify-center gap-x-1.5 rounded-md px-2 py-2 text-sm font-semibold text-white-500 shadow-sm hover:bg-green-400">
+                                  {getInitials(
+                                    assistingAssessorFirstName.assessorCode
+                                  )}
+                                </span>
+                                <span className="font-semibold">
+                                  {assistingAssessorFirstName.assessorCode}
+                                </span>
+                              </div>
+                              <button
+                                onClick={() => {
+                                  setInitialAssessorFirstDivision(false);
+                                }}
+                                className="justify-end flex"
+                              >
+                                <AiOutlineClose />
+                              </button>
                             </div>
-                            <button
-                              onClick={() => {
-                                setInitialAssessorFirstDivision(false);
-                              }}
-                              className="justify-end flex"
-                            >
-                              <AiOutlineClose />
-                            </button>
-                          </div>
-                        </>
-                      )}
+                          </>
+                        )}
 
-                      {initialAssessorSecondDivision && assistingAssessorSecondName && (
-                        <>
-                          <div className="bg-gray-100 items-center flex border border-gray-100 h-[100px] justify-between rounded-xl p-1 mt-2">
-                            <div className="gap-2 flex items-center">
-                              <span className="border-green-500 w-[36px] h-fit items-center bg-green-500 inline-flex justify-center gap-x-1.5 rounded-md px-2 py-2 text-sm font-semibold text-white-500 shadow-sm hover:bg-green-400">
-                                {getInitials(
-                                  assistingAssessorSecondName.assessorCode
-                                )}
-                              </span>
-                              <span className="font-semibold">
-                                {assistingAssessorSecondName.assessorCode}
-                              </span>
+                      {initialAssessorSecondDivision &&
+                        assistingAssessorSecondName && (
+                          <>
+                            <div className="bg-gray-100 items-center flex border border-gray-100 h-[100px] justify-between rounded-xl p-1 mt-2">
+                              <div className="gap-2 flex items-center">
+                                <span className="border-green-500 w-[36px] h-fit items-center bg-green-500 inline-flex justify-center gap-x-1.5 rounded-md px-2 py-2 text-sm font-semibold text-white-500 shadow-sm hover:bg-green-400">
+                                  {getInitials(
+                                    assistingAssessorSecondName.assessorCode
+                                  )}
+                                </span>
+                                <span className="font-semibold">
+                                  {assistingAssessorSecondName.assessorCode}
+                                </span>
+                              </div>
+                              <button
+                                onClick={() => {
+                                  setInitialAssessorSecondDivision(false);
+                                }}
+                                className="justify-end flex"
+                              >
+                                <AiOutlineClose />
+                              </button>
                             </div>
-                            <button
-                              onClick={() => {
-                                setInitialAssessorSecondDivision(false);
-                              }}
-                              className="justify-end flex"
-                            >
-                              <AiOutlineClose />
-                            </button>
-                          </div>
-                        </>
-                      )}
+                          </>
+                        )}
                     </div>
                   </div>
                   <div className="flex flex-col justify-between rounded-xl border border-gray-300 bg-white w-1/2 p-2">
@@ -341,7 +349,9 @@ function ScheduleInspectionModal({ closeSchedule, setToast, instituteId }) {
                 </div>
               </>
             )}
-            {/* <div className="mt-16 flex justify-between"> */}
+
+            {/* For sececting the applications */}
+
             {activeStep === 1 && (
               <>
                 <div className="flex text-2xl font-semibold">
@@ -430,7 +440,7 @@ function ScheduleInspectionModal({ closeSchedule, setToast, instituteId }) {
                     ? "bg-blue-400  text-white"
                     : "invisible "
                 } border border-blue-400 w-[200px] h-[50px] p-2 font-medium rounded-[2px] `}
-                disabled={!Object.keys(payload).length == 2 ? true : false}
+                disabled={!Object.keys(payload).length === 2 ? true : false}
               >
                 Submit
               </button>
@@ -450,13 +460,14 @@ function ScheduleInspectionModal({ closeSchedule, setToast, instituteId }) {
               <Button
                 onClick={handleNext}
                 // disabled={isLastStep}
-                disabled={!Object.keys(payload).length == 2 ? true : false}
-
+                disabled={!Object.keys(payload).length === 2 ? true : false}
                 moreClass={`${
-                  activeStep === 0 && Object.keys(payload).length === 2 && initialAssessorSecondDivision === true
+                  activeStep === 0 &&
+                  Object.keys(payload).length === 2 &&
+                  initialAssessorFirstDivision === true
                     ? "border border-blue-400 bg-blue-400 text-white w-1/6 "
                     : "invisible"
-                    // : "cursor-not-allowed border border-gray-500 bg-white text-gray-500 w-1/6"
+                  // : "cursor-not-allowed border border-gray-500 bg-white text-gray-500 w-1/6"
                 }`}
                 text="Next"
               ></Button>
