@@ -13,6 +13,7 @@ const addInstitutePoc  = (institutePocDetails) => {
 const getApplicantDetails = (applicantDetails) => {
     return axiosService.post(APIS.APPLICANT.GET_APPLICANT_DETAILS, applicantDetails);
   }
+ 
 
 export const applicantService = {   
   addInstitute,
