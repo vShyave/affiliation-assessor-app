@@ -48,22 +48,36 @@ const UploadForm = ({ setFormStage, handleFile, xmlData, formData }) => {
   };
 
   const userId = "427d473d-d8ea-4bb3-b317-f230f1c9b2f7";
-  const formSpec = formData?.file_name?.split(".")[0]; //passing form name
+  const formSpec = {
+    skipOnSuccessMessage: true,
+    prefill: {},
+    submissionURL: "",
+    name: formData?.file_name,
+    successCheck: "async (formData) => { return true; }",
+    onSuccess: {
+      notificationMessage: "Form submitted successfully",
+      sideEffect: "async (formData) => { console.log(formData); }",
+    },
+    onFailure: {
+      message: "Form submission failed",
+      sideEffect: "async (formData) => { console.log(formData); }",
+      next: {
+        type: "url",
+        id: "google",
+      },
+    },
+  };
+  // const formSpec = formData?.file_name?.split(".")[0]; //passing form name
 
   const fetchFormData = async () => {
-    const res = await axios.get(formData?.path);
-    // console.log(res);
-
-    {/**removing the xml declaration from the response to just passs the <data></data> in prefillXml */}
-    // let xmlData = res.data.split("\n")
-    // xmlData.splice(0,1);
-    // xmlData=xmlData.join('\n')
-    // console.log(xmlData)
-
+    // const res = await axios.get(formData?.path);
+    {
+      /**removing the xml declaration from the response to just pass the <data></data> in prefillXml */
+    }
     let formURI = await getPrefillXML(
       formData?.file_name?.split(".")[0],
       "",
-      res.data //tried passing xmlData here
+      "" //tried passing xmlData here
     );
     setEncodedFormURI(formURI);
   };
@@ -99,7 +113,7 @@ const UploadForm = ({ setFormStage, handleFile, xmlData, formData }) => {
                   <ul className="flex flex-col gap-3">
                     <li>Download ODK template (in .xlsx format)</li>
                     <li>
-                      Create a new Form by refering{" "}
+                      Create a new Form by referring{" "}
                       <a
                         className="text-primary-600"
                         href="https://docs.getodk.org"
