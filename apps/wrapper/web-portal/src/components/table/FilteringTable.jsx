@@ -42,26 +42,27 @@ const FilteringTable = (props) => {
     usePagination,
     useRowSelect,
     (hooks) => {
-      if(props.showCheckbox){
-      hooks.visibleColumns.push((columns) => {
-        return [
-          {
-            id: "selection",
-            Header: ({ getToggleAllRowsSelectedProps }) => (
-              <Checkbox {...getToggleAllRowsSelectedProps()} />
-            ),
-            Cell: ({ row }) => (
-              <Checkbox {...row.getToggleRowSelectedProps()} />
-            ),
-          },
-          ...columns,
-        ];
-      });}
+      if (props.showCheckbox) {
+        hooks.visibleColumns.push((columns) => {
+          return [
+            {
+              id: "selection",
+              Header: ({ getToggleAllRowsSelectedProps }) => (
+                <Checkbox {...getToggleAllRowsSelectedProps()} />
+              ),
+              Cell: ({ row }) => (
+                <Checkbox {...row.getToggleRowSelectedProps()} />
+              ),
+            },
+            ...columns,
+          ];
+        });
+      }
     }
   );
 
   const { globalFilter, pageIndex, pageSize } = state;
- 
+
   {
     array = JSON.stringify(
       {
@@ -74,7 +75,6 @@ const FilteringTable = (props) => {
       console.log(array);
     }
   }
-  
 
   return (
     <>
@@ -90,7 +90,7 @@ const FilteringTable = (props) => {
                 {headerGroup.headers?.map((column, idx) => (
                   <th
                     {...column.getHeaderProps(column.getSortByToggleProps())}
-                    className="px-6 py-3"
+                    className="p-4"
                     key={`${index}_${idx}`}
                   >
                     <span className="inline-block">
@@ -126,7 +126,7 @@ const FilteringTable = (props) => {
                     return (
                       <td
                         {...cell.getCellProps()}
-                        className="px-6 py-4"
+                        className="p-4"
                         key={`${index}_${idx}`}
                       >
                         {cell.render("Cell")}
@@ -165,7 +165,7 @@ const FilteringTable = (props) => {
           <span className="font-medium">
             Go to page:{" "}
             <input
-              className="rounded-md border-0 p-2 w-[70px] h-[40px]  text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+              className="rounded-md border-0 p-2 w-[70px] h-[40px] text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
               type="text"
               defaultValue={pageIndex + 1}
               onChange={(e) => {

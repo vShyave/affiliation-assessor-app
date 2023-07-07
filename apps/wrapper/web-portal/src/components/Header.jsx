@@ -2,9 +2,9 @@ import React, { useEffect, useState } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import "./Header.css";
 
-import { AiFillHome} from "react-icons/ai";
+import { AiFillHome } from "react-icons/ai";
 
-import {  getCookie, removeCookie , getInitials} from "../utils/common";
+import { getCookie, removeCookie, getInitials } from "../utils/common";
 import ADMIN_ROUTE_MAP from "../routes/adminRouteMap";
 import Overlay from "../pages/notifications/Overlay";
 
@@ -57,8 +57,8 @@ export default function Header() {
                 <img src="/images/upsmf.png" alt="logo" className="h-[84px]" />
               </div>
               <div className="relative inline-block text-left flex gap-12 items-center">
-              <Overlay className="text-3xl text-gray-500"/>
-                <div>                
+                <Overlay className="text-3xl text-gray-500" />
+                <div>
                   <button
                     type="button"
                     className="border-green-500 bg-green-500 inline-flex w-full justify-center gap-x-1.5 rounded-md px-2 py-2 text-sm font-semibold text-white-500 shadow-sm hover:bg-green-400"
@@ -71,7 +71,7 @@ export default function Header() {
                   >
                     {/* {getInitials(regulator[0].full_name)}  */}
                   </button>
-                  
+
                   {showProfileDropdown && (
                     <div
                       className="absolute right-0 z-10 mt-2 w-56 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
