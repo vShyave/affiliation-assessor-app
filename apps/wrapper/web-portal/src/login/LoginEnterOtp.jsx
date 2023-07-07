@@ -16,7 +16,7 @@ export default function LoginEnterOtp() {
             <p className="text-sm text-gray-400">Enter the 6 digit OTP sent to your email address</p>
             {/* <p className="text-red-500 text-sm" >{formErrors.email}</p> */}
           </div>
-          <Button moreClass="uppercase w-full mt-7" text="Sign in"></Button>
+          <Button moreClass="uppercase w-full mt-7 text-white" text="Sign in"></Button>
           <Link className="text-primary-700 text-center font-medium my-6" to={ADMIN_ROUTE_MAP.loginModule.signup}>Go back, re-enter the email</Link>
         </div>
       </Card>

@@ -232,7 +232,7 @@ export default function SelfRegistration() {
                   <div className="sm:col-span-3">
                     <Label
                       htmlFor="phonenumber"
-                      text="phonenumber"
+                      text="Phonenumber"
                       required
                     ></Label>
                     <div className="mt-2">

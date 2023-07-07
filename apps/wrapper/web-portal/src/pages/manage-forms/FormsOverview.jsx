@@ -8,11 +8,14 @@ import {
   markReviewStatus,
   publishForms,
   unpublishForms,
+  deleteForm
 } from "../../api";
 import { getOnGroundAssessorData } from "../../api";
 import { getFieldName, readableDate } from "../../utils/common";
 import Toast from "../../components/Toast";
 import { VscPreview } from "react-icons/vsc";
+import {RiDeleteBin6Line} from "react-icons/ri";
+
 import AlertModal from "../../components/AlertModal";
 
 const FormsOverview = () => {
@@ -63,6 +66,10 @@ const FormsOverview = () => {
       Header: "Preview",
       accessor: "preview",
     },
+    {
+      Header: "Delete",  
+      accessor: "delete",
+    }
   ];
 
   const COLUMN_PUBLISHED = [
@@ -94,6 +101,45 @@ const FormsOverview = () => {
       Header: "Preview",  
       accessor: "preview",
     },
+    {
+      Header: "Delete",  
+      accessor: "delete",
+    }
+  ];
+  const COLUMN_UNPUBLISHED = [
+    {
+      Header: "Form title",
+      accessor: "title",
+    },
+    {
+      Header: "Application type",
+      accessor: "application_type",
+    },
+    {
+      Header: "Round no.",
+      accessor: "round",
+    },
+    {
+      Header: "Course Name",
+      accessor: "course_type",
+    },
+    {
+      Header: "Published on",
+      accessor: "updated_at",
+    },
+    {
+      Header: "Action",
+      accessor: "publish",
+    },
+    {
+      Header: "Preview",  
+      accessor: "preview",
+    },
+    ,
+    {
+      Header: "Delete",  
+      accessor: "delete",
+    }
   ];
 
   const navigateToView = (formObj) => {
@@ -123,6 +169,11 @@ const FormsOverview = () => {
   const unpublish = (formId) => {
     setShowAlert(false);
     unpublishForm(formId);
+  };
+
+  const delete_Form = (formId) => {
+    setShowAlert(false);
+     deleteForms(formId);
   };
 
   useEffect(() => {
@@ -203,6 +254,26 @@ const FormsOverview = () => {
           </span>
         </div>
       ),
+      delete: (
+        <a
+          className={`px-6 text-gray-600 pl-0 bg-white`}
+          onClick={() => {
+            setShowAlert(true);
+            setState((prevState) => ({
+              ...prevState,
+              alertContent: {
+                alertTitle: "Delete form",
+                alertMsg: e.form_status==="Published"? "You cannot delete the form before unpublishing it?" : "Are you sure,you want to delete this form?",
+                actionButtonLabel: e.form_status==="Published"? "Unpublish" : "Delete",
+                actionFunction: e.form_status==="Published"? unpublish:delete_Form,
+                actionProps: [e?.form_id],
+              },
+            }));
+          }}
+        >
+          <RiDeleteBin6Line className="text-xl mt-4"/>
+        </a>
+      )
     };
     formsDataList.push(formsData);
     if (e.submitted_on === new Date().toJSON().slice(0, 10)) {
@@ -236,6 +307,7 @@ const FormsOverview = () => {
           toastType: "",
         }));
       }, 3000);
+      // Notification.sendemail({"body":})
       fetchFormsList();
     } catch (error) {
       console.log("error - ", error);
@@ -298,6 +370,49 @@ const FormsOverview = () => {
       );
     }
   };
+  const deleteForms = async (form_id) => {
+    const formData = new FormData();
+    formData.append("form_id", form_id);
+    try {
+      await deleteForm(formData).then(
+        setToast((prevState) => ({
+          ...prevState,
+          toastOpen: true,
+          toastMsg: "Form successfully Deleted!",
+          toastType: "success",
+        }))
+      );
+      
+      setTimeout(() => {
+        setToast((prevState) => ({
+          ...prevState,
+          toastOpen: false,
+          toastMsg: "",
+          toastType: "",
+        }));
+      }, 3000);
+      fetchFormsList();
+    } catch (error) {
+      console.log("error - ", error);
+      setToast((prevState) => ({
+        ...prevState,
+        toastOpen: true,
+        toastMsg: "Error occured while deleting form!",
+        toastType: "error",
+      }));
+      setTimeout(
+        () =>
+          setToast((prevState) => ({
+            ...prevState,
+            toastOpen: false,
+            toastMsg: "",
+            toastType: "",
+          })),
+        3000
+      );
+    }
+  };
+
 
   return (
     <>
@@ -359,6 +474,21 @@ const FormsOverview = () => {
                   Published
                 </a>
               </li>
+              <li
+                className="mr-2"
+                onClick={() => handleSelectMenu("unpublished")}
+              >
+                <a
+                  href="#"
+                  className={`inline-block p-4 rounded-t-lg dark:text-blue-500 dark:border-blue-600 ${
+                    state.menu_selected === "unpublished"
+                      ? "text-blue-600 border-b-2 border-blue-600"
+                      : ""
+                  }`}
+                >
+                  Unpublished
+                </a>
+              </li>
             </ul>
           </div>
         </div>
@@ -399,6 +529,17 @@ const FormsOverview = () => {
               )}
               navigateFunc={() => {}}
               columns={COLUMN_PUBLISHED}
+            />
+          </div>
+        )}
+        {state.menu_selected === "unpublished" && (
+          <div className="text-2xl mt-4 font-medium">
+            <FilteringTable
+              dataList={formsDataList.filter(
+                (item) => item.form_status === "Unpublished"
+              )}
+              navigateFunc={() => {}}
+              columns={COLUMN_UNPUBLISHED}
             />
           </div>
         )}

@@ -6,8 +6,8 @@ import {
   usePagination,
   useRowSelect,
 } from "react-table";
+// import { Checkbox } from "./Checkbox";
 import { Checkbox } from "@material-tailwind/react";
-
 import GlobalFilter from "./GlobalFilter";
 
 import { AiOutlineArrowUp, AiOutlineArrowDown } from "react-icons/ai";
@@ -84,7 +84,7 @@ const FilteringTable = (props) => {
           {...getTableProps()}
           className="w-full text-sm text-left text-gray-500 dark:text-gray-400"
         >
-          <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+          <thead className="text-xs text-gray-700 uppercase bg-gray-300 dark:bg-gray-700 dark:text-gray-400">
             {headerGroups?.map((headerGroup, index) => (
               <tr {...headerGroup.getHeaderGroupProps()} key={index}>
                 {headerGroup.headers?.map((column, idx) => (

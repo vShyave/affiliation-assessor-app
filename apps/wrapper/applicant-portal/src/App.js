@@ -13,6 +13,7 @@ import MyApplications from "./pages/MyApplications";
 import AllApplications from "./pages/AllApplications";
 import Congratulations from "./pages/Congratulation";
 import PrivateRoute from "./routes/PrivateRoute";
+import Profile from "./pages/Profile";
 
 
 function App() {
@@ -56,6 +57,10 @@ function App() {
              <Route
               path={APPLICANT_ROUTE_MAP.dashboardModule.congratulations}
               element={<Congratulations />}
+            ></Route>
+            <Route
+              path={APPLICANT_ROUTE_MAP.dashboardModule.profile}
+              element={<Profile />}
             ></Route>
           </Route>
         </Routes>
