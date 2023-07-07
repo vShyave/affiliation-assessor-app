@@ -7,20 +7,19 @@ import FilteringTable from "../../components/table/FilteringTable";
 import Card from "../../components/Card";
 import { Button } from "../../components";
 
-
-import { getAllUsers } from "../../api";
+import { getAssessmentSchedule } from "../../api";
 import ADMIN_ROUTE_MAP from "../../routes/adminRouteMap";
 
 const ScheduleManagementList = () => {
   const navigation = useNavigate();
   var resUserData = [];
-  const [usersList, setUsersList] = useState();
-  const [userTableList, setUserTableList] = useState([]);
+  const [assessmentScheduleList, setAssessmentScheduleList] = useState();
+  const [scheduleTableList, setScheduleTableList] = useState([]);
 
   const COLUMNS = [
     {
       Header: "#",
-      accessor: "number_of_scheduled_application",
+      accessor: "scheduled_application_sno",
     },
     {
       Header: "District",
@@ -32,7 +31,7 @@ const ScheduleManagementList = () => {
     },
     {
       Header: "Child center code",
-      accessor: "chile_center_code",
+      accessor: "child_center_code",
     },
     {
       Header: "Institute name",
@@ -48,7 +47,7 @@ const ScheduleManagementList = () => {
     },
     {
       Header: "Assessor IDs",
-      accessor: "assessor_ids",
+      accessor: "assessor_id",
     },
     {
       Header: "Status",
@@ -88,19 +87,25 @@ const ScheduleManagementList = () => {
     },
   ];
 
-  const fetchAllUsers = async () => {
+  const fetchAllAssessmentSchedule = async () => {
+    // const formData = new FormData();
+    // formData.append("offsetNo", Number(0));
+    // formData.append("limit", Number(10));
     try {
-      const res = await getAllUsers();
-      setUsersList(res?.data?.assessors);
-      const data = res?.data?.assessors;
-      data.forEach((e) => {
-        var usersData = {
-          full_name: e.fname || e.lname ? e.fname + e.lname : e.name,
-          email: e.email?.toLowerCase(),
-          mobile_number: e.phonenumber,
-          role: e.role || "Assessor",
-          status: e.workingstatus || "Active",
-          id: e.user_id,
+      const res = await getAssessmentSchedule();
+      setAssessmentScheduleList(res?.data?.assessment_schedule);
+      const data = res?.data?.assessment_schedule;
+      setScheduleTableList(
+        data.map((e) => ({
+          scheduled_application_sno: e?.id,
+          district: e?.institute?.district,
+          parent_center_code: "-",
+          child_center_code: "-",
+          institute_name: e?.institute?.name,
+          type: '-',
+          assessment_date: e?.date,
+          assessor_id: e?.assessor_code,
+          status: new Date(e?.date)> new Date()?"Scheduled":new Date(e?.date)<new Date() && e?.institute?.form_submissions.length?"Completed":"Closed",
           more_actions: (
             <div className="flex flex-row text-2xl font-semibold">
               <button
@@ -110,39 +115,38 @@ const ScheduleManagementList = () => {
               </button>
             </div>
           ),
-        };
-        resUserData.push(usersData);
-      });
-      setUserTableList(resUserData);
+        }))
+      );
     } catch (error) {
       console.log("error - ", error);
     }
   };
   useEffect(() => {
-    fetchAllUsers();
+    fetchAllAssessmentSchedule();
   }, []);
 
   return (
     <>
       <div className="flex flex-col gap-8">
         <div className="flex flex-col gap-4">
-         <div className="flex flex-row justify-between">   
-          <div>
-            <h1 className="text-2xl font-medium">Schedule management</h1>
-          </div>
-          <div className="flex justify-end">
-            <span className="flex gap-4">
-              <button 
-                  className="flex flex-wrap items-center justify-center gap-2 border border-gray-500 text-gray-500 bg-white w-[200px] h-[45px] text-md font-medium rounded-[4px]"
-                  >
-                    Download CSV template
+          <div className="flex flex-row justify-between">
+            <div>
+              <h1 className="text-2xl font-medium">Schedule management</h1>
+            </div>
+            <div className="flex justify-end">
+              <span className="flex gap-4">
+                <button className="flex flex-wrap items-center justify-center gap-2 border border-gray-500 text-gray-500 bg-white w-[200px] h-[45px] text-md font-medium rounded-[4px]">
+                  Download CSV template
                 </button>
-                  <Button 
+                <Button
                   onClick={() =>
-                    navigation(ADMIN_ROUTE_MAP.adminModule.scheduleManagement.uploadForm)
+                    navigation(
+                      ADMIN_ROUTE_MAP.adminModule.scheduleManagement.uploadForm
+                    )
                   }
-                  moreClass="text-white" 
-                  text="Upload CSV for scheduling" ></Button>
+                  moreClass="text-white"
+                  text="Upload CSV for scheduling"
+                ></Button>
               </span>
             </div>
           </div>
@@ -166,7 +170,7 @@ const ScheduleManagementList = () => {
       <div className="flex flex-row items-center">
         <div className="text-2xl w-full mt-4 font-medium">
           <FilteringTable
-            dataList={userTableList}
+            dataList={scheduleTableList}
             columns={COLUMNS}
             navigateFunc={() => {}}
           />

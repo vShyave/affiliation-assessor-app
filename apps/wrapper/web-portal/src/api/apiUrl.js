@@ -35,6 +35,9 @@ desktopAnalysis:{
     scheduleAssessment: `${rest}scheduleAssessment`,
     getDesktopAnalysisForms: `${rest}getDesktopAnalysis`
   },
+  scheduleManagement:{
+    getAssessmentSchedule: `${rest}getAssessmentSchedule`
+  },
   SIGNUP: {
     FUSION_AUTH_REGISTRATION: "user/registration",
   },
