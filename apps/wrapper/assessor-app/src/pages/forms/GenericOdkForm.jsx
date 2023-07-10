@@ -14,6 +14,7 @@ import {
 } from "../../utils";
 
 import CommonLayout from "../../components/CommonLayout";
+import CommonModal from "../../components/Modal";
 
 const ENKETO_MANAGER_URL = process.env.REACT_APP_ENKETO_MANAGER_URL;
 const ENKETO_URL = process.env.REACT_APP_ENKETO_URL;
@@ -71,6 +72,7 @@ const GenericOdkForm = (props) => {
   const [onFormFailureData, setOnFormFailureData] = useState(undefined);
   const [encodedFormURI, setEncodedFormURI] = useState("");
   const [prefilledFormData, setPrefilledFormData] = useState();
+  const [errorModal, setErrorModal] = useState(false);
 
   const loading = useRef(false);
   const [assData, setData] = useState({
@@ -89,6 +91,11 @@ const GenericOdkForm = (props) => {
     try {
       const { nextForm, formData, onSuccessData, onFailureData } = data;
       if (data?.state === "ON_FORM_SUCCESS_COMPLETED") {
+        if (date) {
+          setErrorModal(true);
+          return;
+        }
+
         const updatedFormData = await updateFormData(formSpec.start);
         const storedData = await getSpecificDataFromForage("required_data");
 
@@ -180,31 +187,53 @@ const GenericOdkForm = (props) => {
       setData,
       setEncodedFormSpec,
       setEncodedFormURI,
-      isPreview
+      isPreview,
     });
   }, [isPreview]);
 
   return (
-    <CommonLayout
-      {...props.commonLayoutProps}
-      formUrl={`${ENKETO_URL}/preview?formSpec=${encodedFormSpec}&xform=${encodedFormURI}&userId=${user.user.id}`}
-      formPreview={true}
-      setIsPreview={setIsPreview}
-    >
-      {!isPreview && (
-        <div className="flex flex-col items-center">
-          {encodedFormURI && assData && (
-            <>
-              <iframe
-                title="form"
-                src={`${ENKETO_URL}/preview?formSpec=${encodedFormSpec}&xform=${encodedFormURI}&userId=${user.user.id}`}
-                style={{ height: "80vh", width: "100%" }}
-              />
-            </>
-          )}
-        </div>
+    <>
+      <CommonLayout
+        {...props.commonLayoutProps}
+        formUrl={`${ENKETO_URL}/preview?formSpec=${encodedFormSpec}&xform=${encodedFormURI}&userId=${user.user.id}`}
+        formPreview={true}
+        setIsPreview={setIsPreview}
+      >
+        {!isPreview && (
+          <div className="flex flex-col items-center">
+            {encodedFormURI && assData && (
+              <>
+                <iframe
+                  title="form"
+                  src={`${ENKETO_URL}/preview?formSpec=${encodedFormSpec}&xform=${encodedFormURI}&userId=${user.user.id}`}
+                  style={{ height: "80vh", width: "100%" }}
+                />
+              </>
+            )}
+          </div>
+        )}
+      </CommonLayout>
+      {errorModal && (
+        <CommonModal>
+          <div>
+            <p className="text-secondary text-2xl lg:text-3xl text-semibold font-medium text-center">
+              Error!
+            </p>
+            <div className="flex flex-row justify-center w-full py-4 text-center">
+              You can't submit a Preview form.
+            </div>
+            <div className="flex flex-row justify-center w-full py-4">
+              <div
+                className="border border-primary bg-primary text-white py-1 px-7 cursor-pointer lg:px-16 lg:py-3 lg:text-xl"
+                onClick={() => setErrorModal(false)}
+              >
+                Close
+              </div>
+            </div>
+          </div>
+        </CommonModal>
       )}
-    </CommonLayout>
+    </>
   );
 };
 
