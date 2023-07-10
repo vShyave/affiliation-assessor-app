@@ -1,17 +1,22 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 
-import { MdFileUpload, MdEdit, MdDelete } from "react-icons/md";
+import { MdFileUpload, MdEdit, MdDelete, MdSwapHoriz } from "react-icons/md";
 
 import { Button } from "../../components";
 import FilteringTable from "../../components/table/FilteringTable";
 
-import { readableDate } from "../../utils/common";
 import { getAllUsers } from "../../api";
 import ADMIN_ROUTE_MAP from "../../routes/adminRouteMap";
 
 import DeleteUsersModal from "./DeleteUsers";
 import BulkUploadUsersModal from "./BulkUploadUsersModal";
+import {
+  Menu,
+  MenuHandler,
+  MenuList,
+  MenuItem,
+} from "@material-tailwind/react";
 
 import { scheduled } from "rxjs";
 
@@ -25,7 +30,7 @@ export default function ManageUsersList({
   const [bulkUploadUsersModel, setBulkUploadUsersModel] = useState(false);
   const [usersList, setUsersList] = useState();
   const [userTableList, setUserTableList] = useState([]);
-  const [isOpen, setIsOpen] = useState(false);
+  const [invalidUserRowFlag, setInvalidUserRowFlag] = useState(false);
 
   const COLUMNS = [
     {
@@ -55,6 +60,15 @@ export default function ManageUsersList({
     {
       Header: "",
       accessor: "more_actions",
+    },
+    {
+      Header: "",
+      accessor: "isRowInvalid",
+      Cell: () => {
+        return (
+          invalidUserRowFlag
+        );
+      }
     },
   ];
 
@@ -94,42 +108,60 @@ export default function ManageUsersList({
           schedule: (
             <a
               className={`px-6 text-primary-600 pl-0 bg-white`}
-              // onClick={() => {
-              //   setShowAlert(true);
-              //   setState((prevState) => ({
-              //     ...prevState,
-              //     alertContent: {
-              //       alertTitle: "Publish Form",
-              //       alertMsg: "Are you sure to publish the form?",
-              //       actionButtonLabel: "Publish",
-              //       actionFunction: publish,
-              //       actionProps: [e?.form_id] // onClick={() => {
-              //   setShowAlert(true);
-              //   setState((prevState) => ({
-              //     ...prevState,
-              //     alertContent: {
-              //       alertTitle: "Publish Form",
-              //       alertMsg: "Are you sure to publish the form?",
-              //       actionButtonLabel: "Publish",
-              //       actionFunction: publish,
-              //       actionProps: [e?.form_id]
-              //     },
-              //   }));
-              // }}
-              //     },
-              //   }));
-              // }}
             >
               View Schedule
-            </a>
-          ),
+            </a>),
           more_actions: (
-            <div className="flex flex-row font-semibold justify-center text-2xl"></div>
+            <div className="flex flex-row text-2xl font-semibold">
+              <Menu>
+                <MenuHandler>
+                  <button
+                  >
+                    ...
+                  </button>
+                </MenuHandler>
+                <MenuList>
+                  <MenuItem onClick={() => navigation(`${ADMIN_ROUTE_MAP.adminModule.manageUsers.createUser}/${e.user_id}`)}><div className="flex flex-row gap-4 mt-4">
+                    <div
+
+                    ><MdEdit /></div>
+                    <div className="text-semibold m-"
+                    ><span>
+                        Edit</span></div>
+
+                  </div> </MenuItem>
+                  <MenuItem onClick={(e) => console.log("icon clicked")}><div className="flex flex-row gap-4 mt-4">
+                    <div
+
+                    ><MdSwapHoriz /></div>
+                    <div className="text-semibold m-"
+                    ><span>
+                        Deactivate</span></div>
+
+                  </div> </MenuItem>
+                  <MenuItem
+                    onClick={() => setDeleteUsersModel(true)}>
+                    <div className="flex flex-row gap-4 mt-4">
+                      <div
+                      ><MdDelete /></div>
+                      <div className="text-semibold m-"
+                      ><span>
+                          Delete</span></div>
+
+                    </div> </MenuItem>
+                </MenuList>
+              </Menu>
+
+            </div>
+
+
           ),
+
         };
         resUserData.push(usersData);
       });
       setUserTableList(resUserData);
+
     } catch (error) {
       console.log("error - ", error);
     }
@@ -148,12 +180,13 @@ export default function ManageUsersList({
           </div>
           <div className="flex justify-end">
             <span className="flex gap-4">
-              <Button moreClass="text-white" text="Make inactive"></Button>
+              <Button moreClass="text-white" text="Make inactive">
+              </Button>
               <Button
                 moreClass="text-white"
                 onClick={() => setDeleteUsersModel(true)}
-                text="Delete user"
-              ></Button>
+                text="Delete user">
+              </Button>
               <button
                 onClick={() => setBulkUploadUsersModel(true)}
                 className="flex flex-wrap items-center justify-center gap-2 border border-gray-500 text-gray-500 bg-white w-[200px] h-[45px] text-md font-medium rounded-[4px]"
@@ -172,10 +205,12 @@ export default function ManageUsersList({
             <FilteringTable
               dataList={userTableList}
               columns={COLUMNS}
-              navigateFunc={() => {}}
+              navigateFunc={() => { }}
               showCheckbox={true}
               pagination={true}
+              onRowSelect={(e) => { console.log(e) }}
             />
+
           </div>
         </div>
       </div>

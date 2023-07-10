@@ -146,3 +146,12 @@ export const getDesktopAnalysisForms = async () => {
   const res = await adminCustomPost.get(API_URL.desktopAnalysis.getDesktopAnalysisForms);
   return res;
 };
+
+// Bulk create users
+export const createUsers = async (postData) => {
+  const res = await adminCustomPost.post(
+    API_URL.manageUsers.deleteUsers,
+    postData
+  );
+  return res;
+};

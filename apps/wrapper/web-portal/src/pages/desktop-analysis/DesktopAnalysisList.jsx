@@ -256,6 +256,7 @@ const DesktopAnalysisList = () => {
                 navigateFunc={navigateToView}
                 columns={COLUMNS}
                 pagination={true}
+                onRowSelect={() => {}}
               />
             </div>
           </div>

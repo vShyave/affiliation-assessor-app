@@ -4,17 +4,21 @@ import { Switch } from "@material-tailwind/react";
 import { Link } from 'react-router-dom';
 import { Button } from "../../components";
 
+import { AiOutlineArrowUp, AiOutlineArrowDown, AiFillExclamationCircle } from "react-icons/ai";
+
 
 function BulkUploadUsersModal({ closeBulkUploadUsersModal }) {
 
   const [file, setFile] = useState();
   const [tableUserList, setTableUserList] = useState([]);
-  const fileReader = new FileReader();
   const hiddenFileInput = React.useRef(null);
   const [tableDataReady, setTableDataReady] = useState(false);
   const [invalidTableUserList, setInvalidTableUserList] = useState([]);
   const [invalidUserDataFlag, setInvalidUserDataFlag] = useState(true);
-  
+  const [allUsersList, setAllUsersList] = useState([]);
+  const [invalidUserRowFlag, setInvalidUserRowFlag] = useState("false");
+  const [selectedUserList, setSelectedUserList] = useState(false);
+
 
   const isEmailValid = (email) => {
     const reqExp = /[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$/;
@@ -43,13 +47,8 @@ function BulkUploadUsersModal({ closeBulkUploadUsersModal }) {
   };
 
   const isDataValid = (data) => {
-    if (data.toString().length != 0) {
-      return data
-    } else {
-      return (
-        <span className="text-red-500 mt-2 text-sm"> - <br></br>  <small>Missing Text</small>  </span>
-      );
-    }
+    return (data?.toString().length != 0 ? data : 
+    <span className="text-red-500 mt-2 text-sm"> - <br></br>  <small>Missing Text</small>  </span>);
   };
 
 
@@ -59,7 +58,7 @@ function BulkUploadUsersModal({ closeBulkUploadUsersModal }) {
       accessor: "full_name",
       Cell: (props) => {
         return (
-          <p>{isDataValid(props.value)}</p>
+          <p>{ isDataValid(props.value)}</p>
         );
       }
     },
@@ -68,7 +67,7 @@ function BulkUploadUsersModal({ closeBulkUploadUsersModal }) {
       accessor: "email",
       Cell: (props) => {
         return (
-          <p>{isEmailValid(props.value)}</p>
+          <p>{ isEmailValid(props.value)}</p>
         );
       }
     },
@@ -90,7 +89,30 @@ function BulkUploadUsersModal({ closeBulkUploadUsersModal }) {
         );
       }
     },
+    {
+      Header: "",
+      accessor: "isRowInvalid",
+      Cell: (row,original) => {
+       // console.log(row)
+     
+        {row?.flatRows.map((row1, index) => {
+         // console.log(row1.original)})} 
+         /*  return (
+        <div style={{ background: row.original.full_name === '' ? 'green' : 'red' }}>
+            {row.original.full_name}
+          </div> 
+        //  <AiFillExclamationCircle className="text-red-400 text-2xl" />
+        );
+      const r = isDataValid(" ")
+        console.log(r)
+          if(){
 
+          } 
+        return    <AiFillExclamationCircle className="text-red-400 text-2xl" />
+ */
+      })}
+    },
+  }
   ];
 
   const handleClick = (e) => {
@@ -107,6 +129,7 @@ function BulkUploadUsersModal({ closeBulkUploadUsersModal }) {
 
   const handleFile = (file) => {
     const formData = new FormData();
+    const fileReader = new FileReader();
     formData.append("file", file);
     if (file) {
       fileReader.onload = function (event) {
@@ -124,14 +147,14 @@ function BulkUploadUsersModal({ closeBulkUploadUsersModal }) {
       var reader = new FileReader();
       reader.readAsBinaryString(file);
       reader.onload = (e) => {
-        var UserToBulkUploadData = [];
+        var validUserData = [];
         var headers = [];
         var rows = e.target.result.split("\r\n");
         for (var i = 0; i < rows.length; i++) {
           var cells = rows[i].split(",");
           var rowData = {};
           for (var j = 0; j < cells.length; j++) {
-            if (i == 0) {// start from i=1 to remove header aftrwards
+            if (i == 0) {
               var headerName = cells[j].trim();
               headers.push(headerName);
             } else {
@@ -141,29 +164,28 @@ function BulkUploadUsersModal({ closeBulkUploadUsersModal }) {
               }
             }
           }
-
-          const isValidUserEntry = Object.values(rowData).every(value => !!value);
-          //skip the first row (header) data
-          if (i != 0 && isValidUserEntry) {
-            UserToBulkUploadData.push(rowData);
-          } else {
+          const reqExp = /[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$/;
+          const isValidUserEntry = Object.values(rowData).every(value => !!value );
+          
+          setInvalidTableUserList(invalidTableUserList);
+           if (i>0 && isValidUserEntry && (rowData.mobile_number.toString().length < 10  || !reqExp.test(rowData.email.toString()) )) {
             invalidTableUserList.push(rowData);
-            setInvalidTableUserList(invalidTableUserList)
+          } else if(!isValidUserEntry) {
+            invalidTableUserList.push(rowData);
+          } else{
+            validUserData.push(rowData)
           }
+          setInvalidTableUserList(invalidTableUserList)
         }
-
-        console.log(UserToBulkUploadData);
       }
     } catch (e) {
       console.error(e);
     }
   }
 
-
   const csvFileToArray = string => {
     const csvHeader = string.slice(0, string.indexOf("\n")).split(",");
     const csvRows = string.slice(string.indexOf("\n") + 1).split("\n");
-
     const tableUserList = csvRows.map(i => {
       const values = i.split(",");
       const obj = csvHeader.reduce((object, header, index) => {
@@ -173,41 +195,56 @@ function BulkUploadUsersModal({ closeBulkUploadUsersModal }) {
       return obj;
     });
     setTableUserList(tableUserList);
+    setAllUsersList(tableUserList); // setting the all user list again to use it in on toggle
     setTableDataReady(true);
   };
 
-  
-
   const handleToggleChange = e => {
-    console.log("at click ---value-"+invalidUserDataFlag)
-    if(JSON.stringify(invalidTableUserList[0]) === "{}")
-    {
+    if (JSON.stringify(invalidTableUserList[0]) === "{}") {
       invalidTableUserList.shift();
     }
-     
-   
-    console.log(tableUserList)
-    console.log(invalidTableUserList)
-    {invalidUserDataFlag ?  (invalidTableUserList) : setTableUserList(tableUserList)}
- 
+    { invalidUserDataFlag ? setTableUserList(invalidTableUserList) : setTableUserList(allUsersList) }
     setInvalidUserDataFlag(!invalidUserDataFlag);
-    console.log("after ---change-"+invalidUserDataFlag)
   };
+
+
+
+  const selectedRows = (userList) => {
+    //console.log(userList)
+    setSelectedUserList(userList)
+  }
+
+  const createUsers = (userList) => {
+    //console.log(userList)
+    try {
+      //const res = await getAllUsers();
+
+    } catch (error) {
+      console.log("error - ", error);
+    }
+  }
+
 
   return (
     <>
       <div className="flex flex-col justify-center items-center fixed inset-0 bg-opacity-25 backdrop-blur-sm">
-        <div className="flex bg-white rounded-xl shadow-xl border border-gray-400 w-[760px] h-[560px] p-8">
+        <div className="flex bg-white rounded-xl shadow-xl border border-gray-400 w-[860px] h-[560px] p-8">
           <div className="flex flex-col justify-between w-full ">
             <div className="flex text-xl font-semibold">
               <h1>Bulk upload users</h1>
               <div className="flex flex-row m-auto">
-                <Switch id="show-with-errors" 
-                label="Show with errors" 
-                onChange={handleToggleChange}
-                />
+                {tableDataReady &&
+                  <p className="text-sm"><small>Show all users</small></p> &&
+                  <Switch id="show-with-errors"
+                    label={
+                      <span className="text-sm">
+                        Show with errors
+                      </span>
+                    }
+                    onChange={handleToggleChange}
+                  />}
               </div>
-              <div className=" flex-row "><Link to='/download-template'>Download Template</Link></div>
+              <div className=" flex-row text-blue-500"><Link to='/download-template'><small>Download Template</small></Link></div>
             </div>
 
             <div className="justify-center flex flex-col items-center gap-4">
@@ -234,6 +271,7 @@ function BulkUploadUsersModal({ closeBulkUploadUsersModal }) {
                     columns={COLUMNS}
                     navigateFunc={() => { }}
                     showCheckbox={true}
+                    onRowSelect={selectedRows}
                   />
                 </div>
               </div>
@@ -252,7 +290,7 @@ function BulkUploadUsersModal({ closeBulkUploadUsersModal }) {
                 ></Button>
                 <Button
                   onClick={() => {
-                    closeBulkUploadUsersModal(false);
+                    createUsers();
                   }}
                   moreClass="border text-white w-[120px]"
                   text="Create users"
