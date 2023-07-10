@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useNavigate, Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 import { MdFileUpload, MdEdit, MdDelete, MdSwapHoriz } from "react-icons/md";
 
@@ -18,7 +18,6 @@ import {
   MenuItem,
 } from "@material-tailwind/react";
 
-import { scheduled } from "rxjs";
 
 export default function ManageUsersList({
   closeDeleteUsersModal,
@@ -30,7 +29,7 @@ export default function ManageUsersList({
   const [bulkUploadUsersModel, setBulkUploadUsersModel] = useState(false);
   const [usersList, setUsersList] = useState();
   const [userTableList, setUserTableList] = useState([]);
-  const [invalidUserRowFlag, setInvalidUserRowFlag] = useState(false);
+  const [invalidUserRowFlag] = useState(false);
 
   const COLUMNS = [
     {
@@ -71,26 +70,6 @@ export default function ManageUsersList({
       }
     },
   ];
-
-  const list = [
-    {
-      icon: <MdEdit />,
-      functionality: "Edit",
-    },
-    {
-      icon: <MdEdit />,
-      functionality: "Deactive",
-    },
-    {
-      icon: <MdDelete />,
-      functionality: "Delete",
-    },
-  ];
-
-  const navigateToUpdate = (userObj) => {
-    const navigationURL = `${ADMIN_ROUTE_MAP.adminModule.manageUsers.createUser}/${userObj?.original?.id}`;
-    navigation(navigationURL);
-  };
 
   const fetchAllUsers = async () => {
     try {
