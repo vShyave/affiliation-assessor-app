@@ -22,7 +22,8 @@ const API_URL = {
     createForm: `${rest}createForm`,
     publishForms: `${rest}publishForms`,
     unpublishForms: `${rest}unpublishForms`,
-    viewForm: `${rest}viewForm`
+    viewForm: `${rest}viewForm`,
+    deleteForm: `${rest}deleteForm`
   },
   manageUsers: {
     userList: `${rest}getAllUsers`,
@@ -41,6 +42,12 @@ desktopAnalysis:{
     OTP_SEND: "user/otpSend",
     OTP_VERIFY: "user/otpVerify",
     USERLOGIN: "login",
+  },
+  NOTIFICATION: {
+    SEND_SMS: "",
+    SEND_EMAIL: "",
+    SAVE: "",
+    GET: "",
   },
 };
 

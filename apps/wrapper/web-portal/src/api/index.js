@@ -106,6 +106,12 @@ export const viewForm = async (postData) => {
   return res;
 };
 
+
+export const deleteForm = async (postData) => {
+   return await adminCustomPost.delete(API_URL.manageForms.deleteForm, { data: postData})
+};
+
+
 // Manage users API's...
 export const getAllUsers = async () => {
   const res = await adminCustomPost.get(API_URL.manageUsers.userList);

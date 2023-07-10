@@ -1,20 +1,19 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { Select, Option } from "@material-tailwind/react";
 import { Link } from "react-router-dom";
+
 import "./UploadForm.css";
+import { FaAngleRight } from "react-icons/fa";
 
 import { HiOutlineInformationCircle } from "react-icons/hi";
-import { Card, Button, Label, Input } from "./../../components";
+import { Card, Button, Label, Input } from "../../components";
 import { MdEventBusy } from "react-icons/md";
-import axios from "axios";
-import { getPrefillXML } from "../../api/formApi";
 
-const ENKETO_URL = process.env.REACT_APP_ENKETO_URL;
+import ADMIN_ROUTE_MAP from "../../routes/adminRouteMap";
 
 const UploadForm = ({ setFormStage, handleFile, xmlData, formData }) => {
   const [fileName, setFileName] = useState("");
   const hiddenFileInput = React.useRef(null);
-  const [encodedFormURI, setEncodedFormURI] = useState("");
 
   const handleClick = (e) => {
     hiddenFileInput.current.click();
@@ -47,58 +46,34 @@ const UploadForm = ({ setFormStage, handleFile, xmlData, formData }) => {
     element.click();
   };
 
-  const userId = "427d473d-d8ea-4bb3-b317-f230f1c9b2f7";
-  const formSpec = {
-    skipOnSuccessMessage: true,
-    prefill: {},
-    submissionURL: "",
-    name: formData?.file_name,
-    successCheck: "async (formData) => { return true; }",
-    onSuccess: {
-      notificationMessage: "Form submitted successfully",
-      sideEffect: "async (formData) => { console.log(formData); }",
-    },
-    onFailure: {
-      message: "Form submission failed",
-      sideEffect: "async (formData) => { console.log(formData); }",
-      next: {
-        type: "url",
-        id: "google",
-      },
-    },
-  };
-  // const formSpec = formData?.file_name?.split(".")[0]; //passing form name
-
-  const fetchFormData = async () => {
-    // const res = await axios.get(formData?.path);
-    {
-      /**removing the xml declaration from the response to just pass the <data></data> in prefillXml */
-    }
-    let formURI = await getPrefillXML(
-      formData?.file_name?.split(".")[0],
-      "",
-      "" //tried passing xmlData here
-    );
-    setEncodedFormURI(formURI);
-  };
-
-  const handleFormPreview = () => {
-    console.log("inside handle preview- ", formData);
-    fetchFormData();
-    let src = `${ENKETO_URL}preview?formSpec=${encodeURI(
-      JSON.stringify(formSpec)
-    )}&xform=${encodedFormURI}&userId=${userId}`;
-    window.open(src, "_blank");
-  };
-
-  useEffect(() => {
-    console.log(formData);
-  }, [formData]);
-
   return (
     <>
+      {/* <div className="h-[48px] bg-white drop-shadow-sm ">
+        <div className="container mx-auto px-3 py-3">
+          <div className="flex flex-row font-bold gap-2 items-center">
+            <Link
+              to={ADMIN_ROUTE_MAP.adminModule.scheduleManagement.list}
+            >
+              <span className="text-primary-400 cursor-pointer">Schedule Management</span>
+            </Link>
+            <FaAngleRight className="text-[16px]" />
+            <span className="text-gray-500">Upload CSV</span>
+          </div>
+        </div>
+      </div> */}
       <div className="container">
         <div className="flex flex-col gap-4">
+          <div className="flex flex-row justify-between">
+            <div>
+              <h1 className="text-2xl font-medium">Schedule management</h1>
+            </div>
+            <div className="flex justify-end">
+              <button className="flex flex-wrap items-center justify-center gap-2 border border-blue-900 text-blue-900 bg-white w-[100px] h-[45px] text-md font-medium rounded-[4px]">
+                Cancel
+              </button>
+            </div>
+          </div>
+
           <div className="flex flex-row gap-6">
             <div className=" w-[30%] h-full bg-white">
               <div className="flex flex-col">
@@ -111,18 +86,18 @@ const UploadForm = ({ setFormStage, handleFile, xmlData, formData }) => {
 
                 <div className="inst_list flex flex-col p-6">
                   <ul className="flex flex-col gap-3">
-                    <li>Download ODK template (in .xlsx format)</li>
+                    <li>Download CSV Template</li>
                     <li>
-                      Create a new Form by referring{" "}
-                      <a
+                      Based on reference, Create a CSV file
+                      {/* <a
                         className="text-primary-600"
                         href="https://docs.getodk.org"
                         target="_blank"
                       >
                         https://docs.getodk.org
-                      </a>
+                      </a> */}
                     </li>
-                    <li>Upload ODK file to get XML file</li>
+                    <li>Upload CSV file</li>
                   </ul>
                 </div>
                 <div className="flex justify-center p-6">
@@ -142,38 +117,26 @@ const UploadForm = ({ setFormStage, handleFile, xmlData, formData }) => {
 
             <div className="w-full bg-white p-8">
               <div className="flex flex-col h-[48vh] gap-8 justify-between">
-                <div className="font-semibold text-xl">Upload ODK</div>
-                <div className="flex flex-row m-auto">
+                <div className="font-semibold text-xl">Upload CSV</div>
+                <div className="flex flex-col m-auto">
                   <input
                     type="file"
                     accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel"
                     ref={hiddenFileInput}
-                    onChange={handleChange}
+                    // onChange={handleChange}
                     style={{ display: "none" }}
                   />
                   <Button
                     moreClass="text-white w-full px-6"
-                    text="Browse file to upload"
-                    onClick={handleClick}
+                    text="Browse file"
+                    // onClick={handleClick}
                   />
-                  {formData?.path && (
-                    <>
-                      <div className="text-black px-6 flex items-center">
-                        OR
-                      </div>
-                      <Button
-                        moreClass="text-white w-full px-6"
-                        text="Form Preview"
-                        onClick={handleFormPreview}
-                      />
-                    </>
-                  )}
                 </div>
                 <div className="">
                   <Button
                     moreClass="text-gray-500 w-1/6 bg-white border border-gray-500"
                     text="Back"
-                    onClick={() => setFormStage(1)}
+                    // onClick={() => setFormStage(1)}
                   ></Button>
                 </div>
               </div>
