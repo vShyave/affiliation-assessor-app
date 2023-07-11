@@ -8,13 +8,12 @@ import {
   markReviewStatus,
   publishForms,
   unpublishForms,
-  deleteForm
+  deleteForm,
 } from "../../api";
-import { getOnGroundAssessorData } from "../../api";
 import { getFieldName, readableDate } from "../../utils/common";
 import Toast from "../../components/Toast";
 import { VscPreview } from "react-icons/vsc";
-import {RiDeleteBin6Line} from "react-icons/ri";
+import { RiDeleteBin6Line } from "react-icons/ri";
 
 import AlertModal from "../../components/AlertModal";
 
@@ -67,9 +66,9 @@ const FormsOverview = () => {
       accessor: "preview",
     },
     {
-      Header: "Delete",  
+      Header: "Delete",
       accessor: "delete",
-    }
+    },
   ];
 
   const COLUMN_PUBLISHED = [
@@ -98,13 +97,13 @@ const FormsOverview = () => {
       accessor: "unpublish",
     },
     {
-      Header: "Preview",  
+      Header: "Preview",
       accessor: "preview",
     },
     {
-      Header: "Delete",  
+      Header: "Delete",
       accessor: "delete",
-    }
+    },
   ];
   const COLUMN_UNPUBLISHED = [
     {
@@ -132,14 +131,14 @@ const FormsOverview = () => {
       accessor: "publish",
     },
     {
-      Header: "Preview",  
+      Header: "Preview",
       accessor: "preview",
     },
     ,
     {
-      Header: "Delete",  
+      Header: "Delete",
       accessor: "delete",
-    }
+    },
   ];
 
   const navigateToView = (formObj) => {
@@ -173,7 +172,7 @@ const FormsOverview = () => {
 
   const delete_Form = (formId) => {
     setShowAlert(false);
-     deleteForms(formId);
+    deleteForms(formId);
   };
 
   useEffect(() => {
@@ -181,8 +180,9 @@ const FormsOverview = () => {
   }, []);
 
   const fetchFormsList = async () => {
+    const pagination = {offsetNo:0,limit:10}
     try {
-      const res = await getForms();
+      const res = await getForms(pagination);
       setFormsList(res?.data?.forms);
     } catch (error) {
       console.log("error - ", error);
@@ -263,17 +263,22 @@ const FormsOverview = () => {
               ...prevState,
               alertContent: {
                 alertTitle: "Delete form",
-                alertMsg: e.form_status==="Published"? "You cannot delete the form before unpublishing it?" : "Are you sure,you want to delete this form?",
-                actionButtonLabel: e.form_status==="Published"? "Unpublish" : "Delete",
-                actionFunction: e.form_status==="Published"? unpublish:delete_Form,
+                alertMsg:
+                  e.form_status === "Published"
+                    ? "You cannot delete the form before unpublishing it?"
+                    : "Are you sure,you want to delete this form?",
+                actionButtonLabel:
+                  e.form_status === "Published" ? "Unpublish" : "Delete",
+                actionFunction:
+                  e.form_status === "Published" ? unpublish : delete_Form,
                 actionProps: [e?.form_id],
               },
             }));
           }}
         >
-          <RiDeleteBin6Line className="text-xl mt-4"/>
+          <RiDeleteBin6Line className="text-xl mt-4" />
         </a>
-      )
+      ),
     };
     formsDataList.push(formsData);
     if (e.submitted_on === new Date().toJSON().slice(0, 10)) {
@@ -382,7 +387,7 @@ const FormsOverview = () => {
           toastType: "success",
         }))
       );
-      
+
       setTimeout(() => {
         setToast((prevState) => ({
           ...prevState,
@@ -490,59 +495,60 @@ const FormsOverview = () => {
                 </a>
               </li>
             </ul>
+            {state.menu_selected === "create_new" && (
+              <div className="flex flex-col gap-4">
+                <Card moreClass="flex h-[50vh]">
+                  <div className="flex flex-col gap-4 m-auto items-center">
+                    <div className="font-semibold text-xl">
+                      Click on the button to a create a form
+                    </div>
+                    <Button
+                      moreClass="text-white w-3/5"
+                      text="Upload ODK"
+                      onClick={() => navigation("/manage-forms/create-form")}
+                    />
+                    {/* Or
+                            <Button moreClass="text-white w-3/5" text="Configure Manually" /> */}
+                  </div>
+                </Card>
+              </div>
+            )}
+            {state.menu_selected === "draft" && (
+              <div className="text-2xl mt-4 font-medium">
+                <FilteringTable
+                  dataList={formsDataList.filter(
+                    (item) => item.form_status === "Draft"
+                  )}
+                  navigateFunc={() => {}}
+                  columns={COLUMN_DRAFTS}
+                  filterApiCall={fetchFormsList}
+                />
+              </div>
+            )}
+            {state.menu_selected === "published" && (
+              <div className="text-2xl mt-4 font-medium">
+                <FilteringTable
+                  dataList={formsDataList.filter(
+                    (item) => item.form_status === "Published"
+                  )}
+                  navigateFunc={() => {}}
+                  columns={COLUMN_PUBLISHED}
+                />
+              </div>
+            )}
+            {state.menu_selected === "unpublished" && (
+              <div className="text-2xl mt-4 font-medium">
+                <FilteringTable
+                  dataList={formsDataList.filter(
+                    (item) => item.form_status === "Unpublished"
+                  )}
+                  navigateFunc={() => {}}
+                  columns={COLUMN_UNPUBLISHED}
+                />
+              </div>
+            )}
           </div>
         </div>
-        {state.menu_selected === "create_new" && (
-          <div className="flex flex-col gap-4">
-            <Card moreClass="flex h-[50vh]">
-              <div className="flex flex-col gap-4 m-auto items-center">
-                <div className="font-semibold text-xl">
-                  Click on the button to a create a form
-                </div>
-                <Button
-                  moreClass="text-white w-3/5"
-                  text="Upload ODK"
-                  onClick={() => navigation("/manage-forms/create-form")}
-                />
-                {/* Or
-                            <Button moreClass="text-white w-3/5" text="Configure Manually" /> */}
-              </div>
-            </Card>
-          </div>
-        )}
-        {state.menu_selected === "draft" && (
-          <div className="text-2xl mt-4 font-medium">
-            <FilteringTable
-              dataList={formsDataList.filter(
-                (item) => item.form_status === "Draft"
-              )}
-              navigateFunc={() => {}}
-              columns={COLUMN_DRAFTS}
-            />
-          </div>
-        )}
-        {state.menu_selected === "published" && (
-          <div className="text-2xl mt-4 font-medium">
-            <FilteringTable
-              dataList={formsDataList.filter(
-                (item) => item.form_status === "Published"
-              )}
-              navigateFunc={() => {}}
-              columns={COLUMN_PUBLISHED}
-            />
-          </div>
-        )}
-        {state.menu_selected === "unpublished" && (
-          <div className="text-2xl mt-4 font-medium">
-            <FilteringTable
-              dataList={formsDataList.filter(
-                (item) => item.form_status === "Unpublished"
-              )}
-              navigateFunc={() => {}}
-              columns={COLUMN_UNPUBLISHED}
-            />
-          </div>
-        )}
       </div>
     </>
   );

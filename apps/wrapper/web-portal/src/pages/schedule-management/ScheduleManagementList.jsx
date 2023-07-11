@@ -88,11 +88,9 @@ const ScheduleManagementList = () => {
   ];
 
   const fetchAllAssessmentSchedule = async () => {
-    // const formData = new FormData();
-    // formData.append("offsetNo", Number(0));
-    // formData.append("limit", Number(10));
+    const pagination = {offsetNo:0,limit:10}
     try {
-      const res = await getAssessmentSchedule();
+      const res = await getAssessmentSchedule(pagination);
       setAssessmentScheduleList(res?.data?.assessment_schedule);
       const data = res?.data?.assessment_schedule;
       setScheduleTableList(
@@ -102,10 +100,16 @@ const ScheduleManagementList = () => {
           parent_center_code: "-",
           child_center_code: "-",
           institute_name: e?.institute?.name,
-          type: '-',
+          type: "-",
           assessment_date: e?.date,
           assessor_id: e?.assessor_code,
-          status: new Date(e?.date)> new Date()?"Scheduled":new Date(e?.date)<new Date() && e?.institute?.form_submissions.length?"Completed":"Closed",
+          status:
+            new Date(e?.date) > new Date()
+              ? "Scheduled"
+              : new Date(e?.date) < new Date() &&
+                e?.institute?.form_submissions.length
+              ? "Completed"
+              : "Closed",
           more_actions: (
             <div className="flex flex-row text-2xl font-semibold">
               <button
@@ -167,13 +171,16 @@ const ScheduleManagementList = () => {
           </div>
         </div>
       </div>
-      <div className="flex flex-row items-center">
-        <div className="text-2xl w-full mt-4 font-medium">
-          <FilteringTable
-            dataList={scheduleTableList}
-            columns={COLUMNS}
-            navigateFunc={() => {}}
-          />
+      <div className="flex flex-col">
+        <div className="text-sm font-medium text-center text-gray-500 border-b border-gray-200 dark:text-gray-400 dark:border-gray-700">
+          <div className="text-2xl w-full mt-4 font-medium">
+            <FilteringTable
+              dataList={scheduleTableList}
+              columns={COLUMNS}
+              navigateFunc={() => {}}
+              filterApiCall={fetchAllAssessmentSchedule}
+            />
+          </div>
         </div>
       </div>
     </>

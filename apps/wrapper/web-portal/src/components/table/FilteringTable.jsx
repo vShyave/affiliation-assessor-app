@@ -78,7 +78,7 @@ const FilteringTable = (props) => {
 
   return (
     <>
-      <GlobalFilter filter={globalFilter} setFilter={setGlobalFilter} />
+      <GlobalFilter filter={globalFilter} setFilter={setGlobalFilter} filterApiCall={props.filterApiCall} />
       <div className="overflow-x-auto">
         <table
           {...getTableProps()}
@@ -162,7 +162,8 @@ const FilteringTable = (props) => {
           >
             Previous
           </button>
-          <span className="font-medium">
+          {/* Uncomment this for Go To PageNumber */}
+          {/* <span className="font-medium">
             Go to page:{" "}
             <input
               className="rounded-md border-0 p-2 w-[70px] h-[40px] text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
@@ -175,7 +176,7 @@ const FilteringTable = (props) => {
                 gotoPage(pageNumber);
               }}
             />
-          </span>
+          </span> */}
 
           <select
             className="border text-gray-300 p-2 bg-blue-700 w-[140px] h-[40px] font-medium rounded-[4px]"

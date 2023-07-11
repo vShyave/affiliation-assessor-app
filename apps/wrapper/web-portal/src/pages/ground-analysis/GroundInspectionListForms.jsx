@@ -98,8 +98,9 @@ export default function OnGroundInspectionAnalysis() {
   }, []);
 
   const fetchOnGroundAssessorData = async () => {
+    const pagination = {offsetNo:0,limit:10}
     try {
-      const res = await getOnGroundAssessorData();
+      const res = await getOnGroundAssessorData(pagination);
       setFormsList(res?.data?.form_submissions);
     } catch (error) {
       console.log("error - ", error);

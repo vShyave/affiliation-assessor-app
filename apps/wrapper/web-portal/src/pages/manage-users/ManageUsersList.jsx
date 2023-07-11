@@ -26,6 +26,11 @@ export default function ManageUsersList({
   const [usersList, setUsersList] = useState();
   const [userTableList, setUserTableList] = useState([]);
   const [isOpen, setIsOpen] = useState(false);
+  const [paginationInfo, setPaginationInfo] = useState({
+    offsetNo: 0,
+    limit: 10,
+    totalCount: 0,
+  });
 
   const COLUMNS = [
     {
@@ -79,8 +84,13 @@ export default function ManageUsersList({
   };
 
   const fetchAllUsers = async () => {
+    const pagination = { offsetNo: paginationInfo.offsetNo, limit: paginationInfo.limit };
     try {
-      const res = await getAllUsers();
+      const res = await getAllUsers(pagination);
+      setPaginationInfo((prevState) => ({
+        ...prevState,
+        totalCount: res.data.assessors_aggregate.aggregate.totalCount,
+      }));
       setUsersList(res?.data?.assessors);
       const data = res?.data?.assessors;
       data.forEach((e) => {
@@ -135,9 +145,9 @@ export default function ManageUsersList({
     }
   };
 
-  useEffect(() => {
-    fetchAllUsers();
-  }, []);
+  useEffect(()=>{
+    fetchAllUsers()
+  },[paginationInfo.offsetNo,paginationInfo.limit])
 
   return (
     <>
@@ -167,14 +177,18 @@ export default function ManageUsersList({
             </span>
           </div>
         </div>
-        <div className="flex flex-row items-center">
-          <div className="text-2xl w-full mt-4 font-medium">
-            <FilteringTable
-              dataList={userTableList}
-              columns={COLUMNS}
-              navigateFunc={() => {}}
-              showCheckbox={true}
-            />
+        <div className="flex flex-col">
+          <div className="text-sm font-medium text-center text-gray-500 border-b border-gray-200 dark:text-gray-400 dark:border-gray-700">
+            <div className="text-2xl w-full mt-4 font-medium">
+              <FilteringTable
+                dataList={userTableList}
+                columns={COLUMNS}
+                navigateFunc={() => {}}
+                showCheckbox={true}
+                paginationInfo={paginationInfo}
+                setPaginationInfo={setPaginationInfo}
+              />
+            </div>
           </div>
         </div>
       </div>
