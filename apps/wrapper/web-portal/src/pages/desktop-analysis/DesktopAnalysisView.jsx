@@ -18,11 +18,11 @@ const ENKETO_URL = process.env.REACT_APP_ENKETO_URL;
 export default function DesktopAnalysisView() {
   // const [rejectModel, setRejectModel] = useState(false)
   // const [openModel, setOpenModel] = useState(false);
-  const [openScheduleInspectionModel, setOpenSheduleInspectionModel] =
-    useState(false);
+  const [openScheduleInspectionModel, setOpenSheduleInspectionModel] = useState(false);
   const [encodedFormURI, setEncodedFormURI] = useState("");
   let { formName, formId } = useParams();
   const [formDataFromApi, setFormDataFromApi] = useState();
+  // const[]
 
   const [toast, setToast] = useState({
     toastOpen: false,
@@ -55,6 +55,8 @@ export default function DesktopAnalysisView() {
     const postData = { form_id: formId };
     const res = await getFormData(postData);
     const formData = res.data.form_submissions[0];
+    //  setindividualFormName(res.data.form.form_name)
+    // console.log("formData",formData.form_name)
     setFormDataFromApi(res.data.form_submissions[0])
     let formURI = await getPrefillXML(
       `${formData?.form_name}`,
@@ -140,6 +142,7 @@ export default function DesktopAnalysisView() {
           closeSchedule={setOpenSheduleInspectionModel}
           setToast={setToast}
           instituteId={formDataFromApi?.institute?.id}
+          instituteName = {formDataFromApi?.form_name}
         />
       )}
     </>

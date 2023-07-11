@@ -146,3 +146,10 @@ export const getDesktopAnalysisForms = async () => {
   const res = await adminCustomPost.get(API_URL.desktopAnalysis.getDesktopAnalysisForms);
   return res;
 };
+
+export const getAllTheCourses = async (postData) => {
+  const res = await adminCustomPost.post(
+    API_URL.desktopAnalysis.getAllCourses,
+    postData);
+    return res;
+};
