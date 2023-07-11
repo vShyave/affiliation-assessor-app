@@ -33,7 +33,8 @@ const API_URL = {
 desktopAnalysis:{
     getUsersForSchedulingAssessment:`${rest}getUsersForSchedulingAssessment`,
     scheduleAssessment: `${rest}scheduleAssessment`,
-    getDesktopAnalysisForms: `${rest}getDesktopAnalysis`
+    getDesktopAnalysisForms: `${rest}getDesktopAnalysis`,
+    getAllCourses : `${rest}getAllCourses`
   },
   scheduleManagement:{
     getAssessmentSchedule: `${rest}getAssessmentSchedule`

@@ -1,4 +1,4 @@
-import React, {  useState } from "react";
+import React, {  useState, useEffect } from "react";
 
 import Calendar from "react-calendar";
 import Select from "react-select";
@@ -9,9 +9,11 @@ import { formatDate, getInitials } from "../../utils/common";
 
 import {
   getUsersForScheduling,
+  getAllTheCourses,
   getScheduleAssessment,
   // getDesktopAnalysisForms,
 } from "../../api";
+import DesktopAnalysisView from "./DesktopAnalysisView";
 
 import { Label, Button } from "../../components";
 
@@ -20,9 +22,8 @@ import { GrDocumentPdf } from "react-icons/gr";
 import { AiOutlineClose } from "react-icons/ai";
 
 // import Toast from "../../components/Toast";
-import MultiSelect from "./SelectMultiple";
 
-function ScheduleInspectionModal({ closeSchedule, setToast, instituteId }) {
+function ScheduleInspectionModal({ closeSchedule, setToast, instituteId , instituteName}) {
   // const [formStatus, setFormStatus] = useState({});
   const [initialDivision, setInitialDivision] = useState(false);
   const [initialAssessorFirstDivision, setInitialAssessorFirstDivision] =
@@ -46,7 +47,50 @@ function ScheduleInspectionModal({ closeSchedule, setToast, instituteId }) {
     useState("");
 
   const [assessorList, setAssessorList] = useState([]);
+  const [formList, setFormList] = useState([]);
+  const [formName, setFormName] = useState("");
+  const [formpayload, setFormPayload] = useState({});
+  const [formList1, setFormList1] = useState([]);
+  const [secondFormName, setSecondFormName] = useState("");
+  const [thirdFormName, setThirdFormName] = useState("");
+
+
+
+
+
   let [assistingAssessorList1, setAssistingAssessorList1] = useState([{}]);
+
+
+  useEffect(() => {
+    getTheCourses();
+  }, []);
+
+  const handleOnFormSelect = (e) => {
+    console.log("e",e)
+    setFormName((prevState) => ({ ...prevState, formCode: e[0].label }));
+    setFormPayload((prevState) => ({ ...prevState, formCode: e[0].value }));
+    console.log("formName", formName)
+    console.log("formpayload", formpayload)
+
+    setFormList1(
+      formList.filter((el) => {
+        return el.label !== e.label;
+      })
+    );
+  };
+   const handleOnSecondFormSelect = (e) => {
+    setSecondFormName((prevState) => ({
+      ...prevState,
+      formCode: e[0]?.label,
+    }));
+    setThirdFormName((prevState) => ({
+      ...prevState,
+      formCode: e[1]?.label,
+    }));
+
+    setPayload((prevState) => ({ ...prevState, formCode: e.value }));
+  };
+
 
   const handleOnAssessorSelect = (e) => {
     setAssessorName((prevState) => ({ ...prevState, assessorCode: e.label }));
@@ -78,6 +122,7 @@ function ScheduleInspectionModal({ closeSchedule, setToast, instituteId }) {
     setPayload((prevState) => ({ ...prevState, date: tempDate }));
     const postData = { todayDate: tempDate };
     const res = await getUsersForScheduling(postData);
+    console.log("resone",res)
     setAssessorList(
       res?.data?.assessors.map((item) => ({
         value: item.code,
@@ -87,8 +132,25 @@ function ScheduleInspectionModal({ closeSchedule, setToast, instituteId }) {
     );
   };
 
+
+
+  const getTheCourses = async () => {
+    // let courseApplied = {"course_applied" : instituteName};
+    let courseApplied = {"course_applied" : "Paramedical"};
+
+    const res = await getAllTheCourses(courseApplied);
+    console.log("res",res)
+    setFormList(
+      res?.data?.courses?.map((item) => ({
+        value: item.course_level,
+        label: item.course_name
+      }))
+    );
+  };
+
   const handleScheduleAssessment = async () => {
     const formData = new FormData();
+    console.log(formData)
 
     formData.append("instituteId", instituteId);
 
@@ -157,13 +219,16 @@ function ScheduleInspectionModal({ closeSchedule, setToast, instituteId }) {
     }
   };
 
+
+  
+
   return (
     <>
       <div className="flex flex-col justify-center  items-center fixed inset-0 bg-opacity-25 z-10 backdrop-blur-sm">
         <div className="flex bg-white rounded-xl shadow-xl border border-gray-400 w-[1024px] h-fit p-8">
           <div className="flex flex-col justify-between gap-4 w-full">
             <div className="w-1/3 mx-auto ">
-              <Stepper
+              <Stepper 
                 activeStep={activeStep}
                 isLastStep={(value) => setIsLastStep(value)}
                 isFirstStep={(value) => setIsFirstStep(value)}
@@ -354,7 +419,7 @@ function ScheduleInspectionModal({ closeSchedule, setToast, instituteId }) {
 
             {activeStep === 1 && (
               <>
-                <div className="flex text-2xl font-semibold">
+                <div className="flex text-2xl font-semibold overflow-y-auto ">
                   <h1>Select the applications</h1>
                 </div>
 
@@ -362,59 +427,51 @@ function ScheduleInspectionModal({ closeSchedule, setToast, instituteId }) {
                   <div className="flex flex-col gap-12 w-full">
                     <div className="flex flex-col rounded-xl border border-gray-300 h-1/3 p-4">
                       <Label
-                        htmlFor={"assessor_name"}
+                        htmlFor={"institute_name"}
                         required
                         text="Form filled by the institute"
                         moreClass="block mb-2 text-lg font-semibold text-gray-900 dark:text-gray-400"
-                      ></Label>
+                      > </Label>
 
                       <div className="bg-gray-100  items-center flex gap-4 border border-gray-100 rounded-xl mt-4">
                         <span className="font-semibold p-2">
-                          Application name
+                        {instituteName}
                         </span>
                       </div>
                     </div>
                     <div className="flex flex-col gap-4 rounded-xl border border-gray-300 h-3/4 p-2">
                       <Label
-                        htmlFor={"assessor_name"}
+                        htmlFor={"form_name"}
                         required
                         text="Select other available forms"
                         moreClass="block mb-2 text-lg font-semibold text-gray-900 dark:text-gray-400"
                       ></Label>
 
-                      <span className="flex flex-row ">
-                        <MultiSelect className="w-full" />
-                        {/* <select
-                         isMulti
-                          key={"assessor_name"}
-                          name="assessor_name"
-                          label="Assessor Name"
-                          onChange={handleOnAssessorSelect}
-                          className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                        > */}
-                        {/* <Option value='' >Select Assessor</Option> */}
+                      {/* <span className="flex flex-row "> */}
 
-                        {/* <option value="">Select here</option>
-
-                          {assessorList &&
-                            assessorList.map((item) => (
-                              <option key={item.user_id} value={item.code}>
-                                {item.name}
-                              </option>
-                            ))}
-                        </select> */}
+                      <span className="flex flex-row gap-2">
+                        <Select
+                          isMulti
+                          key={"form_name"}
+                          name="form_name"
+                          label="Form Name"
+                          onChange={handleOnSecondFormSelect}
+                          options={formList}
+                          className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-1 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                        />
                       </span>
+                      
                       <div className="flex gap-2 items-center bg-gray-100 border border-gray-100 rounded-xl p-1 mt-2">
-                        <span className=" w-[36px] h-3/4 items-center inline-fle justify-center gap-x-1.5 rounded-md px-2 py-2 text-sm font-semibold text-white-500 shadow-sm hover:bg-green-400">
+                        <span className= "w-[36px] h-3/4 items-center inline-fle justify-center gap-x-1.5 rounded-md px-2 py-2 text-sm font-semibold text-white-500 shadow-sm hover:bg-green-400" >
                           <GrDocumentPdf />
                         </span>
-                        <span className="font-semibold p-2">Form name 1</span>
+                        <span className="font-semibold p-2">{secondFormName.formCode}</span>
                       </div>
                       <div className="flex gap-2 items-center mb-4 bg-gray-100 border border-gray-100 rounded-xl p-1 mt-2">
                         <span className=" w-[36px] h-3/4 items-center  inline-flex justify-center gap-x-1.5 rounded-md px-2 py-2 text-sm font-semibold text-white-500 shadow-sm hover:bg-green-400">
                           <GrDocumentPdf />
                         </span>
-                        <span className="font-semibold p-2">Form name 3</span>
+                        <span className="font-semibold p-2">{thirdFormName.formCode}</span>
                       </div>
                     </div>
                   </div>
@@ -428,7 +485,7 @@ function ScheduleInspectionModal({ closeSchedule, setToast, instituteId }) {
                 disabled={isFirstStep}
                 moreClass={`${
                   activeStep === 1
-                    ? "border border-blue-500 bg-blue-400 text-white w-1/6"
+                    ? "border border-blue-900 text-white w-1/6"
                     : "invisible"
                 }`}
                 text="Previous"
@@ -436,10 +493,10 @@ function ScheduleInspectionModal({ closeSchedule, setToast, instituteId }) {
               <button
                 onClick={handleScheduleAssessment}
                 className={`${
-                  Object.keys(payload).length === 2 && activeStep === 1
-                    ? "bg-blue-400  text-white"
+                  activeStep === 1
+                    ? "bg-blue-900  text-white"
                     : "invisible "
-                } border border-blue-400 w-[200px] h-[50px] p-2 font-medium rounded-[2px] `}
+                } border border-blue-900 w-[160px] h-[50px] p-2 font-medium rounded-[2px] `}
                 disabled={!Object.keys(payload).length === 2 ? true : false}
               >
                 Submit
