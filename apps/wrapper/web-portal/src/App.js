@@ -30,7 +30,10 @@ import ScheduleManagementList from "./pages/schedule-management/ScheduleManageme
 import ManageUser from "./pages/manage-users/ManageUser";
 import DesktopAnalysis from "./pages/desktop-analysis/DesktopAnalysis";
 import PrivateRoute from "./routes/PrivateRoute";
-
+import ScheduleManagement from "./pages/schedule-management/ScheduleManagement";
+import ScheduledUploadForm from "./pages/schedule-management/ScheduledUploadForm";
+import Notification from "./pages/notifications/Notification";
+import NotificationsDetailedView from "./pages/notifications/NotificationsDetailedView";
 
 function App() {
   return (
@@ -64,9 +67,9 @@ function App() {
           <Route
             path={ADMIN_ROUTE_MAP.adminModule.dashboard}
             element={
-            // <PrivateRoute>
-            <DashboardLandingPage />
-            //  </PrivateRoute>
+            //  <PrivateRoute>
+             <DashboardLandingPage />
+             /* </PrivateRoute>  */
           }
           >
             <Route
@@ -80,6 +83,16 @@ function App() {
               ></Route>
             </Route>
 
+            {/* Notifications routing starts here */}
+            <Route
+              path={ADMIN_ROUTE_MAP.adminModule.notifications.home}
+              element={<Notification />}
+            >
+            <Route
+              index
+              element={<NotificationsDetailedView />}
+            ></Route>
+            </Route>
             {/*Manage forms routing starts here */}
             <Route
               path={ADMIN_ROUTE_MAP.adminModule.manageForms.home}
@@ -125,10 +138,20 @@ function App() {
               path={ADMIN_ROUTE_MAP.adminModule.certificateManagement.list}
               element={<CertificateManagementList />}
             ></Route>
+
             <Route
-              path={ADMIN_ROUTE_MAP.adminModule.scheduleManagement.list}
+              path={ADMIN_ROUTE_MAP.adminModule.scheduleManagement.home}
+              element={<ScheduleManagement />}
+            >
+            <Route
+              index
               element={<ScheduleManagementList />}
             ></Route>
+            <Route
+                path={ADMIN_ROUTE_MAP.adminModule.scheduleManagement.uploadForm}
+                element={<ScheduledUploadForm />}
+              ></Route>
+            </Route>
           </Route>
         </Routes>
       </BrowserRouter>

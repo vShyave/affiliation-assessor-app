@@ -4,32 +4,48 @@ import "./Header.css";
 
 import { AiFillHome } from "react-icons/ai";
 
-import { getCookie, getInitials, removeCookie } from "../utils/common";
+import { getCookie, removeCookie, getInitials } from "../utils/common";
 import ADMIN_ROUTE_MAP from "../routes/adminRouteMap";
+import Overlay from "../pages/notifications/Overlay";
 
 export default function Header() {
-  const [userInfoChars, setUserInfoChars] = useState("");
   const [showProfileDropdown, setShowProfileDropdown] = useState(false);
+  const [showButtons, setshowButtons] = useState(false);
   const navigate = useNavigate();
+  const regulator = getCookie("regulator");
+  const instituteData = getCookie("institutes");
+
   const logout = () => {
     removeCookie("userData");
-    removeCookie("regulator");
+    removeCookie("institutes");
     navigate(ADMIN_ROUTE_MAP.loginModule.login);
   };
 
   useEffect(() => {
-    const isAuthenticated = getCookie("regulator");
-    if (isAuthenticated);
-    const name = isAuthenticated ? isAuthenticated[0].full_name: "Test Admin";
-    if (!name) return;
-    const firstName = name.split(" ")[0].charAt(0).toUpperCase();
-    const lastName = name
-      .split(" ")
-      [name.split(" ").length - 1].charAt(0)
-      .toUpperCase();
-    const chars = firstName + lastName;
-    setUserInfoChars(chars);
-  }, []);
+    if (instituteData != null) {
+      setshowButtons(true);
+    }
+  }, [instituteData]);
+  // const [toggle, setToggle] = useState(false);
+  // const [userInfoChars, setUserInfoChars] = useState("");
+  // const [showProfileDropdown, setShowProfileDropdown] = useState(false);
+  // const navigate = useNavigate();
+  // const logout = () => {
+  //   removeCookie("userData");
+  //   removeCookie("regulator");
+  //   navigate(ADMIN_ROUTE_MAP.loginModule.login);
+  // };
+
+  // useEffect(() => {
+  //   const isAuthenticated = getCookie("regulator");
+  //   console.log( "value" , isAuthenticated)
+  //   // if (isAuthenticated) {
+  //   // const name = isAuthenticated ? isAuthenticated[0]?.full_name : "akansh dhyani"
+  //   // const firstName = (name.split(" ")[0].charAt(0).toUpperCase())
+  //   //     const lastName = (name.split(" ")[name.split(" ").length-1].charAt(0).toUpperCase())
+  //   //     const chars = firstName + lastName;
+  //   //     setUserInfoChars(chars)}
+  // }, []);
 
   return (
     <>
@@ -40,7 +56,8 @@ export default function Header() {
               <div className="flex grow">
                 <img src="/images/upsmf.png" alt="logo" className="h-[84px]" />
               </div>
-              <div className="relative inline-block text-left">
+              <div className="relative inline-block text-left flex gap-12 items-center">
+                <Overlay className="text-3xl text-gray-500" />
                 <div>
                   <button
                     type="button"
@@ -52,8 +69,9 @@ export default function Header() {
                       setShowProfileDropdown(!showProfileDropdown);
                     }}
                   >
-                    {userInfoChars}
+                    {/* {getInitials(regulator[0].full_name)}  */}
                   </button>
+
                   {showProfileDropdown && (
                     <div
                       className="absolute right-0 z-10 mt-2 w-56 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
@@ -126,7 +144,7 @@ export default function Header() {
                 </li>
                 <li className="flex hover:text-primary-600 hover:cursor-pointer">
                   <NavLink
-                    to={ADMIN_ROUTE_MAP.adminModule.scheduleManagement.list}
+                    to={ADMIN_ROUTE_MAP.adminModule.scheduleManagement.home}
                   >
                     Schedule Management
                   </NavLink>

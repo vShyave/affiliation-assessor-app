@@ -22,7 +22,8 @@ const API_URL = {
     createForm: `${rest}createForm`,
     publishForms: `${rest}publishForms`,
     unpublishForms: `${rest}unpublishForms`,
-    viewForm: `${rest}viewForm`
+    viewForm: `${rest}viewForm`,
+    deleteForm: `${rest}deleteForm`
   },
   manageUsers: {
     userList: `${rest}getAllUsers`,
@@ -32,7 +33,11 @@ const API_URL = {
 desktopAnalysis:{
     getUsersForSchedulingAssessment:`${rest}getUsersForSchedulingAssessment`,
     scheduleAssessment: `${rest}scheduleAssessment`,
-    getDesktopAnalysisForms: `${rest}getDesktopAnalysis`
+    getDesktopAnalysisForms: `${rest}getDesktopAnalysis`,
+    getAllCourses : `${rest}getAllCourses`
+  },
+  scheduleManagement:{
+    getAssessmentSchedule: `${rest}getAssessmentSchedule`
   },
   SIGNUP: {
     FUSION_AUTH_REGISTRATION: "user/registration",
@@ -41,6 +46,12 @@ desktopAnalysis:{
     OTP_SEND: "user/otpSend",
     OTP_VERIFY: "user/otpVerify",
     USERLOGIN: "login",
+  },
+  NOTIFICATION: {
+    SEND_SMS: "",
+    SEND_EMAIL: "",
+    SAVE: "",
+    GET: "",
   },
 };
 

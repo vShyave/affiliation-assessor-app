@@ -32,7 +32,7 @@ const UpcomingMedicalAssessments = () => {
       }
     } catch(error) {
       console.log('error - ', error);
-      alert(error);
+      console.debug(error)
     }
   };
 

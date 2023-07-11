@@ -70,10 +70,22 @@ const Header = () => {
                       aria-labelledby="menu-button"
                       tabIndex="-1"
                     >
-                      <div class="py-1" role="none">
+                      <div className="py-1" role="none">
+                        <Link to={APPLICANT_ROUTE_MAP.dashboardModule.profile}>
+                      <button
+                          type="button"
+                          className="text-gray-700 font-semibold block w-full px-4 py-2 text-left text-sm"
+                          role="menuitem"
+                          tabIndex="-1"
+                          id="menu-item-3"
+                        >
+                          My Profile
+                        </button>
+                        </Link>
+                        <hr />
                         <button
                           type="button"
-                          className="text-gray-700 block w-full px-4 py-2 text-left text-sm"
+                          className="text-gray-700 font-semibold block w-full px-4 py-2 text-left text-sm"
                           role="menuitem"
                           tabIndex="-1"
                           id="menu-item-3"
