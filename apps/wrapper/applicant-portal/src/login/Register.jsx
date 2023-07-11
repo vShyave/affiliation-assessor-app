@@ -31,7 +31,7 @@ export default function SelfRegistration() {
       courseType,
       email,
       mobilePhone,
-    } = data;
+    } = data;   
     let userDetails = {
       registration: {
         applicationId: process.env.REACT_APP_APPLICATION_ID,
