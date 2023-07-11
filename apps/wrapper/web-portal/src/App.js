@@ -145,7 +145,6 @@ function App() {
             >
             <Route
               index
-              path={ADMIN_ROUTE_MAP.adminModule.scheduleManagement.list}
               element={<ScheduleManagementList />}
             ></Route>
             <Route

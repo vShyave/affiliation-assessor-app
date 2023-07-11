@@ -20,8 +20,8 @@ export const getFormData = async (postData) => {
   return res;
 };
 
-export const getOnGroundAssessorData = async () => {
-  const res = await adminCustomPost.get(API_URL.groundAnalysis.list);
+export const getOnGroundAssessorData = async (postData) => {
+  const res = await adminCustomPost.post(API_URL.groundAnalysis.list,postData);
   return res;
 };
 
@@ -37,13 +37,6 @@ export const getRejectApplicant = async (postData) => {
   const res = await adminCustomPost.post(
     API_URL.groundAnalysis.rejectApplicant,
     postData
-  );
-  return res;
-};
-
-export const getOnGroundInspectionAnalysis = async () => {
-  const res = await adminCustomPost.get(
-    API_URL.groundInspectionAnalysis.getGroundInspectionAnalysis
   );
   return res;
 };
@@ -81,8 +74,8 @@ export const createForm = async (postData) => {
   return res;
 };
 
-export const getForms = async () => {
-  const res = await adminCustomPost.get(API_URL.manageForms.getForms);
+export const getForms = async (postData) => {
+  const res = await adminCustomPost.post(API_URL.manageForms.getForms,postData);
   return res;
 };
 
@@ -116,8 +109,8 @@ export const deleteForm = async (postData) => {
 };
 
 // Manage users API's...
-export const getAllUsers = async () => {
-  const res = await adminCustomPost.get(API_URL.manageUsers.userList);
+export const getAllUsers = async (postData) => {
+  const res = await adminCustomPost.post(API_URL.manageUsers.userList,postData);
   return res;
 };
 
@@ -145,10 +138,11 @@ export const getScheduleAssessment = async (postData) => {
   return res;
 };
 
-export const getDesktopAnalysisForms = async () => {
-  const res = await adminCustomPost.get(
-    API_URL.desktopAnalysis.getDesktopAnalysisForms
-  );
+
+export const getDesktopAnalysisForms = async (postData) => {
+  const res = await adminCustomPost.post(
+    API_URL.desktopAnalysis.getDesktopAnalysisForms,postData
+);
   return res;
 };
 
@@ -160,10 +154,19 @@ export const getAllTheCourses = async (postData) => {
   return res;
 };
 
+//Schedule Management APIs...
+export const getAssessmentSchedule = async (postData) => {
+  const res = await adminCustomPost.post(
+    API_URL.scheduleManagement.getAssessmentSchedule,
+    postData
+  );
+  return res;
+};
+
 // Bulk create users
 export const createUsers = async (postData) => {
   const res = await adminCustomPost.post(
-    API_URL.manageUsers.deleteUsers,
+    API_URL.manageUsers.addUsers,
     postData
   );
   return res;

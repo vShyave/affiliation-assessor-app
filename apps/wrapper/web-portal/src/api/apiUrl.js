@@ -36,6 +36,9 @@ desktopAnalysis:{
     getDesktopAnalysisForms: `${rest}getDesktopAnalysis`,
     getAllCourses : `${rest}getAllCourses`
   },
+  scheduleManagement:{
+    getAssessmentSchedule: `${rest}getAssessmentSchedule`
+  },
   SIGNUP: {
     FUSION_AUTH_REGISTRATION: "user/registration",
   },

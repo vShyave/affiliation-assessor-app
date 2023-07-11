@@ -7,11 +7,10 @@ import {
   useRowSelect,
 } from "react-table";
 // import { Checkbox } from "./Checkbox";
-import { AiOutlineArrowUp, AiOutlineArrowDown, AiFillExclamationCircle } from "react-icons/ai";
-
 import { Checkbox } from "@material-tailwind/react";
 import GlobalFilter from "./GlobalFilter";
 
+import { AiOutlineArrowUp, AiOutlineArrowDown,AiFillExclamationCircle  } from "react-icons/ai";
 
 const FilteringTable = (props) => {
   let array = [];
@@ -52,21 +51,21 @@ const FilteringTable = (props) => {
                 <Checkbox {...getToggleAllRowsSelectedProps()} />
               ),
               Cell: ({ row }) => {
-              //  console.log(row)
-              /*   if (props.invalidRow === "true") {
-                  return(
-                   <AiFillExclamationCircle className="text-red-400 text-2xl" />
-                )
-                }
-                else {
+                //  console.log(row)
+                /*   if (props.invalidRow === "true") {
+                    return(
+                     <AiFillExclamationCircle className="text-red-400 text-2xl" />
+                  )
+                  }
+                  else {
+                    return (
+                      <Checkbox {...row.getToggleRowSelectedProps()} />
+                    )
+                  } */
                   return (
                     <Checkbox {...row.getToggleRowSelectedProps()} />
                   )
-                } */
-                return (
-                  <Checkbox {...row.getToggleRowSelectedProps()} />
-                )
-              }
+                }
             },
             ...columns,
           ];
@@ -76,7 +75,7 @@ const FilteringTable = (props) => {
   );
 
   const { globalFilter, pageIndex, pageSize } = state;
-/*   useEffect(() => {
+  /*   useEffect(() => {
    if(props.pagination){
       setPageSize(1000)
    }
@@ -91,15 +90,14 @@ const FilteringTable = (props) => {
       2
     );
     {
-      /*  console.log(array);
-       console.log(props) */
       props.onRowSelect(array)
+      console.log(array);
     }
   }
 
   return (
     <>
-      <GlobalFilter filter={globalFilter} setFilter={setGlobalFilter} />
+      <GlobalFilter filter={globalFilter} setFilter={setGlobalFilter} filterApiCall={props.filterApiCall} />
       <div className={`overflow-x-auto ${props.moreHeight}`} >
         <table
           {...getTableProps()}
@@ -160,58 +158,59 @@ const FilteringTable = (props) => {
           </tbody>
         </table>
       </div>
-
       { props.pagination && 
-        (<div className="flex flex-col font-normal text-[16px] py-8 gap-8">
-          <span className="font-medium flex justify-center">
-            Page{" "}
-            <strong>
-              {pageIndex + 1} of {pageOptions.length}
-            </strong>{" "}
-          </span>
-          <div className="flex justify-between ">
-            <button
-              className=""
-              onClick={() => gotoPage(0)}
-              disabled={!canPreviousPage}
-            >
-            </button>
-            <button
-              className="border text-gray-300 bg-blue-700 w-[140px] h-[40px] font-medium rounded-[4px]"
-              onClick={() => previousPage()}
-              disabled={!canPreviousPage}
-            >
-              Previous
-            </button>
-            <span className="font-medium">
-              Go to page:{" "}
-              <input
-                className="rounded-md border-0 p-2 w-[70px] h-[40px]  text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                type="text"
-                defaultValue={pageIndex + 1}
-                onChange={(e) => {
-                  const pageNumber = e.target.value
-                    ? Number(e.target.value) - 1
-                    : 0;
-                  gotoPage(pageNumber);
-                }}
-              />
-            </span>
+      <div className="flex flex-col font-normal text-[16px] py-8 gap-8">
+        <span className="font-medium flex justify-center">
+          Page{" "}
+          <strong>
+            {pageIndex + 1} of {pageOptions.length}
+          </strong>{" "}
+        </span>
+        <div className="flex justify-between ">
+          <button
+            className=""
+            onClick={() => gotoPage(0)}
+            disabled={!canPreviousPage}
+          >
+            {"<<"}
+          </button>
+          <button
+            className="border text-gray-300 bg-blue-700 w-[140px] h-[40px] font-medium rounded-[4px]"
+            onClick={() => previousPage()}
+            disabled={!canPreviousPage}
+          >
+            Previous
+          </button>
+          {/* Uncomment this for Go To PageNumber */}
+          {/* <span className="font-medium">
+            Go to page:{" "}
+            <input
+              className="rounded-md border-0 p-2 w-[70px] h-[40px] text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+              type="text"
+              defaultValue={pageIndex + 1}
+              onChange={(e) => {
+                const pageNumber = e.target.value
+                  ? Number(e.target.value) - 1
+                  : 0;
+                gotoPage(pageNumber);
+              }}
+            />
+          </span> */}
 
-            <select
-              className="border text-gray-300 p-2 bg-blue-700 w-[140px] h-[40px] font-medium rounded-[4px]"
-              value={pageSize}
-              onChange={(e) => setPageSize(Number(e.target.value))}
-            >
-              {[10, 25, 50].map((pageSize) => (
-                <option key={pageSize} value={pageSize}>
-                  Show {pageSize}
-                </option>
-              ))}
-            </select>
+          <select
+            className="border text-gray-300 p-2 bg-blue-700 w-[140px] h-[40px] font-medium rounded-[4px]"
+            value={pageSize}
+            onChange={(e) => setPageSize(Number(e.target.value))}
+          >
+            {[10, 25, 50].map((pageSize) => (
+              <option key={pageSize} value={pageSize}>
+                Show {pageSize}
+              </option>
+            ))}
+          </select>
 
-            {/* Do not remove the following comment code, need it for later */}
-            {/* <div className="w-60 bg-blue-700">
+          {/* Do not remove the following comment code, need it for later */}
+          {/* <div className="w-60 bg-blue-700">
             <Select label="Select page size">
               {
                 [10,25,50].map((pageSize) => (
@@ -222,24 +221,22 @@ const FilteringTable = (props) => {
               }
             </Select>
           </div> */}
-            <button
-              className="border text-gray-300 bg-blue-700 w-[140px] h-[40px] font-medium rounded-[4px]"
-              onClick={() => nextPage()}
-              disabled={!canNextPage}
-            >
-              Next
-            </button>
-            <button
-              onClick={() => gotoPage(pageCount - 1)}
-              disabled={!canNextPage}
-            >
-            </button>
-          </div>
-        </div>)
-      }
-
-
-
+          <button
+            className="border text-gray-300 bg-blue-700 w-[140px] h-[40px] font-medium rounded-[4px]"
+            onClick={() => nextPage()}
+            disabled={!canNextPage}
+          >
+            Next
+          </button>
+          <button
+            onClick={() => gotoPage(pageCount - 1)}
+            disabled={!canNextPage}
+          >
+            {">>"}
+          </button>
+        </div>
+      </div>
+}
     </>
   );
 };
