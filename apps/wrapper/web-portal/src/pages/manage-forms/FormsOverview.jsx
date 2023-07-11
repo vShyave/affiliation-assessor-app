@@ -518,6 +518,7 @@ const FormsOverview = () => {
               )}
               navigateFunc={() => {}}
               columns={COLUMN_DRAFTS}
+              pagination={true}
             />
           </div>
         )}
@@ -529,6 +530,7 @@ const FormsOverview = () => {
               )}
               navigateFunc={() => {}}
               columns={COLUMN_PUBLISHED}
+              pagination={true}
             />
           </div>
         )}

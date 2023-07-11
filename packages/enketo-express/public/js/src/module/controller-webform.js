@@ -313,7 +313,7 @@ function _submitRecord(survey) {
     beforeMsg = (redirect) ? t('alert.submission.redirectmsg') : '';
     authLink = `<a href="${settings.loginUrl}" target="_blank">${t('here')}</a>`;
 
-    gui.alert(`${beforeMsg}<div class="loader-animation-small" style="margin: 40px auto 0 auto;"/>`, t('alert.submission.msg'), 'bare');
+    // gui.alert(`${beforeMsg}<div class="loader-animation-small" style="margin: 40px auto 0 auto;"/>`, t('alert.submission.msg'), 'bare');
 
     return fileManager.getCurrentFiles()
         .then(files => {
@@ -392,13 +392,13 @@ function _submitRecord(survey) {
                 // msg += t( 'alert.submissionsuccess.redirectmsg' );
 
 
-                gui.alert(msg, heading, level);
+                // gui.alert(msg, heading, level);
                 setTimeout(() => {
                     location.href = decodeURIComponent(settings.returnUrl || settings.defaultReturnUrl);
                 }, 1200);
             } else {
                 //msg = ( msg.length > 0 ) ? msg : t( 'alert.submissionsuccess.msg' );
-                gui.alert(msg, heading, level);
+                // gui.alert(msg, heading, level);
                 _resetForm(survey);
             }
         })

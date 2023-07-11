@@ -26,8 +26,8 @@ function DeleteUsersModal({ closeDeleteUsersModal }) {
             </div>
             <div>
               <p className="text-base">
-                Are you sure, you want to delete the users? Once deleted, you
-                can't revert back the action.
+                Are you sure, you want to delete the user/s ? Once deleted, 
+                this action cannot be reverted.
               </p>
             </div>
             <hr />

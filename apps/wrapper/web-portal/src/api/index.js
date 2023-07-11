@@ -102,15 +102,18 @@ export const unpublishForms = async (postData) => {
 };
 
 export const viewForm = async (postData) => {
-  const res = await adminCustomPost.post(API_URL.manageForms.viewForm, postData);
+  const res = await adminCustomPost.post(
+    API_URL.manageForms.viewForm,
+    postData
+  );
   return res;
 };
 
-
 export const deleteForm = async (postData) => {
-   return await adminCustomPost.delete(API_URL.manageForms.deleteForm, { data: postData})
+  return await adminCustomPost.delete(API_URL.manageForms.deleteForm, {
+    data: postData,
+  });
 };
-
 
 // Manage users API's...
 export const getAllUsers = async () => {
@@ -143,13 +146,25 @@ export const getScheduleAssessment = async (postData) => {
 };
 
 export const getDesktopAnalysisForms = async () => {
-  const res = await adminCustomPost.get(API_URL.desktopAnalysis.getDesktopAnalysisForms);
+  const res = await adminCustomPost.get(
+    API_URL.desktopAnalysis.getDesktopAnalysisForms
+  );
   return res;
 };
 
 export const getAllTheCourses = async (postData) => {
   const res = await adminCustomPost.post(
     API_URL.desktopAnalysis.getAllCourses,
-    postData);
-    return res;
+    postData
+  );
+  return res;
+};
+
+// Bulk create users
+export const createUsers = async (postData) => {
+  const res = await adminCustomPost.post(
+    API_URL.manageUsers.deleteUsers,
+    postData
+  );
+  return res;
 };

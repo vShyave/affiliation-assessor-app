@@ -11,6 +11,7 @@ import {
   Query,
   UploadedFile,
   UseInterceptors,
+  Req
 } from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express/multer';
 import { AppService } from './app.service';
@@ -261,7 +262,7 @@ export class AppController {
 
   @Post('form/uploadFile')
   @UseInterceptors(FileInterceptor('file'))
-  async uploadFile(@UploadedFile() file: Express.Multer.File) {
+  async uploadFile(@UploadedFile() file: Express.Multer.File, @Req() req: any) {
     console.log(file);
     const extension = file.originalname.split('.').pop();
     const fileName = uuidv4() + `.${extension}`;
@@ -299,7 +300,7 @@ export class AppController {
       },
     );
 
-    const fileURL = `${this.MINIO_URL}/${this.configService.get('MINIO_BUCKETNAME')}/${fileName}`;
+    const fileURL = `${req.protocol}://${this.MINIO_URL}/${this.configService.get('MINIO_BUCKETNAME')}/${fileName}`;
 
     console.log('Uploaded File:', fileURL);
 

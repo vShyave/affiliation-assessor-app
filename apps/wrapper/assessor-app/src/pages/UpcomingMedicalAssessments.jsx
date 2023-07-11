@@ -31,8 +31,7 @@ const UpcomingMedicalAssessments = () => {
         setInspectionData([]);
       }
     } catch(error) {
-      console.log('error - ', error);
-      alert(error);
+      console.debug('error - ', error);
     }
   };
 
