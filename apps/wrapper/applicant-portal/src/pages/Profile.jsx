@@ -15,16 +15,14 @@ import { profileService } from "../services";
 
 export default function Profile() {
   const instituteData = getCookie("institutes");
-  
-  const [text,setText] = useState("Edit")
+
+  const [text, setText] = useState("Edit");
   const [formData, setFormData] = useState({
-    first_name:"",
-    last_name:"",
-    email:"",
-    phone_number:"",
-    course_type:"",
-
-
+    first_name: "",
+    last_name: "",
+    email: "",
+    phone_number: "",
+    course_type: "",
   });
   const navigate = useNavigate();
   const {
@@ -46,7 +44,7 @@ export default function Profile() {
   }, []);
 
   const handleEditProfile = async (data) => {
-    console.log("data",data)
+    console.log("data", data);
     const {
       firstName,
       lastName,
@@ -85,11 +83,26 @@ export default function Profile() {
 
     try {
       const response = await profileService.getProfileEdit(
-               instituteEditDetails
-      );
-    console.log("instituteDetails",response)
-       }
-    catch (error) {
+        instituteEditDetails,
+        
+        setToast((prevState) => ({
+          ...prevState,
+          toastOpen: true,
+          toastMsg: "User successfully edited",
+          toastType: "success",
+        })));
+        setTimeout(
+          () =>
+            setToast((prevState) => ({
+              ...prevState,
+              toastOpen: false,
+              toastMsg: "",
+              toastType: "",
+            })),
+          3000
+        )
+      
+    } catch (error) {
       setToast((prevState) => ({
         ...prevState,
         toastOpen: true,
@@ -110,9 +123,9 @@ export default function Profile() {
     }
   };
 
-  const handleChange = (data) => {
-    console.log("handlechange", data.target);
-    setFormData((prevState) => ({ ...prevState, [data.target]: data.target.value }));
+  const handleChange = (e) => {
+    console.log("handlechange", e.target);
+    setFormData((prevState) => ({ ...prevState, [e.target]: e.target.value }));
   };
 
   const getProfileDetails = async () => {
@@ -155,9 +168,6 @@ export default function Profile() {
     }
   };
 
-  const goBack = () => {
-    navigate(-1);
-  };
 
   return (
     <>
@@ -181,7 +191,6 @@ export default function Profile() {
         <div className="flex flex-col gap-4">
           <h1 className="text-xl font-semibold">My Profile</h1>
 
-          
           <form
             onSubmit={handleSubmit((data) => {
               handleEditProfile(data);
@@ -201,11 +210,10 @@ export default function Profile() {
                       <div className="mt-2">
                         <input
                           onChange={handleChange}
-                          value={formData.first_name}
+                          defaultValue={formData.first_name}
                           type="text"
                           placeholder="Type here"
                           disabled={isPreview}
-                          
                           id="first_name"
                           name="first_name"
                           className="block w-full rounded-md border-0 p-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
@@ -241,7 +249,7 @@ export default function Profile() {
                       <div className="mt-2">
                         <input
                           type="text"
-                          value={formData.last_name}
+                          defaultValue={formData.last_name}
                           disabled={isPreview}
                           onChange={handleChange}
                           placeholder="Type here"
@@ -278,7 +286,7 @@ export default function Profile() {
                       <Label htmlFor="email" text="Email Id" required></Label>
                       <div className="mt-2">
                         <input
-                          value={formData.email}
+                          defaultValue={formData.email}
                           disabled={isPreview}
                           onChange={handleChange}
                           type="email"
@@ -312,7 +320,7 @@ export default function Profile() {
                       ></Label>
                       <div className="mt-2">
                         <input
-                          value={formData.phone_number}
+                          defaultValue={formData.phone_number}
                           disabled={isPreview}
                           onChange={handleChange}
                           type="tel"
@@ -354,7 +362,7 @@ export default function Profile() {
                       ></Label>
                       <div className="mt-2">
                         <select
-                          value={formData.applicant_type}
+                          defaultValue={formData.applicant_type}
                           disabled={isPreview}
                           onChange={handleChange}
                           className="block w-full rounded-md border-0 p-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
@@ -382,7 +390,7 @@ export default function Profile() {
                       ></Label>
                       <div className="mt-2">
                         <select
-                          value={formData.course_type}
+                          defaultValue={formData.course_type}
                           disabled={isPreview}
                           onChange={handleChange}
                           className="block w-full rounded-md border-0 p-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
@@ -413,7 +421,12 @@ export default function Profile() {
                     moreClass="px-6 text-white"
                     text={text}
                     type="edit"
-                    onClick={function() {setIsPreview(false);setText("Save")} } 
+                    onClick={function () {
+                      setIsPreview(false);
+                      setText("Save");
+                      {text==="Save" && navigate(APPLICANT_ROUTE_MAP.dashboardModule.my_applications)}
+                      
+                    }}
                   ></Button>
                 </div>
               </div>
