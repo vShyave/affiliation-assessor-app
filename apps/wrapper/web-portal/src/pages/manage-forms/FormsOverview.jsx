@@ -522,6 +522,8 @@ const FormsOverview = () => {
                   navigateFunc={() => {}}
                   columns={COLUMN_DRAFTS}
                   filterApiCall={fetchFormsList}
+                  onRowSelect={()=>{}}
+                  pagination={true}
                 />
               </div>
             )}
@@ -533,6 +535,8 @@ const FormsOverview = () => {
                   )}
                   navigateFunc={() => {}}
                   columns={COLUMN_PUBLISHED}
+                  onRowSelect={()=>{}}
+                  pagination={true}
                 />
               </div>
             )}
@@ -544,6 +548,8 @@ const FormsOverview = () => {
                   )}
                   navigateFunc={() => {}}
                   columns={COLUMN_UNPUBLISHED}
+                  onRowSelect={()=>{}}
+                  pagination={true}
                 />
               </div>
             )}

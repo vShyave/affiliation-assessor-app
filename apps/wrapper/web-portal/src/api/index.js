@@ -155,3 +155,12 @@ export const getAssessmentSchedule = async (postData) => {
   );
   return res;
 };
+
+// Bulk create users
+export const createUsers = async (postData) => {
+  const res = await adminCustomPost.post(
+    API_URL.manageUsers.addUsers,
+    postData
+  );
+  return res;
+};

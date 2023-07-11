@@ -179,6 +179,8 @@ const ScheduleManagementList = () => {
               columns={COLUMNS}
               navigateFunc={() => {}}
               filterApiCall={fetchAllAssessmentSchedule}
+              onRowSelect={()=>{}}
+              pagination={true}
             />
           </div>
         </div>

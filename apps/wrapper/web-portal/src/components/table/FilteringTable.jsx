@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {
   useTable,
   useGlobalFilter,
@@ -10,7 +10,7 @@ import {
 import { Checkbox } from "@material-tailwind/react";
 import GlobalFilter from "./GlobalFilter";
 
-import { AiOutlineArrowUp, AiOutlineArrowDown } from "react-icons/ai";
+import { AiOutlineArrowUp, AiOutlineArrowDown,AiFillExclamationCircle  } from "react-icons/ai";
 
 const FilteringTable = (props) => {
   let array = [];
@@ -50,9 +50,22 @@ const FilteringTable = (props) => {
               Header: ({ getToggleAllRowsSelectedProps }) => (
                 <Checkbox {...getToggleAllRowsSelectedProps()} />
               ),
-              Cell: ({ row }) => (
-                <Checkbox {...row.getToggleRowSelectedProps()} />
-              ),
+              Cell: ({ row }) => {
+                //  console.log(row)
+                /*   if (props.invalidRow === "true") {
+                    return(
+                     <AiFillExclamationCircle className="text-red-400 text-2xl" />
+                  )
+                  }
+                  else {
+                    return (
+                      <Checkbox {...row.getToggleRowSelectedProps()} />
+                    )
+                  } */
+                  return (
+                    <Checkbox {...row.getToggleRowSelectedProps()} />
+                  )
+                }
             },
             ...columns,
           ];
@@ -62,6 +75,11 @@ const FilteringTable = (props) => {
   );
 
   const { globalFilter, pageIndex, pageSize } = state;
+  /*   useEffect(() => {
+   if(props.pagination){
+      setPageSize(1000)
+   }
+  }, [data]); */
 
   {
     array = JSON.stringify(
@@ -72,6 +90,7 @@ const FilteringTable = (props) => {
       2
     );
     {
+      props.onRowSelect(array)
       console.log(array);
     }
   }
@@ -79,7 +98,7 @@ const FilteringTable = (props) => {
   return (
     <>
       <GlobalFilter filter={globalFilter} setFilter={setGlobalFilter} filterApiCall={props.filterApiCall} />
-      <div className="overflow-x-auto">
+      <div className={`overflow-x-auto ${props.moreHeight}`} >
         <table
           {...getTableProps()}
           className="w-full text-sm text-left text-gray-500 dark:text-gray-400"
@@ -139,7 +158,7 @@ const FilteringTable = (props) => {
           </tbody>
         </table>
       </div>
-
+      { props.pagination && 
       <div className="flex flex-col font-normal text-[16px] py-8 gap-8">
         <span className="font-medium flex justify-center">
           Page{" "}
@@ -217,6 +236,7 @@ const FilteringTable = (props) => {
           </button>
         </div>
       </div>
+}
     </>
   );
 };
