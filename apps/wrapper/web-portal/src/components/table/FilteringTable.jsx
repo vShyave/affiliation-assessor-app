@@ -36,9 +36,9 @@ const FilteringTable = (props) => {
     setPageSize,
     selectedFlatRows,
   } = useTable(
-    { columns, data, initialState : {
+    { columns, data, /* initialState : {
       pageSize: 200
-    }},
+    } */},
     useGlobalFilter,
     useSortBy,
     usePagination,
@@ -78,12 +78,12 @@ const FilteringTable = (props) => {
   );
 
   const { globalFilter, pageIndex, pageSize } = state;
-  /*   useEffect(() => {
-   if(props.pagination){
+     useEffect(() => {
+   if(!props.pagination){
       setPageSize(1000)
    }
-  }, [data]); */
-
+  }, []); 
+ 
   {
     array = JSON.stringify(
       {
