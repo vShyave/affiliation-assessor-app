@@ -36,11 +36,14 @@ const FilteringTable = (props) => {
     setPageSize,
     selectedFlatRows,
   } = useTable(
-    { columns, data },
+    { columns, data, initialState : {
+      pageSize: 200
+    }},
     useGlobalFilter,
     useSortBy,
     usePagination,
     useRowSelect,
+    
     (hooks) => {
       if (props.showCheckbox) {
         hooks.visibleColumns.push((columns) => {
@@ -97,7 +100,7 @@ const FilteringTable = (props) => {
 
   return (
     <>
-      <GlobalFilter filter={globalFilter} setFilter={setGlobalFilter} filterApiCall={props.filterApiCall} />
+     {props.showFilter && <GlobalFilter filter={globalFilter} setFilter={setGlobalFilter} filterApiCall={props.filterApiCall} />} 
       <div className={`overflow-x-auto ${props.moreHeight}`} >
         <table
           {...getTableProps()}

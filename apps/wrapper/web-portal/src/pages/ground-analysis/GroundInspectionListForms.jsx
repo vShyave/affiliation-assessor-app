@@ -250,6 +250,7 @@ export default function OnGroundInspectionAnalysis() {
                   columns={COLUMN}
                   pagination={true}
                   onRowSelect={()=>{}}
+                  showFilter={true}
                 />
               </div>
             )}
@@ -263,6 +264,7 @@ export default function OnGroundInspectionAnalysis() {
                   columns={COLUMN}
                   pagination={true}
                   onRowSelect={()=>{}}
+                  showFilter={true}
                 />
               </div>
             )}
@@ -276,6 +278,7 @@ export default function OnGroundInspectionAnalysis() {
                   columns={COLUMN}
                   pagination={true}
                   onRowSelect={()=>{}}
+                  showFilter={true}
                 />
               </div>
             )}

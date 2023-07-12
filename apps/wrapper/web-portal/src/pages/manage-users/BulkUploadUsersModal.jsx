@@ -378,6 +378,7 @@ function BulkUploadUsersModal({ closeBulkUploadUsersModal }) {
                       columns={COLUMNS}
                       navigateFunc={() => {}}
                       showCheckbox={true}
+                      showFilter={false}
                       onRowSelect={selectedRows}
                     />
                   </div>
