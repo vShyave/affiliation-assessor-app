@@ -41,12 +41,10 @@ function BulkUploadUsersModal({ closeBulkUploadUsersModal }) {
     } else {
       return email.toString().length === 0 ? (
         <span className="text-red-500 mt-2 text-sm">
-          {" "}
-          - <br></br> <small>Missing Email ID</small>{" "}
+          - <br></br> <small>Missing Email ID</small>
         </span>
       ) : (
         <span className="text-red-500 mt-2 text-sm">
-          {" "}
           {email} <br></br>
           <small>Invalid Email ID</small>
         </span>
@@ -65,12 +63,10 @@ function BulkUploadUsersModal({ closeBulkUploadUsersModal }) {
     } else {
       return mobileNumber.toString().length === 0 ? (
         <span className="text-red-500 mt-2 text-sm">
-          {" "}
-          - <br></br> <small>Missing mobile number</small>{" "}
+          - <br></br> <small>Missing mobile number</small>
         </span>
       ) : (
         <span className="text-red-500 mt-2 text-sm">
-          {" "}
           {mobileNumber} <br></br>
           <small>Invalid mobile number</small>
         </span>
@@ -83,8 +79,7 @@ function BulkUploadUsersModal({ closeBulkUploadUsersModal }) {
       data
     ) : (
       <span className="text-red-500 mt-2 text-sm">
-        {" "}
-        - <br></br> <small>Missing Text</small>{" "}
+        - <br></br> <small>Missing Text</small>
       </span>
     );
   };
@@ -135,40 +130,21 @@ function BulkUploadUsersModal({ closeBulkUploadUsersModal }) {
 
       accessor: "isRowInvalid",
 
-      Cell: (row, original) => {
-        // console.log(row)
-
-        {
-          row?.flatRows.map((row1, index) => {
-            // console.log(row1.original)})}
-            /*  return (
-
-        <div style={{ background: row.original.full_name === '' ? 'green' : 'red' }}>
-
-            {row.original.full_name}
-
-          </div>
-
-        //  <AiFillExclamationCircle className="text-red-400 text-2xl" />
-
-        );
-
-      const r = isDataValid(" ")
-
-        console.log(r)
-
-          if(){
-
-
-
-
-          }
-
-        return    <AiFillExclamationCircle className="text-red-400 text-2xl" />
-
- */
-          });
-        }
+      Cell: (props) => {
+      const expr =  /[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$/;
+      const expr2 =  /^(0|91)?[6-9][0-9]{9}$/;
+      
+       if(!expr.test(props.row.original.email.toString())||
+       !expr2.test(props.row.original.mobile_number.toString())||
+       props.row.original.full_name == "" ||
+       props.row.original.email== "" ||
+       props.row.original.mobile_number == "")
+       {
+        return <p>{"true"}</p>;
+       } else {
+        return <p>{"false"}</p>;
+       }
+        
       },
     },
   ];

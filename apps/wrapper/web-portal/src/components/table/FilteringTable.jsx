@@ -54,8 +54,8 @@ const FilteringTable = (props) => {
                 <Checkbox {...getToggleAllRowsSelectedProps()} />
               ),
               Cell: ({ row }) => {
-                //  console.log(row)
-                /*   if (props.invalidRow === "true") {
+                  console.log(row?.original?.values?.isRowInvalid)
+            /*       if (row.original.values.isRowInvalid != undefined && row.original.values.isRowInvalid === true) {
                     return(
                      <AiFillExclamationCircle className="text-red-400 text-2xl" />
                   )
@@ -64,10 +64,10 @@ const FilteringTable = (props) => {
                     return (
                       <Checkbox {...row.getToggleRowSelectedProps()} />
                     )
-                  } */
+                  }  */
                   return (
                     <Checkbox {...row.getToggleRowSelectedProps()} />
-                  )
+                  ) 
                 }
             },
             ...columns,
