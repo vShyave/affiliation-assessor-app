@@ -33,10 +33,12 @@ function BulkUploadUsersModal({ closeBulkUploadUsersModal }) {
 
   const [selectedUserList, setSelectedUserList] = useState(false);
 
+  const emailExp = /[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$/;
+  const mobNumberExp = /^(0|91)?[6-9][0-9]{9}$/;
   const isEmailValid = (email) => {
-    const reqExp = /[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$/;
 
-    if (reqExp.test(email.toString()) && email.toString().length != 0) {
+
+    if (emailExp.test(email.toString()) && email.toString().length != 0) {
       return email;
     } else {
       return email.toString().length === 0 ? (
@@ -53,10 +55,9 @@ function BulkUploadUsersModal({ closeBulkUploadUsersModal }) {
   };
 
   const ismobileNumberValid = (mobileNumber) => {
-    const expr = /^(0|91)?[6-9][0-9]{9}$/;
 
     if (
-      expr.test(parseInt(mobileNumber)) &&
+      mobNumberExp.test(parseInt(mobileNumber)) &&
       mobileNumber.toString().length != 0
     ) {
       return mobileNumber;
@@ -131,20 +132,17 @@ function BulkUploadUsersModal({ closeBulkUploadUsersModal }) {
       accessor: "isRowInvalid",
 
       Cell: (props) => {
-      const expr =  /[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$/;
-      const expr2 =  /^(0|91)?[6-9][0-9]{9}$/;
-      
-       if(!expr.test(props.row.original.email.toString())||
-       !expr2.test(props.row.original.mobile_number.toString())||
-       props.row.original.full_name == "" ||
-       props.row.original.email== "" ||
-       props.row.original.mobile_number == "")
-       {
-        return <p>{"true"}</p>;
-       } else {
-        return <p>{"false"}</p>;
-       }
-        
+
+        if (!emailExp.test(props.row.original.email.toString()) ||
+          !mobNumberExp.test(props.row.original.mobile_number.toString()) ||
+          props.row.original.full_name == "" ||
+          props.row.original.email == "" ||
+          props.row.original.mobile_number == "") {
+          return <p>{"true"}</p>;
+        } else {
+          return <p>{"false"}</p>;
+        }
+
       },
     },
   ];
@@ -213,7 +211,6 @@ function BulkUploadUsersModal({ closeBulkUploadUsersModal }) {
             }
           }
 
-          const reqExp = /[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$/;
 
           const isValidUserEntry = Object.values(rowData).every(
             (value) => !!value
@@ -225,7 +222,7 @@ function BulkUploadUsersModal({ closeBulkUploadUsersModal }) {
             i > 0 &&
             isValidUserEntry &&
             (rowData.mobile_number.toString().length < 10 ||
-              !reqExp.test(rowData.email.toString()))
+              !emailExp.test(rowData.email.toString()))
           ) {
             invalidTableUserList.push(rowData);
           } else if (!isValidUserEntry) {
@@ -306,10 +303,10 @@ function BulkUploadUsersModal({ closeBulkUploadUsersModal }) {
 
               <div className="flex flex-row m-auto">
                 {tableDataReady && (
-                    <p className="text-sm">
-                      <small>Show all users</small>
-                    </p>
-                  ) && (
+                  <p className="text-sm">
+                    <small>Show all users</small>
+                  </p>
+                ) && (
                     <Switch
                       id="show-with-errors"
                       label={<span className="text-sm">Show with errors</span>}
@@ -352,7 +349,7 @@ function BulkUploadUsersModal({ closeBulkUploadUsersModal }) {
                       pagination={false}
                       dataList={tableUserList}
                       columns={COLUMNS}
-                      navigateFunc={() => {}}
+                      navigateFunc={() => { }}
                       showCheckbox={true}
                       showFilter={false}
                       onRowSelect={selectedRows}
