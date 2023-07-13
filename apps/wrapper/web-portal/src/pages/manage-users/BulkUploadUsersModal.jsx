@@ -131,9 +131,9 @@ function BulkUploadUsersModal({ closeBulkUploadUsersModal }) {
           props.row.original.full_name == "" ||
           props.row.original.email == "" ||
           props.row.original.mobile_number == "") {
-          return <p>{"true"}</p>;
+          return true
         } else {
-          return <p>{"false"}</p>;
+          return false
         }
 
       },
