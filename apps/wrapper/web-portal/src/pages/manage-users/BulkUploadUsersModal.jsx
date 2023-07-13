@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 
 import FilteringTable from "../../components/table/FilteringTable";
 
@@ -7,12 +7,6 @@ import { Switch } from "@material-tailwind/react";
 import { Link } from "react-router-dom";
 
 import { Button } from "../../components";
-
-import {
-  AiOutlineArrowUp,
-  AiOutlineArrowDown,
-  AiFillExclamationCircle,
-} from "react-icons/ai";
 
 function BulkUploadUsersModal({ closeBulkUploadUsersModal }) {
   const [file, setFile] = useState();
@@ -33,20 +27,19 @@ function BulkUploadUsersModal({ closeBulkUploadUsersModal }) {
 
   const [selectedUserList, setSelectedUserList] = useState(false);
 
+  const emailExp = /[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$/;
+  const mobNumberExp = /^(0|91)?[6-9][0-9]{9}$/;
   const isEmailValid = (email) => {
-    const reqExp = /[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$/;
 
-    if (reqExp.test(email.toString()) && email.toString().length != 0) {
+    if (emailExp.test(email.toString()) && email.toString().length != 0) {
       return email;
     } else {
       return email.toString().length === 0 ? (
         <span className="text-red-500 mt-2 text-sm">
-          {" "}
-          - <br></br> <small>Missing Email ID</small>{" "}
+          - <br></br> <small>Missing Email ID</small>
         </span>
       ) : (
         <span className="text-red-500 mt-2 text-sm">
-          {" "}
           {email} <br></br>
           <small>Invalid Email ID</small>
         </span>
@@ -55,22 +48,19 @@ function BulkUploadUsersModal({ closeBulkUploadUsersModal }) {
   };
 
   const ismobileNumberValid = (mobileNumber) => {
-    const expr = /^(0|91)?[6-9][0-9]{9}$/;
 
     if (
-      expr.test(parseInt(mobileNumber)) &&
+      mobNumberExp.test(parseInt(mobileNumber)) &&
       mobileNumber.toString().length != 0
     ) {
       return mobileNumber;
     } else {
       return mobileNumber.toString().length === 0 ? (
         <span className="text-red-500 mt-2 text-sm">
-          {" "}
-          - <br></br> <small>Missing mobile number</small>{" "}
+          - <br></br> <small>Missing mobile number</small>
         </span>
       ) : (
         <span className="text-red-500 mt-2 text-sm">
-          {" "}
           {mobileNumber} <br></br>
           <small>Invalid mobile number</small>
         </span>
@@ -83,8 +73,7 @@ function BulkUploadUsersModal({ closeBulkUploadUsersModal }) {
       data
     ) : (
       <span className="text-red-500 mt-2 text-sm">
-        {" "}
-        - <br></br> <small>Missing Text</small>{" "}
+        - <br></br> <small>Missing Text</small>
       </span>
     );
   };
@@ -135,40 +124,18 @@ function BulkUploadUsersModal({ closeBulkUploadUsersModal }) {
 
       accessor: "isRowInvalid",
 
-      Cell: (row, original) => {
-        // console.log(row)
+      Cell: (props) => {
 
-        {
-          row?.flatRows.map((row1, index) => {
-            // console.log(row1.original)})}
-            /*  return (
-
-        <div style={{ background: row.original.full_name === '' ? 'green' : 'red' }}>
-
-            {row.original.full_name}
-
-          </div>
-
-        //  <AiFillExclamationCircle className="text-red-400 text-2xl" />
-
-        );
-
-      const r = isDataValid(" ")
-
-        console.log(r)
-
-          if(){
-
-
-
-
-          }
-
-        return    <AiFillExclamationCircle className="text-red-400 text-2xl" />
-
- */
-          });
+        if (!emailExp.test(props.row.original.email.toString()) ||
+          !mobNumberExp.test(props.row.original.mobile_number.toString()) ||
+          props.row.original.full_name == "" ||
+          props.row.original.email == "" ||
+          props.row.original.mobile_number == "") {
+          return true
+        } else {
+          return false
         }
+
       },
     },
   ];
@@ -237,7 +204,6 @@ function BulkUploadUsersModal({ closeBulkUploadUsersModal }) {
             }
           }
 
-          const reqExp = /[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$/;
 
           const isValidUserEntry = Object.values(rowData).every(
             (value) => !!value
@@ -249,7 +215,7 @@ function BulkUploadUsersModal({ closeBulkUploadUsersModal }) {
             i > 0 &&
             isValidUserEntry &&
             (rowData.mobile_number.toString().length < 10 ||
-              !reqExp.test(rowData.email.toString()))
+              !emailExp.test(rowData.email.toString()))
           ) {
             invalidTableUserList.push(rowData);
           } else if (!isValidUserEntry) {
@@ -330,10 +296,10 @@ function BulkUploadUsersModal({ closeBulkUploadUsersModal }) {
 
               <div className="flex flex-row m-auto">
                 {tableDataReady && (
-                    <p className="text-sm">
-                      <small>Show all users</small>
-                    </p>
-                  ) && (
+                  <p className="text-sm">
+                    <small>Show all users</small>
+                  </p>
+                ) && (
                     <Switch
                       id="show-with-errors"
                       label={<span className="text-sm">Show with errors</span>}
@@ -376,8 +342,9 @@ function BulkUploadUsersModal({ closeBulkUploadUsersModal }) {
                       pagination={false}
                       dataList={tableUserList}
                       columns={COLUMNS}
-                      navigateFunc={() => {}}
+                      navigateFunc={() => { }}
                       showCheckbox={true}
+                      showFilter={false}
                       onRowSelect={selectedRows}
                     />
                   </div>

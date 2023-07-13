@@ -181,6 +181,7 @@ const ScheduleManagementList = () => {
               filterApiCall={fetchAllAssessmentSchedule}
               onRowSelect={()=>{}}
               pagination={true}
+              showFilter={true}
             />
           </div>
         </div>

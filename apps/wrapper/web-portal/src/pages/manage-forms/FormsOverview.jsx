@@ -524,6 +524,7 @@ const FormsOverview = () => {
                   filterApiCall={fetchFormsList}
                   onRowSelect={()=>{}}
                   pagination={true}
+                  showFilter={true}
                 />
               </div>
             )}
@@ -537,6 +538,7 @@ const FormsOverview = () => {
                   columns={COLUMN_PUBLISHED}
                   onRowSelect={()=>{}}
                   pagination={true}
+                  showFilter={true}
                 />
               </div>
             )}
@@ -550,6 +552,7 @@ const FormsOverview = () => {
                   columns={COLUMN_UNPUBLISHED}
                   onRowSelect={()=>{}}
                   pagination={true}
+                  showFilter={true}
                 />
               </div>
             )}

@@ -257,6 +257,7 @@ const DesktopAnalysisList = () => {
                 columns={COLUMNS}
                 pagination={true}
                 onRowSelect={()=>{}}
+                showFilter={true}
               />
             </div>
           </div>
