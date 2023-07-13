@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 
 import FilteringTable from "../../components/table/FilteringTable";
 
@@ -7,12 +7,6 @@ import { Switch } from "@material-tailwind/react";
 import { Link } from "react-router-dom";
 
 import { Button } from "../../components";
-
-import {
-  AiOutlineArrowUp,
-  AiOutlineArrowDown,
-  AiFillExclamationCircle,
-} from "react-icons/ai";
 
 function BulkUploadUsersModal({ closeBulkUploadUsersModal }) {
   const [file, setFile] = useState();
@@ -36,7 +30,6 @@ function BulkUploadUsersModal({ closeBulkUploadUsersModal }) {
   const emailExp = /[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$/;
   const mobNumberExp = /^(0|91)?[6-9][0-9]{9}$/;
   const isEmailValid = (email) => {
-
 
     if (emailExp.test(email.toString()) && email.toString().length != 0) {
       return email;
