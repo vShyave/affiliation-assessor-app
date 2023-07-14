@@ -7,6 +7,7 @@ import FilteringTable from "../../components/table/FilteringTable";
 import Card from "../../components/Card";
 
 import {
+  filterDesktopAnalysis,
   getDesktopAnalysisForms,
   markReviewStatus,
 } from "../../api";
@@ -100,9 +101,19 @@ const DesktopAnalysisList = () => {
   }, []);
 
   const fetchDesktopAnalysisForms = async () => {
-    const pagination = {offsetNo:0,limit:10}
+    const pagination = { offsetNo: 0, limit: 10 };
     try {
       const res = await getDesktopAnalysisForms(pagination);
+      setFormsList(res?.data?.form_submissions);
+    } catch (error) {
+      console.log("error - ", error);
+    }
+  };
+
+  const filterApiCall = async (filters) => {
+    const postData = { offsetNo: 0, limit: 10, ...filters };
+    try {
+      const res = await filterDesktopAnalysis(postData);
       setFormsList(res?.data?.form_submissions);
     } catch (error) {
       console.log("error - ", error);
@@ -256,7 +267,8 @@ const DesktopAnalysisList = () => {
                 navigateFunc={navigateToView}
                 columns={COLUMNS}
                 pagination={true}
-                onRowSelect={()=>{}}
+                onRowSelect={() => {}}
+                filterApiCall={filterApiCall}
                 showFilter={true}
               />
             </div>

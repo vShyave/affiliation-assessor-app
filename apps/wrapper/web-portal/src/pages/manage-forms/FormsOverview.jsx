@@ -9,6 +9,7 @@ import {
   publishForms,
   unpublishForms,
   deleteForm,
+  filterForms,
 } from "../../api";
 import { getFieldName, readableDate } from "../../utils/common";
 import Toast from "../../components/Toast";
@@ -188,6 +189,16 @@ const FormsOverview = () => {
       console.log("error - ", error);
     }
   };
+
+  const filterApiCall = async (filters) => {
+    const postData = {offsetNo:0,limit:10,...filters}
+    try {
+      const res = await filterForms(postData);
+      setFormsList(res?.data?.forms);
+    } catch (error) {
+      console.log("error - ", error);
+    }
+  }
 
   const status_obj = {
     total: formsList?.length,
@@ -521,7 +532,7 @@ const FormsOverview = () => {
                   )}
                   navigateFunc={() => {}}
                   columns={COLUMN_DRAFTS}
-                  filterApiCall={fetchFormsList}
+                  filterApiCall={filterApiCall}
                   onRowSelect={()=>{}}
                   pagination={true}
                   showFilter={true}
@@ -538,6 +549,7 @@ const FormsOverview = () => {
                   columns={COLUMN_PUBLISHED}
                   onRowSelect={()=>{}}
                   pagination={true}
+                  filterApiCall={filterApiCall}
                   showFilter={true}
                 />
               </div>
@@ -552,6 +564,7 @@ const FormsOverview = () => {
                   columns={COLUMN_UNPUBLISHED}
                   onRowSelect={()=>{}}
                   pagination={true}
+                  filterApiCall={filterApiCall}
                   showFilter={true}
                 />
               </div>
