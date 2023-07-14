@@ -7,7 +7,7 @@ import FilteringTable from "../../components/table/FilteringTable";
 import Card from "../../components/Card";
 
 import { getFieldName, readableDate } from "../../utils/common";
-import { getOnGroundAssessorData, markReviewStatus } from "../../api";
+import { filterOGA, getOnGroundAssessorData, markReviewStatus } from "../../api";
 import ADMIN_ROUTE_MAP from "../../routes/adminRouteMap";
 
 export default function OnGroundInspectionAnalysis() {
@@ -101,6 +101,16 @@ export default function OnGroundInspectionAnalysis() {
     const pagination = {offsetNo:0,limit:10}
     try {
       const res = await getOnGroundAssessorData(pagination);
+      setFormsList(res?.data?.form_submissions);
+    } catch (error) {
+      console.log("error - ", error);
+    }
+  };
+
+  const filterApiCall = async (filters) => {
+    const postData = {offsetNo:0,limit:10,...filters}
+    try {
+      const res = await filterOGA(postData);
       setFormsList(res?.data?.form_submissions);
     } catch (error) {
       console.log("error - ", error);
@@ -250,6 +260,7 @@ export default function OnGroundInspectionAnalysis() {
                   columns={COLUMN}
                   pagination={true}
                   onRowSelect={()=>{}}
+                  filterApiCall={filterApiCall}
                 />
               </div>
             )}
@@ -263,6 +274,7 @@ export default function OnGroundInspectionAnalysis() {
                   columns={COLUMN}
                   pagination={true}
                   onRowSelect={()=>{}}
+                  filterApiCall={filterApiCall}
                 />
               </div>
             )}
@@ -276,6 +288,7 @@ export default function OnGroundInspectionAnalysis() {
                   columns={COLUMN}
                   pagination={true}
                   onRowSelect={()=>{}}
+                  filterApiCall={filterApiCall}
                 />
               </div>
             )}

@@ -7,7 +7,7 @@ import { Button } from "../../components";
 import FilteringTable from "../../components/table/FilteringTable";
 
 import { readableDate } from "../../utils/common";
-import { getAllUsers } from "../../api";
+import { filterUsers, getAllUsers } from "../../api";
 import ADMIN_ROUTE_MAP from "../../routes/adminRouteMap";
 
 import DeleteUsersModal from "./DeleteUsers";
@@ -75,6 +75,68 @@ export default function ManageUsersList({
     },
   ];
 
+  const setTableData = (e) => {
+    var usersData = {
+      full_name: e.fname || e.lname ? e.fname + e.lname : e.name,
+      email: e.email?.toLowerCase(),
+      mobile_number: e.phonenumber,
+      role: e.role || "Assessor",
+      status: e.workingstatus || "Active",
+      id: e.user_id,
+      schedule: (
+        <a className={`px-6 text-primary-600 pl-0 bg-white`}>View Schedule</a>
+      ),
+      more_actions: (
+        <div className="flex flex-row text-2xl font-semibold">
+          <Menu>
+            <MenuHandler>
+              <button>...</button>
+            </MenuHandler>
+            <MenuList>
+              <MenuItem
+                onClick={() =>
+                  navigation(
+                    `${ADMIN_ROUTE_MAP.adminModule.manageUsers.createUser}/${e.user_id}`
+                  )
+                }
+              >
+                <div className="flex flex-row gap-4 mt-4">
+                  <div>
+                    <MdEdit />
+                  </div>
+                  <div className="text-semibold m-">
+                    <span>Edit</span>
+                  </div>
+                </div>{" "}
+              </MenuItem>
+              <MenuItem onClick={(e) => console.log("icon clicked")}>
+                <div className="flex flex-row gap-4 mt-4">
+                  <div>
+                    <MdSwapHoriz />
+                  </div>
+                  <div className="text-semibold m-">
+                    <span>Deactivate</span>
+                  </div>
+                </div>{" "}
+              </MenuItem>
+              <MenuItem onClick={() => setDeleteUsersModel(true)}>
+                <div className="flex flex-row gap-4 mt-4">
+                  <div>
+                    <MdDelete />
+                  </div>
+                  <div className="text-semibold m-">
+                    <span>Delete</span>
+                  </div>
+                </div>{" "}
+              </MenuItem>
+            </MenuList>
+          </Menu>
+        </div>
+      ),
+    };
+    resUserData.push(usersData);
+  };
+
   const fetchAllUsers = async () => {
     const pagination = {
       offsetNo: paginationInfo.offsetNo,
@@ -88,69 +150,24 @@ export default function ManageUsersList({
       }));
       setUsersList(res?.data?.assessors);
       const data = res?.data?.assessors;
-      data.forEach((e) => {
-        var usersData = {
-          full_name: e.fname || e.lname ? e.fname + e.lname : e.name,
-          email: e.email?.toLowerCase(),
-          mobile_number: e.phonenumber,
-          role: e.role || "Assessor",
-          status: e.workingstatus || "Active",
-          id: e.user_id,
-          schedule: (
-            <a className={`px-6 text-primary-600 pl-0 bg-white`}>
-              View Schedule
-            </a>
-          ),
-          more_actions: (
-            <div className="flex flex-row text-2xl font-semibold">
-              <Menu>
-                <MenuHandler>
-                  <button>...</button>
-                </MenuHandler>
-                <MenuList>
-                  <MenuItem
-                    onClick={() =>
-                      navigation(
-                        `${ADMIN_ROUTE_MAP.adminModule.manageUsers.createUser}/${e.user_id}`
-                      )
-                    }
-                  >
-                    <div className="flex flex-row gap-4 mt-4">
-                      <div>
-                        <MdEdit />
-                      </div>
-                      <div className="text-semibold m-">
-                        <span>Edit</span>
-                      </div>
-                    </div>{" "}
-                  </MenuItem>
-                  <MenuItem onClick={(e) => console.log("icon clicked")}>
-                    <div className="flex flex-row gap-4 mt-4">
-                      <div>
-                        <MdSwapHoriz />
-                      </div>
-                      <div className="text-semibold m-">
-                        <span>Deactivate</span>
-                      </div>
-                    </div>{" "}
-                  </MenuItem>
-                  <MenuItem onClick={() => setDeleteUsersModel(true)}>
-                    <div className="flex flex-row gap-4 mt-4">
-                      <div>
-                        <MdDelete />
-                      </div>
-                      <div className="text-semibold m-">
-                        <span>Delete</span>
-                      </div>
-                    </div>{" "}
-                  </MenuItem>
-                </MenuList>
-              </Menu>
-            </div>
-          ),
-        };
-        resUserData.push(usersData);
-      });
+      data.forEach(setTableData);
+      setUserTableList(resUserData);
+    } catch (error) {
+      console.log("error - ", error);
+    }
+  };
+
+  const filterApiCall = async (filters) => {
+    const postData = { offsetNo: 0, limit: 10, ...filters };
+    try {
+      const res = await filterUsers(postData);
+      setPaginationInfo((prevState) => ({
+        ...prevState,
+        totalCount: res.data.assessors_aggregate.aggregate.totalCount,
+      }));
+      setUsersList(res?.data?.assessors);
+      const data = res?.data?.assessors;
+      data.forEach(setTableData);
       setUserTableList(resUserData);
     } catch (error) {
       console.log("error - ", error);
@@ -201,6 +218,7 @@ export default function ManageUsersList({
                 setPaginationInfo={setPaginationInfo}
                 onRowSelect={() => {}}
                 pagination={true}
+                filterApiCall={filterApiCall}
               />
             </div>
           </div>
