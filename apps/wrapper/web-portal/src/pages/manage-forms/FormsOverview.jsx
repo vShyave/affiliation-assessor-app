@@ -535,6 +535,7 @@ const FormsOverview = () => {
                   filterApiCall={filterApiCall}
                   onRowSelect={()=>{}}
                   pagination={true}
+                  showFilter={true}
                 />
               </div>
             )}
@@ -549,6 +550,7 @@ const FormsOverview = () => {
                   onRowSelect={()=>{}}
                   pagination={true}
                   filterApiCall={filterApiCall}
+                  showFilter={true}
                 />
               </div>
             )}
@@ -563,6 +565,7 @@ const FormsOverview = () => {
                   onRowSelect={()=>{}}
                   pagination={true}
                   filterApiCall={filterApiCall}
+                  showFilter={true}
                 />
               </div>
             )}

@@ -261,6 +261,7 @@ export default function OnGroundInspectionAnalysis() {
                   pagination={true}
                   onRowSelect={()=>{}}
                   filterApiCall={filterApiCall}
+                  showFilter={true}
                 />
               </div>
             )}
@@ -275,6 +276,7 @@ export default function OnGroundInspectionAnalysis() {
                   pagination={true}
                   onRowSelect={()=>{}}
                   filterApiCall={filterApiCall}
+                  showFilter={true}
                 />
               </div>
             )}
@@ -289,6 +291,7 @@ export default function OnGroundInspectionAnalysis() {
                   pagination={true}
                   onRowSelect={()=>{}}
                   filterApiCall={filterApiCall}
+                  showFilter={true}
                 />
               </div>
             )}

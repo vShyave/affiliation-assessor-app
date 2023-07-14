@@ -269,6 +269,7 @@ const DesktopAnalysisList = () => {
                 pagination={true}
                 onRowSelect={() => {}}
                 filterApiCall={filterApiCall}
+                showFilter={true}
               />
             </div>
           </div>

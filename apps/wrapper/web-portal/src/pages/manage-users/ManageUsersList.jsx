@@ -217,6 +217,7 @@ export default function ManageUsersList({
                 paginationInfo={paginationInfo}
                 setPaginationInfo={setPaginationInfo}
                 onRowSelect={() => {}}
+                showFilter={true}
                 pagination={true}
                 filterApiCall={filterApiCall}
               />

@@ -36,11 +36,14 @@ const FilteringTable = (props) => {
     setPageSize,
     selectedFlatRows,
   } = useTable(
-    { columns, data },
+    { columns, data, /* initialState : {
+      pageSize: 200
+    } */},
     useGlobalFilter,
     useSortBy,
     usePagination,
     useRowSelect,
+    
     (hooks) => {
       if (props.showCheckbox) {
         hooks.visibleColumns.push((columns) => {
@@ -51,8 +54,8 @@ const FilteringTable = (props) => {
                 <Checkbox {...getToggleAllRowsSelectedProps()} />
               ),
               Cell: ({ row }) => {
-                //  console.log(row)
-                /*   if (props.invalidRow === "true") {
+                  console.log(row?.original?.values?.isRowInvalid)
+            /*       if (row.original.values.isRowInvalid != undefined && row.original.values.isRowInvalid === true) {
                     return(
                      <AiFillExclamationCircle className="text-red-400 text-2xl" />
                   )
@@ -61,10 +64,10 @@ const FilteringTable = (props) => {
                     return (
                       <Checkbox {...row.getToggleRowSelectedProps()} />
                     )
-                  } */
+                  }  */
                   return (
                     <Checkbox {...row.getToggleRowSelectedProps()} />
-                  )
+                  ) 
                 }
             },
             ...columns,
@@ -75,12 +78,12 @@ const FilteringTable = (props) => {
   );
 
   const { globalFilter, pageIndex, pageSize } = state;
-  /*   useEffect(() => {
-   if(props.pagination){
+     useEffect(() => {
+   if(!props.pagination){
       setPageSize(1000)
    }
-  }, [data]); */
-
+  }, []); 
+ 
   {
     array = JSON.stringify(
       {
@@ -97,7 +100,7 @@ const FilteringTable = (props) => {
 
   return (
     <>
-      <GlobalFilter filter={globalFilter} setFilter={setGlobalFilter} filterApiCall={props.filterApiCall} />
+     {props.showFilter && <GlobalFilter filter={globalFilter} setFilter={setGlobalFilter} filterApiCall={props.filterApiCall} />} 
       <div className={`overflow-x-auto ${props.moreHeight}`} >
         <table
           {...getTableProps()}
