@@ -422,9 +422,9 @@ export default function Profile() {
                     text={text}
                     type="edit"
                     onClick={function () {
-                      setIsPreview(false);
                       setText("Save");
-                      {text==="Save" && navigate(APPLICANT_ROUTE_MAP.dashboardModule.my_applications)}
+                      setIsPreview(false);
+                      // {text==="Save" && navigate(APPLICANT_ROUTE_MAP.dashboardModule.my_applications)}
                       
                     }}
                   ></Button>
