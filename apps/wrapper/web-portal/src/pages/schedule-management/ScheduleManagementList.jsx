@@ -7,7 +7,11 @@ import FilteringTable from "../../components/table/FilteringTable";
 import Card from "../../components/Card";
 import { Button } from "../../components";
 
-import { getAssessmentSchedule } from "../../api";
+import {
+  filterAssessments,
+  filterForms,
+  getAssessmentSchedule,
+} from "../../api";
 import ADMIN_ROUTE_MAP from "../../routes/adminRouteMap";
 
 const ScheduleManagementList = () => {
@@ -15,6 +19,11 @@ const ScheduleManagementList = () => {
   var resUserData = [];
   const [assessmentScheduleList, setAssessmentScheduleList] = useState();
   const [scheduleTableList, setScheduleTableList] = useState([]);
+  const [paginationInfo, setPaginationInfo] = useState({
+    offsetNo: 0,
+    limit: 10,
+    totalCount: 0,
+  });
 
   const COLUMNS = [
     {
@@ -87,47 +96,64 @@ const ScheduleManagementList = () => {
     },
   ];
 
+  const setTableData = (e) => ({
+    scheduled_application_sno: e?.id,
+    district: e?.institute?.district,
+    parent_center_code: "-",
+    child_center_code: "-",
+    institute_name: e?.institute?.name,
+    type: "-",
+    assessment_date: e?.date,
+    assessor_id: e?.assessor_code,
+    status: e?.status,
+    more_actions: (
+      <div className="flex flex-row text-2xl font-semibold">
+        <button
+        //   onClick={() => navigateToUpdate(e)}
+        >
+          ...
+        </button>
+      </div>
+    ),
+  });
+
+  const filterApiCall = async (filters) => {
+    const postData = { offsetNo: 0, limit: 10, ...filters };
+    try {
+      const res = await filterAssessments(postData);
+      setAssessmentScheduleList(res?.data?.assessment_schedule);
+      const data = res?.data?.assessment_schedule;
+      setPaginationInfo((prevState) => ({
+        ...prevState,
+        totalCount: res.data.assessment_schedule_aggregate.aggregate.totalCount,
+      }));
+      setScheduleTableList(data.map(setTableData));
+    } catch (error) {
+      console.log("error - ", error);
+    }
+  };
+
   const fetchAllAssessmentSchedule = async () => {
-    const pagination = {offsetNo:0,limit:10}
+    const pagination = {
+      offsetNo: paginationInfo.offsetNo,
+      limit: paginationInfo.limit,
+    };
     try {
       const res = await getAssessmentSchedule(pagination);
       setAssessmentScheduleList(res?.data?.assessment_schedule);
       const data = res?.data?.assessment_schedule;
-      setScheduleTableList(
-        data.map((e) => ({
-          scheduled_application_sno: e?.id,
-          district: e?.institute?.district,
-          parent_center_code: "-",
-          child_center_code: "-",
-          institute_name: e?.institute?.name,
-          type: "-",
-          assessment_date: e?.date,
-          assessor_id: e?.assessor_code,
-          status:
-            new Date(e?.date) > new Date()
-              ? "Scheduled"
-              : new Date(e?.date) < new Date() &&
-                e?.institute?.form_submissions.length
-              ? "Completed"
-              : "Closed",
-          more_actions: (
-            <div className="flex flex-row text-2xl font-semibold">
-              <button
-              //   onClick={() => navigateToUpdate(e)}
-              >
-                ...
-              </button>
-            </div>
-          ),
-        }))
-      );
+      setPaginationInfo((prevState) => ({
+        ...prevState,
+        totalCount: res.data.assessment_schedule_aggregate.aggregate.totalCount,
+      }));
+      setScheduleTableList(data.map(setTableData));
     } catch (error) {
       console.log("error - ", error);
     }
   };
   useEffect(() => {
     fetchAllAssessmentSchedule();
-  }, []);
+  }, [paginationInfo.offsetNo, paginationInfo.limit]);
 
   return (
     <>
@@ -178,9 +204,12 @@ const ScheduleManagementList = () => {
               dataList={scheduleTableList}
               columns={COLUMNS}
               navigateFunc={() => {}}
-              filterApiCall={fetchAllAssessmentSchedule}
-              onRowSelect={()=>{}}
+              filterApiCall={filterApiCall}
+              onRowSelect={() => {}}
               pagination={true}
+              showFilter={true}
+              paginationInfo={paginationInfo}
+              setPaginationInfo={setPaginationInfo}
             />
           </div>
         </div>

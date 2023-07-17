@@ -15,6 +15,7 @@ const API_URL = {
     ViewStatus: {
       getViewStatus: `${rest}getStatusLog`,
     },
+    filterOGA: `${rest}filterOGA`
   },
   manageForms: {
     getForms: `${rest}getForms`,
@@ -23,21 +24,25 @@ const API_URL = {
     publishForms: `${rest}publishForms`,
     unpublishForms: `${rest}unpublishForms`,
     viewForm: `${rest}viewForm`,
-    deleteForm: `${rest}deleteForm`
+    deleteForm: `${rest}deleteForm`,
+    filterForms: `${rest}filterForms`
   },
   manageUsers: {
     userList: `${rest}getAllUsers`,
     specificUser: `${rest}getSpecificUser`,
+    filterUsers: `${rest}filterUsers`
   },
 
 desktopAnalysis:{
     getUsersForSchedulingAssessment:`${rest}getUsersForSchedulingAssessment`,
     scheduleAssessment: `${rest}addAssessmentSchedule`,
     getDesktopAnalysisForms: `${rest}getDesktopAnalysis`,
-    getAllCourses : `${rest}getAllCourses`
+    getAllCourses : `${rest}getAllCourses`,
+    filterDesktopAnalysis: `${rest}filterDesktopAnalysis`
   },
   scheduleManagement:{
-    getAssessmentSchedule: `${rest}getAssessmentSchedule`
+    getAssessmentSchedule: `${rest}getAssessmentSchedule`,
+    filterAssessments: `${rest}filterAssessments`
   },
   SIGNUP: {
     FUSION_AUTH_REGISTRATION: "user/registration",
