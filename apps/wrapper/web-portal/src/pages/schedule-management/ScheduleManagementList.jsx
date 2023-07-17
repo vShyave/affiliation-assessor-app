@@ -7,7 +7,11 @@ import FilteringTable from "../../components/table/FilteringTable";
 import Card from "../../components/Card";
 import { Button } from "../../components";
 
-import { filterAssessments, filterForms, getAssessmentSchedule } from "../../api";
+import {
+  filterAssessments,
+  filterForms,
+  getAssessmentSchedule,
+} from "../../api";
 import ADMIN_ROUTE_MAP from "../../routes/adminRouteMap";
 
 const ScheduleManagementList = () => {
@@ -15,6 +19,11 @@ const ScheduleManagementList = () => {
   var resUserData = [];
   const [assessmentScheduleList, setAssessmentScheduleList] = useState();
   const [scheduleTableList, setScheduleTableList] = useState([]);
+  const [paginationInfo, setPaginationInfo] = useState({
+    offsetNo: 0,
+    limit: 10,
+    totalCount: 0,
+  });
 
   const COLUMNS = [
     {
@@ -106,14 +115,18 @@ const ScheduleManagementList = () => {
         </button>
       </div>
     ),
-  })
+  });
 
   const filterApiCall = async (filters) => {
-    const postData = {offsetNo:0,limit:10,...filters}
+    const postData = { offsetNo: 0, limit: 10, ...filters };
     try {
       const res = await filterAssessments(postData);
       setAssessmentScheduleList(res?.data?.assessment_schedule);
       const data = res?.data?.assessment_schedule;
+      setPaginationInfo((prevState) => ({
+        ...prevState,
+        totalCount: res.data.assessment_schedule_aggregate.aggregate.totalCount,
+      }));
       setScheduleTableList(data.map(setTableData));
     } catch (error) {
       console.log("error - ", error);
@@ -121,11 +134,18 @@ const ScheduleManagementList = () => {
   };
 
   const fetchAllAssessmentSchedule = async () => {
-    const pagination = {offsetNo:0,limit:10}
+    const pagination = {
+      offsetNo: paginationInfo.offsetNo,
+      limit: paginationInfo.limit,
+    };
     try {
       const res = await getAssessmentSchedule(pagination);
       setAssessmentScheduleList(res?.data?.assessment_schedule);
       const data = res?.data?.assessment_schedule;
+      setPaginationInfo((prevState) => ({
+        ...prevState,
+        totalCount: res.data.assessment_schedule_aggregate.aggregate.totalCount,
+      }));
       setScheduleTableList(data.map(setTableData));
     } catch (error) {
       console.log("error - ", error);
@@ -133,7 +153,7 @@ const ScheduleManagementList = () => {
   };
   useEffect(() => {
     fetchAllAssessmentSchedule();
-  }, []);
+  }, [paginationInfo.offsetNo, paginationInfo.limit]);
 
   return (
     <>
@@ -185,9 +205,11 @@ const ScheduleManagementList = () => {
               columns={COLUMNS}
               navigateFunc={() => {}}
               filterApiCall={filterApiCall}
-              onRowSelect={()=>{}}
+              onRowSelect={() => {}}
               pagination={true}
               showFilter={true}
+              paginationInfo={paginationInfo}
+              setPaginationInfo={setPaginationInfo}
             />
           </div>
         </div>
