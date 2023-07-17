@@ -209,16 +209,19 @@ const FilteringTable = (props) => {
         </table>
       </div>
       {props.pagination && (
-        <div className="flex flex-col font-normal text-[16px] py-8 gap-8">
-          <span className="font-medium flex justify-center">
-            Page{" "}
-            <strong>
-              {pageIndex + 1} of {totalPageCount}
-            </strong>{" "}
-          </span>
-          <div className="flex justify-between ">
+        <div className="flex flex-row font-normal text-[16px] py-8 gap-8">
+          <div className="flex flex-row flex-grow gap-12 items-center">
+            <div className="font-bold">
+              Total number of record(s): {totalCount}
+            </div>
+            <div className="font-bold">
+              Page: {pageIndex + 1} of {totalPageCount}
+            </div>
+          </div>
+
+          <div className="flex flex-row gap-6">
             <button
-              className=""
+              className="px-3 text-gray-300 border bg-blue-700 font-medium rounded-[4px] text-white"
               onClick={() => {
                 setPaginationInfo((prevState) => ({
                   ...prevState,
@@ -231,30 +234,15 @@ const FilteringTable = (props) => {
               {"<<"}
             </button>
             <button
-              className="border text-gray-300 bg-blue-700 w-[140px] h-[40px] font-medium rounded-[4px]"
+              className="border text-gray-300 bg-blue-700 w-[140px] h-[40px] font-medium rounded-[4px] text-white"
               onClick={() => previousPage()}
               disabled={!canPreviousPage}
             >
               Previous
             </button>
-            {/* Uncomment this for Go To PageNumber */}
-            {/* <span className="font-medium">
-            Go to page:{" "}
-            <input
-              className="rounded-md border-0 p-2 w-[70px] h-[40px] text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-              type="text"
-              defaultValue={pageIndex + 1}
-              onChange={(e) => {
-                const pageNumber = e.target.value
-                  ? Number(e.target.value) - 1
-                  : 0;
-                gotoPage(pageNumber);
-              }}
-            />
-          </span> */}
 
             <select
-              className="border text-gray-300 p-2 bg-blue-700 w-[140px] h-[40px] font-medium rounded-[4px]"
+              className="border text-gray-300 p-2 bg-blue-700 w-[140px] h-[40px] font-medium rounded-[4px] text-white"
               value={pageSize}
               onChange={(e) => {
                 setPaginationInfo((prevState) => ({
@@ -274,13 +262,14 @@ const FilteringTable = (props) => {
             </select>
 
             <button
-              className="border text-gray-300 bg-blue-700 w-[140px] h-[40px] font-medium rounded-[4px]"
+              className="border text-gray-300 bg-blue-700 w-[140px] h-[40px] font-medium rounded-[4px] text-white"
               onClick={() => nextPage()}
               disabled={!canNextPage}
             >
               Next
             </button>
             <button
+              className="px-3 text-gray-300 border bg-blue-700 font-medium rounded-[4px] text-white"
               onClick={() => {
                 setPaginationInfo((prevState) => ({
                   ...prevState,
