@@ -30,11 +30,11 @@ function BulkUploadUsersModal({ closeBulkUploadUsersModal }) {
   const emailExp = /[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$/;
   const mobNumberExp = /^(0|91)?[6-9][0-9]{9}$/;
   const isEmailValid = (email) => {
-
-    if (emailExp.test(email.toString()) && email.toString().length != 0) {
+    
+    if (emailExp.test(email?.trim().toString()) && email?.trim().toString().length != 0) {
       return email;
     } else {
-      return email.toString().length === 0 ? (
+      return email?.toString().length === 0 ? (
         <span className="text-red-500 mt-2 text-sm">
           - <br></br> <small>Missing Email ID</small>
         </span>
@@ -55,7 +55,7 @@ function BulkUploadUsersModal({ closeBulkUploadUsersModal }) {
     ) {
       return mobileNumber;
     } else {
-      return mobileNumber.toString().length === 0 ? (
+      return mobileNumber?.toString().length === 0 ? (
         <span className="text-red-500 mt-2 text-sm">
           - <br></br> <small>Missing mobile number</small>
         </span>
@@ -126,8 +126,8 @@ function BulkUploadUsersModal({ closeBulkUploadUsersModal }) {
 
       Cell: (props) => {
 
-        if (!emailExp.test(props.row.original.email.toString()) ||
-          !mobNumberExp.test(props.row.original.mobile_number.toString()) ||
+        if (!emailExp.test(props.row.original.email?.toString()) ||
+          !mobNumberExp.test(props.row.original.mobile_number?.toString()) ||
           props.row.original.full_name == "" ||
           props.row.original.email == "" ||
           props.row.original.mobile_number == "") {

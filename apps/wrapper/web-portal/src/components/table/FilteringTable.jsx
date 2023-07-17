@@ -6,6 +6,7 @@ import {
   usePagination,
   useRowSelect,
 } from "react-table";
+// import { Checkbox } from "./Checkbox";
 import { Checkbox } from "@material-tailwind/react";
 import GlobalFilter from "./GlobalFilter";
 
@@ -29,10 +30,6 @@ const FilteringTable = (props) => {
     state,
     setGlobalFilter,
     page,
-    nextPage,
-    previousPage,
-    canNextPage,
-    canPreviousPage,
     pageOptions,
     gotoPage,
     pageCount,
@@ -60,6 +57,7 @@ const FilteringTable = (props) => {
                 <Checkbox {...getToggleAllRowsSelectedProps()} />
               ),
               Cell: ({ row }) => {
+                // console.log(row?.original?.values?.isRowInvalid);
                 /*       if (row.original.values.isRowInvalid != undefined && row.original.values.isRowInvalid === true) {
                     return(
                      <AiFillExclamationCircle className="text-red-400 text-2xl" />
@@ -80,12 +78,52 @@ const FilteringTable = (props) => {
     }
   );
 
-  const { globalFilter, pageIndex, pageSize } = state;
+  const { globalFilter } = state;
+  const { setPaginationInfo } = props;
+  const { limit: pageSize, offsetNo, totalCount } = props.paginationInfo;
+  const [canNextPage, setCanNextPage] = useState(false);
+  const [canPreviousPage, setCanPreviousPage] = useState(false);
+  const [pageIndex, setPageIndex] = useState(0);
+  const [totalPageCount, setTotalPageCount] = useState(0);
+  const nextPage = () => {
+    setPageIndex((prevState) => prevState + 1);
+    setPaginationInfo((prevState) => ({
+      ...prevState,
+      offsetNo: offsetNo + pageSize,
+    }));
+  };
+  const previousPage = () => {
+    setPageIndex((prevState) => prevState - 1);
+    setPaginationInfo((prevState) => ({
+      ...prevState,
+      offsetNo: offsetNo - pageSize,
+    }));
+  };
   useEffect(() => {
     if (!props.pagination) {
       setPageSize(1000);
     }
   }, []);
+
+  useEffect(() => {
+    if (pageIndex > 0) {
+      setCanPreviousPage(true);
+    } else {
+      setCanPreviousPage(false);
+    }
+  }, [pageIndex, totalCount]);
+
+  useEffect(() => {
+    setTotalPageCount(Math.ceil(totalCount / pageSize));
+    if (
+      Math.ceil(totalCount / pageSize) > 1 &&
+      pageIndex < Math.ceil(totalCount / pageSize) - 1
+    ) {
+      setCanNextPage(true);
+    } else {
+      setCanNextPage(false);
+    }
+  }, [totalCount, pageSize, pageIndex]);
 
   {
     array = JSON.stringify(
@@ -97,6 +135,7 @@ const FilteringTable = (props) => {
     );
     {
       props.onRowSelect(array);
+      // console.log(array);
     }
   }
 
@@ -171,17 +210,25 @@ const FilteringTable = (props) => {
       </div>
       {props.pagination && (
         <div className="flex flex-row font-normal text-[16px] py-8 gap-8">
-          <div className="flex flex-grow items-center">
-            <span className="font-bold">
-              Page {/* <strong> */}
-              {pageIndex + 1} of {pageOptions.length}
-              {/* </strong> */}{" "}
-            </span>
+          <div className="flex flex-row flex-grow gap-12 items-center">
+            <div className="font-bold">
+              Total number of record(s): {totalCount}
+            </div>
+            <div className="font-bold">
+              Page: {pageIndex + 1} of {totalPageCount}
+            </div>
           </div>
+
           <div className="flex flex-row gap-6">
             <button
               className="px-3 text-gray-300 border bg-blue-700 font-medium rounded-[4px] text-white"
-              onClick={() => gotoPage(0)}
+              onClick={() => {
+                setPaginationInfo((prevState) => ({
+                  ...prevState,
+                  offsetNo: 0,
+                }));
+                setPageIndex(0);
+              }}
               disabled={!canPreviousPage}
             >
               {"<<"}
@@ -193,28 +240,19 @@ const FilteringTable = (props) => {
             >
               Previous
             </button>
-            {/* Uncomment this for Go To PageNumber */}
-            {/* 
-                <span className="font-medium">
-                  Go to page:{" "}
-                  <input
-                    className="rounded-md border-0 p-2 w-[70px] h-[40px] text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                    type="text"
-                    defaultValue={pageIndex + 1}
-                    onChange={(e) => {
-                      const pageNumber = e.target.value
-                        ? Number(e.target.value) - 1
-                        : 0;
-                      gotoPage(pageNumber);
-                    }}
-                  />
-                </span>
-              */}
 
             <select
               className="border text-gray-300 p-2 bg-blue-700 w-[140px] h-[40px] font-medium rounded-[4px] text-white"
               value={pageSize}
-              onChange={(e) => setPageSize(Number(e.target.value))}
+              onChange={(e) => {
+                setPaginationInfo((prevState) => ({
+                  ...prevState,
+                  limit: Number(e.target.value),
+                  offsetNo: 0,
+                }));
+                setPageSize(Number(e.target.value));
+                setPageIndex(0);
+              }}
             >
               {[10, 25, 50].map((pageSize) => (
                 <option key={pageSize} value={pageSize}>
@@ -232,7 +270,13 @@ const FilteringTable = (props) => {
             </button>
             <button
               className="px-3 text-gray-300 border bg-blue-700 font-medium rounded-[4px] text-white"
-              onClick={() => gotoPage(pageCount - 1)}
+              onClick={() => {
+                setPaginationInfo((prevState) => ({
+                  ...prevState,
+                  offsetNo: pageSize * (totalPageCount - 1),
+                }));
+                setPageIndex(totalPageCount - 1);
+              }}
               disabled={!canNextPage}
             >
               {">>"}

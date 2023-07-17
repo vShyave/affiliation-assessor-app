@@ -9,6 +9,7 @@ import {
   publishForms,
   unpublishForms,
   deleteForm,
+  filterForms,
 } from "../../api";
 import { getFieldName, readableDate } from "../../utils/common";
 import Toast from "../../components/Toast";
@@ -34,6 +35,11 @@ const FormsOverview = () => {
     toastOpen: false,
     toastMsg: "",
     toastType: "",
+  });
+  const [paginationInfo, setPaginationInfo] = useState({
+    offsetNo: 0,
+    limit: 10,
+    totalCount: 0,
   });
 
   const COLUMN_DRAFTS = [
@@ -144,8 +150,6 @@ const FormsOverview = () => {
   const navigateToView = (formObj) => {
     const navigationURL = `${ADMIN_ROUTE_MAP.adminModule.manageForms.viewForm}/${formObj?.title}/${formObj?.form_id}`;
     navigation(navigationURL);
-    // const postData = { form_id: formObj?.form_id };
-    // viewForm(postData);
   };
 
   const viewForm = async (postData) => {
@@ -177,12 +181,33 @@ const FormsOverview = () => {
 
   useEffect(() => {
     fetchFormsList();
-  }, []);
+  }, [paginationInfo.offsetNo, paginationInfo.limit]);
 
   const fetchFormsList = async () => {
-    const pagination = {offsetNo:0,limit:10}
+    const pagination = {
+      offsetNo: paginationInfo.offsetNo,
+      limit: paginationInfo.limit,
+    };
     try {
       const res = await getForms(pagination);
+      setPaginationInfo((prevState) => ({
+        ...prevState,
+        totalCount: res?.data?.forms_aggregate?.aggregate.totalCount,
+      }));
+      setFormsList(res?.data?.forms);
+    } catch (error) {
+      console.log("error - ", error);
+    }
+  };
+
+  const filterApiCall = async (filters) => {
+    const postData = { offsetNo: 0, limit: 10, ...filters };
+    try {
+      const res = await filterForms(postData);
+      setPaginationInfo((prevState) => ({
+        ...prevState,
+        totalCount: res?.data?.forms_aggregate?.aggregate.totalCount,
+      }));
       setFormsList(res?.data?.forms);
     } catch (error) {
       console.log("error - ", error);
@@ -418,7 +443,6 @@ const FormsOverview = () => {
     }
   };
 
-
   return (
     <>
       {toast.toastOpen && (
@@ -521,10 +545,12 @@ const FormsOverview = () => {
                   )}
                   navigateFunc={() => {}}
                   columns={COLUMN_DRAFTS}
-                  filterApiCall={fetchFormsList}
-                  onRowSelect={()=>{}}
+                  filterApiCall={filterApiCall}
+                  onRowSelect={() => {}}
                   pagination={true}
                   showFilter={true}
+                  paginationInfo={paginationInfo}
+                  setPaginationInfo={setPaginationInfo}
                 />
               </div>
             )}
@@ -536,9 +562,12 @@ const FormsOverview = () => {
                   )}
                   navigateFunc={() => {}}
                   columns={COLUMN_PUBLISHED}
-                  onRowSelect={()=>{}}
+                  onRowSelect={() => {}}
                   pagination={true}
+                  filterApiCall={filterApiCall}
                   showFilter={true}
+                  paginationInfo={paginationInfo}
+                  setPaginationInfo={setPaginationInfo}
                 />
               </div>
             )}
@@ -550,9 +579,12 @@ const FormsOverview = () => {
                   )}
                   navigateFunc={() => {}}
                   columns={COLUMN_UNPUBLISHED}
-                  onRowSelect={()=>{}}
+                  onRowSelect={() => {}}
                   pagination={true}
+                  filterApiCall={filterApiCall}
                   showFilter={true}
+                  paginationInfo={paginationInfo}
+                  setPaginationInfo={setPaginationInfo}
                 />
               </div>
             )}
