@@ -21,6 +21,11 @@ const DesktopAnalysisList = () => {
   const [state, setState] = useState({
     menu_selected: "new",
   });
+  const [paginationInfo, setPaginationInfo] = useState({
+    offsetNo: 0,
+    limit: 10,
+    totalCount: 0,
+  });
 
   const COLUMNS = [
     {
@@ -98,12 +103,19 @@ const DesktopAnalysisList = () => {
 
   useEffect(() => {
     fetchDesktopAnalysisForms();
-  }, []);
+  }, [paginationInfo.offsetNo, paginationInfo.limit]);
 
   const fetchDesktopAnalysisForms = async () => {
-    const pagination = { offsetNo: 0, limit: 10 };
+    const pagination = {
+      offsetNo: paginationInfo.offsetNo,
+      limit: paginationInfo.limit,
+    };
     try {
       const res = await getDesktopAnalysisForms(pagination);
+      setPaginationInfo((prevState) => ({
+        ...prevState,
+        totalCount: res.data.form_submissions_aggregate.aggregate.totalCount,
+      }));
       setFormsList(res?.data?.form_submissions);
     } catch (error) {
       console.log("error - ", error);
@@ -114,6 +126,10 @@ const DesktopAnalysisList = () => {
     const postData = { offsetNo: 0, limit: 10, ...filters };
     try {
       const res = await filterDesktopAnalysis(postData);
+      setPaginationInfo((prevState) => ({
+        ...prevState,
+        totalCount: res.data.form_submissions_aggregate.aggregate.totalCount,
+      }));
       setFormsList(res?.data?.form_submissions);
     } catch (error) {
       console.log("error - ", error);
@@ -270,6 +286,8 @@ const DesktopAnalysisList = () => {
                 onRowSelect={() => {}}
                 filterApiCall={filterApiCall}
                 showFilter={true}
+                paginationInfo={paginationInfo}
+                setPaginationInfo={setPaginationInfo}
               />
             </div>
           </div>

@@ -7,7 +7,11 @@ import FilteringTable from "../../components/table/FilteringTable";
 import Card from "../../components/Card";
 
 import { getFieldName, readableDate } from "../../utils/common";
-import { filterOGA, getOnGroundAssessorData, markReviewStatus } from "../../api";
+import {
+  filterOGA,
+  getOnGroundAssessorData,
+  markReviewStatus,
+} from "../../api";
 import ADMIN_ROUTE_MAP from "../../routes/adminRouteMap";
 
 export default function OnGroundInspectionAnalysis() {
@@ -18,6 +22,11 @@ export default function OnGroundInspectionAnalysis() {
   const [formsList, setFormsList] = useState();
   const [state, setState] = useState({
     menu_selected: "new",
+  });
+  const [paginationInfo, setPaginationInfo] = useState({
+    offsetNo: 0,
+    limit: 10,
+    totalCount: 0,
   });
 
   const COLUMN = [
@@ -95,12 +104,19 @@ export default function OnGroundInspectionAnalysis() {
   };
   useEffect(() => {
     fetchOnGroundAssessorData();
-  }, []);
+  }, [paginationInfo.offsetNo, paginationInfo.limit]);
 
   const fetchOnGroundAssessorData = async () => {
-    const pagination = {offsetNo:0,limit:10}
+    const pagination = {
+      offsetNo: paginationInfo.offsetNo,
+      limit: paginationInfo.limit,
+    };
     try {
       const res = await getOnGroundAssessorData(pagination);
+      setPaginationInfo((prevState) => ({
+        ...prevState,
+        totalCount: res.data.form_submissions_aggregate.aggregate.totalCount,
+      }));
       setFormsList(res?.data?.form_submissions);
     } catch (error) {
       console.log("error - ", error);
@@ -108,9 +124,13 @@ export default function OnGroundInspectionAnalysis() {
   };
 
   const filterApiCall = async (filters) => {
-    const postData = {offsetNo:0,limit:10,...filters}
+    const postData = { offsetNo: 0, limit: 10, ...filters };
     try {
       const res = await filterOGA(postData);
+      setPaginationInfo((prevState) => ({
+        ...prevState,
+        totalCount: res.data.form_submissions_aggregate.aggregate.totalCount,
+      }));
       setFormsList(res?.data?.form_submissions);
     } catch (error) {
       console.log("error - ", error);
@@ -259,9 +279,11 @@ export default function OnGroundInspectionAnalysis() {
                   navigateFunc={navigateToView}
                   columns={COLUMN}
                   pagination={true}
-                  onRowSelect={()=>{}}
+                  onRowSelect={() => {}}
                   filterApiCall={filterApiCall}
                   showFilter={true}
+                  paginationInfo={paginationInfo}
+                  setPaginationInfo={setPaginationInfo}
                 />
               </div>
             )}
@@ -274,9 +296,11 @@ export default function OnGroundInspectionAnalysis() {
                   navigateFunc={navigateToView}
                   columns={COLUMN}
                   pagination={true}
-                  onRowSelect={()=>{}}
+                  onRowSelect={() => {}}
                   filterApiCall={filterApiCall}
                   showFilter={true}
+                  paginationInfo={paginationInfo}
+                  setPaginationInfo={setPaginationInfo}
                 />
               </div>
             )}
@@ -289,9 +313,11 @@ export default function OnGroundInspectionAnalysis() {
                   navigateFunc={navigateToView}
                   columns={COLUMN}
                   pagination={true}
-                  onRowSelect={()=>{}}
+                  onRowSelect={() => {}}
                   filterApiCall={filterApiCall}
                   showFilter={true}
+                  paginationInfo={paginationInfo}
+                  setPaginationInfo={setPaginationInfo}
                 />
               </div>
             )}
