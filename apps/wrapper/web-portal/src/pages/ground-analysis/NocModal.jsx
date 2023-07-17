@@ -1,8 +1,14 @@
 import React, { useState } from 'react';
 import { getAcceptApplicant } from "../../api";
+import ADMIN_ROUTE_MAP from "../../routes/adminRouteMap";
+import { useNavigate } from "react-router-dom";
+
+
 
 
 function NocModal({closeModal,setToast}) {
+    const navigate = useNavigate();
+
 
     const handleChange = (e) =>{
             setComment(e.target.value)
@@ -19,6 +25,9 @@ function NocModal({closeModal,setToast}) {
         setTimeout(()=>(setToast((prevState)=>({...prevState,toastOpen:false,toastMsg:"",toastType:""}))),3000)
         console.log('res',res)
         closeModal(false)
+        // navigate to next page
+        { navigate(ADMIN_ROUTE_MAP.adminModule.onGroundInspection.nocForm) }
+
     
     }
     

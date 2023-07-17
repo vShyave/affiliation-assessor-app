@@ -14,6 +14,7 @@ import DashboardLandingPage from "./pages/DashboardLandingPage";
 import GroundInspectionAnalysis from "./pages/ground-analysis/GroundInspectionAnalysis";
 import GroundInspectionListForms from "./pages/ground-analysis/GroundInspectionListForms";
 import GroundInspectionViewForm from "./pages/ground-analysis/GroundInspectionViewForm";
+import GroundInspectionNoc from "./pages/ground-analysis/GroundInspectionNOC";
 import ManageUsersList from "./pages/manage-users/ManageUsersList";
 import AdminCreateUser from "./pages/manage-users/AdminCreateUser";
 // import ManageFormsList from "./pages/manage-forms/ManageFormsList";
@@ -34,6 +35,7 @@ import ScheduleManagement from "./pages/schedule-management/ScheduleManagement";
 import ScheduledUploadForm from "./pages/schedule-management/ScheduledUploadForm";
 import Notification from "./pages/notifications/Notification";
 import NotificationsDetailedView from "./pages/notifications/NotificationsDetailedView";
+import NocIssued from "./pages/ground-analysis/NocIssuedConfirmation";
 
 function App() {
   return (
@@ -122,7 +124,7 @@ function App() {
                 element={<DesktopAnalysisView />}
               ></Route>
             </Route>
-
+            {/*Ground Inspection routing starts here  */}
             <Route
               path={ADMIN_ROUTE_MAP.adminModule.onGroundInspection.home}
               element={<GroundInspectionAnalysis />}
@@ -132,13 +134,21 @@ function App() {
                 path={`${ADMIN_ROUTE_MAP.adminModule.onGroundInspection.viewForm}/:formName/:formId`}
                 element={<GroundInspectionViewForm />}
               ></Route>
+               <Route
+                path={`${ADMIN_ROUTE_MAP.adminModule.onGroundInspection.nocForm}`}
+                element={<GroundInspectionNoc />}
+              ></Route>
+              <Route
+                path={`${ADMIN_ROUTE_MAP.adminModule.onGroundInspection.nocIssued}`}
+                element={<NocIssued />}
+              ></Route>
             </Route>
-
+            {/* Certificate management routing starts here */}
             <Route
               path={ADMIN_ROUTE_MAP.adminModule.certificateManagement.list}
               element={<CertificateManagementList />}
             ></Route>
-
+            {/* Schedule management routing starts here */}
             <Route
               path={ADMIN_ROUTE_MAP.adminModule.scheduleManagement.home}
               element={<ScheduleManagement />}

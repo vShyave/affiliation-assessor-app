@@ -142,7 +142,7 @@ export default function DesktopAnalysisView() {
           closeSchedule={setOpenSheduleInspectionModel}
           setToast={setToast}
           instituteId={formDataFromApi?.institute?.id}
-          instituteName = {formDataFromApi?.form_name}
+          instituteName = {formDataFromApi?.institute?.course_applied}
         />
       )}
     </>

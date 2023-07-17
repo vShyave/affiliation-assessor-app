@@ -1,7 +1,7 @@
-import React, {  useState, useEffect } from "react";
+import React, { useState, useEffect} from "react";
 
 import Calendar from "react-calendar";
-import Select from "react-select";
+import Select, { components } from "react-select";
 
 import "react-calendar/dist/Calendar.css";
 
@@ -23,11 +23,18 @@ import { AiOutlineClose } from "react-icons/ai";
 
 // import Toast from "../../components/Toast";
 
-function ScheduleInspectionModal({ closeSchedule, setToast, instituteId , instituteName}) {
+function ScheduleInspectionModal({
+  closeSchedule,
+  setToast,
+  instituteId,
+  instituteName,
+}) {
   // const [formStatus, setFormStatus] = useState({});
   const [initialDivision, setInitialDivision] = useState(false);
   const [initialAssessorFirstDivision, setInitialAssessorFirstDivision] =
     useState(false);
+  const [initialFormDivision, setInitialFormDivision] = useState(false);
+
   const [initialAssessorSecondDivision, setInitialAssessorSecondDivision] =
     useState(false);
 
@@ -40,6 +47,11 @@ function ScheduleInspectionModal({ closeSchedule, setToast, instituteId , instit
 
   // const [date, setDate] = useState(new Date());
   const [payload, setPayload] = useState({});
+  const [assistingAssessorPayload, setAssistingAssessorPayload] = useState({});
+  const [thirdAssessorPayload, setAssistingAssessorSecondPayload] = useState(
+    {}
+  );
+
   const [assessorName, setAssessorName] = useState("");
   const [assistingAssessorFirstName, setAssistingAssessorFirstName] =
     useState("");
@@ -54,23 +66,18 @@ function ScheduleInspectionModal({ closeSchedule, setToast, instituteId , instit
   const [secondFormName, setSecondFormName] = useState("");
   const [thirdFormName, setThirdFormName] = useState("");
 
-
-
-
-
   let [assistingAssessorList1, setAssistingAssessorList1] = useState([{}]);
-
 
   useEffect(() => {
     getTheCourses();
   }, []);
 
   const handleOnFormSelect = (e) => {
-    console.log("e",e)
+    console.log("e", e);
     setFormName((prevState) => ({ ...prevState, formCode: e[0].label }));
     setFormPayload((prevState) => ({ ...prevState, formCode: e[0].value }));
-    console.log("formName", formName)
-    console.log("formpayload", formpayload)
+    console.log("formName", formName);
+    console.log("formpayload", formpayload);
 
     setFormList1(
       formList.filter((el) => {
@@ -78,7 +85,7 @@ function ScheduleInspectionModal({ closeSchedule, setToast, instituteId , instit
       })
     );
   };
-   const handleOnSecondFormSelect = (e) => {
+  const handleOnSecondFormSelect = (e) => {
     setSecondFormName((prevState) => ({
       ...prevState,
       formCode: e[0]?.label,
@@ -89,12 +96,12 @@ function ScheduleInspectionModal({ closeSchedule, setToast, instituteId , instit
     }));
 
     setPayload((prevState) => ({ ...prevState, formCode: e.value }));
+    setInitialFormDivision(true);
   };
-
 
   const handleOnAssessorSelect = (e) => {
     setAssessorName((prevState) => ({ ...prevState, assessorCode: e.label }));
-    setPayload((prevState) => ({ ...prevState, assessorCode: e.value }));
+    setPayload((prevState) => ({ ...prevState, assessorCode: e?.value }));
 
     setAssistingAssessorList1(
       assessorList.filter((el) => {
@@ -108,12 +115,19 @@ function ScheduleInspectionModal({ closeSchedule, setToast, instituteId , instit
       ...prevState,
       assessorCode: e[0]?.label,
     }));
+    setAssistingAssessorPayload((prevState) => ({
+      ...prevState,
+      assessorCode: e[0]?.value,
+    }));
+
     setAssistingAssessorSecondName((prevState) => ({
       ...prevState,
       assessorCode: e[1]?.label,
     }));
-
-    setPayload((prevState) => ({ ...prevState, assessorCode: e.value }));
+    setAssistingAssessorSecondPayload((prevState) => ({
+      ...prevState,
+      assessorCode: e[1]?.value,
+    }));
   };
 
   const onChangeDate = async (date) => {
@@ -122,7 +136,7 @@ function ScheduleInspectionModal({ closeSchedule, setToast, instituteId , instit
     setPayload((prevState) => ({ ...prevState, date: tempDate }));
     const postData = { todayDate: tempDate };
     const res = await getUsersForScheduling(postData);
-    console.log("resone",res)
+    console.log("resone", res);
     setAssessorList(
       res?.data?.assessors.map((item) => ({
         value: item.code,
@@ -132,33 +146,39 @@ function ScheduleInspectionModal({ closeSchedule, setToast, instituteId , instit
     );
   };
 
-
-
   const getTheCourses = async () => {
-    // let courseApplied = {"course_applied" : instituteName};
-    let courseApplied = {"course_applied" : "Paramedical"};
+    let courseApplied = { course_applied: instituteName };
 
     const res = await getAllTheCourses(courseApplied);
-    console.log("res",res)
+    console.log("res", res);
     setFormList(
       res?.data?.courses?.map((item) => ({
         value: item.course_level,
-        label: item.course_name
+        label: item.course_name,
       }))
     );
   };
 
   const handleScheduleAssessment = async () => {
-    const formData = new FormData();
-    console.log(formData)
+    // const formData = new FormData();
+    // console.log(formData)
 
-    formData.append("instituteId", instituteId);
+    // formData.append("instituteId", instituteId);
 
-    Object.keys(payload).forEach((key) => {
-      formData.append(key, payload[key]);
-    });
-
+    // Object.keys(payload).forEach((key) => {
+    //   formData.append(key, payload[key]);
+    const formData = {
+      assessment_schedule: [
+        {
+          assessor_code: payload.assessorCode,
+          date: payload.date,
+          institute_id: instituteId,
+          assisstant_code: assistingAssessorPayload.assessorCode,
+        },
+      ],
+    };
     try {
+      console.log("payload", payload);
       const res = await getScheduleAssessment(formData);
       setToast((prevState) => ({
         ...prevState,
@@ -178,8 +198,7 @@ function ScheduleInspectionModal({ closeSchedule, setToast, instituteId , instit
       );
       closeSchedule(false);
     } catch (error) {
-      console.log("error - ", formData.get("date"));
-      let date = new Date(formData.get("date"));
+      let date = new Date(formData.assessment_schedule.date);
       if (error.response.data.code === "constraint-violation") {
         setToast((prevState) => ({
           ...prevState,
@@ -219,16 +238,13 @@ function ScheduleInspectionModal({ closeSchedule, setToast, instituteId , instit
     }
   };
 
-
-  
-
   return (
     <>
       <div className="flex flex-col justify-center  items-center fixed inset-0 bg-opacity-25 z-10 backdrop-blur-sm">
         <div className="flex bg-white rounded-xl shadow-xl border border-gray-400 w-[1024px] h-fit p-8">
           <div className="flex flex-col justify-between gap-4 w-full">
             <div className="w-1/3 mx-auto ">
-              <Stepper 
+              <Stepper
                 activeStep={activeStep}
                 isLastStep={(value) => setIsLastStep(value)}
                 isFirstStep={(value) => setIsFirstStep(value)}
@@ -242,10 +258,9 @@ function ScheduleInspectionModal({ closeSchedule, setToast, instituteId , instit
               </div>
             </div>
 
-
             <hr className="border-2 m-" />
 
-           {/* For scheduling inspection */}
+            {/* For scheduling inspection */}
 
             {activeStep === 0 && (
               <>
@@ -277,7 +292,6 @@ function ScheduleInspectionModal({ closeSchedule, setToast, instituteId , instit
                           onClick={() => {
                             {
                               setInitialDivision(true);
-
                             }
                           }}
                           moreClass={`${
@@ -431,15 +445,16 @@ function ScheduleInspectionModal({ closeSchedule, setToast, instituteId , instit
                         required
                         text="Form filled by the institute"
                         moreClass="block mb-2 text-lg font-semibold text-gray-900 dark:text-gray-400"
-                      > </Label>
+                      >
+                      </Label>
 
                       <div className="bg-gray-100  items-center flex gap-4 border border-gray-100 rounded-xl mt-4">
                         <span className="font-semibold p-2">
-                        {instituteName}
+                          {instituteName}
                         </span>
                       </div>
                     </div>
-                    <div className="flex flex-col gap-4 rounded-xl border border-gray-300 h-3/4 p-2">
+                    <div className="flex flex-col gap-4 rounded-xl border border-gray-300  h-[256px]  p-2">
                       <Label
                         htmlFor={"form_name"}
                         required
@@ -460,19 +475,26 @@ function ScheduleInspectionModal({ closeSchedule, setToast, instituteId , instit
                           className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-1 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                         />
                       </span>
-                      
-                      <div className="flex gap-2 items-center bg-gray-100 border border-gray-100 rounded-xl p-1 mt-2">
-                        <span className= "w-[36px] h-3/4 items-center inline-fle justify-center gap-x-1.5 rounded-md px-2 py-2 text-sm font-semibold text-white-500 shadow-sm hover:bg-green-400" >
-                          <GrDocumentPdf />
-                        </span>
-                        <span className="font-semibold p-2">{secondFormName.formCode}</span>
-                      </div>
-                      <div className="flex gap-2 items-center mb-4 bg-gray-100 border border-gray-100 rounded-xl p-1 mt-2">
-                        <span className=" w-[36px] h-3/4 items-center  inline-flex justify-center gap-x-1.5 rounded-md px-2 py-2 text-sm font-semibold text-white-500 shadow-sm hover:bg-green-400">
-                          <GrDocumentPdf />
-                        </span>
-                        <span className="font-semibold p-2">{thirdFormName.formCode}</span>
-                      </div>
+                      {initialFormDivision  && secondFormName && (
+                        <>
+                          <div className="flex gap-2 items-center bg-gray-100 border border-gray-100 rounded-xl p-1 mt-2">
+                            <span className="w-[36px] h-3/4 items-center inline-fle justify-center gap-x-1.5 rounded-md px-2 py-2 text-sm font-semibold text-white-500 shadow-sm hover:bg-green-400">
+                              <GrDocumentPdf />
+                            </span>
+                            <span className="font-semibold p-2">
+                              {secondFormName.formCode}
+                            </span>
+                          </div>
+                          <div className="flex gap-2 items-center mb-4 bg-gray-100 border border-gray-100 rounded-xl p-1 mt-2">
+                            <span className=" w-[36px] h-3/4 items-center  inline-flex justify-center gap-x-1.5 rounded-md px-2 py-2 text-sm font-semibold text-white-500 shadow-sm hover:bg-green-400">
+                              <GrDocumentPdf />
+                            </span>
+                            <span className="font-semibold p-2">
+                              {thirdFormName.formCode}
+                            </span>
+                          </div>
+                        </>
+                      )}
                     </div>
                   </div>
                 </div>
@@ -493,9 +515,7 @@ function ScheduleInspectionModal({ closeSchedule, setToast, instituteId , instit
               <button
                 onClick={handleScheduleAssessment}
                 className={`${
-                  activeStep === 1
-                    ? "bg-blue-900  text-white"
-                    : "invisible "
+                  activeStep === 1 ? "bg-blue-900  text-white" : "invisible "
                 } border border-blue-900 w-[160px] h-[50px] p-2 font-medium rounded-[2px] `}
                 disabled={!Object.keys(payload).length === 2 ? true : false}
               >

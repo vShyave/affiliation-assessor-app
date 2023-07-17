@@ -6,7 +6,6 @@ import {
   usePagination,
   useRowSelect,
 } from "react-table";
-// import { Checkbox } from "./Checkbox";
 import { Checkbox } from "@material-tailwind/react";
 import GlobalFilter from "./GlobalFilter";
 

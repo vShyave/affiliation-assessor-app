@@ -98,7 +98,7 @@ export default function OnGroundInspectionAnalysis() {
   }, []);
 
   const fetchOnGroundAssessorData = async () => {
-    const pagination = {offsetNo:0,limit:10}
+    const pagination = { offsetNo: 0, limit: 10 };
     try {
       const res = await getOnGroundAssessorData(pagination);
       setFormsList(res?.data?.form_submissions);
@@ -249,7 +249,7 @@ export default function OnGroundInspectionAnalysis() {
                   navigateFunc={navigateToView}
                   columns={COLUMN}
                   pagination={true}
-                  onRowSelect={()=>{}}
+                  onRowSelect={() => {}}
                 />
               </div>
             )}
@@ -262,7 +262,7 @@ export default function OnGroundInspectionAnalysis() {
                   navigateFunc={navigateToView}
                   columns={COLUMN}
                   pagination={true}
-                  onRowSelect={()=>{}}
+                  onRowSelect={() => {}}
                 />
               </div>
             )}
@@ -275,7 +275,7 @@ export default function OnGroundInspectionAnalysis() {
                   navigateFunc={navigateToView}
                   columns={COLUMN}
                   pagination={true}
-                  onRowSelect={()=>{}}
+                  onRowSelect={() => {}}
                 />
               </div>
             )}
