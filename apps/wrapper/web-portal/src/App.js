@@ -1,4 +1,5 @@
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+import { useEffect } from "react";
 import ADMIN_ROUTE_MAP from "./routes/adminRouteMap";
 import "./App.css";
 
@@ -35,7 +36,10 @@ import ScheduledUploadForm from "./pages/schedule-management/ScheduledUploadForm
 import Notification from "./pages/notifications/Notification";
 import NotificationsDetailedView from "./pages/notifications/NotificationsDetailedView";
 
+
+
 function App() {
+  
   return (
     <div className="App">
       <BrowserRouter>

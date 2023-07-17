@@ -28,6 +28,7 @@
   </head>
   <body class="bg-gray-100 w-full min-h-screen">
     <script type="module" src="https://unpkg.com/@material-tailwind/html@latest/scripts/popover.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fingerprintjs2/1.5.0/fingerprint2.min.js"></script>
     <noscript>You need to enable JavaScript to run this app.</noscript>
     <div id="root"></div>
     <!-- <script type="module" src="node_modules/@material-tailwind/html@latest/scripts/popover.js"></script> -->
@@ -42,5 +43,21 @@
       To begin the development, run `npm start` or `yarn start`.
       To create a production bundle, use `npm run build` or `yarn build`.
     -->
+
+    <script>
+      if (window.requestIdleCallback) {
+        requestIdleCallback(function () {
+          Fingerprint2().get(function (components) {
+            console.log('components - ', components) // an array of components: {key: ..., value: ...}
+          })
+        })
+      } else {
+        setTimeout(function () {
+          Fingerprint2().get(function (components) {
+            console.log(components) // an array of components: {key: ..., value: ...}
+          })
+        }, 1000)
+      }
+    </script>
   </body>
 </html>
