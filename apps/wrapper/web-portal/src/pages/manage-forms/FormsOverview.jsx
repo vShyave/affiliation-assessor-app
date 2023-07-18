@@ -457,138 +457,125 @@ const FormsOverview = () => {
             <h1 className="text-2xl font-medium">Manage Forms</h1>
           </div>
         </div>
-        <div className="flex flex-col">
-          <div className="text-sm font-medium text-center text-gray-500 border-b border-gray-200 dark:text-gray-400 dark:border-gray-700">
-            <ul className="flex flex-wrap -mb-px">
-              <li
-                className="mr-2"
-                onClick={() => handleSelectMenu("create_new")}
+        <div className="flex flex-col gap-4">
+          <ul className="flex flex-wrap gap-3 -mb-px">
+            <li className="" onClick={() => handleSelectMenu("create_new")}>
+              <a
+                href="#"
+                className={`inline-block p-4 rounded-t-lg dark:text-blue-500 dark:border-blue-600 ${
+                  state.menu_selected === "create_new"
+                    ? "text-blue-600 border-b-2 border-blue-600"
+                    : ""
+                }`}
               >
-                <a
-                  href="#"
-                  className={`inline-block p-4 rounded-t-lg dark:text-blue-500 dark:border-blue-600 ${
-                    state.menu_selected === "create_new"
-                      ? "text-blue-600 border-b-2 border-blue-600"
-                      : ""
-                  }`}
-                >
-                  Create New
-                </a>
-              </li>
-              <li className="mr-2" onClick={() => handleSelectMenu("draft")}>
-                <a
-                  href="#"
-                  className={`inline-block p-4 rounded-t-lg dark:text-blue-500 dark:border-blue-600 ${
-                    state.menu_selected === "draft"
-                      ? "text-blue-600 border-b-2 border-blue-600"
-                      : ""
-                  }`}
-                  aria-current="page"
-                >
-                  Draft
-                </a>
-              </li>
-              <li
-                className="mr-2"
-                onClick={() => handleSelectMenu("published")}
+                Create New
+              </a>
+            </li>
+            <li className="" onClick={() => handleSelectMenu("draft")}>
+              <a
+                href="#"
+                className={`inline-block p-4 rounded-t-lg dark:text-blue-500 dark:border-blue-600 ${
+                  state.menu_selected === "draft"
+                    ? "text-blue-600 border-b-2 border-blue-600"
+                    : ""
+                }`}
+                aria-current="page"
               >
-                <a
-                  href="#"
-                  className={`inline-block p-4 rounded-t-lg dark:text-blue-500 dark:border-blue-600 ${
-                    state.menu_selected === "published"
-                      ? "text-blue-600 border-b-2 border-blue-600"
-                      : ""
-                  }`}
-                >
-                  Published
-                </a>
-              </li>
-              <li
-                className="mr-2"
-                onClick={() => handleSelectMenu("unpublished")}
+                Draft
+              </a>
+            </li>
+            <li className="" onClick={() => handleSelectMenu("published")}>
+              <a
+                href="#"
+                className={`inline-block p-4 rounded-t-lg dark:text-blue-500 dark:border-blue-600 ${
+                  state.menu_selected === "published"
+                    ? "text-blue-600 border-b-2 border-blue-600"
+                    : ""
+                }`}
               >
-                <a
-                  href="#"
-                  className={`inline-block p-4 rounded-t-lg dark:text-blue-500 dark:border-blue-600 ${
-                    state.menu_selected === "unpublished"
-                      ? "text-blue-600 border-b-2 border-blue-600"
-                      : ""
-                  }`}
-                >
-                  Unpublished
-                </a>
-              </li>
-            </ul>
-            {state.menu_selected === "create_new" && (
-              <div className="flex flex-col gap-4">
-                <Card moreClass="flex h-[50vh]">
-                  <div className="flex flex-col gap-4 m-auto items-center">
-                    <div className="font-semibold text-xl">
-                      Click on the button to a create a form
-                    </div>
-                    <Button
-                      moreClass="text-white w-3/5"
-                      text="Upload ODK"
-                      onClick={() => navigation("/manage-forms/create-form")}
-                    />
-                    {/* Or
-                            <Button moreClass="text-white w-3/5" text="Configure Manually" /> */}
+                Published
+              </a>
+            </li>
+            <li className="" onClick={() => handleSelectMenu("unpublished")}>
+              <a
+                href="#"
+                className={`inline-block p-4 rounded-t-lg dark:text-blue-500 dark:border-blue-600 ${
+                  state.menu_selected === "unpublished"
+                    ? "text-blue-600 border-b-2 border-blue-600"
+                    : ""
+                }`}
+              >
+                Unpublished
+              </a>
+            </li>
+          </ul>
+          {state.menu_selected === "create_new" && (
+            <div className="flex flex-col gap-4">
+              <Card moreClass="flex h-[50vh]">
+                <div className="flex flex-col gap-4 m-auto items-center">
+                  <div className="font-semibold text-xl">
+                    Click on the button to a create a form
                   </div>
-                </Card>
-              </div>
-            )}
-            {state.menu_selected === "draft" && (
-              <div className="text-2xl mt-4 font-medium">
-                <FilteringTable
-                  dataList={formsDataList.filter(
-                    (item) => item.form_status === "Draft"
-                  )}
-                  navigateFunc={() => {}}
-                  columns={COLUMN_DRAFTS}
-                  filterApiCall={filterApiCall}
-                  onRowSelect={() => {}}
-                  pagination={true}
-                  showFilter={true}
-                  paginationInfo={paginationInfo}
-                  setPaginationInfo={setPaginationInfo}
-                />
-              </div>
-            )}
-            {state.menu_selected === "published" && (
-              <div className="text-2xl mt-4 font-medium">
-                <FilteringTable
-                  dataList={formsDataList.filter(
-                    (item) => item.form_status === "Published"
-                  )}
-                  navigateFunc={() => {}}
-                  columns={COLUMN_PUBLISHED}
-                  onRowSelect={() => {}}
-                  pagination={true}
-                  filterApiCall={filterApiCall}
-                  showFilter={true}
-                  paginationInfo={paginationInfo}
-                  setPaginationInfo={setPaginationInfo}
-                />
-              </div>
-            )}
-            {state.menu_selected === "unpublished" && (
-              <div className="text-2xl mt-4 font-medium">
-                <FilteringTable
-                  dataList={formsDataList.filter(
-                    (item) => item.form_status === "Unpublished"
-                  )}
-                  navigateFunc={() => {}}
-                  columns={COLUMN_UNPUBLISHED}
-                  onRowSelect={() => {}}
-                  pagination={true}
-                  filterApiCall={filterApiCall}
-                  showFilter={true}
-                  paginationInfo={paginationInfo}
-                  setPaginationInfo={setPaginationInfo}
-                />
-              </div>
-            )}
-          </div>
+                  <Button
+                    moreClass="text-white w-3/5"
+                    text="Upload ODK"
+                    onClick={() => navigation("/manage-forms/create-form")}
+                  />
+                </div>
+              </Card>
+            </div>
+          )}
+          {state.menu_selected === "draft" && (
+            <div className="flex flex-col gap-4">
+              <FilteringTable
+                dataList={formsDataList.filter(
+                  (item) => item.form_status === "Draft"
+                )}
+                navigateFunc={() => {}}
+                columns={COLUMN_DRAFTS}
+                filterApiCall={filterApiCall}
+                onRowSelect={() => {}}
+                pagination={true}
+                showFilter={true}
+                paginationInfo={paginationInfo}
+                setPaginationInfo={setPaginationInfo}
+              />
+            </div>
+          )}
+          {state.menu_selected === "published" && (
+            <div className="flex flex-col gap-4">
+              <FilteringTable
+                dataList={formsDataList.filter(
+                  (item) => item.form_status === "Published"
+                )}
+                navigateFunc={() => {}}
+                columns={COLUMN_PUBLISHED}
+                onRowSelect={() => {}}
+                pagination={true}
+                filterApiCall={filterApiCall}
+                showFilter={true}
+                paginationInfo={paginationInfo}
+                setPaginationInfo={setPaginationInfo}
+              />
+            </div>
+          )}
+          {state.menu_selected === "unpublished" && (
+            <div className="flex flex-col gap-4">
+              <FilteringTable
+                dataList={formsDataList.filter(
+                  (item) => item.form_status === "Unpublished"
+                )}
+                navigateFunc={() => {}}
+                columns={COLUMN_UNPUBLISHED}
+                onRowSelect={() => {}}
+                pagination={true}
+                filterApiCall={filterApiCall}
+                showFilter={true}
+                paginationInfo={paginationInfo}
+                setPaginationInfo={setPaginationInfo}
+              />
+            </div>
+          )}
         </div>
       </div>
     </>
