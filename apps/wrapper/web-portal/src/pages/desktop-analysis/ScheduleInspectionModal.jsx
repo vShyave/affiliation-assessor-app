@@ -1,7 +1,7 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef} from "react";
 
 import Calendar from "react-calendar";
-import Select from "react-select";
+import Select, { components } from "react-select";
 
 import "react-calendar/dist/Calendar.css";
 import "./calendar.css";
@@ -29,7 +29,6 @@ function ScheduleInspectionModal({
   instituteId,
   instituteName,
 }) {
-  // const [formStatus, setFormStatus] = useState({});
 
   const [activeStep, setActiveStep] = React.useState(0);
   const [isLastStep, setIsLastStep] = React.useState(false);
@@ -48,7 +47,6 @@ function ScheduleInspectionModal({
   let [assistingAssessorList, setAssistingAssessorList] = useState([{}]);
   const [AAObject, setAAObject] = useState([]);
   const [selectedAA, setSelectedAA] = useState([]);
-  // const [aaError, setAAError] = useState(false);
 
   const [initialAssessorFirstDivision, setInitialAssessorFirstDivision] =
     useState(false);
@@ -64,11 +62,6 @@ function ScheduleInspectionModal({
   const [assessorList, setAssessorList] = useState([]);
   const [formList, setFormList] = useState([]);
   const [selectedFormList, setSelectedFormList] = useState([]);
-  // const [formName, setFormName] = useState("");
-  // const [formPayLoad, setFormPayload] = useState({});
-  // const [formList1, setFormList1] = useState([]);
-  // const [secondFormName, setSecondFormName] = useState("");
-  // const [thirdFormName, setThirdFormName] = useState("");
 
   useEffect(() => {
     getTheCourses();
@@ -91,18 +84,6 @@ function ScheduleInspectionModal({
     );
   };
 
-  // const handleOnSecondFormSelect = (e) => {
-  //   setSecondFormName((prevState) => ({
-  //     ...prevState,
-  //     formCode: e[0]?.label,
-  //   }));
-  //   setThirdFormName((prevState) => ({
-  //     ...prevState,
-  //     formCode: e[1]?.label,
-  //   }));
-
-  //   setPayload((prevState) => ({ ...prevState, formCode: e.value }));
-  // };
 
   const handleSelectOGA = (e) => {
     setOGAObject(e);
@@ -110,10 +91,9 @@ function ScheduleInspectionModal({
 
   const handleAssignOGA = () => {
     setSelectedOGA(OGAObject);
-    // setPayload((prevState) => ({ ...prevState, assessorCode: e?.value }));
     setAssistingAssessorList(
       assessorList.filter((el) => {
-        return el?.phonenumber !== selectedOGA?.phonenumber;
+        return el?.phonenumber !== OGAObject?.phonenumber;
       })
     );
   };
@@ -122,16 +102,10 @@ function ScheduleInspectionModal({
     setSelectedOGA({});
     setOGAObject({});
     selectInputRef.clearValue();
-    // setPayload((prevState) => ({ ...prevState, assessorCode: "" }));
   };
 
   const handleSelectAA = (e) => {
-    // if (e?.length > 1) {
-    //   setAAError(true);
-    //   return;
-    // }
     setAAObject(e);
-    // setPayload((prevState) => ({ ...prevState, assessorCode: e.value }));
   };
 
   // aa - Assisting assessor
@@ -148,8 +122,8 @@ function ScheduleInspectionModal({
   };
 
   const getTheCourses = async () => {
-    // let courseApplied = {"course_applied" : instituteName};
-    let courseApplied = { course_applied: "Paramedical" };
+    let courseApplied = {"course_applied" : instituteName};
+    // let courseApplied = { course_applied: "Paramedical" };
 
     const res = await getAllTheCourses(courseApplied);
 
@@ -163,13 +137,7 @@ function ScheduleInspectionModal({
 
   const handleFormSelection = (e) => {
     setSelectedFormList(e);
-    // setFormName((prevState) => ({ ...prevState, formCode: e[0].label }));
-    // setFormPayload((prevState) => ({ ...prevState, formCode: e[0].value }));
-    // setFormList1(
-    //   formList.filter((el) => {
-    //     return el.label !== e.label;
-    //   })
-    // );
+    
   };
 
   const handleScheduleAssessment = async () => {
@@ -181,6 +149,7 @@ function ScheduleInspectionModal({
     Object.keys(payload).forEach((key) => {
       formData.append(key, payload[key]);
     });
+    
 
     try {
       const res = await getScheduleAssessment(formData);
@@ -202,8 +171,7 @@ function ScheduleInspectionModal({
       );
       closeSchedule(false);
     } catch (error) {
-      console.log("error - ", formData.get("date"));
-      let date = new Date(formData.get("date"));
+      let date = new Date(formData.assessment_schedule.date);
       if (error.response.data.code === "constraint-violation") {
         setToast((prevState) => ({
           ...prevState,
@@ -255,7 +223,7 @@ function ScheduleInspectionModal({
                   isLastStep={(value) => setIsLastStep(value)}
                   isFirstStep={(value) => setIsFirstStep(value)}
                 >
-                  <Step onClick={() => setActiveStep(0)}>
+                  <Step >
                     1
                     <div className="absolute -bottom-[2rem] w-max text-center">
                       <div className="font-semibold text-[#000]">
@@ -263,7 +231,7 @@ function ScheduleInspectionModal({
                       </div>
                     </div>
                   </Step>
-                  <Step onClick={() => setActiveStep(1)}>
+                  <Step >
                     2
                     <div className="absolute -bottom-[2rem] w-max text-center">
                       <div className="font-semibold text-[#000]">
@@ -377,6 +345,7 @@ function ScheduleInspectionModal({
                           <div className="flex flex-row gap-3">
                             <Select
                               isMulti
+                              isOptionDisabled={() => AAObject.length >= 2}
                               name="assisting_assessor"
                               label="Assisting Assessor/s"
                               ref={(ref) => {
@@ -462,6 +431,7 @@ function ScheduleInspectionModal({
 
                         <div className="flex flex-row">
                           <Select
+                            isOptionDisabled={() => selectedFormList.length >= 4}
                             isMulti
                             key={"form_name"}
                             name="form_name"
@@ -505,10 +475,11 @@ function ScheduleInspectionModal({
                     ></Button>
                     <Button
                       onClick={handleNext}
-                      disabled={
-                        !Object.keys(payload).length === 2 ? true : false
-                      }
-                      moreClass={`px-8 text-white`}
+                      moreClass={`${
+                        selectedOGA?.value
+                          ? "px-8 text-white"
+                          : "cursor-not-allowed border border-gray-500 bg-white text-gray-500 px-8 h-[44px]"
+                      }`}
                       text="Next"
                     ></Button>
                   </div>
@@ -522,7 +493,12 @@ function ScheduleInspectionModal({
                     ></Button>
                     <Button
                       onClick={handleScheduleAssessment}
-                      moreClass={`px-8 text-white`}
+                      // moreClass={`px-8 text-white`}
+                      moreClass={`${
+                        selectedOGA?.value && selectedFormList[0]?.value
+                          ? "px-8 text-white"
+                          : "cursor-not-allowed border border-gray-500 bg-white text-gray-500 px-8 h-[44px]"
+                      }`}
                       text="Submit"
                     ></Button>
                   </div>

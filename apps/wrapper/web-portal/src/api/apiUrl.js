@@ -35,7 +35,7 @@ const API_URL = {
 
 desktopAnalysis:{
     getUsersForSchedulingAssessment:`${rest}getUsersForSchedulingAssessment`,
-    scheduleAssessment: `${rest}scheduleAssessment`,
+    scheduleAssessment: `${rest}addAssessmentSchedule`,
     getDesktopAnalysisForms: `${rest}getDesktopAnalysis`,
     getAllCourses : `${rest}getAllCourses`,
     filterDesktopAnalysis: `${rest}filterDesktopAnalysis`
