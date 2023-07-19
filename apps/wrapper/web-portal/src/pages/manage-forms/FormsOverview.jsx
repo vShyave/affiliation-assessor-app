@@ -485,12 +485,29 @@ const FormsOverview = () => {
             <h1 className="text-2xl font-medium">Manage Forms</h1>
           </div>
         </div>
-        <div className="flex flex-col">
-          <div className="text-sm font-medium text-center text-gray-500 border-b border-gray-200 dark:text-gray-400 dark:border-gray-700">
-            <ul className="flex flex-wrap -mb-px">
-              <li
-                className="mr-2"
-                onClick={() => handleSelectMenu("create_new")}
+        <div className="flex flex-col gap-4">
+          <ul className="flex flex-wrap gap-3 -mb-px">
+            <li className="" onClick={() => handleSelectMenu("create_new")}>
+              <a
+                href="#"
+                className={`inline-block p-4 rounded-t-lg dark:text-blue-500 dark:border-blue-600 ${
+                  state.menu_selected === "create_new"
+                    ? "text-blue-600 border-b-2 border-blue-600"
+                    : ""
+                }`}
+              >
+                Create New
+              </a>
+            </li>
+            <li className="" onClick={() => handleSelectMenu("draft")}>
+              <a
+                href="#"
+                className={`inline-block p-4 rounded-t-lg dark:text-blue-500 dark:border-blue-600 ${
+                  state.menu_selected === "draft"
+                    ? "text-blue-600 border-b-2 border-blue-600"
+                    : ""
+                }`}
+                aria-current="page"
               >
                 <a
                   href="#"

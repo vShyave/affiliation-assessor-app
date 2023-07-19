@@ -188,13 +188,13 @@ const ScheduleManagementList = () => {
 
   return (
     <>
-      <div className="flex flex-col gap-8">
+      <div className="flex flex-col gap-4">
         <div className="flex flex-col gap-4">
-          <div className="flex flex-row justify-between">
-            <div>
-              <h1 className="text-2xl font-medium">Schedule management</h1>
+          <div className="flex flex-row">
+            <div className="flex flex-grow items-center">
+              <div className="text-2xl font-medium">Schedule management</div>
             </div>
-            <div className="flex justify-end">
+            <div className="flex flex-grow justify-end">
               <span className="flex gap-4">
                 <button className="flex flex-wrap items-center justify-center gap-2 border border-gray-500 text-gray-500 bg-white w-[200px] h-[45px] text-md font-medium rounded-[4px]">
                   Download CSV template
@@ -228,25 +228,21 @@ const ScheduleManagementList = () => {
           </div>
         </div>
       </div>
-      <div className="flex flex-col">
-        <div className="text-sm font-medium text-center text-gray-500 border-b border-gray-200 dark:text-gray-400 dark:border-gray-700">
-          <div className="text-2xl w-full mt-4 font-medium">
-            <FilteringTable
-              dataList={scheduleTableList}
-              columns={COLUMNS}
-              navigateFunc={() => {}}
-              filterApiCall={filterApiCall}
-              onRowSelect={() => {}}
-              pagination={true}
-              showFilter={true}
-              paginationInfo={paginationInfo}
-              setPaginationInfo={setPaginationInfo}
-              setIsSearchOpen={setIsSearchOpen}
-              setIsFilterOpen={setIsFilterOpen}
-              searchApiCall={searchApiCall}
-            />
-          </div>
-        </div>
+      <div className="flex flex-col gap-4">
+        <FilteringTable
+          dataList={scheduleTableList}
+          columns={COLUMNS}
+          navigateFunc={() => {}}
+          filterApiCall={filterApiCall}
+          onRowSelect={() => {}}
+          pagination={true}
+          showFilter={true}
+          paginationInfo={paginationInfo}
+          setPaginationInfo={setPaginationInfo}
+          setIsSearchOpen={setIsSearchOpen}
+          setIsFilterOpen={setIsFilterOpen}
+          searchApiCall={searchApiCall}
+        />
       </div>
     </>
   );

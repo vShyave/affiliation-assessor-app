@@ -221,7 +221,7 @@ export default function OnGroundInspectionAnalysis() {
 
   return (
     <>
-      <div className="flex flex-col gap-8">
+      <div className="flex flex-col gap-4">
         <div className="flex flex-col gap-4">
           <div>
             <h1 className="text-2xl font-medium">Your activity</h1>
@@ -251,14 +251,14 @@ export default function OnGroundInspectionAnalysis() {
           <div className="grid grid-cols-1 gap-x-6 gap-y-6 sm:grid-cols-6">
             <div className="sm:col-span-3">
               <div className="w-72 bg-white rounded-[8px]">
-                {/* <Select
+                <Select
                   value="1"
                   label="Select round"
                   onChange={(value) => console.log(value)}
                 >
                   <Option value="1">Round one</Option>
                   <Option value="2">Round two</Option>
-                </Select> */}
+                </Select>
               </div>
             </div>
           </div>

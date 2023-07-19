@@ -209,9 +209,9 @@ export default function ManageUsersList({
 
   return (
     <>
-      <div className="flex flex-col justify-center align-center">
+      <div className="flex flex-col justify-center align-center gap-4">
         <div className="flex flex-row">
-          <div className="flex grow">
+          <div className="flex grow items-center">
             <h1 className="text-xl font-semibold">Manage Users</h1>
           </div>
           <div className="flex justify-end">
@@ -235,26 +235,22 @@ export default function ManageUsersList({
             </span>
           </div>
         </div>
-        <div className="flex flex-col">
-          <div className="text-sm font-medium text-center text-gray-500 border-b border-gray-200 dark:text-gray-400 dark:border-gray-700">
-            <div className="text-2xl w-full mt-4 font-medium">
-              <FilteringTable
-                dataList={userTableList}
-                columns={COLUMNS}
-                navigateFunc={() => {}}
-                showCheckbox={true}
-                paginationInfo={paginationInfo}
-                setPaginationInfo={setPaginationInfo}
-                onRowSelect={() => {}}
-                showFilter={true}
-                pagination={true}
-                filterApiCall={filterApiCall}
-                searchApiCall={searchApiCall}
-                setIsSearchOpen={setIsSearchOpen}
-                setIsFilterOpen={setIsFilterOpen}
-              />
-            </div>
-          </div>
+        <div className="flex flex-col gap-4">
+          <FilteringTable
+            dataList={userTableList}
+            columns={COLUMNS}
+            navigateFunc={() => {}}
+            showCheckbox={true}
+            paginationInfo={paginationInfo}
+            setPaginationInfo={setPaginationInfo}
+            onRowSelect={() => {}}
+            showFilter={true}
+            pagination={true}
+            filterApiCall={filterApiCall}
+            searchApiCall={searchApiCall}
+            setIsSearchOpen={setIsSearchOpen}
+            setIsFilterOpen={setIsFilterOpen}
+          />
         </div>
       </div>
       {deleteUsersModel && (

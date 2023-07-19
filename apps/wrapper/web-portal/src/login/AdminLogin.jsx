@@ -254,7 +254,7 @@ const AdminLogin = () => {
                       type="otp"
                       name="otp"
                       id="otp"
-                      placeholder="0-0-0-0-0-0"
+                      placeholder="XXXXXX"
                       {...register("otp", {
                         required: true,
                         pattern: /^\d{1,6}$/i,
@@ -290,7 +290,7 @@ const AdminLogin = () => {
                   ></Button>
                   <p className="flex justify-center my-6">
                     <span
-                      className="text-primary-700"
+                      className="text-primary-700 cursor-pointer"
                       onClick={() => {
                         setEnableOtp(false);
                       }}

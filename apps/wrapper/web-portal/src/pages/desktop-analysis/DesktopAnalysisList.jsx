@@ -235,78 +235,80 @@ const DesktopAnalysisList = () => {
           <div className="grid grid-cols-1 gap-x-6 gap-y-6 sm:grid-cols-6">
             <div className="sm:col-span-3">
               <div className="w-72 bg-white rounded-[8px]">
-                {/* <Select value="1" label="Select round" onChange={(value)=>{console.log(value)}}>
+                <Select
+                  value="1"
+                  label="Select round"
+                  onChange={(value) => {
+                    console.log(value);
+                  }}
+                >
                   <Option value="1">Round one</Option>
                   <Option value="2">Round two</Option>
-                </Select> */}
+                </Select>
               </div>
             </div>
           </div>
         </div>
 
-        <div className="flex flex-col">
-          <div className="text-sm font-medium text-center text-gray-500 border-b border-gray-200 dark:text-gray-400 dark:border-gray-700">
-            <ul className="flex flex-wrap -mb-px">
-              <li className="mr-2" onClick={() => handleSelectMenu("new")}>
-                <a
-                  href="#"
-                  className={`inline-block p-4 rounded-t-lg dark:text-blue-500 dark:border-blue-600 ${
-                    state.menu_selected === "new"
-                      ? "text-blue-600 border-b-2 border-blue-600"
-                      : ""
-                  }`}
-                >
-                  New
-                </a>
-              </li>
-              <li className="mr-2" onClick={() => handleSelectMenu("rejected")}>
-                <a
-                  href="#"
-                  className={`inline-block p-4 rounded-t-lg dark:text-blue-500 dark:border-blue-600 ${
-                    state.menu_selected === "rejected"
-                      ? "text-blue-600 border-b-2 border-blue-600"
-                      : ""
-                  }`}
-                  aria-current="page"
-                >
-                  Rejected
-                </a>
-              </li>
-              <li
-                className="mr-2"
-                onClick={() => handleSelectMenu("resubmitted")}
+        <div className="flex flex-col gap-4">
+          <ul className="flex flex-wrap gap-3 -mb-px">
+            <li className="" onClick={() => handleSelectMenu("new")}>
+              <a
+                href="#"
+                className={`inline-block p-4 rounded-t-lg dark:text-blue-500 dark:border-blue-600 ${
+                  state.menu_selected === "new"
+                    ? "text-blue-600 border-b-2 border-blue-600"
+                    : ""
+                }`}
               >
-                <a
-                  href="#"
-                  className={`inline-block p-4 rounded-t-lg dark:text-blue-500 dark:border-blue-600 ${
-                    state.menu_selected === "resubmitted"
-                      ? "text-blue-600 border-b-2 border-blue-600"
-                      : ""
-                  }`}
-                >
-                  Resubmitted
-                </a>
-              </li>
-              <li
-                className="mr-2"
-                onClick={() => handleSelectMenu("sent_for_inspection")}
+                New
+              </a>
+            </li>
+            <li className="" onClick={() => handleSelectMenu("rejected")}>
+              <a
+                href="#"
+                className={`inline-block p-4 rounded-t-lg dark:text-blue-500 dark:border-blue-600 ${
+                  state.menu_selected === "rejected"
+                    ? "text-blue-600 border-b-2 border-blue-600"
+                    : ""
+                }`}
+                aria-current="page"
               >
-                <a
-                  href="#"
-                  className={`inline-block p-4 rounded-t-lg dark:text-blue-500 dark:border-blue-600 ${
-                    state.menu_selected === "sent_for_inspection"
-                      ? "text-blue-600 border-b-2 border-blue-600"
-                      : ""
-                  }`}
-                >
-                  Sent for inspection
-                </a>
-              </li>
-            </ul>
-            {/* <div>create a search bar and filter component here</div> */}
-            {/* table creation starts here */}
-
-            <div className="text-2xl mt-4 font-medium">
+                Rejected
+              </a>
+            </li>
+            <li className="" onClick={() => handleSelectMenu("resubmitted")}>
+              <a
+                href="#"
+                className={`inline-block p-4 rounded-t-lg dark:text-blue-500 dark:border-blue-600 ${
+                  state.menu_selected === "resubmitted"
+                    ? "text-blue-600 border-b-2 border-blue-600"
+                    : ""
+                }`}
+              >
+                Resubmitted
+              </a>
+            </li>
+            <li
+              className=""
+              onClick={() => handleSelectMenu("sent_for_inspection")}
+            >
+              <a
+                href="#"
+                className={`inline-block p-4 rounded-t-lg dark:text-blue-500 dark:border-blue-600 ${
+                  state.menu_selected === "sent_for_inspection"
+                    ? "text-blue-600 border-b-2 border-blue-600"
+                    : ""
+                }`}
+              >
+                Sent for inspection
+              </a>
+            </li>
+          </ul>
+          
+          {/* <div>create a search bar and filter component here</div> */}
+          {/* table creation starts here */}
+            <div className="flex flex-col gap-4">
               <FilteringTable
                 dataList={formsDataList}
                 navigateFunc={navigateToView}

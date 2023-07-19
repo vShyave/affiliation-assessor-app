@@ -1,7 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
+import { Label } from "../components";
 import { FormCard } from "../components";
+import { useForm } from "react-hook-form";
+
+import { Select, Option } from "@material-tailwind/react";
+
 import { FaAngleRight } from "react-icons/fa";
 import { formService } from "../services";
 import { getCookie } from "../utils";
@@ -14,6 +19,12 @@ const AllApplications = () => {
   useEffect(() => {
     getAvailableForms();
   }, []);
+
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
 
   const getAvailableForms = async () => {
     if (!instituteDetails || !instituteDetails?.length) {
@@ -52,6 +63,29 @@ const AllApplications = () => {
 
       <div className="container mx-auto py-12 px-3 min-h-[40vh]">
         <div className="flex flex-col gap-4">
+          <div className="flex mb-12 justify-between grid grid-cols-6 gap-x-6 gap-y-8 sm:grid-cols-6">
+            <div className="sm:col-span-2 ">
+              <Select className="bg-white" size="lg" label="Application type">
+                <Option>New Institute</Option>
+                <Option>New course in an existing institute</Option>
+                <Option>Seat enhancement for an existing course</Option>
+              </Select>
+              {/* </div> */}
+            </div>
+            <div className="sm:col-span-2 ">
+              <Select className="bg-white" size="lg" label="Course type">
+                <Option>Nursing</Option>
+                <Option>Paramedical</Option>
+              </Select>
+            </div>
+            <div className="sm:col-span-2 ">
+              <Select className="bg-white" size="lg" label="Course level">
+                <Option>Degree</Option>
+                <Option>Diploma</Option>
+              </Select>
+            </div>
+          </div>
+
           <div className="flex flex-col gap-3">
             <div className="text-xl font-semibold">Application forms</div>
             {!loadingForms && availableForms.length === 0 && (
