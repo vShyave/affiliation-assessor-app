@@ -149,9 +149,7 @@ export class AppService {
     // Download XML file from Google Cloud Storage bucket URL
     if(reqOrigin.includes("affiliation")) {
       //Read the file from local forms folder
-      const urlData= formUrl.split("/");
-      const formName = urlData[urlData.length-1];
-      const formFilePath = join(__dirname, `forms/${formName}`);
+      const formFilePath = join(__dirname, `forms/${formUrl}.xml`);
       formString = fs.readFileSync(formFilePath, 'utf8');
     } else {
       const response = await axios.get(formUrl);
