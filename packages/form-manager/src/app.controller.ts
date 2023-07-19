@@ -178,15 +178,15 @@ export class AppController {
 
   @Post('prefillXML')
   async prefillXML(
-    @Query('form') form,
+    @Query('formUrl') formUrl,
     @Query('onFormSuccessData') onFormSuccessData,
     @Body('prefillXML') prefillXML,
     @Body('imageUrls') files,
   ): Promise<string> {
     try {
       if (onFormSuccessData) {
-        const prefilledForm = this.appService.prefillFormXML(
-          form,
+        const prefilledForm =await this.appService.prefillFormXML(
+          formUrl,
           onFormSuccessData,
           prefillXML,
           files,
