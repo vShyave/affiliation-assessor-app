@@ -7,7 +7,7 @@ import { Button } from "../../components";
 import FilteringTable from "../../components/table/FilteringTable";
 
 import { readableDate } from "../../utils/common";
-import { filterUsers, getAllUsers } from "../../api";
+import { filterUsers, getAllUsers, searchUsers } from "../../api";
 import ADMIN_ROUTE_MAP from "../../routes/adminRouteMap";
 
 import DeleteUsersModal from "./DeleteUsers";
@@ -36,6 +36,8 @@ export default function ManageUsersList({
     limit: 10,
     totalCount: 0,
   });
+  const [isSearchOpen, setIsSearchOpen] = useState(false);
+  const [isFilterOpen, setIsFilterOpen] = useState(false);
 
   const COLUMNS = [
     {
@@ -157,8 +159,33 @@ export default function ManageUsersList({
     }
   };
 
+  const searchApiCall = async (searchData) => {
+    const pagination = {
+      offsetNo: paginationInfo.offsetNo,
+      limit: paginationInfo.limit,
+      ...searchData,
+    };
+    try {
+      const res = await searchUsers(pagination);
+      setPaginationInfo((prevState) => ({
+        ...prevState,
+        totalCount: res.data.assessors_aggregate.aggregate.totalCount,
+      }));
+      setUsersList(res?.data?.assessors);
+      const data = res?.data?.assessors;
+      data.forEach(setTableData);
+      setUserTableList(resUserData);
+    } catch (error) {
+      console.log("error - ", error);
+    }
+  };
+
   const filterApiCall = async (filters) => {
-    const postData = { offsetNo: 0, limit: 10, ...filters };
+    const postData = {
+      offsetNo: paginationInfo.offsetNo,
+      limit: paginationInfo.limit,
+      ...filters,
+    };
     try {
       const res = await filterUsers(postData);
       setPaginationInfo((prevState) => ({
@@ -175,7 +202,9 @@ export default function ManageUsersList({
   };
 
   useEffect(() => {
-    fetchAllUsers();
+    if (!isSearchOpen && !isFilterOpen) {
+      fetchAllUsers();
+    }
   }, [paginationInfo.offsetNo, paginationInfo.limit]);
 
   return (
@@ -207,8 +236,6 @@ export default function ManageUsersList({
           </div>
         </div>
         <div className="flex flex-col gap-4">
-          {/* <div className="text-sm font-medium text-center text-gray-500 border-b border-gray-200 dark:text-gray-400 dark:border-gray-700"> */}
-          {/* <div className="text-2xl w-full font-medium"> */}
           <FilteringTable
             dataList={userTableList}
             columns={COLUMNS}
@@ -220,9 +247,10 @@ export default function ManageUsersList({
             showFilter={true}
             pagination={true}
             filterApiCall={filterApiCall}
+            searchApiCall={searchApiCall}
+            setIsSearchOpen={setIsSearchOpen}
+            setIsFilterOpen={setIsFilterOpen}
           />
-          {/* </div> */}
-          {/* </div> */}
         </div>
       </div>
       {deleteUsersModel && (

@@ -3,7 +3,12 @@ import Calendar from "react-calendar";
 import { formatDate, readableDate } from "../../utils/common";
 
 //Manage Users
-export const ManageUsersFilters = ({ filterApiCall }) => {
+export const ManageUsersFilters = ({
+  filterApiCall,
+  paginationInfo,
+  setIsFilterOpen,
+  setPaginationInfo,
+}) => {
   const [filters, setFilters] = useState({ condition: {} });
   const handleChange = (e) => {
     if (e.target.value === "") {
@@ -18,10 +23,22 @@ export const ManageUsersFilters = ({ filterApiCall }) => {
         },
       },
     });
+    setIsFilterOpen(e.target.value ? true : false);
+    setPaginationInfo((prevState) => ({
+      ...prevState,
+      offsetNo: 0,
+    }));
   };
+  const handleClearFilter =()=>{
+    setFilters({ condition: {} })
+    setPaginationInfo((prevState) => ({
+      ...prevState,
+      offsetNo: 0,
+    }));
+  }
   useEffect(() => {
     filterApiCall(filters);
-  }, [filters]);
+  }, [filters, paginationInfo.offsetNo, paginationInfo.limit]);
   return (
     <div className="flex flex-grow text-gray-700 dark:text-gray-400 gap-8">
       <div className="flex">
@@ -48,12 +65,25 @@ export const ManageUsersFilters = ({ filterApiCall }) => {
           <option value="inactive">Inactive</option>
         </select>
       </div>
+      <div>
+        <button 
+        className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+        onClick={handleClearFilter}
+        >
+          Clear
+        </button>
+      </div>
     </div>
   );
 };
 
 //Manage Forms
-export const ManageFormsFilters = ({ filterApiCall }) => {
+export const ManageFormsFilters = ({
+  filterApiCall,
+  setIsFilterOpen,
+  paginationInfo,
+  setPaginationInfo,
+}) => {
   const [filters, setFilters] = useState({ condition: {} });
   const handleChange = (e) => {
     if (e.target.value === "") {
@@ -68,11 +98,24 @@ export const ManageFormsFilters = ({ filterApiCall }) => {
         },
       },
     });
+    setIsFilterOpen(e.target.value ? true : false);
+    setPaginationInfo((prevState) => ({
+      ...prevState,
+      offsetNo: 0,
+    }));
   };
 
+  const handleClearFilter =()=>{
+    setFilters({ condition: {} })
+    setPaginationInfo((prevState) => ({
+      ...prevState,
+      offsetNo: 0,
+    }));
+  }
+  
   useEffect(() => {
     filterApiCall(filters);
-  }, [filters]);
+  }, [filters, paginationInfo.offsetNo, paginationInfo.limit]);
 
   return (
     <div className="flex flex-grow text-gray-700 dark:text-gray-400 gap-8">
@@ -112,12 +155,25 @@ export const ManageFormsFilters = ({ filterApiCall }) => {
           <option value="paramedical">Paramedical</option>
         </select>
       </div>
+      <div>
+        <button 
+        className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+        onClick={handleClearFilter}
+        >
+          Clear
+        </button>
+      </div>
     </div>
   );
 };
 
 // Desktop Analysis
-export const DesktopAnalysisFilters = ({ filterApiCall }) => {
+export const DesktopAnalysisFilters = ({
+  filterApiCall,
+  setIsFilterOpen,
+  paginationInfo,
+  setPaginationInfo,
+}) => {
   const [showCalendar, setShowCalendar] = useState(false);
   const [buttonText, setButtonText] = useState("Published On");
   const [filters, setFilters] = useState({
@@ -125,6 +181,7 @@ export const DesktopAnalysisFilters = ({ filterApiCall }) => {
       assessor_id: { _is_null: true },
     },
   });
+  
   const handleChange = (e) => {
     if (e.target.value === "") {
       delete filters?.condition[e.target.name];
@@ -151,6 +208,12 @@ export const DesktopAnalysisFilters = ({ filterApiCall }) => {
         },
       });
     }
+    
+    setIsFilterOpen(e.target.value ? true : false);
+    setPaginationInfo((prevState) => ({
+      ...prevState,
+      offsetNo: 0,
+    }));
   };
 
   const handleDateSelect = (date) => {
@@ -164,12 +227,25 @@ export const DesktopAnalysisFilters = ({ filterApiCall }) => {
         },
       },
     });
+    setIsFilterOpen(date ? true : false);
+    setPaginationInfo((prevState) => ({
+      ...prevState,
+      offsetNo: 0,
+    }));
   };
 
+  const handleClearFilter =()=>{
+    setFilters({ condition: {} })
+    setPaginationInfo((prevState) => ({
+      ...prevState,
+      offsetNo: 0,
+    }));
+  }
+  
   useEffect(() => {
     filterApiCall(filters);
-  }, [filters]);
-
+  }, [filters, paginationInfo.offsetNo, paginationInfo.limit]);
+  
   return (
     <div className="flex flex-grow text-gray-700 dark:text-gray-400 gap-8">
       <div className="flex">
@@ -219,12 +295,25 @@ export const DesktopAnalysisFilters = ({ filterApiCall }) => {
           {/* <option value="inactive">Inactive</option> */}
         </select>
       </div>
+      <div>
+        <button 
+        className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+        onClick={handleClearFilter}
+        >
+          Clear
+        </button>
+      </div>
     </div>
   );
 };
 
 // On-Ground Inspection Analysis
-export const OnGroundInspectionFilters = ({ filterApiCall }) => {
+export const OnGroundInspectionFilters = ({
+  filterApiCall,
+  setIsFilterOpen,
+  paginationInfo,
+  setPaginationInfo,
+}) => {
   const [showCalendar, setShowCalendar] = useState(false);
   const [buttonText, setButtonText] = useState("Published On");
   const [filters, setFilters] = useState({ condition: {} });
@@ -241,6 +330,11 @@ export const OnGroundInspectionFilters = ({ filterApiCall }) => {
         },
       },
     });
+    setIsFilterOpen(e.target.value ? true : false);
+    setPaginationInfo((prevState) => ({
+      ...prevState,
+      offsetNo: 0,
+    }));
   };
 
   const handleDateSelect = (date) => {
@@ -256,53 +350,76 @@ export const OnGroundInspectionFilters = ({ filterApiCall }) => {
     });
   };
 
+  const handleClearFilter =()=>{
+    setFilters({ condition: {} })
+    setPaginationInfo((prevState) => ({
+      ...prevState,
+      offsetNo: 0,
+    }));
+  }
+  
   useEffect(() => {
     filterApiCall(filters);
-  }, [filters]);
-
+  }, [filters, paginationInfo.offsetNo, paginationInfo.limit]);
+  
   return (
     <div className="flex flex-grow text-gray-700 dark:text-gray-400 gap-8">
-      <div className="flex">
-        <select
-          name="role"
-          id="role"
-          onChange={() => {}}
-          className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-        >
-          <option value="">Assessor</option>
-          <option value="admin">Admin</option>
-          <option value="applicant">Applicant</option>
-        </select>
-      </div>
-      <div className="flex">
-        <button
-          className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full px-8 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-          onClick={() => setShowCalendar(true)}
-        >
-          {buttonText.includes("Published")
+        <div className="flex">
+          <select
+            name="role"
+            id="role"
+            onChange={() => {}}
+            className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+          >
+            <option value="">Assessor</option>
+            <option value="admin">Admin</option>
+            <option value="applicant">Applicant</option>
+          </select>
+        </div>
+        <div className="flex">
+          <button
+            className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full px-8 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+            onClick={() => setShowCalendar(true)}
+          >
+            {buttonText.includes("Published")
             ? buttonText
             : readableDate(buttonText)}
-        </button>
-        {showCalendar && <Calendar onChange={handleDateSelect} />}
+          </button>
+          {showCalendar && <Calendar onChange={handleDateSelect} />}
+        </div>
+        <div className="flex">
+          <select
+            name="review_status"
+            id="review_status"
+            onChange={handleChange}
+            className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+          >
+            <option value="">Review Status</option>
+            <option value="In Progress">In Progress</option>
+            <option value="Approved">Approved</option>
+            <option value="Rejected">Rejected</option>
+          </select>
+        </div>
       </div>
-      <div className="flex">
-        <select
-          name="review_status"
-          id="review_status"
-          onChange={handleChange}
-          className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+      <div>
+        <button 
+        className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+        onClick={handleClearFilter}
         >
-          <option value="">Review Status</option>
-          <option value="active">Active</option>
-          <option value="inactive">Inactive</option>
-        </select>
+          Clear
+        </button>
       </div>
     </div>
   );
 };
 
 // Schedule Management
-export const ScheduleManagementFilters = ({ filterApiCall }) => {
+export const ScheduleManagementFilters = ({
+  filterApiCall,
+  setIsFilterOpen,
+  paginationInfo,
+  setPaginationInfo,
+}) => {
   const [showCalendar, setShowCalendar] = useState(false);
   const [buttonText, setButtonText] = useState("Published On");
   const [filters, setFilters] = useState({ condition: {} });
@@ -333,6 +450,11 @@ export const ScheduleManagementFilters = ({ filterApiCall }) => {
         },
       });
     }
+    setIsFilterOpen(e.target.value ? true : false);
+    setPaginationInfo((prevState) => ({
+      ...prevState,
+      offsetNo: 0,
+    }));
   };
 
   const handleDateSelect = (date) => {
@@ -346,11 +468,24 @@ export const ScheduleManagementFilters = ({ filterApiCall }) => {
         },
       },
     });
+    setIsFilterOpen(date ? true : false);
+    setPaginationInfo((prevState) => ({
+      ...prevState,
+      offsetNo: 0,
+    }));
   };
 
+  const handleClearFilter =()=>{
+    setFilters({ condition: {} })
+    setPaginationInfo((prevState) => ({
+      ...prevState,
+      offsetNo: 0,
+    }));
+  }
+  
   useEffect(() => {
     filterApiCall(filters);
-  }, [filters]);
+  }, [filters, paginationInfo.offsetNo, paginationInfo.limit]);
 
   return (
     <div className="flex flex-grow text-gray-700 dark:text-gray-400 gap-8">
@@ -394,6 +529,14 @@ export const ScheduleManagementFilters = ({ filterApiCall }) => {
           <option value="Upcoming">Upcoming</option>
           <option value="Closed">Closed</option>
         </select>
+      </div>
+      <div>
+        <button 
+        className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+        onClick={handleClearFilter}
+        >
+          Clear
+        </button>
       </div>
     </div>
   );

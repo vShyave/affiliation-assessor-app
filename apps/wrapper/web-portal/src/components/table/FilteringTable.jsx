@@ -28,9 +28,6 @@ const FilteringTable = (props) => {
     state,
     setGlobalFilter,
     page,
-    pageOptions,
-    gotoPage,
-    pageCount,
     setPageSize,
     selectedFlatRows,
   } = useTable(
@@ -144,6 +141,11 @@ const FilteringTable = (props) => {
           filter={globalFilter}
           setFilter={setGlobalFilter}
           filterApiCall={props.filterApiCall}
+          searchApiCall={props.searchApiCall}
+          setIsSearchOpen={props.setIsSearchOpen}
+          setIsFilterOpen={props.setIsFilterOpen}
+          paginationInfo={props.paginationInfo}
+          setPaginationInfo={props.setPaginationInfo}
         />
       )}
       <div className={`overflow-x-auto ${props.moreHeight}`}>
