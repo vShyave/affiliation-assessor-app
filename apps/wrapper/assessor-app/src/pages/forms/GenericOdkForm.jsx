@@ -55,7 +55,7 @@ const GenericOdkForm = (props) => {
 
   const getFormURI = (form, ofsd, prefillSpec) => {
     return encodeURIComponent(
-      `${ENKETO_MANAGER_URL}/prefillXML?form=${form}&onFormSuccessData=${encodeFunction(
+      `${ENKETO_MANAGER_URL}/prefillXML?formUrl=${form}&onFormSuccessData=${encodeFunction(
         ofsd
       )}&prefillSpec=${encodeFunction(prefillSpec)}`
     );
