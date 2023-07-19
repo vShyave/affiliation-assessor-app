@@ -3,7 +3,7 @@ import { Outlet } from 'react-router-dom'
 
 function DesktopAnalysis() {
   return (
-    <div>
+    <div >
         <Outlet/>
     </div>
   )

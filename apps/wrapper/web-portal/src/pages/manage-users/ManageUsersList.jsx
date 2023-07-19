@@ -11,6 +11,7 @@ import { filterUsers, getAllUsers, searchUsers } from "../../api";
 import ADMIN_ROUTE_MAP from "../../routes/adminRouteMap";
 
 import DeleteUsersModal from "./DeleteUsers";
+import Nav from "../../components/Nav";
 import BulkUploadUsersModal from "./BulkUploadUsersModal";
 import {
   Menu,
@@ -209,6 +210,9 @@ export default function ManageUsersList({
 
   return (
     <>
+     <Nav/>
+    <div className={`container m-auto min-h-[calc(100vh-148px)] px-3 py-12`}>
+      <div className="flex flex-col justify-center align-center">
       <div className="flex flex-col justify-center align-center gap-4">
         <div className="flex flex-row">
           <div className="flex grow items-center">
@@ -254,6 +258,8 @@ export default function ManageUsersList({
           />
         </div>
       </div>
+      </div>
+      </div>
       {deleteUsersModel && (
         <DeleteUsersModal closeDeleteUsersModal={setDeleteUsersModel} />
       )}
@@ -262,6 +268,7 @@ export default function ManageUsersList({
           closeBulkUploadUsersModal={setBulkUploadUsersModel}
         />
       )}
+   
     </>
   );
 }
