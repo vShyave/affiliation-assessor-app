@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useAsyncDebounce } from "react-table";
 import { MdFilterList } from "react-icons/md";
 import { useLocation } from "react-router-dom";
@@ -10,14 +10,67 @@ import {
   OnGroundInspectionFilters,
   ScheduleManagementFilters,
 } from "./Filters";
+import { searchUsers } from "../../api";
 
-const GlobalFilter = ({ filter, setFilter, filterApiCall }) => {
-  const [value, setValue] = useState(filter);
+const GlobalFilter = ({
+  filter,
+  setFilter,
+  filterApiCall,
+  searchApiCall,
+  setIsSearchOpen,
+  setIsFilterOpen,
+  paginationInfo,
+  setPaginationInfo
+}) => {
+  const [value, setValue] = useState("");
   const [isFilter, setIsFilter] = useState(false);
   let location = useLocation();
-  const onChange = useAsyncDebounce((value) => {
-    setFilter(value || undefined);
-  }, 1000);
+  // const onChange = useAsyncDebounce((value) => {
+  //   setFilter(value || undefined);
+  // }, 1000);
+
+  const handleSearch = async (value) => {
+    setValue(value);
+    setIsSearchOpen(value ? true : false);
+    const postData = { searchString: `%${value}%` };
+    setPaginationInfo((prevState) => ({
+      ...prevState,
+      offsetNo: 0,
+    }));
+    switch (location.pathname) {
+      //Manage Users
+      case ADMIN_ROUTE_MAP.adminModule.manageUsers.home: {
+        const res = await searchApiCall(postData);
+        return;
+      }
+      //Manage Forms
+      case ADMIN_ROUTE_MAP.adminModule.manageForms.home: {
+        const res = await searchApiCall(postData);
+        return;
+      }
+      //Desktop Analysis
+      case ADMIN_ROUTE_MAP.adminModule.desktopAnalysis.home: {
+        const res = await searchApiCall(postData);
+        return;
+      }
+      //On-Ground Inspection Analysis
+      case ADMIN_ROUTE_MAP.adminModule.onGroundInspection.home: {
+        const res = await searchApiCall(postData);
+        return;
+      }
+      //Schedule Management
+      case ADMIN_ROUTE_MAP.adminModule.scheduleManagement.home: {
+        const res = await searchApiCall(postData);
+        return;
+      }
+    }
+  };
+
+  useEffect(() => {
+    if (value !== "") {
+      handleSearch(value);
+    }
+  }, [paginationInfo.offsetNo, paginationInfo.limit]);
 
   return (
     <div className="flex flex-col gap-4">
@@ -26,8 +79,8 @@ const GlobalFilter = ({ filter, setFilter, filterApiCall }) => {
           <input
             value={value || ""}
             onChange={(e) => {
-              setValue(e.target.value);
-              onChange(e.target.value);
+              // setValue(e.target.value);
+              handleSearch(e.target.value);
             }}
             type="search"
             className="block w-[1px] min-w-0 flex-auto rounded border border-solid border-neutral-300 bg-transparent bg-clip-padding p-2  text-base font-normal leading-[1.6] text-neutral-700 outline-none transition duration-200 ease-in-out focus:z-[3] focus:border-primary focus:text-neutral-700 focus:shadow-[inset_0_0_0_1px_rgb(59,113,202)] focus:outline-none dark:border-neutral-600 dark:text-neutral-200 dark:placeholder:text-neutral-200 dark:focus:border-primary"
@@ -50,22 +103,53 @@ const GlobalFilter = ({ filter, setFilter, filterApiCall }) => {
             switch (location.pathname) {
               //Manage Users
               case ADMIN_ROUTE_MAP.adminModule.manageUsers.home:
-                return <ManageUsersFilters filterApiCall={filterApiCall} />;
+                return (
+                  <ManageUsersFilters
+                    filterApiCall={filterApiCall}
+                    paginationInfo={paginationInfo}
+                    setIsFilterOpen={setIsFilterOpen}
+                    setPaginationInfo={setPaginationInfo}
+                  />
+                );
               //Manage Forms
               case ADMIN_ROUTE_MAP.adminModule.manageForms.home:
-                return <ManageFormsFilters filterApiCall={filterApiCall} />;
+                return (
+                  <ManageFormsFilters
+                    filterApiCall={filterApiCall}
+                    paginationInfo={paginationInfo}
+                    setIsFilterOpen={setIsFilterOpen}
+                    setPaginationInfo={setPaginationInfo}
+                  />
+                );
               //Desktop Analysis
               case ADMIN_ROUTE_MAP.adminModule.desktopAnalysis.home:
-                return <DesktopAnalysisFilters filterApiCall={filterApiCall} />;
+                return (
+                  <DesktopAnalysisFilters
+                    filterApiCall={filterApiCall}
+                    paginationInfo={paginationInfo}
+                    setIsFilterOpen={setIsFilterOpen}
+                    setPaginationInfo={setPaginationInfo}
+                  />
+                );
               //On-Ground Inspection Analysis
               case ADMIN_ROUTE_MAP.adminModule.onGroundInspection.home:
                 return (
-                  <OnGroundInspectionFilters filterApiCall={filterApiCall} />
+                  <OnGroundInspectionFilters
+                    filterApiCall={filterApiCall}
+                    paginationInfo={paginationInfo}
+                    setIsFilterOpen={setIsFilterOpen}
+                    setPaginationInfo={setPaginationInfo}
+                  />
                 );
               //Schedule Management
               case ADMIN_ROUTE_MAP.adminModule.scheduleManagement.home:
                 return (
-                  <ScheduleManagementFilters filterApiCall={filterApiCall} />
+                  <ScheduleManagementFilters
+                    filterApiCall={filterApiCall}
+                    paginationInfo={paginationInfo}
+                    setIsFilterOpen={setIsFilterOpen}
+                    setPaginationInfo={setPaginationInfo}
+                  />
                 );
             }
           })()}

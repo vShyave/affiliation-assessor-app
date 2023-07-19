@@ -10,6 +10,7 @@ import {
   filterDesktopAnalysis,
   getDesktopAnalysisForms,
   markReviewStatus,
+  searchDesktop,
 } from "../../api";
 import { getFieldName, readableDate } from "../../utils/common";
 import ADMIN_ROUTE_MAP from "../../routes/adminRouteMap";
@@ -26,6 +27,8 @@ const DesktopAnalysisList = () => {
     limit: 10,
     totalCount: 0,
   });
+  const [isSearchOpen, setIsSearchOpen] = useState(false);
+  const [isFilterOpen, setIsFilterOpen] = useState(false);
 
   const COLUMNS = [
     {
@@ -84,6 +87,8 @@ const DesktopAnalysisList = () => {
 
   const handleSelectMenu = (menuItem) => {
     setState((prevState) => ({ ...prevState, menu_selected: menuItem }));
+    setPaginationInfo((prevState)=>({...prevState,offsetNo:0}))
+    setIsFilterOpen(false)
   };
 
   const navigateToView = (formObj) => {
@@ -102,7 +107,9 @@ const DesktopAnalysisList = () => {
   };
 
   useEffect(() => {
-    fetchDesktopAnalysisForms();
+    if (!isSearchOpen && !isFilterOpen) {
+      fetchDesktopAnalysisForms();
+    }
   }, [paginationInfo.offsetNo, paginationInfo.limit]);
 
   const fetchDesktopAnalysisForms = async () => {
@@ -122,8 +129,30 @@ const DesktopAnalysisList = () => {
     }
   };
 
+  const searchApiCall = async (searchData) => {
+    const postData = {
+      offsetNo: paginationInfo.offsetNo,
+      limit: paginationInfo.limit,
+      ...searchData,
+    };
+    try {
+      const res = await searchDesktop(postData);
+      setPaginationInfo((prevState) => ({
+        ...prevState,
+        totalCount: res.data.form_submissions_aggregate.aggregate.totalCount,
+      }));
+      setFormsList(res?.data?.form_submissions);
+    } catch (error) {
+      console.log("error - ", error);
+    }
+  };
+
   const filterApiCall = async (filters) => {
-    const postData = { offsetNo: 0, limit: 10, ...filters };
+    const postData = {
+      offsetNo: paginationInfo.offsetNo,
+      limit: paginationInfo.limit,
+      ...filters,
+    };
     try {
       const res = await filterDesktopAnalysis(postData);
       setPaginationInfo((prevState) => ({
@@ -276,21 +305,25 @@ const DesktopAnalysisList = () => {
               </a>
             </li>
           </ul>
+          
           {/* <div>create a search bar and filter component here</div> */}
           {/* table creation starts here */}
-
-          <div className="flex flex-col gap-4">
-            <FilteringTable
-              dataList={formsDataList}
-              navigateFunc={navigateToView}
-              columns={COLUMNS}
-              pagination={true}
-              onRowSelect={() => {}}
-              filterApiCall={filterApiCall}
-              showFilter={true}
-              paginationInfo={paginationInfo}
-              setPaginationInfo={setPaginationInfo}
-            />
+            <div className="flex flex-col gap-4">
+              <FilteringTable
+                dataList={formsDataList}
+                navigateFunc={navigateToView}
+                columns={COLUMNS}
+                pagination={true}
+                onRowSelect={() => {}}
+                filterApiCall={filterApiCall}
+                showFilter={true}
+                paginationInfo={paginationInfo}
+                setPaginationInfo={setPaginationInfo}
+                searchApiCall={searchApiCall}
+                setIsSearchOpen={setIsSearchOpen}
+                setIsFilterOpen={setIsFilterOpen}
+              />
+            </div>
           </div>
         </div>
       </div>

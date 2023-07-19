@@ -5,11 +5,11 @@ import FilteringTable from "../../components/table/FilteringTable";
 import ADMIN_ROUTE_MAP from "../../routes/adminRouteMap";
 import {
   getForms,
-  markReviewStatus,
   publishForms,
   unpublishForms,
   deleteForm,
   filterForms,
+  searchForms,
 } from "../../api";
 import { getFieldName, readableDate } from "../../utils/common";
 import Toast from "../../components/Toast";
@@ -41,6 +41,8 @@ const FormsOverview = () => {
     limit: 10,
     totalCount: 0,
   });
+  const [isSearchOpen, setIsSearchOpen] = useState(false);
+  const [isFilterOpen, setIsFilterOpen] = useState(false);
 
   const COLUMN_DRAFTS = [
     {
@@ -152,16 +154,10 @@ const FormsOverview = () => {
     navigation(navigationURL);
   };
 
-  const viewForm = async (postData) => {
-    try {
-      const res = await markReviewStatus(postData);
-    } catch (error) {
-      console.log("error - ", error);
-    }
-  };
-
   const handleSelectMenu = (menuItem) => {
     setState((prevState) => ({ ...prevState, menu_selected: menuItem }));
+    setPaginationInfo((prevState)=>({...prevState,offsetNo:0}))
+    setIsFilterOpen(false)
   };
 
   const publish = (formId) => {
@@ -180,16 +176,38 @@ const FormsOverview = () => {
   };
 
   useEffect(() => {
-    fetchFormsList();
-  }, [paginationInfo.offsetNo, paginationInfo.limit]);
+    if (state.menu_selected !== "create_new" && !isSearchOpen && !isFilterOpen) {
+      fetchFormsList();
+    }
+  }, [paginationInfo.offsetNo, paginationInfo.limit, state.menu_selected]);
 
   const fetchFormsList = async () => {
-    const pagination = {
+    const postData = {
       offsetNo: paginationInfo.offsetNo,
       limit: paginationInfo.limit,
+      formStatus: state.menu_selected,
     };
     try {
-      const res = await getForms(pagination);
+      const res = await getForms(postData);
+      setPaginationInfo((prevState) => ({
+        ...prevState,
+        totalCount: res?.data?.forms_aggregate?.aggregate.totalCount,
+      }));
+      setFormsList(res?.data?.forms);
+    } catch (error) {
+      console.log("error - ", error);
+    }
+  };
+
+  const searchApiCall = async (searchData) => {
+    const postData = {
+      offsetNo: paginationInfo.offsetNo,
+      limit: paginationInfo.limit,
+      formStatus: state.menu_selected ,
+      ...searchData,
+    };
+    try {
+      const res = await searchForms(postData);
       setPaginationInfo((prevState) => ({
         ...prevState,
         totalCount: res?.data?.forms_aggregate?.aggregate.totalCount,
@@ -201,7 +219,17 @@ const FormsOverview = () => {
   };
 
   const filterApiCall = async (filters) => {
-    const postData = { offsetNo: 0, limit: 10, ...filters };
+    const customFilters = {
+      condition: {
+        ...filters["condition"],
+        form_status: { _eq: state.menu_selected },
+      },
+    };
+    const postData = {
+      offsetNo: paginationInfo.offsetNo,
+      limit: paginationInfo.limit,
+      ...customFilters,
+    };
     try {
       const res = await filterForms(postData);
       setPaginationInfo((prevState) => ({
@@ -481,101 +509,140 @@ const FormsOverview = () => {
                 }`}
                 aria-current="page"
               >
-                Draft
-              </a>
-            </li>
-            <li className="" onClick={() => handleSelectMenu("published")}>
-              <a
-                href="#"
-                className={`inline-block p-4 rounded-t-lg dark:text-blue-500 dark:border-blue-600 ${
-                  state.menu_selected === "published"
-                    ? "text-blue-600 border-b-2 border-blue-600"
-                    : ""
-                }`}
+                <a
+                  href="#"
+                  className={`inline-block p-4 rounded-t-lg dark:text-blue-500 dark:border-blue-600 ${
+                    state.menu_selected === "create_new"
+                      ? "text-blue-600 border-b-2 border-blue-600"
+                      : ""
+                  }`}
+                >
+                  Create New
+                </a>
+              </li>
+              <li className="mr-2" onClick={() => handleSelectMenu("Draft")}>
+                <a
+                  href="#"
+                  className={`inline-block p-4 rounded-t-lg dark:text-blue-500 dark:border-blue-600 ${
+                    state.menu_selected === "Draft"
+                      ? "text-blue-600 border-b-2 border-blue-600"
+                      : ""
+                  }`}
+                  aria-current="page"
+                >
+                  Draft
+                </a>
+              </li>
+              <li
+                className="mr-2"
+                onClick={() => handleSelectMenu("Published")}
               >
-                Published
-              </a>
-            </li>
-            <li className="" onClick={() => handleSelectMenu("unpublished")}>
-              <a
-                href="#"
-                className={`inline-block p-4 rounded-t-lg dark:text-blue-500 dark:border-blue-600 ${
-                  state.menu_selected === "unpublished"
-                    ? "text-blue-600 border-b-2 border-blue-600"
-                    : ""
-                }`}
+                <a
+                  href="#"
+                  className={`inline-block p-4 rounded-t-lg dark:text-blue-500 dark:border-blue-600 ${
+                    state.menu_selected === "Published"
+                      ? "text-blue-600 border-b-2 border-blue-600"
+                      : ""
+                  }`}
+                >
+                  Published
+                </a>
+              </li>
+              <li
+                className="mr-2"
+                onClick={() => handleSelectMenu("Unpublished")}
               >
-                Unpublished
-              </a>
-            </li>
-          </ul>
-          {state.menu_selected === "create_new" && (
-            <div className="flex flex-col gap-4">
-              <Card moreClass="flex h-[50vh]">
-                <div className="flex flex-col gap-4 m-auto items-center">
-                  <div className="font-semibold text-xl">
-                    Click on the button to a create a form
+                <a
+                  href="#"
+                  className={`inline-block p-4 rounded-t-lg dark:text-blue-500 dark:border-blue-600 ${
+                    state.menu_selected === "Unpublished"
+                      ? "text-blue-600 border-b-2 border-blue-600"
+                      : ""
+                  }`}
+                >
+                  Archived
+                </a>
+              </li>
+            </ul>
+            {state.menu_selected === "create_new" && (
+              <div className="flex flex-col gap-4">
+                <Card moreClass="flex h-[50vh]">
+                  <div className="flex flex-col gap-4 m-auto items-center">
+                    <div className="font-semibold text-xl">
+                      Click on the button to a create a form
+                    </div>
+                    <Button
+                      moreClass="text-white w-3/5"
+                      text="Upload ODK"
+                      onClick={() => navigation("/manage-forms/create-form")}
+                    />
+                    {/* Or
+                            <Button moreClass="text-white w-3/5" text="Configure Manually" /> */}
                   </div>
-                  <Button
-                    moreClass="text-white w-3/5"
-                    text="Upload ODK"
-                    onClick={() => navigation("/manage-forms/create-form")}
-                  />
-                </div>
-              </Card>
-            </div>
-          )}
-          {state.menu_selected === "draft" && (
-            <div className="flex flex-col gap-4">
-              <FilteringTable
-                dataList={formsDataList.filter(
-                  (item) => item.form_status === "Draft"
-                )}
-                navigateFunc={() => {}}
-                columns={COLUMN_DRAFTS}
-                filterApiCall={filterApiCall}
-                onRowSelect={() => {}}
-                pagination={true}
-                showFilter={true}
-                paginationInfo={paginationInfo}
-                setPaginationInfo={setPaginationInfo}
-              />
-            </div>
-          )}
-          {state.menu_selected === "published" && (
-            <div className="flex flex-col gap-4">
-              <FilteringTable
-                dataList={formsDataList.filter(
-                  (item) => item.form_status === "Published"
-                )}
-                navigateFunc={() => {}}
-                columns={COLUMN_PUBLISHED}
-                onRowSelect={() => {}}
-                pagination={true}
-                filterApiCall={filterApiCall}
-                showFilter={true}
-                paginationInfo={paginationInfo}
-                setPaginationInfo={setPaginationInfo}
-              />
-            </div>
-          )}
-          {state.menu_selected === "unpublished" && (
-            <div className="flex flex-col gap-4">
-              <FilteringTable
-                dataList={formsDataList.filter(
-                  (item) => item.form_status === "Unpublished"
-                )}
-                navigateFunc={() => {}}
-                columns={COLUMN_UNPUBLISHED}
-                onRowSelect={() => {}}
-                pagination={true}
-                filterApiCall={filterApiCall}
-                showFilter={true}
-                paginationInfo={paginationInfo}
-                setPaginationInfo={setPaginationInfo}
-              />
-            </div>
-          )}
+                </Card>
+              </div>
+            )}
+            {state.menu_selected === "Draft" && (
+              <div className="text-2xl mt-4 font-medium">
+                <FilteringTable
+                  dataList={formsDataList.filter(
+                    (item) => item.form_status === "Draft"
+                  )}
+                  navigateFunc={() => {}}
+                  columns={COLUMN_DRAFTS}
+                  filterApiCall={filterApiCall}
+                  onRowSelect={() => {}}
+                  pagination={true}
+                  showFilter={true}
+                  paginationInfo={paginationInfo}
+                  setPaginationInfo={setPaginationInfo}
+                  searchApiCall={searchApiCall}
+                  setIsSearchOpen={setIsSearchOpen}
+                  setIsFilterOpen={setIsFilterOpen}
+                />
+              </div>
+            )}
+            {state.menu_selected === "Published" && (
+              <div className="text-2xl mt-4 font-medium">
+                <FilteringTable
+                  dataList={formsDataList.filter(
+                    (item) => item.form_status === "Published"
+                  )}
+                  navigateFunc={() => {}}
+                  columns={COLUMN_PUBLISHED}
+                  onRowSelect={() => {}}
+                  pagination={true}
+                  filterApiCall={filterApiCall}
+                  showFilter={true}
+                  paginationInfo={paginationInfo}
+                  setPaginationInfo={setPaginationInfo}
+                  searchApiCall={searchApiCall}
+                  setIsSearchOpen={setIsSearchOpen}
+                  setIsFilterOpen={setIsFilterOpen}
+                />
+              </div>
+            )}
+            {state.menu_selected === "Unpublished" && (
+              <div className="text-2xl mt-4 font-medium">
+                <FilteringTable
+                  dataList={formsDataList.filter(
+                    (item) => item.form_status === "Unpublished"
+                  )}
+                  navigateFunc={() => {}}
+                  columns={COLUMN_UNPUBLISHED}
+                  onRowSelect={() => {}}
+                  pagination={true}
+                  filterApiCall={filterApiCall}
+                  showFilter={true}
+                  paginationInfo={paginationInfo}
+                  setPaginationInfo={setPaginationInfo}
+                  searchApiCall={searchApiCall}
+                  setIsSearchOpen={setIsSearchOpen}
+                  setIsFilterOpen={setIsFilterOpen}
+                />
+              </div>
+            )}
+          </div>
         </div>
       </div>
     </>

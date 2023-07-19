@@ -63,7 +63,7 @@ export const filterOGA = async (postData) => {
     postData
   );
   return res;
-}
+};
 
 // Manage forms APIs
 export const convertODKtoXML = async (postData) => {
@@ -214,6 +214,47 @@ export const filterAssessments = async (postData) => {
 export const createUsers = async (postData) => {
   const res = await adminCustomPost.post(
     API_URL.manageUsers.addUsers,
+    postData
+  );
+  return res;
+};
+
+//global search
+export const searchUsers = async (postData) => {
+  const res = await adminCustomPost.post(
+    API_URL.GLOBAL_SEARCH.searchUsers,
+    postData
+  );
+  return res;
+};
+
+export const searchDesktop = async (postData) => {
+  const res = await adminCustomPost.post(
+    API_URL.GLOBAL_SEARCH.searchDesktop,
+    postData
+  );
+  return res;
+};
+
+export const searchOGA = async (postData) => {
+  const res = await adminCustomPost.post(
+    API_URL.GLOBAL_SEARCH.searchOGA,
+    postData
+  );
+  return res;
+};
+
+export const searchForms = async (postData) => {
+  const res = await adminCustomPost.post(
+    API_URL.GLOBAL_SEARCH.searchForms,
+    postData
+  );
+  return res;
+};
+
+export const searchAssessments = async (postData) => {
+  const res = await adminCustomPost.post(
+    API_URL.GLOBAL_SEARCH.searchAssessments,
     postData
   );
   return res;
