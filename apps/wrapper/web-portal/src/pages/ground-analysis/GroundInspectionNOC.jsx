@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useNavigate, Link } from "react-router-dom";
+import { useNavigate, Link} from "react-router-dom";
 
 import { FaAngleRight } from "react-icons/fa";
 
@@ -19,6 +19,12 @@ import {
 import GlobalFilter from "../../components/table/GlobalFilter";
 
 export default function GroundInspectionNoc({ notification }) {
+  const navigate = useNavigate();
+
+  const goBack = () => {
+      navigate(-1);
+  };
+
   const [selectedUser, setSelectedUser] = useState([]);
 
   const navigation = useNavigate();
@@ -62,18 +68,20 @@ export default function GroundInspectionNoc({ notification }) {
         <div className="container mx-auto px-3 py-3">
           <div className="flex flex-row font-bold gap-2 items-center">
             <Link to={ADMIN_ROUTE_MAP.adminModule.manageForms.home}>
-              <span className="text-gray-500 cursor-pointer">
+              <span className="text-primary-400 cursor-pointer">
                 Home
               </span>
             </Link>
             <FaAngleRight className="text-[16px]" />
             <Link to={ADMIN_ROUTE_MAP.adminModule.onGroundInspection.home}>
-            <span className="text-gray-500">All applications</span>
+            <span className="text-primary-400">All applications</span>
             </Link>
             <FaAngleRight className="text-[16px]" />
-            <span className="text-gray-500 uppercase">Back to application</span>
+            <Link >
+            <span onClick={goBack} className="text-primary-400">Back to application</span>
+            </Link>
             <FaAngleRight className="text-[16px]" />
-            <span className="text-primary-400  uppercase">Issue NOC</span>
+            <span className="text-gray-500 uppercase">Issue NOC</span>
           </div>
         </div>
       </div> 
@@ -87,7 +95,7 @@ export default function GroundInspectionNoc({ notification }) {
             </div>
             <div className="flex grow gap-4 justify-end items-center">
               <button
-                onClick={() => navigation("/groundInspection")}
+                onClick={goBack}
                 className="flex flex-wrap items-center justify-center gap-2 border border-blue-700 bg-white text-blue-700 w-[140px] h-[40px] font-medium rounded-[4px]"
               >
                 Cancel
