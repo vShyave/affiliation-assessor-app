@@ -139,10 +139,14 @@ export class AppService {
 
   async prefillFormXML(
     formUrl: string,
+    // form: string,
     onFormSuccessData: any,
     prefillSpec: any,
     files: any,
   ): Promise<string> {
+    //Read the file from local forms folder
+    // const formFilePath = join(__dirname, `forms/${form}.xml`);
+    // const formString = fs.readFileSync(formFilePath, 'utf8');
     // Download XML file from Google Cloud Storage bucket URL
     const response = await axios.get(formUrl);
     const formString = response.data;
