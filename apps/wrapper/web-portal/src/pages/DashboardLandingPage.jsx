@@ -7,7 +7,7 @@ const DashboardLandingPage = (props) => {
   return (
     <div>
       <Header></Header>
-      <div className={`container m-auto min-h-[calc(100vh-148px)] px-3 py-12 ${props.moreClass}`}>
+      <div className={`container m-auto min-h-[calc(100vh-148px)] px-3 py-12`}>
         <Outlet />
       </div>
     </div>

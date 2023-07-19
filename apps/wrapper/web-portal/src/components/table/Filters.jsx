@@ -1,149 +1,370 @@
-import { useState } from "react";
-import Label from "../Label";
+import { useEffect, useState } from "react";
+import Calendar from "react-calendar";
+import { formatDate, readableDate } from "../../utils/common";
 
 //Manage Users
-export const ManageUsersFilters = ({ filterApiCall }) => {
-  const [filters,setFilters] = useState({})
-  const handleChange = (e)=>{
-        setFilters((prevState)=>({...filters,[e.target.name]:e.target.value}))
-  }
+export const ManageUsersFilters = ({
+  filterApiCall,
+  paginationInfo,
+  setIsFilterOpen,
+  setPaginationInfo,
+}) => {
+  const [filters, setFilters] = useState({ condition: {} });
+  const handleChange = (e) => {
+    if (e.target.value === "") {
+      delete filters?.condition[e.target.name];
+      return;
+    }
+    setFilters({
+      condition: {
+        ...filters.condition,
+        [e.target.name]: {
+          _eq: e.target.value,
+        },
+      },
+    });
+    setIsFilterOpen(e.target.value ? true : false);
+    setPaginationInfo((prevState) => ({
+      ...prevState,
+      offsetNo: 0,
+    }));
+  };
+  const handleClearFilter = () => {
+    setFilters({ condition: {} });
+    setPaginationInfo((prevState) => ({
+      ...prevState,
+      offsetNo: 0,
+    }));
+  };
+  useEffect(() => {
+    filterApiCall(filters);
+  }, [filters, paginationInfo.offsetNo, paginationInfo.limit]);
   return (
-    <div className="flex flex-grow justify-around text-gray-700 dark:text-gray-400 p-4">
-      <div className="grid grid-cols-12 gap-8">
-        <div className="sm:col-span-3 ">
-          <select
-            name="role"
-            id="role"
-            onChange={handleChange}
-            className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-          >
-            <option value="">Role</option>
-            <option value="admin">Admin</option>
-            <option value="applicant">Applicant</option>
-          </select>
-        </div>
-        <div className="sm:col-span-3 ">
-          <select
-            name="account_status"
-            id="account_status"
-            onChange={handleChange}
-            className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-          >
-            <option value="">Account Status</option>
-            <option value="active">Active</option>
-            <option value="inactive">Inactive</option>
-          </select>
-        </div>
+    <div className="flex flex-grow text-gray-700 dark:text-gray-400 gap-8">
+      <div className="flex">
+        <select
+          name="role"
+          id="role"
+          onChange={handleChange}
+          className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+        >
+          <option value="">Role</option>
+          <option value="admin">Admin</option>
+          <option value="applicant">Applicant</option>
+        </select>
+      </div>
+      <div className="flex">
+        <select
+          name="workingstatus"
+          id="workingstatus"
+          onChange={handleChange}
+          className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+        >
+          <option value="">Account Status</option>
+          <option value="active">Active</option>
+          <option value="inactive">Inactive</option>
+        </select>
+      </div>
+      <div>
+        <button
+          className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+          onClick={handleClearFilter}
+        >
+          Clear
+        </button>
       </div>
     </div>
   );
 };
 
 //Manage Forms
-export const ManageFormsFilters = ({ filterApiCall }) => (
-  <div className="flex flex-grow justify-around text-gray-700 dark:text-gray-400 p-4">
-    <div className="grid grid-cols-12 gap-8">
-      <div className="sm:col-span-3 ">
+export const ManageFormsFilters = ({
+  filterApiCall,
+  setIsFilterOpen,
+  paginationInfo,
+  setPaginationInfo,
+}) => {
+  const [filters, setFilters] = useState({ condition: {} });
+  const handleChange = (e) => {
+    if (e.target.value === "") {
+      delete filters?.condition[e.target.name];
+      return;
+    }
+    setFilters({
+      condition: {
+        ...filters.condition,
+        [e.target.name]: {
+          _eq: e.target.value,
+        },
+      },
+    });
+    setIsFilterOpen(e.target.value ? true : false);
+    setPaginationInfo((prevState) => ({
+      ...prevState,
+      offsetNo: 0,
+    }));
+  };
+
+  const handleClearFilter = () => {
+    setFilters({ condition: {} });
+    setPaginationInfo((prevState) => ({
+      ...prevState,
+      offsetNo: 0,
+    }));
+  };
+
+  useEffect(() => {
+    filterApiCall(filters);
+  }, [filters, paginationInfo.offsetNo, paginationInfo.limit]);
+
+  return (
+    <div className="flex flex-grow text-gray-700 dark:text-gray-400 gap-8">
+      <div className="flex">
         <select
           name="application_type"
           id="application_type"
-          onChange={() => {}}
+          onChange={handleChange}
           className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
         >
           <option value="">Application Type</option>
-          <option value="admin">Admin</option>
-          <option value="applicant">Applicant</option>
+          <option value="new_institute">New Institute</option>
+          <option value="new_course">New Course</option>
         </select>
       </div>
-      <div className="sm:col-span-3 ">
+      <div className="flex">
         <select
-          name="round_no"
-          id="round_no"
-          onChange={() => {}}
+          name="round"
+          id="round"
+          onChange={handleChange}
           className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
         >
-          <option value="">Round</option>
-          <option value="active">Active</option>
-          <option value="inactive">Inactive</option>
+          <option value="">Round No.</option>
+          <option value={1}>Round 1</option>
+          <option value={2}>Round 2</option>
         </select>
       </div>
-      <div className="sm:col-span-3 ">
+      <div className="flex">
         <select
           name="course_type"
           id="course_type"
-          onChange={() => {}}
+          onChange={handleChange}
           className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
         >
           <option value="">Course Type</option>
-          <option value="active">Active</option>
-          <option value="inactive">Inactive</option>
+          <option value="nursing">Nursing</option>
+          <option value="paramedical">Paramedical</option>
         </select>
       </div>
+      <div>
+        <button
+          className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+          onClick={handleClearFilter}
+        >
+          Clear
+        </button>
+      </div>
     </div>
-  </div>
-);
+  );
+};
 
 // Desktop Analysis
-export const DesktopAnalysisFilters = ({ filterApiCall }) => (
-  <div className="flex flex-grow justify-around text-gray-700 dark:text-gray-400 p-4">
-    <div className="grid grid-cols-12 gap-8">
-      <div className="sm:col-span-3 ">
+export const DesktopAnalysisFilters = ({
+  filterApiCall,
+  setIsFilterOpen,
+  paginationInfo,
+  setPaginationInfo,
+}) => {
+  const [showCalendar, setShowCalendar] = useState(false);
+  const [buttonText, setButtonText] = useState("Published On");
+  const [filters, setFilters] = useState({
+    condition: {
+      assessor_id: { _is_null: true },
+    },
+  });
+
+  const handleChange = (e) => {
+    if (e.target.value === "") {
+      delete filters?.condition[e.target.name];
+      return;
+    }
+    if (e.target.name === "course_applied") {
+      setFilters({
+        condition: {
+          ...filters.condition,
+          institute: {
+            [e.target.name]: {
+              _eq: e.target.value,
+            },
+          },
+        },
+      });
+    } else {
+      setFilters({
+        condition: {
+          ...filters.condition,
+          [e.target.name]: {
+            _eq: e.target.value,
+          },
+        },
+      });
+    }
+
+    setIsFilterOpen(e.target.value ? true : false);
+    setPaginationInfo((prevState) => ({
+      ...prevState,
+      offsetNo: 0,
+    }));
+  };
+
+  const handleDateSelect = (date) => {
+    setButtonText(formatDate(date));
+    setShowCalendar(false);
+    setFilters({
+      condition: {
+        ...filters.condition,
+        submitted_on: {
+          _eq: formatDate(date),
+        },
+      },
+    });
+    setIsFilterOpen(date ? true : false);
+    setPaginationInfo((prevState) => ({
+      ...prevState,
+      offsetNo: 0,
+    }));
+  };
+
+  const handleClearFilter = () => {
+    setFilters({ condition: {} });
+    setPaginationInfo((prevState) => ({
+      ...prevState,
+      offsetNo: 0,
+    }));
+  };
+
+  useEffect(() => {
+    filterApiCall(filters);
+  }, [filters, paginationInfo.offsetNo, paginationInfo.limit]);
+
+  return (
+    <div className="flex flex-grow text-gray-700 dark:text-gray-400 gap-8">
+      <div className="flex">
         <select
-          name="role"
-          id="role"
-          onChange={() => {}}
+          name="assessment_type"
+          id="assessment_type"
+          onChange={handleChange}
           className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
         >
           <option value="">Application Type</option>
-          <option value="admin">Admin</option>
+          <option value="institute">Institute</option>
           <option value="applicant">Applicant</option>
         </select>
       </div>
-      <div className="sm:col-span-3 ">
+      <div className="flex">
         <select
-          name="account_status"
-          id="account_status"
-          onChange={() => {}}
+          name="course_applied"
+          id="course_applied"
+          onChange={handleChange}
           className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
         >
           <option value="">Course Name</option>
-          <option value="active">Active</option>
-          <option value="inactive">Inactive</option>
+          <option value="Nursing">Nursing</option>
+          {/* <option value="inactive">Inactive</option> */}
         </select>
       </div>
-      <div className="sm:col-span-3 ">
-        <select
-          name="account_status"
-          id="account_status"
-          onChange={() => {}}
-          className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+      <div className="flex">
+        <button
+          className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 px-8"
+          onClick={() => setShowCalendar(true)}
         >
-          <option value="">Published On</option>
-          <option value="active">Active</option>
-          <option value="inactive">Inactive</option>
-        </select>
+          {buttonText.includes("Published")
+            ? buttonText
+            : readableDate(buttonText)}
+        </button>
+        {showCalendar && <Calendar onChange={handleDateSelect} />}
       </div>
-      <div className="sm:col-span-3 ">
+      <div className="flex">
         <select
-          name="account_status"
-          id="account_status"
+          name="review_status"
+          id="review_status"
           onChange={() => {}}
           className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
         >
           <option value="">Status</option>
-          <option value="active">Active</option>
-          <option value="inactive">Inactive</option>
+          <option value="In Progress">In Progress</option>
+          {/* <option value="inactive">Inactive</option> */}
         </select>
       </div>
+      <div>
+        <button
+          className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+          onClick={handleClearFilter}
+        >
+          Clear
+        </button>
+      </div>
     </div>
-  </div>
-);
+  );
+};
 
 // On-Ground Inspection Analysis
-export const OnGroundInspectionFilters = ({ filterApiCall }) => (
-  <div className="flex flex-grow justify-around text-gray-700 dark:text-gray-400 p-4">
-    <div className="grid grid-cols-12 gap-8">
-      <div className="sm:col-span-3 ">
+export const OnGroundInspectionFilters = ({
+  filterApiCall,
+  setIsFilterOpen,
+  paginationInfo,
+  setPaginationInfo,
+}) => {
+  const [showCalendar, setShowCalendar] = useState(false);
+  const [buttonText, setButtonText] = useState("Published On");
+  const [filters, setFilters] = useState({ condition: {} });
+  const handleChange = (e) => {
+    if (e.target.value === "") {
+      delete filters?.condition[e.target.name];
+      return;
+    }
+    setFilters({
+      condition: {
+        ...filters.condition,
+        [e.target.name]: {
+          _eq: e.target.value,
+        },
+      },
+    });
+    setIsFilterOpen(e.target.value ? true : false);
+    setPaginationInfo((prevState) => ({
+      ...prevState,
+      offsetNo: 0,
+    }));
+  };
+
+  const handleDateSelect = (date) => {
+    setButtonText(formatDate(date));
+    setShowCalendar(false);
+    setFilters({
+      condition: {
+        ...filters.condition,
+        submitted_on: {
+          _eq: formatDate(date),
+        },
+      },
+    });
+  };
+
+  const handleClearFilter = () => {
+    setFilters({ condition: {} });
+    setPaginationInfo((prevState) => ({
+      ...prevState,
+      offsetNo: 0,
+    }));
+  };
+
+  useEffect(() => {
+    filterApiCall(filters);
+  }, [filters, paginationInfo.offsetNo, paginationInfo.limit]);
+
+  return (
+    <div className="flex flex-grow text-gray-700 dark:text-gray-400 gap-8">
+      <div className="flex">
         <select
           name="role"
           id="role"
@@ -155,74 +376,167 @@ export const OnGroundInspectionFilters = ({ filterApiCall }) => (
           <option value="applicant">Applicant</option>
         </select>
       </div>
-      <div className="sm:col-span-3 ">
+      <div className="flex">
+        <button
+          className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full px-8 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+          onClick={() => setShowCalendar(true)}
+        >
+          {buttonText.includes("Published")
+            ? buttonText
+            : readableDate(buttonText)}
+        </button>
+        {showCalendar && <Calendar onChange={handleDateSelect} />}
+      </div>
+      <div className="flex">
         <select
-          name="account_status"
-          id="account_status"
-          onChange={() => {}}
+          name="review_status"
+          id="review_status"
+          onChange={handleChange}
           className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
         >
-          <option value="">Published On</option>
-          <option value="active">Active</option>
-          <option value="inactive">Inactive</option>
+          <option value="">Review Status</option>
+          <option value="In Progress">In Progress</option>
+          <option value="Approved">Approved</option>
+          <option value="Rejected">Rejected</option>
         </select>
       </div>
-      <div className="sm:col-span-3 ">
-        <select
-          name="account_status"
-          id="account_status"
-          onChange={() => {}}
+      <div>
+        <button
           className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+          onClick={handleClearFilter}
         >
-          <option value="">Status</option>
-          <option value="active">Active</option>
-          <option value="inactive">Inactive</option>
-        </select>
+          Clear
+        </button>
       </div>
     </div>
-  </div>
-);
+  );
+};
 
 // Schedule Management
-export const ScheduleManagementFilters = ({ filterApiCall }) => (
-  <div className="flex flex-grow justify-around text-gray-700 dark:text-gray-400 p-4">
-    <div className="grid grid-cols-12 gap-8">
-      <div className="sm:col-span-3 ">
+export const ScheduleManagementFilters = ({
+  filterApiCall,
+  setIsFilterOpen,
+  paginationInfo,
+  setPaginationInfo,
+}) => {
+  const [showCalendar, setShowCalendar] = useState(false);
+  const [buttonText, setButtonText] = useState("Published On");
+  const [filters, setFilters] = useState({ condition: {} });
+
+  const handleChange = (e) => {
+    if (e.target.value === "") {
+      delete filters?.condition[e.target.name];
+      return;
+    }
+    if (e.target.name === "district") {
+      setFilters({
+        condition: {
+          ...filters.condition,
+          institute: {
+            [e.target.name]: {
+              _eq: e.target.value,
+            },
+          },
+        },
+      });
+    } else {
+      setFilters({
+        condition: {
+          ...filters.condition,
+          [e.target.name]: {
+            _eq: e.target.value,
+          },
+        },
+      });
+    }
+    setIsFilterOpen(e.target.value ? true : false);
+    setPaginationInfo((prevState) => ({
+      ...prevState,
+      offsetNo: 0,
+    }));
+  };
+
+  const handleDateSelect = (date) => {
+    setButtonText(formatDate(date));
+    setShowCalendar(false);
+    setFilters({
+      condition: {
+        ...filters.condition,
+        date: {
+          _eq: formatDate(date),
+        },
+      },
+    });
+    setIsFilterOpen(date ? true : false);
+    setPaginationInfo((prevState) => ({
+      ...prevState,
+      offsetNo: 0,
+    }));
+  };
+
+  const handleClearFilter = () => {
+    setFilters({ condition: {} });
+    setPaginationInfo((prevState) => ({
+      ...prevState,
+      offsetNo: 0,
+    }));
+  };
+
+  useEffect(() => {
+    filterApiCall(filters);
+  }, [filters, paginationInfo.offsetNo, paginationInfo.limit]);
+
+  return (
+    <div className="flex flex-grow text-gray-700 dark:text-gray-400 gap-8">
+      <div className="flex">
         <select
-          name="role"
-          id="role"
-          onChange={() => {}}
+          name="district"
+          id="district"
+          onChange={handleChange}
           className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
         >
           <option value="">District</option>
-          <option value="admin">Admin</option>
-          <option value="applicant">Applicant</option>
+          <option value="New Delhi">New Delhi</option>
+          <option value="Lucknow">Lucknow</option>
+          <option value="Ballari">Ballari</option>
+          <option value="KANPUR DEHAT">KANPUR DEHAT</option>
+          <option value="BIJNOR">BIJNOR</option>
+          <option value="PRAYAGRAJ">PRAYAGRAJ</option>
+          <option value="BHADOHI">BHADOHI</option>
         </select>
       </div>
-      <div className="sm:col-span-3 ">
-        <select
-          name="account_status"
-          id="account_status"
-          onChange={() => {}}
-          className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+      <div className="flex">
+        <button
+          className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full px-8 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+          onClick={() => setShowCalendar(true)}
         >
-          <option value="">Published On</option>
-          <option value="active">Active</option>
-          <option value="inactive">Inactive</option>
-        </select>
+          {buttonText.includes("Published")
+            ? buttonText
+            : readableDate(buttonText)}
+        </button>
+        {showCalendar && <Calendar onChange={handleDateSelect} />}
       </div>
-      <div className="sm:col-span-3 ">
+      <div className="flex">
         <select
-          name="account_status"
-          id="account_status"
-          onChange={() => {}}
+          name="status"
+          id="status"
+          onChange={handleChange}
           className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
         >
           <option value="">Status</option>
-          <option value="active">Active</option>
-          <option value="inactive">Inactive</option>
+          <option value="Completed">Completed</option>
+          <option value="Upcoming">Upcoming</option>
+          <option value="Closed">Closed</option>
         </select>
       </div>
+      <div>
+        <button
+          className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+          onClick={handleClearFilter}
+        >
+          Clear
+        </button>
+      </div>
     </div>
-  </div>
-);
+  );
+};
