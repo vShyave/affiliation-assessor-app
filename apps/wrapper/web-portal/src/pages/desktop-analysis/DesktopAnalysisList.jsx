@@ -87,8 +87,8 @@ const DesktopAnalysisList = () => {
 
   const handleSelectMenu = (menuItem) => {
     setState((prevState) => ({ ...prevState, menu_selected: menuItem }));
-    setPaginationInfo((prevState)=>({...prevState,offsetNo:0}))
-    setIsFilterOpen(false)
+    setPaginationInfo((prevState) => ({ ...prevState, offsetNo: 0 }));
+    setIsFilterOpen(false);
   };
 
   const navigateToView = (formObj) => {
@@ -305,25 +305,24 @@ const DesktopAnalysisList = () => {
               </a>
             </li>
           </ul>
-          
+
           {/* <div>create a search bar and filter component here</div> */}
           {/* table creation starts here */}
-            <div className="flex flex-col gap-4">
-              <FilteringTable
-                dataList={formsDataList}
-                navigateFunc={navigateToView}
-                columns={COLUMNS}
-                pagination={true}
-                onRowSelect={() => {}}
-                filterApiCall={filterApiCall}
-                showFilter={true}
-                paginationInfo={paginationInfo}
-                setPaginationInfo={setPaginationInfo}
-                searchApiCall={searchApiCall}
-                setIsSearchOpen={setIsSearchOpen}
-                setIsFilterOpen={setIsFilterOpen}
-              />
-            </div>
+          <div className="flex flex-col gap-4">
+            <FilteringTable
+              dataList={formsDataList}
+              navigateFunc={navigateToView}
+              columns={COLUMNS}
+              pagination={true}
+              onRowSelect={() => {}}
+              filterApiCall={filterApiCall}
+              showFilter={true}
+              paginationInfo={paginationInfo}
+              setPaginationInfo={setPaginationInfo}
+              searchApiCall={searchApiCall}
+              setIsSearchOpen={setIsSearchOpen}
+              setIsFilterOpen={setIsFilterOpen}
+            />
           </div>
         </div>
       </div>

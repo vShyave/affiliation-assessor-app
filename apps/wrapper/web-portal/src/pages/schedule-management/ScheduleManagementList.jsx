@@ -160,8 +160,6 @@ const ScheduleManagementList = () => {
     }
   };
 
-
-
   const fetchAllAssessmentSchedule = async () => {
     const pagination = {
       offsetNo: paginationInfo.offsetNo,
@@ -180,6 +178,7 @@ const ScheduleManagementList = () => {
       console.log("error - ", error);
     }
   };
+
   useEffect(() => {
     if (!isSearchOpen && !isFilterOpen) {
       fetchAllAssessmentSchedule();
@@ -188,7 +187,7 @@ const ScheduleManagementList = () => {
 
   return (
     <>
-      <div className="flex flex-col gap-4">
+      <div className="flex flex-col gap-8">
         <div className="flex flex-col gap-4">
           <div className="flex flex-row">
             <div className="flex flex-grow items-center">
@@ -227,22 +226,22 @@ const ScheduleManagementList = () => {
             ))}
           </div>
         </div>
-      </div>
-      <div className="flex flex-col gap-4">
-        <FilteringTable
-          dataList={scheduleTableList}
-          columns={COLUMNS}
-          navigateFunc={() => {}}
-          filterApiCall={filterApiCall}
-          onRowSelect={() => {}}
-          pagination={true}
-          showFilter={true}
-          paginationInfo={paginationInfo}
-          setPaginationInfo={setPaginationInfo}
-          setIsSearchOpen={setIsSearchOpen}
-          setIsFilterOpen={setIsFilterOpen}
-          searchApiCall={searchApiCall}
-        />
+        <div className="flex flex-col gap-4">
+          <FilteringTable
+            dataList={scheduleTableList}
+            columns={COLUMNS}
+            navigateFunc={() => {}}
+            filterApiCall={filterApiCall}
+            onRowSelect={() => {}}
+            pagination={true}
+            showFilter={true}
+            paginationInfo={paginationInfo}
+            setPaginationInfo={setPaginationInfo}
+            setIsSearchOpen={setIsSearchOpen}
+            setIsFilterOpen={setIsFilterOpen}
+            searchApiCall={searchApiCall}
+          />
+        </div>
       </div>
     </>
   );
