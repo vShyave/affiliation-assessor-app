@@ -1,25 +1,21 @@
-import React, { useState, useEffect, useRef} from "react";
+import React, { useState, useEffect, useRef } from "react";
+import { Stepper, Step } from "@material-tailwind/react";
+import { GrDocumentPdf } from "react-icons/gr";
+import { AiOutlineClose } from "react-icons/ai";
 
 import Calendar from "react-calendar";
-import Select, { components } from "react-select";
+import Select from "react-select";
 
 import "react-calendar/dist/Calendar.css";
 import "./calendar.css";
 
-import { formatDate, getInitials } from "../../utils/common";
+import { Label, Button } from "../../components";
+import { formatDate, getInitials, readableDate } from "../../utils/common";
 import {
   getUsersForScheduling,
   getAllTheCourses,
   getScheduleAssessment,
 } from "../../api";
-import DesktopAnalysisView from "./DesktopAnalysisView";
-import { readableDate } from "../../utils/common";
-
-import { Label, Button } from "../../components";
-
-import { Stepper, Step, Typography } from "@material-tailwind/react";
-import { GrDocumentPdf } from "react-icons/gr";
-import { AiOutlineClose } from "react-icons/ai";
 
 // import Toast from "../../components/Toast";
 
@@ -29,7 +25,6 @@ function ScheduleInspectionModal({
   instituteId,
   instituteName,
 }) {
-
   const [activeStep, setActiveStep] = React.useState(0);
   const [isLastStep, setIsLastStep] = React.useState(false);
   const [isFirstStep, setIsFirstStep] = React.useState(false);
@@ -37,29 +32,20 @@ function ScheduleInspectionModal({
   const handleNext = () => !isLastStep && setActiveStep((cur) => cur + 1);
   const handlePrev = () => !isFirstStep && setActiveStep((cur) => cur - 1);
 
-  // Section 1, where active === 0
+  // Common state variables...
   let selectInputRef = useRef();
   let selectAARef = useRef();
   const [payload, setPayload] = useState({});
+
+  // Section 1, where active === 0
   const [OGAObject, setOGAObject] = useState({});
   const [selectedOGA, setSelectedOGA] = useState({});
-
   let [assistingAssessorList, setAssistingAssessorList] = useState([{}]);
   const [AAObject, setAAObject] = useState([]);
   const [selectedAA, setSelectedAA] = useState([]);
-
-  const [initialAssessorFirstDivision, setInitialAssessorFirstDivision] =
-    useState(false);
-  const [initialAssessorSecondDivision, setInitialAssessorSecondDivision] =
-    useState(false);
+  const [assessorList, setAssessorList] = useState([]);
 
   // Section 2, where active === 1
-  const [assistingAssessorFirstName, setAssistingAssessorFirstName] =
-    useState("");
-  const [assistingAssessorSecondName, setAssistingAssessorSecondName] =
-    useState("");
-
-  const [assessorList, setAssessorList] = useState([]);
   const [formList, setFormList] = useState([]);
   const [selectedFormList, setSelectedFormList] = useState([]);
 
@@ -74,7 +60,6 @@ function ScheduleInspectionModal({
     setPayload((prevState) => ({ ...prevState, date: tempDate }));
     const postData = { todayDate: tempDate };
     const res = await getUsersForScheduling(postData);
-    console.log("res - ", res);
     setAssessorList(
       res?.data?.assessors.map((item) => ({
         value: item.code,
@@ -83,7 +68,6 @@ function ScheduleInspectionModal({
       }))
     );
   };
-
 
   const handleSelectOGA = (e) => {
     setOGAObject(e);
@@ -122,46 +106,29 @@ function ScheduleInspectionModal({
   };
 
   const getTheCourses = async () => {
-    let courseApplied = {"course_applied" : instituteName};
-    // let courseApplied = { course_applied: "Paramedical" };
+    let courseApplied = { course_applied: instituteName };
 
     const res = await getAllTheCourses(courseApplied);
-
     setFormList(
       res?.data?.courses?.map((item) => ({
-        value: item.course_level,
+        value: item.course_name,
         label: item.course_name,
+        level: item.course_level,
       }))
     );
   };
 
   const handleFormSelection = (e) => {
     setSelectedFormList(e);
-    
   };
 
   const handleScheduleAssessment = async () => {
     const formData = new FormData();
-    console.log(formData);
-
     formData.append("instituteId", instituteId);
 
     Object.keys(payload).forEach((key) => {
       formData.append(key, payload[key]);
     });
-    // const formData = {
-    //   assessment_schedule: {
-    //       assessment_schedule: [    
-    //         {    
-    //           assessor_code: OGAObject?.label,    
-    //           date: payload?.date,    
-    //           institute_id: instituteId,  
-    //           assisstant_code: "1",    
-    //         },    
-    //       ],   
-    //     }
-    //   }
-    
 
     try {
       const res = await getScheduleAssessment(formData);
@@ -189,7 +156,7 @@ function ScheduleInspectionModal({
           ...prevState,
           toastOpen: true,
           toastMsg:
-            "Inspection already schduled for " + date.toDateString() + ".",
+            "Inspection already scheduled for " + date.toDateString() + ".",
           toastType: "error",
         }));
         setTimeout(
@@ -206,7 +173,7 @@ function ScheduleInspectionModal({
         setToast((prevState) => ({
           ...prevState,
           toastOpen: true,
-          toastMsg: "Error occured while scheduling inspection!",
+          toastMsg: "Error occurred while scheduling inspection!",
           toastType: "error",
         }));
         setTimeout(
@@ -235,7 +202,7 @@ function ScheduleInspectionModal({
                   isLastStep={(value) => setIsLastStep(value)}
                   isFirstStep={(value) => setIsFirstStep(value)}
                 >
-                  <Step >
+                  <Step>
                     1
                     <div className="absolute -bottom-[2rem] w-max text-center">
                       <div className="font-semibold text-[#000]">
@@ -243,7 +210,7 @@ function ScheduleInspectionModal({
                       </div>
                     </div>
                   </Step>
-                  <Step >
+                  <Step>
                     2
                     <div className="absolute -bottom-[2rem] w-max text-center">
                       <div className="font-semibold text-[#000]">
@@ -439,11 +406,8 @@ function ScheduleInspectionModal({
                           moreClass="text-[16px]"
                         ></Label>
 
-                        {/* <span className="flex flex-row "> */}
-
                         <div className="flex flex-row">
                           <Select
-                            isOptionDisabled={() => selectedFormList.length >= 4}
                             isMulti
                             key={"form_name"}
                             name="form_name"
@@ -505,7 +469,6 @@ function ScheduleInspectionModal({
                     ></Button>
                     <Button
                       onClick={handleScheduleAssessment}
-                      // moreClass={`px-8 text-white`}
                       moreClass={`${
                         selectedOGA?.value && selectedFormList[0]?.value
                           ? "px-8 text-white"

@@ -12,6 +12,7 @@ import {
   filterAssessments,
   filterForms,
   getAssessmentSchedule,
+  searchAssessments,
 } from "../../api";
 import ADMIN_ROUTE_MAP from "../../routes/adminRouteMap";
 
@@ -25,6 +26,8 @@ const ScheduleManagementList = () => {
     limit: 10,
     totalCount: 0,
   });
+  const [isSearchOpen, setIsSearchOpen] = useState(false);
+  const [isFilterOpen, setIsFilterOpen] = useState(false);
 
   const COLUMNS = [
     {
@@ -119,9 +122,33 @@ const ScheduleManagementList = () => {
   });
 
   const filterApiCall = async (filters) => {
-    const postData = { offsetNo: 0, limit: 10, ...filters };
+    const postData = {
+      offsetNo: paginationInfo.offsetNo,
+      limit: paginationInfo.limit,
+      ...filters,
+    };
     try {
       const res = await filterAssessments(postData);
+      setAssessmentScheduleList(res?.data?.assessment_schedule);
+      const data = res?.data?.assessment_schedule;
+      setPaginationInfo((prevState) => ({
+        ...prevState,
+        totalCount: res.data.assessment_schedule_aggregate.aggregate.totalCount,
+      }));
+      setScheduleTableList(data.map(setTableData));
+    } catch (error) {
+      console.log("error - ", error);
+    }
+  };
+
+  const searchApiCall = async (searchData) => {
+    const postData = {
+      offsetNo: paginationInfo.offsetNo,
+      limit: paginationInfo.limit,
+      ...searchData,
+    };
+    try {
+      const res = await searchAssessments(postData);
       setAssessmentScheduleList(res?.data?.assessment_schedule);
       const data = res?.data?.assessment_schedule;
       setPaginationInfo((prevState) => ({
@@ -152,8 +179,11 @@ const ScheduleManagementList = () => {
       console.log("error - ", error);
     }
   };
+
   useEffect(() => {
-    fetchAllAssessmentSchedule();
+    if (!isSearchOpen && !isFilterOpen) {
+      fetchAllAssessmentSchedule();
+    }
   }, [paginationInfo.offsetNo, paginationInfo.limit]);
 
   return (
@@ -162,11 +192,11 @@ const ScheduleManagementList = () => {
     <div className={`container m-auto min-h-[calc(100vh-148px)] px-3 py-12`}>
       <div className="flex flex-col gap-8">
         <div className="flex flex-col gap-4">
-          <div className="flex flex-row justify-between">
-            <div>
-              <h1 className="text-2xl font-medium">Schedule management</h1>
+          <div className="flex flex-row">
+            <div className="flex flex-grow items-center">
+              <div className="text-2xl font-medium">Schedule management</div>
             </div>
-            <div className="flex justify-end">
+            <div className="flex flex-grow justify-end">
               <span className="flex gap-4">
                 <button className="flex flex-wrap items-center justify-center gap-2 border border-gray-500 text-gray-500 bg-white w-[200px] h-[45px] text-md font-medium rounded-[4px]">
                   Download CSV template
@@ -199,22 +229,21 @@ const ScheduleManagementList = () => {
             ))}
           </div>
         </div>
-      </div>
-      <div className="flex flex-col">
-        <div className="text-sm font-medium text-center text-gray-500 border-b border-gray-200 dark:text-gray-400 dark:border-gray-700">
-          <div className="text-2xl w-full mt-4 font-medium">
-            <FilteringTable
-              dataList={scheduleTableList}
-              columns={COLUMNS}
-              navigateFunc={() => {}}
-              filterApiCall={filterApiCall}
-              onRowSelect={() => {}}
-              pagination={true}
-              showFilter={true}
-              paginationInfo={paginationInfo}
-              setPaginationInfo={setPaginationInfo}
-            />
-          </div>
+        <div className="flex flex-col gap-4">
+          <FilteringTable
+            dataList={scheduleTableList}
+            columns={COLUMNS}
+            navigateFunc={() => {}}
+            filterApiCall={filterApiCall}
+            onRowSelect={() => {}}
+            pagination={true}
+            showFilter={true}
+            paginationInfo={paginationInfo}
+            setPaginationInfo={setPaginationInfo}
+            setIsSearchOpen={setIsSearchOpen}
+            setIsFilterOpen={setIsFilterOpen}
+            searchApiCall={searchApiCall}
+          />
         </div>
       </div>
       </div>

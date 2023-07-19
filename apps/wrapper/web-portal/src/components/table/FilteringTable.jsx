@@ -19,7 +19,6 @@ const FilteringTable = (props) => {
   let array = [];
   const columns = props?.columns;
   const data = props?.dataList;
-  // const onFormHandler = () => {};
   const {
     getTableProps,
     getTableBodyProps,
@@ -29,9 +28,6 @@ const FilteringTable = (props) => {
     state,
     setGlobalFilter,
     page,
-    pageOptions,
-    gotoPage,
-    pageCount,
     setPageSize,
     selectedFlatRows,
   } = useTable(
@@ -84,6 +80,7 @@ const FilteringTable = (props) => {
   const [canPreviousPage, setCanPreviousPage] = useState(false);
   const [pageIndex, setPageIndex] = useState(0);
   const [totalPageCount, setTotalPageCount] = useState(0);
+
   const nextPage = () => {
     setPageIndex((prevState) => prevState + 1);
     setPaginationInfo((prevState) => ({
@@ -91,6 +88,7 @@ const FilteringTable = (props) => {
       offsetNo: offsetNo + pageSize,
     }));
   };
+
   const previousPage = () => {
     setPageIndex((prevState) => prevState - 1);
     setPaginationInfo((prevState) => ({
@@ -98,6 +96,7 @@ const FilteringTable = (props) => {
       offsetNo: offsetNo - pageSize,
     }));
   };
+
   useEffect(() => {
     if (!props.pagination) {
       setPageSize(1000);
@@ -126,15 +125,12 @@ const FilteringTable = (props) => {
 
   {
     array = JSON.stringify(
-      {
-        selectedFlatRows: selectedFlatRows.map((row) => row.original),
-      },
+      { selectedFlatRows: selectedFlatRows.map((row) => row.original) },
       null,
       2
     );
     {
       props.onRowSelect(array);
-      // console.log(array);
     }
   }
 
@@ -145,6 +141,11 @@ const FilteringTable = (props) => {
           filter={globalFilter}
           setFilter={setGlobalFilter}
           filterApiCall={props.filterApiCall}
+          searchApiCall={props.searchApiCall}
+          setIsSearchOpen={props.setIsSearchOpen}
+          setIsFilterOpen={props.setIsFilterOpen}
+          paginationInfo={props.paginationInfo}
+          setPaginationInfo={props.setPaginationInfo}
         />
       )}
       <div className={`overflow-x-auto ${props.moreHeight}`}>
@@ -164,7 +165,7 @@ const FilteringTable = (props) => {
                     <span className="inline-block">
                       {column.render("Header")}
                     </span>
-                    <span className="inline-block ml-[8px]">
+                    <span className="inline-block">
                       {column.isSorted ? (
                         column.isSortedDesc ? (
                           <AiOutlineArrowUp />

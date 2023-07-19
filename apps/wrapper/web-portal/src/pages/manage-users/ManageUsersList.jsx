@@ -7,7 +7,7 @@ import { Button } from "../../components";
 import FilteringTable from "../../components/table/FilteringTable";
 
 import { readableDate } from "../../utils/common";
-import { filterUsers, getAllUsers } from "../../api";
+import { filterUsers, getAllUsers, searchUsers } from "../../api";
 import ADMIN_ROUTE_MAP from "../../routes/adminRouteMap";
 
 import DeleteUsersModal from "./DeleteUsers";
@@ -37,6 +37,8 @@ export default function ManageUsersList({
     limit: 10,
     totalCount: 0,
   });
+  const [isSearchOpen, setIsSearchOpen] = useState(false);
+  const [isFilterOpen, setIsFilterOpen] = useState(false);
 
   const COLUMNS = [
     {
@@ -158,8 +160,33 @@ export default function ManageUsersList({
     }
   };
 
+  const searchApiCall = async (searchData) => {
+    const pagination = {
+      offsetNo: paginationInfo.offsetNo,
+      limit: paginationInfo.limit,
+      ...searchData,
+    };
+    try {
+      const res = await searchUsers(pagination);
+      setPaginationInfo((prevState) => ({
+        ...prevState,
+        totalCount: res.data.assessors_aggregate.aggregate.totalCount,
+      }));
+      setUsersList(res?.data?.assessors);
+      const data = res?.data?.assessors;
+      data.forEach(setTableData);
+      setUserTableList(resUserData);
+    } catch (error) {
+      console.log("error - ", error);
+    }
+  };
+
   const filterApiCall = async (filters) => {
-    const postData = { offsetNo: 0, limit: 10, ...filters };
+    const postData = {
+      offsetNo: paginationInfo.offsetNo,
+      limit: paginationInfo.limit,
+      ...filters,
+    };
     try {
       const res = await filterUsers(postData);
       setPaginationInfo((prevState) => ({
@@ -176,16 +203,19 @@ export default function ManageUsersList({
   };
 
   useEffect(() => {
-    fetchAllUsers();
+    if (!isSearchOpen && !isFilterOpen) {
+      fetchAllUsers();
+    }
   }, [paginationInfo.offsetNo, paginationInfo.limit]);
 
   return (
     <>
-    <Nav/>
+     <Nav/>
     <div className={`container m-auto min-h-[calc(100vh-148px)] px-3 py-12`}>
       <div className="flex flex-col justify-center align-center">
+      <div className="flex flex-col justify-center align-center gap-4">
         <div className="flex flex-row">
-          <div className="flex grow">
+          <div className="flex grow items-center">
             <h1 className="text-xl font-semibold">Manage Users</h1>
           </div>
           <div className="flex justify-end">
@@ -209,24 +239,25 @@ export default function ManageUsersList({
             </span>
           </div>
         </div>
-        <div className="flex flex-col">
-          <div className="text-sm font-medium text-center text-gray-500 border-b border-gray-200 dark:text-gray-400 dark:border-gray-700">
-            <div className="text-2xl w-full mt-4 font-medium">
-              <FilteringTable
-                dataList={userTableList}
-                columns={COLUMNS}
-                navigateFunc={() => {}}
-                showCheckbox={true}
-                paginationInfo={paginationInfo}
-                setPaginationInfo={setPaginationInfo}
-                onRowSelect={() => {}}
-                showFilter={true}
-                pagination={true}
-                filterApiCall={filterApiCall}
-              />
-            </div>
-          </div>
+
+        <div className="flex flex-col gap-4 mt-4">
+          <FilteringTable
+            dataList={userTableList}
+            columns={COLUMNS}
+            navigateFunc={() => {}}
+            showCheckbox={true}
+            paginationInfo={paginationInfo}
+            setPaginationInfo={setPaginationInfo}
+            onRowSelect={() => {}}
+            showFilter={true}
+            pagination={true}
+            filterApiCall={filterApiCall}
+            searchApiCall={searchApiCall}
+            setIsSearchOpen={setIsSearchOpen}
+            setIsFilterOpen={setIsFilterOpen}
+          />
         </div>
+      </div>
       </div>
       </div>
       {deleteUsersModel && (
@@ -237,6 +268,7 @@ export default function ManageUsersList({
           closeBulkUploadUsersModal={setBulkUploadUsersModel}
         />
       )}
+   
     </>
   );
 }
