@@ -143,13 +143,20 @@ export class AppService {
     onFormSuccessData: any,
     prefillSpec: any,
     files: any,
+    reqOrigin: string,
   ): Promise<string> {
-    //Read the file from local forms folder
-    // const formFilePath = join(__dirname, `forms/${form}.xml`);
-    // const formString = fs.readFileSync(formFilePath, 'utf8');
+    let formString = "";
     // Download XML file from Google Cloud Storage bucket URL
-    const response = await axios.get(formUrl);
-    const formString = response.data;
+    if(reqOrigin.includes("affiliation")) {
+      //Read the file from local forms folder
+      const urlData= formUrl.split("/");
+      const formName = urlData[urlData.length-1];
+      const formFilePath = join(__dirname, `forms/${formName}`);
+      formString = fs.readFileSync(formFilePath, 'utf8');
+    } else {
+      const response = await axios.get(formUrl);
+      formString = response.data;
+    }
     const doc = this.parser.parseFromString(formString, 'text/xml');
     const instanceFromForm = doc.getElementsByTagName('instance')[0];
 
