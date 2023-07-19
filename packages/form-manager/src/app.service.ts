@@ -152,7 +152,7 @@ export class AppService {
       const formFilePath = join(__dirname, `forms/${formUrl}.xml`);
       formString = fs.readFileSync(formFilePath, 'utf8');
     } else {
-      const response = await axios.get(formUrl);
+      const response = await axios.get(formUrl,{responseType: 'text'});
       formString = response.data;
     }
     const doc = this.parser.parseFromString(formString, 'text/xml');

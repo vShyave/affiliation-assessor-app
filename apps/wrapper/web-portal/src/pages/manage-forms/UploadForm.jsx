@@ -71,7 +71,7 @@ const UploadForm = ({ setFormStage, handleFile, xmlData, formData }) => {
   // const formSpec = formData?.file_name?.split(".")[0]; //passing form name
 
   const fetchFormData = async () => {
-    const res = await axios.get(formData?.path);
+    const res = await axios.get(formData?.path, {responseType: "text"});
     formURI = await getPrefillXML(
       formData?.path,
       formSpec.onSuccess,
