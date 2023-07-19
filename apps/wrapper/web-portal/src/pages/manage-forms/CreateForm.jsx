@@ -195,13 +195,13 @@ const CreateForm = () => {
         <div className="container mx-auto px-3 py-3">
           <div className="flex flex-row font-bold gap-2 items-center">
             <Link to={ADMIN_ROUTE_MAP.adminModule.manageUsers.home}>
-              <span className="text-gray-500 cursor-pointer">
-                Home
+              <span className="text-primary-400 cursor-pointer">
+               Manage Forms
               </span>
             </Link>
-            <FaAngleRight className="text-[16px]" />
+            <FaAngleRight className="text-gray-500 text-[16px]" />
             <Link to={ADMIN_ROUTE_MAP.adminModule.scheduleManagement.home}>
-            <span className="text-primary-400">Create form</span>
+            <span className="">Create form</span>
             </Link>
             {/* <FaAngleRight className="text-[16px]" />
             <span className="text-gray-500 uppercase">User details</span> */}
