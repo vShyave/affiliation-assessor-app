@@ -21,7 +21,7 @@ export const getFormData = async (postData) => {
 };
 
 export const getOnGroundAssessorData = async (postData) => {
-  const res = await adminCustomPost.post(API_URL.groundAnalysis.list,postData);
+  const res = await adminCustomPost.post(API_URL.groundAnalysis.list, postData);
   return res;
 };
 
@@ -57,6 +57,14 @@ export const markReviewStatus = async (postData) => {
   return res;
 };
 
+export const filterOGA = async (postData) => {
+  const res = await adminCustomPost.post(
+    API_URL.groundAnalysis.filterOGA,
+    postData
+  );
+  return res;
+};
+
 // Manage forms APIs
 export const convertODKtoXML = async (postData) => {
   const res = await fileConversionCustomPost.post(
@@ -75,7 +83,10 @@ export const createForm = async (postData) => {
 };
 
 export const getForms = async (postData) => {
-  const res = await adminCustomPost.post(API_URL.manageForms.getForms,postData);
+  const res = await adminCustomPost.post(
+    API_URL.manageForms.getForms,
+    postData
+  );
   return res;
 };
 
@@ -108,9 +119,20 @@ export const deleteForm = async (postData) => {
   });
 };
 
+export const filterForms = async (postData) => {
+  const res = await adminCustomPost.post(
+    API_URL.manageForms.filterForms,
+    postData
+  );
+  return res;
+};
+
 // Manage users API's...
 export const getAllUsers = async (postData) => {
-  const res = await adminCustomPost.post(API_URL.manageUsers.userList,postData);
+  const res = await adminCustomPost.post(
+    API_URL.manageUsers.userList,
+    postData
+  );
   return res;
 };
 
@@ -130,6 +152,15 @@ export const getSpecificUser = async (postData) => {
   return res;
 };
 
+export const filterUsers = async (postData) => {
+  const res = await adminCustomPost.post(
+    API_URL.manageUsers.filterUsers,
+    postData
+  );
+  return res;
+};
+
+//Desktop Analysis APIs...
 export const getScheduleAssessment = async (postData) => {
   const res = await adminCustomPost.post(
     API_URL.desktopAnalysis.scheduleAssessment,
@@ -138,17 +169,25 @@ export const getScheduleAssessment = async (postData) => {
   return res;
 };
 
-
 export const getDesktopAnalysisForms = async (postData) => {
   const res = await adminCustomPost.post(
-    API_URL.desktopAnalysis.getDesktopAnalysisForms,postData
-);
+    API_URL.desktopAnalysis.getDesktopAnalysisForms,
+    postData
+  );
   return res;
 };
 
 export const getAllTheCourses = async (postData) => {
   const res = await adminCustomPost.post(
     API_URL.desktopAnalysis.getAllCourses,
+    postData
+  );
+  return res;
+};
+
+export const filterDesktopAnalysis = async (postData) => {
+  const res = await adminCustomPost.post(
+    API_URL.desktopAnalysis.filterDesktopAnalysis,
     postData
   );
   return res;
@@ -163,10 +202,59 @@ export const getAssessmentSchedule = async (postData) => {
   return res;
 };
 
+export const filterAssessments = async (postData) => {
+  const res = await adminCustomPost.post(
+    API_URL.scheduleManagement.filterAssessments,
+    postData
+  );
+  return res;
+};
+
 // Bulk create users
 export const createUsers = async (postData) => {
   const res = await adminCustomPost.post(
     API_URL.manageUsers.addUsers,
+    postData
+  );
+  return res;
+};
+
+//global search
+export const searchUsers = async (postData) => {
+  const res = await adminCustomPost.post(
+    API_URL.GLOBAL_SEARCH.searchUsers,
+    postData
+  );
+  return res;
+};
+
+export const searchDesktop = async (postData) => {
+  const res = await adminCustomPost.post(
+    API_URL.GLOBAL_SEARCH.searchDesktop,
+    postData
+  );
+  return res;
+};
+
+export const searchOGA = async (postData) => {
+  const res = await adminCustomPost.post(
+    API_URL.GLOBAL_SEARCH.searchOGA,
+    postData
+  );
+  return res;
+};
+
+export const searchForms = async (postData) => {
+  const res = await adminCustomPost.post(
+    API_URL.GLOBAL_SEARCH.searchForms,
+    postData
+  );
+  return res;
+};
+
+export const searchAssessments = async (postData) => {
+  const res = await adminCustomPost.post(
+    API_URL.GLOBAL_SEARCH.searchAssessments,
     postData
   );
   return res;
