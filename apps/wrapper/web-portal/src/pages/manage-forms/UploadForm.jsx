@@ -84,7 +84,7 @@ const UploadForm = ({ setFormStage, handleFile, xmlData, formData }) => {
   const handleFormPreview = async () => {
     console.log("inside handle preview- ", formData);
     await fetchFormData();
-    let src = `${ENKETO_URL}preview?formSpec=${encodeURI(
+    let src = `${ENKETO_URL}/preview?formSpec=${encodeURI(
       JSON.stringify(formSpec)
     )}&xform=${formURI}&userId=${userId}`;
     console.log("Preview Url", src);
