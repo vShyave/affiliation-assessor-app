@@ -235,7 +235,8 @@ export default function ManageUsersList({
             </span>
           </div>
         </div>
-        <div className="flex flex-col gap-4">
+
+        <div className="flex flex-col gap-4 mt-4">
           <FilteringTable
             dataList={userTableList}
             columns={COLUMNS}

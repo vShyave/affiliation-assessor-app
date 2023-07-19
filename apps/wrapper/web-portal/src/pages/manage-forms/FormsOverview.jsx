@@ -22,6 +22,7 @@ const FormsOverview = () => {
   const navigation = useNavigate();
   var formsDataList = [];
   const [formsList, setFormsList] = useState();
+
   const [state, setState] = useState({
     menu_selected: "create_new",
     alertContent: {
@@ -30,17 +31,20 @@ const FormsOverview = () => {
       actionButtonLabel: "",
     },
   });
+
   const [showAlert, setShowAlert] = useState(false);
   const [toast, setToast] = useState({
     toastOpen: false,
     toastMsg: "",
     toastType: "",
   });
+
   const [paginationInfo, setPaginationInfo] = useState({
     offsetNo: 0,
     limit: 10,
     totalCount: 0,
   });
+
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [isFilterOpen, setIsFilterOpen] = useState(false);
 
@@ -113,6 +117,7 @@ const FormsOverview = () => {
       accessor: "delete",
     },
   ];
+
   const COLUMN_UNPUBLISHED = [
     {
       Header: "Form title",
@@ -156,8 +161,8 @@ const FormsOverview = () => {
 
   const handleSelectMenu = (menuItem) => {
     setState((prevState) => ({ ...prevState, menu_selected: menuItem }));
-    setPaginationInfo((prevState)=>({...prevState,offsetNo:0}))
-    setIsFilterOpen(false)
+    setPaginationInfo((prevState) => ({ ...prevState, offsetNo: 0 }));
+    setIsFilterOpen(false);
   };
 
   const publish = (formId) => {
@@ -176,7 +181,11 @@ const FormsOverview = () => {
   };
 
   useEffect(() => {
-    if (state.menu_selected !== "create_new" && !isSearchOpen && !isFilterOpen) {
+    if (
+      state.menu_selected !== "create_new" &&
+      !isSearchOpen &&
+      !isFilterOpen
+    ) {
       fetchFormsList();
     }
   }, [paginationInfo.offsetNo, paginationInfo.limit, state.menu_selected]);
@@ -203,7 +212,7 @@ const FormsOverview = () => {
     const postData = {
       offsetNo: paginationInfo.offsetNo,
       limit: paginationInfo.limit,
-      formStatus: state.menu_selected ,
+      formStatus: state.menu_selected,
       ...searchData,
     };
     try {
@@ -428,6 +437,7 @@ const FormsOverview = () => {
       );
     }
   };
+
   const deleteForms = async (form_id) => {
     const formData = new FormData();
     formData.append("form_id", form_id);
@@ -472,13 +482,15 @@ const FormsOverview = () => {
   };
 
   return (
-    <>
+    <div>
       {toast.toastOpen && (
         <Toast toastMsg={toast.toastMsg} toastType={toast.toastType} />
       )}
+
       {showAlert && (
         <AlertModal showAlert={setShowAlert} {...state.alertContent} />
       )}
+
       <div className="flex flex-col gap-8">
         <div className="flex flex-col gap-4">
           <div>
@@ -487,7 +499,7 @@ const FormsOverview = () => {
         </div>
         <div className="flex flex-col gap-4">
           <ul className="flex flex-wrap gap-3 -mb-px">
-            <li className="" onClick={() => handleSelectMenu("create_new")}>
+            <li onClick={() => handleSelectMenu("create_new")}>
               <a
                 href="#"
                 className={`inline-block p-4 rounded-t-lg dark:text-blue-500 dark:border-blue-600 ${
@@ -499,153 +511,135 @@ const FormsOverview = () => {
                 Create New
               </a>
             </li>
-            <li className="" onClick={() => handleSelectMenu("draft")}>
+
+            <li className="mr-2" onClick={() => handleSelectMenu("Draft")}>
               <a
                 href="#"
                 className={`inline-block p-4 rounded-t-lg dark:text-blue-500 dark:border-blue-600 ${
-                  state.menu_selected === "draft"
+                  state.menu_selected === "Draft"
                     ? "text-blue-600 border-b-2 border-blue-600"
                     : ""
                 }`}
                 aria-current="page"
               >
-                <a
-                  href="#"
-                  className={`inline-block p-4 rounded-t-lg dark:text-blue-500 dark:border-blue-600 ${
-                    state.menu_selected === "create_new"
-                      ? "text-blue-600 border-b-2 border-blue-600"
-                      : ""
-                  }`}
-                >
-                  Create New
-                </a>
-              </li>
-              <li className="mr-2" onClick={() => handleSelectMenu("Draft")}>
-                <a
-                  href="#"
-                  className={`inline-block p-4 rounded-t-lg dark:text-blue-500 dark:border-blue-600 ${
-                    state.menu_selected === "Draft"
-                      ? "text-blue-600 border-b-2 border-blue-600"
-                      : ""
-                  }`}
-                  aria-current="page"
-                >
-                  Draft
-                </a>
-              </li>
-              <li
-                className="mr-2"
-                onClick={() => handleSelectMenu("Published")}
+                Draft
+              </a>
+            </li>
+
+            <li className="mr-2" onClick={() => handleSelectMenu("Published")}>
+              <a
+                href="#"
+                className={`inline-block p-4 rounded-t-lg dark:text-blue-500 dark:border-blue-600 ${
+                  state.menu_selected === "Published"
+                    ? "text-blue-600 border-b-2 border-blue-600"
+                    : ""
+                }`}
               >
-                <a
-                  href="#"
-                  className={`inline-block p-4 rounded-t-lg dark:text-blue-500 dark:border-blue-600 ${
-                    state.menu_selected === "Published"
-                      ? "text-blue-600 border-b-2 border-blue-600"
-                      : ""
-                  }`}
-                >
-                  Published
-                </a>
-              </li>
-              <li
-                className="mr-2"
-                onClick={() => handleSelectMenu("Unpublished")}
+                Published
+              </a>
+            </li>
+
+            <li
+              className="mr-2"
+              onClick={() => handleSelectMenu("Unpublished")}
+            >
+              <a
+                href="#"
+                className={`inline-block p-4 rounded-t-lg dark:text-blue-500 dark:border-blue-600 ${
+                  state.menu_selected === "Unpublished"
+                    ? "text-blue-600 border-b-2 border-blue-600"
+                    : ""
+                }`}
               >
-                <a
-                  href="#"
-                  className={`inline-block p-4 rounded-t-lg dark:text-blue-500 dark:border-blue-600 ${
-                    state.menu_selected === "Unpublished"
-                      ? "text-blue-600 border-b-2 border-blue-600"
-                      : ""
-                  }`}
-                >
-                  Archived
-                </a>
-              </li>
-            </ul>
-            {state.menu_selected === "create_new" && (
-              <div className="flex flex-col gap-4">
-                <Card moreClass="flex h-[50vh]">
-                  <div className="flex flex-col gap-4 m-auto items-center">
-                    <div className="font-semibold text-xl">
-                      Click on the button to a create a form
-                    </div>
-                    <Button
-                      moreClass="text-white w-3/5"
-                      text="Upload ODK"
-                      onClick={() => navigation("/manage-forms/create-form")}
-                    />
-                    {/* Or
-                            <Button moreClass="text-white w-3/5" text="Configure Manually" /> */}
+                Archived
+              </a>
+            </li>
+          </ul>
+
+          {state.menu_selected === "create_new" && (
+            <div className="flex flex-col gap-4">
+              <Card moreClass="flex h-[50vh]">
+                <div className="flex flex-col gap-4 m-auto items-center">
+                  <div className="font-semibold text-xl">
+                    Click on the button to a create a form
                   </div>
-                </Card>
-              </div>
-            )}
-            {state.menu_selected === "Draft" && (
-              <div className="text-2xl mt-4 font-medium">
-                <FilteringTable
-                  dataList={formsDataList.filter(
-                    (item) => item.form_status === "Draft"
-                  )}
-                  navigateFunc={() => {}}
-                  columns={COLUMN_DRAFTS}
-                  filterApiCall={filterApiCall}
-                  onRowSelect={() => {}}
-                  pagination={true}
-                  showFilter={true}
-                  paginationInfo={paginationInfo}
-                  setPaginationInfo={setPaginationInfo}
-                  searchApiCall={searchApiCall}
-                  setIsSearchOpen={setIsSearchOpen}
-                  setIsFilterOpen={setIsFilterOpen}
-                />
-              </div>
-            )}
-            {state.menu_selected === "Published" && (
-              <div className="text-2xl mt-4 font-medium">
-                <FilteringTable
-                  dataList={formsDataList.filter(
-                    (item) => item.form_status === "Published"
-                  )}
-                  navigateFunc={() => {}}
-                  columns={COLUMN_PUBLISHED}
-                  onRowSelect={() => {}}
-                  pagination={true}
-                  filterApiCall={filterApiCall}
-                  showFilter={true}
-                  paginationInfo={paginationInfo}
-                  setPaginationInfo={setPaginationInfo}
-                  searchApiCall={searchApiCall}
-                  setIsSearchOpen={setIsSearchOpen}
-                  setIsFilterOpen={setIsFilterOpen}
-                />
-              </div>
-            )}
-            {state.menu_selected === "Unpublished" && (
-              <div className="text-2xl mt-4 font-medium">
-                <FilteringTable
-                  dataList={formsDataList.filter(
-                    (item) => item.form_status === "Unpublished"
-                  )}
-                  navigateFunc={() => {}}
-                  columns={COLUMN_UNPUBLISHED}
-                  onRowSelect={() => {}}
-                  pagination={true}
-                  filterApiCall={filterApiCall}
-                  showFilter={true}
-                  paginationInfo={paginationInfo}
-                  setPaginationInfo={setPaginationInfo}
-                  searchApiCall={searchApiCall}
-                  setIsSearchOpen={setIsSearchOpen}
-                  setIsFilterOpen={setIsFilterOpen}
-                />
-              </div>
-            )}
-          </div>
+                  <Button
+                    moreClass="text-white w-3/5"
+                    text="Upload ODK"
+                    onClick={() => navigation("/manage-forms/create-form")}
+                  />
+                  {/* Or
+                  <Button moreClass="text-white w-3/5" text="Configure Manually" /> */}
+                </div>
+              </Card>
+            </div>
+          )}
+
+          {state.menu_selected === "Draft" && (
+            <div className="flex flex-col gap-3">
+              <FilteringTable
+                dataList={formsDataList.filter(
+                  (item) => item.form_status === "Draft"
+                )}
+                navigateFunc={() => {}}
+                columns={COLUMN_DRAFTS}
+                filterApiCall={filterApiCall}
+                onRowSelect={() => {}}
+                pagination={true}
+                showFilter={true}
+                paginationInfo={paginationInfo}
+                setPaginationInfo={setPaginationInfo}
+                searchApiCall={searchApiCall}
+                setIsSearchOpen={setIsSearchOpen}
+                setIsFilterOpen={setIsFilterOpen}
+              />
+            </div>
+          )}
+
+          {state.menu_selected === "Published" && (
+            <div className="flex flex-col gap-3">
+              <FilteringTable
+                dataList={formsDataList.filter(
+                  (item) => item.form_status === "Published"
+                )}
+                navigateFunc={() => {}}
+                columns={COLUMN_PUBLISHED}
+                onRowSelect={() => {}}
+                pagination={true}
+                filterApiCall={filterApiCall}
+                showFilter={true}
+                paginationInfo={paginationInfo}
+                setPaginationInfo={setPaginationInfo}
+                searchApiCall={searchApiCall}
+                setIsSearchOpen={setIsSearchOpen}
+                setIsFilterOpen={setIsFilterOpen}
+              />
+            </div>
+          )}
+
+          {state.menu_selected === "Unpublished" && (
+            <div className="flex flex-col gap-3">
+              <FilteringTable
+                dataList={formsDataList.filter(
+                  (item) => item.form_status === "Unpublished"
+                )}
+                navigateFunc={() => {}}
+                columns={COLUMN_UNPUBLISHED}
+                onRowSelect={() => {}}
+                pagination={true}
+                filterApiCall={filterApiCall}
+                showFilter={true}
+                paginationInfo={paginationInfo}
+                setPaginationInfo={setPaginationInfo}
+                searchApiCall={searchApiCall}
+                setIsSearchOpen={setIsSearchOpen}
+                setIsFilterOpen={setIsFilterOpen}
+              />
+            </div>
+          )}
         </div>
       </div>
-    </>
+    </div>
   );
 };
 

@@ -29,13 +29,13 @@ export const ManageUsersFilters = ({
       offsetNo: 0,
     }));
   };
-  const handleClearFilter =()=>{
-    setFilters({ condition: {} })
+  const handleClearFilter = () => {
+    setFilters({ condition: {} });
     setPaginationInfo((prevState) => ({
       ...prevState,
       offsetNo: 0,
     }));
-  }
+  };
   useEffect(() => {
     filterApiCall(filters);
   }, [filters, paginationInfo.offsetNo, paginationInfo.limit]);
@@ -66,9 +66,9 @@ export const ManageUsersFilters = ({
         </select>
       </div>
       <div>
-        <button 
-        className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-        onClick={handleClearFilter}
+        <button
+          className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+          onClick={handleClearFilter}
         >
           Clear
         </button>
@@ -105,14 +105,14 @@ export const ManageFormsFilters = ({
     }));
   };
 
-  const handleClearFilter =()=>{
-    setFilters({ condition: {} })
+  const handleClearFilter = () => {
+    setFilters({ condition: {} });
     setPaginationInfo((prevState) => ({
       ...prevState,
       offsetNo: 0,
     }));
-  }
-  
+  };
+
   useEffect(() => {
     filterApiCall(filters);
   }, [filters, paginationInfo.offsetNo, paginationInfo.limit]);
@@ -156,9 +156,9 @@ export const ManageFormsFilters = ({
         </select>
       </div>
       <div>
-        <button 
-        className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-        onClick={handleClearFilter}
+        <button
+          className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+          onClick={handleClearFilter}
         >
           Clear
         </button>
@@ -181,7 +181,7 @@ export const DesktopAnalysisFilters = ({
       assessor_id: { _is_null: true },
     },
   });
-  
+
   const handleChange = (e) => {
     if (e.target.value === "") {
       delete filters?.condition[e.target.name];
@@ -208,7 +208,7 @@ export const DesktopAnalysisFilters = ({
         },
       });
     }
-    
+
     setIsFilterOpen(e.target.value ? true : false);
     setPaginationInfo((prevState) => ({
       ...prevState,
@@ -234,18 +234,18 @@ export const DesktopAnalysisFilters = ({
     }));
   };
 
-  const handleClearFilter =()=>{
-    setFilters({ condition: {} })
+  const handleClearFilter = () => {
+    setFilters({ condition: {} });
     setPaginationInfo((prevState) => ({
       ...prevState,
       offsetNo: 0,
     }));
-  }
-  
+  };
+
   useEffect(() => {
     filterApiCall(filters);
   }, [filters, paginationInfo.offsetNo, paginationInfo.limit]);
-  
+
   return (
     <div className="flex flex-grow text-gray-700 dark:text-gray-400 gap-8">
       <div className="flex">
@@ -296,9 +296,9 @@ export const DesktopAnalysisFilters = ({
         </select>
       </div>
       <div>
-        <button 
-        className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-        onClick={handleClearFilter}
+        <button
+          className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+          onClick={handleClearFilter}
         >
           Clear
         </button>
@@ -350,61 +350,60 @@ export const OnGroundInspectionFilters = ({
     });
   };
 
-  const handleClearFilter =()=>{
-    setFilters({ condition: {} })
+  const handleClearFilter = () => {
+    setFilters({ condition: {} });
     setPaginationInfo((prevState) => ({
       ...prevState,
       offsetNo: 0,
     }));
-  }
-  
+  };
+
   useEffect(() => {
     filterApiCall(filters);
   }, [filters, paginationInfo.offsetNo, paginationInfo.limit]);
-  
+
   return (
     <div className="flex flex-grow text-gray-700 dark:text-gray-400 gap-8">
-        <div className="flex">
-          <select
-            name="role"
-            id="role"
-            onChange={() => {}}
-            className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-          >
-            <option value="">Assessor</option>
-            <option value="admin">Admin</option>
-            <option value="applicant">Applicant</option>
-          </select>
-        </div>
-        <div className="flex">
-          <button
-            className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full px-8 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-            onClick={() => setShowCalendar(true)}
-          >
-            {buttonText.includes("Published")
+      <div className="flex">
+        <select
+          name="role"
+          id="role"
+          onChange={() => {}}
+          className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+        >
+          <option value="">Assessor</option>
+          <option value="admin">Admin</option>
+          <option value="applicant">Applicant</option>
+        </select>
+      </div>
+      <div className="flex">
+        <button
+          className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full px-8 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+          onClick={() => setShowCalendar(true)}
+        >
+          {buttonText.includes("Published")
             ? buttonText
             : readableDate(buttonText)}
-          </button>
-          {showCalendar && <Calendar onChange={handleDateSelect} />}
-        </div>
-        <div className="flex">
-          <select
-            name="review_status"
-            id="review_status"
-            onChange={handleChange}
-            className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-          >
-            <option value="">Review Status</option>
-            <option value="In Progress">In Progress</option>
-            <option value="Approved">Approved</option>
-            <option value="Rejected">Rejected</option>
-          </select>
-        </div>
+        </button>
+        {showCalendar && <Calendar onChange={handleDateSelect} />}
+      </div>
+      <div className="flex">
+        <select
+          name="review_status"
+          id="review_status"
+          onChange={handleChange}
+          className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+        >
+          <option value="">Review Status</option>
+          <option value="In Progress">In Progress</option>
+          <option value="Approved">Approved</option>
+          <option value="Rejected">Rejected</option>
+        </select>
       </div>
       <div>
-        <button 
-        className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-        onClick={handleClearFilter}
+        <button
+          className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+          onClick={handleClearFilter}
         >
           Clear
         </button>
@@ -475,14 +474,14 @@ export const ScheduleManagementFilters = ({
     }));
   };
 
-  const handleClearFilter =()=>{
-    setFilters({ condition: {} })
+  const handleClearFilter = () => {
+    setFilters({ condition: {} });
     setPaginationInfo((prevState) => ({
       ...prevState,
       offsetNo: 0,
     }));
-  }
-  
+  };
+
   useEffect(() => {
     filterApiCall(filters);
   }, [filters, paginationInfo.offsetNo, paginationInfo.limit]);
@@ -531,9 +530,9 @@ export const ScheduleManagementFilters = ({
         </select>
       </div>
       <div>
-        <button 
-        className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-        onClick={handleClearFilter}
+        <button
+          className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+          onClick={handleClearFilter}
         >
           Clear
         </button>

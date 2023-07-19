@@ -89,8 +89,8 @@ export default function OnGroundInspectionAnalysis() {
 
   const handleSelectMenu = (menuItem) => {
     setState((prevState) => ({ ...prevState, menu_selected: menuItem }));
-    setPaginationInfo((prevState)=>({...prevState,offsetNo:0}))
-    setIsFilterOpen(false)
+    setPaginationInfo((prevState) => ({ ...prevState, offsetNo: 0 }));
+    setIsFilterOpen(false);
   };
 
   const navigateToView = (formObj) => {
@@ -107,6 +107,7 @@ export default function OnGroundInspectionAnalysis() {
       console.log("error - ", error);
     }
   };
+
   useEffect(() => {
     if (!isSearchOpen && !isFilterOpen) {
       fetchOnGroundAssessorData();
@@ -117,7 +118,7 @@ export default function OnGroundInspectionAnalysis() {
     const postData = {
       offsetNo: paginationInfo.offsetNo,
       limit: paginationInfo.limit,
-      formStatus: state.menu_selected
+      formStatus: state.menu_selected,
     };
     try {
       const res = await getOnGroundAssessorData(postData);
@@ -199,7 +200,7 @@ export default function OnGroundInspectionAnalysis() {
       id: e.form_id,
       status: e?.review_status || "NA",
       form_status: e?.form_status,
-      review_status: e?.review_status
+      review_status: e?.review_status,
     };
 
     resData.push(formsData);
@@ -221,7 +222,7 @@ export default function OnGroundInspectionAnalysis() {
 
   return (
     <>
-      <div className="flex flex-col gap-4">
+      <div className="flex flex-col gap-8">
         <div className="flex flex-col gap-4">
           <div>
             <h1 className="text-2xl font-medium">Your activity</h1>
@@ -264,117 +265,114 @@ export default function OnGroundInspectionAnalysis() {
           </div>
         </div>
 
-        <div className="flex flex-col">
-          <div className="text-sm font-medium text-center text-gray-500 border-b border-gray-200 dark:text-gray-400 dark:border-gray-700">
-            <ul className="flex flex-wrap -mb-px">
-              <li className="mr-2" onClick={() => handleSelectMenu("In Progress")}>
-                <a
-                  href="#"
-                  className={`inline-block p-4 rounded-t-lg dark:text-blue-500 dark:border-blue-600 ${
-                    state.menu_selected === "In Progress"
-                      ? "text-blue-600 border-b-2 border-blue-600"
-                      : ""
-                  }`}
-                >
-                  New
-                </a>
-              </li>
-              <li
-                className="mr-2"
-                onClick={() => handleSelectMenu("Approved")}
+        <div className="flex flex-col gap-3">
+          <ul className="flex flex-wrap -mb-px">
+            <li
+              className="gap-3"
+              onClick={() => handleSelectMenu("In Progress")}
+            >
+              <a
+                href="#"
+                className={`inline-block p-4 rounded-t-lg dark:text-blue-500 dark:border-blue-600 ${
+                  state.menu_selected === "In Progress"
+                    ? "text-blue-600 border-b-2 border-blue-600"
+                    : ""
+                }`}
               >
-                <a
-                  href="#"
-                  className={`inline-block p-4 rounded-t-lg dark:text-blue-500 dark:border-blue-600 ${
-                    state.menu_selected === "Approved"
-                      ? "text-blue-600 border-b-2 border-blue-600"
-                      : ""
-                  }`}
-                  aria-current="page"
-                >
-                  Approved
-                </a>
-              </li>
-              <li
-                className="mr-2"
-                onClick={() => handleSelectMenu("Rejected")}
+                New
+              </a>
+            </li>
+            <li className="gap-3" onClick={() => handleSelectMenu("Approved")}>
+              <a
+                href="#"
+                className={`inline-block p-4 rounded-t-lg dark:text-blue-500 dark:border-blue-600 ${
+                  state.menu_selected === "Approved"
+                    ? "text-blue-600 border-b-2 border-blue-600"
+                    : ""
+                }`}
+                aria-current="page"
               >
-                <a
-                  href="#"
-                  className={`inline-block p-4 rounded-t-lg dark:text-blue-500 dark:border-blue-600 ${
-                    state.menu_selected === "Rejected"
-                      ? "text-blue-600 border-b-2 border-blue-600"
-                      : ""
-                  }`}
-                >
-                  Rejected
-                </a>
-              </li>
-            </ul>
-            {/* <div>create a search bar and filter component here</div> */}
+                Approved
+              </a>
+            </li>
+            <li className="gap-3" onClick={() => handleSelectMenu("Rejected")}>
+              <a
+                href="#"
+                className={`inline-block p-4 rounded-t-lg dark:text-blue-500 dark:border-blue-600 ${
+                  state.menu_selected === "Rejected"
+                    ? "text-blue-600 border-b-2 border-blue-600"
+                    : ""
+                }`}
+              >
+                Rejected
+              </a>
+            </li>
+          </ul>
+          {/* <div>create a search bar and filter component here</div> */}
 
-            {/* table creation starts here */}
-            {state.menu_selected === "In Progress" && (
-              <div className="text-2xl mt-4 font-medium">
-                <FilteringTable
-                  dataList={resData.filter(
-                    (item) => item.form_status === "In Progress"
-                  )}
-                  navigateFunc={navigateToView}
-                  columns={COLUMN}
-                  pagination={true}
-                  onRowSelect={() => {}}
-                  filterApiCall={filterApiCall}
-                  showFilter={true}
-                  paginationInfo={paginationInfo}
-                  setPaginationInfo={setPaginationInfo}
-                  searchApiCall={searchApiCall}
-                  setIsSearchOpen={setIsSearchOpen}
-                  setIsFilterOpen={setIsFilterOpen}
-                />
-              </div>
-            )}
-            {state.menu_selected === "Approved" && (
-              <div className="text-2xl mt-4 font-medium">
-                <FilteringTable
-                  dataList={resData.filter(
-                    (item) => item.form_status === "Approved"
-                  )}
-                  navigateFunc={navigateToView}
-                  columns={COLUMN}
-                  pagination={true}
-                  onRowSelect={() => {}}
-                  filterApiCall={filterApiCall}
-                  showFilter={true}
-                  paginationInfo={paginationInfo}
-                  setPaginationInfo={setPaginationInfo}
-                  searchApiCall={searchApiCall}
-                  setIsSearchOpen={setIsSearchOpen}
-                  setIsFilterOpen={setIsFilterOpen}
-                />
-              </div>
-            )}
-            {state.menu_selected === "Rejected" && (
-              <div className="text-2xl mt-4 font-medium">
-                <FilteringTable
-                  dataList={resData.filter(
-                    (item) => item.form_status === "Rejected"
-                  )}
-                  navigateFunc={navigateToView}
-                  columns={COLUMN}
-                  pagination={true}
-                  onRowSelect={() => {}}
-                  filterApiCall={filterApiCall}
-                  showFilter={true}
-                  paginationInfo={paginationInfo}
-                  setPaginationInfo={setPaginationInfo}
-                  searchApiCall={searchApiCall}
-                  setIsSearchOpen={setIsSearchOpen}
-                  setIsFilterOpen={setIsFilterOpen}
-                />
-              </div>
-            )}
-          </div>
+          {/* table creation starts here */}
+          {state.menu_selected === "In Progress" && (
+            <div className="flex flex-col gap-4">
+              <FilteringTable
+                dataList={resData.filter(
+                  (item) => item.form_status === "In Progress"
+                )}
+                navigateFunc={navigateToView}
+                columns={COLUMN}
+                pagination={true}
+                onRowSelect={() => {}}
+                filterApiCall={filterApiCall}
+                showFilter={true}
+                paginationInfo={paginationInfo}
+                setPaginationInfo={setPaginationInfo}
+                searchApiCall={searchApiCall}
+                setIsSearchOpen={setIsSearchOpen}
+                setIsFilterOpen={setIsFilterOpen}
+              />
+            </div>
+          )}
+
+          {state.menu_selected === "Approved" && (
+            <div className="flex flex-col gap-4">
+              <FilteringTable
+                dataList={resData.filter(
+                  (item) => item.form_status === "Approved"
+                )}
+                navigateFunc={navigateToView}
+                columns={COLUMN}
+                pagination={true}
+                onRowSelect={() => {}}
+                filterApiCall={filterApiCall}
+                showFilter={true}
+                paginationInfo={paginationInfo}
+                setPaginationInfo={setPaginationInfo}
+                searchApiCall={searchApiCall}
+                setIsSearchOpen={setIsSearchOpen}
+                setIsFilterOpen={setIsFilterOpen}
+              />
+            </div>
+          )}
+
+          {state.menu_selected === "Rejected" && (
+            <div className="flex flex-col gap-4">
+              <FilteringTable
+                dataList={resData.filter(
+                  (item) => item.form_status === "Rejected"
+                )}
+                navigateFunc={navigateToView}
+                columns={COLUMN}
+                pagination={true}
+                onRowSelect={() => {}}
+                filterApiCall={filterApiCall}
+                showFilter={true}
+                paginationInfo={paginationInfo}
+                setPaginationInfo={setPaginationInfo}
+                searchApiCall={searchApiCall}
+                setIsSearchOpen={setIsSearchOpen}
+                setIsFilterOpen={setIsFilterOpen}
+              />
+            </div>
+          )}
         </div>
       </div>
     </>
