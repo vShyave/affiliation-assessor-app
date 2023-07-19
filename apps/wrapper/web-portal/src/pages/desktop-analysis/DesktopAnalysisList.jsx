@@ -5,6 +5,7 @@ import { Select, Option } from "@material-tailwind/react";
 
 import FilteringTable from "../../components/table/FilteringTable";
 import Card from "../../components/Card";
+import Nav from "../../components/Nav";
 
 import {
   filterDesktopAnalysis,
@@ -176,6 +177,8 @@ const DesktopAnalysisList = () => {
 
   return (
     <>
+      <Nav/>
+    <div className={`container m-auto min-h-[calc(100vh-148px)] px-3 py-12`}>
       <div className="flex flex-col gap-8">
         <div className="flex flex-col gap-4">
           <div>
@@ -293,7 +296,8 @@ const DesktopAnalysisList = () => {
           </div>
         </div>
       </div>
-    </>
+      </div>    
+      </>
   );
 };
 export default DesktopAnalysisList;

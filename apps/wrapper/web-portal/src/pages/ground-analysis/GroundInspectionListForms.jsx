@@ -5,6 +5,7 @@ import { Select, Option } from "@material-tailwind/react";
 
 import FilteringTable from "../../components/table/FilteringTable";
 import Card from "../../components/Card";
+import Nav from "../../components/Nav";
 
 import { getFieldName, readableDate } from "../../utils/common";
 import {
@@ -83,6 +84,9 @@ export default function OnGroundInspectionAnalysis() {
       text: "Total pending",
     },
   ];
+
+
+
 
   const handleSelectMenu = (menuItem) => {
     setState((prevState) => ({ ...prevState, menu_selected: menuItem }));
@@ -183,6 +187,8 @@ export default function OnGroundInspectionAnalysis() {
 
   return (
     <>
+    <Nav/>
+    <div className={`container m-auto min-h-[calc(100vh-148px)] px-3 py-12`}>
       <div className="flex flex-col gap-8">
         <div className="flex flex-col gap-4">
           <div>
@@ -323,6 +329,7 @@ export default function OnGroundInspectionAnalysis() {
             )}
           </div>
         </div>
+      </div>
       </div>
     </>
   );

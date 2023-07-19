@@ -61,6 +61,30 @@ const UploadForm = ({ setFormStage, handleFile, xmlData, formData }) => {
           </div>
         </div>
       </div> */}
+
+ {/* Breadcrum */}
+      {/* <Breadcrumb data={breadCrumbData} /> */}
+
+
+      <div className="h-[48px] bg-white flex justify-start drop-shadow-sm">
+        <div className="container mx-auto px-3 py-3">
+          <div className="flex flex-row font-bold gap-2 items-center">
+            <Link to={ADMIN_ROUTE_MAP.adminModule.manageUsers.home}>
+              <span className="text-gray-500 cursor-pointer">
+                Home
+              </span>
+            </Link>
+            <FaAngleRight className="text-[16px]" />
+            <Link to={ADMIN_ROUTE_MAP.adminModule.scheduleManagement.home}>
+            <span className="text-primary-400">Upload CSV</span>
+            </Link>
+            {/* <FaAngleRight className="text-[16px]" />
+            <span className="text-gray-500 uppercase">User details</span> */}
+          </div>
+        </div>
+      </div>
+
+      <div className={`container m-auto min-h-[calc(100vh-148px)] px-3 py-12`}>
       <div className="container">
         <div className="flex flex-col gap-4">
           <div className="flex flex-row justify-between">
@@ -143,6 +167,7 @@ const UploadForm = ({ setFormStage, handleFile, xmlData, formData }) => {
             </div>
           </div>
         </div>
+      </div>
       </div>
     </>
   );

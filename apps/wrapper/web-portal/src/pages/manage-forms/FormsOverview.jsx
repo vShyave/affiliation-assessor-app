@@ -17,6 +17,7 @@ import { VscPreview } from "react-icons/vsc";
 import { RiDeleteBin6Line } from "react-icons/ri";
 
 import AlertModal from "../../components/AlertModal";
+import Nav from "../../components/Nav";
 
 const FormsOverview = () => {
   const navigation = useNavigate();
@@ -451,6 +452,8 @@ const FormsOverview = () => {
       {showAlert && (
         <AlertModal showAlert={setShowAlert} {...state.alertContent} />
       )}
+      <Nav/>
+      <div className={`container m-auto min-h-[calc(100vh-148px)] px-3 py-12`}>
       <div className="flex flex-col gap-8">
         <div className="flex flex-col gap-4">
           <div>
@@ -590,6 +593,7 @@ const FormsOverview = () => {
             )}
           </div>
         </div>
+      </div>
       </div>
     </>
   );

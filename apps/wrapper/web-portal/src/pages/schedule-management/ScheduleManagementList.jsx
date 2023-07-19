@@ -6,6 +6,7 @@ import { MdFileUpload, MdEdit, MdDelete } from "react-icons/md";
 import FilteringTable from "../../components/table/FilteringTable";
 import Card from "../../components/Card";
 import { Button } from "../../components";
+import Nav from "../../components/Nav";
 
 import {
   filterAssessments,
@@ -157,6 +158,8 @@ const ScheduleManagementList = () => {
 
   return (
     <>
+    <Nav/>
+    <div className={`container m-auto min-h-[calc(100vh-148px)] px-3 py-12`}>
       <div className="flex flex-col gap-8">
         <div className="flex flex-col gap-4">
           <div className="flex flex-row justify-between">
@@ -213,6 +216,7 @@ const ScheduleManagementList = () => {
             />
           </div>
         </div>
+      </div>
       </div>
     </>
   );

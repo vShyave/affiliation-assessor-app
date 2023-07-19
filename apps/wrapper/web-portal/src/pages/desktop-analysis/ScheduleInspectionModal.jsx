@@ -149,6 +149,18 @@ function ScheduleInspectionModal({
     Object.keys(payload).forEach((key) => {
       formData.append(key, payload[key]);
     });
+    // const formData = {
+    //   assessment_schedule: {
+    //       assessment_schedule: [    
+    //         {    
+    //           assessor_code: OGAObject?.label,    
+    //           date: payload?.date,    
+    //           institute_id: instituteId,  
+    //           assisstant_code: "1",    
+    //         },    
+    //       ],   
+    //     }
+    //   }
     
 
     try {
