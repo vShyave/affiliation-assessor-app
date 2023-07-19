@@ -41,7 +41,11 @@ import NocIssued from "./pages/ground-analysis/NocIssuedConfirmation";
 
 
 function App() {
-  
+  useEffect(() => {
+    
+  }, []);
+
+
   return (
     <div className="App">
       <BrowserRouter>
