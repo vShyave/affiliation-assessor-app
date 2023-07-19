@@ -5,11 +5,11 @@ import FilteringTable from "../../components/table/FilteringTable";
 import ADMIN_ROUTE_MAP from "../../routes/adminRouteMap";
 import {
   getForms,
-  markReviewStatus,
   publishForms,
   unpublishForms,
   deleteForm,
   filterForms,
+  searchForms,
 } from "../../api";
 import { getFieldName, readableDate } from "../../utils/common";
 import Toast from "../../components/Toast";
@@ -41,6 +41,8 @@ const FormsOverview = () => {
     limit: 10,
     totalCount: 0,
   });
+  const [isSearchOpen, setIsSearchOpen] = useState(false);
+  const [isFilterOpen, setIsFilterOpen] = useState(false);
 
   const COLUMN_DRAFTS = [
     {
@@ -152,16 +154,10 @@ const FormsOverview = () => {
     navigation(navigationURL);
   };
 
-  const viewForm = async (postData) => {
-    try {
-      const res = await markReviewStatus(postData);
-    } catch (error) {
-      console.log("error - ", error);
-    }
-  };
-
   const handleSelectMenu = (menuItem) => {
     setState((prevState) => ({ ...prevState, menu_selected: menuItem }));
+    setPaginationInfo((prevState)=>({...prevState,offsetNo:0}))
+    setIsFilterOpen(false)
   };
 
   const publish = (formId) => {
@@ -180,16 +176,38 @@ const FormsOverview = () => {
   };
 
   useEffect(() => {
-    fetchFormsList();
-  }, [paginationInfo.offsetNo, paginationInfo.limit]);
+    if (state.menu_selected !== "create_new" && !isSearchOpen && !isFilterOpen) {
+      fetchFormsList();
+    }
+  }, [paginationInfo.offsetNo, paginationInfo.limit, state.menu_selected]);
 
   const fetchFormsList = async () => {
-    const pagination = {
+    const postData = {
       offsetNo: paginationInfo.offsetNo,
       limit: paginationInfo.limit,
+      formStatus: state.menu_selected,
     };
     try {
-      const res = await getForms(pagination);
+      const res = await getForms(postData);
+      setPaginationInfo((prevState) => ({
+        ...prevState,
+        totalCount: res?.data?.forms_aggregate?.aggregate.totalCount,
+      }));
+      setFormsList(res?.data?.forms);
+    } catch (error) {
+      console.log("error - ", error);
+    }
+  };
+
+  const searchApiCall = async (searchData) => {
+    const postData = {
+      offsetNo: paginationInfo.offsetNo,
+      limit: paginationInfo.limit,
+      formStatus: state.menu_selected ,
+      ...searchData,
+    };
+    try {
+      const res = await searchForms(postData);
       setPaginationInfo((prevState) => ({
         ...prevState,
         totalCount: res?.data?.forms_aggregate?.aggregate.totalCount,
@@ -201,7 +219,17 @@ const FormsOverview = () => {
   };
 
   const filterApiCall = async (filters) => {
-    const postData = { offsetNo: 0, limit: 10, ...filters };
+    const customFilters = {
+      condition: {
+        ...filters["condition"],
+        form_status: { _eq: state.menu_selected },
+      },
+    };
+    const postData = {
+      offsetNo: paginationInfo.offsetNo,
+      limit: paginationInfo.limit,
+      ...customFilters,
+    };
     try {
       const res = await filterForms(postData);
       setPaginationInfo((prevState) => ({
@@ -475,11 +503,11 @@ const FormsOverview = () => {
                   Create New
                 </a>
               </li>
-              <li className="mr-2" onClick={() => handleSelectMenu("draft")}>
+              <li className="mr-2" onClick={() => handleSelectMenu("Draft")}>
                 <a
                   href="#"
                   className={`inline-block p-4 rounded-t-lg dark:text-blue-500 dark:border-blue-600 ${
-                    state.menu_selected === "draft"
+                    state.menu_selected === "Draft"
                       ? "text-blue-600 border-b-2 border-blue-600"
                       : ""
                   }`}
@@ -490,12 +518,12 @@ const FormsOverview = () => {
               </li>
               <li
                 className="mr-2"
-                onClick={() => handleSelectMenu("published")}
+                onClick={() => handleSelectMenu("Published")}
               >
                 <a
                   href="#"
                   className={`inline-block p-4 rounded-t-lg dark:text-blue-500 dark:border-blue-600 ${
-                    state.menu_selected === "published"
+                    state.menu_selected === "Published"
                       ? "text-blue-600 border-b-2 border-blue-600"
                       : ""
                   }`}
@@ -505,17 +533,17 @@ const FormsOverview = () => {
               </li>
               <li
                 className="mr-2"
-                onClick={() => handleSelectMenu("unpublished")}
+                onClick={() => handleSelectMenu("Unpublished")}
               >
                 <a
                   href="#"
                   className={`inline-block p-4 rounded-t-lg dark:text-blue-500 dark:border-blue-600 ${
-                    state.menu_selected === "unpublished"
+                    state.menu_selected === "Unpublished"
                       ? "text-blue-600 border-b-2 border-blue-600"
                       : ""
                   }`}
                 >
-                  Unpublished
+                  Archived
                 </a>
               </li>
             </ul>
@@ -537,7 +565,7 @@ const FormsOverview = () => {
                 </Card>
               </div>
             )}
-            {state.menu_selected === "draft" && (
+            {state.menu_selected === "Draft" && (
               <div className="text-2xl mt-4 font-medium">
                 <FilteringTable
                   dataList={formsDataList.filter(
@@ -551,10 +579,13 @@ const FormsOverview = () => {
                   showFilter={true}
                   paginationInfo={paginationInfo}
                   setPaginationInfo={setPaginationInfo}
+                  searchApiCall={searchApiCall}
+                  setIsSearchOpen={setIsSearchOpen}
+                  setIsFilterOpen={setIsFilterOpen}
                 />
               </div>
             )}
-            {state.menu_selected === "published" && (
+            {state.menu_selected === "Published" && (
               <div className="text-2xl mt-4 font-medium">
                 <FilteringTable
                   dataList={formsDataList.filter(
@@ -568,10 +599,13 @@ const FormsOverview = () => {
                   showFilter={true}
                   paginationInfo={paginationInfo}
                   setPaginationInfo={setPaginationInfo}
+                  searchApiCall={searchApiCall}
+                  setIsSearchOpen={setIsSearchOpen}
+                  setIsFilterOpen={setIsFilterOpen}
                 />
               </div>
             )}
-            {state.menu_selected === "unpublished" && (
+            {state.menu_selected === "Unpublished" && (
               <div className="text-2xl mt-4 font-medium">
                 <FilteringTable
                   dataList={formsDataList.filter(
@@ -585,6 +619,9 @@ const FormsOverview = () => {
                   showFilter={true}
                   paginationInfo={paginationInfo}
                   setPaginationInfo={setPaginationInfo}
+                  searchApiCall={searchApiCall}
+                  setIsSearchOpen={setIsSearchOpen}
+                  setIsFilterOpen={setIsFilterOpen}
                 />
               </div>
             )}

@@ -11,6 +11,7 @@ import {
   filterOGA,
   getOnGroundAssessorData,
   markReviewStatus,
+  searchOGA,
 } from "../../api";
 import ADMIN_ROUTE_MAP from "../../routes/adminRouteMap";
 
@@ -21,13 +22,15 @@ export default function OnGroundInspectionAnalysis() {
   resData = formsDataList;
   const [formsList, setFormsList] = useState();
   const [state, setState] = useState({
-    menu_selected: "new",
+    menu_selected: "In Progress",
   });
   const [paginationInfo, setPaginationInfo] = useState({
     offsetNo: 0,
     limit: 10,
     totalCount: 0,
   });
+  const [isSearchOpen, setIsSearchOpen] = useState(false);
+  const [isFilterOpen, setIsFilterOpen] = useState(false);
 
   const COLUMN = [
     {
@@ -52,7 +55,7 @@ export default function OnGroundInspectionAnalysis() {
     },
     {
       Header: "Status",
-      accessor: "status",
+      accessor: "review_status",
     },
   ];
 
@@ -86,6 +89,8 @@ export default function OnGroundInspectionAnalysis() {
 
   const handleSelectMenu = (menuItem) => {
     setState((prevState) => ({ ...prevState, menu_selected: menuItem }));
+    setPaginationInfo((prevState)=>({...prevState,offsetNo:0}))
+    setIsFilterOpen(false)
   };
 
   const navigateToView = (formObj) => {
@@ -103,16 +108,38 @@ export default function OnGroundInspectionAnalysis() {
     }
   };
   useEffect(() => {
-    fetchOnGroundAssessorData();
-  }, [paginationInfo.offsetNo, paginationInfo.limit]);
+    if (!isSearchOpen && !isFilterOpen) {
+      fetchOnGroundAssessorData();
+    }
+  }, [paginationInfo.offsetNo, paginationInfo.limit, state.menu_selected]);
 
   const fetchOnGroundAssessorData = async () => {
-    const pagination = {
+    const postData = {
       offsetNo: paginationInfo.offsetNo,
       limit: paginationInfo.limit,
+      formStatus: state.menu_selected
     };
     try {
-      const res = await getOnGroundAssessorData(pagination);
+      const res = await getOnGroundAssessorData(postData);
+      setPaginationInfo((prevState) => ({
+        ...prevState,
+        totalCount: res.data.form_submissions_aggregate.aggregate.totalCount,
+      }));
+      setFormsList(res?.data?.form_submissions);
+    } catch (error) {
+      console.log("error - ", error);
+    }
+  };
+
+  const searchApiCall = async (searchData) => {
+    const postData = {
+      offsetNo: paginationInfo.offsetNo,
+      limit: paginationInfo.limit,
+      formStatus: state.menu_selected,
+      ...searchData,
+    };
+    try {
+      const res = await searchOGA(postData);
       setPaginationInfo((prevState) => ({
         ...prevState,
         totalCount: res.data.form_submissions_aggregate.aggregate.totalCount,
@@ -124,7 +151,17 @@ export default function OnGroundInspectionAnalysis() {
   };
 
   const filterApiCall = async (filters) => {
-    const postData = { offsetNo: 0, limit: 10, ...filters };
+    const customFilters = {
+      condition: {
+        ...filters["condition"],
+        form_status: { _eq: state.menu_selected },
+      },
+    };
+    const postData = {
+      offsetNo: paginationInfo.offsetNo,
+      limit: paginationInfo.limit,
+      ...customFilters,
+    };
     try {
       const res = await filterOGA(postData);
       setPaginationInfo((prevState) => ({
@@ -161,7 +198,8 @@ export default function OnGroundInspectionAnalysis() {
       published_on: readableDate(e?.submitted_on),
       id: e.form_id,
       status: e?.review_status || "NA",
-      noc_recommendation: e?.noc_recommendation,
+      form_status: e?.form_status,
+      review_status: e?.review_status
     };
 
     resData.push(formsData);
@@ -229,11 +267,11 @@ export default function OnGroundInspectionAnalysis() {
         <div className="flex flex-col">
           <div className="text-sm font-medium text-center text-gray-500 border-b border-gray-200 dark:text-gray-400 dark:border-gray-700">
             <ul className="flex flex-wrap -mb-px">
-              <li className="mr-2" onClick={() => handleSelectMenu("new")}>
+              <li className="mr-2" onClick={() => handleSelectMenu("In Progress")}>
                 <a
                   href="#"
                   className={`inline-block p-4 rounded-t-lg dark:text-blue-500 dark:border-blue-600 ${
-                    state.menu_selected === "new"
+                    state.menu_selected === "In Progress"
                       ? "text-blue-600 border-b-2 border-blue-600"
                       : ""
                   }`}
@@ -241,11 +279,14 @@ export default function OnGroundInspectionAnalysis() {
                   New
                 </a>
               </li>
-              <li className="mr-2" onClick={() => handleSelectMenu("approved")}>
+              <li
+                className="mr-2"
+                onClick={() => handleSelectMenu("Approved")}
+              >
                 <a
                   href="#"
                   className={`inline-block p-4 rounded-t-lg dark:text-blue-500 dark:border-blue-600 ${
-                    state.menu_selected === "approved"
+                    state.menu_selected === "Approved"
                       ? "text-blue-600 border-b-2 border-blue-600"
                       : ""
                   }`}
@@ -254,11 +295,14 @@ export default function OnGroundInspectionAnalysis() {
                   Approved
                 </a>
               </li>
-              <li className="mr-2" onClick={() => handleSelectMenu("rejected")}>
+              <li
+                className="mr-2"
+                onClick={() => handleSelectMenu("Rejected")}
+              >
                 <a
                   href="#"
                   className={`inline-block p-4 rounded-t-lg dark:text-blue-500 dark:border-blue-600 ${
-                    state.menu_selected === "rejected"
+                    state.menu_selected === "Rejected"
                       ? "text-blue-600 border-b-2 border-blue-600"
                       : ""
                   }`}
@@ -270,11 +314,11 @@ export default function OnGroundInspectionAnalysis() {
             {/* <div>create a search bar and filter component here</div> */}
 
             {/* table creation starts here */}
-            {state.menu_selected === "new" && (
+            {state.menu_selected === "In Progress" && (
               <div className="text-2xl mt-4 font-medium">
                 <FilteringTable
                   dataList={resData.filter(
-                    (item) => item.noc_recommendation === null
+                    (item) => item.form_status === "In Progress"
                   )}
                   navigateFunc={navigateToView}
                   columns={COLUMN}
@@ -284,14 +328,17 @@ export default function OnGroundInspectionAnalysis() {
                   showFilter={true}
                   paginationInfo={paginationInfo}
                   setPaginationInfo={setPaginationInfo}
+                  searchApiCall={searchApiCall}
+                  setIsSearchOpen={setIsSearchOpen}
+                  setIsFilterOpen={setIsFilterOpen}
                 />
               </div>
             )}
-            {state.menu_selected === "approved" && (
+            {state.menu_selected === "Approved" && (
               <div className="text-2xl mt-4 font-medium">
                 <FilteringTable
                   dataList={resData.filter(
-                    (item) => item.noc_recommendation === "Recommended"
+                    (item) => item.form_status === "Approved"
                   )}
                   navigateFunc={navigateToView}
                   columns={COLUMN}
@@ -301,14 +348,17 @@ export default function OnGroundInspectionAnalysis() {
                   showFilter={true}
                   paginationInfo={paginationInfo}
                   setPaginationInfo={setPaginationInfo}
+                  searchApiCall={searchApiCall}
+                  setIsSearchOpen={setIsSearchOpen}
+                  setIsFilterOpen={setIsFilterOpen}
                 />
               </div>
             )}
-            {state.menu_selected === "rejected" && (
+            {state.menu_selected === "Rejected" && (
               <div className="text-2xl mt-4 font-medium">
                 <FilteringTable
                   dataList={resData.filter(
-                    (item) => item.noc_recommendation === "Not recommended"
+                    (item) => item.form_status === "Rejected"
                   )}
                   navigateFunc={navigateToView}
                   columns={COLUMN}
@@ -318,6 +368,9 @@ export default function OnGroundInspectionAnalysis() {
                   showFilter={true}
                   paginationInfo={paginationInfo}
                   setPaginationInfo={setPaginationInfo}
+                  searchApiCall={searchApiCall}
+                  setIsSearchOpen={setIsSearchOpen}
+                  setIsFilterOpen={setIsFilterOpen}
                 />
               </div>
             )}

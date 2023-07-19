@@ -3,7 +3,12 @@ import Calendar from "react-calendar";
 import { formatDate } from "../../utils/common";
 
 //Manage Users
-export const ManageUsersFilters = ({ filterApiCall }) => {
+export const ManageUsersFilters = ({
+  filterApiCall,
+  paginationInfo,
+  setIsFilterOpen,
+  setPaginationInfo,
+}) => {
   const [filters, setFilters] = useState({ condition: {} });
   const handleChange = (e) => {
     if (e.target.value === "") {
@@ -18,10 +23,22 @@ export const ManageUsersFilters = ({ filterApiCall }) => {
         },
       },
     });
+    setIsFilterOpen(e.target.value ? true : false);
+    setPaginationInfo((prevState) => ({
+      ...prevState,
+      offsetNo: 0,
+    }));
   };
+  const handleClearFilter =()=>{
+    setFilters({ condition: {} })
+    setPaginationInfo((prevState) => ({
+      ...prevState,
+      offsetNo: 0,
+    }));
+  }
   useEffect(() => {
     filterApiCall(filters);
-  }, [filters]);
+  }, [filters, paginationInfo.offsetNo, paginationInfo.limit]);
   return (
     <div className="flex flex-grow justify-around text-gray-700 dark:text-gray-400 p-4">
       <div className="grid grid-cols-12 gap-8">
@@ -50,12 +67,25 @@ export const ManageUsersFilters = ({ filterApiCall }) => {
           </select>
         </div>
       </div>
+      <div>
+        <button 
+        className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+        onClick={handleClearFilter}
+        >
+          Clear
+        </button>
+      </div>
     </div>
   );
 };
 
 //Manage Forms
-export const ManageFormsFilters = ({ filterApiCall }) => {
+export const ManageFormsFilters = ({
+  filterApiCall,
+  setIsFilterOpen,
+  paginationInfo,
+  setPaginationInfo,
+}) => {
   const [filters, setFilters] = useState({ condition: {} });
   const handleChange = (e) => {
     if (e.target.value === "") {
@@ -70,10 +100,22 @@ export const ManageFormsFilters = ({ filterApiCall }) => {
         },
       },
     });
+    setIsFilterOpen(e.target.value ? true : false);
+    setPaginationInfo((prevState) => ({
+      ...prevState,
+      offsetNo: 0,
+    }));
   };
+  const handleClearFilter =()=>{
+    setFilters({ condition: {} })
+    setPaginationInfo((prevState) => ({
+      ...prevState,
+      offsetNo: 0,
+    }));
+  }
   useEffect(() => {
     filterApiCall(filters);
-  }, [filters]);
+  }, [filters, paginationInfo.offsetNo, paginationInfo.limit]);
   return (
     <div className="flex flex-grow justify-around text-gray-700 dark:text-gray-400 p-4">
       <div className="grid grid-cols-12 gap-8">
@@ -114,12 +156,25 @@ export const ManageFormsFilters = ({ filterApiCall }) => {
           </select>
         </div>
       </div>
+      <div>
+        <button 
+        className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+        onClick={handleClearFilter}
+        >
+          Clear
+        </button>
+      </div>
     </div>
   );
 };
 
 // Desktop Analysis
-export const DesktopAnalysisFilters = ({ filterApiCall }) => {
+export const DesktopAnalysisFilters = ({
+  filterApiCall,
+  setIsFilterOpen,
+  paginationInfo,
+  setPaginationInfo,
+}) => {
   const [showCalendar, setShowCalendar] = useState(false);
   const [buttonText, setButtonText] = useState("Published On");
   const [filters, setFilters] = useState({
@@ -153,6 +208,11 @@ export const DesktopAnalysisFilters = ({ filterApiCall }) => {
         },
       });
     }
+    setIsFilterOpen(e.target.value ? true : false);
+    setPaginationInfo((prevState) => ({
+      ...prevState,
+      offsetNo: 0,
+    }));
   };
   const handleDateSelect = (date) => {
     setButtonText(formatDate(date));
@@ -165,10 +225,22 @@ export const DesktopAnalysisFilters = ({ filterApiCall }) => {
         },
       },
     });
+    setIsFilterOpen(date ? true : false);
+    setPaginationInfo((prevState) => ({
+      ...prevState,
+      offsetNo: 0,
+    }));
   };
+  const handleClearFilter =()=>{
+    setFilters({ condition: {} })
+    setPaginationInfo((prevState) => ({
+      ...prevState,
+      offsetNo: 0,
+    }));
+  }
   useEffect(() => {
     filterApiCall(filters);
-  }, [filters]);
+  }, [filters, paginationInfo.offsetNo, paginationInfo.limit]);
   return (
     <div className="flex flex-grow justify-around text-gray-700 dark:text-gray-400 p-4">
       <div className="grid grid-cols-12 gap-8">
@@ -218,12 +290,25 @@ export const DesktopAnalysisFilters = ({ filterApiCall }) => {
           </select>
         </div>
       </div>
+      <div>
+        <button 
+        className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+        onClick={handleClearFilter}
+        >
+          Clear
+        </button>
+      </div>
     </div>
   );
 };
 
 // On-Ground Inspection Analysis
-export const OnGroundInspectionFilters = ({ filterApiCall }) => {
+export const OnGroundInspectionFilters = ({
+  filterApiCall,
+  setIsFilterOpen,
+  paginationInfo,
+  setPaginationInfo,
+}) => {
   const [showCalendar, setShowCalendar] = useState(false);
   const [buttonText, setButtonText] = useState("Published On");
   const [filters, setFilters] = useState({ condition: {} });
@@ -240,6 +325,11 @@ export const OnGroundInspectionFilters = ({ filterApiCall }) => {
         },
       },
     });
+    setIsFilterOpen(e.target.value ? true : false);
+    setPaginationInfo((prevState) => ({
+      ...prevState,
+      offsetNo: 0,
+    }));
   };
   const handleDateSelect = (date) => {
     setButtonText(formatDate(date));
@@ -253,9 +343,16 @@ export const OnGroundInspectionFilters = ({ filterApiCall }) => {
       },
     });
   };
+  const handleClearFilter =()=>{
+    setFilters({ condition: {} })
+    setPaginationInfo((prevState) => ({
+      ...prevState,
+      offsetNo: 0,
+    }));
+  }
   useEffect(() => {
     filterApiCall(filters);
-  }, [filters]);
+  }, [filters, paginationInfo.offsetNo, paginationInfo.limit]);
   return (
     <div className="flex flex-grow justify-around text-gray-700 dark:text-gray-400 p-4">
       <div className="grid grid-cols-12 gap-8">
@@ -288,17 +385,31 @@ export const OnGroundInspectionFilters = ({ filterApiCall }) => {
             className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
           >
             <option value="">Review Status</option>
-            <option value="active">Active</option>
-            <option value="inactive">Inactive</option>
+            <option value="In Progress">In Progress</option>
+            <option value="Approved">Approved</option>
+            <option value="Rejected">Rejected</option>
           </select>
         </div>
+      </div>
+      <div>
+        <button 
+        className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+        onClick={handleClearFilter}
+        >
+          Clear
+        </button>
       </div>
     </div>
   );
 };
 
 // Schedule Management
-export const ScheduleManagementFilters = ({ filterApiCall }) => {
+export const ScheduleManagementFilters = ({
+  filterApiCall,
+  setIsFilterOpen,
+  paginationInfo,
+  setPaginationInfo,
+}) => {
   const [showCalendar, setShowCalendar] = useState(false);
   const [buttonText, setButtonText] = useState("Published On");
   const [filters, setFilters] = useState({ condition: {} });
@@ -328,6 +439,11 @@ export const ScheduleManagementFilters = ({ filterApiCall }) => {
         },
       });
     }
+    setIsFilterOpen(e.target.value ? true : false);
+    setPaginationInfo((prevState) => ({
+      ...prevState,
+      offsetNo: 0,
+    }));
   };
   const handleDateSelect = (date) => {
     setButtonText(formatDate(date));
@@ -340,10 +456,22 @@ export const ScheduleManagementFilters = ({ filterApiCall }) => {
         },
       },
     });
+    setIsFilterOpen(date ? true : false);
+    setPaginationInfo((prevState) => ({
+      ...prevState,
+      offsetNo: 0,
+    }));
   };
+  const handleClearFilter =()=>{
+    setFilters({ condition: {} })
+    setPaginationInfo((prevState) => ({
+      ...prevState,
+      offsetNo: 0,
+    }));
+  }
   useEffect(() => {
     filterApiCall(filters);
-  }, [filters]);
+  }, [filters, paginationInfo.offsetNo, paginationInfo.limit]);
   return (
     <div className="flex flex-grow justify-around text-gray-700 dark:text-gray-400 p-4">
       <div className="grid grid-cols-12 gap-8">
@@ -386,6 +514,14 @@ export const ScheduleManagementFilters = ({ filterApiCall }) => {
             <option value="Closed">Closed</option>
           </select>
         </div>
+      </div>
+      <div>
+        <button 
+        className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+        onClick={handleClearFilter}
+        >
+          Clear
+        </button>
       </div>
     </div>
   );

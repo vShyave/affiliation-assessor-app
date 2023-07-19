@@ -58,6 +58,13 @@ desktopAnalysis:{
     SAVE: "",
     GET: "",
   },
+  GLOBAL_SEARCH: {
+    searchUsers: `${rest}searchUsers`,
+    searchDesktop: `${rest}searchDesktop`,
+    searchOGA: `${rest}searchOGA`,
+    searchForms: `${rest}searchForms`,
+    searchAssessments: `${rest}searchAssessments`
+  }
 };
 
 export default API_URL;

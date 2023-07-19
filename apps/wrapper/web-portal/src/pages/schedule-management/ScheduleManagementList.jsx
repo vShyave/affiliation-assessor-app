@@ -11,6 +11,7 @@ import {
   filterAssessments,
   filterForms,
   getAssessmentSchedule,
+  searchAssessments,
 } from "../../api";
 import ADMIN_ROUTE_MAP from "../../routes/adminRouteMap";
 
@@ -24,6 +25,8 @@ const ScheduleManagementList = () => {
     limit: 10,
     totalCount: 0,
   });
+  const [isSearchOpen, setIsSearchOpen] = useState(false);
+  const [isFilterOpen, setIsFilterOpen] = useState(false);
 
   const COLUMNS = [
     {
@@ -118,7 +121,11 @@ const ScheduleManagementList = () => {
   });
 
   const filterApiCall = async (filters) => {
-    const postData = { offsetNo: 0, limit: 10, ...filters };
+    const postData = {
+      offsetNo: paginationInfo.offsetNo,
+      limit: paginationInfo.limit,
+      ...filters,
+    };
     try {
       const res = await filterAssessments(postData);
       setAssessmentScheduleList(res?.data?.assessment_schedule);
@@ -132,6 +139,28 @@ const ScheduleManagementList = () => {
       console.log("error - ", error);
     }
   };
+
+  const searchApiCall = async (searchData) => {
+    const postData = {
+      offsetNo: paginationInfo.offsetNo,
+      limit: paginationInfo.limit,
+      ...searchData,
+    };
+    try {
+      const res = await searchAssessments(postData);
+      setAssessmentScheduleList(res?.data?.assessment_schedule);
+      const data = res?.data?.assessment_schedule;
+      setPaginationInfo((prevState) => ({
+        ...prevState,
+        totalCount: res.data.assessment_schedule_aggregate.aggregate.totalCount,
+      }));
+      setScheduleTableList(data.map(setTableData));
+    } catch (error) {
+      console.log("error - ", error);
+    }
+  };
+
+
 
   const fetchAllAssessmentSchedule = async () => {
     const pagination = {
@@ -152,7 +181,9 @@ const ScheduleManagementList = () => {
     }
   };
   useEffect(() => {
-    fetchAllAssessmentSchedule();
+    if (!isSearchOpen && !isFilterOpen) {
+      fetchAllAssessmentSchedule();
+    }
   }, [paginationInfo.offsetNo, paginationInfo.limit]);
 
   return (
@@ -210,6 +241,9 @@ const ScheduleManagementList = () => {
               showFilter={true}
               paginationInfo={paginationInfo}
               setPaginationInfo={setPaginationInfo}
+              setIsSearchOpen={setIsSearchOpen}
+              setIsFilterOpen={setIsFilterOpen}
+              searchApiCall={searchApiCall}
             />
           </div>
         </div>
