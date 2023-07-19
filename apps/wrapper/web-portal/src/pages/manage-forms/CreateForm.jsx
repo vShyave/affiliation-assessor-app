@@ -52,7 +52,7 @@ const CreateForm = () => {
     newForm.append("user_id", "53c57d13-d33d-439a-bd72-1f56b189642d");
     newForm.append("form_status", "Draft");
     try {
-      setLoading(true) 
+      setLoading(true);
       const createFormResponse = await createForm(newForm);
       setToast((prevState) => ({
         ...prevState,
@@ -94,7 +94,11 @@ const CreateForm = () => {
     try {
       const res = await convertODKtoXML(postData);
       setXmlData(res.data);
-      setFormData((prevState) => ({ ...prevState, path: res.data.fileUrl,file_name:res.data.fileName }));
+      setFormData((prevState) => ({
+        ...prevState,
+        path: res.data.fileUrl,
+        file_name: res.data.fileName,
+      }));
       //TODO: function call to invoke API for uploading xml file and get the remote path
       //TODO: add remote path to formData (state).
       setToast((prevState) => ({
@@ -146,7 +150,7 @@ const CreateForm = () => {
         round_no: formDetail?.round,
         title: formDetail?.title,
         path: formDetail?.path,
-        file_name: formDetail?.file_name
+        file_name: formDetail?.file_name,
       });
     } catch (error) {
       console.log("error - ", error);
@@ -183,228 +187,257 @@ const CreateForm = () => {
       {toast.toastOpen && (
         <Toast toastMsg={toast.toastMsg} toastType={toast.toastType} />
       )}
-      <div className="container mx-auto px-3 min-h-[40vh]">
-        <div className="flex flex-col gap-8">
-          <div className="flex flex-row justify-between">
-            <h1 className="text-2xl font-bold">Create form</h1>
-            <div className="flex gap-4">
-              <Button
-                moreClass="px-6 text-primary-600 bg-white border border-primary-600"
-                style={{ backgroundColor: "" }}
-                text="Cancel"
-                onClick={() =>
-                  navigate(ADMIN_ROUTE_MAP.adminModule.manageForms.home)
-                }
-              ></Button>
-              <Button
-                moreClass={`${
-                  Object.values(formData).length !== 8
-                    ? "text-gray-500 bg-white border border-gray-300 cursor-not-allowed"
-                    : "text-white bg-primary-500 border border-primary-500"
-                } px-6`}
-                text="Save as draft"
-                onClick={handleSaveDraft}
-                otherProps={{ disabled: Object.values(formData).length !== 8 }}
-              ></Button>
-            </div>
-          </div>
+       {/* Breadcrum */}
+      {/* <Breadcrumb data={breadCrumbData} /> */}
 
-          <div className="flex flex-row gap-4 justify-center">
-            <div
-              className={`${
-                formStage === 1 ? "bg-black text-white" : "bg-white text-black"
-              } py-3 px-10 rounded-[4px] text-[16px]`}
-            >
-              1. Add attributes
-            </div>
-            <div
-              className={`${
-                formStage === 2 ? "bg-black text-white" : "bg-white text-black"
-              } py-3 px-10 rounded-[4px] text-[16px]`}
-            >
-              2. Upload ODK
-            </div>
-          </div>
 
-          {formStage === 1 && (
-            <form onSubmit={handleSubmit}>
-              <div className="flex flex-col bg-white rounded-[4px] p-8 gap-8">
-                <div className="flex">
-                  <h1 className="text-xl font-semibold">Add attributes</h1>
-                </div>
-                <div className="flex flex-grow">
-                  <div className="grid grid-rows-3 grid-cols-6 gap-8">
-                    <div className="sm:col-span-3">
-                      <Label
-                        required
-                        text="Form title"
-                        moreClass="block text-sm font-medium leading-6 text-gray-900"
-                      />
-                      <div className="mt-2">
-                        <input
+      <div className="h-[48px] bg-white flex justify-start drop-shadow-sm">
+        <div className="container mx-auto px-3 py-3">
+          <div className="flex flex-row font-bold gap-2 items-center">
+            <Link to={ADMIN_ROUTE_MAP.adminModule.manageUsers.home}>
+              <span className="text-gray-500 cursor-pointer">
+                Home
+              </span>
+            </Link>
+            <FaAngleRight className="text-[16px]" />
+            <Link to={ADMIN_ROUTE_MAP.adminModule.scheduleManagement.home}>
+            <span className="text-primary-400">Create form</span>
+            </Link>
+            {/* <FaAngleRight className="text-[16px]" />
+            <span className="text-gray-500 uppercase">User details</span> */}
+          </div>
+        </div>
+      </div>
+      <div className={`container m-auto min-h-[calc(100vh-148px)] px-3 py-12`}>
+        <div className="container mx-auto px-3 min-h-[40vh]">
+          <div className="flex flex-col gap-8">
+            <div className="flex flex-row justify-between">
+              <h1 className="text-2xl font-bold">Create form</h1>
+              <div className="flex gap-4">
+                <Button
+                  moreClass="px-6 text-primary-600 bg-white border border-primary-600"
+                  style={{ backgroundColor: "" }}
+                  text="Cancel"
+                  onClick={() =>
+                    navigate(ADMIN_ROUTE_MAP.adminModule.manageForms.home)
+                  }
+                ></Button>
+                <Button
+                  moreClass={`${
+                    Object.values(formData).length !== 8
+                      ? "text-gray-500 bg-white border border-gray-300 cursor-not-allowed"
+                      : "text-white bg-primary-500 border border-primary-500"
+                  } px-6`}
+                  text="Save as draft"
+                  onClick={handleSaveDraft}
+                  otherProps={{
+                    disabled: Object.values(formData).length !== 8,
+                  }}
+                ></Button>
+              </div>
+            </div>
+
+            <div className="flex flex-row gap-4 justify-center">
+              <div
+                className={`${
+                  formStage === 1
+                    ? "bg-black text-white"
+                    : "bg-white text-black"
+                } py-3 px-10 rounded-[4px] text-[16px]`}
+              >
+                1. Add attributes
+              </div>
+              <div
+                className={`${
+                  formStage === 2
+                    ? "bg-black text-white"
+                    : "bg-white text-black"
+                } py-3 px-10 rounded-[4px] text-[16px]`}
+              >
+                2. Upload ODK
+              </div>
+            </div>
+
+            {formStage === 1 && (
+              <form onSubmit={handleSubmit}>
+                <div className="flex flex-col bg-white rounded-[4px] p-8 gap-8">
+                  <div className="flex">
+                    <h1 className="text-xl font-semibold">Add attributes</h1>
+                  </div>
+                  <div className="flex flex-grow">
+                    <div className="grid grid-rows-3 grid-cols-6 gap-8">
+                      <div className="sm:col-span-3">
+                        <Label
                           required
-                          value={formData.title}
-                          type="text"
-                          placeholder="Type here"
-                          id="title"
-                          name="title"
-                          onChange={handleChange}
-                          className="block w-full rounded-md border-0 p-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                          text="Form title"
+                          moreClass="block text-sm font-medium leading-6 text-gray-900"
                         />
+                        <div className="mt-2">
+                          <input
+                            required
+                            value={formData.title}
+                            type="text"
+                            placeholder="Type here"
+                            id="title"
+                            name="title"
+                            onChange={handleChange}
+                            className="block w-full rounded-md border-0 p-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                          />
+                        </div>
+                      </div>
+                      <div className="sm:col-span-3 ">
+                        <Label
+                          required={true}
+                          text="Application type"
+                          htmlFor="application_type"
+                          moreClass="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-400"
+                        />
+
+                        <select
+                          required
+                          value={formData.application_type}
+                          name="application_type"
+                          id="application_type"
+                          onChange={handleChange}
+                          className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                        >
+                          <option value="">Select here</option>
+                          <option value="new_institute">New Institute</option>
+                          <option value="new_course">New Course</option>
+                          <option value="seat_enhancement">
+                            Seat Enhancement
+                          </option>
+                        </select>
+                      </div>
+                      <div className="sm:col-span-3 ">
+                        <Label
+                          required
+                          text="Round No."
+                          htmlFor="round_no"
+                          moreClass="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-400"
+                        />
+
+                        <select
+                          required
+                          value={formData.round_no}
+                          name="round_no"
+                          id="round_no"
+                          onChange={handleChange}
+                          className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                        >
+                          <option value="">Select here</option>
+                          <option value={1}>Round 1</option>
+                          <option value={2}>Round 2</option>
+                        </select>
+                      </div>
+                      <div className="sm:col-span-3">
+                        <Label
+                          required
+                          text="Course name"
+                          htmlFor="course_type"
+                          moreClass="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-400"
+                        />
+
+                        <select
+                          required
+                          value={formData.course_type}
+                          name="course_type"
+                          id="course_type"
+                          onChange={handleChange}
+                          className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                        >
+                          <option value="">Select here</option>
+                          <option value="nursing">Nursing</option>
+                          <option value="paramedical">Paramedical</option>
+                        </select>
+                      </div>
+
+                      <div className="sm:col-span-3 ">
+                        <Label
+                          required
+                          text="Form labels"
+                          htmlFor="labels"
+                          moreClass="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-400"
+                        />
+
+                        <select
+                          required
+                          value={formData.labels}
+                          name="labels"
+                          id="labels"
+                          onChange={handleChange}
+                          className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                        >
+                          <option value="">Select here</option>
+                          <option value="infrastructure">Infrastructure</option>
+                          <option value="teaching_learning_process">
+                            Teaching Learning Process
+                          </option>
+                          <option value="objective_structured_clinical_examination">
+                            Objective Structured Clinical Examination
+                          </option>
+                        </select>
+                      </div>
+                      <div className="sm:col-span-3">
+                        <Label
+                          required
+                          text="Assignee"
+                          htmlFor="assignee"
+                          moreClass="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-400"
+                        />
+
+                        <select
+                          required
+                          value={formData.assignee}
+                          name="assignee"
+                          id="assignee"
+                          onChange={handleChange}
+                          className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                        >
+                          <option value="">Select here</option>
+                          <option value="applicant">Applicant</option>
+                          <option value="admin">Admin</option>
+                          <option value="government">Government</option>
+                          <option value="desktop_assessor">
+                            Desktop Assessor
+                          </option>
+                          <option value="on-ground_assessor">
+                            On-ground Assessor
+                          </option>
+                        </select>
                       </div>
                     </div>
-                    <div className="sm:col-span-3 ">
-                      <Label
-                        required={true}
-                        text="Application type"
-                        htmlFor="application_type"
-                        moreClass="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-400"
-                      />
-
-                      <select
-                        required
-                        value={formData.application_type}
-                        name="application_type"
-                        id="application_type"
-                        onChange={handleChange}
-                        className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                      >
-                        <option value="">Select here</option>
-                        <option value="new_institute">New Institute</option>
-                        <option value="new_course">New Course</option>
-                        <option value="seat_enhancement">
-                          Seat Enhancement
-                        </option>
-                      </select>
-                    </div>
-                    <div className="sm:col-span-3 ">
-                      <Label
-                        required
-                        text="Round No."
-                        htmlFor="round_no"
-                        moreClass="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-400"
-                      />
-
-                      <select
-                        required
-                        value={formData.round_no}
-                        name="round_no"
-                        id="round_no"
-                        onChange={handleChange}
-                        className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                      >
-                        <option value="">Select here</option>
-                        <option value={1}>Round 1</option>
-                        <option value={2}>Round 2</option>
-                      </select>
-                    </div>
-                    <div className="sm:col-span-3">
-                      <Label
-                        required
-                        text="Course name"
-                        htmlFor="course_type"
-                        moreClass="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-400"
-                      />
-
-                      <select
-                        required
-                        value={formData.course_type}
-                        name="course_type"
-                        id="course_type"
-                        onChange={handleChange}
-                        className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                      >
-                        <option value="">Select here</option>
-                        <option value="nursing">Nursing</option>
-                        <option value="paramedical">Paramedical</option>
-                      </select>
-                    </div>
-
-                    <div className="sm:col-span-3 ">
-                      <Label
-                        required
-                        text="Form labels"
-                        htmlFor="labels"
-                        moreClass="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-400"
-                      />
-
-                      <select
-                        required
-                        value={formData.labels}
-                        name="labels"
-                        id="labels"
-                        onChange={handleChange}
-                        className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                      >
-                        <option value="">Select here</option>
-                        <option value="infrastructure">Infrastructure</option>
-                        <option value="teaching_learning_process">
-                          Teaching Learning Process
-                        </option>
-                        <option value="objective_structured_clinical_examination">
-                          Objective Structured Clinical Examination
-                        </option>
-                      </select>
-                    </div>
-                    <div className="sm:col-span-3">
-                      <Label
-                        required
-                        text="Assignee"
-                        htmlFor="assignee"
-                        moreClass="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-400"
-                      />
-
-                      <select
-                        required
-                        value={formData.assignee}
-                        name="assignee"
-                        id="assignee"
-                        onChange={handleChange}
-                        className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                      >
-                        <option value="">Select here</option>
-                        <option value="applicant">Applicant</option>
-                        <option value="admin">Admin</option>
-                        <option value="government">Government</option>
-                        <option value="desktop_assessor">
-                          Desktop Assessor
-                        </option>
-                        <option value="on-ground_assessor">
-                          On-ground Assessor
-                        </option>
-                      </select>
-                    </div>
+                  </div>
+                  <div className="flex justify-end">
+                    <button
+                      className={`${
+                        Object.values(formData).length < 6
+                          ? "bg-gray-400 text-gray-700 cursor-not-allowed"
+                          : "px-6 text-white bg-primary-900 border border-primary-500"
+                      } border w-[140px] h-[40px] font-medium rounded-[4px] `}
+                      style={{ backgroundColor: "" }}
+                      type="submit"
+                      disabled={
+                        Object.values(formData).length < 6 ? true : false
+                      }
+                    >
+                      Next
+                    </button>
                   </div>
                 </div>
-                <div className="flex justify-end">
-                  <button
-                    className={`${
-                      Object.values(formData).length < 6
-                        ? "bg-gray-400 text-gray-700 cursor-not-allowed"
-                        : "px-6 text-white bg-primary-900 border border-primary-500"
-                    } border w-[140px] h-[40px] font-medium rounded-[4px] `}
-                    style={{ backgroundColor: "" }}
-                    type="submit"
-                    disabled={
-                      Object.values(formData).length < 6 ? true : false
-                    }
-                  >
-                    Next
-                  </button>
-                </div>
-              </div>
-            </form>
-          )}
+              </form>
+            )}
 
-          {formStage === 2 && (
-            <UploadForm
-              setFormStage={setFormStage}
-              handleFile={handleFile}
-              xmlData={xmlData}
-              formData={formData}
-              setFormData={setFormData}
-            />
-          )}
+            {formStage === 2 && (
+              <UploadForm
+                setFormStage={setFormStage}
+                handleFile={handleFile}
+                xmlData={xmlData}
+                formData={formData}
+                setFormData={setFormData}
+              />
+            )}
+          </div>
         </div>
       </div>
     </>

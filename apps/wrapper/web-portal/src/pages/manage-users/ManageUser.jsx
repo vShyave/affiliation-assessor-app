@@ -3,7 +3,7 @@ import { Outlet } from 'react-router-dom'
 
 function ManageUser() {
     return (
-    <div>
+    <div >
         <Outlet />
     </div>
   )
