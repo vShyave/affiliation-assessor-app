@@ -40,7 +40,7 @@ export default function AdminCreateUser() {
 
 
       <div className="h-[48px] bg-white flex justify-start drop-shadow-sm">
-        <div className="container mx-auto px-3 py-3">
+        <div className="container mx-auto flex px-3">
           <div className="flex flex-row font-bold gap-2 items-center">
             <Link to={ADMIN_ROUTE_MAP.adminModule.manageUsers.home}>
               <span className="text-primary-400 cursor-pointer">
@@ -49,7 +49,7 @@ export default function AdminCreateUser() {
             </Link>
             <FaAngleRight className="text-gray-500 text-[16px]" />
             <Link to={ADMIN_ROUTE_MAP.adminModule.manageUsers.home}>
-            <span className="">Create user</span>
+            <span className="text-gray-500">Create user</span>
             </Link>
             {/* <FaAngleRight className="text-[16px]" />
             <span className="text-gray-500 uppercase">User details</span> */}

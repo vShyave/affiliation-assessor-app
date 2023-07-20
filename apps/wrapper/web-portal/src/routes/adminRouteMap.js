@@ -1,5 +1,6 @@
 let ADMIN_ROUTE_MAP = {};
 let MANAGE_USERS = "manageUsers";
+let CERTIFICATE_MANAGEMENT = "certificateManagement"
 let GROUND_INSPECTION = "groundInspection";
 let MANAGE_FORMS = "manage-forms";
 let DESKTOP_ANALYSIS = "desktopAnalysis";
@@ -42,7 +43,8 @@ ADMIN_ROUTE_MAP.adminModule = {
 
   },
   certificateManagement: {
-    list: "certificate/list",
+    home: `/${CERTIFICATE_MANAGEMENT}`,
+    list: `/${CERTIFICATE_MANAGEMENT}/list`,
   },
   scheduleManagement: {
     home: `/${SCHEDULE_MANAGEMENT}`,

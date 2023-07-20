@@ -86,16 +86,11 @@ export default function DesktopAnalysisView() {
 
 
       <div className="h-[48px] bg-white flex justify-start drop-shadow-sm">
-        <div className="container mx-auto px-3 py-3">
+        <div className="container mx-auto flex px-3">
           <div className="flex flex-row font-bold gap-2 items-center">
-            <Link to={ADMIN_ROUTE_MAP.adminModule.manageUsers.home}>
-              <span className="text-primary-400 cursor-pointer">
-                Home
-              </span>
-            </Link>
-            <FaAngleRight className="text-[16px]" />
+            
             <Link to={ADMIN_ROUTE_MAP.adminModule.desktopAnalysis.home}>
-            <span className="text-primary-400">All applications</span>
+            <span className="text-primary-400">Desktop analysis - All applications</span>
             </Link>
             <FaAngleRight className="text-[16px]" />
             <span className="text-gray-500 uppercase">{formName.split("_").join(" ")}</span>

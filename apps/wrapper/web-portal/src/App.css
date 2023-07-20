@@ -34,6 +34,10 @@ body, .react-calendar {
   z-index: 10;
 }
 
+.no-absolute > .react-calendar {
+  position: relative;
+}
+
 :disabled {
   background: #f9f9f9;
   color: rgb(209 213 219 / var(--tw-text-opacity));
