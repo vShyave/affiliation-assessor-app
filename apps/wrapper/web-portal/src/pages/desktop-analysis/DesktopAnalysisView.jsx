@@ -1,13 +1,18 @@
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams , Link } from "react-router-dom";
 import { BsArrowLeft, BsArrowRight } from "react-icons/bs";
+import { FaAngleRight } from "react-icons/fa";
+
 
 import { Card, Button } from "./../../components";
+
 
 // import NocModal from "./NocModal";
 import ScheduleInspectionModal from "./ScheduleInspectionModal";
 // import RejectNocModal from "./RejectNocModal";
 import Sidebar from "../../components/Sidebar";
+
+import ADMIN_ROUTE_MAP from "../../routes/adminRouteMap";
 
 import { getFormData } from "../../api";
 import { getPrefillXML } from "./../../api/formApi";
@@ -18,11 +23,11 @@ const ENKETO_URL = process.env.REACT_APP_ENKETO_URL;
 export default function DesktopAnalysisView() {
   // const [rejectModel, setRejectModel] = useState(false)
   // const [openModel, setOpenModel] = useState(false);
-  const [openScheduleInspectionModel, setOpenSheduleInspectionModel] =
-    useState(false);
+  const [openScheduleInspectionModel, setOpenSheduleInspectionModel] = useState(false);
   const [encodedFormURI, setEncodedFormURI] = useState("");
   let { formName, formId } = useParams();
   const [formDataFromApi, setFormDataFromApi] = useState();
+  // const[]
 
   const [toast, setToast] = useState({
     toastOpen: false,
@@ -55,6 +60,8 @@ export default function DesktopAnalysisView() {
     const postData = { form_id: formId };
     const res = await getFormData(postData);
     const formData = res.data.form_submissions[0];
+    //  setindividualFormName(res.data.form.form_name)
+    // console.log("formData",formData.form_name)
     setFormDataFromApi(res.data.form_submissions[0])
     let formURI = await getPrefillXML(
       `${formData?.form_name}`,
@@ -74,6 +81,30 @@ export default function DesktopAnalysisView() {
       {toast.toastOpen && (
         <Toast toastMsg={toast.toastMsg} toastType={toast.toastType} />
       )}
+       {/* Breadcrum */}
+      {/* <Breadcrumb data={breadCrumbData} /> */}
+
+
+      <div className="h-[48px] bg-white flex justify-start drop-shadow-sm">
+        <div className="container mx-auto px-3 py-3">
+          <div className="flex flex-row font-bold gap-2 items-center">
+            <Link to={ADMIN_ROUTE_MAP.adminModule.manageUsers.home}>
+              <span className="text-primary-400 cursor-pointer">
+                Home
+              </span>
+            </Link>
+            <FaAngleRight className="text-[16px]" />
+            <Link to={ADMIN_ROUTE_MAP.adminModule.desktopAnalysis.home}>
+            <span className="text-primary-400">All applications</span>
+            </Link>
+            <FaAngleRight className="text-[16px]" />
+            <span className="text-gray-500 uppercase">{formName.split("_").join(" ")}</span>
+          </div>
+        </div>
+      </div>
+
+      <div className={`container m-auto min-h-[calc(100vh-148px)] px-3 py-12`}>
+
       <div className="flex flex-col gap-12">
         <div className="flex flex-row">
           {/* <div className="flex grow justify-start items-center">
@@ -140,8 +171,10 @@ export default function DesktopAnalysisView() {
           closeSchedule={setOpenSheduleInspectionModel}
           setToast={setToast}
           instituteId={formDataFromApi?.institute?.id}
+          instituteName = {formDataFromApi?.institute?.course_applied}
         />
       )}
+      </div>
     </>
   );
 }

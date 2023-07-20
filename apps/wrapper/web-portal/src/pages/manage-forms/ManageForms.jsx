@@ -3,7 +3,7 @@ import { Outlet } from "react-router-dom";
 
 const ManageForms = () => {
   return (
-    <div>
+    <div >
       <Outlet />
     </div>
   );

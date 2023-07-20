@@ -187,7 +187,7 @@ export const getPrefillXML = async (
 ) => {
   try {
     const res = await axios.post(
-      `${ENKETO_MANAGER_URL}/prefillXML?form=${form}&onFormSuccessData=${encodeURI(
+      `${ENKETO_MANAGER_URL}/prefillXML?formUrl=${form}&onFormSuccessData=${encodeURI(
         JSON.stringify(onFormSuccessData)
       )}`,
       {

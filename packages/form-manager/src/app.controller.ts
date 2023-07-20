@@ -11,7 +11,8 @@ import {
   Query,
   UploadedFile,
   UseInterceptors,
-  Req
+  Req,
+  Headers
 } from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express/multer';
 import { AppService } from './app.service';
@@ -178,18 +179,20 @@ export class AppController {
 
   @Post('prefillXML')
   async prefillXML(
-    @Query('form') form,
+    @Query('formUrl') formUrl,
     @Query('onFormSuccessData') onFormSuccessData,
     @Body('prefillXML') prefillXML,
     @Body('imageUrls') files,
+    @Headers() headers: any
   ): Promise<string> {
     try {
       if (onFormSuccessData) {
-        const prefilledForm = this.appService.prefillFormXML(
-          form,
+        const prefilledForm =await this.appService.prefillFormXML(
+          formUrl,
           onFormSuccessData,
           prefillXML,
           files,
+          headers.origin
         );
         const instanceId = uuidv4();
         await this.cacheManager.set(instanceId, prefilledForm, 86400 * 10);

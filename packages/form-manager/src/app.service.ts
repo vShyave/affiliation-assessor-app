@@ -2,6 +2,7 @@ import { ConsoleLogger, Injectable } from '@nestjs/common';
 import { DOMParser } from 'xmldom';
 import * as fs from 'fs';
 import { join } from 'path';
+import axios from "axios";
 
 @Injectable()
 export class AppService {
@@ -136,17 +137,26 @@ export class AppService {
     );
   }
 
-  prefillFormXML(
-    form: string,
+  async prefillFormXML(
+    formUrl: string,
+    // form: string,
     onFormSuccessData: any,
     prefillSpec: any,
     files: any,
-  ): string {
-    const formFilePath = join(__dirname, `forms/${form}.xml`);
-    const formString = fs.readFileSync(formFilePath, 'utf8');
+    reqOrigin: string,
+  ): Promise<string> {
+    let formString = "";
+    // Download XML file from Google Cloud Storage bucket URL
+    if(reqOrigin.includes("affiliation")) {
+      //Read the file from local forms folder
+      const formFilePath = join(__dirname, `forms/${formUrl}.xml`);
+      formString = fs.readFileSync(formFilePath, 'utf8');
+    } else {
+      const response = await axios.get(formUrl,{responseType: 'text'});
+      formString = response.data;
+    }
     const doc = this.parser.parseFromString(formString, 'text/xml');
     const instanceFromForm = doc.getElementsByTagName('instance')[0];
-    console.log({ form, prefillSpec, files });
 
     if (prefillSpec !== undefined) {
       let instanceData = this.parser.parseFromString(prefillSpec, 'text/xml');
@@ -162,13 +172,12 @@ export class AppService {
           // instanceData = this.parser.parseFromString(this.pf, 'text/xml');
         }
       }
-      console.log(instanceData.toString());
       doc
         .getElementsByTagName('instance')[0]
         .replaceChild(instanceData, instanceFromForm);
     }
 
-    console.log(doc.toString().length);
+    console.log("doc.toString().length", doc.toString());
     return doc.toString();
   }
 
