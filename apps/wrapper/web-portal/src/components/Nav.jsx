@@ -1,10 +1,8 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { NavLink, useNavigate, Link } from "react-router-dom";
 import "./Header.css";
 
 import { AiFillHome } from "react-icons/ai";
-import { FaAngleRight } from "react-icons/fa";
-
 
 import ADMIN_ROUTE_MAP from "../routes/adminRouteMap";
 
@@ -12,7 +10,6 @@ export default function Nav() {
 
   return (
     <>
-       
         <div className="h-[48px] bg-white drop-shadow-sm">
           <div className="container px-3 mx-auto">
             <div className="flex items-center h-[48px] py-2">
@@ -52,7 +49,7 @@ export default function Nav() {
                 </li>
                 <li className="flex hover:text-primary-600 hover:cursor-pointer">
                   <NavLink
-                    to={ADMIN_ROUTE_MAP.adminModule.certificateManagement.list}
+                    to={ADMIN_ROUTE_MAP.adminModule.certificateManagement.home }
                   >
                     Certificate Management
                   </NavLink>
@@ -65,6 +62,7 @@ export default function Nav() {
                   </NavLink>
                 </li>
               </ul>
+              
               {/* </div> */}
 
               {/* <ul className={`nav-items duration-500 font-bold md:hidden flex flex-col text-gray-600 p-4 bg-gray-200 fixed w-4/5 h-screen left-0 top-[100px] gap-10 ${toggle ? "left-[0%]" : "left-[-100%]"} `}>

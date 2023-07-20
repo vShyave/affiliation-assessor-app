@@ -27,6 +27,7 @@ import UploadForm from "./pages/manage-forms/UploadForm";
 
 import DesktopAnalysisList from "./pages/desktop-analysis/DesktopAnalysisList";
 import DesktopAnalysisView from "./pages/desktop-analysis/DesktopAnalysisView";
+import CertificateManagement from "./pages/certificate-management/CertificateManagement";
 import CertificateManagementList from "./pages/certificate-management/CertificateManagementList";
 import ScheduleManagementList from "./pages/schedule-management/ScheduleManagementList";
 import ManageUser from "./pages/manage-users/ManageUser";
@@ -153,9 +154,14 @@ function App() {
             </Route>
             {/* Certificate management routing starts here */}
             <Route
-              path={ADMIN_ROUTE_MAP.adminModule.certificateManagement.list}
+              path={ADMIN_ROUTE_MAP.adminModule.certificateManagement.home}
+              element={<CertificateManagement />}
+            >
+              <Route
+              index
               element={<CertificateManagementList />}
             ></Route>
+            </Route>
             {/* Schedule management routing starts here */}
             <Route
               path={ADMIN_ROUTE_MAP.adminModule.scheduleManagement.home}
