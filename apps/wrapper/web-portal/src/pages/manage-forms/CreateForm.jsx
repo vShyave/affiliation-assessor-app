@@ -146,6 +146,7 @@ const CreateForm = () => {
         application_type: formDetail?.application_type,
         assignee: formDetail?.assignee,
         course_type: formDetail?.course_type,
+        course_level: formDetail?.course_level,
         labels: formDetail?.labels,
         round_no: formDetail?.round,
         title: formDetail?.title,
@@ -224,14 +225,14 @@ const CreateForm = () => {
                 ></Button>
                 <Button
                   moreClass={`${
-                    Object.values(formData).length !== 8
+                    Object.values(formData).length !== 9
                       ? "text-gray-500 bg-white border border-gray-300 cursor-not-allowed"
-                      : "text-white bg-primary-500 border border-primary-500"
+                      : "text-white border"
                   } px-6`}
                   text="Save as draft"
                   onClick={handleSaveDraft}
                   otherProps={{
-                    disabled: Object.values(formData).length !== 8,
+                    disabled: Object.values(formData).length !== 9,
                   }}
                 ></Button>
               </div>
@@ -333,7 +334,7 @@ const CreateForm = () => {
                       <div className="sm:col-span-3">
                         <Label
                           required
-                          text="Course name"
+                          text="Course type"
                           htmlFor="course_type"
                           moreClass="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-400"
                         />
@@ -349,6 +350,27 @@ const CreateForm = () => {
                           <option value="">Select here</option>
                           <option value="nursing">Nursing</option>
                           <option value="paramedical">Paramedical</option>
+                        </select>
+                      </div>
+                      <div className="sm:col-span-3">
+                        <Label
+                          required
+                          text="Course level"
+                          htmlFor="course_level"
+                          moreClass="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-400"
+                        />
+
+                        <select
+                          required
+                          value={formData.course_level}
+                          name="course_level"
+                          id="course_level"
+                          onChange={handleChange}
+                          className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                        >
+                          <option value="">Select here</option>
+                          <option value="degree">Degree</option>
+                          <option value="diploma">Diploma</option>
                         </select>
                       </div>
 
@@ -411,14 +433,14 @@ const CreateForm = () => {
                   <div className="flex justify-end">
                     <button
                       className={`${
-                        Object.values(formData).length < 6
+                        Object.values(formData).length < 7
                           ? "bg-gray-400 text-gray-700 cursor-not-allowed"
-                          : "px-6 text-white bg-primary-900 border border-primary-500"
+                          : "px-6 text-white bg-primary-900 border"
                       } border w-[140px] h-[40px] font-medium rounded-[4px] `}
                       style={{ backgroundColor: "" }}
                       type="submit"
                       disabled={
-                        Object.values(formData).length < 6 ? true : false
+                        Object.values(formData).length < 7 ? true : false
                       }
                     >
                       Next
