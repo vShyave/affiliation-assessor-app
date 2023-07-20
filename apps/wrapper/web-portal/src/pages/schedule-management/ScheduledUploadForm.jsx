@@ -67,15 +67,15 @@ const UploadForm = ({ setFormStage, handleFile, xmlData, formData }) => {
 
 
       <div className="h-[48px] bg-white flex justify-start drop-shadow-sm">
-        <div className="container mx-auto px-3 py-3">
+        <div className="container mx-auto flex px-3">
           <div className="flex flex-row font-bold gap-2 items-center">
-            <Link to={ADMIN_ROUTE_MAP.adminModule.manageUsers.home}>
+            <Link to={ADMIN_ROUTE_MAP.adminModule.scheduleManagement.home}>
               <span className="text-primary-400 cursor-pointer">
                 Schedule Management
               </span>
             </Link>
             <FaAngleRight className="text-[16px]" />
-            <Link to={ADMIN_ROUTE_MAP.adminModule.scheduleManagement.home}>
+            <Link>
             <span className="text-gray-500">Upload CSV</span>
             </Link>
             {/* <FaAngleRight className="text-[16px]" />

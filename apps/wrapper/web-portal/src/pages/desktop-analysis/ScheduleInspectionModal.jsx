@@ -241,11 +241,13 @@ function ScheduleInspectionModal({
                             required
                           ></Label>
                         </div>
-                        <Calendar
-                          className="bg-blue-400 rounded-[8px]"
-                          onChange={handleOnChangeDate}
-                          minDate={new Date()}
-                        />
+                        <div className="no-absolute">
+                          <Calendar
+                            className="bg-blue-400 rounded-[8px]"
+                            onChange={handleOnChangeDate}
+                            minDate={new Date()}
+                          />
+                        </div>
                         <div className="font-medium">
                           Selected date : {readableDate(payload.date)}
                         </div>
@@ -314,11 +316,15 @@ function ScheduleInspectionModal({
                             <div className="flex justify-center items-center w-[28px] h-[28px] rounded-full bg-gray-300 border-1 border-gray-400 text-bold text-primary-500">
                               3
                             </div>
-                            <div className="font-medium">
+                            <div className="flex flex-row gap-1 items-center">
                               <Label
                                 text="Add an assisting assessor"
-                                moreClass="text-[16px]"
+                                moreClass="text-[16px] font-medium"
                               ></Label>
+
+                              <span className="text-[11px]">
+                                (only two members allowed)
+                              </span>
                             </div>
                           </div>
                           <div className="flex flex-row gap-3">
@@ -451,6 +457,9 @@ function ScheduleInspectionModal({
                     ></Button>
                     <Button
                       onClick={handleNext}
+                      otherProps={{
+                        disabled: selectedOGA?.value ? false : true,
+                      }}
                       moreClass={`${
                         selectedOGA?.value
                           ? "px-8 text-white"
@@ -469,6 +478,12 @@ function ScheduleInspectionModal({
                     ></Button>
                     <Button
                       onClick={handleScheduleAssessment}
+                      otherProps={{
+                        disabled:
+                          selectedOGA?.value && selectedFormList[0]?.value
+                            ? false
+                            : true,
+                      }}
                       moreClass={`${
                         selectedOGA?.value && selectedFormList[0]?.value
                           ? "px-8 text-white"
