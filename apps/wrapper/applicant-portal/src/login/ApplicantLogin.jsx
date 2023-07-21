@@ -122,12 +122,14 @@ const ApplicantLogin = () => {
       const verifyOtpReq = userService.verifyOtp(data.phone, data.otp);
       const fusionAuthLoginReq = from(verifyOtpReq).pipe(
         mergeMap((verifyOtpRes) => {
-          if (verifyOtpRes.data.data.Status === "Error") {
-            setVerifyEnteredOtp(false);
-          } else {
-            setVerifyEnteredOtp(true);
-            return userService.login(loginDetails);
-          }
+          // if (verifyOtpRes.data.data.Status === "Error") {
+          //   setVerifyEnteredOtp(false);
+          // } else {
+          //   setVerifyEnteredOtp(true);
+          //   return userService.login(loginDetails);
+          // }
+          return userService.login(loginDetails);
+
         })
       );
 
@@ -143,30 +145,30 @@ const ApplicantLogin = () => {
         await lastValueFrom(
           forkJoin([verifyOtpReq, fusionAuthLoginReq, applicantDetailsReq])
         );
-      if (
-        fusionAuthLoginRes.data.user.registrations[0]?.roles[0] === "Institute"
-      ) {
-        setCookie("userData", fusionAuthLoginRes.data);
-        setCookie("institutes", applicantDetailsRes.data.institutes);
+      // if (
+      //   fusionAuthLoginRes.data.user.registrations[0]?.roles[0] === "Institute"
+      // ) {
+      //   setCookie("userData", fusionAuthLoginRes.data);
+      //   setCookie("institutes", applicantDetailsRes.data.institutes);
         navigate(APPLICANT_ROUTE_MAP.dashboardModule.my_applications);
-      } else {
-        setToast((prevState) => ({
-          ...prevState,
-          toastOpen: true,
-          toastMsg: "Invalid user.",
-          toastType: "error",
-        }));
-        setTimeout(
-          () =>
-            setToast((prevState) => ({
-              ...prevState,
-              toastOpen: false,
-              toastMsg: "",
-              toastType: "",
-            })),
-          3000
-        );
-      }
+      // } else {
+      //   setToast((prevState) => ({
+      //     ...prevState,
+      //     toastOpen: true,
+      //     toastMsg: "Invalid user.",
+      //     toastType: "error",
+      //   }));
+      //   setTimeout(
+      //     () =>
+      //       setToast((prevState) => ({
+      //         ...prevState,
+      //         toastOpen: false,
+      //         toastMsg: "",
+      //         toastType: "",
+      //       })),
+      //     3000
+      //   );
+      // }
     } catch (error) {
       console.log(
         "Otp veriification and login failed due to some error",
