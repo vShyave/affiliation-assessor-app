@@ -12,6 +12,7 @@ import Toast from "../components/Toast";
 const AdminLogin = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [phoneNumber, setPhoneNumber] = useState(null);
+  const [emailId, setEmailId] = useState(null);
   const [enableOtp, setEnableOtp] = useState(false);
   const [verifyEnteredOtp, setVerifyEnteredOtp] = useState(true);
   const [verifyUser, setVerifyUser] = useState(true);
@@ -44,18 +45,19 @@ const AdminLogin = () => {
   const login = async (data) => {
     try {
       const loginDetails = {
-        loginId: data.phone,
-        password: data.phone,
+        loginId: data.email,
+        password: data.email,
         noJWT: false,
       };
       const checkUser = await userService.login(loginDetails);
-      console.log("user check", checkUser.data.user.mobilePhone);
-      if (checkUser.data.user.mobilePhone) {
-        console.log(checkUser.data.user.mobilePhone);
-        const loginRes = await userService.sendOtp(data.phone);
+      console.log("user check", checkUser.data.user.email);
+      if (checkUser.data.user.email) {
+        console.log(checkUser.data.user.email);
+        const loginRes = await userService.sendOtp(data.email);
         if (Object.keys(loginRes.data).length === 0) {
           setEnableOtp(true);
-          setPhoneNumber(data.phone);
+          // setPhoneNumber(data.phone);
+          setEmailId(data.email)
         } else {
           console.log("Something went wrong", loginRes);
         }
@@ -116,11 +118,11 @@ const AdminLogin = () => {
       //     console.log("Something went wrong", verifyOtpRes?.data?.status);
       // }
       const loginDetails = {
-        loginId: data.phone,
-        password: data.phone,
+        loginId: data.email,
+        password: data.email,
         noJWT: false,
       };
-      const verifyOtpReq = userService.verifyOtp(data.phone, data.otp);
+      const verifyOtpReq = userService.verifyOtp(data.email, data.otp);
       const fusionAuthLoginReq = from(verifyOtpReq).pipe(
         mergeMap((verifyOtpRes) => {
           if (verifyOtpRes.data.data.Status === "Error") {
@@ -135,7 +137,7 @@ const AdminLogin = () => {
       const adminDetailsReq = from(fusionAuthLoginReq).pipe(
         mergeMap((fusionAuthLoginRes) => {
           return getRegulator({
-            phoneNumber: data.phone,
+            email: data.email,
           });
         })
       );
@@ -193,7 +195,7 @@ const AdminLogin = () => {
                   })}
                   noValidate
                 >
-                  <div className="flex flex-col gap-2">
+                  {/* <div className="flex flex-col gap-2">
                     <Label
                       htmlFor="phone"
                       text="Mobile Number"
@@ -219,6 +221,32 @@ const AdminLogin = () => {
                     {errors?.phone?.type === "pattern" && (
                       <p className="text-red-500 mt-2 text-sm">
                         This is not a valid mobile number
+                      </p>
+                    )}
+                  </div> */}
+                  <div className="flex flex-col gap-2">
+                    <Label htmlFor="email" text="Email id" required></Label>
+                    <input
+                      type="email"
+                      name="email"
+                      id="email"
+                      placeholder="name@email.com"
+                      {...register("email", {
+                        required: true,
+                        pattern:
+                          /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/i,
+                      })}
+                      className="block w-full rounded-md border-0 p-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                      noValidate
+                    />
+                    {errors?.email?.type === "required" && (
+                      <p className="text-red-500 mt-2 text-sm">
+                        This field is required
+                      </p>
+                    )}
+                    {errors?.email?.type === "pattern" && (
+                      <p className="text-red-500 mt-2 text-sm">
+                        This is not a valid email format
                       </p>
                     )}
                   </div>
@@ -295,7 +323,7 @@ const AdminLogin = () => {
                         setEnableOtp(false);
                       }}
                     >
-                      Go back, re-enter the mobile number
+                      Go back, re-enter the email id
                     </span>
                   </p>
                 </form>
