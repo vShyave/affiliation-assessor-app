@@ -95,6 +95,7 @@ export default function OnGroundInspectionAnalysis() {
     setState((prevState) => ({ ...prevState, menu_selected: menuItem }));
     setPaginationInfo((prevState) => ({ ...prevState, offsetNo: 0 }));
     setIsFilterOpen(false);
+    setIsSearchOpen(false)
   };
 
   const navigateToView = (formObj) => {

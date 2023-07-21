@@ -13,6 +13,7 @@ const ApplicantLogin = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [enableOtp, setEnableOtp] = useState(false);
   const [phoneNumber, setPhoneNumber] = useState(null);
+  const [emailId, setEmailId] = useState(null)
   const [verifyEnteredOtp, setVerifyEnteredOtp] = useState(true);
   const navigate = useNavigate();
 
@@ -43,18 +44,19 @@ const ApplicantLogin = () => {
   const login = async (data) => {
     try {
       const loginDetails = {
-        loginId: data.phone,
-        password: data.phone,
+        loginId: data.email,
+        password: data.email,
         noJWT: false,
       };
       const checkUser = await userService.login(loginDetails);
-      console.log("user check", checkUser.data.user.mobilePhone);
-      if (checkUser.data.user.mobilePhone) {
-        console.log(checkUser.data.user.mobilePhone);
-        const loginRes = await userService.sendOtp(data.phone);
+      console.log("user check", checkUser.data.user.email);
+      if (checkUser.data.user.email) {
+        console.log(checkUser.data.user.email);
+        const loginRes = await userService.sendOtp(data.email);
         if (Object.keys(loginRes.data).length === 0) {
           setEnableOtp(true);
-          setPhoneNumber(data.phone);
+          // setPhoneNumber(data.phone);
+          setEmailId(data.email)
         } else {
           console.log("Something went wrong", loginRes);
         }
@@ -115,11 +117,11 @@ const ApplicantLogin = () => {
       //     console.log("Something went wrong", verifyOtpRes?.data?.status);
       // }
       const loginDetails = {
-        loginId: data.phone,
-        password: data.phone,
+        loginId: data.email,
+        password: data.email,
         noJWT: false,
       };
-      const verifyOtpReq = userService.verifyOtp(data.phone, data.otp);
+      const verifyOtpReq = userService.verifyOtp(data.email, data.otp);
       const fusionAuthLoginReq = from(verifyOtpReq).pipe(
         mergeMap((verifyOtpRes) => {
           if (verifyOtpRes.data.data.Status === "Error") {
@@ -186,7 +188,16 @@ const ApplicantLogin = () => {
         <Card moreClass="shadow-md w-screen sm:px-24 sm:w-[480px] md:w-[600px] py-16">
           <div className="flex flex-col">
             <h1 className="text-2xl font-medium text-center mb-8">Login</h1>
-            {/* <div className="flex flex-col gap-2">
+            
+            {!enableOtp && (
+              <>
+                <form
+                  onSubmit={handleSubmit((data) => {
+                    login(data);
+                  })}
+                  noValidate
+                >
+                  <div className="flex flex-col gap-2">
                                 <Label htmlFor="email" text="Email id" required></Label>
                                 <input 
                                     type="email" 
@@ -204,16 +215,8 @@ const ApplicantLogin = () => {
                                 {errors?.email?.type === "pattern" && (
                                     <p className="text-red-500 mt-2 text-sm">This is not a valid email format</p>
                                 )}     
-                            </div> */}
-            {!enableOtp && (
-              <>
-                <form
-                  onSubmit={handleSubmit((data) => {
-                    login(data);
-                  })}
-                  noValidate
-                >
-                  <div className="flex flex-col gap-2">
+                            </div>
+                  {/* <div className="flex flex-col gap-2">
                     <Label
                       htmlFor="phone"
                       text="Mobile Number"
@@ -241,7 +244,7 @@ const ApplicantLogin = () => {
                         This is not a valid mobile number format
                       </p>
                     )}
-                  </div>
+                  </div> */}
                   <Button
                     moreClass="uppercase w-full mt-7 text-white"
                     text="Get Otp"

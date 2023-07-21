@@ -20,56 +20,53 @@ const GlobalFilter = ({
   setIsSearchOpen,
   setIsFilterOpen,
   paginationInfo,
-  setPaginationInfo
+  setPaginationInfo,
 }) => {
   const [value, setValue] = useState("");
   const [isFilter, setIsFilter] = useState(false);
   let location = useLocation();
-  // const onChange = useAsyncDebounce((value) => {
-  //   setFilter(value || undefined);
-  // }, 1000);
 
   const handleSearch = async (value) => {
     setValue(value);
     setIsSearchOpen(value ? true : false);
-    const postData = { searchString: `%${value}%` };
     setPaginationInfo((prevState) => ({
       ...prevState,
       offsetNo: 0,
     }));
-    switch (location.pathname) {
-      //Manage Users
-      case ADMIN_ROUTE_MAP.adminModule.manageUsers.home: {
-        const res = await searchApiCall(postData);
-        return;
-      }
-      //Manage Forms
-      case ADMIN_ROUTE_MAP.adminModule.manageForms.home: {
-        const res = await searchApiCall(postData);
-        return;
-      }
-      //Desktop Analysis
-      case ADMIN_ROUTE_MAP.adminModule.desktopAnalysis.home: {
-        const res = await searchApiCall(postData);
-        return;
-      }
-      //On-Ground Inspection Analysis
-      case ADMIN_ROUTE_MAP.adminModule.onGroundInspection.home: {
-        const res = await searchApiCall(postData);
-        return;
-      }
-      //Schedule Management
-      case ADMIN_ROUTE_MAP.adminModule.scheduleManagement.home: {
-        const res = await searchApiCall(postData);
-        return;
-      }
+
+    // comment following to implement debounce 
+    const postData = { searchString: `%${value}%` };
+    if (value.trim()==""||value.trim().length >= 3) {
+      await searchApiCall(postData);
     }
+
+    {/** rxjs debounce implementation */}
+    // if (value.trim()=="") {
+    //   return await searchApiCall(postData);
+    // }
+    // fromEvent(document.getElementById("global_search_input"), "keyup")
+    //   .pipe(
+    //     map((e) => {
+    //       return e.target.value.trim();
+    //     }),
+    //     filter((res) => res.length >= 3),
+    //     debounceTime(750),
+    //     distinctUntilChanged()
+    //   )
+    //   .subscribe(async(value) => {
+    //     console.log(value);
+    //     const postData = { searchString: `%${value}%` };
+    //     await searchApiCall(postData);
+    //   });
+
   };
 
   useEffect(() => {
-    if (value !== "") {
-      handleSearch(value);
-    }
+    (async () => {
+      if (value !== "") {
+        await searchApiCall({ searchString: `%${value}%` });
+      }
+    })();
   }, [paginationInfo.offsetNo, paginationInfo.limit]);
 
   return (
@@ -77,6 +74,7 @@ const GlobalFilter = ({
       <div className="flex flex-row justify-between">
         <div className="bg-white flex w-1/4 items-stretch">
           <input
+            id="global_search_input"
             value={value || ""}
             onChange={(e) => {
               // setValue(e.target.value);
@@ -84,7 +82,7 @@ const GlobalFilter = ({
             }}
             type="search"
             className="block w-[1px] min-w-0 flex-auto rounded border border-solid border-neutral-300 bg-transparent bg-clip-padding p-2  text-base font-normal leading-[1.6] text-neutral-700 outline-none transition duration-200 ease-in-out focus:z-[3] focus:border-primary focus:text-neutral-700 focus:shadow-[inset_0_0_0_1px_rgb(59,113,202)] focus:outline-none dark:border-neutral-600 dark:text-neutral-200 dark:placeholder:text-neutral-200 dark:focus:border-primary"
-            placeholder="Search"
+            placeholder="Search (min 3 characters required)"
           />
         </div>
         <div className="flex justify-end">

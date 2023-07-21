@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import Calendar from "react-calendar";
 import { formatDate, readableDate } from "../../utils/common";
+import { Option, Select } from "@material-tailwind/react";
 
 //Manage Users
 export const ManageUsersFilters = ({
@@ -10,26 +11,38 @@ export const ManageUsersFilters = ({
   setPaginationInfo,
 }) => {
   const [filters, setFilters] = useState({ condition: {} });
-  const handleChange = (e) => {
-    if (e.target.value === "") {
-      delete filters?.condition[e.target.name];
+  const [state, setState] = useState({
+    role: null,
+    workingstatus: null,
+  });
+  const handleChange = (name, value) => {
+    setState((prevState) => ({
+      ...prevState,
+      [name]: value,
+    }));
+    if (value === "") {
+      delete filters?.condition[name];
       return;
     }
     setFilters({
       condition: {
         ...filters.condition,
-        [e.target.name]: {
-          _eq: e.target.value,
+        [name]: {
+          _eq: value,
         },
       },
     });
-    setIsFilterOpen(e.target.value ? true : false);
+    setIsFilterOpen(value ? true : false);
     setPaginationInfo((prevState) => ({
       ...prevState,
       offsetNo: 0,
     }));
   };
   const handleClearFilter = () => {
+    setState({
+      role: null,
+      workingstatus: null,
+    });
     setFilters({ condition: {} });
     setPaginationInfo((prevState) => ({
       ...prevState,
@@ -42,28 +55,32 @@ export const ManageUsersFilters = ({
   return (
     <div className="flex flex-grow text-gray-700 dark:text-gray-400 gap-8">
       <div className="flex">
-        <select
+        <Select
           name="role"
           id="role"
-          onChange={handleChange}
-          className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+          value={state.role}
+          onChange={(value) => handleChange("role", value)}
+          label="Role"
+          className="bg-gray-50"
         >
-          <option value="">Role</option>
-          <option value="admin">Admin</option>
-          <option value="applicant">Applicant</option>
-        </select>
+          {/* <Option value="">--Select Role--</Option> */}
+          <Option value="admin">Admin</Option>
+          <Option value="applicant">Applicant</Option>
+        </Select>
       </div>
       <div className="flex">
-        <select
+        <Select
           name="workingstatus"
           id="workingstatus"
-          onChange={handleChange}
-          className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+          label="Account Status"
+          value={state.workingstatus}
+          onChange={(value) => handleChange("workingstatus", value)}
+          className="bg-gray-50"
         >
-          <option value="">Account Status</option>
-          <option value="active">Active</option>
-          <option value="inactive">Inactive</option>
-        </select>
+          {/* <Option value="">Account Status</Option> */}
+          <Option value="active">Active</Option>
+          <Option value="inactive">Inactive</Option>
+        </Select>
       </div>
       <div>
         <button
@@ -85,20 +102,29 @@ export const ManageFormsFilters = ({
   setPaginationInfo,
 }) => {
   const [filters, setFilters] = useState({ condition: {} });
-  const handleChange = (e) => {
-    if (e.target.value === "") {
-      delete filters?.condition[e.target.name];
+  const [state, setState] = useState({
+    application_type: null,
+    round: null,
+    course_type: null,
+  });
+  const handleChange = (name, value) => {
+    setState((prevState) => ({
+      ...prevState,
+      [name]: value,
+    }));
+    if (value === "") {
+      delete filters?.condition[name];
       return;
     }
     setFilters({
       condition: {
         ...filters.condition,
-        [e.target.name]: {
-          _eq: e.target.value,
+        [name]: {
+          _eq: value,
         },
       },
     });
-    setIsFilterOpen(e.target.value ? true : false);
+    setIsFilterOpen(value ? true : false);
     setPaginationInfo((prevState) => ({
       ...prevState,
       offsetNo: 0,
@@ -106,6 +132,11 @@ export const ManageFormsFilters = ({
   };
 
   const handleClearFilter = () => {
+    setState({
+      application_type: null,
+      round: null,
+      course_type: null,
+    });
     setFilters({ condition: {} });
     setPaginationInfo((prevState) => ({
       ...prevState,
@@ -120,40 +151,46 @@ export const ManageFormsFilters = ({
   return (
     <div className="flex flex-grow text-gray-700 dark:text-gray-400 gap-8">
       <div className="flex">
-        <select
+        <Select
           name="application_type"
           id="application_type"
-          onChange={handleChange}
-          className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+          label="Application Type"
+          value={state.application_type}
+          onChange={(value) => handleChange("application_type", value)}
+          className="bg-gray-50"
         >
-          <option value="">Application Type</option>
-          <option value="new_institute">New Institute</option>
-          <option value="new_course">New Course</option>
-        </select>
+          {/* <Option value="">Application Type</Option> */}
+          <Option value="new_institute">New Institute</Option>
+          <Option value="new_course">New Course</Option>
+        </Select>
       </div>
       <div className="flex">
-        <select
+        <Select
           name="round"
           id="round"
-          onChange={handleChange}
-          className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+          label="Round No."
+          value={state.round}
+          onChange={(value) => handleChange("round", value)}
+          className="bg-gray-50"
         >
-          <option value="">Round No.</option>
-          <option value={1}>Round 1</option>
-          <option value={2}>Round 2</option>
-        </select>
+          {/* <Option value="">Round No.</Option> */}
+          <Option value={1}>Round 1</Option>
+          <Option value={2}>Round 2</Option>
+        </Select>
       </div>
       <div className="flex">
-        <select
+        <Select
           name="course_type"
           id="course_type"
-          onChange={handleChange}
-          className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+          label="Course Type"
+          value={state.course_type}
+          onChange={(value) => handleChange("course_type", value)}
+          className="bg-gray-50"
         >
-          <option value="">Course Type</option>
-          <option value="nursing">Nursing</option>
-          <option value="paramedical">Paramedical</option>
-        </select>
+          {/* <Option value="">Course Type</Option> */}
+          <Option value="nursing">Nursing</Option>
+          <Option value="paramedical">Paramedical</Option>
+        </Select>
       </div>
       <div>
         <button
@@ -181,19 +218,29 @@ export const DesktopAnalysisFilters = ({
       assessor_id: { _is_null: true },
     },
   });
+  const [state, setState] = useState({
+    assessment_type: null,
+    course_applied: null,
+    submitted_on: null,
+    review_status: null,
+  });
 
-  const handleChange = (e) => {
-    if (e.target.value === "") {
-      delete filters?.condition[e.target.name];
+  const handleChange = (name, value) => {
+    setState((prevState) => ({
+      ...prevState,
+      [name]: value,
+    }));
+    if (value === "") {
+      delete filters?.condition[name];
       return;
     }
-    if (e.target.name === "course_applied") {
+    if (name === "course_applied") {
       setFilters({
         condition: {
           ...filters.condition,
           institute: {
-            [e.target.name]: {
-              _eq: e.target.value,
+            [name]: {
+              _eq: value,
             },
           },
         },
@@ -202,14 +249,14 @@ export const DesktopAnalysisFilters = ({
       setFilters({
         condition: {
           ...filters.condition,
-          [e.target.name]: {
-            _eq: e.target.value,
+          [name]: {
+            _eq: value,
           },
         },
       });
     }
 
-    setIsFilterOpen(e.target.value ? true : false);
+    setIsFilterOpen(value ? true : false);
     setPaginationInfo((prevState) => ({
       ...prevState,
       offsetNo: 0,
@@ -235,7 +282,18 @@ export const DesktopAnalysisFilters = ({
   };
 
   const handleClearFilter = () => {
-    setFilters({ condition: {} });
+    setState({
+      assessment_type: null,
+      course_applied: null,
+      submitted_on: null,
+      review_status: null,
+    });
+    setButtonText("Published On");
+    setFilters({
+      condition: {
+        assessor_id: { _is_null: true },
+      },
+    });
     setPaginationInfo((prevState) => ({
       ...prevState,
       offsetNo: 0,
@@ -249,28 +307,32 @@ export const DesktopAnalysisFilters = ({
   return (
     <div className="flex flex-grow text-gray-700 dark:text-gray-400 gap-8">
       <div className="flex">
-        <select
+        <Select
           name="assessment_type"
           id="assessment_type"
-          onChange={handleChange}
-          className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+          label="Application Type"
+          value={state.assessment_type}
+          onChange={(value) => handleChange("assessment_type", value)}
+          className="bg-gray-50"
         >
-          <option value="">Application Type</option>
-          <option value="institute">Institute</option>
-          <option value="applicant">Applicant</option>
-        </select>
+          {/* <Option value="">Application Type</Option> */}
+          <Option value="institute">Institute</Option>
+          <Option value="applicant">Applicant</Option>
+        </Select>
       </div>
       <div className="flex">
-        <select
+        <Select
           name="course_applied"
           id="course_applied"
-          onChange={handleChange}
-          className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+          label="Course Name"
+          value={state.course_applied}
+          onChange={(value) => handleChange("course_applied", value)}
+          className="bg-gray-50"
         >
-          <option value="">Course Name</option>
-          <option value="Nursing">Nursing</option>
-          {/* <option value="inactive">Inactive</option> */}
-        </select>
+          {/* <Option value="">Course Name</Option> */}
+          <Option value="Nursing">Nursing</Option>
+          <Option value="Paramedical">Paramedical</Option>
+        </Select>
       </div>
       <div className="flex">
         <button
@@ -281,19 +343,24 @@ export const DesktopAnalysisFilters = ({
             ? buttonText
             : readableDate(buttonText)}
         </button>
-        {showCalendar && <Calendar onChange={handleDateSelect} />}
+        {showCalendar && (
+          <Calendar value={state.submitted_on} onChange={handleDateSelect} />
+        )}
       </div>
       <div className="flex">
-        <select
+        <Select
           name="review_status"
           id="review_status"
-          onChange={() => {}}
-          className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+          label="Review Status"
+          value={state.review_status}
+          onChange={(value) => handleChange("review_status", value)}
+          className="bg-gray-50"
         >
-          <option value="">Status</option>
-          <option value="In Progress">In Progress</option>
-          {/* <option value="inactive">Inactive</option> */}
-        </select>
+          {/* <Option value="">--Select Review Status--</Option> */}
+          <Option value="In Progress">In Progress</Option>
+          <Option value="Reviewed">Reviewed</Option>
+          <Option value="Rejected">Rejected</Option>
+        </Select>
       </div>
       <div>
         <button
@@ -317,20 +384,29 @@ export const OnGroundInspectionFilters = ({
   const [showCalendar, setShowCalendar] = useState(false);
   const [buttonText, setButtonText] = useState("Published On");
   const [filters, setFilters] = useState({ condition: {} });
-  const handleChange = (e) => {
-    if (e.target.value === "") {
-      delete filters?.condition[e.target.name];
+  const [state, setState] = useState({
+    role: null,
+    submitted_on: null,
+    review_status: null,
+  });
+  const handleChange = (name, value) => {
+    setState((prevState) => ({
+      ...prevState,
+      [name]: value,
+    }));
+    if (value === "") {
+      delete filters?.condition[name];
       return;
     }
     setFilters({
       condition: {
         ...filters.condition,
-        [e.target.name]: {
-          _eq: e.target.value,
+        [name]: {
+          _eq: value,
         },
       },
     });
-    setIsFilterOpen(e.target.value ? true : false);
+    setIsFilterOpen(value ? true : false);
     setPaginationInfo((prevState) => ({
       ...prevState,
       offsetNo: 0,
@@ -351,6 +427,12 @@ export const OnGroundInspectionFilters = ({
   };
 
   const handleClearFilter = () => {
+    setState({
+      role: null,
+      submitted_on: null,
+      review_status: null,
+    });
+    setButtonText("Published On");
     setFilters({ condition: {} });
     setPaginationInfo((prevState) => ({
       ...prevState,
@@ -365,16 +447,21 @@ export const OnGroundInspectionFilters = ({
   return (
     <div className="flex flex-grow text-gray-700 dark:text-gray-400 gap-8">
       <div className="flex">
-        <select
+        <Select
           name="role"
           id="role"
-          onChange={() => {}}
-          className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+          value={state.role}
+          onChange={(value) => {
+            console.log(value);
+          }}
+          label="Assessor"
+          disabled
+          className="bg-gray-50"
         >
-          <option value="">Assessor</option>
-          <option value="admin">Admin</option>
-          <option value="applicant">Applicant</option>
-        </select>
+          {/* <Option value="">--Select Assessor--</Option> */}
+          <Option value="admin">Admin</Option>
+          <Option value="applicant">Applicant</Option>
+        </Select>
       </div>
       <div className="flex">
         <button
@@ -385,20 +472,24 @@ export const OnGroundInspectionFilters = ({
             ? buttonText
             : readableDate(buttonText)}
         </button>
-        {showCalendar && <Calendar onChange={handleDateSelect} />}
+        {showCalendar && (
+          <Calendar value={state.submitted_on} onChange={handleDateSelect} />
+        )}
       </div>
       <div className="flex">
-        <select
+        <Select
           name="review_status"
           id="review_status"
-          onChange={handleChange}
-          className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+          label="Review Status"
+          value={state.review_status}
+          onChange={(value) => handleChange("review_status", value)}
+          className="bg-gray-50"
         >
-          <option value="">Review Status</option>
-          <option value="In Progress">In Progress</option>
-          <option value="Approved">Approved</option>
-          <option value="Rejected">Rejected</option>
-        </select>
+          {/* <Option value="">--Select Review Status--</Option> */}
+          <Option value="In Progress">In Progress</Option>
+          <Option value="Reviewed">Reviewed</Option>
+          <Option value="Rejected">Rejected</Option>
+        </Select>
       </div>
       <div>
         <button
@@ -422,19 +513,28 @@ export const ScheduleManagementFilters = ({
   const [showCalendar, setShowCalendar] = useState(false);
   const [buttonText, setButtonText] = useState("Published On");
   const [filters, setFilters] = useState({ condition: {} });
+  const [state, setState] = useState({
+    district: null,
+    submitted_on: null,
+    status: null,
+  });
 
-  const handleChange = (e) => {
-    if (e.target.value === "") {
-      delete filters?.condition[e.target.name];
+  const handleChange = (name, value) => {
+    setState((prevState) => ({
+      ...prevState,
+      [name]: value,
+    }));
+    if (value === "") {
+      delete filters?.condition[name];
       return;
     }
-    if (e.target.name === "district") {
+    if (name === "district") {
       setFilters({
         condition: {
           ...filters.condition,
           institute: {
-            [e.target.name]: {
-              _eq: e.target.value,
+            [name]: {
+              _eq: value,
             },
           },
         },
@@ -443,13 +543,13 @@ export const ScheduleManagementFilters = ({
       setFilters({
         condition: {
           ...filters.condition,
-          [e.target.name]: {
-            _eq: e.target.value,
+          [name]: {
+            _eq: value,
           },
         },
       });
     }
-    setIsFilterOpen(e.target.value ? true : false);
+    setIsFilterOpen(value ? true : false);
     setPaginationInfo((prevState) => ({
       ...prevState,
       offsetNo: 0,
@@ -475,6 +575,12 @@ export const ScheduleManagementFilters = ({
   };
 
   const handleClearFilter = () => {
+    setState({
+      district: null,
+      submitted_on: null,
+      status: null,
+    });
+    setButtonText("Published On");
     setFilters({ condition: {} });
     setPaginationInfo((prevState) => ({
       ...prevState,
@@ -489,21 +595,23 @@ export const ScheduleManagementFilters = ({
   return (
     <div className="flex flex-grow text-gray-700 dark:text-gray-400 gap-8">
       <div className="flex">
-        <select
+        <Select
           name="district"
           id="district"
-          onChange={handleChange}
-          className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+          label="District"
+          value={state.district}
+          onChange={(value) => handleChange("district", value)}
+          className="bg-gray-50"
         >
-          <option value="">District</option>
-          <option value="New Delhi">New Delhi</option>
-          <option value="Lucknow">Lucknow</option>
-          <option value="Ballari">Ballari</option>
-          <option value="KANPUR DEHAT">KANPUR DEHAT</option>
-          <option value="BIJNOR">BIJNOR</option>
-          <option value="PRAYAGRAJ">PRAYAGRAJ</option>
-          <option value="BHADOHI">BHADOHI</option>
-        </select>
+          {/* <Option value="">--Select District--</Option> */}
+          <Option value="New Delhi">New Delhi</Option>
+          <Option value="Lucknow">Lucknow</Option>
+          <Option value="Ballari">Ballari</Option>
+          <Option value="KANPUR DEHAT">KANPUR DEHAT</Option>
+          <Option value="BIJNOR">BIJNOR</Option>
+          <Option value="PRAYAGRAJ">PRAYAGRAJ</Option>
+          <Option value="BHADOHI">BHADOHI</Option>
+        </Select>
       </div>
       <div className="flex">
         <button
@@ -514,20 +622,24 @@ export const ScheduleManagementFilters = ({
             ? buttonText
             : readableDate(buttonText)}
         </button>
-        {showCalendar && <Calendar onChange={handleDateSelect} />}
+        {showCalendar && (
+          <Calendar value={state.submitted_on} onChange={handleDateSelect} />
+        )}
       </div>
       <div className="flex">
-        <select
+        <Select
           name="status"
           id="status"
-          onChange={handleChange}
-          className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+          label="Status"
+          value={state.status}
+          onChange={(value) => handleChange("status", value)}
+          className="bg-gray-50"
         >
-          <option value="">Status</option>
-          <option value="Completed">Completed</option>
-          <option value="Upcoming">Upcoming</option>
-          <option value="Closed">Closed</option>
-        </select>
+          {/* <Option value="">--Select Status--</Option> */}
+          <Option value="Completed">Completed</Option>
+          <Option value="Upcoming">Upcoming</Option>
+          <Option value="Closed">Closed</Option>
+        </Select>
       </div>
       <div>
         <button
