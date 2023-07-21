@@ -14,52 +14,23 @@ import APPLICANT_ROUTE_MAP from "../routes/ApplicantRoute";
 
 const AllApplications = () => {
   const [loadingForms, setLoadingForms] = useState(false);
-  const [formData, setFormData] = useState({
-    condition: {
-      assessor_id: { _is_null: true },
-    },
-  });
+  const [formData, setFormData] = useState({ condition: {} });
   const [availableForms, setAvailableForms] = useState([]);
   const instituteDetails = getCookie("institutes");
-  useEffect(() => {
-    getAvailableForms();
-  }, []);
 
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm();
-
-  const handleChange = (e) => {
-    console.log("e", e);
-    
-    // setFormData({
-    //   condition: {
-    //     ...formData.condition,
-    //     [e.target.name]: {
-    //       _eq: e.target.value,
-    //     },
-    //   },
-    // });
+  const handleChange = (name, value) => {
+    setFormData({
+      condition: {
+        ...formData.condition,
+        [name]: {
+          _eq: value,
+        },
+      },
+    });
   };
 
   const getAvailableForms = async () => {
-    if (!instituteDetails || !instituteDetails?.length) {
-      return;
-    }
-    setLoadingForms(true);
-    // const requestPayoad = {
-    //   course_applied: instituteDetails[0].course_applied,
-    // };
-    const requestPayload = {
-      condition: {
-        course_type: { _eq: "Nursing" },
-        course_level: { _eq: "Degree" },
-        application_type: { _eq: "new_institute" },
-      },
-    };
-    const formsResponse = await formService.getData(requestPayload);
+    const formsResponse = await formService.getData(formData);
     if (formsResponse?.data?.courses) {
       setAvailableForms(formsResponse?.data?.courses);
     }
@@ -69,6 +40,14 @@ const AllApplications = () => {
   const applyFormHandler = () => {
     console.log("Apply Form clicked");
   };
+
+  const handleClearFilter = () => {
+    setFormData({ condition: {} });
+  };
+
+  useEffect(() => {
+    getAvailableForms();
+  }, [formData]);
 
   return (
     <>
@@ -97,16 +76,20 @@ const AllApplications = () => {
                 moreClass="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-400"
               />
               <Select
-                //  value={formData.application_type}
                 name="application_type"
                 id="application_type"
-                onChange={handleChange}
+                value={formData?.condition?.application_type?._eq}
+                onChange={(value) => handleChange("application_type", value)}
                 className="bg-white"
                 size="lg"
               >
                 <Option value="new_institute">New Institute</Option>
-                <Option value="new_course">New course in an existing institute</Option>
-                <Option value="seat_enhancement">Seat enhancement for an existing course</Option>
+                <Option value="new_course">
+                  New course in an existing institute
+                </Option>
+                <Option value="seat_enhancement">
+                  Seat enhancement for an existing course
+                </Option>
               </Select>
               {/* </div> */}
             </div>
@@ -120,7 +103,8 @@ const AllApplications = () => {
               <Select
                 name="course_type"
                 id="course_type"
-                onChange={handleChange}
+                value={formData?.condition?.course_type?._eq}
+                onChange={(value) => handleChange("course_type", value)}
                 className="bg-white"
                 size="lg"
               >
@@ -136,16 +120,24 @@ const AllApplications = () => {
                 moreClass="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-400"
               />
               <Select
-                //  value={formData.course_level}
                 name="course_level"
                 id="course_level"
-                onChange={handleChange}
+                value={formData?.condition?.course_level?._eq}
+                onChange={(value) => handleChange("course_level", value)}
                 className="bg-white"
                 size="lg"
               >
                 <Option value="degree">Degree</Option>
                 <Option value="diploma">Diploma</Option>
               </Select>
+            </div>
+            <div>
+              <button
+                className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                onClick={handleClearFilter}
+              >
+                Clear
+              </button>
             </div>
           </div>
 
