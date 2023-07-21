@@ -67,8 +67,8 @@ const AllApplications = () => {
 
       <div className="container mx-auto py-12 px-3 min-h-[40vh]">
         <div className="flex flex-col gap-4">
-          <div className="flex mb-12 justify-between grid grid-cols-6 gap-x-6 gap-y-8 sm:grid-cols-6">
-            <div className="sm:col-span-2 ">
+          <div className="flex  mb-12 justify-between grid grid-cols-10 gap-x-2 gap-y-8 sm:grid-cols-10">
+            <div className="sm:col-span-3 ">
               <Label
                 required={true}
                 text="Application type"
@@ -93,7 +93,7 @@ const AllApplications = () => {
               </Select>
               {/* </div> */}
             </div>
-            <div className="sm:col-span-2 ">
+            <div className="sm:col-span-3 ">
               <Label
                 required={true}
                 text="Course type"
@@ -112,7 +112,7 @@ const AllApplications = () => {
                 <Option value="paramedical">Paramedical</Option>
               </Select>
             </div>
-            <div className="sm:col-span-2 ">
+            <div className="sm:col-span-3 ">
               <Label
                 required={true}
                 text="Course level"
@@ -131,7 +131,7 @@ const AllApplications = () => {
                 <Option value="diploma">Diploma</Option>
               </Select>
             </div>
-            <div>
+            <div className="mt-7 sm:col-span-1">
               <button
                 className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                 onClick={handleClearFilter}
