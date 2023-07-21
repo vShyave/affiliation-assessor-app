@@ -75,7 +75,7 @@ const UploadForm = ({ setFormStage, handleFile, xmlData, formData }) => {
     formURI = await getPrefillXML(
       formData?.path,
       formSpec.onSuccess,
-      res.data //tried passing xmlData here
+      // res.data //tried passing xmlData here
     );
     console.log("formURI----->", formURI);
     setEncodedFormURI(formURI);

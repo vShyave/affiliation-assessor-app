@@ -1,6 +1,10 @@
 import React, { useState } from "react";
-import { useParams } from "react-router-dom";
-import { BsArrowLeft, BsArrowRight } from "react-icons/bs";
+import { Link, useNavigate } from "react-router-dom";
+import { BiArrowBack } from "react-icons/bi";
+import { FaAngleRight } from "react-icons/fa";
+
+
+import ADMIN_ROUTE_MAP from "../../routes/adminRouteMap";
 
 import DetailedNotification from "../notifications/DetailedNotification";
 
@@ -13,8 +17,14 @@ import {
   Typography,
 } from "@material-tailwind/react";
 
-export default function NotificationsDetailedView({notification}) {
+export default function NotificationsDetailedView({ notification }) {
   const [selectedUser, setSelectedUser] = useState([]);
+
+  const navigate = useNavigate();
+
+  const goBack = () => {
+      navigate(-1);
+  };
 
   //   const [toast, setToast] = useState({
   //     toastOpen: false,
@@ -83,61 +93,84 @@ export default function NotificationsDetailedView({notification}) {
       {/* {toast.toastOpen && (
         <Toast toastMsg={toast.toastMsg} toastType={toast.toastType} />
       )} */}
-      <div className="flex flex-row gap-1">
-        <div className="flex w-[30%] border w-[276px] overflow-y-auto h-[720px] shadow-xl flex-col justify-between bg-white">
-          <div className="flex flex-col gap-2">
-            <div className="flex items-center py-2 pl-2">
-              <div className="flex flex-row gap-28 items-center">
-                <div variant="small" color="gray" className="font-normal ">
-                  <span className="text-base font-semibold text-gray-900">
-                    Notification
-                  </span>
-                </div>
-            
-                      <div className="text-black pr-2 text-xl">...</div>
-              </div>
-            </div>
-            <hr />
+      {/* Breadcrum */}
+      {/* <Breadcrumb data={breadCrumbData} /> */}
 
-            {DUMMY_DATA.map((item, index) => (
-              <>
-                <MenuItem
-                  key={index}
-                  className="flex flex-row justify-between gap-2 py-2 pl-2 hover:bg-[#FFE5B4]"
-                  onClick={() => handleClick(item)}
-                >
-                  <div className="flex flex-col gap-2">
-                    <div className="w-fit bg-[#f6a192] text-white border-[#009A2B] py-1 px-3 text-[12px] rounded-[24px] capitalize font-semibold">
-                      {"" + item.roles}
-                    </div>
-                    <div className="flex flex-col gap-1">
-                      <Typography
-                        variant="small"
-                        color="gray"
-                        className="font-normal"
-                      >
-                        <div className="font-medium text-gray-900">
-                          {item.title}
-                        </div>
-                        <p>{item.body}</p>
-                      </Typography>
-                    </div>
-                  </div>
-                  <Typography
-                    variant="small"
-                    className="flex items-center gap-1 text-xs text-gray-900"
-                  >
-                    {item.date}
-                  </Typography>
-                </MenuItem>
-                <hr />
-              </>
-            ))}
+      <div className="h-[48px] bg-white flex justify-start drop-shadow-sm">
+        <div className="container mx-auto flex px-3">
+          <div className="flex flex-row font-bold gap-2 items-center">
+          <BiArrowBack onClick={goBack} className="text-blue-400 text-[16px]" />
+            <Link >
+              <span onClick={goBack} className="text-blue-400 cursor-pointer">
+                Back
+              </span>
+            </Link>
+            <FaAngleRight className="text-gray-500 text-[16px]" />
+            <span className="text-gray-500">All notifications</span>
           </div>
         </div>
-        <div>
-          {/* <DetailedNotification user={selectedUser} /> */}
-          {selectedUser ? <DetailedNotification user={selectedUser} /> : <DetailedNotification user={notification}/>}
+      </div>
+      <div className={`container m-auto min-h-[calc(100vh-148px)] px-3 py-12`}>
+        <div className="flex flex-row gap-1">
+          <div className="flex w-[30%] border w-[276px] overflow-y-auto h-[720px] shadow-xl flex-col justify-between bg-white">
+            <div className="flex flex-col gap-2">
+              <div className="flex items-center py-2 pl-2">
+                <div className="flex flex-row gap-28 items-center">
+                  <div variant="small" color="gray" className="font-normal ">
+                    <span className="text-base font-semibold text-gray-900">
+                      Notification
+                    </span>
+                  </div>
+
+                  <div className="text-black pr-2 text-xl">...</div>
+                </div>
+              </div>
+              <hr />
+
+              {DUMMY_DATA.map((item, index) => (
+                <>
+                  <MenuItem
+                    key={index}
+                    className="flex flex-row justify-between gap-2 py-2 pl-2 hover:bg-[#FFE5B4]"
+                    onClick={() => handleClick(item)}
+                  >
+                    <div className="flex flex-col gap-2">
+                      <div className="w-fit bg-[#f6a192] text-white border-[#009A2B] py-1 px-3 text-[12px] rounded-[24px] capitalize font-semibold">
+                        {"" + item.roles}
+                      </div>
+                      <div className="flex flex-col gap-1">
+                        <Typography
+                          variant="small"
+                          color="gray"
+                          className="font-normal"
+                        >
+                          <div className="font-medium text-gray-900">
+                            {item.title}
+                          </div>
+                          <p>{item.body}</p>
+                        </Typography>
+                      </div>
+                    </div>
+                    <Typography
+                      variant="small"
+                      className="flex items-center gap-1 text-xs text-gray-900"
+                    >
+                      {item.date}
+                    </Typography>
+                  </MenuItem>
+                  <hr />
+                </>
+              ))}
+            </div>
+          </div>
+          <div>
+            {/* <DetailedNotification user={selectedUser} /> */}
+            {selectedUser ? (
+              <DetailedNotification user={selectedUser} />
+            ) : (
+              <DetailedNotification user={notification} />
+            )}
+          </div>
         </div>
       </div>
     </>
