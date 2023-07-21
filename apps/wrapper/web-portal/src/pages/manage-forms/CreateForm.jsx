@@ -144,6 +144,7 @@ const CreateForm = () => {
       const formDetail = response.data.forms[0];
       setFormData({
         application_type: formDetail?.application_type,
+        form_desc: formDetail.form_desc,
         assignee: formDetail?.assignee,
         course_type: formDetail?.course_type,
         course_level: formDetail?.course_level,
@@ -225,14 +226,14 @@ const CreateForm = () => {
                 ></Button>
                 <Button
                   moreClass={`${
-                    Object.values(formData).length !== 9
+                    Object.values(formData).length !== 10
                       ? "text-gray-500 bg-white border border-gray-300 cursor-not-allowed"
                       : "text-white border"
                   } px-6`}
                   text="Save as draft"
                   onClick={handleSaveDraft}
                   otherProps={{
-                    disabled: Object.values(formData).length !== 9,
+                    disabled: Object.values(formData).length !== 10,
                   }}
                 ></Button>
               </div>
@@ -267,7 +268,7 @@ const CreateForm = () => {
                   </div>
                   <div className="flex flex-grow">
                     <div className="grid grid-rows-3 grid-cols-6 gap-8">
-                      <div className="sm:col-span-3">
+                    <div className="sm:col-span-3">
                         <Label
                           required
                           text="Form title"
@@ -283,6 +284,25 @@ const CreateForm = () => {
                             name="title"
                             onChange={handleChange}
                             className="block w-full rounded-md border-0 p-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                          />
+                        </div>
+                      </div>
+                      <div className="sm:col-span-6">
+                        <Label
+                          required
+                          text="Form description"
+                          moreClass=" block text-sm font-medium leading-6 text-gray-900"
+                        />
+                        <div className="">
+                          <textarea
+                            required
+                            value={formData.form_desc}
+                            type="text"
+                            placeholder="Type here"
+                            id="form_desc"
+                            name="form_desc"
+                            onChange={handleChange}
+                            className= "resize-none block w-full rounded-md border-0 p-1 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                           />
                         </div>
                       </div>
@@ -440,7 +460,7 @@ const CreateForm = () => {
                       style={{ backgroundColor: "" }}
                       type="submit"
                       disabled={
-                        Object.values(formData).length < 7 ? true : false
+                        Object.values(formData).length < 8 ? true : false
                       }
                     >
                       Next

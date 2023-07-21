@@ -126,7 +126,13 @@ export const filterForms = async (postData) => {
   );
   return res;
 };
-
+export const createCourse = async (postData) => {
+  const res = await adminCustomPost.post(
+    API_URL.manageForms.createCourses,
+    postData
+  );
+  return res;
+};
 // Manage users API's...
 export const getAllUsers = async (postData) => {
   const res = await adminCustomPost.post(
