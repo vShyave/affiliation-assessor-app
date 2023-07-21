@@ -96,9 +96,7 @@ export default function AdminSingUp() {
   //   return errors;
   //   }
   const signupHandler = async (data) => {
-    const { fullName, mobilePhone } = data;
-    var firstName = fullName?.split(" ").slice(0, -1).join(" ");
-    var lastName = fullName?.split(" ").slice(-1).join(" ");
+    const { fullName,firstName,lastName,email, mobilePhone } = data;
     let userDetails = {
       registration: {
         applicationId: process.env.REACT_APP_APPLICATION_ID,
@@ -106,9 +104,10 @@ export default function AdminSingUp() {
         roles: ["Admin"],
       },
       user: {
-        firstName: `${firstName}`,
-        lastName: `${lastName}`,
-        fullName: `${fullName}`,
+        firstName: firstName,
+        lastName: lastName,
+        fullName: fullName,
+        email: email,
         username: mobilePhone,
         password: mobilePhone,
         mobilePhone: mobilePhone,
@@ -123,6 +122,7 @@ export default function AdminSingUp() {
         fname: firstName,
         lname: lastName,
         fullName: fullName,
+        email: email,
         phoneNumber: mobilePhone,
       };
       const addAdimRes = await registerUser(adminDetails);
@@ -163,31 +163,81 @@ export default function AdminSingUp() {
             <h1 className="text-2xl font-medium text-center mb-8">Sign Up</h1>
             <div className="flex flex-col gap-4">
               <div className="flex flex-col gap-2">
-                <Label htmlFor="fullName" text="Full name" required></Label>
+                <Label htmlFor="firstName" text="First name" required></Label>
                 <div>
                   <input
                     type="text"
-                    id="fullName"
-                    name="fullName"
+                    id="firstName"
+                    name="firstName"
                     placeholder="Type here"
                     className="w-full rounded-[4px] p-4 py-3 text-gray-900 ring-1  ring-gray-300 placeholder:text-gray-400 focus:ring-1 focus:ring-inset focus:ring-primary-600 sm:text-sm sm:leading-6"
-                    {...register("fullName", {
+                    {...register("firstName", {
                       required: true,
                       pattern: /^[A-Za-z ]+$/i,
                     })}
                   />
-                  {errors?.fullName?.type === "required" && (
+                  {errors?.firstName?.type === "required" && (
                     <p className="text-red-500 mt-2 text-sm">
                       This field is required
                     </p>
                   )}
-                  {errors?.fullName?.type === "pattern" && (
+                  {errors?.firstName?.type === "pattern" && (
+                    <p className="text-red-500 mt-2 text-sm">
+                      Alphabetical characters only
+                    </p>
+                  )}
+                </div>
+                <Label htmlFor="lastName" text="Last name" required></Label>
+                <div>
+                  <input
+                    type="text"
+                    id="lastName"
+                    name="lastName"
+                    placeholder="Type here"
+                    className="w-full rounded-[4px] p-4 py-3 text-gray-900 ring-1  ring-gray-300 placeholder:text-gray-400 focus:ring-1 focus:ring-inset focus:ring-primary-600 sm:text-sm sm:leading-6"
+                    {...register("lastName", {
+                      required: true,
+                      pattern: /^[A-Za-z ]+$/i,
+                    })}
+                  />
+                  {errors?.lastName?.type === "required" && (
+                    <p className="text-red-500 mt-2 text-sm">
+                      This field is required
+                    </p>
+                  )}
+                  {errors?.lastName?.type === "pattern" && (
                     <p className="text-red-500 mt-2 text-sm">
                       Alphabetical characters only
                     </p>
                   )}
                 </div>
               </div>
+              <div className="flex flex-col gap-2">
+                    <Label htmlFor="email" text="Email id" required></Label>
+                    <input
+                      type="email"
+                      name="email"
+                      id="email"
+                      placeholder="name@email.com"
+                      {...register("email", {
+                        required: true,
+                        pattern:
+                          /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/i,
+                      })}
+                      className="block w-full rounded-md border-0 p-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                      noValidate
+                    />
+                    {errors?.email?.type === "required" && (
+                      <p className="text-red-500 mt-2 text-sm">
+                        This field is required
+                      </p>
+                    )}
+                    {errors?.email?.type === "pattern" && (
+                      <p className="text-red-500 mt-2 text-sm">
+                        This is not a valid email format
+                      </p>
+                    )}
+                  </div>
               <div className="flex flex-col gap-2">
                 <Label
                   htmlFor="phoneNumber"

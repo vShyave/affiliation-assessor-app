@@ -75,7 +75,7 @@ const FilteringTable = (props) => {
 
   const { globalFilter } = state;
   const { setPaginationInfo } = props;
-  const { limit: pageSize, offsetNo, totalCount } = props.paginationInfo;
+  const { limit: pageSize, offsetNo, totalCount } = props?.paginationInfo||{};
   const [canNextPage, setCanNextPage] = useState(false);
   const [canPreviousPage, setCanPreviousPage] = useState(false);
   const [pageIndex, setPageIndex] = useState(0);
