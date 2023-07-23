@@ -75,10 +75,10 @@ const FilteringTable = (props) => {
 
   const { globalFilter } = state;
   const { setPaginationInfo } = props;
-  const { limit: pageSize, offsetNo, totalCount } = props?.paginationInfo||{};
+  const { limit: pageSize, offsetNo, totalCount } = props?.paginationInfo || {};
   const [canNextPage, setCanNextPage] = useState(false);
   const [canPreviousPage, setCanPreviousPage] = useState(false);
-  const [pageIndex, setPageIndex] = useState(0);
+  const [pageIndex, setPageIndex] = useState(-1);
   const [totalPageCount, setTotalPageCount] = useState(0);
 
   const nextPage = () => {
@@ -122,6 +122,15 @@ const FilteringTable = (props) => {
       setCanNextPage(false);
     }
   }, [totalCount, pageSize, pageIndex]);
+
+  useEffect(() => {
+    if (!offsetNo) {
+      setPageIndex(0);
+    }
+    if(!totalCount){
+      setPageIndex(-1)
+    }
+  }, [offsetNo,totalCount]);
 
   {
     array = JSON.stringify(
@@ -227,7 +236,6 @@ const FilteringTable = (props) => {
                   ...prevState,
                   offsetNo: 0,
                 }));
-                setPageIndex(0);
               }}
               disabled={!canPreviousPage}
             >
@@ -251,7 +259,6 @@ const FilteringTable = (props) => {
                   offsetNo: 0,
                 }));
                 setPageSize(Number(e.target.value));
-                setPageIndex(0);
               }}
             >
               {[10, 25, 50].map((pageSize) => (
