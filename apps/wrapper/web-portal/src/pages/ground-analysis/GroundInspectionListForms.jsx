@@ -189,6 +189,7 @@ export default function OnGroundInspectionAnalysis() {
   };
 
   formsList?.forEach((e) => {
+    console.log("formlist",e)
     var formsData = {
       applicant:
         e?.institute?.name?.charAt(0).toUpperCase() +

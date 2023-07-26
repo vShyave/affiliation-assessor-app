@@ -106,7 +106,7 @@ export default function DesktopAnalysisView() {
                         <h1 className="text-2xl font-bold uppercase">{ formName.split('_').join(' ') }</h1>
                     </div> */}
           <div className="flex grow gap-4 justify-end items-center">
-            <button className="flex flex-wrap items-center justify-center gap-2 border border-gray-500 bg-white text-gray-500 w-1/6 h-[40px] font-semibold rounded-[4px]">
+            <button className="flex flex-wrap items-center justify-center gap-2 border border-gray-500 bg-white text-gray-500 w-fit h-fit p-2 font-semibold rounded-[4px]">
               <span>
                 <BsArrowLeft />
               </span>
@@ -114,7 +114,7 @@ export default function DesktopAnalysisView() {
             </button>
             <button
               onClick={() => setOpenSheduleInspectionModel(true)}
-              className="flex flex-wrap items-center justify-center gap-2 border border-gray-500 text-gray-500 bg-white w-1/6 h-[40px] font-semibold rounded-[4px]"
+              className="flex flex-wrap items-center justify-center gap-2 border border-gray-500 text-gray-500 bg-white w-fit h-fit p-2 font-semibold rounded-[4px]"
             >
               Send for inspection{" "}
               <span>

@@ -24,6 +24,7 @@ const API_URL = {
     publishForms: `${rest}publishForms`,
     unpublishForms: `${rest}unpublishForms`,
     viewForm: `${rest}viewForm`,
+    duplicateForm:`${rest}duplicateForm`,
     deleteForm: `${rest}deleteForm`,
     filterForms: `${rest}filterForms`,
     createCourses: `${rest}createCourse`
@@ -38,7 +39,7 @@ desktopAnalysis:{
     getUsersForSchedulingAssessment:`${rest}getUsersForSchedulingAssessment`,
     scheduleAssessment: `${rest}addAssessmentSchedule`,
     getDesktopAnalysisForms: `${rest}getDesktopAnalysis`,
-    getAllCourses : `${rest}getAllCourses`,
+    getCourseOGA : `${rest}getCoursesOGA`,
     filterDesktopAnalysis: `${rest}filterDesktopAnalysis`
   },
   scheduleManagement:{
