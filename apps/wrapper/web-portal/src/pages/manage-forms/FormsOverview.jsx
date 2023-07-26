@@ -11,11 +11,20 @@ import {
   filterForms,
   searchForms,
   createCourse,
+  viewForm,
+  duplicateForms
 } from "../../api";
 import { getFieldName, readableDate } from "../../utils/common";
 import Toast from "../../components/Toast";
-import { VscPreview } from "react-icons/vsc";
+import { VscPreview , VscCopy} from "react-icons/vsc";
 import { RiDeleteBin6Line } from "react-icons/ri";
+
+import {
+  Menu,
+  MenuHandler,
+  MenuList,
+  MenuItem,
+} from "@material-tailwind/react";
 
 import AlertModal from "../../components/AlertModal";
 import Nav from "../../components/Nav";
@@ -25,6 +34,8 @@ const FormsOverview = () => {
   var formsDataList = [];
   const [formsList, setFormsList] = useState();
 
+  const [viewFormState,setViewFormState]=useState()
+
   const [state, setState] = useState({
     menu_selected: "create_new",
     alertContent: {
@@ -32,6 +43,9 @@ const FormsOverview = () => {
       alertMsg: "",
       actionButtonLabel: "",
     },
+  });
+  const [viewFormData,setViewFormData] = useState({
+    title: "",
   });
 
   const [showAlert, setShowAlert] = useState(false);
@@ -75,13 +89,18 @@ const FormsOverview = () => {
       Header: "Action",
       accessor: "publish",
     },
+    // {
+    //   Header: "Preview",
+    //   accessor: "preview",
+    // },
+    // {
+    //   Header: "Delete",
+    //   accessor: "delete",
+    // },
+    ,
     {
-      Header: "Preview",
-      accessor: "preview",
-    },
-    {
-      Header: "Delete",
-      accessor: "delete",
+      Header: "",
+      accessor: "more_actions",
     },
   ];
 
@@ -110,14 +129,14 @@ const FormsOverview = () => {
       Header: "Action",
       accessor: "unpublish",
     },
-    {
-      Header: "Preview",
-      accessor: "preview",
-    },
-    {
-      Header: "Delete",
-      accessor: "delete",
-    },
+    // {
+    //   Header: "Preview",
+    //   accessor: "preview",
+    // },
+    // {
+    //   Header: "Delete",
+    //   accessor: "delete",
+    // },
   ];
 
   const COLUMN_UNPUBLISHED = [
@@ -145,11 +164,11 @@ const FormsOverview = () => {
       Header: "Action",
       accessor: "publish",
     },
-    {
-      Header: "Preview",
-      accessor: "preview",
-    },
-    ,
+    // {
+    //   Header: "Preview",
+    //   accessor: "preview",
+    // },
+
     {
       Header: "Delete",
       accessor: "delete",
@@ -165,20 +184,28 @@ const FormsOverview = () => {
     setState((prevState) => ({ ...prevState, menu_selected: menuItem }));
     setPaginationInfo((prevState) => ({ ...prevState, offsetNo: 0 }));
     setIsFilterOpen(false);
-    setIsSearchOpen(false)
+    setIsSearchOpen(false);
   };
 
   const publish = (e) => {
-    let publishFormId = [e[0]?.form_id]
+    let publishFormId = [e[0]?.form_id];
     setShowAlert(false);
-    console.log(e)
-   publishForm(publishFormId);
+    // console.log(e);
+    publishForm(publishFormId);
     HandlecreateCourse(e);
   };
 
   const unpublish = (formId) => {
     setShowAlert(false);
     unpublishForm(formId);
+  };
+
+  const duplicate = (formId) => {
+    // console.log("viewformstate")
+    console.log(formId)
+    setShowAlert(false);
+    getFormDetails(formId );
+    // duplicateForms(viewFormState);
   };
 
   const delete_Form = (formId) => {
@@ -195,6 +222,59 @@ const FormsOverview = () => {
       fetchFormsList();
     }
   }, [paginationInfo.offsetNo, paginationInfo.limit, state.menu_selected]);
+
+  const getFormDetails = async (form_Id) => {
+    const formData = new FormData();
+    formData.append("form_id", form_Id);
+    try {
+      const response = await viewForm(formData);
+      const formDetail = response.data.forms[0];
+      console.log("formDetails",formDetail)
+     const postData = {
+       formsData: [
+         {
+            
+           title: formDetail?.title +'-'+'Duplicate',
+           file_name: formDetail?.file_name,
+           course_type: formDetail?.course_type,
+           course_level: formDetail?.course_level,
+           application_type: formDetail?.application_type,
+           form_desc: formDetail?.form_desc,
+           created_at: formDetail?.created_at,
+           updated_at: formDetail?.updated_at,
+           round: formDetail?.round,
+           form_status: formDetail?.form_status,
+           path: formDetail?.path,
+           labels: formDetail?.labels,
+           assignee: formDetail?.assignee,
+           user_id: formDetail?.user_id,
+         },
+       ],
+     };      
+      duplicateForms(postData);
+
+      // setViewFormState( formDetail  )
+    } catch (error) {
+      console.log("error - ", error);
+      setToast((prevState) => ({
+        ...prevState,
+        toastOpen: true,
+        toastMsg: "Error occured while uploading!",
+        toastType: "error",
+      }));
+      setTimeout(
+        () =>
+          setToast((prevState) => ({
+            ...prevState,
+            toastOpen: false,
+            toastMsg: "",
+            toastType: "",
+          })),
+        3000
+      );
+    }
+  };
+
 
   const fetchFormsList = async () => {
     const postData = {
@@ -266,6 +346,7 @@ const FormsOverview = () => {
   };
 
   formsList?.forEach((e) => {
+    // console.log("formlist",e)
     var formsData = {
       title: getFieldName(e?.title),
       application_type: getFieldName(e?.application_type),
@@ -276,9 +357,12 @@ const FormsOverview = () => {
       file_name: getFieldName(e?.file_name),
       path: getFieldName(e?.path),
       form_status: e?.form_status,
-      created_at: new Date(e?.created_at)?.toLocaleDateString(),
+      created_at: readableDate(e?.created_at) ,
+      // new Date(e?.created_at)?.toLocaleDateString(),
       form_id: e?.form_id,
-      updated_at: new Date(e?.updated_at)?.toLocaleDateString(),
+      updated_at: readableDate(e?.updated_at),
+      labels:e?.labels,
+      // new Date(e?.updated_at)?.toLocaleDateString(),
       publish: (
         <a
           className={`px-6 text-primary-600 pl-0 bg-white`}
@@ -297,6 +381,26 @@ const FormsOverview = () => {
           }}
         >
           Publish
+        </a>
+      ),
+      title: (
+        <a
+          className={`px-6 text-primary-600 pl-0 bg-white`}
+          onClick={() => {
+            setShowAlert(true);
+            setState((prevState) => ({
+              ...prevState,
+              alertContent: {
+                alertTitle: "View Form",
+                alertMsg: "Are you sure to View the form?",
+                actionButtonLabel: "Publish",
+                actionFunction: navigateToView(e),
+                actionProps: [e],
+              },
+            }));
+          }}
+        >
+        {e?.title}
         </a>
       ),
       unpublish: (
@@ -350,6 +454,78 @@ const FormsOverview = () => {
         >
           <RiDeleteBin6Line className="text-xl mt-4" />
         </a>
+      ),
+      more_actions: (
+        <div className="flex flex-row text-2xl font-semibold">
+          <Menu>
+            <MenuHandler>
+              <button>...</button>
+            </MenuHandler>
+            <MenuList>
+              {/* <MenuItem
+              onClick={() => navigateToView(e)}
+              >
+                <div className="flex flex-row gap-4 mt-4">
+                  <div> 
+                    <VscPreview />
+                  </div>
+                  <div className="text-semibold m-">
+                    <span>Preview</span>
+                  </div>
+                </div>{" "}
+              </MenuItem> */}
+              <MenuItem onClick={() => {
+            setShowAlert(true);
+            setState((prevState) => ({
+              ...prevState,
+              alertContent: {
+                alertTitle: "Duplicate Form",
+                alertMsg: "Are you sure to unpublish the form?",
+                actionButtonLabel: "Duplicate",
+                actionFunction: duplicate,
+                actionProps: [e?.form_id],
+              },
+            }));
+          }}>
+                <div className="flex flex-row gap-4 mt-4">
+                  <div> <VscCopy /> </div>
+                  <div className="text-semibold m-">
+                    <span>Duplicate</span>
+                  </div>
+                </div>{" "}
+              </MenuItem>
+              <MenuItem
+                onClick={() => {
+                  setShowAlert(true);
+                  setState((prevState) => ({
+                    ...prevState,
+                    alertContent: {
+                      alertTitle: "Delete form",
+                      alertMsg:
+                        e.form_status === "Published"
+                          ? "You cannot delete the form before unpublishing it?"
+                          : "Are you sure,you want to delete this form?",
+                      actionButtonLabel:
+                        e.form_status === "Published" ? "Unpublish" : "Delete",
+                      actionFunction:
+                        e.form_status === "Published" ? unpublish : delete_Form,
+                      actionProps: [e?.form_id],
+                    },
+                  }));
+                }}
+              >
+                <div className="flex flex-row gap-4 mt-4">
+                  <div>
+                    <RiDeleteBin6Line />
+                  </div>
+                  <div className="text-semibold m-">
+                    <span>Delete</span>
+                  </div>
+                </div>{" "}
+              </MenuItem>
+            </MenuList>
+          </Menu>
+        </div>
       ),
     };
     formsDataList.push(formsData);
@@ -409,19 +585,21 @@ const FormsOverview = () => {
   const HandlecreateCourse = async (formDataObject) => {
     // const formData = new FormData();
     // formData.append("form_id", form_id);]
-    console.log(formDataObject)
-    let objectRes = JSON.stringify([{name: formDataObject[0]?.file_name,path: formDataObject[0]?.path}])
+    // console.log(formDataObject);
+    let objectRes = JSON.stringify([
+      { name: formDataObject[0]?.file_name, path: formDataObject[0]?.path },
+    ]);
     const formData = {
       course_type: formDataObject[0]?.course_type,
       course_level: formDataObject[0]?.course_level,
       course_name: formDataObject[0]?.title,
-      formObject: objectRes,     
+      formObject: objectRes,
       application_type: formDataObject[0]?.application_type,
       course_desc: formDataObject[0]?.form_desc,
     };
 
     try {
-      console.log("formDataObj",formDataObject)
+      // console.log("formDataObj", formDataObject);
       const response = await createCourse(formData);
       setToast((prevState) => ({
         ...prevState,

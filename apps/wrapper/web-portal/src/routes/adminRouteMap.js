@@ -38,7 +38,6 @@ ADMIN_ROUTE_MAP.adminModule = {
     home: `/${GROUND_INSPECTION}`,
     list: `/${GROUND_INSPECTION}/list`,
     viewForm: `/${GROUND_INSPECTION}/view`,
-    nocForm: `/${GROUND_INSPECTION}/view-noc`,
     nocIssued: `/${GROUND_INSPECTION}/noc-issued`,
 
   },
