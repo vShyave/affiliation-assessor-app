@@ -7,7 +7,13 @@ import { Button } from "../../components";
 import FilteringTable from "../../components/table/FilteringTable";
 
 import { readableDate } from "../../utils/common";
-import { filterUsers, getAllUsers, searchUsers } from "../../api";
+import {
+  filterUsers,
+  getAllUsers,
+  searchUsers,
+  handleActiveUser,
+  handleInctiveUser,
+} from "../../api";
 import ADMIN_ROUTE_MAP from "../../routes/adminRouteMap";
 
 import DeleteUsersModal from "./DeleteUsers";
@@ -23,10 +29,13 @@ import {
 export default function ManageUsersList({
   closeDeleteUsersModal,
   closeBulkUploadUsersModal,
+  setDeleteFlags
 }) {
   const navigation = useNavigate();
   var resUserData = [];
   const [deleteUsersModel, setDeleteUsersModel] = useState(false);
+  // const[onRowSelected,setOnRowSelected] = useState([])
+  const [deleteFlag, setDeleteFlag] = useState(false);
   const [bulkUploadUsersModel, setBulkUploadUsersModel] = useState(false);
   const [usersList, setUsersList] = useState();
   const [userTableList, setUserTableList] = useState([]);
@@ -39,6 +48,11 @@ export default function ManageUsersList({
   });
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [isFilterOpen, setIsFilterOpen] = useState(false);
+  const [toast, setToast] = useState({
+    toastOpen: false,
+    toastMsg: "",
+    toastType: "",
+  });
 
   const COLUMNS = [
     {
@@ -78,14 +92,80 @@ export default function ManageUsersList({
     },
   ];
 
+  const handleUsersetInvalid = async (e) => {
+    const userId = e?.user_id;
+    console.log("e", e);
+    const formData = new FormData();
+    formData.append("assessorId", userId);
+    try {
+      const response = await handleInctiveUser(formData);
+      fetchAllUsers();
+      const formDetail = response.data.forms[0];
+      console.log("formDetails", formDetail);
+    } catch (error) {
+      console.log("error - ", error);
+      setToast((prevState) => ({
+        ...prevState,
+        toastOpen: true,
+        toastMsg: "Error occured while uploading!",
+        toastType: "error",
+      }));
+      setTimeout(
+        () =>
+          setToast((prevState) => ({
+            ...prevState,
+            toastOpen: false,
+            toastMsg: "",
+            toastType: "",
+          })),
+        3000
+      );
+    }
+  };
+  const handleUserSetValid = async (e) => {
+    const userId = e?.user_id;
+    console.log("e", e);
+    const formData = new FormData();
+    formData.append("assessorId", userId);
+    try {
+      const response = await handleActiveUser(formData);
+      fetchAllUsers();
+      const formDetail = response.data.forms[0];
+      // console.log("formDetails",formDetail)
+    } catch (error) {
+      console.log("error - ", error);
+      setToast((prevState) => ({
+        ...prevState,
+        toastOpen: true,
+        toastMsg: "Error occured while uploading!",
+        toastType: "error",
+      }));
+      setTimeout(
+        () =>
+          setToast((prevState) => ({
+            ...prevState,
+            toastOpen: false,
+            toastMsg: "",
+            toastType: "",
+          })),
+        3000
+      );
+    }
+  };
+
   const setTableData = (e) => {
-    console.log("setTableData",e)
+    // console.log("setTableData",e)
     var usersData = {
       full_name: e.fname || e.lname ? e.fname + e.lname : e.name,
       email: e.email?.toLowerCase(),
       mobile_number: e.phonenumber,
       role: e.role || "Assessor",
-      status: e.workingstatus || "Active",
+      status:
+        e.workingstatus === "Valid"
+          ? "Active"
+          : e.workingstatus === "Invalid"
+          ? "Inactive"
+          : "-",
       id: e.user_id,
       schedule: (
         <a className={`px-6 text-primary-600 pl-0 bg-white`}>View Schedule</a>
@@ -113,15 +193,23 @@ export default function ManageUsersList({
                   </div>
                 </div>{" "}
               </MenuItem>
-              <MenuItem onClick={e?.workingstatus}>
+              <MenuItem
+                onClick={() =>
+                  e?.workingstatus === "Invalid"
+                    ? handleUserSetValid(e)
+                    : handleUsersetInvalid(e)
+                }
+              >
                 <div className="flex flex-row gap-4 mt-4">
                   <div>
                     <MdSwapHoriz />
                   </div>
                   <div className="text-semibold m-">
                     <span>
-                      {e?.workingstatus  === "Invalid" ? "Active" : "Deactive"}
-                      </span>
+                      {e?.workingstatus === "Invalid"
+                        ? "Activate"
+                        : "Deactivate"}
+                    </span>
                   </div>
                 </div>{" "}
               </MenuItem>
@@ -206,6 +294,23 @@ export default function ManageUsersList({
   };
 
   useEffect(() => {
+    // if (deleteFlag == "true") {
+    //   handleDelete();
+    //   setDeleteFlag(false)
+    // }else{
+    //   handleDelete()
+    // }
+    deleteFlag ? handleDelete() : console.log("nothing")
+
+  },[deleteFlag]);
+
+  const handleDelete = () => {
+    setDeleteFlag(false)
+    userTableList.map((item)=> console.log(item.email))
+    console.log("hello",userTableList);
+  };
+
+  useEffect(() => {
     if (!isSearchOpen && !isFilterOpen) {
       fetchAllUsers();
     }
@@ -213,65 +318,67 @@ export default function ManageUsersList({
 
   return (
     <>
-     <Nav/>
-    <div className={`container m-auto min-h-[calc(100vh-148px)] px-3 py-12`}>
-      <div className="flex flex-col justify-center align-center">
-      <div className="flex flex-col justify-center align-center gap-4">
-        <div className="flex flex-row">
-          <div className="flex grow items-center">
-            <h1 className="text-xl font-semibold">Manage Users</h1>
-          </div>
-          <div className="flex justify-end">
-            <span className="flex gap-4">
-              <Button moreClass="text-white" text="Make inactive"></Button>
-              <Button
-                moreClass="text-white"
-                onClick={() => setDeleteUsersModel(true)}
-                text="Delete user"
-              ></Button>
-              <button
-                onClick={() => setBulkUploadUsersModel(true)}
-                className="flex flex-wrap items-center justify-center gap-2 border border-gray-500 text-gray-500 bg-white w-[200px] h-[45px] text-md font-medium rounded-[4px]"
-              >
-                Bulk upload users
-                <span className="text-xl">
-                  <MdFileUpload />
+      <Nav />
+      <div className={`container m-auto min-h-[calc(100vh-148px)] px-3 py-12`}>
+        <div className="flex flex-col justify-center align-center">
+          <div className="flex flex-col justify-center align-center gap-4">
+            <div className="flex flex-row">
+              <div className="flex grow items-center">
+                <h1 className="text-xl font-semibold">Manage Users</h1>
+              </div>
+              <div className="flex justify-end">
+                <span className="flex gap-4">
+                  <Button moreClass="text-white" text="Make inactive"></Button>
+                  <Button
+                    moreClass="text-white"
+                    onClick={() => setDeleteUsersModel(true)}
+                    text="Delete user"
+                  ></Button>
+                  <button
+                    onClick={() => setBulkUploadUsersModel(true)}
+                    className="flex flex-wrap items-center justify-center gap-2 border border-gray-500 text-gray-500 bg-white w-[200px] h-[45px] text-md font-medium rounded-[4px]"
+                  >
+                    Bulk upload users
+                    <span className="text-xl">
+                      <MdFileUpload />
+                    </span>
+                  </button>
+                  <Button moreClass="text-white" text="Add User"></Button>
                 </span>
-              </button>
-              <Button moreClass="text-white" text="Add User"></Button>
-            </span>
+              </div>
+            </div>
+
+            <div className="flex flex-col gap-4 mt-4">
+              <FilteringTable
+                dataList={userTableList}
+                columns={COLUMNS}
+                navigateFunc={() => {}}
+                showCheckbox={true}
+                paginationInfo={paginationInfo}
+                setPaginationInfo={setPaginationInfo}
+                setOnRowSelect={() => {}}
+                showFilter={true}
+                pagination={true}
+                filterApiCall={filterApiCall}
+                searchApiCall={searchApiCall}
+                setIsSearchOpen={setIsSearchOpen}
+                setIsFilterOpen={setIsFilterOpen}
+              />
+            </div>
           </div>
         </div>
-
-        <div className="flex flex-col gap-4 mt-4">
-          <FilteringTable
-            dataList={userTableList}
-            columns={COLUMNS}
-            navigateFunc={() => {}}
-            showCheckbox={true}
-            paginationInfo={paginationInfo}
-            setPaginationInfo={setPaginationInfo}
-            onRowSelect={() => {}}
-            showFilter={true}
-            pagination={true}
-            filterApiCall={filterApiCall}
-            searchApiCall={searchApiCall}
-            setIsSearchOpen={setIsSearchOpen}
-            setIsFilterOpen={setIsFilterOpen}
-          />
-        </div>
-      </div>
-      </div>
       </div>
       {deleteUsersModel && (
-        <DeleteUsersModal closeDeleteUsersModal={setDeleteUsersModel} />
+        <DeleteUsersModal
+          setDeleteFlags={setDeleteFlag}
+          closeDeleteUsersModal={setDeleteUsersModel}
+        />
       )}
       {bulkUploadUsersModel && (
         <BulkUploadUsersModal
           closeBulkUploadUsersModal={setBulkUploadUsersModel}
         />
       )}
-   
     </>
   );
 }

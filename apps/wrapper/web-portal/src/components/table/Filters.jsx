@@ -64,8 +64,8 @@ export const ManageUsersFilters = ({
           className="bg-gray-50"
         >
           {/* <Option value="">--Select Role--</Option> */}
-          <Option value="admin">Admin</Option>
-          <Option value="applicant">Applicant</Option>
+          <Option value="assessor">Assessor</Option>
+          {/* <Option value="applicant">Applicant</Option> */}
         </Select>
       </div>
       <div className="flex">
@@ -78,8 +78,8 @@ export const ManageUsersFilters = ({
           className="bg-gray-50"
         >
           {/* <Option value="">Account Status</Option> */}
-          <Option value="active">Active</Option>
-          <Option value="inactive">Inactive</Option>
+          <Option value="Valid">Active</Option>
+          <Option value="invalid">Inactive</Option>
         </Select>
       </div>
       <div>

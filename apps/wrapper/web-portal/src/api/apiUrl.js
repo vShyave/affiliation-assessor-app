@@ -32,7 +32,9 @@ const API_URL = {
   manageUsers: {
     userList: `${rest}getAllUsers`,
     specificUser: `${rest}getSpecificUser`,
-    filterUsers: `${rest}filterUsers`
+    filterUsers: `${rest}filterUsers`,
+    setActivate: `${rest}setValid`,
+    setDeactive: `${rest}setInvalid`
   },
 
 desktopAnalysis:{

@@ -156,6 +156,20 @@ export const getUsersForScheduling = async (postData) => {
   );
   return res;
 };
+export const handleActiveUser = async (postData) => {
+  const res = await adminCustomPost.post(
+    API_URL.manageUsers.setActivate,
+    postData
+  );
+  return res;
+};
+export const handleInctiveUser = async (postData) => {
+  const res = await adminCustomPost.post(
+    API_URL.manageUsers.setDeactive,
+    postData
+  );
+  return res;
+};
 
 export const getSpecificUser = async (postData) => {
   const res = await adminCustomPost.post(

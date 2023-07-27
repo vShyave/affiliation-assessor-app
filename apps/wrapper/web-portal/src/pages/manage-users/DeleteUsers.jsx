@@ -3,7 +3,7 @@ import { getOnGroundViewStatus } from "../../api";
 
 import { Button } from "../../components";
 
-function DeleteUsersModal({ closeDeleteUsersModal }) {
+function DeleteUsersModal({ closeDeleteUsersModal,setDeleteFlags }) {
   //   const [formStatus, setFormStatus] = useState({})
 
   //   useEffect(()=>{
@@ -15,6 +15,8 @@ function DeleteUsersModal({ closeDeleteUsersModal }) {
   // }
   // fetchData();
   //   },[])
+
+
 
   return (
     <>
@@ -35,6 +37,7 @@ function DeleteUsersModal({ closeDeleteUsersModal }) {
               <Button
                 onClick={() => {
                   closeDeleteUsersModal(false);
+                  
                 }}
                 moreClass="border border-gray-200 bg-white text-blue-600 w-[120px]"
                 text="Cancel"
@@ -42,6 +45,7 @@ function DeleteUsersModal({ closeDeleteUsersModal }) {
               <Button
                 onClick={() => {
                   closeDeleteUsersModal(false);
+                  setDeleteFlags(true)
                 }}
                 moreClass="border border-red-600 bg-red-600 text-white w-[120px]"
                 text="Delete"
