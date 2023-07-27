@@ -40,17 +40,17 @@ function App() {
             <Route
               path={APPLICANT_ROUTE_MAP.dashboardModule.my_applications}
               element={
-                <PrivateRoute>
+                // <PrivateRoute>
                     <MyApplications />
-                </PrivateRoute>
+                /* </PrivateRoute> */
               }
             ></Route>
             <Route
               path={APPLICANT_ROUTE_MAP.dashboardModule.all_applications}
               element={
-                <PrivateRoute>
+                // <PrivateRoute>
                   <AllApplications />
-                </PrivateRoute>
+                // </PrivateRoute>
                 
               }
             ></Route>

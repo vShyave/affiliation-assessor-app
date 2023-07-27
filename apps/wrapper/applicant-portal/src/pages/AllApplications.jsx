@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
-import { Label } from "../components";
 import { FormCard } from "../components";
 import { useForm } from "react-hook-form";
 
@@ -14,27 +13,23 @@ import APPLICANT_ROUTE_MAP from "../routes/ApplicantRoute";
 
 const AllApplications = () => {
   const [loadingForms, setLoadingForms] = useState(false);
+  const [formData, setFormData] = useState({ condition: {} });
   const [availableForms, setAvailableForms] = useState([]);
   const instituteDetails = getCookie("institutes");
-  useEffect(() => {
-    getAvailableForms();
-  }, []);
 
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm();
+  const handleChange = (name, value) => {
+    setFormData({
+      condition: {
+        ...formData.condition,
+        [name]: {
+          _eq: value,
+        },
+      },
+    });
+  };
 
   const getAvailableForms = async () => {
-    if (!instituteDetails || !instituteDetails?.length) {
-      return;
-    }
-    setLoadingForms(true);
-    const requestPayoad = {
-      course_applied: instituteDetails[0].course_applied,
-    };
-    const formsResponse = await formService.getData(requestPayoad);
+    const formsResponse = await formService.getData(formData);
     if (formsResponse?.data?.courses) {
       setAvailableForms(formsResponse?.data?.courses);
     }
@@ -44,6 +39,14 @@ const AllApplications = () => {
   const applyFormHandler = () => {
     console.log("Apply Form clicked");
   };
+
+  const handleClearFilter = () => {
+    setFormData({ condition: {} });
+  };
+
+  useEffect(() => {
+    getAvailableForms();
+  }, [formData]);
 
   return (
     <>
@@ -63,26 +66,61 @@ const AllApplications = () => {
 
       <div className="container mx-auto py-12 px-3 min-h-[40vh]">
         <div className="flex flex-col gap-4">
-          <div className="flex mb-12 justify-between grid grid-cols-6 gap-x-6 gap-y-8 sm:grid-cols-6">
-            <div className="sm:col-span-2 ">
-              <Select className="bg-white" size="lg" label="Application type">
-                <Option>New Institute</Option>
-                <Option>New course in an existing institute</Option>
-                <Option>Seat enhancement for an existing course</Option>
+          <div className="flex  mb-12 justify-between grid grid-cols-10 gap-x-2 gap-y-8 sm:grid-cols-10">
+            <div className="sm:col-span-3 ">
+              <Select
+                name="application_type"
+                id="application_type"
+                value={formData?.condition?.application_type?._eq}
+                onChange={(value) => handleChange("application_type", value)}
+                className="bg-white"
+                size="lg"
+                label="Application Type"
+              >
+                <Option value="new_institute">New Institute</Option>
+                <Option value="new_course">
+                  New course in an existing institute
+                </Option>
+                <Option value="seat_enhancement">
+                  Seat enhancement for an existing course
+                </Option>
               </Select>
-              {/* </div> */}
             </div>
-            <div className="sm:col-span-2 ">
-              <Select className="bg-white" size="lg" label="Course type">
-                <Option>Nursing</Option>
-                <Option>Paramedical</Option>
+            <div className="sm:col-span-3 ">
+              <Select
+                name="course_type"
+                id="course_type"
+                value={formData?.condition?.course_type?._eq}
+                onChange={(value) => handleChange("course_type", value)}
+                className="bg-white"
+                size="lg"
+                label="Course Type"
+              >
+                <Option value="nursing">Nursing</Option>
+                <Option value="paramedical">Paramedical</Option>
               </Select>
             </div>
-            <div className="sm:col-span-2 ">
-              <Select className="bg-white" size="lg" label="Course level">
-                <Option>Degree</Option>
-                <Option>Diploma</Option>
+            <div className="sm:col-span-3 ">
+              <Select
+                name="course_level"
+                id="course_level"
+                value={formData?.condition?.course_level?._eq}
+                onChange={(value) => handleChange("course_level", value)}
+                className="bg-white"
+                size="lg"
+                label="Course Level"
+              >
+                <Option value="degree">Degree</Option>
+                <Option value="diploma">Diploma</Option>
               </Select>
+            </div>
+            <div className="sm:col-span-1">
+              <button
+                className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                onClick={handleClearFilter}
+              >
+                Clear
+              </button>
             </div>
           </div>
 

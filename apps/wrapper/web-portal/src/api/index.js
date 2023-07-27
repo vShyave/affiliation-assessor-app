@@ -112,6 +112,13 @@ export const viewForm = async (postData) => {
   );
   return res;
 };
+export const duplicateForms = async (postData) => {
+  const res = await adminCustomPost.post(
+    API_URL.manageForms.duplicateForm,
+    postData
+  );
+  return res;
+};
 
 export const deleteForm = async (postData) => {
   return await adminCustomPost.delete(API_URL.manageForms.deleteForm, {
@@ -126,7 +133,13 @@ export const filterForms = async (postData) => {
   );
   return res;
 };
-
+export const createCourse = async (postData) => {
+  const res = await adminCustomPost.post(
+    API_URL.manageForms.createCourses,
+    postData
+  );
+  return res;
+};
 // Manage users API's...
 export const getAllUsers = async (postData) => {
   const res = await adminCustomPost.post(
@@ -179,7 +192,7 @@ export const getDesktopAnalysisForms = async (postData) => {
 
 export const getAllTheCourses = async (postData) => {
   const res = await adminCustomPost.post(
-    API_URL.desktopAnalysis.getAllCourses,
+    API_URL.desktopAnalysis.getCourseOGA,
     postData
   );
   return res;
