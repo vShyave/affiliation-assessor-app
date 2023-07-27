@@ -34,13 +34,15 @@ const GlobalFilter = ({
       offsetNo: 0,
     }));
 
-    // comment following to implement debounce 
+    // comment following to implement debounce
     const postData = { searchString: `%${value}%` };
-    if (value.trim()==""||value.trim().length >= 3) {
+    if (value.trim() == "" || value.trim().length >= 3) {
       await searchApiCall(postData);
     }
 
-    {/** rxjs debounce implementation */}
+    {
+      /** rxjs debounce implementation */
+    }
     // if (value.trim()=="") {
     //   return await searchApiCall(postData);
     // }
@@ -58,7 +60,6 @@ const GlobalFilter = ({
     //     const postData = { searchString: `%${value}%` };
     //     await searchApiCall(postData);
     //   });
-
   };
 
   useEffect(() => {
@@ -88,7 +89,10 @@ const GlobalFilter = ({
         <div className="flex justify-end">
           <div
             className="flex flex-row gap-2 cursor-pointer items-center"
-            onClick={() => setIsFilter(!isFilter)}
+            onClick={() => {
+              setIsFilter(!isFilter);
+              setIsFilterOpen(!isFilter)
+            }}
           >
             <MdFilterList className="text-gray-500" />
             <h6 className="text-base text-gray-500 font-semibold">Filter</h6>

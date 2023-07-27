@@ -1,45 +1,59 @@
 import axios from "axios";
-import fusionAuthAxiosService from "./fusionAuthAxiosService";
 import API_URL from "./apiUrl";
 
 const BASE_URL =
   process.env.REACT_APP_WEB_PORTAL_USER_SERVICE_URL ||
-  "https://api.upsmfac.org/";
-const REGISTRATION_BASE_URL =
-  process.env.REACT_APP_FUSION_AUTH_URL || "https://api.upsmfac.org/api/";
-const AUTH_KEY =
-  process.env.REACT_APP_FUSION_AUTH_API_KEY || "testkeytestkeytestkey";
+  "https://auth.upsmfac.org/api/v1/";
 
-const sendOtp = (phone) => {
-  return axios.get(`${BASE_URL}${API_URL.LOGIN.OTP_SEND}?phone=${phone}`);
-};
-
-const verifyOtp = (phone, otp) => {
-  // const otpDetails ={
-  //   phone,
-  //   otp,
-  //   applicationId: process.env.REACT_APP_APPLICATION_ID
-  // }
-  // const res = await axios.post(BASE_URL + "user/otpVerify", otpDetails);
-  return axios.get(
-    `${BASE_URL}${API_URL.LOGIN.OTP_VERIFY}?phone=${phone}&otp=${otp}`
+  const keyCloakAxiosService = axios.create({
+    baseURL: BASE_URL,
+  });
+  
+  keyCloakAxiosService.interceptors.request.use(
+    (request) => {
+      // const user_data = getCookie('userData');
+      request.headers["Accept"] = "*/*";
+      request.headers["Content-Type"] = "application/json";
+      return request;
+    },
+    (error) => {
+      return Promise.reject(error);
+    }
   );
+  
+  keyCloakAxiosService.interceptors.response.use(
+    function (response) {
+      return response;
+    },
+    function (error) {
+      let res = error.response;
+      if (res.status === 401) {
+        console.error("Unauthorized  user. Status Code: " + res.status);
+        // window.location.href = “https://example.com/login”;
+      }
+      console.error("Looks like there was a problem. Status Code: " + res.status);
+      return Promise.reject(res?.data?.error);
+    }
+  );
+
+const generateOtp = (postData) => {
+  return axios.post(`${BASE_URL}${API_URL.LOGIN.GENERATE_OTP}`,postData);
 };
+
 
 const signup = (userDetails) => {
-  return fusionAuthAxiosService.post(
-    API_URL.SIGNUP.FUSION_AUTH_REGISTRATION,
+  return keyCloakAxiosService.post(
+    API_URL.SIGNUP.CREATE_USER,
     userDetails
   );
 };
 
 const login = (userDetails) => {
-  return fusionAuthAxiosService.post(API_URL.LOGIN.USERLOGIN, userDetails);
+  return keyCloakAxiosService.post(API_URL.LOGIN.USERLOGIN, userDetails);
 };
 
 export const userService = {
-  sendOtp,
+  generateOtp,
   login,
-  verifyOtp,
-  signup,
+  signup
 };

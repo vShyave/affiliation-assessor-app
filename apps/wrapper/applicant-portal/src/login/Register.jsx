@@ -32,22 +32,14 @@ export default function SelfRegistration() {
       email,
       mobilePhone,
     } = data;   
-    let userDetails = {
-      registration: {
-        applicationId: process.env.REACT_APP_APPLICATION_ID,
-        usernameStatus: "ACTIVE",
-        roles: [applicantType],
-      },
-      user: {
+    let userDetails = [{
         firstName,
         lastName,
-        mobilePhone,
         email,
-        fullName: `${firstName} ${lastName}`,
-        username: mobilePhone,
-        password: mobilePhone,
-      },
-    };
+        username:email,
+        password: "rkr",
+        roleName:applicantType
+    }];
 
     const instituteDetails = {
       instituteName: applicantName,
@@ -67,16 +59,19 @@ export default function SelfRegistration() {
     };
 
     try {
-      const fusionAuthSignupRes = await userService.signup(userDetails);
+      const keyCloakSignupRes = await userService.signup(userDetails);
+      console.log(keyCloakSignupRes)
 
       const addInstituteRes = await applicantService.addInstitute(
         instituteDetails
       );
-
-      institutePocDetils.user_id = fusionAuthSignupRes.data.user.id;
-      institutePocDetils.institute_id =
+      console.log(addInstituteRes)
+        // TODO: use  after Rajendra API
+      // institutePocDetils.user_id = keyCloakSignupRes.data.userRepresentation.id;
+      institutePocDetils["institute_id"] =
         addInstituteRes.data.insert_institutes_one.id;
-      await applicantService.addInstitutePoc(institutePocDetils);
+      const addInstitutePocRes = await applicantService.addInstitutePoc(institutePocDetils);
+      console.log(addInstitutePocRes)
       navigate(APPLICANT_ROUTE_MAP.dashboardModule.congratulations);
     } catch (error) {
       setToast((prevState) => ({
