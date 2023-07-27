@@ -32,7 +32,8 @@ const API_URL = {
   manageUsers: {
     userList: `${rest}getAllUsers`,
     specificUser: `${rest}getSpecificUser`,
-    filterUsers: `${rest}filterUsers`
+    filterUsers: `${rest}filterUsers`,
+    addUsers: `${rest}addUsers`
   },
 
 desktopAnalysis:{
@@ -47,12 +48,11 @@ desktopAnalysis:{
     filterAssessments: `${rest}filterAssessments`
   },
   SIGNUP: {
-    FUSION_AUTH_REGISTRATION: "user/registration",
+    CREATE_USER: "createBulkUser",
   },
   LOGIN: {
-    OTP_SEND: "user/otpSend",
-    OTP_VERIFY: "user/otpVerify",
-    USERLOGIN: "login",
+    GENERATE_OTP: "user/generateOtp",
+    USERLOGIN: "user/login",
   },
   NOTIFICATION: {
     SEND_SMS: "",

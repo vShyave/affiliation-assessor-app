@@ -11,11 +11,13 @@ export default function Header() {
   const [showButtons, setshowButtons] = useState(false);
   const navigate = useNavigate();
   const regulator = getCookie("regulator");
+  const userData = getCookie("userData")
   const instituteData = getCookie("institutes");
 
   const logout = () => {
     removeCookie("userData");
     removeCookie("institutes");
+    removeCookie("regulator");
     navigate(ADMIN_ROUTE_MAP.loginModule.login);
   };
 
@@ -49,6 +51,8 @@ export default function Header() {
                     }}
                   >
                     {/* {getInitials(regulator[0].full_name)}  */}
+                    {getInitials(userData.userRepresentation.firstName+" "+userData.userRepresentation.lastName)}
+
                   </button>
 
                   {showProfileDropdown && (

@@ -96,36 +96,32 @@ export default function AdminSingUp() {
   //   return errors;
   //   }
   const signupHandler = async (data) => {
-    const { fullName,firstName,lastName,email, mobilePhone } = data;
-    let userDetails = {
-      registration: {
-        applicationId: process.env.REACT_APP_APPLICATION_ID,
-        usernameStatus: "ACTIVE",
-        roles: ["Admin"],
-      },
-      user: {
+    const {firstName,lastName,email, mobilePhone } = data;
+    let userDetails = [{
+      
         firstName: firstName,
         lastName: lastName,
-        fullName: fullName,
+        fullName: firstName+" "+lastName,
         email: email,
-        username: mobilePhone,
-        password: mobilePhone,
-        mobilePhone: mobilePhone,
-      },
-    };
+        username: email,
+        password: "rkr",
+        roleName: "Regulator"
+      
+    }];
     let res = "";
     try {
       res = await userService.signup(userDetails);
 
       const adminDetails = {
-        user_id: res.data.user.id,
+        user_id: "", //TODO: after rejendra's API
         fname: firstName,
         lname: lastName,
-        fullName: fullName,
+        fullName: firstName+" "+lastName,
         email: email,
         phoneNumber: mobilePhone,
       };
-      const addAdimRes = await registerUser(adminDetails);
+      const adminRes = await registerUser(adminDetails);
+      console.log(adminRes)
       navigate(ADMIN_ROUTE_MAP.loginModule.login);
     } catch (error) {
       setToast((prevState) => ({
