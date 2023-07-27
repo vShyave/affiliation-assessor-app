@@ -165,14 +165,14 @@ const FormsOverview = () => {
     setState((prevState) => ({ ...prevState, menu_selected: menuItem }));
     setPaginationInfo((prevState) => ({ ...prevState, offsetNo: 0 }));
     setIsFilterOpen(false);
-    setIsSearchOpen(false)
+    setIsSearchOpen(false);
   };
 
   const publish = (e) => {
-    let publishFormId = [e[0]?.form_id]
+    let publishFormId = [e[0]?.form_id];
     setShowAlert(false);
-    console.log(e)
-   publishForm(publishFormId);
+    console.log(e);
+    publishForm(publishFormId);
     HandlecreateCourse(e);
   };
 
@@ -409,19 +409,21 @@ const FormsOverview = () => {
   const HandlecreateCourse = async (formDataObject) => {
     // const formData = new FormData();
     // formData.append("form_id", form_id);]
-    console.log(formDataObject)
-    let objectRes = JSON.stringify([{name: formDataObject[0]?.file_name,path: formDataObject[0]?.path}])
+    console.log(formDataObject);
+    let objectRes = JSON.stringify([
+      { name: formDataObject[0]?.file_name, path: formDataObject[0]?.path },
+    ]);
     const formData = {
       course_type: formDataObject[0]?.course_type,
       course_level: formDataObject[0]?.course_level,
       course_name: formDataObject[0]?.title,
-      formObject: objectRes,     
+      formObject: objectRes,
       application_type: formDataObject[0]?.application_type,
       course_desc: formDataObject[0]?.form_desc,
     };
 
     try {
-      console.log("formDataObj",formDataObject)
+      console.log("formDataObj", formDataObject);
       const response = await createCourse(formData);
       setToast((prevState) => ({
         ...prevState,

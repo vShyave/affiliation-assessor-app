@@ -1,14 +1,8 @@
-<<<<<<< HEAD
-# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
-
-=======
->>>>>>> applicant_apply_form
 # dependencies
 /node_modules
 /.pnp
 .pnp.js
 .env
-<<<<<<< HEAD
 
 # testing
 /coverage
@@ -26,6 +20,4 @@
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
-=======
 package-lock.json
->>>>>>> applicant_apply_form

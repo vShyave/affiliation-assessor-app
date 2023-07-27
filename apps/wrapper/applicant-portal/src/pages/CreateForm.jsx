@@ -53,31 +53,6 @@ const CreateForm = () => {
   const instituteDetails = getCookie("institutes");
 
   // const userId = "427d473d-d8ea-4bb3-b317-f230f1c9b2f7";
-  // const formSpec = {
-  //   forms: {
-  //     [formName]: {
-  //       skipOnSuccessMessage: true,
-  //       prefill: {},
-  //       submissionURL: "",
-  //       name: "bsc_nursing",
-  //       successCheck: "async (formData) => { return true; }",
-  //       onSuccess: {
-  //         notificationMessage: "Form submitted successfully",
-  //         sideEffect: "async (formData) => { console.log(formData); }",
-  //       },
-  //       onFailure: {
-  //         message: "Form submission failed",
-  //         sideEffect: "async (formData) => { console.log(formData); }",
-  //         next: {
-  //           type: "url",
-  //           id: "google",
-  //         },
-  //       },
-  //     },
-  //   },
-  //   start: formName,
-  // };
-
   const formSpec = {
     skipOnSuccessMessage: true,
     prefill: {},
@@ -112,16 +87,23 @@ const CreateForm = () => {
       formData = res.data.form_submissions[0];
     }
 
+    let fileGCPPath =
+      "https://storage.googleapis.com/dev-public-upsmf/affiliation/" +
+      formName +
+      ".xml";
+
     let formURI = await getPrefillXML(
-      `${formData?.form_name || formName}`,
-      "",
-      formData?.form_data,
-      formData?.imageUrls
+      `${formData?.form_name || fileGCPPath}`,
+      formSpec.onSuccess
+      // formData?.form_data,
+      // formData?.imageUrls
     );
     setEncodedFormURI(formURI);
   };
 
   const afterFormSubmit = async (e) => {
+    //    console.log("e - ", e);
+
     const data = typeof e.data === "string" ? JSON.parse(e.data) : e.data;
 
     try {
@@ -168,9 +150,8 @@ const CreateForm = () => {
   };
 
   const handleFormEvents = async (startingForm, afterFormSubmit, e) => {
-    // console.log("ENKETO_URL - ", ENKETO_URL);
     if (
-      ENKETO_URL === "https://enketo.upsmfac.org/enketo" &&
+      ENKETO_URL === e.origin + "/enketo" &&
       typeof e?.data === "string" &&
       JSON.parse(e?.data)?.state !== "ON_FORM_SUCCESS_COMPLETED"
     ) {
@@ -183,10 +164,9 @@ const CreateForm = () => {
           startingForm + `${new Date().toISOString().split("T")[0]}`
         );
         await setToLocalForage(
-          user.id +
-            "_" +
-            startingForm +
-            `${new Date().toISOString().split("T")[0]}`,
+          `${user.id}_${startingForm}_${
+            new Date().toISOString().split("T")[0]
+          }`,
           {
             formData: JSON.parse(e.data).formData,
             imageUrls: { ...prevData?.imageUrls, ...images },

@@ -7,7 +7,7 @@ const X_HASURA_ADMIN_SECRET_KEY = process.env.X_HASURA_ADMIN_SECRET_KEY || 'myad
 export const getPrefillXML = async (form, onFormSuccessData, prefillXML, imageUrls) => {
     try {
         const res = await axios.post(
-            `${ENKETO_MANAGER_URL}prefillXML?form=${form}&onFormSuccessData=${encodeURI(
+            `${ENKETO_MANAGER_URL}prefillXML?formUrl=${form}&onFormSuccessData=${encodeURI(
                 JSON.stringify(onFormSuccessData)
             )}`,
             {
@@ -25,8 +25,7 @@ export const getPrefillXML = async (form, onFormSuccessData, prefillXML, imageUr
 };
 
 export const saveFormSubmission = (data) => {
-    console.log('saveFormSubmission data - ', data);
-    
+
     const query = {
         query: `mutation ($object: [form_submissions_insert_input!] = {}) {
             insert_form_submissions(objects: $object) {
@@ -70,9 +69,16 @@ const validateResponse = async (response) => {
 };
 
 export const getSubmissionXML = async (form, prefillXML, imageUrls) => {
+    console.log("form - ", form);
+    let new_form =
+      "https://storage.googleapis.com/dev-public-upsmf/affiliation/" +
+      form +
+      ".xml";
+    console.log("prefillXML - ", prefillXML);
+    console.log("imageUrls - ", imageUrls);
     try {
         const res = await axios.post(
-            `${ENKETO_MANAGER_URL}submissionXML?form=${form}`, {
+            `${ENKETO_MANAGER_URL}submissionXML?form=${new_form}`, {
                 prefillXML,
                 imageUrls,
             }, { headers: {} }
