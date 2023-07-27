@@ -90,11 +90,11 @@ const DesktopAnalysisList = () => {
     setState((prevState) => ({ ...prevState, menu_selected: menuItem }));
     setPaginationInfo((prevState) => ({ ...prevState, offsetNo: 0 }));
     setIsFilterOpen(false);
-    setIsSearchOpen(false)
+    setIsSearchOpen(false);
   };
 
   const navigateToView = (formObj) => {
-    const navigationURL = `${ADMIN_ROUTE_MAP.adminModule.desktopAnalysis.viewForm}/${formObj?.original?.form_title}/${formObj?.original?.id}`;
+    const navigationURL = `${ADMIN_ROUTE_MAP.adminModule.desktopAnalysis.viewForm}/${formObj?.original?.file_name}/${formObj?.original?.id}`;
     navigation(navigationURL);
     const postData = { form_id: formObj?.original?.id };
     markStatus(postData);
@@ -178,6 +178,7 @@ const DesktopAnalysisList = () => {
   formsList?.forEach((e) => {
     var formsData = {
       form_title: getFieldName(e?.form_name),
+      file_name: e?.form_name,
       application_type:
         e?.assessment_type?.charAt(0).toUpperCase() +
         e?.assessment_type?.substring(1).toLowerCase(),
@@ -207,131 +208,131 @@ const DesktopAnalysisList = () => {
 
   return (
     <>
-      <Nav/>
-    <div className={`container m-auto min-h-[calc(100vh-148px)] px-3 py-12`}>
-      <div className="flex flex-col gap-8">
-        <div className="flex flex-col gap-4">
-          <div>
-            <h1 className="text-2xl font-medium">Your activity</h1>
-          </div>
-          <div className="flex flex-wrap">
-            {cardArray.map((obj, index) => (
-              <Card
-                moreClass="shadow-md w-[200px] h-[100px] m-3 first:ml-0"
-                key={index}
-              >
-                <div className="flex flex-col place-items-start justify-center gap-2">
-                  <h3 className="text-xl font-semibold">{obj.value}</h3>
-                  <p className="text-sm font-medium text-gray-700">
-                    {obj.text}
-                  </p>
-                </div>
-              </Card>
-            ))}
-          </div>
-        </div>
-
-        <div className="flex flex-col gap-4">
-          <div>
-            <h1 className="text-2xl font-medium">All applications</h1>
-          </div>
-
-          <div className="grid grid-cols-1 gap-x-6 gap-y-6 sm:grid-cols-6">
-            <div className="sm:col-span-3">
-              <div className="w-72 bg-white rounded-[8px]">
-                <Select
-                  value="1"
-                  label="Select round"
-                  onChange={(value) => {
-                    console.log(value);
-                  }}
+      <Nav />
+      <div className={`container m-auto min-h-[calc(100vh-148px)] px-3 py-12`}>
+        <div className="flex flex-col gap-8">
+          <div className="flex flex-col gap-4">
+            <div>
+              <h1 className="text-2xl font-medium">Your activity</h1>
+            </div>
+            <div className="flex flex-wrap">
+              {cardArray.map((obj, index) => (
+                <Card
+                  moreClass="shadow-md w-[200px] h-[100px] m-3 first:ml-0"
+                  key={index}
                 >
-                  <Option value="1">Round one</Option>
-                  <Option value="2">Round two</Option>
-                </Select>
+                  <div className="flex flex-col place-items-start justify-center gap-2">
+                    <h3 className="text-xl font-semibold">{obj.value}</h3>
+                    <p className="text-sm font-medium text-gray-700">
+                      {obj.text}
+                    </p>
+                  </div>
+                </Card>
+              ))}
+            </div>
+          </div>
+
+          <div className="flex flex-col gap-4">
+            <div>
+              <h1 className="text-2xl font-medium">All applications</h1>
+            </div>
+
+            <div className="grid grid-cols-1 gap-x-6 gap-y-6 sm:grid-cols-6">
+              <div className="sm:col-span-3">
+                <div className="w-72 bg-white rounded-[8px]">
+                  <Select
+                    value="1"
+                    label="Select round"
+                    onChange={(value) => {
+                      console.log(value);
+                    }}
+                  >
+                    <Option value="1">Round one</Option>
+                    <Option value="2">Round two</Option>
+                  </Select>
+                </div>
               </div>
             </div>
           </div>
-        </div>
 
-        <div className="flex flex-col gap-4">
-          <ul className="flex flex-wrap gap-3 -mb-px">
-            <li className="" onClick={() => handleSelectMenu("new")}>
-              <a
-                href="#"
-                className={`inline-block p-4 rounded-t-lg dark:text-blue-500 dark:border-blue-600 ${
-                  state.menu_selected === "new"
-                    ? "text-blue-600 border-b-2 border-blue-600"
-                    : ""
-                }`}
-              >
-                New
-              </a>
-            </li>
-            <li className="" onClick={() => handleSelectMenu("rejected")}>
-              <a
-                href="#"
-                className={`inline-block p-4 rounded-t-lg dark:text-blue-500 dark:border-blue-600 ${
-                  state.menu_selected === "rejected"
-                    ? "text-blue-600 border-b-2 border-blue-600"
-                    : ""
-                }`}
-                aria-current="page"
-              >
-                Rejected
-              </a>
-            </li>
-            <li className="" onClick={() => handleSelectMenu("resubmitted")}>
-              <a
-                href="#"
-                className={`inline-block p-4 rounded-t-lg dark:text-blue-500 dark:border-blue-600 ${
-                  state.menu_selected === "resubmitted"
-                    ? "text-blue-600 border-b-2 border-blue-600"
-                    : ""
-                }`}
-              >
-                Resubmitted
-              </a>
-            </li>
-            <li
-              className=""
-              onClick={() => handleSelectMenu("sent_for_inspection")}
-            >
-              <a
-                href="#"
-                className={`inline-block p-4 rounded-t-lg dark:text-blue-500 dark:border-blue-600 ${
-                  state.menu_selected === "sent_for_inspection"
-                    ? "text-blue-600 border-b-2 border-blue-600"
-                    : ""
-                }`}
-              >
-                Sent for inspection
-              </a>
-            </li>
-          </ul>
-
-          {/* <div>create a search bar and filter component here</div> */}
-          {/* table creation starts here */}
           <div className="flex flex-col gap-4">
-            <FilteringTable
-              dataList={formsDataList}
-              navigateFunc={navigateToView}
-              columns={COLUMNS}
-              pagination={true}
-              onRowSelect={() => {}}
-              filterApiCall={filterApiCall}
-              showFilter={true}
-              paginationInfo={paginationInfo}
-              setPaginationInfo={setPaginationInfo}
-              searchApiCall={searchApiCall}
-              setIsSearchOpen={setIsSearchOpen}
-              setIsFilterOpen={setIsFilterOpen}
-            />
+            <ul className="flex flex-wrap gap-3 -mb-px">
+              <li className="" onClick={() => handleSelectMenu("new")}>
+                <a
+                  href="#"
+                  className={`inline-block p-4 rounded-t-lg dark:text-blue-500 dark:border-blue-600 ${
+                    state.menu_selected === "new"
+                      ? "text-blue-600 border-b-2 border-blue-600"
+                      : ""
+                  }`}
+                >
+                  New
+                </a>
+              </li>
+              <li className="" onClick={() => handleSelectMenu("rejected")}>
+                <a
+                  href="#"
+                  className={`inline-block p-4 rounded-t-lg dark:text-blue-500 dark:border-blue-600 ${
+                    state.menu_selected === "rejected"
+                      ? "text-blue-600 border-b-2 border-blue-600"
+                      : ""
+                  }`}
+                  aria-current="page"
+                >
+                  Rejected
+                </a>
+              </li>
+              <li className="" onClick={() => handleSelectMenu("resubmitted")}>
+                <a
+                  href="#"
+                  className={`inline-block p-4 rounded-t-lg dark:text-blue-500 dark:border-blue-600 ${
+                    state.menu_selected === "resubmitted"
+                      ? "text-blue-600 border-b-2 border-blue-600"
+                      : ""
+                  }`}
+                >
+                  Resubmitted
+                </a>
+              </li>
+              <li
+                className=""
+                onClick={() => handleSelectMenu("sent_for_inspection")}
+              >
+                <a
+                  href="#"
+                  className={`inline-block p-4 rounded-t-lg dark:text-blue-500 dark:border-blue-600 ${
+                    state.menu_selected === "sent_for_inspection"
+                      ? "text-blue-600 border-b-2 border-blue-600"
+                      : ""
+                  }`}
+                >
+                  Sent for inspection
+                </a>
+              </li>
+            </ul>
+
+            {/* <div>create a search bar and filter component here</div> */}
+            {/* table creation starts here */}
+            <div className="flex flex-col gap-4">
+              <FilteringTable
+                dataList={formsDataList}
+                navigateFunc={navigateToView}
+                columns={COLUMNS}
+                pagination={true}
+                onRowSelect={() => {}}
+                filterApiCall={filterApiCall}
+                showFilter={true}
+                paginationInfo={paginationInfo}
+                setPaginationInfo={setPaginationInfo}
+                searchApiCall={searchApiCall}
+                setIsSearchOpen={setIsSearchOpen}
+                setIsFilterOpen={setIsFilterOpen}
+              />
+            </div>
           </div>
         </div>
       </div>
-      </div>    
-      </>
+    </>
   );
 };
 export default DesktopAnalysisList;
