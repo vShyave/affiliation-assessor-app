@@ -6,12 +6,11 @@ export const APIS = {
       LIST: "/rest/getAllCourses",
     },
     SIGNUP: {
-      FUSION_AUTH_REGISTRATION: "user/registration",
+      CREATE_USER: "createBulkUser",
     },
     LOGIN: {
-      OTP_SEND: "user/otpSend",
-      OTP_VERIFY:  "user/otpVerify",
-      USERLOGIN: "login",
+      GENERATE_OTP: "user/generateOtp",
+      USERLOGIN: "user/login",
     },
     APPLICANT: {
       ADD_INSTITUTE: "rest/addInstitute",

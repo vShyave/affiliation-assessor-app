@@ -107,15 +107,11 @@ const FilteringTable = (props,{setOnRowSelected}) => {
   const { globalFilter } = state;
 
   const { setPaginationInfo } = props;
-
   const { limit: pageSize, offsetNo, totalCount } = props?.paginationInfo || {};
-
   const [canNextPage, setCanNextPage] = useState(false);
 
   const [canPreviousPage, setCanPreviousPage] = useState(false);
-
   const [pageIndex, setPageIndex] = useState(-1);
-
   const [totalPageCount, setTotalPageCount] = useState(0);
 
   const nextPage = () => {
@@ -169,9 +165,18 @@ const FilteringTable = (props,{setOnRowSelected}) => {
     if (!offsetNo) {
       setPageIndex(0);
     }
+    if(!totalCount){
+      setPageIndex(-1)
+    }
 
-    if (!totalCount) {
-      setPageIndex(-1);
+  
+    array = JSON.stringify(
+      { selectedFlatRows: selectedFlatRows.map((row) => row.original) },
+      null,
+      2
+    );
+    {
+      props.onRowSelect(array);
     }
   }, [offsetNo, totalCount]);
 
