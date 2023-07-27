@@ -79,6 +79,7 @@ export default function ManageUsersList({
   ];
 
   const setTableData = (e) => {
+    console.log("setTableData",e)
     var usersData = {
       full_name: e.fname || e.lname ? e.fname + e.lname : e.name,
       email: e.email?.toLowerCase(),
@@ -112,13 +113,15 @@ export default function ManageUsersList({
                   </div>
                 </div>{" "}
               </MenuItem>
-              <MenuItem onClick={(e) => console.log("icon clicked")}>
+              <MenuItem onClick={e?.workingstatus}>
                 <div className="flex flex-row gap-4 mt-4">
                   <div>
                     <MdSwapHoriz />
                   </div>
                   <div className="text-semibold m-">
-                    <span>Deactivate</span>
+                    <span>
+                      {e?.workingstatus  === "Invalid" ? "Active" : "Deactive"}
+                      </span>
                   </div>
                 </div>{" "}
               </MenuItem>

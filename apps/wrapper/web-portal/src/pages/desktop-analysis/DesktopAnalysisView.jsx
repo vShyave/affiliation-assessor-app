@@ -61,9 +61,7 @@ export default function DesktopAnalysisView() {
     const formData = res.data.form_submissions[0];
 
     let filePath =
-      "https://storage.googleapis.com/dev-public-upsmf/affiliation/" +
-      formName +
-      ".xml";
+      process.env.REACT_APP_GCP_AFFILIATION_LINK + formName + ".xml";
 
     //  setindividualFormName(res.data.form.form_name)
     // console.log("formData",formData.form_name)
@@ -108,11 +106,8 @@ export default function DesktopAnalysisView() {
       <div className={`container m-auto min-h-[calc(100vh-148px)] px-3 py-12`}>
         <div className="flex flex-col gap-12">
           <div className="flex flex-row">
-            {/* <div className="flex grow justify-start items-center">
-                        <h1 className="text-2xl font-bold uppercase">{ formName.split('_').join(' ') }</h1>
-                    </div> */}
             <div className="flex grow gap-4 justify-end items-center">
-              <button className="flex flex-wrap items-center justify-center gap-2 border border-gray-500 bg-white text-gray-500 w-1/6 h-[40px] font-semibold rounded-[4px]">
+              <button className="flex flex-wrap items-center justify-center gap-2 border border-gray-500 bg-white text-gray-500 w-fit h-fit p-2 font-semibold rounded-[4px]">
                 <span>
                   <BsArrowLeft />
                 </span>
@@ -120,7 +115,7 @@ export default function DesktopAnalysisView() {
               </button>
               <button
                 onClick={() => setOpenSheduleInspectionModel(true)}
-                className="flex flex-wrap items-center justify-center gap-2 border border-gray-500 text-gray-500 bg-white w-1/6 h-[40px] font-semibold rounded-[4px]"
+                className="flex flex-wrap items-center justify-center gap-2 border border-gray-500 text-gray-500 bg-white w-fit h-fit p-2 font-semibold rounded-[4px]"
               >
                 Send for inspection{" "}
                 <span>
@@ -133,6 +128,7 @@ export default function DesktopAnalysisView() {
               </button>
             </div>
           </div>
+
           <div className="flex flex-row gap-4">
             <div className="flex w-[30%]">
               <Sidebar />
@@ -163,18 +159,19 @@ export default function DesktopAnalysisView() {
               </Card>
             </div>
           </div>
+
+          {/* { openModel && <NocModal closeModal={setOpenModel}/> } */}
+          {/* { rejectModel && <RejectNocModal closeRejectModal={setRejectModel}/> } */}
+          {/* {openCertificateModel && <IssueCertificateModal closeCertificateModal={setOpenCertificateModel}/>} */}
+          {openScheduleInspectionModel && (
+            <ScheduleInspectionModal
+              closeSchedule={setOpenSheduleInspectionModel}
+              setToast={setToast}
+              instituteId={formDataFromApi?.institute?.id}
+              instituteName={formDataFromApi?.institute?.course_applied}
+            />
+          )}
         </div>
-        {/* { openModel && <NocModal closeModal={setOpenModel}/> } */}
-        {/* { rejectModel && <RejectNocModal closeRejectModal={setRejectModel}/> } */}
-        {/* {openCertificateModel && <IssueCertificateModal closeCertificateModal={setOpenCertificateModel}/>} */}
-        {openScheduleInspectionModel && (
-          <ScheduleInspectionModal
-            closeSchedule={setOpenSheduleInspectionModel}
-            setToast={setToast}
-            instituteId={formDataFromApi?.institute?.id}
-            instituteName={formDataFromApi?.institute?.course_applied}
-          />
-        )}
       </div>
     </>
   );

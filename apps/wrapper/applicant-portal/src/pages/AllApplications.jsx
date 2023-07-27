@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 
-import { Label } from "../components";
 import { FormCard } from "../components";
 import { useForm } from "react-hook-form";
 
@@ -73,12 +72,6 @@ const AllApplications = () => {
         <div className="flex flex-col gap-4">
           <div className="flex  mb-12 justify-between grid grid-cols-10 gap-x-2 gap-y-8 sm:grid-cols-10">
             <div className="sm:col-span-3 ">
-              <Label
-                required={true}
-                text="Application type"
-                htmlFor="application_type"
-                moreClass="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-400"
-              />
               <Select
                 name="application_type"
                 id="application_type"
@@ -86,6 +79,7 @@ const AllApplications = () => {
                 onChange={(value) => handleChange("application_type", value)}
                 className="bg-white"
                 size="lg"
+                label="Application Type"
               >
                 <Option value="new_institute">New Institute</Option>
                 <Option value="new_course">
@@ -95,15 +89,8 @@ const AllApplications = () => {
                   Seat enhancement for an existing course
                 </Option>
               </Select>
-              {/* </div> */}
             </div>
             <div className="sm:col-span-3 ">
-              <Label
-                required={true}
-                text="Course type"
-                htmlFor="course_type"
-                moreClass="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-400"
-              />
               <Select
                 name="course_type"
                 id="course_type"
@@ -111,18 +98,13 @@ const AllApplications = () => {
                 onChange={(value) => handleChange("course_type", value)}
                 className="bg-white"
                 size="lg"
+                label="Course Type"
               >
                 <Option value="nursing">Nursing</Option>
                 <Option value="paramedical">Paramedical</Option>
               </Select>
             </div>
             <div className="sm:col-span-3 ">
-              <Label
-                required={true}
-                text="Course level"
-                htmlFor="course_level"
-                moreClass="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-400"
-              />
               <Select
                 name="course_level"
                 id="course_level"
@@ -130,12 +112,13 @@ const AllApplications = () => {
                 onChange={(value) => handleChange("course_level", value)}
                 className="bg-white"
                 size="lg"
+                label="Course Level"
               >
                 <Option value="degree">Degree</Option>
                 <Option value="diploma">Diploma</Option>
               </Select>
             </div>
-            <div className="mt-7 sm:col-span-1">
+            <div className="sm:col-span-1">
               <button
                 className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                 onClick={handleClearFilter}

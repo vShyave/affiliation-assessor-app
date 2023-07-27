@@ -23,7 +23,7 @@ const FilteringTable = (props) => {
     getTableProps,
     getTableBodyProps,
     headerGroups,
-    // rows,
+    rows,
     prepareRow,
     state,
     setGlobalFilter,
@@ -41,7 +41,6 @@ const FilteringTable = (props) => {
     useSortBy,
     usePagination,
     useRowSelect,
-
     (hooks) => {
       if (props.showCheckbox) {
         hooks.visibleColumns.push((columns) => {
@@ -52,8 +51,8 @@ const FilteringTable = (props) => {
                 <Checkbox {...getToggleAllRowsSelectedProps()} />
               ),
               Cell: ({ row }) => {
-                // console.log(row?.original?.values?.isRowInvalid);
-                /*       if (row.original.values.isRowInvalid != undefined && row.original.values.isRowInvalid === true) {
+                console.log(row?.original?.values?.isRowInvalid);
+                       if (row.original.values != undefined && row.original.values.isRowInvalid === true) {
                     return(
                      <AiFillExclamationCircle className="text-red-400 text-2xl" />
                   )
@@ -62,8 +61,8 @@ const FilteringTable = (props) => {
                     return (
                       <Checkbox {...row.getToggleRowSelectedProps()} />
                     )
-                  }  */
-                return <Checkbox {...row.getToggleRowSelectedProps()} />;
+                  }  
+                // return <Checkbox {...row.getToggleRowSelectedProps()} />;
               },
             },
             ...columns,
@@ -207,6 +206,7 @@ const FilteringTable = (props) => {
             })}
           </tbody>
         </table>
+        
       </div>
       {props.pagination && (
         <div className="flex flex-row font-normal text-[16px] py-8 gap-8">

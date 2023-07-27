@@ -15,7 +15,6 @@ import DashboardLandingPage from "./pages/DashboardLandingPage";
 import GroundInspectionAnalysis from "./pages/ground-analysis/GroundInspectionAnalysis";
 import GroundInspectionListForms from "./pages/ground-analysis/GroundInspectionListForms";
 import GroundInspectionViewForm from "./pages/ground-analysis/GroundInspectionViewForm";
-import GroundInspectionNoc from "./pages/ground-analysis/GroundInspectionNOC";
 import ManageUsersList from "./pages/manage-users/ManageUsersList";
 import AdminCreateUser from "./pages/manage-users/AdminCreateUser";
 // import ManageFormsList from "./pages/manage-forms/ManageFormsList";
@@ -39,13 +38,8 @@ import Notification from "./pages/notifications/Notification";
 import NotificationsDetailedView from "./pages/notifications/NotificationsDetailedView";
 import NocIssued from "./pages/ground-analysis/NocIssuedConfirmation";
 
-
-
 function App() {
-  useEffect(() => {
-    
-  }, []);
-
+  useEffect(() => {}, []);
 
   return (
     <div className="App">
@@ -78,10 +72,10 @@ function App() {
           <Route
             path={ADMIN_ROUTE_MAP.adminModule.dashboard}
             element={
-            //  <PrivateRoute>
-             <DashboardLandingPage />
-             /* </PrivateRoute>  */
-          }
+              //  <PrivateRoute>
+              <DashboardLandingPage />
+              /* </PrivateRoute>  */
+            }
           >
             <Route
               path={ADMIN_ROUTE_MAP.adminModule.manageUsers.home}
@@ -99,10 +93,7 @@ function App() {
               path={ADMIN_ROUTE_MAP.adminModule.notifications.home}
               element={<Notification />}
             >
-            <Route
-              index
-              element={<NotificationsDetailedView />}
-            ></Route>
+              <Route index element={<NotificationsDetailedView />}></Route>
             </Route>
             {/*Manage forms routing starts here */}
             <Route
@@ -143,10 +134,7 @@ function App() {
                 path={`${ADMIN_ROUTE_MAP.adminModule.onGroundInspection.viewForm}/:formName/:formId`}
                 element={<GroundInspectionViewForm />}
               ></Route>
-               <Route
-                path={`${ADMIN_ROUTE_MAP.adminModule.onGroundInspection.nocForm}`}
-                element={<GroundInspectionNoc />}
-              ></Route>
+
               <Route
                 path={`${ADMIN_ROUTE_MAP.adminModule.onGroundInspection.nocIssued}`}
                 element={<NocIssued />}
@@ -157,21 +145,15 @@ function App() {
               path={ADMIN_ROUTE_MAP.adminModule.certificateManagement.home}
               element={<CertificateManagement />}
             >
-              <Route
-              index
-              element={<CertificateManagementList />}
-            ></Route>
+              <Route index element={<CertificateManagementList />}></Route>
             </Route>
             {/* Schedule management routing starts here */}
             <Route
               path={ADMIN_ROUTE_MAP.adminModule.scheduleManagement.home}
               element={<ScheduleManagement />}
             >
-            <Route
-              index
-              element={<ScheduleManagementList />}
-            ></Route>
-            <Route
+              <Route index element={<ScheduleManagementList />}></Route>
+              <Route
                 path={ADMIN_ROUTE_MAP.adminModule.scheduleManagement.uploadForm}
                 element={<ScheduledUploadForm />}
               ></Route>

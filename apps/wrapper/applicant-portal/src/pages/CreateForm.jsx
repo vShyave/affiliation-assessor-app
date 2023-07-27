@@ -28,7 +28,6 @@ console.log("ENKETO_URL - ", ENKETO_URL);
 
 const CreateForm = () => {
   let { formName, formId } = useParams();
-  // const formId = 59;
   const [encodedFormURI, setEncodedFormURI] = useState("");
   const scheduleId = useRef();
   const navigate = useNavigate();
@@ -52,7 +51,6 @@ const CreateForm = () => {
   };
   const instituteDetails = getCookie("institutes");
 
-  // const userId = "427d473d-d8ea-4bb3-b317-f230f1c9b2f7";
   const formSpec = {
     skipOnSuccessMessage: true,
     prefill: {},
@@ -88,9 +86,7 @@ const CreateForm = () => {
     }
 
     let fileGCPPath =
-      "https://storage.googleapis.com/dev-public-upsmf/affiliation/" +
-      formName +
-      ".xml";
+      process.env.REACT_APP_GCP_AFFILIATION_LINK + formName + ".xml";
 
     let formURI = await getPrefillXML(
       `${formData?.form_name || fileGCPPath}`,
