@@ -224,7 +224,7 @@ export const filterAssessments = async (postData) => {
 };
 
 // Bulk create users
-export const createUsers = async (postData) => {
+export const addUsers = async (postData) => {
   const res = await adminCustomPost.post(
     API_URL.manageUsers.addUsers,
     postData

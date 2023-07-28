@@ -6,7 +6,7 @@ export const APIS = {
       LIST: "/rest/getAllCourses",
     },
     SIGNUP: {
-      CREATE_USER: "createBulkUser",
+      CREATE_USER: "keycloak/user/create",
     },
     LOGIN: {
       GENERATE_OTP: "user/generateOtp",
@@ -20,6 +20,9 @@ export const APIS = {
     PROFILE:{
       VIEW_PROFILE : "rest/getInstitute",
       EDIT_PROFILE : "rest/editInstitute"
+    },
+    ACCESS_TOKEN:{
+      TOKEN_URL: "realms/sunbird-rc/protocol/openid-connect/token"
     }
 
   };

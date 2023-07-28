@@ -48,8 +48,9 @@ desktopAnalysis:{
     filterAssessments: `${rest}filterAssessments`
   },
   SIGNUP: {
-    CREATE_USER: "createBulkUser",
-  },
+    CREATE_BULK_USER: "keycloak/createBulkUser",
+    CREATE_USER: "keycloak/user/create"
+  },  
   LOGIN: {
     GENERATE_OTP: "user/generateOtp",
     USERLOGIN: "user/login",
@@ -66,6 +67,9 @@ desktopAnalysis:{
     searchOGA: `${rest}searchOGA`,
     searchForms: `${rest}searchForms`,
     searchAssessments: `${rest}searchAssessments`
+  },
+  ACCESS_TOKEN:{
+    TOKEN_URL: "realms/sunbird-rc/protocol/openid-connect/token"
   }
 };
 
