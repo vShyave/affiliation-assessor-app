@@ -156,6 +156,27 @@ export const getUsersForScheduling = async (postData) => {
   );
   return res;
 };
+export const handleActiveUser = async (postData) => {
+  const res = await adminCustomPost.put(
+    API_URL.manageUsers.setActivate,
+    postData
+  );
+  return res;
+};
+
+export const handleDeleteUser = async (postData) => {
+  return await adminCustomPost.delete(API_URL.manageUsers.deleteUser, {
+    data: postData,
+  });
+};
+
+export const handleInctiveUser = async (postData) => {
+  const res = await adminCustomPost.put(
+    API_URL.manageUsers.setDeactive,
+    postData
+  );
+  return res;
+};
 
 export const getSpecificUser = async (postData) => {
   const res = await adminCustomPost.post(
@@ -231,7 +252,14 @@ export const addUsers = async (postData) => {
   );
   return res;
 };
-
+// delete users
+// export const deleteUsers = async (postData) => {
+//   const res = await adminCustomPost.post(
+//     API_URL.manageUsers.addUsers,
+//     postData
+//   );
+//   return res;
+// };
 //global search
 export const searchUsers = async (postData) => {
   const res = await adminCustomPost.post(

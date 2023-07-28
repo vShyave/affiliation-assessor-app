@@ -40,7 +40,7 @@ const BASE_URL =
       console.error("Looks like there was a problem. Status Code: " + res.status);
       return Promise.reject(res?.data?.error);
     }
-  );
+);
 
   const accessTokenAxiosService = axios.create({
     baseURL: TOKEN_BASE_URL,
@@ -74,9 +74,8 @@ const BASE_URL =
   );
 
 const generateOtp = (postData) => {
-  return axios.post(`${BASE_URL}${API_URL.LOGIN.GENERATE_OTP}`,postData);
+  return axios.post(`${BASE_URL}${API_URL.LOGIN.GENERATE_OTP}`, postData);
 };
-
 
 const signup = (userDetails) => {
   return axios.post(
@@ -103,9 +102,21 @@ const createBulkUser = (userDetails) => {
 };
 
 
+const deleteUsers = (postData) => {
+  return axios.post(
+    `${BASE_URL}${API_URL.DELETE.DELETE_USER}`,
+    postData,{
+       headers:{
+         "Content-Type": "application/json",
+         "Authorization": getCookie("access_token")
+       }
+     }
+   );
+}
 export const userService = {
   generateOtp,
   login,
+  deleteUsers,
   signup,
   getAccessToken,
   createBulkUser
