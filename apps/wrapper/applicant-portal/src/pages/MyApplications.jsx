@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 import { Button,  ApplicationCard, FormCard } from "../components";
 import APPLICANT_ROUTE_MAP from "../routes/ApplicantRoute";
@@ -12,6 +12,7 @@ const MyApplications = () => {
   const [applications, setApplications] = useState([]);
   const [availableForms, setAvailableForms] = useState([]);
   const instituteDetails = getCookie("institutes");
+  const navigate = useNavigate();
 
   useEffect(() => {
     getApplications();
@@ -23,9 +24,9 @@ const MyApplications = () => {
       return;
     }
     setLoadingApplications(true);
-    const requestPayoad = { applicant_id: instituteDetails[0].id };
+    const requestPayload = { applicant_id: instituteDetails[0].id };
     const applicationsResponse = await applicationService.getData(
-      requestPayoad
+      requestPayload
     );
     if (applicationsResponse?.data?.form_submissions) {
       setApplications(applicationsResponse?.data?.form_submissions);
@@ -38,10 +39,10 @@ const MyApplications = () => {
       return;
     }
     setLoadingForms(true);
-    const requestPayoad = {
+    const requestPayload = {
       course_applied: instituteDetails[0].course_applied,
     };
-    const formsResponse = await formService.getData(requestPayoad);
+    const formsResponse = await formService.getData(requestPayload);
     if (formsResponse?.data?.courses) {
       setAvailableForms(formsResponse?.data?.courses.slice(0, 4));
     }
@@ -52,8 +53,10 @@ const MyApplications = () => {
     console.log("View Application clicked", appId);
   };
 
-  const applyFormHandler = () => {
-    console.log("Apply Form clicked");
+  const applyFormHandler = (formObj) => {
+    console.log("formObj - ", formObj);
+    const path = formObj.course_name.toLowerCase().split(" ").join("_");
+    navigate(`${APPLICANT_ROUTE_MAP.dashboardModule.createForm}/${path}`);
   };
 
   return (

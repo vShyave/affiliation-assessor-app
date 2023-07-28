@@ -10,17 +10,9 @@ import { userService } from "../api/userService";
 import { Card, Label, Button, Input } from "../components";
 //import { forkJoin, lastValueFrom } from "rxjs";
 import Toast from "../components/Toast";
+import { setCookie } from "../utils/common";
 
 export default function AdminSingUp() {
-  // const initialValues = {fullname:"" , email:""}
-  // const [ formValues,setFormValues ] = useState(initialValues)
-  // const [ formErrors, setFormErrors ] = useState({})
-  // const [ isSubmit,setIsSubmit ] = useState(false)
-
-  // const  FormValues = {
-  //   fullName: String,
-  //   email: String
-  // }
   const navigate = useNavigate();
   const {
     register,
@@ -36,69 +28,9 @@ export default function AdminSingUp() {
     toastMsg: "",
     toastType: "",
   });
-  // const{register,handleSubmit,formState: {errors}} = useForm();
-  //   ,
-  //   watch,
-  //
-  // }
-
-  // console.log(errors)
-  //   const onSubmit = (data) => {
-  // console.log("form submitted",data,FormValues);
-  //   };
-  // console.log(watch("fullname"));
-
-  // const handleChange =(e) =>{}
-  //   // console.log(e.target)
-  //   const { name , value } = e.target;
-  //   setFormValues({...formValues, [name]: value})
-  //   // console.log(formValues)
-  // }
-
-  // const handleSubmit = (e) => {
-  //   e.preventDefault();
-  //   setFormErrors(validate(formValues));
-  //   setIsSubmit(true)
-  // }
-
-  // useEffect(() =>{
-  //   // console.log(formErrors)
-  //   if(Object.keys(formErrors).length === 0 && isSubmit){
-  //       const handleRegister = async (e) => {
-  //     e.preventDefault();
-  //     try {
-  //       const registerRes = registerUser(formValues);
-  //       console.log('registerRes - ', registerRes);
-  //       // return res.data;
-  //     } catch (err) {
-  //       console.log(err);
-  //       alert(err);
-  //       // return err;
-  //     }
-  //   };
-  //    }
-  // },[formErrors])
-
-  // const validate = (values) => {
-  //   const errors = {}
-  //   const regex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/i;
-  //   const regui = /^[a-zA-Z ]{2,40}$/
-  //   if(!values.fullname){
-  //     errors.fullname = "Username is required"
-  //   }else if(!regui.test(values.fullname)){
-  //     errors.fullname = "Username can contain only letters"
-  //   }
-  //   if(!values.email){
-  //     errors.email = "Email is required"
-  //   }
-  //   else if(!regex.test(values.email)){
-  //     errors.email = "This is not a valid email format"
-  //   }
-  //   return errors;
-  //   }
   const signupHandler = async (data) => {
     const {firstName,lastName,email, mobilePhone } = data;
-    let userDetails = [{
+    let userDetails = {
       
         firstName: firstName,
         lastName: lastName,
@@ -108,13 +40,24 @@ export default function AdminSingUp() {
         password: "rkr",
         roleName: "Regulator"
       
-    }];
-    let res = "";
+    };
     try {
-      res = await userService.signup(userDetails);
+      let accessTokenObj = {
+        grant_type: "client_credentials",
+        client_id: "admin-api",
+        client_secret: "edd0e83d-56b9-4c01-8bf8-bad1870a084a",
+      };
+      const accessTokenResponse = await userService.getAccessToken(
+        accessTokenObj
+      );
+      setCookie("access_token","Bearer "+accessTokenResponse.data.access_token)
+      console.log(accessTokenResponse);
+
+      const keyCloakSignupRes = await userService.signup(userDetails);
+      console.log(keyCloakSignupRes);
 
       const adminDetails = {
-        user_id: "", //TODO: after rejendra's API
+        user_id: keyCloakSignupRes.data.userId,
         fname: firstName,
         lname: lastName,
         fullName: firstName+" "+lastName,

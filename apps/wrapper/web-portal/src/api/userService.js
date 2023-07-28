@@ -1,60 +1,115 @@
 import axios from "axios";
 import API_URL from "./apiUrl";
+import { getCookie } from "../utils/common";
 
 const BASE_URL =
   process.env.REACT_APP_WEB_PORTAL_USER_SERVICE_URL ||
   "https://auth.upsmfac.org/api/v1/";
 
-const keyCloakAxiosService = axios.create({
-  baseURL: BASE_URL,
-});
+  const TOKEN_BASE_URL =
+  process.env.REACT_APP_TOKEN_URL || "https://odk.upsmfac.org/auth/"
+  
 
-keyCloakAxiosService.interceptors.request.use(
-  (request) => {
-    // const user_data = getCookie('userData');
-    request.headers["Accept"] = "*/*";
-    request.headers["Content-Type"] = "application/json";
-    return request;
-  },
-  (error) => {
-    return Promise.reject(error);
-  }
-);
-
-keyCloakAxiosService.interceptors.response.use(
-  function (response) {
-    return response;
-  },
-  function (error) {
-    let res = error.response;
-    if (res.status === 401) {
-      console.error("Unauthorized  user. Status Code: " + res.status);
-      // window.location.href = “https://example.com/login”;
+  const keyCloakAxiosService = axios.create({
+    baseURL: BASE_URL,
+  });
+  
+  keyCloakAxiosService.interceptors.request.use(
+    (request) => {
+      console.log(request)
+      // const user_data = getCookie('userData');
+      request.headers["Accept"] = "*/*";
+      request.headers["Content-Type"] = "application/json";
+      return request;
+    },
+    (error) => {
+      return Promise.reject(error);
     }
-    console.error("Looks like there was a problem. Status Code: " + res.status);
-    return Promise.reject(res?.data?.error);
-  }
+  );
+  
+  keyCloakAxiosService.interceptors.response.use(
+    function (response) {
+      return response;
+    },
+    function (error) {
+      let res = error.response;
+      if (res.status === 401) {
+        console.error("Unauthorized  user. Status Code: " + res.status);
+        // window.location.href = “https://example.com/login”;
+      }
+      console.error("Looks like there was a problem. Status Code: " + res.status);
+      return Promise.reject(res?.data?.error);
+    }
 );
+
+  const accessTokenAxiosService = axios.create({
+    baseURL: TOKEN_BASE_URL,
+  });
+  
+  accessTokenAxiosService.interceptors.request.use(
+    (request) => {
+      // const user_data = getCookie('userData');
+      request.headers["Accept"] = "*/*";
+      request.headers["Content-Type"] = "application/x-www-form-urlencoded";
+      return request;
+    },
+    (error) => {
+      return Promise.reject(error);
+    }
+  );
+  
+  accessTokenAxiosService.interceptors.response.use(
+    function (response) {
+      return response;
+    },
+    function (error) {
+      let res = error.response;
+      if (res.status === 401) {
+        console.error("Unauthorized  user. Status Code: " + res.status);
+        // window.location.href = “https://example.com/login”;
+      }
+      console.error("Looks like there was a problem. Status Code: " + res.status);
+      return Promise.reject(res?.data?.error);
+    }
+  );
 
 const generateOtp = (postData) => {
   return axios.post(`${BASE_URL}${API_URL.LOGIN.GENERATE_OTP}`, postData);
 };
 
 const signup = (userDetails) => {
-  return keyCloakAxiosService.post(API_URL.SIGNUP.CREATE_USER, userDetails);
-};
-
-const deleteUsers = (postData) => {
-  return keyCloakAxiosService.post(API_URL.DELETE.DELETE_USER, postData);
+  return axios.post(
+   `${BASE_URL}${API_URL.SIGNUP.CREATE_USER}`,
+    userDetails,{
+      headers:{
+        "Content-Type": "application/json",
+        "Authorization": getCookie("access_token")
+      }
+    }
+  );
 };
 
 const login = (userDetails) => {
   return keyCloakAxiosService.post(API_URL.LOGIN.USERLOGIN, userDetails);
 };
 
+const getAccessToken = (postData) => {
+  return accessTokenAxiosService.post(API_URL.ACCESS_TOKEN.TOKEN_URL,postData)
+}
+
+const createBulkUser = (userDetails) => {
+  return keyCloakAxiosService.post(API_URL.SIGNUP.CREATE_BULK_USER, userDetails);
+};
+
+
+const deleteUsers = (postData) => {
+  return keyCloakAxiosService.post(API_URL.DELETE.DELETE_USER, postData);
+}
 export const userService = {
   generateOtp,
   login,
-  signup,
   deleteUsers,
+  signup,
+  getAccessToken,
+  createBulkUser
 };
