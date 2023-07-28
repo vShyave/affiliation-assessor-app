@@ -745,7 +745,7 @@ const FormsOverview = () => {
           </div>
           <div className="flex flex-col gap-4">
             <ul className="flex flex-wrap gap-3 -mb-px">
-              <li onClick={() => handleSelectMenu("create_new")}>
+            <li onClick={() => handleSelectMenu("create_new")}>
                 <a
                   href="#"
                   className={`inline-block p-4 rounded-t-lg dark:text-blue-500 dark:border-blue-600 ${
@@ -758,7 +758,7 @@ const FormsOverview = () => {
                 </a>
               </li>
 
-              <li className="mr-2" onClick={() => handleSelectMenu("Draft")}>
+            <li className="mr-2" onClick={() => handleSelectMenu("Draft")}>
                 <a
                   href="#"
                   className={`inline-block p-4 rounded-t-lg dark:text-blue-500 dark:border-blue-600 ${
@@ -772,10 +772,7 @@ const FormsOverview = () => {
                 </a>
               </li>
 
-              <li
-                className="mr-2"
-                onClick={() => handleSelectMenu("Published")}
-              >
+            <li className="mr-2" onClick={() => handleSelectMenu("Published")}>
                 <a
                   href="#"
                   className={`inline-block p-4 rounded-t-lg dark:text-blue-500 dark:border-blue-600 ${

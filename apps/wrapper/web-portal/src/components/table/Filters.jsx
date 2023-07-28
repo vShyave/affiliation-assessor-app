@@ -124,7 +124,6 @@ export const ManageFormsFilters = ({
         },
       },
     });
-    setIsFilterOpen(value ? true : false);
     setPaginationInfo((prevState) => ({
       ...prevState,
       offsetNo: 0,

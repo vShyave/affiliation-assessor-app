@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { Button, Label } from "../components";
+import { setCookie, getCookie, removeCookie } from "../utils";
 
 import { FaAngleRight } from "react-icons/fa";
 import Toast from "../components/Toast";
@@ -31,24 +32,15 @@ export default function SelfRegistration() {
       courseType,
       email,
       mobilePhone,
-    } = data;   
+    } = data;
     let userDetails = {
-      registration: {
-        applicationId: process.env.REACT_APP_APPLICATION_ID,
-        usernameStatus: "ACTIVE",
-        roles: [applicantType],
-      },
-      user: {
-        firstName,
-        lastName,
-        mobilePhone,
-        email,
-        fullName: `${firstName} ${lastName}`,
-        username: mobilePhone,
-        password: mobilePhone,
-      },
+      firstName,
+      lastName,
+      email,
+      username: email,
+      password: "rkr",
+      roleName: applicantType,
     };
-
     const instituteDetails = {
       instituteName: applicantName,
       district: "Varanasi", // Capture it from UI once field is added
@@ -67,16 +59,32 @@ export default function SelfRegistration() {
     };
 
     try {
-      const fusionAuthSignupRes = await userService.signup(userDetails);
+      let accessTokenObj = {
+        grant_type: "client_credentials",
+        client_id: "admin-api",
+        client_secret: "edd0e83d-56b9-4c01-8bf8-bad1870a084a",
+      };
+      const accessTokenResponse = await userService.getAccessToken(
+        accessTokenObj
+      );
+      setCookie("access_token","Bearer "+accessTokenResponse.data.access_token)
+      console.log(accessTokenResponse);
+
+      const keyCloakSignupRes = await userService.signup(userDetails);
+      console.log(keyCloakSignupRes);
 
       const addInstituteRes = await applicantService.addInstitute(
         instituteDetails
       );
-
-      institutePocDetils.user_id = fusionAuthSignupRes.data.user.id;
-      institutePocDetils.institute_id =
+      console.log(addInstituteRes);
+      
+      institutePocDetils.user_id = keyCloakSignupRes.data.userId;
+      institutePocDetils["institute_id"] =
         addInstituteRes.data.insert_institutes_one.id;
-      await applicantService.addInstitutePoc(institutePocDetils);
+      const addInstitutePocRes = await applicantService.addInstitutePoc(
+        institutePocDetils
+      );
+      console.log(addInstitutePocRes);
       navigate(APPLICANT_ROUTE_MAP.dashboardModule.congratulations);
     } catch (error) {
       setToast((prevState) => ({

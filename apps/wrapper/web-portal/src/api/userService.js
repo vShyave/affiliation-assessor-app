@@ -1,45 +1,112 @@
 import axios from "axios";
-import fusionAuthAxiosService from "./fusionAuthAxiosService";
 import API_URL from "./apiUrl";
+import { getCookie } from "../utils/common";
 
 const BASE_URL =
   process.env.REACT_APP_WEB_PORTAL_USER_SERVICE_URL ||
-  "https://api.upsmfac.org/";
-const REGISTRATION_BASE_URL =
-  process.env.REACT_APP_FUSION_AUTH_URL || "https://api.upsmfac.org/api/";
-const AUTH_KEY =
-  process.env.REACT_APP_FUSION_AUTH_API_KEY || "testkeytestkeytestkey";
+  "https://auth.upsmfac.org/api/v1/";
 
-const sendOtp = (phone) => {
-  return axios.get(`${BASE_URL}${API_URL.LOGIN.OTP_SEND}?phone=${phone}`);
-};
+  const TOKEN_BASE_URL =
+  process.env.REACT_APP_TOKEN_URL || "https://odk.upsmfac.org/auth/"
+  
 
-const verifyOtp = (phone, otp) => {
-  // const otpDetails ={
-  //   phone,
-  //   otp,
-  //   applicationId: process.env.REACT_APP_APPLICATION_ID
-  // }
-  // const res = await axios.post(BASE_URL + "user/otpVerify", otpDetails);
-  return axios.get(
-    `${BASE_URL}${API_URL.LOGIN.OTP_VERIFY}?phone=${phone}&otp=${otp}`
+  const keyCloakAxiosService = axios.create({
+    baseURL: BASE_URL,
+  });
+  
+  keyCloakAxiosService.interceptors.request.use(
+    (request) => {
+      console.log(request)
+      // const user_data = getCookie('userData');
+      request.headers["Accept"] = "*/*";
+      request.headers["Content-Type"] = "application/json";
+      return request;
+    },
+    (error) => {
+      return Promise.reject(error);
+    }
   );
+  
+  keyCloakAxiosService.interceptors.response.use(
+    function (response) {
+      return response;
+    },
+    function (error) {
+      let res = error.response;
+      if (res.status === 401) {
+        console.error("Unauthorized  user. Status Code: " + res.status);
+        // window.location.href = “https://example.com/login”;
+      }
+      console.error("Looks like there was a problem. Status Code: " + res.status);
+      return Promise.reject(res?.data?.error);
+    }
+  );
+
+  const accessTokenAxiosService = axios.create({
+    baseURL: TOKEN_BASE_URL,
+  });
+  
+  accessTokenAxiosService.interceptors.request.use(
+    (request) => {
+      // const user_data = getCookie('userData');
+      request.headers["Accept"] = "*/*";
+      request.headers["Content-Type"] = "application/x-www-form-urlencoded";
+      return request;
+    },
+    (error) => {
+      return Promise.reject(error);
+    }
+  );
+  
+  accessTokenAxiosService.interceptors.response.use(
+    function (response) {
+      return response;
+    },
+    function (error) {
+      let res = error.response;
+      if (res.status === 401) {
+        console.error("Unauthorized  user. Status Code: " + res.status);
+        // window.location.href = “https://example.com/login”;
+      }
+      console.error("Looks like there was a problem. Status Code: " + res.status);
+      return Promise.reject(res?.data?.error);
+    }
+  );
+
+const generateOtp = (postData) => {
+  return axios.post(`${BASE_URL}${API_URL.LOGIN.GENERATE_OTP}`,postData);
 };
+
 
 const signup = (userDetails) => {
-  return fusionAuthAxiosService.post(
-    API_URL.SIGNUP.FUSION_AUTH_REGISTRATION,
-    userDetails
+  return axios.post(
+   `${BASE_URL}${API_URL.SIGNUP.CREATE_USER}`,
+    userDetails,{
+      headers:{
+        "Content-Type": "application/json",
+        "Authorization": getCookie("access_token")
+      }
+    }
   );
 };
 
 const login = (userDetails) => {
-  return fusionAuthAxiosService.post(API_URL.LOGIN.USERLOGIN, userDetails);
+  return keyCloakAxiosService.post(API_URL.LOGIN.USERLOGIN, userDetails);
 };
 
+const getAccessToken = (postData) => {
+  return accessTokenAxiosService.post(API_URL.ACCESS_TOKEN.TOKEN_URL,postData)
+}
+
+const createBulkUser = (userDetails) => {
+  return keyCloakAxiosService.post(API_URL.SIGNUP.CREATE_BULK_USER, userDetails);
+};
+
+
 export const userService = {
-  sendOtp,
+  generateOtp,
   login,
-  verifyOtp,
   signup,
+  getAccessToken,
+  createBulkUser
 };
