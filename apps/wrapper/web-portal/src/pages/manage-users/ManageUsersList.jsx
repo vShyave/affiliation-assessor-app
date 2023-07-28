@@ -48,6 +48,8 @@ export default function ManageUsersList({
   const [bulkUploadUsersModel, setBulkUploadUsersModel] = useState(false);
   const [usersList, setUsersList] = useState();
   const [userTableList, setUserTableList] = useState([]);
+
+
   const [invalidUserRowFlag] = useState(false);
   const [selectedEmail, setSelectedEmail] = useState([{ email: "" }]);
   const [isOpen, setIsOpen] = useState(false);
@@ -109,11 +111,11 @@ export default function ManageUsersList({
     console.log("e", e);
     const formData = new FormData();
     formData.append("assessorId", userId);
+    
     try {
       const response = await handleInctiveUser(formData);
       fetchAllUsers();
-      const formDetail = response.data.forms[0];
-      console.log("formDetails", formDetail);
+      
     } catch (error) {
       console.log("error - ", error);
       setToast((prevState) => ({
@@ -140,10 +142,11 @@ export default function ManageUsersList({
     const formData = new FormData();
     formData.append("assessorId", userId);
     try {
-      const response = await handleActiveUser(formData);
+      const validResponse = await handleActiveUser(formData);
+      
+      // setUsersList((usersList) => ({ ...usersList, [validResponse]: validResponse.data.update_assessors.returning[0] }));
+
       fetchAllUsers();
-      const formDetail = response.data.forms[0];
-      // console.log("formDetails",formDetail)
     } catch (error) {
       console.log("error - ", error);
       setToast((prevState) => ({
