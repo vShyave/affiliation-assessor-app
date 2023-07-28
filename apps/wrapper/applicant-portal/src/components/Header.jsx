@@ -46,7 +46,7 @@ const Header = () => {
                   </Link>
                 </div>
               )}
-              {userData?.user && (
+              {userData?.userRepresentation && (
                 <div className="relative inline-block text-left">
                   <div>
                     <button
@@ -59,7 +59,7 @@ const Header = () => {
                         setShowProfileDropdown(!showProfileDropdown);
                       }}
                     >
-                      {getInitials(userData.user.fullName)}
+                      {getInitials(userData.userRepresentation.firstName+" "+userData.userRepresentation.lastName)}
                     </button>
                   </div>
                   {showProfileDropdown && (

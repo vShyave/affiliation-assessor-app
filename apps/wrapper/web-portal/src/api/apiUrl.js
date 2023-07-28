@@ -32,7 +32,8 @@ const API_URL = {
   manageUsers: {
     userList: `${rest}getAllUsers`,
     specificUser: `${rest}getSpecificUser`,
-    filterUsers: `${rest}filterUsers`
+    filterUsers: `${rest}filterUsers`,
+    addUsers: `${rest}addUsers`
   },
 
 desktopAnalysis:{
@@ -47,12 +48,12 @@ desktopAnalysis:{
     filterAssessments: `${rest}filterAssessments`
   },
   SIGNUP: {
-    FUSION_AUTH_REGISTRATION: "user/registration",
-  },
+    CREATE_BULK_USER: "keycloak/createBulkUser",
+    CREATE_USER: "keycloak/user/create"
+  },  
   LOGIN: {
-    OTP_SEND: "user/otpSend",
-    OTP_VERIFY: "user/otpVerify",
-    USERLOGIN: "login",
+    GENERATE_OTP: "user/generateOtp",
+    USERLOGIN: "user/login",
   },
   NOTIFICATION: {
     SEND_SMS: "",
@@ -66,6 +67,9 @@ desktopAnalysis:{
     searchOGA: `${rest}searchOGA`,
     searchForms: `${rest}searchForms`,
     searchAssessments: `${rest}searchAssessments`
+  },
+  ACCESS_TOKEN:{
+    TOKEN_URL: "realms/sunbird-rc/protocol/openid-connect/token"
   }
 };
 
