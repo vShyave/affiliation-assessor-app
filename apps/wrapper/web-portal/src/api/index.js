@@ -163,6 +163,13 @@ export const handleActiveUser = async (postData) => {
   );
   return res;
 };
+
+export const handleDeleteUser = async (postData) => {
+  return await adminCustomPost.delete(API_URL.manageUsers.deleteUser, {
+    data: postData,
+  });
+};
+
 export const handleInctiveUser = async (postData) => {
   const res = await adminCustomPost.put(
     API_URL.manageUsers.setDeactive,

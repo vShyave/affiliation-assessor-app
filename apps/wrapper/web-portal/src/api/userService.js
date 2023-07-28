@@ -103,7 +103,15 @@ const createBulkUser = (userDetails) => {
 
 
 const deleteUsers = (postData) => {
-  return keyCloakAxiosService.post(API_URL.DELETE.DELETE_USER, postData);
+  return axios.post(
+    `${BASE_URL}${API_URL.DELETE.DELETE_USER}`,
+    postData,{
+       headers:{
+         "Content-Type": "application/json",
+         "Authorization": getCookie("access_token")
+       }
+     }
+   );
 }
 export const userService = {
   generateOtp,

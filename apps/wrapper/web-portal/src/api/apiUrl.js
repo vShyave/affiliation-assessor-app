@@ -35,7 +35,8 @@ const API_URL = {
     filterUsers: `${rest}filterUsers`,
     setActivate: `${rest}setValid`,
     setDeactive: `${rest}setInvalid`,
-    addUsers: `${rest}addUsers`
+    addUsers: `${rest}addUsers`,
+    deleteUser: `${rest}deleteUser`
   },
 
 desktopAnalysis:{
@@ -58,7 +59,7 @@ desktopAnalysis:{
     USERLOGIN: "user/login",
   },
   DELETE:{
-    DELETE_USER:"user/delete"
+    DELETE_USER:"keycloak/user/delete"
   },
   NOTIFICATION: {
     SEND_SMS: "",

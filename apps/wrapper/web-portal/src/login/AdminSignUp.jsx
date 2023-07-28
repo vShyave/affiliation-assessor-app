@@ -10,7 +10,7 @@ import { userService } from "../api/userService";
 import { Card, Label, Button, Input } from "../components";
 //import { forkJoin, lastValueFrom } from "rxjs";
 import Toast from "../components/Toast";
-import { setCookie } from "../utils/common";
+import { removeCookie, setCookie } from "../utils/common";
 
 export default function AdminSingUp() {
   const navigate = useNavigate();
@@ -67,6 +67,7 @@ export default function AdminSingUp() {
       const adminRes = await registerUser(adminDetails);
       console.log(adminRes)
       navigate(ADMIN_ROUTE_MAP.loginModule.login);
+      removeCookie("access_token")
     } catch (error) {
       setToast((prevState) => ({
         ...prevState,

@@ -6,13 +6,14 @@ import { MdFileUpload, MdEdit, MdDelete, MdSwapHoriz } from "react-icons/md";
 import { Button } from "../../components";
 import FilteringTable from "../../components/table/FilteringTable";
 
-import { readableDate } from "../../utils/common";
+import { readableDate, removeCookie, setCookie } from "../../utils/common";
 import {
   filterUsers,
   getAllUsers,
   searchUsers,
   handleActiveUser,
   handleInctiveUser,
+  handleDeleteUser,
 } from "../../api";
 
 import { userService } from "../../api/userService";
@@ -28,6 +29,7 @@ import {
   MenuList,
   MenuItem,
 } from "@material-tailwind/react";
+import Toast from "../../components/Toast";
 
 export default function ManageUsersList({
   closeDeleteUsersModal,
@@ -37,13 +39,17 @@ export default function ManageUsersList({
   const navigation = useNavigate();
   var resUserData = [];
   const [deleteUsersModel, setDeleteUsersModel] = useState(false);
+  const [deleteBulkUsersModel, setDeleteBulkUsersModel] = useState(false);
+
   // const[onRowSelected,setOnRowSelected] = useState([])
   const [deleteFlag, setDeleteFlag] = useState(false);
+  const [bulkDeleteFlag, setBulkDeleteFlag] = useState(false);
+
   const [bulkUploadUsersModel, setBulkUploadUsersModel] = useState(false);
   const [usersList, setUsersList] = useState();
   const [userTableList, setUserTableList] = useState([]);
   const [invalidUserRowFlag] = useState(false);
-  const [selectedEmail, setSelectedEmail] = useState([{email:""}]);
+  const [selectedEmail, setSelectedEmail] = useState([{ email: "" }]);
   const [isOpen, setIsOpen] = useState(false);
 
   const [paginationInfo, setPaginationInfo] = useState({
@@ -58,7 +64,7 @@ export default function ManageUsersList({
     toastMsg: "",
     toastType: "",
   });
-  let selectedRows = []
+  let selectedRows = [];
 
   const COLUMNS = [
     {
@@ -158,10 +164,10 @@ export default function ManageUsersList({
       );
     }
   };
- 
-  const handleUserDelete = (email) => {
-    setSelectedEmail(email.email);
-    console.log("e.email",email.email);
+
+  const handleUserDelete = (e) => {
+    setSelectedEmail(e.email);
+    console.log("e.email", e.email);
     setDeleteUsersModel(true);
   };
 
@@ -312,19 +318,67 @@ export default function ManageUsersList({
     }
   }, [deleteFlag]);
 
+  useEffect(() => {
+    if (bulkDeleteFlag) {
+      // handleDelete(selectedEmail);
+      handleBulkDelete(selectedRows);
+      console.log(selectedRows);
+    }
+  }, [bulkDeleteFlag]);
+
   const handleDelete = async (email) => {
     const postData = [
       {
         email: email,
       },
     ];
+    const hasuraPostData = { email: email };
     try {
+      console.log("email", email);
+      let accessTokenObj = {
+        grant_type: "client_credentials",
+        client_id: "admin-api",
+        client_secret: "edd0e83d-56b9-4c01-8bf8-bad1870a084a",
+      };
+      const accessTokenResponse = await userService.getAccessToken(
+        accessTokenObj
+      );
+      setCookie(
+        "access_token",
+        "Bearer " + accessTokenResponse.data.access_token
+      );
+      console.log(accessTokenResponse);
+      let hasuraResponse = {};
       const response = await userService.deleteUsers(postData);
+      if (response.status === 200) {
+        hasuraResponse = await handleDeleteUser(hasuraPostData);
+      }
+      console.log("hasurabulk res", hasuraResponse);
       fetchAllUsers();
       setDeleteFlag(false);
       setSelectedEmail([]);
+
+      if (hasuraResponse.status === 200) {
+        setToast((prevState) => ({
+          ...prevState,
+          toastOpen: true,
+          toastMsg: "User Deleted!",
+          toastType: "success",
+        }));
+        setTimeout(
+          () =>
+            setToast((prevState) => ({
+              ...prevState,
+              toastOpen: false,
+              toastMsg: "",
+              toastType: "",
+            })),
+          3000
+        );
+      }
+
       // userTableList.map((item) => console.log(item.email));
-      console.log("hello", userTableList);
+      removeCookie("access_token");
     } catch (error) {
       console.log("error - ", error);
       setToast((prevState) => ({
@@ -357,29 +411,77 @@ export default function ManageUsersList({
   }, [paginationInfo.offsetNo, paginationInfo.limit]);
 
   const setSelectedRows = (rowList) => {
-    let checkboxArr = []
-    console.log("row",rowList)
-    rowList.forEach((item)=>{
-      let checkboxObj ={}
-      checkboxObj.email = item.values.email
-      checkboxArr.push(checkboxObj)
-    
-    })
-    selectedRows=checkboxArr
-    console.log("selectedrows",selectedRows)
+    let checkboxArr = [];
+    console.log("row", rowList);
+    rowList.forEach((item) => {
+      let checkboxObj = {};
+      checkboxObj.email = item.values.email;
+      checkboxArr.push(checkboxObj);
+    });
+    selectedRows = checkboxArr;
+    console.log("selectedrows", selectedRows);
   };
- 
-  const handleBulkHandleDelete = async (bulkEmail) => {
-        console.log("bulkemail",bulkEmail)
-      const postData = bulkEmail
+
+  const handleBulkDelete = async (bulkEmail) => {
+    // console.log("bulkemail",bulkEmail)
+    // setDeleteUsersModel(true)
+    const postData = bulkEmail;
     try {
-       const res = await userService.deleteUsers(postData);
+      let errorFlag = false;
+      let accessTokenObj = {
+        grant_type: "client_credentials",
+        client_id: "admin-api",
+        client_secret: "edd0e83d-56b9-4c01-8bf8-bad1870a084a",
+      };
+      const accessTokenResponse = await userService.getAccessToken(
+        accessTokenObj
+      );
+      if(accessTokenResponse.status!==200){errorFlag=true}
+      setCookie(
+        "access_token",
+        "Bearer " + accessTokenResponse.data.access_token
+      );
+      console.log(accessTokenResponse);
+
+      const res = await userService.deleteUsers(postData);
+      if(res.status!==200){errorFlag=true}
+
+      let hasuraResponse = {}
+      bulkEmail.map(async(item) => {
+        console.log("bulk", item.email);
+        let bulkHasuraPostData = { email: item.email };
+         hasuraResponse = await handleDeleteUser(bulkHasuraPostData);
+         if(hasuraResponse.status!==200){errorFlag=true}
+
+        });
+
+      //  const res = await userService.deleteUsers(postData);
       fetchAllUsers();
-      setDeleteFlag(false);
-      setSelectedEmail([]);
-          
+      setBulkDeleteFlag(false);
+      setDeleteBulkUsersModel(false);
+      selectedRows = [];
+      if(!errorFlag){
+        setToast((prevState) => ({
+          ...prevState,
+          toastOpen: true,
+          toastMsg: "Users Deleted!",
+          toastType: "success",
+        }));
+        setTimeout(
+          () =>
+            setToast((prevState) => ({
+              ...prevState,
+              toastOpen: false,
+              toastMsg: "",
+              toastType: "",
+            })),
+          3000
+        );
+      }
+      
+      removeCookie("access_token");
       // userTableList.map((item) => console.log(item.email));
-      console.log("hello", userTableList);
+      // console.log("hello", userTableList);
     } catch (error) {
       console.log("error - ", error);
       setToast((prevState) => ({
@@ -387,7 +489,7 @@ export default function ManageUsersList({
         toastOpen: true,
         toastMsg: "Error occured while uploading!",
         toastType: "error",
-      })); 
+      }));
       setTimeout(
         () =>
           setToast((prevState) => ({
@@ -400,10 +502,14 @@ export default function ManageUsersList({
       );
     }
   };
-   
+
   return (
     <>
+      {toast.toastOpen && (
+        <Toast toastMsg={toast.toastMsg} toastType={toast.toastType} />
+      )}
       <Nav />
+
       <div className={`container m-auto min-h-[calc(100vh-148px)] px-3 py-12`}>
         <div className="flex flex-col justify-center align-center">
           <div className="flex flex-col justify-center align-center gap-4">
@@ -416,7 +522,7 @@ export default function ManageUsersList({
                   <Button moreClass="text-white" text="Make inactive"></Button>
                   <Button
                     moreClass="text-white"
-                    onClick={() => handleBulkHandleDelete(selectedRows)}
+                    onClick={() => setDeleteBulkUsersModel(true)}
                     text="Delete user"
                   ></Button>
                   <button
@@ -458,6 +564,12 @@ export default function ManageUsersList({
         <DeleteUsersModal
           setDeleteFlags={setDeleteFlag}
           closeDeleteUsersModal={setDeleteUsersModel}
+        />
+      )}
+      {deleteBulkUsersModel && (
+        <DeleteUsersModal
+          setDeleteFlags={setBulkDeleteFlag}
+          closeDeleteUsersModal={setDeleteBulkUsersModel}
         />
       )}
       {bulkUploadUsersModel && (
