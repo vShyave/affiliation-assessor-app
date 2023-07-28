@@ -7,6 +7,7 @@ import {
   useRowSelect,
 } from "react-table";
 import { Checkbox } from "@material-tailwind/react";
+// import { Checkbox } from "./Checkbox";
 import GlobalFilter from "./GlobalFilter";
 
 import {
@@ -51,17 +52,13 @@ const FilteringTable = (props) => {
                 <Checkbox {...getToggleAllRowsSelectedProps()} />
               ),
               Cell: ({ row }) => {
-                console.log(row?.original?.values?.isRowInvalid);
-                       if (row.original.values != undefined && row.original.values.isRowInvalid === true) {
-                    return(
-                     <AiFillExclamationCircle className="text-red-400 text-2xl" />
-                  )
-                  }
-                  else {
-                    return (
-                      <Checkbox {...row.getToggleRowSelectedProps()} />
-                    )
-                  }  
+                if (row.original.isRowInvalid === true) {
+                  return (
+                    <AiFillExclamationCircle className="text-red-400 text-2xl" />
+                  );
+                } else {
+                  return <Checkbox {...row.getToggleRowSelectedProps()} />;
+                }
                 // return <Checkbox {...row.getToggleRowSelectedProps()} />;
               },
             },
@@ -126,21 +123,16 @@ const FilteringTable = (props) => {
     if (!offsetNo) {
       setPageIndex(0);
     }
-    if(!totalCount){
-      setPageIndex(-1)
+    if (!totalCount) {
+      setPageIndex(-1);
     }
-  }, [offsetNo,totalCount]);
+  }, [offsetNo, totalCount]);
 
-  {
-    array = JSON.stringify(
-      { selectedFlatRows: selectedFlatRows.map((row) => row.original) },
-      null,
-      2
-    );
-    {
-      props.onRowSelect(array);
+  useEffect(() => {
+    if (props.showCheckbox) {
+      props.setSelectedRows(selectedFlatRows);
     }
-  }
+  }, [selectedFlatRows]);
 
   return (
     <>
@@ -215,7 +207,6 @@ const FilteringTable = (props) => {
             })}
           </tbody>
         </table>
-        
       </div>
       {props.pagination && (
         <div className="flex flex-row font-normal text-[16px] py-8 gap-8">

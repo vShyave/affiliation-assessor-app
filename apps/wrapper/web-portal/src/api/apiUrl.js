@@ -45,7 +45,8 @@ desktopAnalysis:{
   },
   scheduleManagement:{
     getAssessmentSchedule: `${rest}getAssessmentSchedule`,
-    filterAssessments: `${rest}filterAssessments`
+    filterAssessments: `${rest}filterAssessments`,
+    addAssessmentSchedule: `${rest}addAssessmentSchedule`
   },
   SIGNUP: {
     CREATE_BULK_USER: "keycloak/createBulkUser",

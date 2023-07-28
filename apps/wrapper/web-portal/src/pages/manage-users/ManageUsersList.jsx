@@ -258,6 +258,7 @@ export default function ManageUsersList({
             searchApiCall={searchApiCall}
             setIsSearchOpen={setIsSearchOpen}
             setIsFilterOpen={setIsFilterOpen}
+            setSelectedRows={()=>{}}
           />
         </div>
       </div>

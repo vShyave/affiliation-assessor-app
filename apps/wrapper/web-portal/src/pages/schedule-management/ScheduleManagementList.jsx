@@ -15,6 +15,7 @@ import {
   searchAssessments,
 } from "../../api";
 import ADMIN_ROUTE_MAP from "../../routes/adminRouteMap";
+import BulkUploadScheduleModal from "./BulkUploadScheduleModal";
 
 const ScheduleManagementList = () => {
   const navigation = useNavigate();
@@ -28,6 +29,7 @@ const ScheduleManagementList = () => {
   });
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [isFilterOpen, setIsFilterOpen] = useState(false);
+  const [bulkUploadScheduleModal, setBulkUploadSchduleModal] = useState(false)
 
   const COLUMNS = [
     {
@@ -202,11 +204,12 @@ const ScheduleManagementList = () => {
                   Download CSV template
                 </button>
                 <Button
-                  onClick={() =>
-                    navigation(
-                      ADMIN_ROUTE_MAP.adminModule.scheduleManagement.uploadForm
-                    )
-                  }
+                  // onClick={() =>
+                  //   navigation(
+                  //     ADMIN_ROUTE_MAP.adminModule.scheduleManagement.uploadForm
+                  //   )
+                  // }
+                  onClick={()=> setBulkUploadSchduleModal(true)}
                   moreClass="text-white"
                   text="Upload CSV for scheduling"
                 ></Button>
@@ -247,6 +250,9 @@ const ScheduleManagementList = () => {
         </div>
       </div>
       </div>
+      {bulkUploadScheduleModal && (
+        <BulkUploadScheduleModal setBulkUploadSchduleModal={setBulkUploadSchduleModal}/>
+      )}
     </>
   );
 };
