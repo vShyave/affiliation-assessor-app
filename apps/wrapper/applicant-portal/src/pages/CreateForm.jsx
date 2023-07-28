@@ -89,16 +89,16 @@ const CreateForm = () => {
       process.env.REACT_APP_GCP_AFFILIATION_LINK + formName + ".xml";
 
     let formURI = await getPrefillXML(
-      `${formData?.form_name || fileGCPPath}`,
-      formSpec.onSuccess
-      // formData?.form_data,
-      // formData?.imageUrls
+      `${fileGCPPath}`,
+      formSpec.onSuccess,
+      formData?.form_data,
+      formData?.imageUrls
     );
     setEncodedFormURI(formURI);
   };
 
   const afterFormSubmit = async (e) => {
-    //    console.log("e - ", e);
+    console.log("e - ", e);
 
     const data = typeof e.data === "string" ? JSON.parse(e.data) : e.data;
 
