@@ -14,6 +14,9 @@ import {
   handleActiveUser,
   handleInctiveUser,
 } from "../../api";
+
+import { userService } from "../../api/userService";
+
 import ADMIN_ROUTE_MAP from "../../routes/adminRouteMap";
 
 import DeleteUsersModal from "./DeleteUsers";
@@ -29,7 +32,7 @@ import {
 export default function ManageUsersList({
   closeDeleteUsersModal,
   closeBulkUploadUsersModal,
-  setDeleteFlags
+  setDeleteFlags,
 }) {
   const navigation = useNavigate();
   var resUserData = [];
@@ -40,7 +43,9 @@ export default function ManageUsersList({
   const [usersList, setUsersList] = useState();
   const [userTableList, setUserTableList] = useState([]);
   const [invalidUserRowFlag] = useState(false);
+  const [selectedEmail, setSelectedEmail] = useState([{email:""}]);
   const [isOpen, setIsOpen] = useState(false);
+
   const [paginationInfo, setPaginationInfo] = useState({
     offsetNo: 0,
     limit: 10,
@@ -53,6 +58,7 @@ export default function ManageUsersList({
     toastMsg: "",
     toastType: "",
   });
+  let selectedRows = []
 
   const COLUMNS = [
     {
@@ -152,6 +158,12 @@ export default function ManageUsersList({
       );
     }
   };
+ 
+  const handleUserDelete = (email) => {
+    setSelectedEmail(email.email);
+    console.log("e.email",email.email);
+    setDeleteUsersModel(true);
+  };
 
   const setTableData = (e) => {
     // console.log("setTableData",e)
@@ -213,7 +225,7 @@ export default function ManageUsersList({
                   </div>
                 </div>{" "}
               </MenuItem>
-              <MenuItem onClick={() => setDeleteUsersModel(true)}>
+              <MenuItem onClick={() => handleUserDelete(e)}>
                 <div className="flex flex-row gap-4 mt-4">
                   <div>
                     <MdDelete />
@@ -294,21 +306,49 @@ export default function ManageUsersList({
   };
 
   useEffect(() => {
-    // if (deleteFlag == "true") {
-    //   handleDelete();
-    //   setDeleteFlag(false)
-    // }else{
-    //   handleDelete()
-    // }
-    deleteFlag ? handleDelete() : console.log("nothing")
+    if (deleteFlag) {
+      handleDelete(selectedEmail);
+      console.log(selectedEmail);
+    }
+  }, [deleteFlag]);
 
-  },[deleteFlag]);
-
-  const handleDelete = () => {
-    setDeleteFlag(false)
-    userTableList.map((item)=> console.log(item.email))
-    console.log("hello",userTableList);
+  const handleDelete = async (email) => {
+    const postData = [
+      {
+        email: email,
+      },
+    ];
+    try {
+      const response = await userService.deleteUsers(postData);
+      fetchAllUsers();
+      setDeleteFlag(false);
+      setSelectedEmail([]);
+      // userTableList.map((item) => console.log(item.email));
+      console.log("hello", userTableList);
+    } catch (error) {
+      console.log("error - ", error);
+      setToast((prevState) => ({
+        ...prevState,
+        toastOpen: true,
+        toastMsg: "Error occured while uploading!",
+        toastType: "error",
+      }));
+      setTimeout(
+        () =>
+          setToast((prevState) => ({
+            ...prevState,
+            toastOpen: false,
+            toastMsg: "",
+            toastType: "",
+          })),
+        3000
+      );
+    }
   };
+
+  // const handleDelete = () => {
+
+  // };
 
   useEffect(() => {
     if (!isSearchOpen && !isFilterOpen) {
@@ -316,6 +356,51 @@ export default function ManageUsersList({
     }
   }, [paginationInfo.offsetNo, paginationInfo.limit]);
 
+  const setSelectedRows = (rowList) => {
+    let checkboxArr = []
+    console.log("row",rowList)
+    rowList.forEach((item)=>{
+      let checkboxObj ={}
+      checkboxObj.email = item.values.email
+      checkboxArr.push(checkboxObj)
+    
+    })
+    selectedRows=checkboxArr
+    console.log("selectedrows",selectedRows)
+  };
+ 
+  const handleBulkHandleDelete = async (bulkEmail) => {
+        console.log("bulkemail",bulkEmail)
+      const postData = bulkEmail
+    try {
+       const res = await userService.deleteUsers(postData);
+      fetchAllUsers();
+      setDeleteFlag(false);
+      setSelectedEmail([]);
+          
+      // userTableList.map((item) => console.log(item.email));
+      console.log("hello", userTableList);
+    } catch (error) {
+      console.log("error - ", error);
+      setToast((prevState) => ({
+        ...prevState,
+        toastOpen: true,
+        toastMsg: "Error occured while uploading!",
+        toastType: "error",
+      })); 
+      setTimeout(
+        () =>
+          setToast((prevState) => ({
+            ...prevState,
+            toastOpen: false,
+            toastMsg: "",
+            toastType: "",
+          })),
+        3000
+      );
+    }
+  };
+   
   return (
     <>
       <Nav />
@@ -331,7 +416,7 @@ export default function ManageUsersList({
                   <Button moreClass="text-white" text="Make inactive"></Button>
                   <Button
                     moreClass="text-white"
-                    onClick={() => setDeleteUsersModel(true)}
+                    onClick={() => handleBulkHandleDelete(selectedRows)}
                     text="Delete user"
                   ></Button>
                   <button
@@ -357,6 +442,7 @@ export default function ManageUsersList({
                 paginationInfo={paginationInfo}
                 setPaginationInfo={setPaginationInfo}
                 setOnRowSelect={() => {}}
+                setSelectedRows={setSelectedRows}
                 showFilter={true}
                 pagination={true}
                 filterApiCall={filterApiCall}

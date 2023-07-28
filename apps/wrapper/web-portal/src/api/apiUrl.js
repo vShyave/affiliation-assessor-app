@@ -56,6 +56,9 @@ desktopAnalysis:{
     GENERATE_OTP: "user/generateOtp",
     USERLOGIN: "user/login",
   },
+  DELETE:{
+    DELETE_USER:"user/delete"
+  },
   NOTIFICATION: {
     SEND_SMS: "",
     SEND_EMAIL: "",

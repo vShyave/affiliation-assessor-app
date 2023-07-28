@@ -20,14 +20,14 @@ import {
   AiFillExclamationCircle,
 } from "react-icons/ai";
 
-const FilteringTable = (props,{setOnRowSelected}) => {
+const FilteringTable = (props) => {
   let array = [];
 
   const columns = props?.columns;
 
   const data = props?.dataList;
 
-  const [selectedRows, setSelectedRows] = useState([])
+  const [selectedRows, setSelectedRows] = useState([]);
   // console.log(data);
 
   const {
@@ -165,25 +165,26 @@ const FilteringTable = (props,{setOnRowSelected}) => {
     if (!offsetNo) {
       setPageIndex(0);
     }
-    if(!totalCount){
-      setPageIndex(-1)
+    if (!totalCount) {
+      setPageIndex(-1);
     }
 
-  
     array = JSON.stringify(
       { selectedFlatRows: selectedFlatRows.map((row) => row.original) },
       null,
       2
     );
     {
-      props.onRowSelect(array);
+      // props.onRowSelect(array);
     }
   }, [offsetNo, totalCount]);
 
   useEffect(() => {
-    // console.log(selectedFlatRows.map((row) => row.original));
+    if (props.showCheckbox) {
+      console.log(selectedFlatRows);
 
-    setSelectedRows(selectedFlatRows.map((row) => row.original))
+      props.setSelectedRows(selectedFlatRows);
+    }
   }, [selectedFlatRows]);
 
   return (
