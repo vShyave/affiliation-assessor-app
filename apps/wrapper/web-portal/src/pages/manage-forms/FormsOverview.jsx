@@ -12,11 +12,11 @@ import {
   searchForms,
   createCourse,
   viewForm,
-  duplicateForms
+  duplicateForms,
 } from "../../api";
 import { getFieldName, readableDate } from "../../utils/common";
 import Toast from "../../components/Toast";
-import { VscPreview , VscCopy} from "react-icons/vsc";
+import { VscPreview, VscCopy } from "react-icons/vsc";
 import { RiDeleteBin6Line } from "react-icons/ri";
 
 import {
@@ -34,7 +34,7 @@ const FormsOverview = () => {
   var formsDataList = [];
   const [formsList, setFormsList] = useState();
 
-  const [viewFormState,setViewFormState]=useState()
+  const [viewFormState, setViewFormState] = useState();
 
   const [state, setState] = useState({
     menu_selected: "create_new",
@@ -44,7 +44,7 @@ const FormsOverview = () => {
       actionButtonLabel: "",
     },
   });
-  const [viewFormData,setViewFormData] = useState({
+  const [viewFormData, setViewFormData] = useState({
     title: "",
   });
 
@@ -89,6 +89,7 @@ const FormsOverview = () => {
       Header: "Action",
       accessor: "publish",
     },
+    ,
     // {
     //   Header: "Preview",
     //   accessor: "preview",
@@ -97,7 +98,6 @@ const FormsOverview = () => {
     //   Header: "Delete",
     //   accessor: "delete",
     // },
-    ,
     {
       Header: "",
       accessor: "more_actions",
@@ -202,9 +202,9 @@ const FormsOverview = () => {
 
   const duplicate = (formId) => {
     // console.log("viewformstate")
-    console.log(formId)
+    console.log(formId);
     setShowAlert(false);
-    getFormDetails(formId );
+    getFormDetails(formId);
     // duplicateForms(viewFormState);
   };
 
@@ -229,28 +229,27 @@ const FormsOverview = () => {
     try {
       const response = await viewForm(formData);
       const formDetail = response.data.forms[0];
-      console.log("formDetails",formDetail)
-     const postData = {
-       formsData: [
-         {
-            
-           title: formDetail?.title +'-'+'Duplicate',
-           file_name: formDetail?.file_name,
-           course_type: formDetail?.course_type,
-           course_level: formDetail?.course_level,
-           application_type: formDetail?.application_type,
-           form_desc: formDetail?.form_desc,
-           created_at: formDetail?.created_at,
-           updated_at: formDetail?.updated_at,
-           round: formDetail?.round,
-           form_status: formDetail?.form_status,
-           path: formDetail?.path,
-           labels: formDetail?.labels,
-           assignee: formDetail?.assignee,
-           user_id: formDetail?.user_id,
-         },
-       ],
-     };      
+      console.log("formDetails", formDetail);
+      const postData = {
+        formsData: [
+          {
+            title: formDetail?.title + "-" + "Duplicate",
+            file_name: formDetail?.file_name,
+            course_type: formDetail?.course_type,
+            course_level: formDetail?.course_level,
+            application_type: formDetail?.application_type,
+            form_desc: formDetail?.form_desc,
+            created_at: formDetail?.created_at,
+            updated_at: formDetail?.updated_at,
+            round: formDetail?.round,
+            form_status: formDetail?.form_status,
+            path: formDetail?.path,
+            labels: formDetail?.labels,
+            assignee: formDetail?.assignee,
+            user_id: formDetail?.user_id,
+          },
+        ],
+      };
       duplicateForms(postData);
 
       // setViewFormState( formDetail  )
@@ -274,7 +273,6 @@ const FormsOverview = () => {
       );
     }
   };
-
 
   const fetchFormsList = async () => {
     const postData = {
@@ -357,11 +355,11 @@ const FormsOverview = () => {
       file_name: getFieldName(e?.file_name),
       path: getFieldName(e?.path),
       form_status: e?.form_status,
-      created_at: readableDate(e?.created_at) ,
+      created_at: readableDate(e?.created_at),
       // new Date(e?.created_at)?.toLocaleDateString(),
       form_id: e?.form_id,
       updated_at: readableDate(e?.updated_at),
-      labels:e?.labels,
+      labels: e?.labels,
       // new Date(e?.updated_at)?.toLocaleDateString(),
       publish: (
         <a
@@ -400,7 +398,7 @@ const FormsOverview = () => {
             }));
           }}
         >
-        {e?.title}
+          {e?.title}
         </a>
       ),
       unpublish: (
@@ -474,21 +472,26 @@ const FormsOverview = () => {
                   </div>
                 </div>{" "}
               </MenuItem> */}
-              <MenuItem onClick={() => {
-            setShowAlert(true);
-            setState((prevState) => ({
-              ...prevState,
-              alertContent: {
-                alertTitle: "Duplicate Form",
-                alertMsg: "Are you sure to unpublish the form?",
-                actionButtonLabel: "Duplicate",
-                actionFunction: duplicate,
-                actionProps: [e?.form_id],
-              },
-            }));
-          }}>
+              <MenuItem
+                onClick={() => {
+                  setShowAlert(true);
+                  setState((prevState) => ({
+                    ...prevState,
+                    alertContent: {
+                      alertTitle: "Duplicate Form",
+                      alertMsg: "Are you sure to unpublish the form?",
+                      actionButtonLabel: "Duplicate",
+                      actionFunction: duplicate,
+                      actionProps: [e?.form_id],
+                    },
+                  }));
+                }}
+              >
                 <div className="flex flex-row gap-4 mt-4">
-                  <div> <VscCopy /> </div>
+                  <div>
+                    {" "}
+                    <VscCopy />{" "}
+                  </div>
                   <div className="text-semibold m-">
                     <span>Duplicate</span>
                   </div>
@@ -582,6 +585,7 @@ const FormsOverview = () => {
       );
     }
   };
+
   const HandlecreateCourse = async (formDataObject) => {
     // const formData = new FormData();
     // formData.append("form_id", form_id);]

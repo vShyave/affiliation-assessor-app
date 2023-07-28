@@ -211,12 +211,14 @@ export class AppController {
     @Query('form') form,
     @Body('prefillXML') prefillXML,
     @Body('imageUrls') files,
+    @Headers() headers: any
   ): Promise<string> {
     try {
-      const submissionFormXML = this.appService.submissionFormXML(
+      const submissionFormXML = await this.appService.submissionFormXML(
         form,
         prefillXML,
         files,
+        headers.origin
       );
       return submissionFormXML;
     } catch (e) {

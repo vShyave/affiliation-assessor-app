@@ -146,17 +146,19 @@ export class AppService {
     reqOrigin: string,
   ): Promise<string> {
     let formString = "";
+
     // Download XML file from Google Cloud Storage bucket URL
-    if(reqOrigin.includes("affiliation")) {
+    if(reqOrigin.includes("affiliation") || reqOrigin.includes("localhost")) {
       //Read the file from local forms folder
       const formFilePath = join(__dirname, `forms/${formUrl}.xml`);
       formString = fs.readFileSync(formFilePath, 'utf8');
     } else {
-      const response = await axios.get(formUrl,{responseType: 'text'});
+      const response = await axios.get(formUrl, {responseType: 'text'});
       formString = response.data;
     }
+
     const doc = this.parser.parseFromString(formString, 'text/xml');
-    const instanceFromForm = doc.getElementsByTagName('instance')[0];
+    const instanceFromForm = doc.getElementsByTagName('instance')[0].childNodes[0];
 
     if (prefillSpec !== undefined) {
       let instanceData = this.parser.parseFromString(prefillSpec, 'text/xml');
@@ -167,11 +169,11 @@ export class AppService {
             key,
             value,
           ).cloneNode(true);
-          console.log('instance after 1 cycle', instanceData.toString());
           // this.walk(instanceData, prefillSpec, key, value);
           // instanceData = this.parser.parseFromString(this.pf, 'text/xml');
         }
       }
+
       doc
         .getElementsByTagName('instance')[0]
         .replaceChild(instanceData, instanceFromForm);
@@ -181,9 +183,17 @@ export class AppService {
     return doc.toString();
   }
 
-  submissionFormXML(form: string, prefillSpec: any, files: any): string {
-    const formFilePath = join(__dirname, `forms/${form}.xml`);
-    const formString = fs.readFileSync(formFilePath, 'utf8');
+  async submissionFormXML(form: string, prefillSpec: any, files: any, reqOrigin: string): Promise<string> {
+    let formString = "";
+    if (reqOrigin.includes("affiliation") || reqOrigin.includes("localhost")) {
+      const formFilePath = join(__dirname, `forms/${form}.xml`);
+      formString = fs.readFileSync(formFilePath, 'utf8');
+    } else {
+      const response = await axios.get(form,{responseType: 'text'});
+      formString = response.data;
+    }
+    // const formFilePath = join(__dirname, `forms/${form}.xml`);
+    // const formString = fs.readFileSync(formFilePath, 'utf8');
     const doc = this.parser.parseFromString(formString, 'text/xml');
     const instanceFromForm = doc.getElementsByTagName('instance')[0];
     console.log({ form, prefillSpec, files });

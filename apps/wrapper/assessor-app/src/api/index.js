@@ -292,6 +292,9 @@ export const createUser = async (data) => {
 };
 
 export const saveFormSubmission = (data) => {
+  console.log("data - ", data);
+  return;
+  
   const query = {
     query: `mutation ($object: [form_submissions_insert_input!] = {}) {
       insert_form_submissions(objects: $object) {

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 import { FormCard } from "../components";
 import { useForm } from "react-hook-form";
@@ -16,6 +16,7 @@ const AllApplications = () => {
   const [formData, setFormData] = useState({ condition: {} });
   const [availableForms, setAvailableForms] = useState([]);
   const instituteDetails = getCookie("institutes");
+  const navigate = useNavigate();
 
   const handleChange = (name, value) => {
     setFormData({
@@ -36,8 +37,11 @@ const AllApplications = () => {
     setLoadingForms(false);
   };
 
-  const applyFormHandler = () => {
-    console.log("Apply Form clicked");
+  const applyFormHandler = (formObj) => {
+    let form_obj = JSON.parse(formObj.formObject);
+    form_obj = form_obj[0].name;
+    let file_name = form_obj.substr(0, form_obj.lastIndexOf("."));
+    navigate(`${APPLICANT_ROUTE_MAP.dashboardModule.createForm}/${file_name}`);
   };
 
   const handleClearFilter = () => {

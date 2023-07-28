@@ -14,6 +14,7 @@ import AllApplications from "./pages/AllApplications";
 import Congratulations from "./pages/Congratulation";
 import PrivateRoute from "./routes/PrivateRoute";
 import Profile from "./pages/Profile";
+import CreateForm from "./pages/CreateForm";
 
 
 function App() {
@@ -51,10 +52,17 @@ function App() {
                 // <PrivateRoute>
                   <AllApplications />
                 // </PrivateRoute>
-                
               }
             ></Route>
-             <Route
+            <Route
+              path={`${APPLICANT_ROUTE_MAP.dashboardModule.createForm}/:formName`}
+              element={
+                // <PrivateRoute>
+                  <CreateForm />
+                // </PrivateRoute>
+              }
+            ></Route>
+            <Route
               path={APPLICANT_ROUTE_MAP.dashboardModule.congratulations}
               element={<Congratulations />}
             ></Route>
