@@ -17,4 +17,6 @@ APPLICANT_ROUTE_MAP.dashboardModule = {
     createForm: `${APPLICANT_ROUTE_MAP.dashboard}create-form`
 };
 
+APPLICANT_ROUTE_MAP.root_star =  "/*";
+
 export default APPLICANT_ROUTE_MAP;

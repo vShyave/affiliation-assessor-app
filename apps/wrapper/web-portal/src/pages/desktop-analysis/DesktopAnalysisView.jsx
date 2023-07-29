@@ -42,7 +42,7 @@ export default function DesktopAnalysisView() {
     name: formName,
     successCheck: "async (formData) => { return true; }",
     onSuccess: {
-      notificationMessage: "Form submitted successfully",
+      notificationMessage: "Feedback submitted successfully",
       sideEffect: "async (formData) => { console.log(formData); }",
     },
     onFailure: {
@@ -63,12 +63,11 @@ export default function DesktopAnalysisView() {
     let filePath =
       process.env.REACT_APP_GCP_AFFILIATION_LINK + formName + ".xml";
 
-    //  setindividualFormName(res.data.form.form_name)
-    // console.log("formData",formData.form_name)
+    // setindividualFormName(res.data.form.form_name)
     setFormDataFromApi(res.data.form_submissions[0]);
     let formURI = await getPrefillXML(
       `${filePath}`,
-      "",
+      formSpec.onSuccess,
       formData?.form_data,
       formData?.imageUrls
     );

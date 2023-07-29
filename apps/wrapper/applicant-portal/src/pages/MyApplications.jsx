@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 
-import { Button,  ApplicationCard, FormCard } from "../components";
+import { Button, ApplicationCard, FormCard } from "../components";
 import APPLICANT_ROUTE_MAP from "../routes/ApplicantRoute";
 import { applicationService, formService } from "../services";
 import { getCookie } from "../utils";
@@ -23,11 +23,13 @@ const MyApplications = () => {
     if (!instituteDetails || !instituteDetails?.length) {
       return;
     }
+
     setLoadingApplications(true);
-    const requestPayload = { applicant_id: instituteDetails[0].id };
+    const requestPayload = { applicant_id: instituteDetails?.[0].id || 11 };
     const applicationsResponse = await applicationService.getData(
       requestPayload
     );
+
     if (applicationsResponse?.data?.form_submissions) {
       setApplications(applicationsResponse?.data?.form_submissions);
     }
@@ -38,10 +40,16 @@ const MyApplications = () => {
     if (!instituteDetails || !instituteDetails?.length) {
       return;
     }
+
     setLoadingForms(true);
     const requestPayload = {
-      course_applied: instituteDetails[0].course_applied,
+      condition: {
+        course_type: {
+          _eq: instituteDetails?.[0].course_applied,
+        },
+      },
     };
+
     const formsResponse = await formService.getData(requestPayload);
     if (formsResponse?.data?.courses) {
       setAvailableForms(formsResponse?.data?.courses.slice(0, 4));
@@ -49,12 +57,13 @@ const MyApplications = () => {
     setLoadingForms(false);
   };
 
-  const viewApplicationHandler = (appId) => {
-    console.log("View Application clicked", appId);
+  const handleViewApplicationHandler = (formObj) => {
+    navigate(
+      `${APPLICANT_ROUTE_MAP.dashboardModule.createForm}/${formObj.form_name}/${formObj.form_id}`
+    );
   };
 
   const applyFormHandler = (formObj) => {
-    console.log("formObj - ", formObj);
     const path = formObj.course_name.toLowerCase().split(" ").join("_");
     navigate(`${APPLICANT_ROUTE_MAP.dashboardModule.createForm}/${path}`);
   };
@@ -82,7 +91,7 @@ const MyApplications = () => {
                 <ApplicationCard
                   application={application}
                   key={application.form_id}
-                  onView={viewApplicationHandler}
+                  onView={handleViewApplicationHandler}
                 />
               ))}
             </div>

@@ -169,7 +169,6 @@ function App() {
               path={ROUTE_MAP.hospital_forms}
               element={
                 <PrivateRoute>
-                  {/* <HospitalOptions /> */}
                   <ComingSoon />
                 </PrivateRoute>
               }
