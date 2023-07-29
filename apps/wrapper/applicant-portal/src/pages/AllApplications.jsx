@@ -70,8 +70,8 @@ const AllApplications = () => {
 
       <div className="container mx-auto py-12 px-3 min-h-[40vh]">
         <div className="flex flex-col gap-4">
-          <div className="flex  mb-12 justify-between grid grid-cols-10 gap-x-2 gap-y-8 sm:grid-cols-10">
-            <div className="sm:col-span-3 ">
+          <div className="flex mb-12 justify-between grid grid-cols-10 gap-x-5 gap-y-8 sm:grid-cols-10">
+            <div className="sm:col-span-3">
               <Select
                 name="application_type"
                 id="application_type"

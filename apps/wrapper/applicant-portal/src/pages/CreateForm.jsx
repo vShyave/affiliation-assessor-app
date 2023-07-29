@@ -1,7 +1,13 @@
 import React, { useEffect, useState, useRef } from "react";
 import { Link, useParams, useNavigate } from "react-router-dom";
-import { FaAngleRight, FaArrowLeft } from "react-icons/fa";
 import XMLParser from "react-xml-parser";
+
+import {
+  FaAngleRight,
+  FaArrowLeft,
+  FaEye,
+  FaFileDownload,
+} from "react-icons/fa";
 
 import {
   getCookie,
@@ -14,8 +20,10 @@ import {
 
 import APPLICANT_ROUTE_MAP from "../routes/ApplicantRoute";
 import { Card } from "../components";
+import CommonModal from "../Modal";
+import Toast from "../components/Toast";
 
-import { getFormData } from "../api";
+import { getFormData, base64ToPdf } from "../api";
 import {
   getPrefillXML,
   saveFormSubmission,
@@ -31,6 +39,7 @@ const CreateForm = () => {
   const navigate = useNavigate();
   const [onFormSuccessData, setOnFormSuccessData] = useState(undefined);
   const [onFormFailureData, setOnFormFailureData] = useState(undefined);
+  const [isDownloading, setIsDownloading] = useState(false);
   const [assData, setData] = useState({
     district: "",
     instituteName: "",
@@ -41,6 +50,7 @@ const CreateForm = () => {
     longitude: null,
   });
   const [prefilledFormData, setPrefilledFormData] = useState();
+  const [onSubmit, setOnSubmit] = useState(false);
 
   const { userRepresentation } = getCookie("userData");
   const userId = userRepresentation?.id;
@@ -66,6 +76,12 @@ const CreateForm = () => {
     },
     start: formName,
   };
+
+  const [toast, setToast] = useState({
+    toastOpen: false,
+    toastMsg: "",
+    toastType: "",
+  });
 
   const startingForm = formSpec.start;
   const [encodedFormSpec, setEncodedFormSpec] = useState(
@@ -93,34 +109,36 @@ const CreateForm = () => {
   };
 
   const afterFormSubmit = async (e) => {
-    if (typeof e.data !== "object") {
-      return;
-    }
+    console.log("e = ", e);
 
     const data = typeof e.data === "string" ? JSON.parse(e.data) : e.data;
 
     try {
       const { nextForm, formData, onSuccessData, onFailureData } = data;
+      // if (data?.state === "ON_FORM_SUCCESS_COMPLETED") {
+      //   const updatedFormData = await updateFormData(formSpec.start);
+      //   const storedData = await getSpecificDataFromForage("required_data");
+
+      //   saveFormSubmission({
+      //     schedule_id: null,
+      //     form_data: updatedFormData,
+      //     assessment_type: "applicant",
+      //     form_name: formName,
+      //     submission_status: true,
+      //     assessor_id: null,
+      //     applicant_id: instituteDetails?.[0]?.id || 11,
+      //   });
+
+      //   // Delete the data from the Local Forage
+      //   const key = `${storedData?.assessor_user_id}_${formSpec.start}_${
+      //     new Date().toISOString().split("T")[0]
+      //   }`;
+      //   console.log("key - ", key);
+      //   removeItemFromLocalForage(key);
+      // }
+
       if (data?.state === "ON_FORM_SUCCESS_COMPLETED") {
-        const updatedFormData = await updateFormData(formSpec.start);
-        const storedData = await getSpecificDataFromForage("required_data");
-
-        saveFormSubmission({
-          schedule_id: null,
-          form_data: updatedFormData,
-          assessment_type: "applicant",
-          form_name: formName,
-          submission_status: true,
-          assessor_id: null,
-          applicant_id: instituteDetails?.[0]?.id || 11,
-        });
-
-        // Delete the data from the Local Forage
-        const key = `${storedData?.assessor_user_id}_${formSpec.start}_${
-          new Date().toISOString().split("T")[0]
-        }`;
-        console.log("key - ", key);
-        removeItemFromLocalForage(key);
+        setOnSubmit(true);
       }
 
       if (nextForm?.type === "form") {
@@ -142,7 +160,60 @@ const CreateForm = () => {
     }
   };
 
+  const handleSubmit = async () => {
+    // console.log("submitted!");
+
+    const updatedFormData = await updateFormData(formSpec.start);
+    const storedData = await getSpecificDataFromForage("required_data");
+
+    saveFormSubmission({
+      schedule_id: null,
+      form_data: updatedFormData,
+      assessment_type: "applicant",
+      form_name: formName,
+      submission_status: true,
+      assessor_id: null,
+      applicant_id: instituteDetails?.[0]?.id || 11,
+      submitted_on: new Date().toJSON().slice(0, 10),
+    });
+
+    // Delete the data from the Local Forage
+    const key = `${storedData?.assessor_user_id}_${formSpec.start}_${
+      new Date().toISOString().split("T")[0]
+    }`;
+
+    removeItemFromLocalForage(key);
+
+    setOnSubmit(false);
+    setToast((prevState) => ({
+      ...prevState,
+      toastOpen: true,
+      toastMsg: "Form Submitted Successfully!.",
+      toastType: "success",
+    }));
+
+    setTimeout(
+      () =>
+        setToast((prevState) => ({
+          ...prevState,
+          toastOpen: false,
+          toastMsg: "",
+          toastType: "",
+        })),
+      1500
+    );
+
+    setTimeout(
+      () => navigate(`${APPLICANT_ROUTE_MAP.dashboardModule.my_applications}`),
+      1500
+    );
+  };
+
   const handleFormEvents = async (startingForm, afterFormSubmit, e) => {
+    if (typeof e.data === "string" && e.data.includes("webpackHot")) {
+      return;
+    }
+
     if (
       ENKETO_URL === e.origin + "/enketo" &&
       typeof e?.data === "string" &&
@@ -180,6 +251,51 @@ const CreateForm = () => {
     navigate(-1);
   };
 
+  const handleFormDownload = async () => {
+    try {
+      setIsDownloading(true);
+      const formUrl = `${ENKETO_URL}/preview?formSpec=${encodeURI(
+        JSON.stringify(formSpec)
+      )}&xform=${encodedFormURI}&userId=${userId}`;
+      const res = await base64ToPdf(formUrl);
+
+      const linkSource = `data:application/pdf;base64,${res.data}`;
+      const downloadLink = document.createElement("a");
+      const fileName = "enketo_form.pdf";
+      downloadLink.href = linkSource;
+      downloadLink.download = fileName;
+      downloadLink.target = window.safari ? "" : "_blank";
+      downloadLink.click();
+      setIsDownloading(false);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const handlePrintPdf = () => {
+    const URL = `${ENKETO_URL}/preview?formSpec=${encodeURI(
+      JSON.stringify(formSpec)
+    )}&xform=${encodedFormURI}&userId=${userId}`;
+
+    var strWindowFeatures =
+      "fullscreen=1, channelmode=1, status=1, resizable=1";
+    var win = window.open(URL, "_blank", strWindowFeatures);
+
+    // const MutationObserver = window.MutationObserver || window.WebKitMutationObserver;
+    // console.log("win.document - ", win);
+    // setTimeout(() => {
+    //   win.print();
+    // }, 2000);
+
+    // let targetNode = win.document.getElementsByTagName("form");
+    // const interval = setInterval(() => {
+    //   targetNode = win.document.getElementsByTagName("form");
+    //   console.log("targetNode - ", targetNode);
+    // }, 1000);
+    // console.log("targetNode - ", targetNode);
+    // const config = { attributes: true, childList: true, subtree: true };
+  };
+
   useEffect(() => {
     fetchFormData();
     bindEventListener();
@@ -192,6 +308,9 @@ const CreateForm = () => {
 
   return (
     <div>
+      {toast.toastOpen && (
+        <Toast toastMsg={toast.toastMsg} toastType={toast.toastType} />
+      )}
       <div className="h-[48px] bg-white drop-shadow-sm">
         <div className="container mx-auto px-3 py-3">
           <div className="flex flex-row font-bold gap-2 items-center">
@@ -214,15 +333,59 @@ const CreateForm = () => {
 
       <div className="container mx-auto py-12 px-3 min-h-[40vh]">
         <Card moreClass="shadow-md">
-          <iframe
-            title="form"
-            src={`${ENKETO_URL}/preview?formSpec=${encodeURI(
-              JSON.stringify(formSpec)
-            )}&xform=${encodedFormURI}&userId=${userId}`}
-            style={{ minHeight: "100vh", width: "100%" }}
-          />
+          <div className="flex flex-col gap-5">
+            <div className="flex flex-grow gap-3 justify-end">
+              <button className="bg-primary-900 py-3 font-medium rounded-[4px] px-6 text-white flex flex-row items-center gap-3">
+                <FaEye />
+                <span>Preview</span>
+              </button>
+
+              <button
+                className={`bg-primary-900 py-3 font-medium rounded-[4px] px-6 text-white flex flex-row items-center gap-3 ${
+                  isDownloading ? "cursor-not-allowed" : ""
+                }  `}
+                onClick={handleFormDownload}
+                disabled={isDownloading}
+              >
+                <FaFileDownload />
+                <span>{isDownloading ? "Downloading..." : "Download"}</span>
+              </button>
+            </div>
+            <div className="flex">
+              <iframe
+                title="form"
+                src={`${ENKETO_URL}/preview?formSpec=${encodeURI(
+                  JSON.stringify(formSpec)
+                )}&xform=${encodedFormURI}&userId=${userId}`}
+                style={{ minHeight: "100vh", width: "100%" }}
+              />
+            </div>
+          </div>
         </Card>
-        {/* <div className="bg-white min-h-[40vh]"></div> */}
+
+        {onSubmit && (
+          <CommonModal>
+            <p className="text-secondary text-2xl text-semibold font-medium text-center">
+              Once form is submitted, it cannot be modified! Are you sure, do
+              you want to submit?
+            </p>
+
+            <div className="flex flex-row justify-center w-full py-4 gap-5">
+              <div
+                className="border border-primary bg-primary py-3 px-8 rounded-[4px] cursor-pointer items-center"
+                onClick={() => setOnSubmit(false)}
+              >
+                No
+              </div>
+              <div
+                className="bg-primary-900 py-3 rounded-[4px] px-8 text-white items-center gap-3 border border-primary py-3 px-7 cursor-pointer"
+                onClick={() => handleSubmit()}
+              >
+                Yes! Submit
+              </div>
+            </div>
+          </CommonModal>
+        )}
       </div>
     </div>
   );
