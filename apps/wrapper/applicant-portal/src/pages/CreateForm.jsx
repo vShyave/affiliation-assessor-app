@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useRef } from "react";
 import { Link, useParams, useNavigate } from "react-router-dom";
-import { FaAngleRight } from "react-icons/fa";
+import { FaAngleRight, FaArrowLeft } from "react-icons/fa";
 import XMLParser from "react-xml-parser";
 
 import {
@@ -24,8 +24,6 @@ import {
 } from "../api/formApi";
 
 const ENKETO_URL = process.env.REACT_APP_ENKETO_URL;
-console.log("ENKETO_URL - ", ENKETO_URL);
-
 const CreateForm = () => {
   let { formName, formId } = useParams();
   const [encodedFormURI, setEncodedFormURI] = useState("");
@@ -43,12 +41,9 @@ const CreateForm = () => {
     longitude: null,
   });
   const [prefilledFormData, setPrefilledFormData] = useState();
-  // const { user } = getCookie("userData") || {
-  //   id: "427d473d-d8ea-4bb3-b317-f230f1c9b2f7",
-  // };
-  const user = {
-    id: "427d473d-d8ea-4bb3-b317-f230f1c9b2f7",
-  };
+
+  const { userRepresentation } = getCookie("userData");
+  const userId = userRepresentation?.id;
   const instituteDetails = getCookie("institutes");
 
   const formSpec = {
@@ -98,7 +93,9 @@ const CreateForm = () => {
   };
 
   const afterFormSubmit = async (e) => {
-    console.log("e - ", e);
+    if (typeof e.data !== "object") {
+      return;
+    }
 
     const data = typeof e.data === "string" ? JSON.parse(e.data) : e.data;
 
@@ -107,7 +104,6 @@ const CreateForm = () => {
       if (data?.state === "ON_FORM_SUCCESS_COMPLETED") {
         const updatedFormData = await updateFormData(formSpec.start);
         const storedData = await getSpecificDataFromForage("required_data");
-        console.log("updatedFormData - ", updatedFormData);
 
         saveFormSubmission({
           schedule_id: null,
@@ -120,9 +116,10 @@ const CreateForm = () => {
         });
 
         // Delete the data from the Local Forage
-        const key = `${storedData?.assessor_user_id}_${formSpec.start}${
+        const key = `${storedData?.assessor_user_id}_${formSpec.start}_${
           new Date().toISOString().split("T")[0]
         }`;
+        console.log("key - ", key);
         removeItemFromLocalForage(key);
       }
 
@@ -160,9 +157,7 @@ const CreateForm = () => {
           startingForm + `${new Date().toISOString().split("T")[0]}`
         );
         await setToLocalForage(
-          `${user.id}_${startingForm}_${
-            new Date().toISOString().split("T")[0]
-          }`,
+          `${userId}_${startingForm}_${new Date().toISOString().split("T")[0]}`,
           {
             formData: JSON.parse(e.data).formData,
             imageUrls: { ...prevData?.imageUrls, ...images },
@@ -181,6 +176,10 @@ const CreateForm = () => {
     window.addEventListener("message", handleEventTrigger);
   };
 
+  const handleGoBack = () => {
+    navigate(-1);
+  };
+
   useEffect(() => {
     fetchFormData();
     bindEventListener();
@@ -196,9 +195,15 @@ const CreateForm = () => {
       <div className="h-[48px] bg-white drop-shadow-sm">
         <div className="container mx-auto px-3 py-3">
           <div className="flex flex-row font-bold gap-2 items-center">
-            <Link to={APPLICANT_ROUTE_MAP.dashboardModule.my_applications}>
-              <span className="text-primary-400 cursor-pointer">
-                My Application
+            <Link>
+              <span
+                onClick={handleGoBack}
+                className="text-primary-400 flex flex-row gap-2"
+              >
+                <div className="flex items-center">
+                  <FaArrowLeft className="text-[16px]" />
+                </div>
+                Back
               </span>
             </Link>
             <FaAngleRight className="text-[16px]" />
@@ -208,17 +213,12 @@ const CreateForm = () => {
       </div>
 
       <div className="container mx-auto py-12 px-3 min-h-[40vh]">
-        {console.log(
-          `${ENKETO_URL}/preview?formSpec=${encodeURI(
-            JSON.stringify(formSpec)
-          )}&xform=${encodedFormURI}&userId=${user.id}`
-        )}
         <Card moreClass="shadow-md">
           <iframe
             title="form"
             src={`${ENKETO_URL}/preview?formSpec=${encodeURI(
               JSON.stringify(formSpec)
-            )}&xform=${encodedFormURI}&userId=${user.id}`}
+            )}&xform=${encodedFormURI}&userId=${userId}`}
             style={{ minHeight: "100vh", width: "100%" }}
           />
         </Card>

@@ -39,27 +39,28 @@ function App() {
               element={<Register />}
             ></Route>
             <Route
+              index
               path={APPLICANT_ROUTE_MAP.dashboardModule.my_applications}
               element={
-                // <PrivateRoute>
-                    <MyApplications />
-                /* </PrivateRoute> */
+                <PrivateRoute>
+                  <MyApplications />
+                </PrivateRoute>
               }
             ></Route>
             <Route
               path={APPLICANT_ROUTE_MAP.dashboardModule.all_applications}
               element={
-                // <PrivateRoute>
+                <PrivateRoute>
                   <AllApplications />
-                // </PrivateRoute>
+                </PrivateRoute>
               }
             ></Route>
             <Route
-              path={`${APPLICANT_ROUTE_MAP.dashboardModule.createForm}/:formName/:formId`}
+              path={`${APPLICANT_ROUTE_MAP.dashboardModule.createForm}/:formName/:formId?`}
               element={
-                // <PrivateRoute>
+                <PrivateRoute>
                   <CreateForm />
-                // </PrivateRoute>
+                </PrivateRoute>
               }
             ></Route>
             <Route
@@ -71,6 +72,10 @@ function App() {
               element={<Profile />}
             ></Route>
           </Route>
+
+          <Route path={APPLICANT_ROUTE_MAP.root_star} element={
+            <MyApplications />
+          } />
         </Routes>
       </BrowserRouter>
     </div>

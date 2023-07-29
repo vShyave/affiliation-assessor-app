@@ -20,9 +20,9 @@ const MyApplications = () => {
   }, []);
 
   const getApplications = async () => {
-    // if (!instituteDetails || !instituteDetails?.length) {
-    //   return;
-    // }
+    if (!instituteDetails || !instituteDetails?.length) {
+      return;
+    }
 
     setLoadingApplications(true);
     const requestPayload = { applicant_id: instituteDetails?.[0].id || 11 };
@@ -43,7 +43,11 @@ const MyApplications = () => {
 
     setLoadingForms(true);
     const requestPayload = {
-      course_applied: instituteDetails[0].course_applied,
+      condition: {
+        course_type: {
+          _eq: instituteDetails?.[0].course_applied,
+        },
+      },
     };
 
     const formsResponse = await formService.getData(requestPayload);
@@ -60,7 +64,6 @@ const MyApplications = () => {
   };
 
   const applyFormHandler = (formObj) => {
-    console.log("formObj - ", formObj);
     const path = formObj.course_name.toLowerCase().split(" ").join("_");
     navigate(`${APPLICANT_ROUTE_MAP.dashboardModule.createForm}/${path}`);
   };
