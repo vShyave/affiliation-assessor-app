@@ -33,7 +33,10 @@ export default function ApplicationPage({
   const [openStatusModel, setOpenStatusModel] = useState(false);
   const [openIssueNocModel, setOpenIssueNocModel] = useState(false);
   const [encodedFormURI, setEncodedFormURI] = useState("");
-  let { formName, formId } = useParams();
+  let { formName, formId , instituteName, round} = useParams();
+  let [instituteNameModal,setInstituteNameModal] = useState(instituteName)
+  let [selectRound,setSelectRound] = useState(round)
+  console.log(instituteNameModal)
   const [toast, setToast] = useState({
     toastOpen: false,
     toastMsg: "",
@@ -231,7 +234,7 @@ export default function ApplicationPage({
       {openStatusModel && (
         <StatusLogModal closeStatusModal={setOpenStatusModel} />
       )}
-      {openIssueNocModel && <IssueNocModal setOpenIssueNocModel={setOpenIssueNocModel} setToast={setToast} />}
+      {openIssueNocModel && <IssueNocModal selectRound={round} selectInstituteName={instituteName} setOpenIssueNocModel={setOpenIssueNocModel} setToast={setToast} />}
     </>
   );
 }
