@@ -9,9 +9,7 @@ import {
 } from "react-table";
 
 import { Checkbox } from "@material-tailwind/react";
-
 // import { Checkbox } from "./Checkbox";
-
 import GlobalFilter from "./GlobalFilter";
 
 import {
@@ -90,9 +88,6 @@ const FilteringTable = (props) => {
                 } else {
                   return <Checkbox {...row.getToggleRowSelectedProps()} />;
                 }
-
-                //   console.log(row)
-
                 // return <Checkbox {...row.getToggleRowSelectedProps()} />;
               },
             },
@@ -168,21 +163,10 @@ const FilteringTable = (props) => {
     if (!totalCount) {
       setPageIndex(-1);
     }
-
-    array = JSON.stringify(
-      { selectedFlatRows: selectedFlatRows.map((row) => row.original) },
-      null,
-      2
-    );
-    {
-      // props.onRowSelect(array);
-    }
   }, [offsetNo, totalCount]);
 
   useEffect(() => {
     if (props.showCheckbox) {
-      console.log(selectedFlatRows);
-
       props.setSelectedRows(selectedFlatRows);
     }
   }, [selectedFlatRows]);
