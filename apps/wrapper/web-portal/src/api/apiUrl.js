@@ -33,7 +33,10 @@ const API_URL = {
     userList: `${rest}getAllUsers`,
     specificUser: `${rest}getSpecificUser`,
     filterUsers: `${rest}filterUsers`,
-    addUsers: `${rest}addUsers`
+    setActivate: `${rest}setValid`,
+    setDeactive: `${rest}setInvalid`,
+    addUsers: `${rest}addUsers`,
+    deleteUser: `${rest}deleteUser`
   },
 
 desktopAnalysis:{
@@ -45,7 +48,8 @@ desktopAnalysis:{
   },
   scheduleManagement:{
     getAssessmentSchedule: `${rest}getAssessmentSchedule`,
-    filterAssessments: `${rest}filterAssessments`
+    filterAssessments: `${rest}filterAssessments`,
+    addAssessmentSchedule: `${rest}addAssessmentSchedule`
   },
   SIGNUP: {
     CREATE_BULK_USER: "keycloak/createBulkUser",
@@ -54,6 +58,9 @@ desktopAnalysis:{
   LOGIN: {
     GENERATE_OTP: "user/generateOtp",
     USERLOGIN: "user/login",
+  },
+  DELETE:{
+    DELETE_USER:"keycloak/user/delete"
   },
   NOTIFICATION: {
     SEND_SMS: "",

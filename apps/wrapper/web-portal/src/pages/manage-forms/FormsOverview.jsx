@@ -201,11 +201,8 @@ const FormsOverview = () => {
   };
 
   const duplicate = (formId) => {
-    // console.log("viewformstate")
-    console.log(formId);
     setShowAlert(false);
-    getFormDetails(formId);
-    // duplicateForms(viewFormState);
+    getFormDetails(formId );
   };
 
   const delete_Form = (formId) => {
@@ -229,28 +226,29 @@ const FormsOverview = () => {
     try {
       const response = await viewForm(formData);
       const formDetail = response.data.forms[0];
-      console.log("formDetails", formDetail);
-      const postData = {
-        formsData: [
-          {
-            title: formDetail?.title + "-" + "Duplicate",
-            file_name: formDetail?.file_name,
-            course_type: formDetail?.course_type,
-            course_level: formDetail?.course_level,
-            application_type: formDetail?.application_type,
-            form_desc: formDetail?.form_desc,
-            created_at: formDetail?.created_at,
-            updated_at: formDetail?.updated_at,
-            round: formDetail?.round,
-            form_status: formDetail?.form_status,
-            path: formDetail?.path,
-            labels: formDetail?.labels,
-            assignee: formDetail?.assignee,
-            user_id: formDetail?.user_id,
-          },
-        ],
-      };
+     const postData = {
+       formsData: [
+         {
+            
+           title: formDetail?.title +'-'+'Duplicate',
+           file_name: formDetail?.file_name,
+           course_type: formDetail?.course_type,
+           course_level: formDetail?.course_level,
+           application_type: formDetail?.application_type,
+           form_desc: formDetail?.form_desc,
+           created_at: formDetail?.created_at,
+           updated_at: formDetail?.updated_at,
+           round: formDetail?.round,
+           form_status: formDetail?.form_status,
+           path: formDetail?.path,
+           labels: formDetail?.labels,
+           assignee: formDetail?.assignee,
+           user_id: formDetail?.user_id,
+         },
+       ],
+     };      
       duplicateForms(postData);
+      fetchFormsList()
 
       // setViewFormState( formDetail  )
     } catch (error) {
@@ -344,7 +342,6 @@ const FormsOverview = () => {
   };
 
   formsList?.forEach((e) => {
-    // console.log("formlist",e)
     var formsData = {
       title: getFieldName(e?.title),
       application_type: getFieldName(e?.application_type),
@@ -472,21 +469,19 @@ const FormsOverview = () => {
                   </div>
                 </div>{" "}
               </MenuItem> */}
-              <MenuItem
-                onClick={() => {
-                  setShowAlert(true);
-                  setState((prevState) => ({
-                    ...prevState,
-                    alertContent: {
-                      alertTitle: "Duplicate Form",
-                      alertMsg: "Are you sure to unpublish the form?",
-                      actionButtonLabel: "Duplicate",
-                      actionFunction: duplicate,
-                      actionProps: [e?.form_id],
-                    },
-                  }));
-                }}
-              >
+              <MenuItem onClick={() => {
+            setShowAlert(true);
+            setState((prevState) => ({
+              ...prevState,
+              alertContent: {
+                alertTitle: "Duplicate Form",
+                alertMsg: "Are you sure to duplicate the form?",
+                actionButtonLabel: "Duplicate",
+                actionFunction: duplicate,fetchFormsList,
+                actionProps: [e?.form_id],
+              },
+            }));
+          }}>
                 <div className="flex flex-row gap-4 mt-4">
                   <div>
                     {" "}

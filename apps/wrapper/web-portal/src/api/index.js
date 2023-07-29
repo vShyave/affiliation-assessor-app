@@ -1,6 +1,12 @@
 import API_URL from "./apiUrl";
 import adminCustomPost from "./adminCustomApi";
 import fileConversionCustomPost from "./fileConversionCustomApi";
+import axios from "axios";
+import { getCookie } from "../utils/common";
+
+const BASE_URL_KEYCLOAK =
+  process.env.REACT_APP_WEB_PORTAL_USER_SERVICE_URL ||
+  "https://auth.upsmfac.org/api/v1/";
 
 export const registerUser = async (postData) => {
   const res = await adminCustomPost.post(API_URL.auth.register, postData);
@@ -156,6 +162,27 @@ export const getUsersForScheduling = async (postData) => {
   );
   return res;
 };
+export const handleActiveUser = async (postData) => {
+  const res = await adminCustomPost.put(
+    API_URL.manageUsers.setActivate,
+    postData
+  );
+  return res;
+};
+
+export const handleDeleteUser = async (postData) => {
+  return await adminCustomPost.delete(API_URL.manageUsers.deleteUser, {
+    data: postData,
+  });
+};
+
+export const handleInctiveUser = async (postData) => {
+  const res = await adminCustomPost.put(
+    API_URL.manageUsers.setDeactive,
+    postData
+  );
+  return res;
+};
 
 export const getSpecificUser = async (postData) => {
   const res = await adminCustomPost.post(
@@ -223,15 +250,45 @@ export const filterAssessments = async (postData) => {
   return res;
 };
 
-// Bulk create users
-export const addUsers = async (postData) => {
+export const addAssessmentSchedule = async (postData) => {
+  const res = await adminCustomPost.post(
+    API_URL.scheduleManagement.addAssessmentSchedule,
+    postData
+  );
+  return res;
+};
+
+// Bulk create users keycloak
+export const createBulkUsersKeyCloak = async (postData) => {
+  const res = await axios.post(
+    `${BASE_URL_KEYCLOAK}${API_URL.SIGNUP.CREATE_BULK_USER}`,
+    postData,
+    {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: getCookie("access_token"),
+      },
+    }
+  );
+  return res;
+};
+
+//Bulk create users Hasura
+export const createBulkUserHasura = async (postData) => {
   const res = await adminCustomPost.post(
     API_URL.manageUsers.addUsers,
     postData
   );
   return res;
 };
-
+// delete users
+// export const deleteUsers = async (postData) => {
+//   const res = await adminCustomPost.post(
+//     API_URL.manageUsers.addUsers,
+//     postData
+//   );
+//   return res;
+// };
 //global search
 export const searchUsers = async (postData) => {
   const res = await adminCustomPost.post(

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 
 import FilteringTable from "../../components/table/FilteringTable";
 
@@ -7,15 +7,10 @@ import { Switch } from "@material-tailwind/react";
 import { Link } from "react-router-dom";
 
 import { Button } from "../../components";
-import {
-  addUsers,
-  createBulkUserHasura,
-  createBulkUsersKeyCloak,
-} from "../../api";
-import { userService } from "../../api/userService";
-import { removeCookie, setCookie } from "../../utils/common";
+import { addAssessmentSchedule } from "../../api";
+import Toast from "../../components/Toast";
 
-function BulkUploadUsersModal({ closeBulkUploadUsersModal }) {
+function BulkUploadUsersModal({ setBulkUploadSchduleModal }) {
   const [file, setFile] = useState();
 
   const [tableUserList, setTableUserList] = useState([]);
@@ -29,6 +24,14 @@ function BulkUploadUsersModal({ closeBulkUploadUsersModal }) {
   const [invalidUserDataFlag, setInvalidUserDataFlag] = useState(false);
 
   const [allUsersList, setAllUsersList] = useState([]);
+
+  const [selectedUserList, setSelectedUserList] = useState(false);
+  const [toast, setToast] = useState({
+    toastOpen: false,
+    toastMsg: "",
+    toastType: "",
+  });
+
   let selectedRows = [];
 
   const emailExp = /[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$/;
@@ -85,69 +88,39 @@ function BulkUploadUsersModal({ closeBulkUploadUsersModal }) {
 
   const COLUMNS = [
     {
-      Header: "Code",
+      Header: "Assessor Code",
+      accessor: "assessor_code",
 
-      accessor: "code",
+      Cell: (props) => {
+        return <p>{isDataValid(props.value)}</p>;
+      },
+    },
+
+    {
+      Header: "Date",
+      accessor: "date",
+
+      Cell: (props) => {
+        return <p>{isDataValid(props.value)}</p>;
+      },
+    },
+
+    {
+      Header: "Institute Id",
+      accessor: "institute_id",
+
+      Cell: (props) => {
+        return <p>{isDataValid(props.value)}</p>;
+      },
+    },
+
+    {
+      Header: "Assisstant Code",
+      accessor: "assisstant_code",
 
       // Cell: (props) => {
       //   return <p>{isDataValid(props.value)}</p>;
       // },
-    },
-    {
-      Header: "Email",
-
-      accessor: "email",
-
-      Cell: (props) => {
-        return <p>{isEmailValid(props.value)}</p>;
-      },
-    },
-    {
-      Header: "Full Name",
-
-      accessor: "full_name",
-
-      Cell: (props) => {
-        return <p>{isDataValid(props.value)}</p>;
-      },
-    },
-
-    {
-      Header: "First Name",
-
-      accessor: "fname",
-
-      Cell: (props) => {
-        return <p>{isDataValid(props.value)}</p>;
-      },
-    },
-
-    {
-      Header: "Last Name",
-
-      accessor: "lname",
-
-      Cell: (props) => {
-        return <p>{isDataValid(props.value)}</p>;
-      },
-    },
-    {
-      Header: "Mobile Number",
-
-      accessor: "mobile_number",
-
-      Cell: (props) => {
-        return <p>{ismobileNumberValid(props.value)}</p>;
-      },
-    },
-    {
-      Header: "Role",
-
-      accessor: "role",
-
-      Cell: (props) => {
-        return <p>{isDataValid(props.value)}</p>;
-      },
     },
   ];
 
@@ -194,7 +167,7 @@ function BulkUploadUsersModal({ closeBulkUploadUsersModal }) {
 
         var headers = [];
 
-        var rows = e.target.result.split("\r\n");
+        var rows = e.target.result.split("\n");
 
         for (var i = 0; i < rows.length; i++) {
           var cells = rows[i].split(",");
@@ -218,16 +191,20 @@ function BulkUploadUsersModal({ closeBulkUploadUsersModal }) {
           const isValidUserEntry = Object.values(rowData).every(
             (value) => !!value
           );
+          console.log(rowData);
 
-          if (
-            (i > 0 &&
+          for (let key in rowData) {
+            if (
+              i > 0 &&
+              (rowData[key] == null || rowData[key] == "") &&
               isValidUserEntry &&
-              (rowData.mobile_number.toString().length < 10 ||
-                !emailExp.test(rowData.email.toString()))) ||
-            !isValidUserEntry
-          ) {
-            invalidUserData.push({ ...rowData, isRowInvalid: true });
+              !Object.keys(rowData).length &&
+              key !== "assisstant_code"
+            ) {
+              rowData["isRowInvalid"] = true;
+            }
           }
+          invalidUserData.push(rowData);
 
           setInvalidTableUserList(invalidUserData);
         }
@@ -253,15 +230,10 @@ function BulkUploadUsersModal({ closeBulkUploadUsersModal }) {
         return object;
       }, {});
 
-      if (
-        !emailExp.test(obj?.email?.toString()) ||
-        !mobNumberExp.test(obj?.mobile_number?.toString()) ||
-        obj?.full_name == "" ||
-        obj?.email == "" ||
-        obj?.mobile_number == "" ||
-        obj?.role == ""
-      ) {
-        obj["isRowInvalid"] = true;
+      for (let key in obj) {
+        if ((obj[key] == null || obj[key] == "") && key !== "assisstant_code") {
+          obj["isRowInvalid"] = true;
+        }
       }
 
       return obj;
@@ -278,80 +250,55 @@ function BulkUploadUsersModal({ closeBulkUploadUsersModal }) {
     setInvalidUserDataFlag(!invalidUserDataFlag);
   };
 
-  const createUsers = async () => {
-    console.log(selectedRows);
-
-    const postDataKeyCloak = selectedRows.map((item) => ({
-      firstName: item.values.fname,
-      lastName: item.values.lname,
-      email: item.values.email,
-      username: item.values.email,
-      password: "rkr",
-      roleName: item.values.role,
-    }));
-
-    let postDataHasura = {
-      assessors: [],
-      regulators: [],
-    };
-
-    console.log("Keycloak - ", postDataKeyCloak);
+  const bulkSchedule = async () => {
     try {
-      let accessTokenObj = {
-        grant_type: "client_credentials",
-        client_id: "admin-api",
-        client_secret: "edd0e83d-56b9-4c01-8bf8-bad1870a084a",
+      const postData = {
+        assessment_schedule: selectedRows.map((item) => {
+          let tempObj = {
+            ...item.original,
+            institute_id: +item.original.institute_id,
+          };
+          if (tempObj["assisstant_code"] === "") {
+            delete tempObj.assisstant_code;
+          }
+          return tempObj;
+        }),
       };
-      //Access Token API call
-      const accessTokenResponse = await userService.getAccessToken(
-        accessTokenObj
-      );
-      setCookie(
-        "access_token",
-        "Bearer " + accessTokenResponse.data.access_token
-      );
-      console.log(accessTokenResponse);
-
-      //keycloak API call
-      const keycloakRes = await createBulkUsersKeyCloak(postDataKeyCloak);
-
-      console.log(keycloakRes);
-
-      //Hasura API call
-
-      selectedRows.forEach((item) => {
-        if (item.values.role.includes("Assessor")) {
-          postDataHasura["assessors"].push({
-            code: item.values.code,
-            user_id: keycloakRes.data.succeedUser.filter(
-              (user) => user.email === item.values.email
-            )[0].userId,
-            email: item.values.email,
-            name: item.values.full_name,
-            phonenumber: item.values.mobile_number,
-            fname: item.values.fname,
-            lname: item.values.lname,
-          });
-        }
-        if (item.values.role.includes("Regulator")) {
-          postDataHasura["regulators"].push({
-            user_id: keycloakRes.data.succeedUser.filter(
-              (user) => user.email === item.values.email
-            )[0].userId,
-            email: item.values.email,
-            full_name: item.values.full_name,
-            phonenumber: item.values.mobile_number,
-            fname: item.values.fname,
-            lname: item.values.lname,
-          });
-        }
-      });
-      console.log("Hasura - ", postDataHasura);
-      const hasuraRes = await createBulkUserHasura(postDataHasura);
-      console.log(hasuraRes);
-      removeCookie("access_token");
+      console.log(postData);
+      const res = await addAssessmentSchedule(postData);
+      setToast((prevState) => ({
+        ...prevState,
+        toastOpen: true,
+        toastMsg: "Assessments Scheduled Successfully!!",
+        toastType: "success",
+      }));
+      setTimeout(() => {
+        setToast((prevState) => ({
+          ...prevState,
+          toastOpen: false,
+          toastMsg: "",
+          toastType: "",
+        }));
+        setBulkUploadSchduleModal(false);
+      }, 3000);
     } catch (error) {
       console.log("error - ", error);
+      setToast((prevState) => ({
+        ...prevState,
+        toastOpen: true,
+        toastMsg: error.response.data.error,
+        toastType: "error",
+      }));
+      setTimeout(
+        () =>
+          setToast((prevState) => ({
+            ...prevState,
+            toastOpen: false,
+            toastMsg: "",
+            toastType: "",
+          })),
+        3000
+      );
     }
   };
 
@@ -362,6 +309,9 @@ function BulkUploadUsersModal({ closeBulkUploadUsersModal }) {
 
   return (
     <>
+      {toast.toastOpen && (
+        <Toast toastMsg={toast.toastMsg} toastType={toast.toastType} />
+      )}
       <div className="flex flex-col justify-center items-center fixed inset-0 bg-opacity-25 backdrop-blur-sm">
         <div className="flex bg-white rounded-xl shadow-xl border border-gray-400 w-[860px] h-[560px] p-8">
           <div className="flex flex-col justify-between w-full ">
@@ -423,7 +373,6 @@ function BulkUploadUsersModal({ closeBulkUploadUsersModal }) {
                       navigateFunc={() => {}}
                       showCheckbox={true}
                       showFilter={false}
-                      // rows = {rows}
                       setSelectedRows={setSelectedRows}
                     />
                   </div>
@@ -437,7 +386,7 @@ function BulkUploadUsersModal({ closeBulkUploadUsersModal }) {
               <div className="footer flex flex-row gap-4 justify-end">
                 <Button
                   onClick={() => {
-                    closeBulkUploadUsersModal(false);
+                    setBulkUploadSchduleModal(false);
                   }}
                   moreClass="border border-gray-200 bg-white text-blue-600 w-[120px]"
                   text="Cancel"
@@ -446,10 +395,10 @@ function BulkUploadUsersModal({ closeBulkUploadUsersModal }) {
                 {tableDataReady && (
                   <Button
                     onClick={() => {
-                      createUsers();
+                      bulkSchedule();
                     }}
                     moreClass="border text-white w-[120px]"
-                    text="Create users"
+                    text="Schedule Assessments"
                   ></Button>
                 )}
               </div>
