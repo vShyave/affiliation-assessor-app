@@ -22,6 +22,7 @@ export default function OnGroundInspectionAnalysis() {
   var formsDataList = [];
   resData = formsDataList;
   const [formsList, setFormsList] = useState();
+  const [round,setRound] = useState(1)
   const [state, setState] = useState({
     menu_selected: "In Progress",
   });
@@ -99,7 +100,7 @@ export default function OnGroundInspectionAnalysis() {
   };
 
   const navigateToView = (formObj) => {
-    const navigationURL = `${ADMIN_ROUTE_MAP.adminModule.onGroundInspection.viewForm}/${formObj?.original?.form_name}/${formObj?.original?.id}`;
+    const navigationURL = `${ADMIN_ROUTE_MAP.adminModule.onGroundInspection.viewForm}/${formObj?.original?.form_name}/${formObj?.original?.id}/${formObj?.original?.institute?.name}/${round}`;
     navigation(navigationURL);
     const postData = { form_id: formObj?.original?.id };
     markStatus(postData);
@@ -189,7 +190,7 @@ export default function OnGroundInspectionAnalysis() {
   };
 
   formsList?.forEach((e) => {
-    console.log("formlist",e)
+    // console.log("formlist",e)
     var formsData = {
       applicant:
         e?.institute?.name?.charAt(0).toUpperCase() +
@@ -207,6 +208,7 @@ export default function OnGroundInspectionAnalysis() {
       status: e?.review_status || "NA",
       form_status: e?.form_status,
       review_status: e?.review_status,
+      institute: e?.institute
     };
 
     resData.push(formsData);
@@ -263,7 +265,7 @@ export default function OnGroundInspectionAnalysis() {
                 <Select
                   value="1"
                   label="Select round"
-                  onChange={(value) => console.log(value)}
+                  onChange={(value) => setRound(value)}
                 >
                   <Option value="1">Round one</Option>
                   <Option value="2">Round two</Option>

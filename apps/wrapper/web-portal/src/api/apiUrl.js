@@ -20,6 +20,7 @@ const API_URL = {
   manageForms: {
     getForms: `${rest}getForms`,
     convertODKtoXML: `user/convert`,
+    nocPdfUpload:`user/upload`,
     createForm: `${rest}createForm`,
     publishForms: `${rest}publishForms`,
     unpublishForms: `${rest}unpublishForms`,

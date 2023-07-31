@@ -80,6 +80,14 @@ export const convertODKtoXML = async (postData) => {
   return res;
 };
 
+export const nocPdfUploader = async (postData) => {
+  const res = await fileConversionCustomPost.post(
+    API_URL.manageForms.nocPdfUpload,
+    postData
+  );
+  return res;
+};
+
 export const createForm = async (postData) => {
   const res = await adminCustomPost.post(
     API_URL.manageForms.createForm,
