@@ -11,7 +11,7 @@ export default function Header() {
   const [showButtons, setshowButtons] = useState(false);
   const navigate = useNavigate();
   const regulator = getCookie("regulator");
-  const userData = getCookie("userData")
+  const userData = getCookie("userData");
   const instituteData = getCookie("institutes");
 
   const logout = () => {
@@ -26,7 +26,6 @@ export default function Header() {
       setshowButtons(true);
     }
   }, [instituteData]);
- 
 
   return (
     <>
@@ -80,10 +79,9 @@ export default function Header() {
                 </div>
               </div>
             </div>
-          </div>          
+          </div>
         </div>
       </div>
-
     </>
   );
 }

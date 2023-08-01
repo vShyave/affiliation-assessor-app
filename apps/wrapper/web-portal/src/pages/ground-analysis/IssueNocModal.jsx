@@ -1,45 +1,111 @@
 import React, { useState } from "react";
-import { getAcceptApplicant } from "../../api";
+import { getAcceptApplicant, nocPdfUploader } from "../../api";
 import ADMIN_ROUTE_MAP from "../../routes/adminRouteMap";
 import { useNavigate } from "react-router-dom";
 import { Button } from "../../components";
+import Toast from "../../components/Toast";
 
-function IssueNocModal({ setOpenIssueNocModel, setToast }) {
+function IssueNocModal({ setOpenIssueNocModel, selectRound,selectInstituteName}) {
   const navigate = useNavigate();
-
   const [fileName, setFileName] = useState("");
+  const[file,setFile] = useState({})
+  const [comment, setComment] = useState("");
+  const [toast, setToast] = useState({
+    toastOpen: false,
+    toastMsg: "",
+    toastType: "",
+  });
+  console.log(selectRound)
+  console.log(selectInstituteName)
   const hiddenFileInput = React.useRef(null);
 
-  const handleFile = (file) => {
-    // const formData = new FormData();
-    // formData.append("file", file);
-    // uploadOdkForm(formData);
-    console.log(file)
+  let selectedRound = ""
+   if(selectRound == 1){
+    selectedRound = "noc"
+  } else{
+    selectedRound = "certificate"
+  }
+
+  const handleFile = (uploadFile) => {
+    const formData = new FormData();
+    formData.append("file", uploadFile);
+    formData.append("type", selectedRound );
+    formData.append("prefix", selectInstituteName );
+
+    getNocOrCertificatePdf(formData);
   };
 
   const handleChange = (e) => {
+
     setComment(e.target.value);
 
     const fileUploaded = e.target.files[0];
     setFileName(
       fileUploaded.name.substring(0, fileUploaded.name.lastIndexOf("."))
     );
-    handleFile(fileUploaded);
+    setFile(fileUploaded);
   };
-
-  const [comment, setComment] = useState("");
 
   const handleClick = (e) => {
     hiddenFileInput.current.click();
   };
 
-  const handleAcceptApplicant = async () => {
+  const getNocOrCertificatePdf = async (postData) => {
+    try {
+      const res = await nocPdfUploader(postData);
+      // setXmlData(res.data);
+      // setFormData((prevState) => ({
+      //   ...prevState,
+      //   path: res.data.fileUrl,
+      //   file_name: res.data.fileName,
+      // }));
+      if (res.status === 200) {
+      setToast((prevState) => ({
+        ...prevState,
+        toastOpen: true,
+        toastMsg: "File uploaded successfully!",
+        toastType: "success",
+      }));
+      setTimeout(() => {
+        setToast((prevState) => ({
+          ...prevState,
+          toastOpen: false,
+          toastMsg: "",
+          toastType: "",
+        }));
+      navigate("/groundInspection/noc-issued")
+    }, 3000);
+  } }catch (error) {
+      console.log("error - ", error);
+      setToast((prevState) => ({
+        ...prevState,
+        toastOpen: true,
+        toastMsg: "Error occured while uploading!",
+        toastType: "error",
+      }));
+      setTimeout(
+        () =>
+          setToast((prevState) => ({
+            ...prevState,
+            toastOpen: false,
+            toastMsg: "",
+            toastType: "",
+          })),
+        3000
+      );
+    }
+  };
+
+  // const handleAcceptApplicant = async () => {
     // navigate to next page
     // { navigate(ADMIN_ROUTE_MAP.adminModule.onGroundInspection.nocForm) }
-  };
+  // };
 
   return (
     <>
+      {toast.toastOpen && (
+        <Toast toastMsg={toast.toastMsg} toastType={toast.toastType} />
+      )}
       <div className="flex justify-center items-center fixed inset-0 bg-opacity-25 backdrop-blur-sm">
         <div className="flex justify-center p-4 rounded-xl shadow-xl border border-gray-400 bg-gray-100 w-[580px] h-[300px]">
           <div className="flex flex-col gap-4">
@@ -71,7 +137,8 @@ function IssueNocModal({ setOpenIssueNocModel, setToast }) {
                 Cancel
               </button>
               <button
-                onClick={() => navigate("/groundInspection/noc-issued")}
+                onClick={() => handleFile(file) }
+                
                 className="border border-blue-900 text-white bg-blue-900 w-[140px] h-[40px] font-medium rounded-[4px]"
               >
                 Approve
