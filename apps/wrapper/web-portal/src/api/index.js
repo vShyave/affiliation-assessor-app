@@ -337,3 +337,17 @@ export const searchAssessments = async (postData) => {
   );
   return res;
 };
+
+export const registerEvent = async (postData) => {
+  const events = {
+    events: []
+  };
+  events.events.push(postData);
+  console.log("events - ", events);
+
+  const res = await adminCustomPost.post(
+    API_URL.common.registerEvent,
+    events
+  );
+  return res;
+}

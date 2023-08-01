@@ -76,10 +76,18 @@ export const formatDate = (date) => {
 }
 
 export const getFieldName = (formName) => {
-  if(formName){
-    let splitValues = formName.split('_')
+  if(formName) {
+    formName = formName.substr(formName.lastIndexOf('-') + 1);
+    let splitValues = formName.split('_');
     const capitalizedStr = splitValues[0].charAt(0).toUpperCase() + splitValues[0].substr(1, splitValues.substr);
     splitValues[0] = capitalizedStr;
     return splitValues.join(' ');
   }
+}
+
+export const getLocalTimeInISOFormat = () => {
+  const now = new Date();
+  const offset = now.getTimezoneOffset();
+  const localTime = new Date(now - offset * 60 * 1000);
+  return localTime.toISOString();
 }

@@ -90,10 +90,19 @@ const CreateForm = () => {
 
   const fetchFormData = async () => {
     let formData = {};
-    if (formId) {
-      const postData = { form_id: formId };
-      const res = await getFormData(postData);
-      formData = res.data.form_submissions[0];
+
+    let data = await getFromLocalForage(
+      `${userId}_${formName}_${new Date().toISOString().split("T")[0]}`
+    );
+
+    if (data) {
+      formData = data;
+    } else {
+      if (formId) {
+        const postData = { form_id: formId };
+        const res = await getFormData(postData);
+        formData = res.data.form_submissions[0];
+      }
     }
 
     let fileGCPPath =
@@ -102,15 +111,13 @@ const CreateForm = () => {
     let formURI = await getPrefillXML(
       `${fileGCPPath}`,
       formSpec.onSuccess,
-      formData?.form_data,
+      formData?.formData || formData?.form_data,
       formData?.imageUrls
     );
     setEncodedFormURI(formURI);
   };
 
   const afterFormSubmit = async (e) => {
-    console.log("e = ", e);
-
     const data = typeof e.data === "string" ? JSON.parse(e.data) : e.data;
 
     try {
@@ -161,9 +168,7 @@ const CreateForm = () => {
   };
 
   const handleSubmit = async () => {
-    // console.log("submitted!");
-
-    const updatedFormData = await updateFormData(formSpec.start);
+    const updatedFormData = await updateFormData(formSpec.start, userId);
     const storedData = await getSpecificDataFromForage("required_data");
 
     saveFormSubmission({
@@ -175,6 +180,7 @@ const CreateForm = () => {
       assessor_id: null,
       applicant_id: instituteDetails?.[0]?.id || 11,
       submitted_on: new Date().toJSON().slice(0, 10),
+      form_status: "Application Submitted",
     });
 
     // Delete the data from the Local Forage

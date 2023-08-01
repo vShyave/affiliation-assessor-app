@@ -12,8 +12,13 @@ import {
   getDesktopAnalysisForms,
   markReviewStatus,
   searchDesktop,
+  registerEvent,
 } from "../../api";
-import { getFieldName, readableDate } from "../../utils/common";
+import {
+  getFieldName,
+  readableDate,
+  getLocalTimeInISOFormat,
+} from "../../utils/common";
 import ADMIN_ROUTE_MAP from "../../routes/adminRouteMap";
 
 const DesktopAnalysisList = () => {
@@ -45,7 +50,7 @@ const DesktopAnalysisList = () => {
       accessor: "course_name",
     },
     {
-      Header: "Published on",
+      Header: "Submitted on",
       accessor: "published_on",
     },
     {
@@ -96,6 +101,7 @@ const DesktopAnalysisList = () => {
   const navigateToView = (formObj) => {
     const navigationURL = `${ADMIN_ROUTE_MAP.adminModule.desktopAnalysis.viewForm}/${formObj?.original?.file_name}/${formObj?.original?.id}`;
     navigation(navigationURL);
+
     const postData = { form_id: formObj?.original?.id };
     markStatus(postData);
   };
@@ -187,17 +193,18 @@ const DesktopAnalysisList = () => {
           e?.institute?.course_applied?.substring(1).toLowerCase() || "NA",
       published_on: readableDate(e?.submitted_on),
       id: e.form_id,
-      status: e?.review_status || "NA",
+      status: e?.form_status || "NA",
     };
     formsDataList.push(formsData);
+
     if (e.submitted_on === new Date().toJSON().slice(0, 10)) {
       status_obj.submitted_today++;
     }
-    if (e.review_status === null) {
+    if (e.form_status === null) {
       status_obj.pending++;
-    } else if (e.review_status?.toLowerCase() === "in progress") {
+    } else if (e.form_status?.toLowerCase() === "in progress") {
       status_obj.in_progress++;
-    } else if (e.review_status?.toLowerCase() === "reviewed") {
+    } else if (e.form_status?.toLowerCase() === "reviewed") {
       status_obj.reviewed++;
     }
   });

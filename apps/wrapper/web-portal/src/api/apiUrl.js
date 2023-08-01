@@ -5,6 +5,9 @@ const API_URL = {
     register: `${rest}createAdmin`,
     getRegulator: `${rest}getRegulator`,
   },
+  common: {
+    registerEvent: `${rest}addEvents`,
+  },
   groundAnalysis: {
     viewForm: `${rest}getFormData`,
     list: `${rest}getGroundInspectionAnalysis`,

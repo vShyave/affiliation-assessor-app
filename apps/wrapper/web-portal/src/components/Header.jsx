@@ -49,11 +49,8 @@ export default function Header() {
                       setShowProfileDropdown(!showProfileDropdown);
                     }}
                   >
-                    {/* {getInitials(regulator[0].full_name)}  */}
                     {getInitials(
-                      userData?.userRepresentation?.firstName +
-                        " " +
-                        userData?.userRepresentation?.lastName
+                      `${userData?.userRepresentation?.firstName.trim()} ${userData?.userRepresentation?.lastName.trim()}`
                     )}
                   </button>
 
