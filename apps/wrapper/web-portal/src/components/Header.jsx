@@ -51,7 +51,7 @@ export default function Header() {
                     }}
                   >
                     {/* {getInitials(regulator[0].full_name)}  */}
-                    {getInitials(userData.userRepresentation.firstName+" "+userData.userRepresentation.lastName)}
+                    {getInitials(userData?.userRepresentation?.firstName.trim()+" "+userData?.userRepresentation?.lastName.trim())}
 
                   </button>
 

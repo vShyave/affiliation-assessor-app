@@ -200,6 +200,14 @@ export const filterUsers = async (postData) => {
   return res;
 };
 
+export const editUserHasura = async (postData) => {
+  const res = await adminCustomPost.post(
+    API_URL.manageUsers.editUser,
+    postData
+  );
+  return res;
+};
+
 //Desktop Analysis APIs...
 export const getScheduleAssessment = async (postData) => {
   const res = await adminCustomPost.post(
@@ -273,6 +281,21 @@ export const createBulkUsersKeyCloak = async (postData) => {
   return res;
 };
 
+//Edit user keycloak
+export const editUserKeycloak = async (postData) => {
+  const res = await axios.post(
+    `${BASE_URL_KEYCLOAK}${API_URL.SIGNUP.EDIT_USER}`,
+    postData,
+    {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: getCookie("access_token"),
+      },
+    }
+  );
+  return res;
+};
+
 //Bulk create users Hasura
 export const createBulkUserHasura = async (postData) => {
   const res = await adminCustomPost.post(
@@ -289,6 +312,7 @@ export const createBulkUserHasura = async (postData) => {
 //   );
 //   return res;
 // };
+
 //global search
 export const searchUsers = async (postData) => {
   const res = await adminCustomPost.post(
