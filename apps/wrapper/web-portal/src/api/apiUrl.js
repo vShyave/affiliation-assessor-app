@@ -37,7 +37,8 @@ const API_URL = {
     setActivate: `${rest}setValid`,
     setDeactive: `${rest}setInvalid`,
     addUsers: `${rest}addUsers`,
-    deleteUser: `${rest}deleteUser`
+    deleteUser: `${rest}deleteUser`,
+    editUser:`${rest}editUser`
   },
 
 desktopAnalysis:{
@@ -54,7 +55,8 @@ desktopAnalysis:{
   },
   SIGNUP: {
     CREATE_BULK_USER: "keycloak/createBulkUser",
-    CREATE_USER: "keycloak/user/create"
+    CREATE_USER: "keycloak/user/create",
+    EDIT_USER: "keycloak/user/update"
   },  
   LOGIN: {
     GENERATE_OTP: "user/generateOtp",
