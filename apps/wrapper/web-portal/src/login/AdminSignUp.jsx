@@ -34,7 +34,6 @@ export default function AdminSingUp() {
       
         firstName: firstName,
         lastName: lastName,
-        fullName: firstName+" "+lastName,
         email: email,
         username: email,
         password: "rkr",
@@ -51,10 +50,8 @@ export default function AdminSingUp() {
         accessTokenObj
       );
       setCookie("access_token","Bearer "+accessTokenResponse.data.access_token)
-      console.log(accessTokenResponse);
 
       const keyCloakSignupRes = await userService.signup(userDetails);
-      console.log(keyCloakSignupRes);
 
       const adminDetails = {
         user_id: keyCloakSignupRes.data.userId,
@@ -65,7 +62,6 @@ export default function AdminSingUp() {
         phoneNumber: mobilePhone,
       };
       const adminRes = await registerUser(adminDetails);
-      console.log(adminRes)
       navigate(ADMIN_ROUTE_MAP.loginModule.login);
       removeCookie("access_token")
     } catch (error) {
