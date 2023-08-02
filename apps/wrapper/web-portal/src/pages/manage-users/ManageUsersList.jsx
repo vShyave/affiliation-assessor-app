@@ -189,7 +189,7 @@ export default function ManageUsersList({
         <div className="flex flex-row text-2xl font-semibold">
           <Menu>
             <MenuHandler>
-              <button>...</button>
+              <button className="leading-3 position-relative">...</button>
             </MenuHandler>
             <MenuList>
               <MenuItem
