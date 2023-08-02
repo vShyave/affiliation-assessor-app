@@ -247,7 +247,7 @@ const FormsOverview = () => {
          },
        ],
      };      
-      duplicateForms(postData);
+      await duplicateForms(postData);
       fetchFormsList()
 
       // setViewFormState( formDetail  )
@@ -477,7 +477,7 @@ const FormsOverview = () => {
                 alertTitle: "Duplicate Form",
                 alertMsg: "Are you sure to duplicate the form?",
                 actionButtonLabel: "Duplicate",
-                actionFunction: duplicate,fetchFormsList,
+                actionFunction: duplicate,
                 actionProps: [e?.form_id],
               },
             }));

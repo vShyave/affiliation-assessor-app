@@ -333,7 +333,11 @@ function BulkUploadUsersModal({ setBulkUploadSchduleModal }) {
               </div>
 
               <div className=" flex-row text-blue-500">
-                <Link to="/download-template">
+                <Link
+                  to="/files/Template_bulk_assessment_schedule.csv"
+                  target="_blank"
+                  download
+                >
                   <small>Download Template</small>
                 </Link>
               </div>

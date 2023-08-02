@@ -154,6 +154,15 @@ export const createCourse = async (postData) => {
   );
   return res;
 };
+
+export const updateForms = async (postData) => {
+  const res = await adminCustomPost.post(
+    API_URL.manageForms.updateForms,
+    postData
+  );
+  return res;
+};
+
 // Manage users API's...
 export const getAllUsers = async (postData) => {
   const res = await adminCustomPost.post(
