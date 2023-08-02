@@ -2,13 +2,11 @@ import React, { useEffect, useState } from "react";
 
 import { Link, useNavigate, useParams } from "react-router-dom";
 
-import { Select, Option } from "@material-tailwind/react";
-import { set, useForm } from "react-hook-form";
 import Button from "../../components/Button";
 
 import { FaAngleRight } from "react-icons/fa";
 import UploadForm from "./UploadForm";
-import { convertODKtoXML, createForm, publishForms, updateForms, viewForm } from "../../api";
+import { convertODKtoXML, createForm, updateForms, viewForm } from "../../api";
 import Toast from "../../components/Toast";
 import { Label } from "../../components";
 import ADMIN_ROUTE_MAP from "../../routes/adminRouteMap";
@@ -146,47 +144,6 @@ const CreateForm = () => {
     }
   };
 
-  const publishForm = async () => {
-    const formData = new FormData();
-    formData.append("form_id", formId);
-    try {
-      const response = await publishForms(formData);
-      setToast((prevState) => ({
-        ...prevState,
-        toastOpen: true,
-        toastMsg: "Form successfully Published!",
-        toastType: "success",
-      }));
-      setTimeout(() => {
-        setToast((prevState) => ({
-          ...prevState,
-          toastOpen: false,
-          toastMsg: "",
-          toastType: "",
-        }));
-        navigate(ADMIN_ROUTE_MAP.adminModule.manageForms.home);
-      }, 3000);
-      // Notification.sendemail({"body":})
-    } catch (error) {
-      console.log("error - ", error);
-      setToast((prevState) => ({
-        ...prevState,
-        toastOpen: true,
-        toastMsg: "Error occured while publishing form!",
-        toastType: "error",
-      }));
-      setTimeout(
-        () =>
-          setToast((prevState) => ({
-            ...prevState,
-            toastOpen: false,
-            toastMsg: "",
-            toastType: "",
-          })),
-        3000
-      );
-    }
-  };
 
   const getFormDetails = async (formData) => {
     try {
@@ -274,19 +231,6 @@ const CreateForm = () => {
                   onClick={() =>
                     navigate(ADMIN_ROUTE_MAP.adminModule.manageForms.home)
                   }
-                />
-                <Button
-                  moreClass={`${
-                    Object.values(formData).length !== 10
-                      ? "text-gray-500 bg-white border border-gray-300 cursor-not-allowed"
-                      : "text-white border"
-                  } px-6`}
-                  text="Publish"
-                  onClick={publishForm}
-                  otherProps={{
-                    disabled: Object.values(formData).length !== 10,
-                    style: { display: formStatus !== "Draft" ? "none" : "" },
-                  }}
                 />
                 <Button
                   moreClass={`${
@@ -532,10 +476,6 @@ const CreateForm = () => {
                           <option value="">Select here</option>
                           <option value="applicant">Applicant</option>
                           <option value="admin">Admin</option>
-                          <option value="government">Government</option>
-                          <option value="desktop_assessor">
-                            Desktop Assessor
-                          </option>
                           <option value="on-ground_assessor">
                             On-ground Assessor
                           </option>
