@@ -9,7 +9,9 @@ const API_URL = {
     viewForm: `${rest}getFormData`,
     list: `${rest}getGroundInspectionAnalysis`,
     markStatus: `${rest}inProgress`,
-    acceptApplicant: `${rest}acceptForm`,
+    acceptApplicantNoc: `${rest}acceptFormR1`,
+    acceptApplicantCertificate: `${rest}acceptFormR2`,
+
     rejectApplicant: `${rest}rejectForm`,
     getGroundInspectionAnalysis: `${rest}getGroundInspectionAnalysis`,
     ViewStatus: {
@@ -50,7 +52,8 @@ desktopAnalysis:{
   scheduleManagement:{
     getAssessmentSchedule: `${rest}getAssessmentSchedule`,
     filterAssessments: `${rest}filterAssessments`,
-    addAssessmentSchedule: `${rest}addAssessmentSchedule`
+    addAssessmentSchedule: `${rest}addAssessmentSchedule`,
+    deleteSchedule: `${rest}deleteSchedule`
   },
   SIGNUP: {
     CREATE_BULK_USER: "keycloak/createBulkUser",
