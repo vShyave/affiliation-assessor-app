@@ -99,6 +99,13 @@ const DesktopAnalysisList = () => {
   };
 
   const navigateToView = (formObj) => {
+    if (formObj?.original?.file_name?.includes("applicant")) {
+      formObj.original.file_name = formObj?.original?.file_name?.replace(
+        "applicant",
+        "admin"
+      );
+    }
+
     const navigationURL = `${ADMIN_ROUTE_MAP.adminModule.desktopAnalysis.viewForm}/${formObj?.original?.file_name}/${formObj?.original?.id}`;
     navigation(navigationURL);
 
