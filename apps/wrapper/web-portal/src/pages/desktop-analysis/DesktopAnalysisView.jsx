@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useParams, Link } from "react-router-dom";
 import { BsArrowLeft, BsArrowRight } from "react-icons/bs";
 import { FaAngleRight } from "react-icons/fa";
-
+import StatusLogModal from "../ground-analysis/StatusLogModal";
 import { Card, Button } from "./../../components";
 
 // import NocModal from "./NocModal";
@@ -27,7 +27,7 @@ export default function DesktopAnalysisView() {
   let { formName, formId } = useParams();
   const [formDataFromApi, setFormDataFromApi] = useState();
   // const[]
-
+  const [openStatusModel, setOpenStatusModel] = useState(false);
   const [toast, setToast] = useState({
     toastOpen: false,
     toastMsg: "",
@@ -122,7 +122,10 @@ export default function DesktopAnalysisView() {
                 </span>
               </button>
               <div className="inline-block h-[40px] min-h-[1em] w-0.5 border opacity-100 dark:opacity-50"></div>
-              <button className="border border-gray-500 text-blue-600 bg-gray-100 w-[140px] h-[40px] font-medium rounded-[4px]">
+              <button
+                onClick={() => setOpenStatusModel(true)}
+                className="border border-gray-500 text-blue-600 bg-gray-100 w-[140px] h-[40px] font-medium rounded-[4px]"
+              >
                 View status log
               </button>
             </div>
@@ -162,6 +165,12 @@ export default function DesktopAnalysisView() {
           {/* { openModel && <NocModal closeModal={setOpenModel}/> } */}
           {/* { rejectModel && <RejectNocModal closeRejectModal={setRejectModel}/> } */}
           {/* {openCertificateModel && <IssueCertificateModal closeCertificateModal={setOpenCertificateModel}/>} */}
+          {openStatusModel && (
+            <StatusLogModal
+              closeStatusModal={setOpenStatusModel}
+              formId={formId}
+            />
+          )}
           {openScheduleInspectionModel && (
             <ScheduleInspectionModal
               closeSchedule={setOpenSheduleInspectionModel}
