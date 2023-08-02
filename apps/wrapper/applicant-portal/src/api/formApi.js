@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { registerEvent, getLocalTimeInISOFormat } from './index';
 
 const ENKETO_MANAGER_URL = process.env.REACT_APP_ENKETO_MANAGER_URL;
 const HASURA_CLIENT_NAME = process.env.HASURA_CLIENT_NAME || 'hasura-console';
@@ -25,7 +26,6 @@ export const getPrefillXML = async (form, onFormSuccessData, prefillXML, imageUr
 };
 
 export const saveFormSubmission = (data) => {
-
     const query = {
         query: `mutation ($object: [form_submissions_insert_input!] = {}) {
             insert_form_submissions(objects: $object) {
@@ -37,6 +37,7 @@ export const saveFormSubmission = (data) => {
         }`,
         variables: { object: data },
     };
+    
     return makeHasuraCalls(query);
 };
 
@@ -60,7 +61,17 @@ export const makeHasuraCalls = async (query) => {
 };
 
 const validateResponse = async (response) => {
+    console.log("response - ", response);
     const apiRes = await response.json();
+
+    registerEvent({
+      created_date: getLocalTimeInISOFormat(),
+      entity_id: apiRes?.data?.insert_form_submissions?.returning?.[0]?.form_id.toString(),
+      entity_type: "form",
+      event_name: "Application Submitted",
+      remarks: "",
+    });
+
     const jsonResponse = {
         ...apiRes,
         responseStatus: false,
@@ -98,4 +109,4 @@ export const getFormURI = (form, ofsd, prefillSpec) => {
         ofsd
       )}&prefillSpec=${encodeFunction(prefillSpec)}`
     );
-  };
+};
