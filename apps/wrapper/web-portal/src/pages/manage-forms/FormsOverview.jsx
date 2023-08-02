@@ -202,7 +202,7 @@ const FormsOverview = () => {
 
   const duplicate = (formId) => {
     setShowAlert(false);
-    getFormDetails(formId );
+    getFormDetails(formId);
   };
 
   const delete_Form = (formId) => {
@@ -226,29 +226,28 @@ const FormsOverview = () => {
     try {
       const response = await viewForm(formData);
       const formDetail = response.data.forms[0];
-     const postData = {
-       formsData: [
-         {
-            
-           title: formDetail?.title +'-'+'Duplicate',
-           file_name: formDetail?.file_name,
-           course_type: formDetail?.course_type,
-           course_level: formDetail?.course_level,
-           application_type: formDetail?.application_type,
-           form_desc: formDetail?.form_desc,
-           created_at: formDetail?.created_at,
-           updated_at: formDetail?.updated_at,
-           round: formDetail?.round,
-           form_status: formDetail?.form_status,
-           path: formDetail?.path,
-           labels: formDetail?.labels,
-           assignee: formDetail?.assignee,
-           user_id: formDetail?.user_id,
-         },
-       ],
-     };      
+      const postData = {
+        formsData: [
+          {
+            title: `CLONE - ${formDetail?.title}`,
+            file_name: formDetail?.file_name,
+            course_type: formDetail?.course_type,
+            course_level: formDetail?.course_level,
+            application_type: formDetail?.application_type,
+            form_desc: formDetail?.form_desc,
+            created_at: formDetail?.created_at,
+            updated_at: formDetail?.updated_at,
+            round: formDetail?.round,
+            form_status: formDetail?.form_status,
+            path: formDetail?.path,
+            labels: formDetail?.labels,
+            assignee: formDetail?.assignee,
+            user_id: formDetail?.user_id,
+          },
+        ],
+      };
       await duplicateForms(postData);
-      fetchFormsList()
+      fetchFormsList();
 
       // setViewFormState( formDetail  )
     } catch (error) {
@@ -353,14 +352,12 @@ const FormsOverview = () => {
       path: getFieldName(e?.path),
       form_status: e?.form_status,
       created_at: readableDate(e?.created_at),
-      // new Date(e?.created_at)?.toLocaleDateString(),
       form_id: e?.form_id,
       updated_at: readableDate(e?.updated_at),
       labels: e?.labels,
-      // new Date(e?.updated_at)?.toLocaleDateString(),
       publish: (
         <a
-          className={`px-6 text-primary-600 pl-0 bg-white`}
+          className={`text-primary-600 bg-white`}
           onClick={() => {
             setShowAlert(true);
             setState((prevState) => ({
@@ -454,41 +451,32 @@ const FormsOverview = () => {
         <div className="flex flex-row text-2xl font-semibold">
           <Menu>
             <MenuHandler>
-              <button>...</button>
+              <button className="leading-3 relative top-[-8px]">...</button>
             </MenuHandler>
             <MenuList>
-              {/* <MenuItem
-              onClick={() => navigateToView(e)}
+              <MenuItem
+                onClick={() => {
+                  setShowAlert(true);
+                  setState((prevState) => ({
+                    ...prevState,
+                    alertContent: {
+                      alertTitle: "Duplicate Form",
+                      alertMsg: "Are you sure to duplicate the form?",
+                      actionButtonLabel: "Duplicate",
+                      actionFunction: duplicate,
+                      fetchFormsList,
+                      actionProps: [e?.form_id],
+                    },
+                  }));
+                }}
               >
-                <div className="flex flex-row gap-4 mt-4">
-                  <div> 
-                    <VscPreview />
-                  </div>
-                  <div className="text-semibold m-">
-                    <span>Preview</span>
-                  </div>
-                </div>{" "}
-              </MenuItem> */}
-              <MenuItem onClick={() => {
-            setShowAlert(true);
-            setState((prevState) => ({
-              ...prevState,
-              alertContent: {
-                alertTitle: "Duplicate Form",
-                alertMsg: "Are you sure to duplicate the form?",
-                actionButtonLabel: "Duplicate",
-                actionFunction: duplicate,
-                actionProps: [e?.form_id],
-              },
-            }));
-          }}>
-                <div className="flex flex-row gap-4 mt-4">
-                  <div>
+                <div className="flex flex-row gap-3 p-2 px-0 items-center">
+                  <div className="flex">
                     {" "}
                     <VscCopy />{" "}
                   </div>
-                  <div className="text-semibold m-">
-                    <span>Duplicate</span>
+                  <div className="text-semibold">
+                    <span>Clone</span>
                   </div>
                 </div>{" "}
               </MenuItem>
@@ -512,11 +500,11 @@ const FormsOverview = () => {
                   }));
                 }}
               >
-                <div className="flex flex-row gap-4 mt-4">
-                  <div>
+                <div className="flex flex-row gap-3 p-2 px-0 items-center">
+                  <div className="flex">
                     <RiDeleteBin6Line />
                   </div>
-                  <div className="text-semibold m-">
+                  <div className="text-semibold">
                     <span>Delete</span>
                   </div>
                 </div>{" "}
@@ -526,6 +514,7 @@ const FormsOverview = () => {
         </div>
       ),
     };
+
     formsDataList.push(formsData);
     if (e.submitted_on === new Date().toJSON().slice(0, 10)) {
       status_obj.submitted_today++;
@@ -740,7 +729,7 @@ const FormsOverview = () => {
           </div>
           <div className="flex flex-col gap-4">
             <ul className="flex flex-wrap gap-3 -mb-px">
-            <li onClick={() => handleSelectMenu("create_new")}>
+              <li onClick={() => handleSelectMenu("create_new")}>
                 <a
                   href="#"
                   className={`inline-block p-4 rounded-t-lg dark:text-blue-500 dark:border-blue-600 ${
@@ -753,7 +742,7 @@ const FormsOverview = () => {
                 </a>
               </li>
 
-            <li className="mr-2" onClick={() => handleSelectMenu("Draft")}>
+              <li className="mr-2" onClick={() => handleSelectMenu("Draft")}>
                 <a
                   href="#"
                   className={`inline-block p-4 rounded-t-lg dark:text-blue-500 dark:border-blue-600 ${
@@ -767,7 +756,10 @@ const FormsOverview = () => {
                 </a>
               </li>
 
-            <li className="mr-2" onClick={() => handleSelectMenu("Published")}>
+              <li
+                className="mr-2"
+                onClick={() => handleSelectMenu("Published")}
+              >
                 <a
                   href="#"
                   className={`inline-block p-4 rounded-t-lg dark:text-blue-500 dark:border-blue-600 ${

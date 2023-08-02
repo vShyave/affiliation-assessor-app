@@ -9,7 +9,6 @@ import {
 } from "react-table";
 
 import { Checkbox } from "@material-tailwind/react";
-// import { Checkbox } from "./Checkbox";
 import GlobalFilter from "./GlobalFilter";
 
 import {
@@ -20,62 +19,39 @@ import {
 
 const FilteringTable = (props) => {
   let array = [];
-
   const columns = props?.columns;
-
   const data = props?.dataList;
-
   const [selectedRows, setSelectedRows] = useState([]);
-  // console.log(data);
 
   const {
     getTableProps,
-
     getTableBodyProps,
-
     headerGroups,
-
     // rows,
-
     prepareRow,
-
     state,
-
     setGlobalFilter,
-
     page,
-
     setPageSize,
-
     selectedFlatRows,
   } = useTable(
     {
       columns,
-
       data /* initialState : {
-
       pageSize: 200
-
     } */,
     },
-
     useGlobalFilter,
-
     useSortBy,
-
     usePagination,
-
     useRowSelect,
 
     (hooks) => {
       if (props.showCheckbox) {
         hooks.visibleColumns.push((columns) => {
-          console.log(columns);
-
           return [
             {
               id: "selection",
-
               Header: ({ getToggleAllRowsSelectedProps }) => (
                 <Checkbox {...getToggleAllRowsSelectedProps()} />
               ),
@@ -91,7 +67,6 @@ const FilteringTable = (props) => {
                 // return <Checkbox {...row.getToggleRowSelectedProps()} />;
               },
             },
-
             ...columns,
           ];
         });
@@ -111,10 +86,8 @@ const FilteringTable = (props) => {
 
   const nextPage = () => {
     setPageIndex((prevState) => prevState + 1);
-
     setPaginationInfo((prevState) => ({
       ...prevState,
-
       offsetNo: offsetNo + pageSize,
     }));
   };

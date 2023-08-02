@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 
-import { MdFileUpload, MdEdit, MdDelete } from "react-icons/md";
+// import { MdFileUpload, MdEdit, MdDelete } from "react-icons/md";
+import { RiDeleteBin6Line } from "react-icons/ri";
 
 import FilteringTable from "../../components/table/FilteringTable";
 import Card from "../../components/Card";
@@ -13,9 +14,19 @@ import {
   filterForms,
   getAssessmentSchedule,
   searchAssessments,
+  deleteSchedule,
 } from "../../api";
 import ADMIN_ROUTE_MAP from "../../routes/adminRouteMap";
 import BulkUploadScheduleModal from "./BulkUploadScheduleModal";
+import AlertModal from "../../components/AlertModal";
+
+import {
+  Menu,
+  MenuHandler,
+  MenuList,
+  MenuItem,
+} from "@material-tailwind/react";
+import Toast from "../../components/Toast";
 
 const ScheduleManagementList = () => {
   const navigation = useNavigate();
@@ -29,7 +40,23 @@ const ScheduleManagementList = () => {
   });
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [isFilterOpen, setIsFilterOpen] = useState(false);
-  const [bulkUploadScheduleModal, setBulkUploadSchduleModal] = useState(false)
+  const [bulkUploadScheduleModal, setBulkUploadSchduleModal] = useState(false);
+
+  const [showAlert, setShowAlert] = useState(false);
+  const [toast, setToast] = useState({
+    toastOpen: false,
+    toastMsg: "",
+    toastType: "",
+  });
+
+  const [state, setState] = useState({
+    menu_selected: "create_new",
+    alertContent: {
+      alertTitle: "",
+      alertMsg: "",
+      actionButtonLabel: "",
+    },
+  });
 
   const COLUMNS = [
     {
@@ -114,14 +141,88 @@ const ScheduleManagementList = () => {
     status: e?.status,
     more_actions: (
       <div className="flex flex-row text-2xl font-semibold">
-        <button
-        //   onClick={() => navigateToUpdate(e)}
-        >
-          ...
-        </button>
+        <Menu>
+          <MenuHandler>
+            <button className="leading-3 position-relative">...</button>
+          </MenuHandler>
+          <MenuList>
+            <MenuItem
+              onClick={() => {
+                setShowAlert(true);
+                setState((prevState) => ({
+                  ...prevState,
+                  alertContent: {
+                    alertTitle: "Delete schedule",
+                    alertMsg: "Are you sure,you want to delete this schedule?",
+                    actionButtonLabel: "Delete",
+                    actionFunction: handleDeleteSchedule,
+                    actionProps: [e],
+                  },
+                }));
+              }}
+            >
+              <div className="flex flex-row gap-4">
+                <div>
+                  <RiDeleteBin6Line />
+                </div>
+                <div className="text-semibold">
+                  <span >Delete</span>
+                </div>
+              </div>{" "}
+            </MenuItem>
+          </MenuList>
+        </Menu>
       </div>
     ),
   });
+
+  const handleDeleteSchedule = async (formId) => {
+    console.log("clicked", formId[0]?.id);
+    console.log("clicked2", formId);
+
+    const postData = { id: formId[0]?.id };
+
+    try {
+      const response = await deleteSchedule(postData);
+      if (response.status === 200) {
+        setToast((prevState) => ({
+          ...prevState,
+          toastOpen: true,
+          toastMsg: "Schedule successfully Deleted!",
+          toastType: "success",
+        }));
+        setTimeout(() => {
+          setToast((prevState) => ({
+            ...prevState,
+            toastOpen: false,
+            toastMsg: "",
+            toastType: "",
+          }));
+        }, 3000);
+        fetchAllAssessmentSchedule();
+      }
+      // Notification.sendemail({"body":})
+    } catch (error) {
+      console.log("error - ", error);
+      setToast((prevState) => ({
+        ...prevState,
+        toastOpen: true,
+        toastMsg: "Error occured while deleting form!",
+        toastType: "error",
+      }));
+      setTimeout(
+        () =>
+          setToast((prevState) => ({
+            ...prevState,
+            toastOpen: false,
+            toastMsg: "",
+            toastType: "",
+          })),
+        3000
+      );
+    }
+    setShowAlert(false);
+  };
 
   const filterApiCall = async (filters) => {
     const postData = {
@@ -190,13 +291,38 @@ const ScheduleManagementList = () => {
 
   return (
     <>
-    <Nav/>
-    <div className={`container m-auto min-h-[calc(100vh-148px)] px-3 py-12`}>
-      <div className="flex flex-col gap-8">
-        <div className="flex flex-col gap-4">
-          <div className="flex flex-row">
-            <div className="flex flex-grow items-center">
-              <div className="text-2xl font-medium">Schedule management</div>
+      {toast.toastOpen && (
+        <Toast toastMsg={toast.toastMsg} toastType={toast.toastType} />
+      )}
+
+      {showAlert && (
+        <AlertModal showAlert={setShowAlert} {...state.alertContent} />
+      )}
+      <Nav />
+      <div className={`container m-auto min-h-[calc(100vh-148px)] px-3 py-12`}>
+        <div className="flex flex-col gap-8">
+          <div className="flex flex-col gap-4">
+            <div className="flex flex-row">
+              <div className="flex flex-grow items-center">
+                <div className="text-2xl font-medium">Schedule management</div>
+              </div>
+              <div className="flex flex-grow justify-end">
+                <span className="flex gap-4">
+                  <button className="flex flex-wrap items-center justify-center gap-2 border border-gray-500 text-gray-500 bg-white w-[200px] h-[45px] text-md font-medium rounded-[4px]">
+                    Download CSV template
+                  </button>
+                  <Button
+                    // onClick={() =>
+                    //   navigation(
+                    //     ADMIN_ROUTE_MAP.adminModule.scheduleManagement.uploadForm
+                    //   )
+                    // }
+                    onClick={() => setBulkUploadSchduleModal(true)}
+                    moreClass="text-white"
+                    text="Upload CSV for scheduling"
+                  ></Button>
+                </span>
+              </div>
             </div>
             <div className="flex flex-grow justify-end">
               <span className="flex gap-4">
@@ -208,42 +334,28 @@ const ScheduleManagementList = () => {
               </span>
             </div>
           </div>
-          <div className="flex flex-wrap">
-            {cardArray.map((obj, index) => (
-              <Card
-                moreClass="shadow-md w-[200px] h-[100px] m-3 first:ml-0"
-                key={index}
-              >
-                <div className="flex flex-col place-items-start justify-center gap-2">
-                  <h3 className="text-xl font-semibold">{obj.value}</h3>
-                  <p className="text-sm font-medium text-gray-700">
-                    {obj.text}
-                  </p>
-                </div>
-              </Card>
-            ))}
+          <div className="flex flex-col gap-4">
+            <FilteringTable
+              dataList={scheduleTableList}
+              columns={COLUMNS}
+              navigateFunc={() => {}}
+              filterApiCall={filterApiCall}
+              onRowSelect={() => {}}
+              pagination={true}
+              showFilter={true}
+              paginationInfo={paginationInfo}
+              setPaginationInfo={setPaginationInfo}
+              setIsSearchOpen={setIsSearchOpen}
+              setIsFilterOpen={setIsFilterOpen}
+              searchApiCall={searchApiCall}
+            />
           </div>
         </div>
-        <div className="flex flex-col gap-4">
-          <FilteringTable
-            dataList={scheduleTableList}
-            columns={COLUMNS}
-            navigateFunc={() => {}}
-            filterApiCall={filterApiCall}
-            onRowSelect={() => {}}
-            pagination={true}
-            showFilter={true}
-            paginationInfo={paginationInfo}
-            setPaginationInfo={setPaginationInfo}
-            setIsSearchOpen={setIsSearchOpen}
-            setIsFilterOpen={setIsFilterOpen}
-            searchApiCall={searchApiCall}
-          />
-        </div>
-      </div>
       </div>
       {bulkUploadScheduleModal && (
-        <BulkUploadScheduleModal setBulkUploadSchduleModal={setBulkUploadSchduleModal}/>
+        <BulkUploadScheduleModal
+          setBulkUploadSchduleModal={setBulkUploadSchduleModal}
+        />
       )}
     </>
   );
