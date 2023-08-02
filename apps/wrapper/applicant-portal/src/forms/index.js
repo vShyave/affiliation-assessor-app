@@ -15,7 +15,7 @@ export const getCookie = (cname) => {
 export const getFromLocalForage = async (key) => {
     const user = getCookie("userData");
     try {
-      return await localforage.getItem(`${user?.id || '427d473d-d8ea-4bb3-b317-f230f1c9b2f7'}_${key}`);
+      return await localforage.getItem(`${key}`);
     } catch (err) {
         // console.log(err);
         return null;
@@ -40,15 +40,14 @@ export const setToLocalForage = async (key, value) => {
     }
 };
 
-export const updateFormData = async (startingForm) => {
+export const updateFormData = async (fileName, userId) => {
     try {
-        // console.log(`${user.id}_${startingForm}_${new Date().toISOString().split("T")[0]}`);
         let data = await getFromLocalForage(
-            `${startingForm}_${new Date().toISOString().split("T")[0]}`
+            `${userId}_${fileName}_${new Date().toISOString().split("T")[0]}`
         );
         console.log("data - ", data);
         let prefilledForm = await getSubmissionXML(
-            startingForm,
+            fileName,
             data?.formData,
             data?.imageUrls
         );

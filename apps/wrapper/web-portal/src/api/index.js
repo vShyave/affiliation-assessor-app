@@ -31,9 +31,16 @@ export const getOnGroundAssessorData = async (postData) => {
   return res;
 };
 
-export const getAcceptApplicant = async (postData) => {
-  const res = await adminCustomPost.post(
-    API_URL.groundAnalysis.acceptApplicant,
+export const getAcceptApplicantNoc = async (postData) => {
+  const res = await adminCustomPost.put(
+    API_URL.groundAnalysis.acceptApplicantNoc,
+    postData
+  );
+  return res;
+};
+export const getAcceptApplicantCertificate = async (postData) => {
+  const res = await adminCustomPost.put(
+    API_URL.groundAnalysis.acceptApplicantCertificate,
     postData
   );
   return res;
@@ -208,6 +215,14 @@ export const filterUsers = async (postData) => {
   return res;
 };
 
+export const editUserHasura = async (postData) => {
+  const res = await adminCustomPost.post(
+    API_URL.manageUsers.editUser,
+    postData
+  );
+  return res;
+};
+
 //Desktop Analysis APIs...
 export const getScheduleAssessment = async (postData) => {
   const res = await adminCustomPost.post(
@@ -266,10 +281,31 @@ export const addAssessmentSchedule = async (postData) => {
   return res;
 };
 
+export const deleteSchedule = async (postData) => {
+  return await adminCustomPost.delete(API_URL.scheduleManagement.deleteSchedule, {
+    data: postData,
+  });
+};
+
 // Bulk create users keycloak
 export const createBulkUsersKeyCloak = async (postData) => {
   const res = await axios.post(
     `${BASE_URL_KEYCLOAK}${API_URL.SIGNUP.CREATE_BULK_USER}`,
+    postData,
+    {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: getCookie("access_token"),
+      },
+    }
+  );
+  return res;
+};
+
+//Edit user keycloak
+export const editUserKeycloak = async (postData) => {
+  const res = await axios.post(
+    `${BASE_URL_KEYCLOAK}${API_URL.SIGNUP.EDIT_USER}`,
     postData,
     {
       headers: {
@@ -297,6 +333,7 @@ export const createBulkUserHasura = async (postData) => {
 //   );
 //   return res;
 // };
+
 //global search
 export const searchUsers = async (postData) => {
   const res = await adminCustomPost.post(
@@ -337,3 +374,17 @@ export const searchAssessments = async (postData) => {
   );
   return res;
 };
+
+export const registerEvent = async (postData) => {
+  const events = {
+    events: []
+  };
+  events.events.push(postData);
+  console.log("events - ", events);
+
+  const res = await adminCustomPost.post(
+    API_URL.common.registerEvent,
+    events
+  );
+  return res;
+}

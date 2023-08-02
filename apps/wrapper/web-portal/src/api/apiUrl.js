@@ -5,11 +5,16 @@ const API_URL = {
     register: `${rest}createAdmin`,
     getRegulator: `${rest}getRegulator`,
   },
+  common: {
+    registerEvent: `${rest}addEvents`,
+  },
   groundAnalysis: {
     viewForm: `${rest}getFormData`,
     list: `${rest}getGroundInspectionAnalysis`,
     markStatus: `${rest}inProgress`,
-    acceptApplicant: `${rest}acceptForm`,
+    acceptApplicantNoc: `${rest}acceptFormR1`,
+    acceptApplicantCertificate: `${rest}acceptFormR2`,
+
     rejectApplicant: `${rest}rejectForm`,
     getGroundInspectionAnalysis: `${rest}getGroundInspectionAnalysis`,
     ViewStatus: {
@@ -37,7 +42,8 @@ const API_URL = {
     setActivate: `${rest}setValid`,
     setDeactive: `${rest}setInvalid`,
     addUsers: `${rest}addUsers`,
-    deleteUser: `${rest}deleteUser`
+    deleteUser: `${rest}deleteUser`,
+    editUser:`${rest}editUser`
   },
 
 desktopAnalysis:{
@@ -50,11 +56,13 @@ desktopAnalysis:{
   scheduleManagement:{
     getAssessmentSchedule: `${rest}getAssessmentSchedule`,
     filterAssessments: `${rest}filterAssessments`,
-    addAssessmentSchedule: `${rest}addAssessmentSchedule`
+    addAssessmentSchedule: `${rest}addAssessmentSchedule`,
+    deleteSchedule: `${rest}deleteSchedule`
   },
   SIGNUP: {
     CREATE_BULK_USER: "keycloak/createBulkUser",
-    CREATE_USER: "keycloak/user/create"
+    CREATE_USER: "keycloak/user/create",
+    EDIT_USER: "keycloak/user/update"
   },  
   LOGIN: {
     GENERATE_OTP: "user/generateOtp",

@@ -49,7 +49,6 @@ export default function ManageUsersList({
   const [usersList, setUsersList] = useState();
   const [userTableList, setUserTableList] = useState([]);
 
-
   const [invalidUserRowFlag] = useState(false);
   const [selectedEmail, setSelectedEmail] = useState([{ email: "" }]);
   const [isOpen, setIsOpen] = useState(false);
@@ -108,14 +107,12 @@ export default function ManageUsersList({
 
   const handleUsersetInvalid = async (e) => {
     const userId = e?.user_id;
-    console.log("e", e);
     const formData = new FormData();
     formData.append("assessorId", userId);
-    
+
     try {
       const response = await handleInctiveUser(formData);
       fetchAllUsers();
-      
     } catch (error) {
       console.log("error - ", error);
       setToast((prevState) => ({
@@ -138,12 +135,11 @@ export default function ManageUsersList({
   };
   const handleUserSetValid = async (e) => {
     const userId = e?.user_id;
-    console.log("e", e);
     const formData = new FormData();
     formData.append("assessorId", userId);
     try {
       const validResponse = await handleActiveUser(formData);
-      
+
       // setUsersList((usersList) => ({ ...usersList, [validResponse]: validResponse.data.update_assessors.returning[0] }));
 
       fetchAllUsers();
@@ -170,14 +166,12 @@ export default function ManageUsersList({
 
   const handleUserDelete = (e) => {
     setSelectedEmail(e.email);
-    console.log("e.email", e.email);
     setDeleteUsersModel(true);
   };
 
   const setTableData = (e) => {
-    // console.log("setTableData",e)
     var usersData = {
-      full_name: e.fname || e.lname ? e.fname + e.lname : e.name,
+      full_name: e.fname || e.lname ? e.fname +" "+ e.lname : e.name,
       email: e.email?.toLowerCase(),
       mobile_number: e.phonenumber,
       role: e.role || "Assessor",
@@ -195,7 +189,7 @@ export default function ManageUsersList({
         <div className="flex flex-row text-2xl font-semibold">
           <Menu>
             <MenuHandler>
-              <button>...</button>
+              <button className="leading-3 position-relative">...</button>
             </MenuHandler>
             <MenuList>
               <MenuItem
@@ -317,7 +311,6 @@ export default function ManageUsersList({
   useEffect(() => {
     if (deleteFlag) {
       handleDelete(selectedEmail);
-      console.log(selectedEmail);
     }
   }, [deleteFlag]);
 
@@ -325,7 +318,6 @@ export default function ManageUsersList({
     if (bulkDeleteFlag) {
       // handleDelete(selectedEmail);
       handleBulkDelete(selectedRows);
-      console.log(selectedRows);
     }
   }, [bulkDeleteFlag]);
 
@@ -337,7 +329,6 @@ export default function ManageUsersList({
     ];
     const hasuraPostData = { email: email };
     try {
-      console.log("email", email);
       let accessTokenObj = {
         grant_type: "client_credentials",
         client_id: "admin-api",
@@ -350,13 +341,11 @@ export default function ManageUsersList({
         "access_token",
         "Bearer " + accessTokenResponse.data.access_token
       );
-      console.log(accessTokenResponse);
       let hasuraResponse = {};
       const response = await userService.deleteUsers(postData);
       if (response.status === 200) {
         hasuraResponse = await handleDeleteUser(hasuraPostData);
       }
-      console.log("hasurabulk res", hasuraResponse);
       fetchAllUsers();
       setDeleteFlag(false);
       setSelectedEmail([]);
@@ -380,7 +369,6 @@ export default function ManageUsersList({
         );
       }
 
-      // userTableList.map((item) => console.log(item.email));
       removeCookie("access_token");
     } catch (error) {
       console.log("error - ", error);
@@ -415,19 +403,15 @@ export default function ManageUsersList({
 
   const setSelectedRows = (rowList) => {
     let checkboxArr = [];
-    console.log("row", rowList);
     rowList.forEach((item) => {
       let checkboxObj = {};
       checkboxObj.email = item.values.email;
       checkboxArr.push(checkboxObj);
     });
     selectedRows = checkboxArr;
-    console.log("selectedrows", selectedRows);
   };
 
   const handleBulkDelete = async (bulkEmail) => {
-    // console.log("bulkemail",bulkEmail)
-    // setDeleteUsersModel(true)
     const postData = bulkEmail;
     try {
       let errorFlag = false;
@@ -439,31 +423,34 @@ export default function ManageUsersList({
       const accessTokenResponse = await userService.getAccessToken(
         accessTokenObj
       );
-      if(accessTokenResponse.status!==200){errorFlag=true}
+      if (accessTokenResponse.status !== 200) {
+        errorFlag = true;
+      }
       setCookie(
         "access_token",
         "Bearer " + accessTokenResponse.data.access_token
       );
-      console.log(accessTokenResponse);
 
       const res = await userService.deleteUsers(postData);
-      if(res.status!==200){errorFlag=true}
+      if (res.status !== 200) {
+        errorFlag = true;
+      }
 
-      let hasuraResponse = {}
-      bulkEmail.map(async(item) => {
-        console.log("bulk", item.email);
+      let hasuraResponse = {};
+      bulkEmail.map(async (item) => {
         let bulkHasuraPostData = { email: item.email };
-         hasuraResponse = await handleDeleteUser(bulkHasuraPostData);
-         if(hasuraResponse.status!==200){errorFlag=true}
-
-        });
+        hasuraResponse = await handleDeleteUser(bulkHasuraPostData);
+        if (hasuraResponse.status !== 200) {
+          errorFlag = true;
+        }
+      });
 
       //  const res = await userService.deleteUsers(postData);
       fetchAllUsers();
       setBulkDeleteFlag(false);
       setDeleteBulkUsersModel(false);
       selectedRows = [];
-      if(!errorFlag){
+      if (!errorFlag) {
         setToast((prevState) => ({
           ...prevState,
           toastOpen: true,
@@ -481,10 +468,8 @@ export default function ManageUsersList({
           3000
         );
       }
-      
+
       removeCookie("access_token");
-      // userTableList.map((item) => console.log(item.email));
-      // console.log("hello", userTableList);
     } catch (error) {
       console.log("error - ", error);
       setToast((prevState) => ({
@@ -537,7 +522,15 @@ export default function ManageUsersList({
                       <MdFileUpload />
                     </span>
                   </button>
-                  <Button moreClass="text-white" text="Add User"></Button>
+                  <Button
+                    moreClass="text-white"
+                    text="Add User"
+                    onClick={() =>
+                      navigation(
+                        `${ADMIN_ROUTE_MAP.adminModule.manageUsers.createUser}`
+                      )
+                    }
+                  ></Button>
                 </span>
               </div>
             </div>
