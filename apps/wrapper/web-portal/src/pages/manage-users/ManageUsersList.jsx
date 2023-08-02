@@ -346,7 +346,7 @@ export default function ManageUsersList({
       if (response.status === 200) {
         hasuraResponse = await handleDeleteUser(hasuraPostData);
       }
-      fetchAllUsers();
+      await fetchAllUsers();
       setDeleteFlag(false);
       setSelectedEmail([]);
 
@@ -510,7 +510,15 @@ export default function ManageUsersList({
                   <Button moreClass="text-white" text="Make inactive"></Button>
                   <Button
                     moreClass="text-white"
-                    onClick={() => setDeleteBulkUsersModel(true)}
+                    // otherProps={{
+                    //   disabled: (selectedRows.length) ?  true : false,
+                    // }}
+                    // moreClass={`${
+                    //   (!selectedRows.length)
+                    //     ? "cursor-not-allowed border border-gray-500 bg-white text-gray-500 px-8 h-[44px]"
+                    //     : "px-8 text-white bg-blue-900"
+                    // }`}
+                    onClick={() => (selectedRows.length) ? setDeleteBulkUsersModel(true): setDeleteBulkUsersModel(false)}
                     text="Delete user"
                   ></Button>
                   <button
