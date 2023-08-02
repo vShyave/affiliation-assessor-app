@@ -11,11 +11,12 @@ import { getPrefillXML } from "../../api/formApi";
 
 const ENKETO_URL = process.env.REACT_APP_ENKETO_URL;
 
-const UploadForm = ({ setFormStage, handleFile, xmlData, formData }) => {
+const UploadForm = ({ setFormStage, handleFile, xmlData, formData, formStatus }) => {
   const [fileName, setFileName] = useState("");
   const hiddenFileInput = React.useRef(null);
   const [encodedFormURI, setEncodedFormURI] = useState("");
   let formURI = "";
+console.log(formData)
 
   const handleClick = (e) => {
     hiddenFileInput.current.click();
@@ -152,9 +153,19 @@ const UploadForm = ({ setFormStage, handleFile, xmlData, formData }) => {
                     style={{ display: "none" }}
                   />
                   <Button
-                    moreClass="text-white w-full px-6"
+                    // moreClass="text-white w-full px-6"
+                    // disabled={formStatus=="Published" || formStatus=="Unpublished"}
+
+                    moreClass={`${
+                      formStatus=="Published" || formStatus=="Unpublished"
+                        ? "text-white w-full px-6"
+                        : "cursor-not-allowed border w-full px-6 border-gray-500 bg-white text-gray-500 "
+                    }`}
                     text="Browse file to upload"
                     onClick={handleClick}
+                    otherProps={{
+                      disabled: (formStatus=="Published" || formStatus=="Unpublished") ?  true : false  ,
+                    }}
                   />
                   {formData?.path && (
                     <>

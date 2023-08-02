@@ -168,7 +168,8 @@ export default function ApplicationPage({
                 </span>{" "}
               </button>
               <button
-                onClick={() => setOpenModel(true)}
+                onClick={() => setOpenIssueNocModel(true)
+                }
                 disabled={rejectStatus}
                 className={!rejectStatus
                   ? "flex flex-wrap items-center justify-center gap-2 border border-gray-500 text-gray-500 bg-white w-[140px] h-[40px] font-medium rounded-[4px]"
@@ -226,7 +227,7 @@ export default function ApplicationPage({
         </div>
       </div>
 
-      {openModel && <NocModal closeModal={setOpenModel}  setOpenIssueNocModel={setOpenIssueNocModel} setToast={setToast} />}
+      {/* {openModel && <NocModal closeModal={setOpenModel}  setOpenIssueNocModel={setOpenIssueNocModel} setToast={setToast} />} */}
       {rejectModel && (
         <RejectNocModal closeRejectModal={setRejectModel} setRejectStatus={setRejectStatus} setToast={setToast} />
       )}
