@@ -49,8 +49,11 @@ function IssueNocModal({
     getNocOrCertificatePdf(formData);
   };
 
+  const handleChangeComments = (e) => {
+        setComment(e.target.value);
+      };
+
   const handleChange = (e) => {
-    setComment(e.target.value);
 
     const fileUploaded = e.target.files[0];
     console.log("fileUploaded",fileUploaded)
@@ -129,8 +132,8 @@ function IssueNocModal({
     };
     const responseNoc = await getAcceptApplicantNoc(postData);
     console.log("noc hasura done");
-    let pathName = "";
-  let nocorCertificateFileName = "";
+     pathName = "";
+     nocorCertificateFileName = "";
   };
   const handleAcceptApplicantRoundTwo = async () => {
     const postData = {
@@ -142,8 +145,8 @@ function IssueNocModal({
     };
     const responseCertificate = await getAcceptApplicantCertificate(postData);
     console.log("hasura certificate done");
-    let pathName = "";
-  let nocorCertificateFileName = "";
+     pathName = "";
+     nocorCertificateFileName = "";
   };
   // const handleAcceptApplicant = async () => {
   // navigate to next page
@@ -156,13 +159,13 @@ function IssueNocModal({
         <Toast toastMsg={toast.toastMsg} toastType={toast.toastType} />
       )}
       <div className="flex justify-center items-center fixed inset-0 bg-opacity-25 backdrop-blur-sm">
-        <div className="flex justify-center p-4 rounded-xl shadow-xl border border-gray-400 bg-gray-100 w-[580px] h-[300px]">
+        <div className="flex justify-center p-4 rounded-xl shadow-xl border border-gray-400 bg-gray-100 w-[580px] h-fit">
           <div className="flex flex-col gap-4">
             <div className="title text-base flex font-bold">
               <h1>Upload NOC</h1>
             </div>
             <hr />
-            <div className="body w-[496px] flex flex-col h-full flex justify-center items-center">
+            <div className="body w-[496px] flex flex-col  flex justify-center items-center">
               <input
                 type="file"
                 accept="application/pdf, .pdf"
@@ -174,13 +177,22 @@ function IssueNocModal({
                 Upload pdf file of size {"<"} 5mb
               </div>
               <Button
-                moreClass="text-white flex justify-center  h-fit w-1/2 px-6"
+                moreClass="text-white flex justify-center h-fit w-1/2 px-6"
                 text="Browse file to upload(.pdf)"
                 onClick={handleClick}
               />{" "}
               {fileTypeError && (
                 <div className="text-red-500">{"Only pdf files accepted!(max size 5MB)"}</div>
               )}
+                <textarea
+                onChange={handleChangeComments}
+                placeholder="Remarks"
+                className="border w-[480px] h-[120px] p-2 mt-[8px] rounded-xl resize-none"
+                name=""
+                id=""
+                cols="30"
+                rows="10"
+              ></textarea>
             </div>
             <div className="footer flex flex-row justify-between">
               <button

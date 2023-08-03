@@ -53,7 +53,7 @@ export const ManageUsersFilters = ({
     filterApiCall(filters);
   }, [filters, paginationInfo.offsetNo, paginationInfo.limit]);
   return (
-    <div className="flex flex-grow text-gray-700 dark:text-gray-400 gap-8">
+    <div className="flex flex-grow text-gray-700 z-10 dark:text-gray-400 gap-8">
       <div className="flex">
         <Select
           name="role"
@@ -185,6 +185,7 @@ export const ManageFormsFilters = ({
           value={state.course_type}
           onChange={(value) => handleChange("course_type", value)}
           className="bg-gray-50"
+
         >
           {/* <Option value="">Course Type</Option> */}
           <Option value="nursing">Nursing</Option>
