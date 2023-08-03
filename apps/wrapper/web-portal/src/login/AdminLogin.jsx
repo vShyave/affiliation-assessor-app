@@ -197,14 +197,14 @@ const AdminLogin = () => {
                       noValidate
                     />
                     {errors?.email?.type === "required" && (
-                      <p className="text-red-500 mt-2 text-sm">
+                      <div className="text-red-500 mt-2 text-sm">
                         This field is required
-                      </p>
+                      </div>
                     )}
                     {errors?.email?.type === "pattern" && (
-                      <p className="text-red-500 mt-2 text-sm">
+                      <div className="text-red-500 mt-2 text-sm">
                         This is not a valid email format
-                      </p>
+                      </div>
                     )}
                   </div>
                   {/* <div className="flex flex-col gap-2">
@@ -226,14 +226,14 @@ const AdminLogin = () => {
                       noValidate
                     />
                     {errors?.phone?.type === "required" && (
-                      <p className="text-red-500 mt-2 text-sm">
+                      <div className="text-red-500 mt-2 text-sm">
                         This field is required
-                      </p>
+                      </div>
                     )}
                     {errors?.phone?.type === "pattern" && (
-                      <p className="text-red-500 mt-2 text-sm">
+                      <div className="text-red-500 mt-2 text-sm">
                         This is not a valid mobile number format
-                      </p>
+                      </div>
                     )}
                   </div> */}
                   <Button
@@ -241,7 +241,7 @@ const AdminLogin = () => {
                     text="Get Otp"
                     type="submit"
                   ></Button>
-                  <p className="flex justify-center my-6">
+                  <div className="flex justify-center my-6">
                     <span className="text-gray-400">Create an account, </span>
                     &nbsp;
                     <Link
@@ -250,7 +250,7 @@ const AdminLogin = () => {
                     >
                       Sign up
                     </Link>
-                  </p>
+                  </div>
                 </form>
               </>
             )}
@@ -277,24 +277,24 @@ const AdminLogin = () => {
                       noValidate
                     />
                     {errors?.otp?.type === "required" && (
-                      <p className="text-red-500 mt-2 text-sm">
+                      <div className="text-red-500 mt-2 text-sm">
                         This field is required
-                      </p>
+                      </div>
                     )}
                     {errors?.otp?.type === "pattern" && (
-                      <p className="text-red-500 mt-2 text-sm">
+                      <div className="text-red-500 mt-2 text-sm">
                         Please enter 6 digit otp
-                      </p>
+                      </div>
                     )}
                     {verifyEnteredOtp == false && (
-                      <p className="text-red-500 mt-2 text-sm">
+                      <div className="text-red-500 mt-2 text-sm">
                         Please enter the correct OTP
-                      </p>
+                      </div>
                     )}
                     {toast.toastOpen && (
-                      <p className="text-red-500 mt-2 text-sm">
+                      <div className="text-red-500 mt-2 text-sm">
                         You are not a registered admin.
-                      </p>
+                      </div>
                     )}
                   </div>
                   <Button
@@ -302,7 +302,7 @@ const AdminLogin = () => {
                     text="Sign in"
                     type="submit"
                   ></Button>
-                  <p className="flex justify-center my-6">
+                  <div className="flex justify-center my-6">
                     <span
                       className="text-primary-700 cursor-pointer"
                       onClick={() => {
@@ -311,7 +311,7 @@ const AdminLogin = () => {
                     >
                       Go back, re-enter the email id
                     </span>
-                  </p>
+                  </div>
                 </form>
               </>
             )}

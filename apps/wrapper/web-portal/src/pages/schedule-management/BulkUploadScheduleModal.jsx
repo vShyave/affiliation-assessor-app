@@ -92,7 +92,7 @@ function BulkUploadUsersModal({ setBulkUploadSchduleModal }) {
       accessor: "assessor_code",
 
       Cell: (props) => {
-        return <p>{isDataValid(props.value)}</p>;
+        return <div>{isDataValid(props.value)}</div>;
       },
     },
 
@@ -101,7 +101,7 @@ function BulkUploadUsersModal({ setBulkUploadSchduleModal }) {
       accessor: "date",
 
       Cell: (props) => {
-        return <p>{isDataValid(props.value)}</p>;
+        return <div>{isDataValid(props.value)}</div>;
       },
     },
 
@@ -110,7 +110,7 @@ function BulkUploadUsersModal({ setBulkUploadSchduleModal }) {
       accessor: "institute_id",
 
       Cell: (props) => {
-        return <p>{isDataValid(props.value)}</p>;
+        return <div>{isDataValid(props.value)}</div>;
       },
     },
 
@@ -119,7 +119,7 @@ function BulkUploadUsersModal({ setBulkUploadSchduleModal }) {
       accessor: "assisstant_code",
 
       // Cell: (props) => {
-      //   return <p>{isDataValid(props.value)}</p>;
+      //   return <div>{isDataValid(props.value)}</div>;
       // },
     },
   ];
@@ -320,9 +320,9 @@ function BulkUploadUsersModal({ setBulkUploadSchduleModal }) {
 
               <div className="flex flex-row m-auto">
                 {tableDataReady && (
-                    <p className="text-sm">
+                    <div className="text-sm">
                       <small>Show all users</small>
-                    </p>
+                    </div>
                   ) && (
                     <Switch
                       id="show-with-errors"

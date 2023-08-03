@@ -13,10 +13,10 @@ export default function EnterOtp() {
           <div className="flex flex-col gap-2">
             <Label htmlFor="otp" text="Email OTP" required></Label>
             <Input type="text" name="otp" id="otp" placeholder="XXXXXX"></Input>
-            <p className="text-sm text-gray-400">
+            <div className="text-sm text-gray-400">
               Enter the 6 digit OTP sent to your email address
-            </p>
-            {/* <p className="text-red-500 text-sm" >{formErrors.email}</p> */}
+            </div>
+            {/* <div className="text-red-500 text-sm" >{formErrors.email}</div> */}
           </div>
           <Button
             moreClass="uppercase w-full mt-7 text-white"

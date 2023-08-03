@@ -388,3 +388,36 @@ export const registerEvent = async (postData) => {
   );
   return res;
 }
+
+//Notifications APIs
+export const insertNotifications = async (postData) =>{
+  const res = await adminCustomPost.post(
+    API_URL.notifications.insertNotifications,
+    postData
+  );
+  return res;
+}
+
+export const getNotifications = async (postData) =>{
+  const res = await adminCustomPost.post(
+    API_URL.notifications.getNotifications,
+    postData
+  );
+  return res;
+}
+
+export const readNotification = async (postData) =>{
+  const res = await adminCustomPost.put(
+    API_URL.notifications.readNotification,
+    postData
+  );
+  return res;
+}
+
+export const viewNotification = async (postData) =>{
+  const res = await adminCustomPost.post(
+    API_URL.notifications.viewNotification,
+    postData
+  );
+  return res;
+}

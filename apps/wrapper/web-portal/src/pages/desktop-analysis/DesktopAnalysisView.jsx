@@ -143,9 +143,9 @@ export default function DesktopAnalysisView() {
                 >
                   <h4 className="text-secondary font-medium">Status: New</h4>
                 </div>
-                <p className="flex text-gray-500 justify-center">
+                <div className="flex text-gray-500 justify-center">
                   Your application is on-hold 23/03/2023
-                </p>
+                </div>
               </Card>
               <Card moreClass="shadow-md">
                 <iframe

@@ -1,6 +1,7 @@
 import { initializeApp } from "firebase/app";
 import { getMessaging, getToken, onMessage } from "firebase/messaging";
 
+const VAPID_KEY = 'BHQYJFpVAvAyVm0Gnk2yDT8snQ98N6eVx5VlRAcrFgGbWWK5GBy55AJYupwCkP19OzxsdG1OFHBlPwIvqhazWV8'
 const firebaseConfig = {
     apiKey: "AIzaSyDOS8cUwjl-30_cYZvYcnmbtQoCxslQ2qE",
     authDomain: "test-upsmf.firebaseapp.com",
@@ -26,7 +27,7 @@ export const getPermissionForToken = () => {
     const permission = 'granted';
     if (permission === "granted") {
       console.log("Notification User Permission Granted."); 
-      return getToken(messaging, { vapidKey: `Notification_key_pair` }).then((currentToken) => {
+      return getToken(messaging, { vapidKey: `${VAPID_KEY}` }).then((currentToken) => {
         if (currentToken) {
           console.log('Client Token: ', currentToken);
         } else {

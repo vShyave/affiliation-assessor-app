@@ -2,8 +2,16 @@ import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { useEffect } from "react";
 import ADMIN_ROUTE_MAP from "./routes/adminRouteMap";
 import "./App.css";
-import { getMessaging, getToken, onMessage, isSupported } from "firebase/messaging";
-import fireBaseApp, { onMessageListener, getPermissionForToken } from "./config/firebase";
+import {
+  getMessaging,
+  getToken,
+  onMessage,
+  isSupported,
+} from "firebase/messaging";
+import fireBaseApp, {
+  onMessageListener,
+  getPermissionForToken,
+} from "./config/firebase";
 
 // import { messaging } from "firebase/compat/messaging";
 
@@ -41,20 +49,36 @@ import ScheduledUploadForm from "./pages/schedule-management/ScheduledUploadForm
 import Notification from "./pages/notifications/Notification";
 import NotificationsDetailedView from "./pages/notifications/NotificationsDetailedView";
 import NocIssued from "./pages/ground-analysis/NocIssuedConfirmation";
+import { getCookie, getLocalTimeInISOFormat } from "./utils";
+import { insertNotifications } from "./api";
 
 function App() {
-  // const messaging = getMessaging(fireBaseApp);
-  isSupported().then((payload) => {
-    console.log("payload - ", payload);
-    onMessageListener()?.then(payload => {
-      // setNotification({title: payload.notification.title, body: payload.notification.body})
-      // setShow(true);
-      console.log(payload);
-    }).catch(err => console.log('failed: ', err));
-  }); 
+  const messaging = getMessaging(fireBaseApp);
+  const onMessageListener = (async () => {
+    const messagingResolve = await messaging;
+    if (messagingResolve) {
+      onMessage(messagingResolve, (payload) => {
+        console.log(payload);
+        const postData = {
+          notifications: [
+            {
+              title: payload.data.title,
+              body: payload.data.body,
+              date: getLocalTimeInISOFormat(),
+              user_id: getCookie("regulator")[0]["user_id"],
+              user_type: "Admin",
+              read_status: "Unread",
+            },
+          ],
+        };
+        insertNotifications(postData)
+      });
+    }
+  })();
+
 
   useEffect(() => {
-    getPermissionForToken()
+    getPermissionForToken();
   }, []);
 
   return (
@@ -106,7 +130,7 @@ function App() {
 
             {/* Notifications routing starts here */}
             <Route
-              path={ADMIN_ROUTE_MAP.adminModule.notifications.home}
+              path={`${ADMIN_ROUTE_MAP.adminModule.notifications.home}/:notificationId?`}
               element={<Notification />}
             >
               <Route index element={<NotificationsDetailedView />}></Route>

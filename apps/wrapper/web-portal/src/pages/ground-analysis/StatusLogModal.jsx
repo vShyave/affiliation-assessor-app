@@ -26,17 +26,17 @@ function StatusLogModal({closeStatusModal}) {
             </div>
             <div className='flex flex-col gap-2 overflow-auto'>
               <div className='flex flex-col rounded-xl gap-1 border bg-gray-100 p-4'>
-                <p className='font-medium'>Returned</p>
-                <p className='text-sm text-gray-600'>{formStatus?.remarks}</p>
-                <p className='text-sm text-gray-600'>30 Mar 2023</p>
+                <div className='font-medium'>Returned</div>
+                <div className='text-sm text-gray-600'>{formStatus?.remarks}</div>
+                <div className='text-sm text-gray-600'>30 Mar 2023</div>
               </div>
               <div className='flex flex-col rounded-xl gap-1 border bg-gray-100 p-4'>
-                <p className='font-medium'>Under review</p>
-                <p className='text-sm text-gray-600'>{formStatus?.reviewed_on}</p>
+                <div className='font-medium'>Under review</div>
+                <div className='text-sm text-gray-600'>{formStatus?.reviewed_on}</div>
               </div>
               <div className='flex flex-col rounded-xl gap-1 border bg-gray-100 p-4'>
-                <p className='font-medium'>Received on</p>
-                <p className='text-sm text-gray-600'>{formStatus?.submitted_on}</p>
+                <div className='font-medium'>Received on</div>
+                <div className='text-sm text-gray-600'>{formStatus?.submitted_on}</div>
               </div>
             </div>
             <div className='footer flex flex-row justify-end'>

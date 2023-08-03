@@ -8,6 +8,12 @@ const API_URL = {
   common: {
     registerEvent: `${rest}addEvents`,
   },
+  notifications:{
+    insertNotifications: `${rest}insertNotifications`,
+    getNotifications: `${rest}getNotifications`,
+    readNotification: `${rest}readNotification`,
+    viewNotification: `${rest}viewNotification`
+  },
   groundAnalysis: {
     viewForm: `${rest}getFormData`,
     list: `${rest}getGroundInspectionAnalysis`,

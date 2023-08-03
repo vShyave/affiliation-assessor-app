@@ -114,14 +114,14 @@ export default function AdminSingUp() {
                     })}
                   />
                   {errors?.firstName?.type === "required" && (
-                    <p className="text-red-500 mt-2 text-sm">
+                    <div className="text-red-500 mt-2 text-sm">
                       This field is required
-                    </p>
+                    </div>
                   )}
                   {errors?.firstName?.type === "pattern" && (
-                    <p className="text-red-500 mt-2 text-sm">
+                    <div className="text-red-500 mt-2 text-sm">
                       Alphabetical characters only
-                    </p>
+                    </div>
                   )}
                 </div>
                 <Label htmlFor="lastName" text="Last name" required></Label>
@@ -138,14 +138,14 @@ export default function AdminSingUp() {
                     })}
                   />
                   {errors?.lastName?.type === "required" && (
-                    <p className="text-red-500 mt-2 text-sm">
+                    <div className="text-red-500 mt-2 text-sm">
                       This field is required
-                    </p>
+                    </div>
                   )}
                   {errors?.lastName?.type === "pattern" && (
-                    <p className="text-red-500 mt-2 text-sm">
+                    <div className="text-red-500 mt-2 text-sm">
                       Alphabetical characters only
-                    </p>
+                    </div>
                   )}
                 </div>
               </div>
@@ -165,14 +165,14 @@ export default function AdminSingUp() {
                       noValidate
                     />
                     {errors?.email?.type === "required" && (
-                      <p className="text-red-500 mt-2 text-sm">
+                      <div className="text-red-500 mt-2 text-sm">
                         This field is required
-                      </p>
+                      </div>
                     )}
                     {errors?.email?.type === "pattern" && (
-                      <p className="text-red-500 mt-2 text-sm">
+                      <div className="text-red-500 mt-2 text-sm">
                         This is not a valid email format
-                      </p>
+                      </div>
                     )}
                   </div>
               <div className="flex flex-col gap-2">
@@ -195,14 +195,14 @@ export default function AdminSingUp() {
                     })}
                   />
                   {errors?.mobilePhone?.type === "required" && (
-                    <p className="text-red-500 mt-2 text-sm">
+                    <div className="text-red-500 mt-2 text-sm">
                       This field is required
-                    </p>
+                    </div>
                   )}
                   {errors?.mobilePhone?.type === "pattern" && (
-                    <p className="text-red-500 mt-2 text-sm">
+                    <div className="text-red-500 mt-2 text-sm">
                       This is not a valid mobile number
-                    </p>
+                    </div>
                   )}
                 </div>
               </div>
@@ -211,7 +211,7 @@ export default function AdminSingUp() {
               moreClass="uppercase w-full mt-7 text-white"
               text="Continue"
             ></Button>
-            <p className="flex justify-center my-6">
+            <div className="flex justify-center my-6">
               <span className="text-gray-400">Have an account, </span>&nbsp;
               <Link
                 to={ADMIN_ROUTE_MAP.loginModule.login}
@@ -219,7 +219,7 @@ export default function AdminSingUp() {
               >
                 Login
               </Link>
-            </p>
+            </div>
           </div>
         </form>
       </Card>
