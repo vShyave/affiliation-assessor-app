@@ -308,15 +308,7 @@ const ScheduleManagementList = () => {
               </div>
               <div className="flex flex-grow justify-end">
                 <span className="flex gap-4">
-                  <button className="flex flex-wrap items-center justify-center gap-2 border border-gray-500 text-gray-500 bg-white w-[200px] h-[45px] text-md font-medium rounded-[4px]">
-                    Download CSV template
-                  </button>
                   <Button
-                    // onClick={() =>
-                    //   navigation(
-                    //     ADMIN_ROUTE_MAP.adminModule.scheduleManagement.uploadForm
-                    //   )
-                    // }
                     onClick={() => setBulkUploadSchduleModal(true)}
                     moreClass="text-white"
                     text="Upload CSV for scheduling"

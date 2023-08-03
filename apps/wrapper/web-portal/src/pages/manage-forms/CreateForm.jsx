@@ -1,14 +1,12 @@
 import React, { useEffect, useState } from "react";
 
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 
-import { Select, Option } from "@material-tailwind/react";
-import { set, useForm } from "react-hook-form";
 import Button from "../../components/Button";
 
 import { FaAngleRight } from "react-icons/fa";
 import UploadForm from "./UploadForm";
-import { convertODKtoXML, createForm, viewForm } from "../../api";
+import { convertODKtoXML, createForm, updateForms, viewForm } from "../../api";
 import Toast from "../../components/Toast";
 import { Label } from "../../components";
 import ADMIN_ROUTE_MAP from "../../routes/adminRouteMap";
@@ -16,6 +14,7 @@ import ADMIN_ROUTE_MAP from "../../routes/adminRouteMap";
 const CreateForm = () => {
   const [formStatus,setFormStatus] = useState("")
   const navigate = useNavigate();
+  const { formId } = useParams();
   const [formStage, setFormStage] = useState(1);
   const [loading, setLoading] = useState(false);
   const [xmlData, setXmlData] = useState(null);
@@ -46,15 +45,21 @@ const CreateForm = () => {
     uploadOdkForm(formData);
   };
 
-  const handleSaveDraft = async () => {
-    let newForm = new FormData();
-    Object.keys(formData).forEach((key) => newForm.append(key, formData[key]));
+  const handleSaveUpdateDraft = async (action) => {
+    let postData = new FormData();
+    Object.keys(formData).forEach((key) => postData.append(key, formData[key]));
     // TODO: make user_id dynamic
-    newForm.append("user_id", "53c57d13-d33d-439a-bd72-1f56b189642d");
-    newForm.append("form_status", "Draft");
+    postData.append("user_id", "53c57d13-d33d-439a-bd72-1f56b189642d");
+    postData.append("form_status", "Draft");
     try {
       setLoading(true);
-      const createFormResponse = await createForm(newForm);
+      if (action === "save") {
+        const formResponse = await createForm(postData);
+      }
+      if(action==="update"){
+        postData.append("form_id",formId)
+        const formResponse = await updateForms(postData);
+      }
       setToast((prevState) => ({
         ...prevState,
         toastOpen: true,
@@ -139,6 +144,7 @@ const CreateForm = () => {
     }
   };
 
+
   const getFormDetails = async (formData) => {
     try {
       const response = await viewForm(formData);
@@ -192,21 +198,20 @@ const CreateForm = () => {
       {toast.toastOpen && (
         <Toast toastMsg={toast.toastMsg} toastType={toast.toastType} />
       )}
-       {/* Breadcrum */}
+      {/* Breadcrum */}
       {/* <Breadcrumb data={breadCrumbData} /> */}
-
 
       <div className="h-[48px] bg-white flex justify-start drop-shadow-sm">
         <div className="container mx-auto flex px-3">
           <div className="flex flex-row font-bold gap-2 items-center">
             <Link to={ADMIN_ROUTE_MAP.adminModule.manageForms.home}>
               <span className="text-primary-400 cursor-pointer">
-               Manage Forms
+                Manage Forms
               </span>
             </Link>
             <FaAngleRight className="text-gray-500 text-[16px]" />
             <Link to={ADMIN_ROUTE_MAP.adminModule.scheduleManagement.home}>
-            <span className="text-gray-500">Create form</span>
+              <span className="text-gray-500">Create form</span>
             </Link>
             {/* <FaAngleRight className="text-[16px]" />
             <span className="text-gray-500 uppercase">User details</span> */}
@@ -226,7 +231,20 @@ const CreateForm = () => {
                   onClick={() =>
                     navigate(ADMIN_ROUTE_MAP.adminModule.manageForms.home)
                   }
-                ></Button>
+                />
+                <Button
+                  moreClass={`${
+                    Object.values(formData).length !== 10
+                      ? "text-gray-500 bg-white border border-gray-300 cursor-not-allowed"
+                      : "text-white border"
+                  } px-6`}
+                  text="Update"
+                  onClick={()=>(handleSaveUpdateDraft("update"))}
+                  otherProps={{
+                    disabled: Object.values(formData).length !== 10,
+                    style: { display: formStatus !== "Draft" ? "none" : "" },
+                  }}
+                />
                 <Button
                   moreClass={`${
                     Object.values(formData).length !== 10
@@ -234,11 +252,19 @@ const CreateForm = () => {
                       : "text-white border"
                   } px-6`}
                   text="Save as draft"
-                  onClick={handleSaveDraft}
+                  onClick={()=>(handleSaveUpdateDraft("save"))}
                   otherProps={{
                     disabled: Object.values(formData).length !== 10,
+                    style: {
+                      display:
+                        formStatus === "Published" ||
+                        formStatus === "Unpublished" ||
+                        formStatus === "Draft"
+                          ? "none"
+                          : "",
+                    },
                   }}
-                ></Button>
+                />
               </div>
             </div>
 
@@ -271,7 +297,7 @@ const CreateForm = () => {
                   </div>
                   <div className="flex flex-grow">
                     <div className="grid grid-rows-3 grid-cols-6 gap-8">
-                    <div className="sm:col-span-3">
+                      <div className="sm:col-span-3">
                         <Label
                           required
                           text="Form title"
@@ -450,10 +476,6 @@ const CreateForm = () => {
                           <option value="">Select here</option>
                           <option value="applicant">Applicant</option>
                           <option value="admin">Admin</option>
-                          <option value="government">Government</option>
-                          <option value="desktop_assessor">
-                            Desktop Assessor
-                          </option>
                           <option value="on-ground_assessor">
                             On-ground Assessor
                           </option>
