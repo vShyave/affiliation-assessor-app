@@ -7,7 +7,7 @@ function AlertModal({showAlert,actionFunction,alertTitle,actionButtonLabel, aler
   return (
     
       <>
-        <div className='flex justify-center items-center fixed inset-0 bg-opacity-25 backdrop-blur-sm'>
+        <div className='flex justify-center items-center fixed inset-0 bg-opacity-25 z-10 backdrop-blur-sm'>
             <div className='flex justify-between p-4 rounded-xl shadow-xl border border-gray-400 bg-white max-w-[580px] max-h-[300px] '>
                 <div className='flex flex-col gap-4 min-w-[400px]'>
                     <div className='title flex font-bold'>

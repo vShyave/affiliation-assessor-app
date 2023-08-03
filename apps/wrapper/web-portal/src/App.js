@@ -2,8 +2,16 @@ import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { useEffect } from "react";
 import ADMIN_ROUTE_MAP from "./routes/adminRouteMap";
 import "./App.css";
-import { getMessaging, getToken, onMessage, isSupported } from "firebase/messaging";
-import fireBaseApp, { onMessageListener, getPermissionForToken } from "./config/firebase";
+import {
+  getMessaging,
+  getToken,
+  onMessage,
+  isSupported,
+} from "firebase/messaging";
+import fireBaseApp, {
+  onMessageListener,
+  getPermissionForToken,
+} from "./config/firebase";
 
 // import { messaging } from "firebase/compat/messaging";
 
@@ -45,15 +53,17 @@ function App() {
   // const messaging = getMessaging(fireBaseApp);
   isSupported().then((payload) => {
     console.log("payload - ", payload);
-    onMessageListener()?.then(payload => {
-      // setNotification({title: payload.notification.title, body: payload.notification.body})
-      // setShow(true);
-      console.log(payload);
-    }).catch(err => console.log('failed: ', err));
-  }); 
+    onMessageListener()
+      ?.then((payload) => {
+        // setNotification({title: payload.notification.title, body: payload.notification.body})
+        // setShow(true);
+        console.log(payload);
+      })
+      .catch((err) => console.log("failed: ", err));
+  });
 
   useEffect(() => {
-    getPermissionForToken()
+    getPermissionForToken();
   }, []);
 
   return (

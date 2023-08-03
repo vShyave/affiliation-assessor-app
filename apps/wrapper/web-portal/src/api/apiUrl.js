@@ -17,24 +17,21 @@ const API_URL = {
 
     rejectApplicant: `${rest}rejectForm`,
     getGroundInspectionAnalysis: `${rest}getGroundInspectionAnalysis`,
-    ViewStatus: {
-      getViewStatus: `${rest}getStatusLog`,
-    },
-    filterOGA: `${rest}filterOGA`
+    filterOGA: `${rest}filterOGA`,
   },
   manageForms: {
     getForms: `${rest}getForms`,
     convertODKtoXML: `user/convert`,
-    nocPdfUpload:`user/upload`,
+    nocPdfUpload: `user/upload`,
     createForm: `${rest}createForm`,
     publishForms: `${rest}publishForms`,
     unpublishForms: `${rest}unpublishForms`,
     viewForm: `${rest}viewForm`,
-    duplicateForm:`${rest}duplicateForm`,
+    duplicateForm: `${rest}duplicateForm`,
     deleteForm: `${rest}deleteForm`,
     filterForms: `${rest}filterForms`,
     createCourses: `${rest}createCourse`,
-    updateForms: `${rest}updateForms`
+    updateForms: `${rest}updateForms`,
   },
   manageUsers: {
     userList: `${rest}getAllUsers`,
@@ -44,33 +41,36 @@ const API_URL = {
     setDeactive: `${rest}setInvalid`,
     addUsers: `${rest}addUsers`,
     deleteUser: `${rest}deleteUser`,
-    editUser:`${rest}editUser`
+    editUser: `${rest}editUser`,
   },
 
-desktopAnalysis:{
-    getUsersForSchedulingAssessment:`${rest}getUsersForSchedulingAssessment`,
+  desktopAnalysis: {
+    getUsersForSchedulingAssessment: `${rest}getUsersForSchedulingAssessment`,
     scheduleAssessment: `${rest}addAssessmentSchedule`,
     getDesktopAnalysisForms: `${rest}getDesktopAnalysis`,
-    getCourseOGA : `${rest}getCoursesOGA`,
-    filterDesktopAnalysis: `${rest}filterDesktopAnalysis`
+    getCourseOGA: `${rest}getCoursesOGA`,
+    filterDesktopAnalysis: `${rest}filterDesktopAnalysis`,
   },
-  scheduleManagement:{
+  scheduleManagement: {
     getAssessmentSchedule: `${rest}getAssessmentSchedule`,
     filterAssessments: `${rest}filterAssessments`,
     addAssessmentSchedule: `${rest}addAssessmentSchedule`,
-    deleteSchedule: `${rest}deleteSchedule`
+    deleteSchedule: `${rest}deleteSchedule`,
+  },
+  viewStatus: {
+    getViewStatus: `${rest}getEvents`,
   },
   SIGNUP: {
     CREATE_BULK_USER: "keycloak/createBulkUser",
     CREATE_USER: "keycloak/user/create",
-    EDIT_USER: "keycloak/user/update"
-  },  
+    EDIT_USER: "keycloak/user/update",
+  },
   LOGIN: {
     GENERATE_OTP: "user/generateOtp",
     USERLOGIN: "user/login",
   },
-  DELETE:{
-    DELETE_USER:"keycloak/user/delete"
+  DELETE: {
+    DELETE_USER: "keycloak/user/delete",
   },
   NOTIFICATION: {
     SEND_SMS: "",
@@ -83,11 +83,11 @@ desktopAnalysis:{
     searchDesktop: `${rest}searchDesktop`,
     searchOGA: `${rest}searchOGA`,
     searchForms: `${rest}searchForms`,
-    searchAssessments: `${rest}searchAssessments`
+    searchAssessments: `${rest}searchAssessments`,
   },
-  ACCESS_TOKEN:{
-    TOKEN_URL: "realms/sunbird-rc/protocol/openid-connect/token"
-  }
+  ACCESS_TOKEN: {
+    TOKEN_URL: "realms/sunbird-rc/protocol/openid-connect/token",
+  },
 };
 
 export default API_URL;
