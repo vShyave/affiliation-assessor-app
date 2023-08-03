@@ -4,6 +4,7 @@ export const APIS = {
     },
     FORMS: {
       LIST: "/rest/getAllCourses",
+      VIEW_FORM: `/rest/getFormData`,
     },
     SIGNUP: {
       CREATE_USER: "keycloak/user/create",

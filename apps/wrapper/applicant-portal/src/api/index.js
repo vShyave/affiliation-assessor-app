@@ -4,7 +4,7 @@ import axios from 'axios';
 
 export const getFormData = async (postData) => {
     const res = await customPost.post(
-        APIS.FORM.VIEW_FORM,
+        APIS.FORMS.VIEW_FORM,
         postData
     );
     return res;
