@@ -2,19 +2,30 @@ import React, { useEffect, useState } from "react";
 import { useParams, Link } from "react-router-dom";
 import { BsArrowLeft, BsArrowRight } from "react-icons/bs";
 import { FaAngleRight } from "react-icons/fa";
-
-import { Card, Button } from "./../../components";
+import XMLParser from "react-xml-parser";
 
 // import NocModal from "./NocModal";
-import ScheduleInspectionModal from "./ScheduleInspectionModal";
 // import RejectNocModal from "./RejectNocModal";
+import { Card, Button } from "./../../components";
+import CommonModal from "./../../Modal";
+import ScheduleInspectionModal from "./ScheduleInspectionModal";
 import Sidebar from "../../components/Sidebar";
-
-import ADMIN_ROUTE_MAP from "../../routes/adminRouteMap";
+import Toast from "../../components/Toast";
 
 import { getFormData } from "../../api";
-import { getPrefillXML } from "./../../api/formApi";
-import Toast from "../../components/Toast";
+import ADMIN_ROUTE_MAP from "../../routes/adminRouteMap";
+import {
+  getFormURI,
+  saveFormSubmission,
+  getPrefillXML,
+} from "./../../api/formApi";
+import {
+  updateFormData,
+  getSpecificDataFromForage,
+  removeItemFromLocalForage,
+  getFromLocalForage,
+  setToLocalForage,
+} from "../../forms";
 
 const ENKETO_URL = process.env.REACT_APP_ENKETO_URL;
 
@@ -26,7 +37,6 @@ export default function DesktopAnalysisView() {
   const [encodedFormURI, setEncodedFormURI] = useState("");
   let { formName, formId } = useParams();
   const [formDataFromApi, setFormDataFromApi] = useState();
-  // const[]
 
   const [toast, setToast] = useState({
     toastOpen: false,
@@ -53,18 +63,42 @@ export default function DesktopAnalysisView() {
         id: "google",
       },
     },
+    start: formName,
   };
 
-  const fetchFormData = async () => {
-    const postData = { form_id: formId };
-    const res = await getFormData(postData);
-    const formData = res.data.form_submissions[0];
+  const startingForm = formSpec.start;
+  const [onFormSuccessData, setOnFormSuccessData] = useState(undefined);
+  const [onFormFailureData, setOnFormFailureData] = useState(undefined);
+  const [onSubmit, setOnSubmit] = useState(false);
+  const [encodedFormSpec, setEncodedFormSpec] = useState(
+    encodeURI(JSON.stringify(formSpec.formId))
+  );
 
+  const fetchFormData = async () => {
+    let formData = {};
     let filePath =
       process.env.REACT_APP_GCP_AFFILIATION_LINK + formName + ".xml";
 
-    // setindividualFormName(res.data.form.form_name)
+    let data = await getFromLocalForage(
+      `${userId}_${formName}_${new Date().toISOString().split("T")[0]}`
+    );
+    // if (data) {
+    //   formData = data;
+    // } else {
+    const postData = { form_id: formId };
+    const res = await getFormData(postData);
+    formData = res.data.form_submissions[0];
     setFormDataFromApi(res.data.form_submissions[0]);
+
+    await setToLocalForage(
+      `${userId}_${startingForm}_${new Date().toISOString().split("T")[0]}`,
+      {
+        formData: formData?.form_data,
+        imageUrls: { ...data?.imageUrls },
+      }
+    );
+    // }
+
     let formURI = await getPrefillXML(
       `${filePath}`,
       formSpec.onSuccess,
@@ -74,8 +108,128 @@ export default function DesktopAnalysisView() {
     setEncodedFormURI(formURI);
   };
 
+  const afterFormSubmit = async (e) => {
+    const data = typeof e.data === "string" ? JSON.parse(e.data) : e.data;
+
+    try {
+      const { nextForm, formData, onSuccessData, onFailureData } = data;
+      if (data?.state === "ON_FORM_SUCCESS_COMPLETED") {
+        handleSubmit();
+        // setOnSubmit(true);
+      }
+
+      if (nextForm?.type === "form") {
+        setOnFormSuccessData(onSuccessData);
+        setOnFormFailureData(onFailureData);
+        setEncodedFormSpec(encodeURI(JSON.stringify(formSpec.forms[formId])));
+        setEncodedFormURI(
+          getFormURI(
+            nextForm.id,
+            onSuccessData,
+            formSpec.forms[nextForm.id].prefill
+          )
+        );
+      } else if (nextForm?.type === "url") {
+        window.location.href = nextForm.url;
+      }
+    } catch (e) {
+      console.log("error = ", e);
+    }
+  };
+
+  const handleSubmit = async () => {
+    const updatedFormData = await updateFormData(formSpec.start, userId);
+    console.log("updatedFormData - ", updatedFormData);
+    return;
+    const storedData = await getSpecificDataFromForage("required_data");
+
+    saveFormSubmission({
+      schedule_id: null,
+      form_data: updatedFormData,
+      assessment_type: "admin",
+      form_name: formName,
+      submission_status: true,
+      assessor_id: null,
+      applicant_id: null,
+      submitted_on: new Date().toJSON().slice(0, 10),
+      form_status: "Application Submitted",
+    });
+
+    // Delete the data from the Local Forage
+    const key = `${storedData?.assessor_user_id}_${formSpec.start}_${
+      new Date().toISOString().split("T")[0]
+    }`;
+
+    removeItemFromLocalForage(key);
+
+    // setOnSubmit(false);
+    // setToast((prevState) => ({
+    //   ...prevState,
+    //   toastOpen: true,
+    //   toastMsg: "Form Submitted Successfully!.",
+    //   toastType: "success",
+    // }));
+
+    // setTimeout(
+    //   () =>
+    //     setToast((prevState) => ({
+    //       ...prevState,
+    //       toastOpen: false,
+    //       toastMsg: "",
+    //       toastType: "",
+    //     })),
+    //   1500
+    // );
+
+    // setTimeout(
+    //   () => navigate(`${APPLICANT_ROUTE_MAP.dashboardModule.my_applications}`),
+    //   1500
+    // );
+  };
+
+  const handleFormEvents = async (startingForm, afterFormSubmit, e) => {
+    if (typeof e.data === "string" && e.data.includes("webpackHot")) {
+      return;
+    }
+
+    if (
+      ENKETO_URL === e.origin + "/enketo/" &&
+      typeof e?.data === "string" &&
+      JSON.parse(e?.data)?.state !== "ON_FORM_SUCCESS_COMPLETED"
+    ) {
+      var formData = new XMLParser().parseFromString(
+        JSON.parse(e.data).formData
+      );
+      if (formData) {
+        let images = JSON.parse(e.data).fileURLs;
+        let prevData = await getFromLocalForage(
+          `${userId}_${startingForm}_${new Date().toISOString().split("T")[0]}`
+        );
+
+        // console.log("formData - ", JSON.parse(e.data).formData);
+        await setToLocalForage(
+          `${userId}_${startingForm}_${new Date().toISOString().split("T")[0]}`,
+          {
+            formData: JSON.parse(e.data).formData,
+            imageUrls: { ...prevData?.imageUrls, ...images },
+          }
+        );
+      }
+    }
+    afterFormSubmit(e);
+  };
+
+  const handleEventTrigger = async (e) => {
+    handleFormEvents(startingForm, afterFormSubmit, e);
+  };
+
+  const bindEventListener = () => {
+    window.addEventListener("message", handleEventTrigger);
+  };
+
   useEffect(() => {
     fetchFormData();
+    bindEventListener();
   }, []);
 
   return (
@@ -172,6 +326,29 @@ export default function DesktopAnalysisView() {
           )}
         </div>
       </div>
+
+      {onSubmit && (
+        <CommonModal>
+          <p className="text-secondary text-2xl text-semibold font-medium text-center">
+            Are you sure, do you want to submit?
+          </p>
+
+          <div className="flex flex-row justify-center w-full py-4 gap-5">
+            <div
+              className="border border-primary bg-primary py-3 px-8 rounded-[4px] cursor-pointer items-center"
+              onClick={() => setOnSubmit(false)}
+            >
+              No
+            </div>
+            <div
+              className="bg-primary-900 py-3 rounded-[4px] px-8 text-white items-center gap-3 border border-primary py-3 px-7 cursor-pointer"
+              onClick={() => handleSubmit()}
+            >
+              Yes! Submit
+            </div>
+          </div>
+        </CommonModal>
+      )}
     </>
   );
 }
