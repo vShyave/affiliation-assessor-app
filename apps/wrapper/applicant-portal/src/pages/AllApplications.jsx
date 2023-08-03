@@ -13,10 +13,18 @@ import APPLICANT_ROUTE_MAP from "../routes/ApplicantRoute";
 
 const AllApplications = () => {
   const [loadingForms, setLoadingForms] = useState(false);
-  const [formData, setFormData] = useState({ condition: {} });
+  const [formData, setFormData] = useState({
+    condition: {
+      assignee: {
+        _eq: "applicant",
+      },
+    },
+  });
   const [availableForms, setAvailableForms] = useState([]);
   const instituteDetails = getCookie("institutes");
   const navigate = useNavigate();
+
+ 
 
   const handleChange = (name, value) => {
     setFormData({
@@ -24,6 +32,9 @@ const AllApplications = () => {
         ...formData.condition,
         [name]: {
           _eq: value,
+        },
+        assignee: {
+          _eq: "applicant",
         },
       },
     });

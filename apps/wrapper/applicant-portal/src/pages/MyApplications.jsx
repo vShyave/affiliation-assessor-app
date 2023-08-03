@@ -44,8 +44,8 @@ const MyApplications = () => {
     setLoadingForms(true);
     const requestPayload = {
       condition: {
-        course_type: {
-          _eq: instituteDetails?.[0].course_applied,
+        assignee: {
+          _eq: "applicant",
         },
       },
     };

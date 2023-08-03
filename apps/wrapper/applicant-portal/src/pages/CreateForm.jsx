@@ -19,7 +19,7 @@ import {
 } from "./../forms";
 
 import APPLICANT_ROUTE_MAP from "../routes/ApplicantRoute";
-import { Card } from "../components";
+import { Button, Card } from "../components";
 import CommonModal from "../Modal";
 import Toast from "../components/Toast";
 
@@ -38,8 +38,11 @@ const CreateForm = () => {
   const scheduleId = useRef();
   const navigate = useNavigate();
   const [onFormSuccessData, setOnFormSuccessData] = useState(undefined);
+  const[formDataNoc,setFormDataNoc] = useState({})
   const [onFormFailureData, setOnFormFailureData] = useState(undefined);
   const [isDownloading, setIsDownloading] = useState(false);
+  
+
   const [assData, setData] = useState({
     district: "",
     instituteName: "",
@@ -55,6 +58,9 @@ const CreateForm = () => {
   const { userRepresentation } = getCookie("userData");
   const userId = userRepresentation?.id;
   const instituteDetails = getCookie("institutes");
+
+
+  let formData ={}
 
   const formSpec = {
     skipOnSuccessMessage: true,
@@ -102,6 +108,8 @@ const CreateForm = () => {
         const postData = { form_id: formId };
         const res = await getFormData(postData);
         formData = res.data.form_submissions[0];
+        setFormDataNoc(formData)
+
       }
     }
 
@@ -213,6 +221,15 @@ const CreateForm = () => {
       () => navigate(`${APPLICANT_ROUTE_MAP.dashboardModule.my_applications}`),
       1500
     );
+  };
+
+  const handleDownloadNocOrCertificate = () => {
+    if(formDataNoc.round==1){
+    window.open(formDataNoc?.noc_Path, "_blank");
+  } else{
+    window.open(formDataNoc?.certificate_Path, "_blank");
+
+  }
   };
 
   const handleFormEvents = async (startingForm, afterFormSubmit, e) => {
@@ -338,6 +355,28 @@ const CreateForm = () => {
       </div>
 
       <div className="container mx-auto py-12 px-3 min-h-[40vh]">
+        <div className="flex flex-row justify-between">
+          <h1 className="font-bold text-[20px]">
+            {" "}
+            {formName.split("-")[2].toUpperCase()}
+          </h1>
+          <div className="flex flex-grow gap-3 justify-end">
+            <button
+              onClick={handleGoBack}
+              className="bg-gray-100 py-2 mb-8 font-medium rounded-[4px] px-2 text-blue-900 border border-gray-500 flex flex-row items-center gap-3"
+            >
+              Back to my application
+            </button>
+
+            <button
+              onClick={handleDownloadNocOrCertificate}
+              disabled= {formData.form_status=="Approved"}
+              className="bg-primary-900 py-2 mb-8 font-medium rounded-[4px] px-2 text-white flex flex-row items-center gap-3"
+            >
+              Download NOC/Certificate
+            </button>
+          </div>
+        </div>
         <Card moreClass="shadow-md">
           <div className="flex flex-col gap-5">
             <div className="flex flex-grow gap-3 justify-end">

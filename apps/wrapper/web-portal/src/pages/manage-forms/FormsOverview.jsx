@@ -246,7 +246,7 @@ const FormsOverview = () => {
           },
         ],
       };
-      duplicateForms(postData);
+      await duplicateForms(postData);
       fetchFormsList();
 
       // setViewFormState( formDetail  )
@@ -354,6 +354,7 @@ const FormsOverview = () => {
       created_at: readableDate(e?.created_at),
       form_id: e?.form_id,
       updated_at: readableDate(e?.updated_at),
+      assignee: e?.assignee,
       labels: e?.labels,
       publish: (
         <a
@@ -584,6 +585,7 @@ const FormsOverview = () => {
       formObject: objectRes,
       application_type: formDataObject[0]?.application_type,
       course_desc: formDataObject[0]?.form_desc,
+      assignee: formDataObject[0]?.assignee,
     };
 
     try {
