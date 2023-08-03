@@ -72,10 +72,10 @@ console.log(formData)
   // const formSpec = formData?.file_name?.split(".")[0]; //passing form name
 
   const fetchFormData = async () => {
-    const res = await axios.get(formData?.path, {responseType: "text"});
+    const res = await axios.get(formData?.path, { responseType: "text" });
     formURI = await getPrefillXML(
       formData?.path,
-      formSpec.onSuccess,
+      formSpec.onSuccess
       // res.data //tried passing xmlData here
     );
     console.log("formURI----->", formURI);
@@ -85,7 +85,7 @@ console.log(formData)
   const handleFormPreview = async () => {
     console.log("inside handle preview- ", formData);
     await fetchFormData();
-    let src = `${ENKETO_URL}/preview?formSpec=${encodeURI(
+    let src = `${ENKETO_URL}preview?formSpec=${encodeURI(
       JSON.stringify(formSpec)
     )}&xform=${formURI}&userId=${userId}`;
     console.log("Preview Url", src);

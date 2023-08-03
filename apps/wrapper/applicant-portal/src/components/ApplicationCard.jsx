@@ -21,7 +21,7 @@ const ApplicationCard = (props) => {
             className="text-xs text-green-500 p-1 rounded-md"
             style={{ backgroundColor: "#eee" }}
           >
-            Status: {props.application.review_status}
+            Status: {props.application.form_status}
           </span>
         </div>
       </div>
