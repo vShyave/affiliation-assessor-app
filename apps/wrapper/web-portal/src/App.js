@@ -37,7 +37,6 @@ import ManageUser from "./pages/manage-users/ManageUser";
 import DesktopAnalysis from "./pages/desktop-analysis/DesktopAnalysis";
 import PrivateRoute from "./routes/PrivateRoute";
 import ScheduleManagement from "./pages/schedule-management/ScheduleManagement";
-import ScheduledUploadForm from "./pages/schedule-management/ScheduledUploadForm";
 import Notification from "./pages/notifications/Notification";
 import NotificationsDetailedView from "./pages/notifications/NotificationsDetailedView";
 import NocIssued from "./pages/ground-analysis/NocIssuedConfirmation";
@@ -169,10 +168,6 @@ function App() {
               element={<ScheduleManagement />}
             >
               <Route index element={<ScheduleManagementList />}></Route>
-              <Route
-                path={ADMIN_ROUTE_MAP.adminModule.scheduleManagement.uploadForm}
-                element={<ScheduledUploadForm />}
-              ></Route>
             </Route>
           </Route>
         </Routes>
