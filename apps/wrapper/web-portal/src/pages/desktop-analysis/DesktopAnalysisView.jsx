@@ -3,7 +3,6 @@ import { useParams, Link } from "react-router-dom";
 import { BsArrowLeft, BsArrowRight } from "react-icons/bs";
 import { FaAngleRight } from "react-icons/fa";
 import StatusLogModal from "../ground-analysis/StatusLogModal";
-import { Card, Button } from "./../../components";
 import XMLParser from "react-xml-parser";
 
 // import NocModal from "./NocModal";

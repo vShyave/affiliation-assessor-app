@@ -2,8 +2,16 @@ import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { useEffect } from "react";
 import ADMIN_ROUTE_MAP from "./routes/adminRouteMap";
 import "./App.css";
-import { getMessaging, getToken, onMessage, isSupported } from "firebase/messaging";
-import fireBaseApp, { onMessageListener, getPermissionForToken } from "./config/firebase";
+import {
+  getMessaging,
+  getToken,
+  onMessage,
+  isSupported,
+} from "firebase/messaging";
+import fireBaseApp, {
+  onMessageListener,
+  getPermissionForToken,
+} from "./config/firebase";
 
 // import { messaging } from "firebase/compat/messaging";
 
@@ -37,7 +45,6 @@ import ManageUser from "./pages/manage-users/ManageUser";
 import DesktopAnalysis from "./pages/desktop-analysis/DesktopAnalysis";
 import PrivateRoute from "./routes/PrivateRoute";
 import ScheduleManagement from "./pages/schedule-management/ScheduleManagement";
-import ScheduledUploadForm from "./pages/schedule-management/ScheduledUploadForm";
 import Notification from "./pages/notifications/Notification";
 import NotificationsDetailedView from "./pages/notifications/NotificationsDetailedView";
 import NocIssued from "./pages/ground-analysis/NocIssuedConfirmation";
@@ -46,15 +53,17 @@ function App() {
   // const messaging = getMessaging(fireBaseApp);
   isSupported().then((payload) => {
     console.log("payload - ", payload);
-    onMessageListener()?.then(payload => {
-      // setNotification({title: payload.notification.title, body: payload.notification.body})
-      // setShow(true);
-      console.log(payload);
-    }).catch(err => console.log('failed: ', err));
-  }); 
+    onMessageListener()
+      ?.then((payload) => {
+        // setNotification({title: payload.notification.title, body: payload.notification.body})
+        // setShow(true);
+        console.log(payload);
+      })
+      .catch((err) => console.log("failed: ", err));
+  });
 
   useEffect(() => {
-    getPermissionForToken()
+    getPermissionForToken();
   }, []);
 
   return (
@@ -169,10 +178,6 @@ function App() {
               element={<ScheduleManagement />}
             >
               <Route index element={<ScheduleManagementList />}></Route>
-              <Route
-                path={ADMIN_ROUTE_MAP.adminModule.scheduleManagement.uploadForm}
-                element={<ScheduledUploadForm />}
-              ></Route>
             </Route>
           </Route>
         </Routes>
