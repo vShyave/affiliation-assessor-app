@@ -40,7 +40,7 @@ body, .react-calendar {
 
 :disabled {
   background: #f9f9f9;
-  color: rgb(209 213 219 / var(--tw-text-opacity));
+  color: rgb(0 0 0 / var(--tw-text-opacity));
 }
 
 .active {

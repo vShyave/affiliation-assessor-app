@@ -308,36 +308,13 @@ const ScheduleManagementList = () => {
               </div>
               <div className="flex flex-grow justify-end">
                 <span className="flex gap-4">
-                  <button className="flex flex-wrap items-center justify-center gap-2 border border-gray-500 text-gray-500 bg-white w-[200px] h-[45px] text-md font-medium rounded-[4px]">
-                    Download CSV template
-                  </button>
                   <Button
-                    // onClick={() =>
-                    //   navigation(
-                    //     ADMIN_ROUTE_MAP.adminModule.scheduleManagement.uploadForm
-                    //   )
-                    // }
                     onClick={() => setBulkUploadSchduleModal(true)}
                     moreClass="text-white"
                     text="Upload CSV for scheduling"
                   ></Button>
                 </span>
               </div>
-            </div>
-            <div className="flex flex-wrap">
-              {cardArray.map((obj, index) => (
-                <Card
-                  moreClass="shadow-md w-[200px] h-[100px] m-3 first:ml-0"
-                  key={index}
-                >
-                  <div className="flex flex-col place-items-start justify-center gap-2">
-                    <h3 className="text-xl font-semibold">{obj.value}</h3>
-                    <p className="text-sm font-medium text-gray-700">
-                      {obj.text}
-                    </p>
-                  </div>
-                </Card>
-              ))}
             </div>
           </div>
           <div className="flex flex-col gap-4">

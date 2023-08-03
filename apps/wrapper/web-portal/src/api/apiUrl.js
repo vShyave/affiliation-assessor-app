@@ -33,7 +33,8 @@ const API_URL = {
     duplicateForm:`${rest}duplicateForm`,
     deleteForm: `${rest}deleteForm`,
     filterForms: `${rest}filterForms`,
-    createCourses: `${rest}createCourse`
+    createCourses: `${rest}createCourse`,
+    updateForms: `${rest}updateForms`
   },
   manageUsers: {
     userList: `${rest}getAllUsers`,
