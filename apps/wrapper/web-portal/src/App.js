@@ -40,9 +40,11 @@ import DesktopAnalysisList from "./pages/desktop-analysis/DesktopAnalysisList";
 import DesktopAnalysisView from "./pages/desktop-analysis/DesktopAnalysisView";
 import CertificateManagement from "./pages/certificate-management/CertificateManagement";
 import CertificateManagementList from "./pages/certificate-management/CertificateManagementList";
+import ScheduleManagementList from "./pages/schedule-management/ScheduleManagementList";
 import ManageUser from "./pages/manage-users/ManageUser";
 import DesktopAnalysis from "./pages/desktop-analysis/DesktopAnalysis";
 import PrivateRoute from "./routes/PrivateRoute";
+import ScheduleManagement from "./pages/schedule-management/ScheduleManagement";
 import Notification from "./pages/notifications/Notification";
 import NotificationsDetailedView from "./pages/notifications/NotificationsDetailedView";
 import NocIssued from "./pages/ground-analysis/NocIssuedConfirmation";
@@ -111,21 +113,6 @@ function App() {
                 path={ADMIN_ROUTE_MAP.loginModule.login}
                 element={<AdminLogin />}
               ></Route>
-            </Route>
-
-            {/* Notifications routing starts here */}
-            <Route
-              path={`${ADMIN_ROUTE_MAP.adminModule.notifications.home}/:notificationId?`}
-              element={<Notification />}
-            >
-              <Route index element={<NotificationsDetailedView />}></Route>
-            </Route>
-            {/*Manage forms routing starts here */}
-            <Route
-              path={ADMIN_ROUTE_MAP.adminModule.manageForms.home}
-              element={<ManageForms />}
-            >
-              <Route index element={<FormsOverview />}></Route>
               <Route
                 path={ADMIN_ROUTE_MAP.loginModule.loginOtp}
                 element={<LoginEnterOtp />}
@@ -162,7 +149,7 @@ function App() {
 
               {/* Notifications routing starts here */}
               <Route
-                path={ADMIN_ROUTE_MAP.adminModule.notifications.home}
+                path={`${ADMIN_ROUTE_MAP.adminModule.notifications.home}/:notificationId?`}
                 element={<Notification />}
               >
                 <Route index element={<NotificationsDetailedView />}></Route>
