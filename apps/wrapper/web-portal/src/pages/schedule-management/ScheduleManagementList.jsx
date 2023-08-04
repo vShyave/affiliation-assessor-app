@@ -30,7 +30,7 @@ import {
 
 const ScheduleManagementList = () => {
   const navigation = useNavigate();
-  const { setSpinner,setToast } = useContext(ContextAPI);
+  const { setSpinner,setToast,toast } = useContext(ContextAPI);
   var resUserData = [];
   const [assessmentScheduleList, setAssessmentScheduleList] = useState();
   const [scheduleTableList, setScheduleTableList] = useState([]);
@@ -281,10 +281,6 @@ const ScheduleManagementList = () => {
 
   return (
     <>
-      {toast.toastOpen && (
-        <Toast toastMsg={toast.toastMsg} toastType={toast.toastType} />
-      )}
-
       {showAlert && (
         <AlertModal showAlert={setShowAlert} {...state.alertContent} />
       )}

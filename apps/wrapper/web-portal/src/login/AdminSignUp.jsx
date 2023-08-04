@@ -23,7 +23,7 @@ export default function AdminSingUp() {
   const onSubmit = (data) => {
     alert(JSON.stringify(data));
   };
-  const { setSpinner, setToast } = useContext(ContextAPI);
+  const { setSpinner, setToast,toast } = useContext(ContextAPI);
   const signupHandler = async (data) => {
     const { firstName, lastName, email, mobilePhone } = data;
     let userDetails = {
@@ -77,9 +77,7 @@ export default function AdminSingUp() {
 
   return (
     <>
-      {toast.toastOpen && (
-        <Toast toastMsg={toast.toastMsg} toastType={toast.toastType} />
-      )}
+      
       <Card moreClass="shadow-md w-screen sm:px-24 sm:w-[480px] md:w-[600px] py-16">
         <form
           onSubmit={handleSubmit((data) => {

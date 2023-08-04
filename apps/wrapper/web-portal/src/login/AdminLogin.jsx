@@ -17,7 +17,7 @@ const AdminLogin = () => {
   const [emailId, setEmailId] = useState(null);
   const [verifyEnteredOtp, setVerifyEnteredOtp] = useState(true);
   const navigate = useNavigate();
-  const {setSpinner,setToast} = useContext(ContextAPI)
+  const {setSpinner,setToast,toast} = useContext(ContextAPI)
 
   const {
     register,

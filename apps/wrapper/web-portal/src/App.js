@@ -108,7 +108,7 @@ function App() {
 
   return (
     <div className="App">
-      <ContextAPI.Provider value={{ setSpinner, setToast }}>
+      <ContextAPI.Provider value={{ setSpinner, setToast,toast }}>
         {spinner && <Spinner />}
         {toast.toastOpen && (
           <Toast toastMsg={toast.toastMsg} toastType={toast.toastType} />
