@@ -10,21 +10,23 @@ import "react-calendar/dist/Calendar.css";
 import "./calendar.css";
 
 import { Label, Button } from "../../components";
-import { formatDate, getInitials, readableDate } from "../../utils/common";
+import {
+  formatDate,
+  getInitials,
+  readableDate,
+  getLocalTimeInISOFormat,
+} from "../../utils/common";
 import {
   getUsersForScheduling,
   getAllTheCourses,
   getScheduleAssessment,
+  registerEvent,
+  updateFormStatus,
 } from "../../api";
 
 // import Toast from "../../components/Toast";
 
-function ScheduleInspectionModal({
-  closeSchedule,
-  setToast,
-  instituteId,
-  instituteName,
-}) {
+function ScheduleInspectionModal({ closeSchedule, setToast, otherInfo }) {
   const [activeStep, setActiveStep] = React.useState(0);
   const [isLastStep, setIsLastStep] = React.useState(false);
   const [isFirstStep, setIsFirstStep] = React.useState(false);
@@ -65,6 +67,7 @@ function ScheduleInspectionModal({
         value: item.code,
         label: item.name,
         phonenumber: item.phonenumber,
+        other: item,
       }))
     );
   };
@@ -106,7 +109,7 @@ function ScheduleInspectionModal({
   };
 
   const getTheCourses = async () => {
-    let courseApplied = { course_applied: instituteName };
+    let courseApplied = { course_applied: otherInfo?.instituteName };
 
     const res = await getAllTheCourses(courseApplied);
     setFormList(
@@ -123,19 +126,13 @@ function ScheduleInspectionModal({
   };
 
   const handleScheduleAssessment = async () => {
-    // const formData = new FormData();
-    // formData.append("instituteId", instituteId);
-
-    // Object.keys(payload).forEach((key) => {
-    //   formData.append(key, payload[key]);
-    // });
-    const formData =  {
+    const formData = {
       assessment_schedule: [
         {
-          assessor_code: OGAObject?.label,
+          assessor_code: OGAObject.other.code,
           date: payload?.date,
-          institute_id: instituteId,
-          assisstant_code: "2",
+          institute_id: otherInfo?.instituteId,
+          assisstant_code: selectedAA?.[0]?.other?.code,
         },
       ],
     };
@@ -159,6 +156,19 @@ function ScheduleInspectionModal({
         3000
       );
       closeSchedule(false);
+
+      registerEvent({
+        created_date: getLocalTimeInISOFormat(),
+        entity_id: otherInfo?.formId,
+        entity_type: "form",
+        event_name: "Inspection Scheduled",
+        remarks: "Round 1 inspection scheduled",
+      });
+
+      updateFormStatus({
+        form_id: otherInfo?.formId * 1,
+        form_status: "Inspection Scheduled",
+      });
     } catch (error) {
       let date = new Date(formData.assessment_schedule.date);
       if (error.response.data.code === "constraint-violation") {
@@ -333,14 +343,14 @@ function ScheduleInspectionModal({
                               ></Label>
 
                               <span className="text-[11px]">
-                                (only two members allowed)
+                                (only one member allowed)
                               </span>
                             </div>
                           </div>
                           <div className="flex flex-row gap-3">
                             <Select
                               isMulti
-                              isOptionDisabled={() => AAObject.length >= 2}
+                              isOptionDisabled={() => AAObject.length >= 1}
                               name="assisting_assessor"
                               label="Assisting Assessor/s"
                               ref={(ref) => {
@@ -410,7 +420,10 @@ function ScheduleInspectionModal({
 
                         <div className="bg-gray-100  items-center flex gap-4 border border-gray-100 rounded-md">
                           <span className="font-semibold p-2">
-                            {instituteName?.split("_")?.join(" ").toUpperCase()}
+                            {otherInfo?.instituteName
+                              ?.split("_")
+                              ?.join(" ")
+                              .toUpperCase()}
                           </span>
                         </div>
                       </div>

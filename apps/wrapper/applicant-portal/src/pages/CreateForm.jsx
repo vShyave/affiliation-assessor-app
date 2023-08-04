@@ -32,16 +32,16 @@ import {
 } from "../api/formApi";
 
 const ENKETO_URL = process.env.REACT_APP_ENKETO_URL;
-const CreateForm = () => {
+
+const CreateForm = (props) => {
   let { formName, formId } = useParams();
   const [encodedFormURI, setEncodedFormURI] = useState("");
   const scheduleId = useRef();
   const navigate = useNavigate();
   const [onFormSuccessData, setOnFormSuccessData] = useState(undefined);
-  const[formDataNoc,setFormDataNoc] = useState({})
+  const [formDataNoc, setFormDataNoc] = useState({});
   const [onFormFailureData, setOnFormFailureData] = useState(undefined);
   const [isDownloading, setIsDownloading] = useState(false);
-  
 
   const [assData, setData] = useState({
     district: "",
@@ -59,8 +59,7 @@ const CreateForm = () => {
   const userId = userRepresentation?.id;
   const instituteDetails = getCookie("institutes");
 
-
-  let formData ={}
+  let formData = {};
 
   const formSpec = {
     skipOnSuccessMessage: true,
@@ -81,6 +80,7 @@ const CreateForm = () => {
       },
     },
     start: formName,
+    formId: formId,
   };
 
   const [toast, setToast] = useState({
@@ -91,7 +91,7 @@ const CreateForm = () => {
 
   const startingForm = formSpec.start;
   const [encodedFormSpec, setEncodedFormSpec] = useState(
-    encodeURI(JSON.stringify(formSpec.formId))
+    encodeURI(JSON.stringify(formSpec?.formId))
   );
 
   const fetchFormData = async () => {
@@ -108,8 +108,7 @@ const CreateForm = () => {
         const postData = { form_id: formId };
         const res = await getFormData(postData);
         formData = res.data.form_submissions[0];
-        setFormDataNoc(formData)
-
+        setFormDataNoc(formData);
       }
     }
 
@@ -130,28 +129,6 @@ const CreateForm = () => {
 
     try {
       const { nextForm, formData, onSuccessData, onFailureData } = data;
-      // if (data?.state === "ON_FORM_SUCCESS_COMPLETED") {
-      //   const updatedFormData = await updateFormData(formSpec.start);
-      //   const storedData = await getSpecificDataFromForage("required_data");
-
-      //   saveFormSubmission({
-      //     schedule_id: null,
-      //     form_data: updatedFormData,
-      //     assessment_type: "applicant",
-      //     form_name: formName,
-      //     submission_status: true,
-      //     assessor_id: null,
-      //     applicant_id: instituteDetails?.[0]?.id || 11,
-      //   });
-
-      //   // Delete the data from the Local Forage
-      //   const key = `${storedData?.assessor_user_id}_${formSpec.start}_${
-      //     new Date().toISOString().split("T")[0]
-      //   }`;
-      //   console.log("key - ", key);
-      //   removeItemFromLocalForage(key);
-      // }
-
       if (data?.state === "ON_FORM_SUCCESS_COMPLETED") {
         setOnSubmit(true);
       }
@@ -186,7 +163,7 @@ const CreateForm = () => {
       form_name: formName,
       submission_status: true,
       assessor_id: null,
-      applicant_id: instituteDetails?.[0]?.id || 11,
+      applicant_id: instituteDetails?.[0]?.id,
       submitted_on: new Date().toJSON().slice(0, 10),
       form_status: "Application Submitted",
     });
@@ -224,12 +201,11 @@ const CreateForm = () => {
   };
 
   const handleDownloadNocOrCertificate = () => {
-    if(formDataNoc.round==1){
-    window.open(formDataNoc?.noc_Path, "_blank");
-  } else{
-    window.open(formDataNoc?.certificate_Path, "_blank");
-
-  }
+    if (formDataNoc.round == 1) {
+      window.open(formDataNoc?.noc_Path, "_blank");
+    } else {
+      window.open(formDataNoc?.certificate_Path, "_blank");
+    }
   };
 
   const handleFormEvents = async (startingForm, afterFormSubmit, e) => {
@@ -295,38 +271,19 @@ const CreateForm = () => {
     }
   };
 
-  const handlePrintPdf = () => {
-    const URL = `${ENKETO_URL}/preview?formSpec=${encodeURI(
-      JSON.stringify(formSpec)
-    )}&xform=${encodedFormURI}&userId=${userId}`;
+  // const handlePrintPdf = () => {
+  //   const URL = `${ENKETO_URL}/preview?formSpec=${encodeURI(
+  //     JSON.stringify(formSpec)
+  //   )}&xform=${encodedFormURI}&userId=${userId}`;
 
-    var strWindowFeatures =
-      "fullscreen=1, channelmode=1, status=1, resizable=1";
-    var win = window.open(URL, "_blank", strWindowFeatures);
-
-    // const MutationObserver = window.MutationObserver || window.WebKitMutationObserver;
-    // console.log("win.document - ", win);
-    // setTimeout(() => {
-    //   win.print();
-    // }, 2000);
-
-    // let targetNode = win.document.getElementsByTagName("form");
-    // const interval = setInterval(() => {
-    //   targetNode = win.document.getElementsByTagName("form");
-    //   console.log("targetNode - ", targetNode);
-    // }, 1000);
-    // console.log("targetNode - ", targetNode);
-    // const config = { attributes: true, childList: true, subtree: true };
-  };
+  //   var strWindowFeatures =
+  //     "fullscreen=1, channelmode=1, status=1, resizable=1";
+  //   var win = window.open(URL, "_blank", strWindowFeatures);
+  // };
 
   useEffect(() => {
     fetchFormData();
     bindEventListener();
-    // return () => {
-    //   detachEventBinding();
-    //   setData(null);
-    //   setPrefilledFormData(null);
-    // };
   }, []);
 
   return (
@@ -357,8 +314,8 @@ const CreateForm = () => {
       <div className="container mx-auto py-12 px-3 min-h-[40vh]">
         <div className="flex flex-row justify-between">
           <h1 className="font-bold text-[20px]">
-            {" "}
-            {formName.split("-")[2].toUpperCase()}
+            {/* {" "}
+            {formName.split("-")[2].toUpperCase()} */}
           </h1>
           <div className="flex flex-grow gap-3 justify-end">
             <button
@@ -370,7 +327,7 @@ const CreateForm = () => {
 
             <button
               onClick={handleDownloadNocOrCertificate}
-              disabled= {formData.form_status=="Approved"}
+              disabled={formData.form_status == "Approved"}
               className="bg-primary-900 py-2 mb-8 font-medium rounded-[4px] px-2 text-white flex flex-row items-center gap-3"
             >
               Download NOC/Certificate

@@ -7,6 +7,7 @@ const API_URL = {
   },
   common: {
     registerEvent: `${rest}addEvents`,
+    updateForm: `${rest}updateForm`
   },
   groundAnalysis: {
     viewForm: `${rest}getFormData`,
@@ -52,7 +53,8 @@ desktopAnalysis:{
     scheduleAssessment: `${rest}addAssessmentSchedule`,
     getDesktopAnalysisForms: `${rest}getDesktopAnalysis`,
     getCourseOGA : `${rest}getCoursesOGA`,
-    filterDesktopAnalysis: `${rest}filterDesktopAnalysis`
+    filterDesktopAnalysis: `${rest}filterDesktopAnalysis`,
+    updateFormSubmission: `${rest}updateFormSubmission`,
   },
   scheduleManagement:{
     getAssessmentSchedule: `${rest}getAssessmentSchedule`,

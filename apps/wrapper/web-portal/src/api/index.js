@@ -397,3 +397,11 @@ export const registerEvent = async (postData) => {
   );
   return res;
 }
+
+export const updateFormStatus = async (postData) => {
+  const res = await adminCustomPost.put (
+    API_URL.common.updateForm,
+    postData
+  );
+  return res;
+}
