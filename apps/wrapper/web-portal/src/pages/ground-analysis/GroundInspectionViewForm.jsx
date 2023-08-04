@@ -27,16 +27,16 @@ export default function ApplicationPage({
   closeCertificateModal,
 }) {
   const reportTemplateRef = useRef(null);
-  const[rejectStatus,setRejectStatus]=useState(false)
+  const [rejectStatus, setRejectStatus] = useState(false);
   const [rejectModel, setRejectModel] = useState(false);
   const [openModel, setOpenModel] = useState(false);
   const [openStatusModel, setOpenStatusModel] = useState(false);
   const [openIssueNocModel, setOpenIssueNocModel] = useState(false);
   const [encodedFormURI, setEncodedFormURI] = useState("");
-  let { formName, formId , instituteName, round} = useParams();
-  let [instituteNameModal,setInstituteNameModal] = useState(instituteName)
-  let [selectRound,setSelectRound] = useState(round)
-  console.log(instituteNameModal)
+  let { formName, formId, instituteName, round } = useParams();
+  let [instituteNameModal, setInstituteNameModal] = useState(instituteName);
+  let [selectRound, setSelectRound] = useState(round);
+  console.log(instituteNameModal);
   const [toast, setToast] = useState({
     toastOpen: false,
     toastMsg: "",
@@ -158,9 +158,11 @@ export default function ApplicationPage({
               <button
                 onClick={() => setRejectModel(true)}
                 disabled={rejectStatus}
-                className={!rejectStatus
-                ?  "flex flex-wrap items-center justify-center gap-2 border border-gray-500 text-gray-500 bg-white w-[140px] h-[40px] font-medium rounded-[4px]"
-                : "cursor-not-allowed flex flex-wrap items-center justify-center gap-2 border border-gray-500 text-gray-500 bg-white w-[140px] h-[40px] font-medium rounded-[4px]"}
+                className={
+                  !rejectStatus
+                    ? "flex flex-wrap items-center justify-center gap-2 border border-gray-500 text-gray-500 bg-white w-[140px] h-[40px] font-medium rounded-[4px]"
+                    : "cursor-not-allowed flex flex-wrap items-center justify-center gap-2 border border-gray-500 text-gray-500 bg-white w-[140px] h-[40px] font-medium rounded-[4px]"
+                }
               >
                 Reject{" "}
                 <span>
@@ -168,12 +170,13 @@ export default function ApplicationPage({
                 </span>{" "}
               </button>
               <button
-                onClick={() => setOpenIssueNocModel(true)
-                }
+                onClick={() => setOpenIssueNocModel(true)}
                 disabled={rejectStatus}
-                className={!rejectStatus
-                  ? "flex flex-wrap items-center justify-center gap-2 border border-gray-500 text-gray-500 bg-white w-[140px] h-[40px] font-medium rounded-[4px]"
-                  : "cursor-not-allowed flex flex-wrap items-center justify-center gap-2 border border-gray-500 text-gray-500 bg-white w-[140px] h-[40px] font-medium rounded-[4px]"}
+                className={
+                  !rejectStatus
+                    ? "flex flex-wrap items-center justify-center gap-2 border border-gray-500 text-gray-500 bg-white w-[140px] h-[40px] font-medium rounded-[4px]"
+                    : "cursor-not-allowed flex flex-wrap items-center justify-center gap-2 border border-gray-500 text-gray-500 bg-white w-[140px] h-[40px] font-medium rounded-[4px]"
+                }
                 // className="flex flex-wrap items-center justify-center gap-2 border border-gray-500 text-gray-500 bg-white w-[140px] h-[40px] font-medium rounded-[4px]"
               >
                 Approve{" "}
@@ -229,13 +232,24 @@ export default function ApplicationPage({
 
       {/* {openModel && <NocModal closeModal={setOpenModel}  setOpenIssueNocModel={setOpenIssueNocModel} setToast={setToast} />} */}
       {rejectModel && (
-        <RejectNocModal closeRejectModal={setRejectModel} setRejectStatus={setRejectStatus} setToast={setToast} />
+        <RejectNocModal
+          closeRejectModal={setRejectModel}
+          setRejectStatus={setRejectStatus}
+          setToast={setToast}
+        />
       )}
       {/* {openCertificateModel && <IssueCertificateModal closeCertificateModal={setOpenCertificateModel}/>} */}
       {openStatusModel && (
-        <StatusLogModal closeStatusModal={setOpenStatusModel} />
+        <StatusLogModal closeStatusModal={setOpenStatusModel} formId={formId} />
       )}
-      {openIssueNocModel && <IssueNocModal selectRound={round} selectInstituteName={instituteName} setOpenIssueNocModel={setOpenIssueNocModel} setToast={setToast} />}
+      {openIssueNocModel && (
+        <IssueNocModal
+          selectRound={round}
+          selectInstituteName={instituteName}
+          setOpenIssueNocModel={setOpenIssueNocModel}
+          setToast={setToast}
+        />
+      )}
     </>
   );
 }

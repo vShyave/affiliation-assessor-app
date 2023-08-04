@@ -54,9 +54,9 @@ export const getRejectApplicant = async (postData) => {
   return res;
 };
 
-export const getOnGroundViewStatus = async (postData) => {
+export const getStatus = async (postData) => {
   const res = await adminCustomPost.post(
-    API_URL.groundAnalysis.ViewStatus.getViewStatus,
+    API_URL.viewStatus.getViewStatus,
     postData
   );
   return res.data;
@@ -291,9 +291,12 @@ export const addAssessmentSchedule = async (postData) => {
 };
 
 export const deleteSchedule = async (postData) => {
-  return await adminCustomPost.delete(API_URL.scheduleManagement.deleteSchedule, {
-    data: postData,
-  });
+  return await adminCustomPost.delete(
+    API_URL.scheduleManagement.deleteSchedule,
+    {
+      data: postData,
+    }
+  );
 };
 
 // Bulk create users keycloak
@@ -386,15 +389,12 @@ export const searchAssessments = async (postData) => {
 
 export const registerEvent = async (postData) => {
   const events = {
-    events: []
+    events: [],
   };
   events.events.push(postData);
   console.log("events - ", events);
 
-  const res = await adminCustomPost.post(
-    API_URL.common.registerEvent,
-    events
-  );
+  const res = await adminCustomPost.post(API_URL.common.registerEvent, events);
   return res;
 }
 
