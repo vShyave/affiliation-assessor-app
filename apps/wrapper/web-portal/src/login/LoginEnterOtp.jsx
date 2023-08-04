@@ -18,10 +18,10 @@ export default function LoginEnterOtp() {
               id="otp"
               placeholder="0-0-0-0-0-0"
             ></Input>
-            <p className="text-sm text-gray-400">
+            <div className="text-sm text-gray-400">
               Enter the 6 digit OTP sent to your email address
-            </p>
-            {/* <p className="text-red-500 text-sm" >{formErrors.email}</p> */}
+            </div>
+            {/* <div className="text-red-500 text-sm" >{formErrors.email}</div> */}
           </div>
           <Button
             moreClass="uppercase w-full mt-7 text-white"
@@ -66,9 +66,9 @@ export default function LoginEnterOtp() {
                                                            placeholder="0-0-0-0-0-0"
                                                            className="block rounded-[4px] w-full p-4 border-0 py-3 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                                                           />
-                                                          <p className="p-2  text-sm text-gray-400">Enter the 6 digit OTP sent to your email address</p>
+                                                          <div className="p-2  text-sm text-gray-400">Enter the 6 digit OTP sent to your email address</div>
                                                         <button className="mt-4 border border-blue-900 text-white bg-blue-900 w-[400px] py-3 font-medium rounded-[4px]">SIGN IN</button>
-                                                        <p className="p-4 font-medium text-blue-700 text-center">Go back, re-enter the email</p>
+                                                        <div className="p-4 font-medium text-blue-700 text-center">Go back, re-enter the email</div>
                                                    </div>
                                               </div> 
                                          </div>                                     

@@ -7,6 +7,7 @@ import XMLParser from "react-xml-parser";
 
 // import NocModal from "./NocModal";
 // import RejectNocModal from "./RejectNocModal";
+import { getLocalTimeInISOFormat } from "../../utils";
 import { Card, Button } from "./../../components";
 import CommonModal from "./../../Modal";
 import ScheduleInspectionModal from "./ScheduleInspectionModal";
@@ -17,7 +18,7 @@ import { getFormData } from "../../api";
 import ADMIN_ROUTE_MAP from "../../routes/adminRouteMap";
 import {
   getFormURI,
-  saveFormSubmission,
+  updateFormSubmission,
   getPrefillXML,
 } from "./../../api/formApi";
 import {
@@ -87,9 +88,11 @@ export default function DesktopAnalysisView() {
     let data = await getFromLocalForage(
       `${userId}_${formName}_${new Date().toISOString().split("T")[0]}`
     );
+
     // if (data) {
     //   formData = data;
     // } else {
+
     const postData = { form_id: formId };
     try {
       setSpinner(true);
@@ -151,22 +154,20 @@ export default function DesktopAnalysisView() {
 
   const handleSubmit = async () => {
     const updatedFormData = await updateFormData(formSpec.start, userId);
-    console.log("updatedFormData - ", updatedFormData);
-    return;
     const storedData = await getSpecificDataFromForage("required_data");
 
-    saveFormSubmission({
-      schedule_id: null,
+    updateFormSubmission({
+      form_id: formId,
       form_data: updatedFormData,
-      assessment_type: "admin",
+      assessment_type: "applicant",
       form_name: formName,
       submission_status: true,
-      assessor_id: null,
-      applicant_id: null,
-      submitted_on: new Date().toJSON().slice(0, 10),
-      form_status: "Application Submitted",
+      applicant_id: formDataFromApi?.institute?.id,
+      updated_at: getLocalTimeInISOFormat(),
+      form_status: "Returned",
     });
 
+    return;
     // Delete the data from the Local Forage
     const key = `${storedData?.assessor_user_id}_${formSpec.start}_${
       new Date().toISOString().split("T")[0]
@@ -218,12 +219,11 @@ export default function DesktopAnalysisView() {
           `${userId}_${startingForm}_${new Date().toISOString().split("T")[0]}`
         );
 
-        // console.log("formData - ", JSON.parse(e.data).formData);
         await setToLocalForage(
           `${userId}_${startingForm}_${new Date().toISOString().split("T")[0]}`,
           {
             formData: JSON.parse(e.data).formData,
-            imageUrls: { ...prevData?.imageUrls, ...images },
+            // imageUrls: { ...prevData?.imageUrls, ...images },
           }
         );
       }
@@ -237,6 +237,12 @@ export default function DesktopAnalysisView() {
 
   const bindEventListener = () => {
     window.addEventListener("message", handleEventTrigger);
+  };
+
+  const otherInfo = {
+    instituteId: formDataFromApi?.institute?.id,
+    instituteName: formDataFromApi?.institute?.course_applied,
+    formId: formId,
   };
 
   useEffect(() => {
@@ -282,7 +288,7 @@ export default function DesktopAnalysisView() {
                 onClick={() => setOpenSheduleInspectionModel(true)}
                 className="flex flex-wrap items-center justify-center gap-2 border border-gray-500 text-gray-500 bg-white w-fit h-fit p-2 font-semibold rounded-[4px]"
               >
-                Send for inspection{" "}
+                Send for inspection
                 <span>
                   <BsArrowRight />
                 </span>
@@ -312,9 +318,9 @@ export default function DesktopAnalysisView() {
                 >
                   <h4 className="text-secondary font-medium">Status: New</h4>
                 </div>
-                <p className="flex text-gray-500 justify-center">
+                <div className="flex text-gray-500 justify-center">
                   Your application is on-hold 23/03/2023
-                </p>
+                </div>
               </Card>
               <Card moreClass="shadow-md">
                 <iframe
@@ -341,8 +347,7 @@ export default function DesktopAnalysisView() {
             <ScheduleInspectionModal
               closeSchedule={setOpenSheduleInspectionModel}
               setToast={setToast}
-              instituteId={formDataFromApi?.institute?.id}
-              instituteName={formDataFromApi?.institute?.course_applied}
+              otherInfo={otherInfo}
             />
           )}
         </div>

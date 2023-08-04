@@ -316,6 +316,21 @@ const ScheduleManagementList = () => {
                 </span>
               </div>
             </div>
+            <div className="flex flex-wrap">
+              {cardArray.map((obj, index) => (
+                <Card
+                  moreClass="shadow-md w-[200px] h-[100px] m-3 first:ml-0"
+                  key={index}
+                >
+                  <div className="flex flex-col place-items-start justify-center gap-2">
+                    <h3 className="text-xl font-semibold">{obj.value}</h3>
+                    <div className="text-sm font-medium text-gray-700">
+                      {obj.text}
+                    </div>
+                  </div>
+                </Card>
+              ))}
+            </div>
           </div>
           <div className="flex flex-col gap-4">
             <FilteringTable

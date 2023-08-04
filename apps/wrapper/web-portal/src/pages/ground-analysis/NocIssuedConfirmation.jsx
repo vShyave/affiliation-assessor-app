@@ -44,13 +44,13 @@ export default function NocIssued({ notification }) {
           <FaThumbsUp className="text-green-700 w-full text-2xl" />
         </div>
         <h2 className="text-xl font-semibold m-2">NOC has been issued</h2>
-        <p className="text-m">
+        <div className="text-m">
           We will review your application and proceed with next steps.
-        </p>
-        <p>
+        </div>
+        <div>
           You can keep the track status of this application under 'My
           applications' section.
-        </p>
+        </div>
         <div className="flex place-items-end mx-auto gap-4">
           <Button
             onClick={() => navigate("/groundInspection")}

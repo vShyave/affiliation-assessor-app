@@ -120,14 +120,14 @@ export default function AdminSingUp() {
                     })}
                   />
                   {errors?.firstName?.type === "required" && (
-                    <p className="text-red-500 mt-2 text-sm">
+                    <div className="text-red-500 mt-2 text-sm">
                       This field is required
-                    </p>
+                    </div>
                   )}
                   {errors?.firstName?.type === "pattern" && (
-                    <p className="text-red-500 mt-2 text-sm">
+                    <div className="text-red-500 mt-2 text-sm">
                       Alphabetical characters only
-                    </p>
+                    </div>
                   )}
                 </div>
                 <Label htmlFor="lastName" text="Last name" required></Label>
@@ -144,43 +144,43 @@ export default function AdminSingUp() {
                     })}
                   />
                   {errors?.lastName?.type === "required" && (
-                    <p className="text-red-500 mt-2 text-sm">
+                    <div className="text-red-500 mt-2 text-sm">
                       This field is required
-                    </p>
+                    </div>
                   )}
                   {errors?.lastName?.type === "pattern" && (
-                    <p className="text-red-500 mt-2 text-sm">
+                    <div className="text-red-500 mt-2 text-sm">
                       Alphabetical characters only
-                    </p>
+                    </div>
                   )}
                 </div>
               </div>
               <div className="flex flex-col gap-2">
-                <Label htmlFor="email" text="Email id" required></Label>
-                <input
-                  type="email"
-                  name="email"
-                  id="email"
-                  placeholder="name@email.com"
-                  {...register("email", {
-                    required: true,
-                    pattern:
-                      /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/i,
-                  })}
-                  className="block w-full rounded-md border-0 p-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                  noValidate
-                />
-                {errors?.email?.type === "required" && (
-                  <p className="text-red-500 mt-2 text-sm">
-                    This field is required
-                  </p>
-                )}
-                {errors?.email?.type === "pattern" && (
-                  <p className="text-red-500 mt-2 text-sm">
-                    This is not a valid email format
-                  </p>
-                )}
-              </div>
+                    <Label htmlFor="email" text="Email id" required></Label>
+                    <input
+                      type="email"
+                      name="email"
+                      id="email"
+                      placeholder="name@email.com"
+                      {...register("email", {
+                        required: true,
+                        pattern:
+                          /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/i,
+                      })}
+                      className="block w-full rounded-md border-0 p-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                      noValidate
+                    />
+                    {errors?.email?.type === "required" && (
+                      <div className="text-red-500 mt-2 text-sm">
+                        This field is required
+                      </div>
+                    )}
+                    {errors?.email?.type === "pattern" && (
+                      <div className="text-red-500 mt-2 text-sm">
+                        This is not a valid email format
+                      </div>
+                    )}
+                  </div>
               <div className="flex flex-col gap-2">
                 <Label
                   htmlFor="phoneNumber"
@@ -201,14 +201,14 @@ export default function AdminSingUp() {
                     })}
                   />
                   {errors?.mobilePhone?.type === "required" && (
-                    <p className="text-red-500 mt-2 text-sm">
+                    <div className="text-red-500 mt-2 text-sm">
                       This field is required
-                    </p>
+                    </div>
                   )}
                   {errors?.mobilePhone?.type === "pattern" && (
-                    <p className="text-red-500 mt-2 text-sm">
+                    <div className="text-red-500 mt-2 text-sm">
                       This is not a valid mobile number
-                    </p>
+                    </div>
                   )}
                 </div>
               </div>
@@ -217,7 +217,7 @@ export default function AdminSingUp() {
               moreClass="uppercase w-full mt-7 text-white"
               text="Continue"
             ></Button>
-            <p className="flex justify-center my-6">
+            <div className="flex justify-center my-6">
               <span className="text-gray-400">Have an account, </span>&nbsp;
               <Link
                 to={ADMIN_ROUTE_MAP.loginModule.login}
@@ -225,7 +225,7 @@ export default function AdminSingUp() {
               >
                 Login
               </Link>
-            </p>
+            </div>
           </div>
         </form>
       </Card>

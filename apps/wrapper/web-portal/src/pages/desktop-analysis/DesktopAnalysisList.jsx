@@ -242,9 +242,9 @@ const DesktopAnalysisList = () => {
                 >
                   <div className="flex flex-col place-items-start justify-center gap-2">
                     <h3 className="text-xl font-semibold">{obj.value}</h3>
-                    <p className="text-sm font-medium text-gray-700">
+                    <div className="text-sm font-medium text-gray-700">
                       {obj.text}
-                    </p>
+                    </div>
                   </div>
                 </Card>
               ))}

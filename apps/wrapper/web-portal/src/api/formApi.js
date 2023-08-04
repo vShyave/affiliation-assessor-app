@@ -42,6 +42,11 @@ export const saveFormSubmission = (data) => {
     return makeHasuraCalls(query);
 };
 
+export const updateFormSubmission = (data) => {
+    // const res = await 
+    
+}
+
 export const makeHasuraCalls = async (query) => {
     // const userData = getCookie("userData");
     return fetch(process.env.REACT_APP_HASURA_URL, {
@@ -62,16 +67,15 @@ export const makeHasuraCalls = async (query) => {
 };
 
 const validateResponse = async (response) => {
-    console.log("response - ", response);
     const apiRes = await response.json();
 
-    registerEvent({
-      created_date: getLocalTimeInISOFormat(),
-      entity_id: apiRes?.data?.insert_form_submissions?.returning?.[0]?.form_id.toString(),
-      entity_type: "form",
-      event_name: "Application Submitted",
-      remarks: "",
-    });
+    // registerEvent({
+    //   created_date: getLocalTimeInISOFormat(),
+    //   entity_id: apiRes?.data?.insert_form_submissions?.returning?.[0]?.form_id.toString(),
+    //   entity_type: "form",
+    //   event_name: "",
+    //   remarks: "",
+    // });
 
     const jsonResponse = {
         ...apiRes,
@@ -81,11 +85,7 @@ const validateResponse = async (response) => {
 };
 
 export const getSubmissionXML = async (form, prefillXML, imageUrls) => {
-    let new_form =
-      "https://storage.googleapis.com/dev-public-upsmf/affiliation/" +
-      form +
-      ".xml";
-    // new_form = new_form.replace('admin', 'applicant');
+    let new_form = `${process.env.REACT_APP_GCP_AFFILIATION_LINK}${form}.xml`
     console.log("new_form - ", new_form);
     try {
         const res = await axios.post(
@@ -94,7 +94,6 @@ export const getSubmissionXML = async (form, prefillXML, imageUrls) => {
                 imageUrls,
             }, { headers: {} }
         );
-        console.log("res - ", res.data);
         return res.data;
     } catch (err) {
         console.log(err);

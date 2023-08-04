@@ -7,6 +7,13 @@ const API_URL = {
   },
   common: {
     registerEvent: `${rest}addEvents`,
+    updateForm: `${rest}updateForm`
+  },
+  notifications:{
+    insertNotifications: `${rest}insertNotifications`,
+    getNotifications: `${rest}getNotifications`,
+    readNotification: `${rest}readNotification`,
+    viewNotification: `${rest}viewNotification`
   },
   groundAnalysis: {
     viewForm: `${rest}getFormData`,
@@ -48,8 +55,9 @@ const API_URL = {
     getUsersForSchedulingAssessment: `${rest}getUsersForSchedulingAssessment`,
     scheduleAssessment: `${rest}addAssessmentSchedule`,
     getDesktopAnalysisForms: `${rest}getDesktopAnalysis`,
-    getCourseOGA: `${rest}getCoursesOGA`,
+    getCourseOGA : `${rest}getCoursesOGA`,
     filterDesktopAnalysis: `${rest}filterDesktopAnalysis`,
+    updateFormSubmission: `${rest}updateFormSubmission`,
   },
   scheduleManagement: {
     getAssessmentSchedule: `${rest}getAssessmentSchedule`,

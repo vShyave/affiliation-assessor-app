@@ -40,30 +40,54 @@ import DesktopAnalysisList from "./pages/desktop-analysis/DesktopAnalysisList";
 import DesktopAnalysisView from "./pages/desktop-analysis/DesktopAnalysisView";
 import CertificateManagement from "./pages/certificate-management/CertificateManagement";
 import CertificateManagementList from "./pages/certificate-management/CertificateManagementList";
-import ScheduleManagementList from "./pages/schedule-management/ScheduleManagementList";
 import ManageUser from "./pages/manage-users/ManageUser";
 import DesktopAnalysis from "./pages/desktop-analysis/DesktopAnalysis";
 import PrivateRoute from "./routes/PrivateRoute";
-import ScheduleManagement from "./pages/schedule-management/ScheduleManagement";
 import Notification from "./pages/notifications/Notification";
 import NotificationsDetailedView from "./pages/notifications/NotificationsDetailedView";
 import NocIssued from "./pages/ground-analysis/NocIssuedConfirmation";
 import Spinner from "./components/spinner";
 import { ContextAPI } from "./utils/ContextAPI";
+import { getCookie, getLocalTimeInISOFormat } from "./utils";
+import { insertNotifications } from "./api";
+import Toast from "./components/Toast";
 
 function App() {
   const [spinner, setSpinner] = useState(false);
-  // const messaging = getMessaging(fireBaseApp);
-  isSupported().then((payload) => {
-    console.log("payload - ", payload);
-    onMessageListener()
-      ?.then((payload) => {
-        // setNotification({title: payload.notification.title, body: payload.notification.body})
-        // setShow(true);
-        console.log(payload);
-      })
-      .catch((err) => console.log("failed: ", err));
+  const [toast, setToast] = useState({
+    toastOpen: false,
+    toastMsg: "",
+    toastType: "",
   });
+
+  const messaging = getMessaging(fireBaseApp);
+  const onMessageListener = (async () => {
+    const messagingResolve = await messaging;
+    if (messagingResolve) {
+      onMessage(messagingResolve, (payload) => {
+        console.log(payload);
+        setToast((prevState)=>({
+          ...prevState,
+          toastOpen:true,
+          toastMsg: payload.data.title
+        }))
+        const postData = {
+          notifications: [
+            {
+              title: payload.data.title,
+              body: payload.data.body,
+              date: getLocalTimeInISOFormat(),
+              user_id: getCookie("regulator")[0]["user_id"],
+              user_type: "Admin",
+              read_status: "Unread",
+            },
+          ],
+        };
+        insertNotifications(postData)
+      });
+    }
+  })();
+
 
   useEffect(() => {
     getPermissionForToken();
@@ -73,10 +97,13 @@ function App() {
     <div className="App">
       <ContextAPI.Provider value={{spinner,setSpinner}}>
         {spinner && <Spinner />}
-        <BrowserRouter>
-          <Routes>
-            {/* Default landing page */}
-            <Route path="/" element={<Navigate to="/auth/login" />} />
+      {toast.toastOpen && (
+        <Toast toastMsg={toast.toastMsg} toastType={toast.toastType} />
+      )}
+      <BrowserRouter>
+        <Routes>
+          {/* Default landing page */}
+          <Route path="/" element={<Navigate to="/auth/login" />} />
 
             {/* Register and Login Routes */}
             <Route path={ADMIN_ROUTE_MAP.auth} element={<Authenticate />}>
@@ -84,6 +111,21 @@ function App() {
                 path={ADMIN_ROUTE_MAP.loginModule.login}
                 element={<AdminLogin />}
               ></Route>
+            </Route>
+
+            {/* Notifications routing starts here */}
+            <Route
+              path={`${ADMIN_ROUTE_MAP.adminModule.notifications.home}/:notificationId?`}
+              element={<Notification />}
+            >
+              <Route index element={<NotificationsDetailedView />}></Route>
+            </Route>
+            {/*Manage forms routing starts here */}
+            <Route
+              path={ADMIN_ROUTE_MAP.adminModule.manageForms.home}
+              element={<ManageForms />}
+            >
+              <Route index element={<FormsOverview />}></Route>
               <Route
                 path={ADMIN_ROUTE_MAP.loginModule.loginOtp}
                 element={<LoginEnterOtp />}
