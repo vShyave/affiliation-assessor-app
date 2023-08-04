@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 
 const Toast = (props) => {
-  const { toastMsg, toastType } = props;
+  const { toastMsg, toastType="success" } = props;
   const types = {
     success: {
       id: "toast-success",

@@ -92,7 +92,7 @@ function BulkUploadScheduleModal({ setBulkUploadSchduleModal }) {
       accessor: "assessor_code",
 
       Cell: (props) => {
-        return <p>{isDataValid(props.value)}</p>;
+        return <div>{isDataValid(props.value)}</div>;
       },
     },
 
@@ -101,7 +101,7 @@ function BulkUploadScheduleModal({ setBulkUploadSchduleModal }) {
       accessor: "date",
 
       Cell: (props) => {
-        return <p>{isDataValid(props.value)}</p>;
+        return <div>{isDataValid(props.value)}</div>;
       },
     },
 
@@ -110,7 +110,7 @@ function BulkUploadScheduleModal({ setBulkUploadSchduleModal }) {
       accessor: "institute_id",
 
       Cell: (props) => {
-        return <p>{isDataValid(props.value)}</p>;
+        return <div>{isDataValid(props.value)}</div>;
       },
     },
 
@@ -119,7 +119,7 @@ function BulkUploadScheduleModal({ setBulkUploadSchduleModal }) {
       accessor: "assisstant_code",
 
       // Cell: (props) => {
-      //   return <p>{isDataValid(props.value)}</p>;
+      //   return <div>{isDataValid(props.value)}</div>;
       // },
     },
   ];

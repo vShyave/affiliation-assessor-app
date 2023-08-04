@@ -9,6 +9,12 @@ const API_URL = {
     registerEvent: `${rest}addEvents`,
     updateForm: `${rest}updateForm`
   },
+  notifications:{
+    insertNotifications: `${rest}insertNotifications`,
+    getNotifications: `${rest}getNotifications`,
+    readNotification: `${rest}readNotification`,
+    viewNotification: `${rest}viewNotification`
+  },
   groundAnalysis: {
     viewForm: `${rest}getFormData`,
     list: `${rest}getGroundInspectionAnalysis`,

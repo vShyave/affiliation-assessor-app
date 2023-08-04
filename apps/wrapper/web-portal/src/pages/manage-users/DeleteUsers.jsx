@@ -27,10 +27,10 @@ function DeleteUsersModal({ closeDeleteUsersModal,setDeleteFlags }) {
               <h1>Want to delete?</h1>
             </div>
             <div>
-              <p className="text-base">
+              <div className="text-base">
               Are you sure, you want to delete the user/s ? Once deleted, 
                 this action cannot be reverted.
-              </p>
+              </div>
             </div>
             <hr />
             <div className="footer flex flex-row gap-4 justify-end">
