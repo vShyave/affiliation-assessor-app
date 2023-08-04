@@ -29,7 +29,6 @@ import {
   MenuList,
   MenuItem,
 } from "@material-tailwind/react";
-import Toast from "../../components/Toast";
 import { ContextAPI } from "../../utils/ContextAPI";
 
 export default function ManageUsersList({
@@ -61,12 +60,7 @@ export default function ManageUsersList({
   });
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [isFilterOpen, setIsFilterOpen] = useState(false);
-  const [toast, setToast] = useState({
-    toastOpen: false,
-    toastMsg: "",
-    toastType: "",
-  });
-  const {setSpinner} = useContext(ContextAPI)
+  const {setSpinner,setToast} = useContext(ContextAPI)
   let selectedRows = [];
 
   const COLUMNS = [
@@ -124,16 +118,6 @@ export default function ManageUsersList({
         toastMsg: "Error occured while uploading!",
         toastType: "error",
       }));
-      setTimeout(
-        () =>
-          setToast((prevState) => ({
-            ...prevState,
-            toastOpen: false,
-            toastMsg: "",
-            toastType: "",
-          })),
-        3000
-      );
     }finally{
       setSpinner(false)
     }
@@ -157,16 +141,6 @@ export default function ManageUsersList({
         toastMsg: "Error occured while uploading!",
         toastType: "error",
       }));
-      setTimeout(
-        () =>
-          setToast((prevState) => ({
-            ...prevState,
-            toastOpen: false,
-            toastMsg: "",
-            toastType: "",
-          })),
-        3000
-      );
     }finally{
       setSpinner(false)
     }
@@ -377,16 +351,6 @@ export default function ManageUsersList({
           toastMsg: "User Deleted!",
           toastType: "success",
         }));
-        setTimeout(
-          () =>
-            setToast((prevState) => ({
-              ...prevState,
-              toastOpen: false,
-              toastMsg: "",
-              toastType: "",
-            })),
-          3000
-        );
       }
 
       removeCookie("access_token");
@@ -398,16 +362,6 @@ export default function ManageUsersList({
         toastMsg: "Error occured while uploading!",
         toastType: "error",
       }));
-      setTimeout(
-        () =>
-          setToast((prevState) => ({
-            ...prevState,
-            toastOpen: false,
-            toastMsg: "",
-            toastType: "",
-          })),
-        3000
-      );
     }finally{
       setSpinner(false)
     }
@@ -480,16 +434,6 @@ export default function ManageUsersList({
           toastMsg: "Users Deleted!",
           toastType: "success",
         }));
-        setTimeout(
-          () =>
-            setToast((prevState) => ({
-              ...prevState,
-              toastOpen: false,
-              toastMsg: "",
-              toastType: "",
-            })),
-          3000
-        );
       }
 
       removeCookie("access_token");
@@ -501,16 +445,6 @@ export default function ManageUsersList({
         toastMsg: "Error occured while uploading!",
         toastType: "error",
       }));
-      setTimeout(
-        () =>
-          setToast((prevState) => ({
-            ...prevState,
-            toastOpen: false,
-            toastMsg: "",
-            toastType: "",
-          })),
-        3000
-      );
     }finally{
       setSpinner(false)
     }
@@ -518,9 +452,6 @@ export default function ManageUsersList({
 
   return (
     <>
-      {toast.toastOpen && (
-        <Toast toastMsg={toast.toastMsg} toastType={toast.toastType} />
-      )}
       <Nav />
 
       <div className={`container m-auto min-h-[calc(100vh-148px)] px-3 py-12`}>

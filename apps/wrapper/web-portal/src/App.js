@@ -68,11 +68,11 @@ function App() {
     if (messagingResolve) {
       onMessage(messagingResolve, (payload) => {
         console.log(payload);
-        setToast((prevState)=>({
+        setToast((prevState) => ({
           ...prevState,
-          toastOpen:true,
-          toastMsg: payload.data.title
-        }))
+          toastOpen: true,
+          toastMsg: payload.data.title,
+        }));
         const postData = {
           notifications: [
             {
@@ -85,27 +85,38 @@ function App() {
             },
           ],
         };
-        insertNotifications(postData)
+        insertNotifications(postData);
       });
     }
   })();
-
 
   useEffect(() => {
     getPermissionForToken();
   }, []);
 
+  useEffect(() => {
+    if (toast) {
+      setTimeout(() => {
+        setToast({
+          toastOpen: false,
+          toastMsg: "",
+          toastType: "",
+        });
+      }, 3000);
+    }
+  }, [toast]);
+
   return (
     <div className="App">
-      <ContextAPI.Provider value={{spinner,setSpinner}}>
+      <ContextAPI.Provider value={{ setSpinner, setToast,toast }}>
         {spinner && <Spinner />}
-      {toast.toastOpen && (
-        <Toast toastMsg={toast.toastMsg} toastType={toast.toastType} />
-      )}
-      <BrowserRouter>
-        <Routes>
-          {/* Default landing page */}
-          <Route path="/" element={<Navigate to="/auth/login" />} />
+        {toast.toastOpen && (
+          <Toast toastMsg={toast.toastMsg} toastType={toast.toastType} />
+        )}
+        <BrowserRouter>
+          <Routes>
+            {/* Default landing page */}
+            <Route path="/" element={<Navigate to="/auth/login" />} />
 
             {/* Register and Login Routes */}
             <Route path={ADMIN_ROUTE_MAP.auth} element={<Authenticate />}>

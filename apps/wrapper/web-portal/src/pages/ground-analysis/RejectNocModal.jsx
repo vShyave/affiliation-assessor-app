@@ -4,13 +4,13 @@ import { ContextAPI } from "../../utils/ContextAPI";
 
 import { Button } from "../../components";
 
-function RejectNocModal({ closeRejectModal, setRejectStatus, setToast }) {
+function RejectNocModal({ closeRejectModal, setRejectStatus }) {
   const handleChange = (e) => {
     setComment(e.target.value);
   };
 
   const [comment, setComment] = useState("");
-  const { setSpinner } = useContext(ContextAPI);
+  const { setSpinner,setToast } = useContext(ContextAPI);
 
   const handleRejectApplicant = async () => {
     if (comment.length === 0) {
@@ -33,16 +33,6 @@ function RejectNocModal({ closeRejectModal, setRejectStatus, setToast }) {
           toastMsg: "The form is rejected!",
           toastType: "success",
         }));
-        setTimeout(
-          () =>
-            setToast((prevState) => ({
-              ...prevState,
-              toastOpen: false,
-              toastMsg: "",
-              toastType: "",
-            })),
-          3000
-        );
         closeRejectModal(false);
       } catch (error) {
         console.log(error);

@@ -27,11 +27,10 @@ import {
   MenuList,
   MenuItem,
 } from "@material-tailwind/react";
-import Toast from "../../components/Toast";
 
 const ScheduleManagementList = () => {
   const navigation = useNavigate();
-  const { setSpinner } = useContext(ContextAPI);
+  const { setSpinner,setToast,toast } = useContext(ContextAPI);
   var resUserData = [];
   const [assessmentScheduleList, setAssessmentScheduleList] = useState();
   const [scheduleTableList, setScheduleTableList] = useState([]);
@@ -45,11 +44,6 @@ const ScheduleManagementList = () => {
   const [bulkUploadScheduleModal, setBulkUploadSchduleModal] = useState(false);
 
   const [showAlert, setShowAlert] = useState(false);
-  const [toast, setToast] = useState({
-    toastOpen: false,
-    toastMsg: "",
-    toastType: "",
-  });
 
   const [state, setState] = useState({
     menu_selected: "create_new",
@@ -194,14 +188,6 @@ const ScheduleManagementList = () => {
           toastMsg: "Schedule successfully Deleted!",
           toastType: "success",
         }));
-        setTimeout(() => {
-          setToast((prevState) => ({
-            ...prevState,
-            toastOpen: false,
-            toastMsg: "",
-            toastType: "",
-          }));
-        }, 3000);
         fetchAllAssessmentSchedule();
       }
       // Notification.sendemail({"body":})
@@ -213,16 +199,6 @@ const ScheduleManagementList = () => {
         toastMsg: "Error occured while deleting form!",
         toastType: "error",
       }));
-      setTimeout(
-        () =>
-          setToast((prevState) => ({
-            ...prevState,
-            toastOpen: false,
-            toastMsg: "",
-            toastType: "",
-          })),
-        3000
-      );
     } finally {
       setSpinner(false);
     }
@@ -305,10 +281,6 @@ const ScheduleManagementList = () => {
 
   return (
     <>
-      {toast.toastOpen && (
-        <Toast toastMsg={toast.toastMsg} toastType={toast.toastType} />
-      )}
-
       {showAlert && (
         <AlertModal showAlert={setShowAlert} {...state.alertContent} />
       )}
