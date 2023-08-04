@@ -396,4 +396,12 @@ export const registerEvent = async (postData) => {
 
   const res = await adminCustomPost.post(API_URL.common.registerEvent, events);
   return res;
-};
+}
+
+export const updateFormStatus = async (postData) => {
+  const res = await adminCustomPost.put (
+    API_URL.common.updateForm,
+    postData
+  );
+  return res;
+}

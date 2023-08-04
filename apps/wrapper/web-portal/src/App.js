@@ -40,11 +40,9 @@ import DesktopAnalysisList from "./pages/desktop-analysis/DesktopAnalysisList";
 import DesktopAnalysisView from "./pages/desktop-analysis/DesktopAnalysisView";
 import CertificateManagement from "./pages/certificate-management/CertificateManagement";
 import CertificateManagementList from "./pages/certificate-management/CertificateManagementList";
-import ScheduleManagementList from "./pages/schedule-management/ScheduleManagementList";
 import ManageUser from "./pages/manage-users/ManageUser";
 import DesktopAnalysis from "./pages/desktop-analysis/DesktopAnalysis";
 import PrivateRoute from "./routes/PrivateRoute";
-import ScheduleManagement from "./pages/schedule-management/ScheduleManagement";
 import Notification from "./pages/notifications/Notification";
 import NotificationsDetailedView from "./pages/notifications/NotificationsDetailedView";
 import NocIssued from "./pages/ground-analysis/NocIssuedConfirmation";
@@ -173,12 +171,16 @@ function App() {
               <Route index element={<CertificateManagementList />}></Route>
             </Route>
             {/* Schedule management routing starts here */}
-            <Route
+            {/* <Route
               path={ADMIN_ROUTE_MAP.adminModule.scheduleManagement.home}
               element={<ScheduleManagement />}
             >
               <Route index element={<ScheduleManagementList />}></Route>
-            </Route>
+              <Route
+                path={ADMIN_ROUTE_MAP.adminModule.scheduleManagement.uploadForm}
+                element={<ScheduledUploadForm />}
+              ></Route>
+            </Route> */}
           </Route>
         </Routes>
       </BrowserRouter>
