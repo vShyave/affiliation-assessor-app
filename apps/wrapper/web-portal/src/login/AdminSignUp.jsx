@@ -8,7 +8,6 @@ import { userService } from "../api/userService";
 
 import { Card, Label, Button, Input } from "../components";
 //import { forkJoin, lastValueFrom } from "rxjs";
-import Toast from "../components/Toast";
 import { removeCookie, setCookie } from "../utils/common";
 import { ContextAPI } from "../utils/ContextAPI";
 import { useContext } from "react";
@@ -24,12 +23,7 @@ export default function AdminSingUp() {
   const onSubmit = (data) => {
     alert(JSON.stringify(data));
   };
-  const [toast, setToast] = useState({
-    toastOpen: false,
-    toastMsg: "",
-    toastType: "",
-  });
-  const { setSpinner } = useContext(ContextAPI);
+  const { setSpinner, setToast } = useContext(ContextAPI);
   const signupHandler = async (data) => {
     const { firstName, lastName, email, mobilePhone } = data;
     let userDetails = {
@@ -75,16 +69,6 @@ export default function AdminSingUp() {
         toastMsg: "User already registered.",
         toastType: "error",
       }));
-      setTimeout(
-        () =>
-          setToast((prevState) => ({
-            ...prevState,
-            toastOpen: false,
-            toastMsg: "",
-            toastType: "",
-          })),
-        3000
-      );
       console.error("Registration failed due to some error:", error);
     } finally {
       setSpinner(false);

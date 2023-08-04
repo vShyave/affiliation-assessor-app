@@ -19,22 +19,16 @@ import {
 } from "./../../api";
 import { userService } from "../../api/userService";
 import { removeCookie, setCookie } from "../../utils";
-import Toast from "../../components/Toast";
 
 export default function AdminCreateUser() {
   let { userId } = useParams();
-  const {setSpinner} = useContext(ContextAPI)
+  const {setSpinner,setToast} = useContext(ContextAPI)
   const [user, setUser] = useState({
     firstname: "",
     lastname: "",
     email: "",
     phonenumber: "",
     // role: "",
-  });
-  const [toast, setToast] = useState({
-    toastOpen: false,
-    toastMsg: "",
-    toastType: "",
   });
   const navigation = useNavigate();
 
@@ -133,14 +127,6 @@ export default function AdminCreateUser() {
             toastMsg: "User updated successfully!",
             toastType: "success",
           }));
-          setTimeout(() => {
-            setToast((prevState) => ({
-              ...prevState,
-              toastOpen: false,
-              toastMsg: "",
-              toastType: "",
-            }));
-          }, 3000);
         }
       } catch (error) {
         console.log(error);
@@ -150,16 +136,6 @@ export default function AdminCreateUser() {
           toastMsg: "Error occured while updating user!",
           toastType: "error",
         }));
-        setTimeout(
-          () =>
-            setToast((prevState) => ({
-              ...prevState,
-              toastOpen: false,
-              toastMsg: "",
-              toastType: "",
-            })),
-          3000
-        );
       }finally{
         setSpinner(false)
       }
@@ -217,15 +193,7 @@ export default function AdminCreateUser() {
             toastMsg: "User created successfully!",
             toastType: "success",
           }));
-          setTimeout(() => {
-            setToast((prevState) => ({
-              ...prevState,
-              toastOpen: false,
-              toastMsg: "",
-              toastType: "",
-            }));
-            navigation(ADMIN_ROUTE_MAP.adminModule.manageUsers.home);
-          }, 3000);
+          navigation(ADMIN_ROUTE_MAP.adminModule.manageUsers.home);
         }
       } catch (error) {
         console.log("error - ", error);
@@ -235,16 +203,6 @@ export default function AdminCreateUser() {
           toastMsg: "Error occured while creating user!",
           toastType: "error",
         }));
-        setTimeout(
-          () =>
-            setToast((prevState) => ({
-              ...prevState,
-              toastOpen: false,
-              toastMsg: "",
-              toastType: "",
-            })),
-          3000
-        );
       }finally{
         setSpinner(false)
       }
@@ -262,10 +220,6 @@ export default function AdminCreateUser() {
     <>
       {/* Breadcrum */}
       {/* <Breadcrumb data={breadCrumbData} /> */}
-      {toast.toastOpen && (
-        <Toast toastMsg={toast.toastMsg} toastType={toast.toastType} />
-      )}
-
       <div className="h-[48px] bg-white flex justify-start drop-shadow-sm">
         <div className="container mx-auto flex px-3">
           <div className="flex flex-row font-bold gap-2 items-center">

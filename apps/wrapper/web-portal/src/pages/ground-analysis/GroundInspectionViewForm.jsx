@@ -14,7 +14,6 @@ import Sidebar from "../../components/Sidebar";
 import ADMIN_ROUTE_MAP from "../../routes/adminRouteMap";
 import { getFormData } from "../../api";
 import { getPrefillXML } from "./../../api/formApi";
-import Toast from "../../components/Toast";
 import jsPDF from "jspdf";
 import html2canvas from "html2canvas";
 import { ContextAPI } from "../../utils/ContextAPI";
@@ -38,11 +37,6 @@ export default function ApplicationPage({
   let [instituteNameModal, setInstituteNameModal] = useState(instituteName);
   let [selectRound, setSelectRound] = useState(round);
   console.log(instituteNameModal);
-  const [toast, setToast] = useState({
-    toastOpen: false,
-    toastMsg: "",
-    toastType: "",
-  });
   const {setSpinner} = useContext(ContextAPI)
 
   const userId = "427d473d-d8ea-4bb3-b317-f230f1c9b2f7";
@@ -133,10 +127,6 @@ export default function ApplicationPage({
 
   return (
     <>
-      {toast.toastOpen && (
-        <Toast toastMsg={toast.toastMsg} toastType={toast.toastType} />
-      )}
-
       {/* Breadcrum */}
       {/* <Breadcrumb data={breadCrumbData} /> */}
 
@@ -245,7 +235,6 @@ export default function ApplicationPage({
         <RejectNocModal
           closeRejectModal={setRejectModel}
           setRejectStatus={setRejectStatus}
-          setToast={setToast}
         />
       )}
       {/* {openCertificateModel && <IssueCertificateModal closeCertificateModal={setOpenCertificateModel}/>} */}
@@ -257,7 +246,6 @@ export default function ApplicationPage({
           selectRound={round}
           selectInstituteName={instituteName}
           setOpenIssueNocModel={setOpenIssueNocModel}
-          setToast={setToast}
         />
       )}
     </>

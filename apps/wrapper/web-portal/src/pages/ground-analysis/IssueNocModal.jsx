@@ -8,7 +8,6 @@ import {
 import ADMIN_ROUTE_MAP from "../../routes/adminRouteMap";
 import { useNavigate } from "react-router-dom";
 import { Button } from "../../components";
-import Toast from "../../components/Toast";
 import { ContextAPI } from "../../utils/ContextAPI";
 
 function IssueNocModal({
@@ -21,14 +20,9 @@ function IssueNocModal({
   const [file, setFile] = useState({});
   const [comment, setComment] = useState("");
   const [fileTypeError, setFileTypeError] = useState(false);
-  const [toast, setToast] = useState({
-    toastOpen: false,
-    toastMsg: "",
-    toastType: "",
-  });
   let pathName = "";
   let nocorCertificateFileName = "";
-  const { setSpinner } = useContext(ContextAPI);
+  const { setSpinner,setToast } = useContext(ContextAPI);
   // console.log(selectRound);
   // console.log(selectInstituteName);
   // console.log("file",file);
@@ -93,15 +87,7 @@ function IssueNocModal({
           toastMsg: "File uploaded successfully!",
           toastType: "success",
         }));
-        setTimeout(() => {
-          setToast((prevState) => ({
-            ...prevState,
-            toastOpen: false,
-            toastMsg: "",
-            toastType: "",
-          }));
-          navigate("/groundInspection/noc-issued");
-        }, 3000);
+        navigate("/groundInspection/noc-issued");
       }
     } catch (error) {
       console.log("error - ", error);
@@ -111,16 +97,6 @@ function IssueNocModal({
         toastMsg: "Error occured while uploading!",
         toastType: "error",
       }));
-      setTimeout(
-        () =>
-          setToast((prevState) => ({
-            ...prevState,
-            toastOpen: false,
-            toastMsg: "",
-            toastType: "",
-          })),
-        3000
-      );
     } finally {
       setSpinner(false);
     }
@@ -174,9 +150,6 @@ function IssueNocModal({
 
   return (
     <>
-      {toast.toastOpen && (
-        <Toast toastMsg={toast.toastMsg} toastType={toast.toastType} />
-      )}
       <div className="flex justify-center items-center fixed inset-0 bg-opacity-25 backdrop-blur-sm">
         <div className="flex justify-center p-4 rounded-xl shadow-xl border border-gray-400 bg-gray-100 w-[580px] h-fit">
           <div className="flex flex-col gap-4">

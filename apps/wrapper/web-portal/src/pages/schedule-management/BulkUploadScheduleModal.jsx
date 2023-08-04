@@ -8,12 +8,11 @@ import { Link } from "react-router-dom";
 
 import { Button } from "../../components";
 import { addAssessmentSchedule } from "../../api";
-import Toast from "../../components/Toast";
 import { ContextAPI } from "../../utils/ContextAPI";
 
 function BulkUploadScheduleModal({ setBulkUploadSchduleModal }) {
   const [file, setFile] = useState();
-  const { setSpinner } = useContext(ContextAPI);
+  const { setSpinner,setToast } = useContext(ContextAPI);
 
   const [tableAssessmentList, setTableAssessmentList] = useState([]);
 
@@ -31,11 +30,7 @@ function BulkUploadScheduleModal({ setBulkUploadSchduleModal }) {
   const [allAssessmentsList, setAllAssessmentsList] = useState([]);
 
   const [selectedAssessmentList, setSelectedAssessmentList] = useState(false);
-  const [toast, setToast] = useState({
-    toastOpen: false,
-    toastMsg: "",
-    toastType: "",
-  });
+  
 
   let selectedRows = [];
 
@@ -278,15 +273,7 @@ function BulkUploadScheduleModal({ setBulkUploadSchduleModal }) {
         toastMsg: "Assessments Scheduled Successfully!!",
         toastType: "success",
       }));
-      setTimeout(() => {
-        setToast((prevState) => ({
-          ...prevState,
-          toastOpen: false,
-          toastMsg: "",
-          toastType: "",
-        }));
-        setBulkUploadSchduleModal(false);
-      }, 3000);
+      setBulkUploadSchduleModal(false);
     } catch (error) {
       console.log("error - ", error);
       setToast((prevState) => ({
@@ -295,16 +282,6 @@ function BulkUploadScheduleModal({ setBulkUploadSchduleModal }) {
         toastMsg: error.response.data.error,
         toastType: "error",
       }));
-      setTimeout(
-        () =>
-          setToast((prevState) => ({
-            ...prevState,
-            toastOpen: false,
-            toastMsg: "",
-            toastType: "",
-          })),
-        3000
-      );
     } finally {
       setSpinner(false);
     }
@@ -317,9 +294,6 @@ function BulkUploadScheduleModal({ setBulkUploadSchduleModal }) {
 
   return (
     <>
-      {toast.toastOpen && (
-        <Toast toastMsg={toast.toastMsg} toastType={toast.toastType} />
-      )}
       <div className="flex flex-col justify-center items-center fixed inset-0 bg-opacity-25 backdrop-blur-sm">
         <div className="flex bg-white rounded-xl shadow-xl border border-gray-400 w-[860px] h-[560px] p-8">
           <div className="flex flex-col justify-between w-full ">

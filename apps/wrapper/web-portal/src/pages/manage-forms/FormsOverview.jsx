@@ -15,7 +15,6 @@ import {
   duplicateForms,
 } from "../../api";
 import { getFieldName, readableDate } from "../../utils/common";
-import Toast from "../../components/Toast";
 import { VscPreview, VscCopy } from "react-icons/vsc";
 import { RiDeleteBin6Line } from "react-icons/ri";
 
@@ -50,11 +49,6 @@ const FormsOverview = () => {
   });
 
   const [showAlert, setShowAlert] = useState(false);
-  const [toast, setToast] = useState({
-    toastOpen: false,
-    toastMsg: "",
-    toastType: "",
-  });
 
   const [paginationInfo, setPaginationInfo] = useState({
     offsetNo: 0,
@@ -64,7 +58,7 @@ const FormsOverview = () => {
 
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [isFilterOpen, setIsFilterOpen] = useState(false);
-  const { setSpinner } = useContext(ContextAPI);
+  const { setSpinner,setToast } = useContext(ContextAPI);
 
   const COLUMN_DRAFTS = [
     {
@@ -251,26 +245,21 @@ const FormsOverview = () => {
       };
       await duplicateForms(postData);
       fetchFormsList();
-
+      setToast((prevState) => ({
+        ...prevState,
+        toastOpen: true,
+        toastMsg: "Form Cloned!",
+        toastType: "success",
+      }));
       // setViewFormState( formDetail  )
     } catch (error) {
       console.log("error - ", error);
       setToast((prevState) => ({
         ...prevState,
         toastOpen: true,
-        toastMsg: "Error occured while uploading!",
+        toastMsg: "Error while cloning form!",
         toastType: "error",
       }));
-      setTimeout(
-        () =>
-          setToast((prevState) => ({
-            ...prevState,
-            toastOpen: false,
-            toastMsg: "",
-            toastType: "",
-          })),
-        3000
-      );
     } finally {
       setSpinner(false);
     }
@@ -555,14 +544,6 @@ const FormsOverview = () => {
         toastMsg: "Form successfully Published!",
         toastType: "success",
       }));
-      setTimeout(() => {
-        setToast((prevState) => ({
-          ...prevState,
-          toastOpen: false,
-          toastMsg: "",
-          toastType: "",
-        }));
-      }, 3000);
       // Notification.sendemail({"body":})
       fetchFormsList();
     } catch (error) {
@@ -573,16 +554,6 @@ const FormsOverview = () => {
         toastMsg: "Error occured while publishing form!",
         toastType: "error",
       }));
-      setTimeout(
-        () =>
-          setToast((prevState) => ({
-            ...prevState,
-            toastOpen: false,
-            toastMsg: "",
-            toastType: "",
-          })),
-        3000
-      );
     } finally {
       setSpinner(false);
     }
@@ -615,14 +586,6 @@ const FormsOverview = () => {
         toastMsg: "Form successfully Published!",
         toastType: "success",
       }));
-      setTimeout(() => {
-        setToast((prevState) => ({
-          ...prevState,
-          toastOpen: false,
-          toastMsg: "",
-          toastType: "",
-        }));
-      }, 3000);
       // Notification.sendemail({"body":})
       fetchFormsList();
     } catch (error) {
@@ -633,16 +596,6 @@ const FormsOverview = () => {
         toastMsg: "Error occured while publishing form!",
         toastType: "error",
       }));
-      setTimeout(
-        () =>
-          setToast((prevState) => ({
-            ...prevState,
-            toastOpen: false,
-            toastMsg: "",
-            toastType: "",
-          })),
-        3000
-      );
     } finally {
       setSpinner(false);
     }
@@ -660,14 +613,6 @@ const FormsOverview = () => {
         toastMsg: "Form successfully Unpublished!",
         toastType: "success",
       }));
-      setTimeout(() => {
-        setToast((prevState) => ({
-          ...prevState,
-          toastOpen: false,
-          toastMsg: "",
-          toastType: "",
-        }));
-      }, 3000);
       fetchFormsList();
     } catch (error) {
       console.log("error - ", error);
@@ -677,16 +622,6 @@ const FormsOverview = () => {
         toastMsg: "Error occured while unpublishing form!",
         toastType: "error",
       }));
-      setTimeout(
-        () =>
-          setToast((prevState) => ({
-            ...prevState,
-            toastOpen: false,
-            toastMsg: "",
-            toastType: "",
-          })),
-        3000
-      );
     } finally {
       setSpinner(false);
     }
@@ -706,14 +641,6 @@ const FormsOverview = () => {
         }))
       );
 
-      setTimeout(() => {
-        setToast((prevState) => ({
-          ...prevState,
-          toastOpen: false,
-          toastMsg: "",
-          toastType: "",
-        }));
-      }, 3000);
       fetchFormsList();
     } catch (error) {
       console.log("error - ", error);
@@ -723,16 +650,6 @@ const FormsOverview = () => {
         toastMsg: "Error occured while deleting form!",
         toastType: "error",
       }));
-      setTimeout(
-        () =>
-          setToast((prevState) => ({
-            ...prevState,
-            toastOpen: false,
-            toastMsg: "",
-            toastType: "",
-          })),
-        3000
-      );
     } finally {
       setSpinner(false);
     }
@@ -740,10 +657,6 @@ const FormsOverview = () => {
 
   return (
     <>
-      {toast.toastOpen && (
-        <Toast toastMsg={toast.toastMsg} toastType={toast.toastType} />
-      )}
-
       {showAlert && (
         <AlertModal showAlert={setShowAlert} {...state.alertContent} />
       )}

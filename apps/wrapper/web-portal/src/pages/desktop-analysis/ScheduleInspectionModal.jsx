@@ -27,11 +27,11 @@ import {
 
 // import Toast from "../../components/Toast";
 
-function ScheduleInspectionModal({ closeSchedule, setToast, otherInfo }) {
+function ScheduleInspectionModal({ closeSchedule, otherInfo }) {
   const [activeStep, setActiveStep] = React.useState(0);
   const [isLastStep, setIsLastStep] = React.useState(false);
   const [isFirstStep, setIsFirstStep] = React.useState(false);
-  const { setSpinner } = useContext(ContextAPI);
+  const { setSpinner,setToast } = useContext(ContextAPI);
 
   const handleNext = () => !isLastStep && setActiveStep((cur) => cur + 1);
   const handlePrev = () => !isFirstStep && setActiveStep((cur) => cur - 1);
@@ -162,16 +162,6 @@ function ScheduleInspectionModal({ closeSchedule, setToast, otherInfo }) {
         toastMsg: "Inspection scheduled successfully!",
         toastType: "success",
       }));
-      setTimeout(
-        () =>
-          setToast((prevState) => ({
-            ...prevState,
-            toastOpen: false,
-            toastMsg: "",
-            toastType: "",
-          })),
-        3000
-      );
       closeSchedule(false);
 
       registerEvent({
@@ -196,16 +186,6 @@ function ScheduleInspectionModal({ closeSchedule, setToast, otherInfo }) {
             "Inspection already scheduled for " + date.toDateString() + ".",
           toastType: "error",
         }));
-        setTimeout(
-          () =>
-            setToast((prevState) => ({
-              ...prevState,
-              toastOpen: false,
-              toastMsg: "",
-              toastType: "",
-            })),
-          3000
-        );
       } else {
         setToast((prevState) => ({
           ...prevState,
@@ -213,16 +193,6 @@ function ScheduleInspectionModal({ closeSchedule, setToast, otherInfo }) {
           toastMsg: "Error occurred while scheduling inspection!",
           toastType: "error",
         }));
-        setTimeout(
-          () =>
-            setToast((prevState) => ({
-              ...prevState,
-              toastOpen: false,
-              toastMsg: "",
-              toastType: "",
-            })),
-          3000
-        );
       }
     } finally {
       setSpinner(false);

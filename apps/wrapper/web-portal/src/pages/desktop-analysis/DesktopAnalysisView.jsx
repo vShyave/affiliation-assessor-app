@@ -12,7 +12,6 @@ import { Card, Button } from "./../../components";
 import CommonModal from "./../../Modal";
 import ScheduleInspectionModal from "./ScheduleInspectionModal";
 import Sidebar from "../../components/Sidebar";
-import Toast from "../../components/Toast";
 
 import { getFormData } from "../../api";
 import ADMIN_ROUTE_MAP from "../../routes/adminRouteMap";
@@ -43,11 +42,6 @@ export default function DesktopAnalysisView() {
 
   const [openStatusModel, setOpenStatusModel] = useState(false);
 
-  const [toast, setToast] = useState({
-    toastOpen: false,
-    toastMsg: "",
-    toastType: "",
-  });
   const { setSpinner } = useContext(ContextAPI);
 
   const userId = "427d473d-d8ea-4bb3-b317-f230f1c9b2f7";
@@ -252,9 +246,6 @@ export default function DesktopAnalysisView() {
 
   return (
     <>
-      {toast.toastOpen && (
-        <Toast toastMsg={toast.toastMsg} toastType={toast.toastType} />
-      )}
       {/* Breadcrum */}
       {/* <Breadcrumb data={breadCrumbData} /> */}
 
@@ -346,7 +337,6 @@ export default function DesktopAnalysisView() {
           {openScheduleInspectionModel && (
             <ScheduleInspectionModal
               closeSchedule={setOpenSheduleInspectionModel}
-              setToast={setToast}
               otherInfo={otherInfo}
             />
           )}
