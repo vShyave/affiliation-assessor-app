@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { BiArrowBack } from "react-icons/bi";
 import { FaAngleRight } from "react-icons/fa";
@@ -17,11 +17,13 @@ import {
 } from "@material-tailwind/react";
 import { getCookie, readableDate } from "../../utils";
 import { getNotifications } from "../../api";
+import { ContextAPI } from "../../utils/ContextAPI";
 
 export default function NotificationsDetailedView(props) {
   const navigation = useNavigate();
   const [selectedNotification, setselectedNotification] = useState([]);
   const [notificationList, setNotifcationList] = useState([]);
+  const {setSpinner} = useContext(ContextAPI)
 
   const navigate = useNavigate();
 
@@ -40,6 +42,7 @@ export default function NotificationsDetailedView(props) {
       user_id: getCookie("regulator")[0]["user_id"],
     };
     try {
+      setSpinner(true)
       const res = await getNotifications(postData);
       console.log(res);
       const notifList = res.data.notifications.map((item) => ({
@@ -60,6 +63,8 @@ export default function NotificationsDetailedView(props) {
       }
     } catch (error) {
       console.log(error);
+    }finally{
+      setSpinner(false)
     }
   };
 

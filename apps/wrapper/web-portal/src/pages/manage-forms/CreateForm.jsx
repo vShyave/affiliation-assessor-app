@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 
 import { Link, useNavigate, useParams } from "react-router-dom";
 
@@ -10,6 +10,7 @@ import { convertODKtoXML, createForm, updateForms, viewForm } from "../../api";
 import Toast from "../../components/Toast";
 import { Label } from "../../components";
 import ADMIN_ROUTE_MAP from "../../routes/adminRouteMap";
+import { ContextAPI } from "../../utils/ContextAPI";
 
 const CreateForm = () => {
   const [formStatus,setFormStatus] = useState("")
@@ -26,6 +27,7 @@ const CreateForm = () => {
     toastMsg: "",
     toastType: "",
   });
+  const {setSpinner} = useContext(ContextAPI)
 
   const handleChange = (e) => {
     setFormData((prevState) => ({
@@ -52,6 +54,7 @@ const CreateForm = () => {
     postData.append("user_id", "53c57d13-d33d-439a-bd72-1f56b189642d");
     postData.append("form_status", "Draft");
     try {
+      setSpinner(true)
       setLoading(true);
       if (action === "save") {
         const formResponse = await createForm(postData);
@@ -93,11 +96,14 @@ const CreateForm = () => {
           })),
         3000
       );
+    }finally{
+      setSpinner(false)
     }
   };
 
   const uploadOdkForm = async (postData) => {
     try {
+      setSpinner(true)
       const res = await convertODKtoXML(postData);
       setXmlData(res.data);
       setFormData((prevState) => ({
@@ -141,12 +147,15 @@ const CreateForm = () => {
           })),
         3000
       );
+    }finally{
+      setSpinner(false)
     }
   };
 
 
   const getFormDetails = async (formData) => {
     try {
+      setSpinner(true)
       const response = await viewForm(formData);
       const formDetail = response.data.forms[0];
       setFormStatus(formDetail?.form_status)
@@ -181,6 +190,8 @@ const CreateForm = () => {
           })),
         3000
       );
+    }finally{
+      setSpinner(false)
     }
   };
 

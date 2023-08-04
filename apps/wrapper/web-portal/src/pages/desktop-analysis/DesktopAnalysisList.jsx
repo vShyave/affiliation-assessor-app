@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 import { Select, Option } from "@material-tailwind/react";
@@ -6,6 +6,7 @@ import { Select, Option } from "@material-tailwind/react";
 import FilteringTable from "../../components/table/FilteringTable";
 import Card from "../../components/Card";
 import Nav from "../../components/Nav";
+import { ContextAPI } from "../../utils/ContextAPI";
 
 import {
   filterDesktopAnalysis,
@@ -35,6 +36,7 @@ const DesktopAnalysisList = () => {
   });
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [isFilterOpen, setIsFilterOpen] = useState(false);
+  const {setSpinner} = useContext(ContextAPI)
 
   const COLUMNS = [
     {
@@ -115,9 +117,12 @@ const DesktopAnalysisList = () => {
 
   const markStatus = async (postData) => {
     try {
+      setSpinner(true)
       const res = await markReviewStatus(postData);
     } catch (error) {
       console.log("error - ", error);
+    }finally{
+      setSpinner(false)
     }
   };
 
@@ -133,6 +138,7 @@ const DesktopAnalysisList = () => {
       limit: paginationInfo.limit,
     };
     try {
+      setSpinner(true)
       const res = await getDesktopAnalysisForms(pagination);
       setPaginationInfo((prevState) => ({
         ...prevState,
@@ -141,6 +147,8 @@ const DesktopAnalysisList = () => {
       setFormsList(res?.data?.form_submissions);
     } catch (error) {
       console.log("error - ", error);
+    }finally{
+      setSpinner(false)
     }
   };
 
@@ -151,6 +159,7 @@ const DesktopAnalysisList = () => {
       ...searchData,
     };
     try {
+      setSpinner(true)
       const res = await searchDesktop(postData);
       setPaginationInfo((prevState) => ({
         ...prevState,
@@ -159,6 +168,8 @@ const DesktopAnalysisList = () => {
       setFormsList(res?.data?.form_submissions);
     } catch (error) {
       console.log("error - ", error);
+    }finally{
+      setSpinner(false)
     }
   };
 
@@ -169,6 +180,7 @@ const DesktopAnalysisList = () => {
       ...filters,
     };
     try {
+      setSpinner(true)
       const res = await filterDesktopAnalysis(postData);
       setPaginationInfo((prevState) => ({
         ...prevState,
@@ -177,6 +189,8 @@ const DesktopAnalysisList = () => {
       setFormsList(res?.data?.form_submissions);
     } catch (error) {
       console.log("error - ", error);
+    }finally{
+      setSpinner(false)
     }
   };
 

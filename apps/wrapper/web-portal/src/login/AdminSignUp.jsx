@@ -6,11 +6,12 @@ import ADMIN_ROUTE_MAP from "../routes/adminRouteMap";
 import { registerUser } from "../api";
 import { userService } from "../api/userService";
 
-
 import { Card, Label, Button, Input } from "../components";
 //import { forkJoin, lastValueFrom } from "rxjs";
 import Toast from "../components/Toast";
 import { removeCookie, setCookie } from "../utils/common";
+import { ContextAPI } from "../utils/ContextAPI";
+import { useContext } from "react";
 
 export default function AdminSingUp() {
   const navigate = useNavigate();
@@ -28,19 +29,19 @@ export default function AdminSingUp() {
     toastMsg: "",
     toastType: "",
   });
+  const { setSpinner } = useContext(ContextAPI);
   const signupHandler = async (data) => {
-    const {firstName,lastName,email, mobilePhone } = data;
+    const { firstName, lastName, email, mobilePhone } = data;
     let userDetails = {
-      
-        firstName: firstName,
-        lastName: lastName,
-        email: email,
-        username: email,
-        password: "rkr",
-        roleName: "Regulator"
-      
+      firstName: firstName,
+      lastName: lastName,
+      email: email,
+      username: email,
+      password: "rkr",
+      roleName: "Regulator",
     };
     try {
+      setSpinner(true);
       let accessTokenObj = {
         grant_type: "client_credentials",
         client_id: "admin-api",
@@ -49,7 +50,10 @@ export default function AdminSingUp() {
       const accessTokenResponse = await userService.getAccessToken(
         accessTokenObj
       );
-      setCookie("access_token","Bearer "+accessTokenResponse.data.access_token)
+      setCookie(
+        "access_token",
+        "Bearer " + accessTokenResponse.data.access_token
+      );
 
       const keyCloakSignupRes = await userService.signup(userDetails);
 
@@ -57,13 +61,13 @@ export default function AdminSingUp() {
         user_id: keyCloakSignupRes.data.userId,
         fname: firstName,
         lname: lastName,
-        fullName: firstName+" "+lastName,
+        fullName: firstName + " " + lastName,
         email: email,
         phoneNumber: mobilePhone,
       };
       const adminRes = await registerUser(adminDetails);
       navigate(ADMIN_ROUTE_MAP.loginModule.login);
-      removeCookie("access_token")
+      removeCookie("access_token");
     } catch (error) {
       setToast((prevState) => ({
         ...prevState,
@@ -82,6 +86,8 @@ export default function AdminSingUp() {
         3000
       );
       console.error("Registration failed due to some error:", error);
+    } finally {
+      setSpinner(false);
     }
   };
 

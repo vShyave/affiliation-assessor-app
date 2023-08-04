@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useParams, Link } from "react-router-dom";
 import { BsArrowLeft, BsArrowRight } from "react-icons/bs";
 import { FaAngleRight } from "react-icons/fa";
@@ -28,6 +28,7 @@ import {
   getFromLocalForage,
   setToLocalForage,
 } from "../../forms";
+import { ContextAPI } from "../../utils/ContextAPI";
 
 const ENKETO_URL = process.env.REACT_APP_ENKETO_URL;
 
@@ -47,6 +48,7 @@ export default function DesktopAnalysisView() {
     toastMsg: "",
     toastType: "",
   });
+  const { setSpinner } = useContext(ContextAPI);
 
   const userId = "427d473d-d8ea-4bb3-b317-f230f1c9b2f7";
   const formSpec = {
@@ -92,26 +94,33 @@ export default function DesktopAnalysisView() {
     // } else {
 
     const postData = { form_id: formId };
-    const res = await getFormData(postData);
-    formData = res.data.form_submissions[0];
-    setFormDataFromApi(res.data.form_submissions[0]);
+    try {
+      setSpinner(true);
+      const res = await getFormData(postData);
+      formData = res.data.form_submissions[0];
+      setFormDataFromApi(res.data.form_submissions[0]);
 
-    await setToLocalForage(
-      `${userId}_${startingForm}_${new Date().toISOString().split("T")[0]}`,
-      {
-        formData: formData?.form_data,
-        imageUrls: { ...data?.imageUrls },
-      }
-    );
-    // }
+      await setToLocalForage(
+        `${userId}_${startingForm}_${new Date().toISOString().split("T")[0]}`,
+        {
+          formData: formData?.form_data,
+          imageUrls: { ...data?.imageUrls },
+        }
+      );
+      // }
 
-    let formURI = await getPrefillXML(
-      `${filePath}`,
-      formSpec.onSuccess,
-      formData?.form_data,
-      formData?.imageUrls
-    );
-    setEncodedFormURI(formURI);
+      let formURI = await getPrefillXML(
+        `${filePath}`,
+        formSpec.onSuccess,
+        formData?.form_data,
+        formData?.imageUrls
+      );
+      setEncodedFormURI(formURI);
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setSpinner(false);
+    }
   };
 
   const afterFormSubmit = async (e) => {
