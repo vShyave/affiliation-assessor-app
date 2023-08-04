@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import ADMIN_ROUTE_MAP from "../routes/adminRouteMap";
 import { userService } from "../api/userService";
@@ -9,6 +9,8 @@ import { setCookie, getCookie, removeCookie } from "../utils/common";
 import { forkJoin, lastValueFrom, from } from "rxjs";
 import { mergeMap } from "rxjs/operators";
 import Toast from "../components/Toast";
+import { ContextAPI } from "../utils/ContextAPI";
+
 const AdminLogin = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [enableOtp, setEnableOtp] = useState(false);
@@ -16,6 +18,7 @@ const AdminLogin = () => {
   const [emailId, setEmailId] = useState(null);
   const [verifyEnteredOtp, setVerifyEnteredOtp] = useState(true);
   const navigate = useNavigate();
+  const {setSpinner} = useContext(ContextAPI)
 
   const {
     register,
@@ -100,6 +103,7 @@ const AdminLogin = () => {
 
   const verifyOtp = async (data) => {
     try {
+      setSpinner(true)
       const loginDetails = {
         email: data.email,
         otp: Number(data.otp),
@@ -160,6 +164,8 @@ const AdminLogin = () => {
       );
       removeCookie("regulator");
       removeCookie("userData");
+    }finally{
+      setSpinner(false)
     }
   };
 

@@ -1,5 +1,5 @@
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import ADMIN_ROUTE_MAP from "./routes/adminRouteMap";
 import "./App.css";
 import {
@@ -48,8 +48,11 @@ import ScheduleManagement from "./pages/schedule-management/ScheduleManagement";
 import Notification from "./pages/notifications/Notification";
 import NotificationsDetailedView from "./pages/notifications/NotificationsDetailedView";
 import NocIssued from "./pages/ground-analysis/NocIssuedConfirmation";
+import Spinner from "./components/spinner";
+import { ContextAPI } from "./utils/ContextAPI";
 
 function App() {
+  const [spinner, setSpinner] = useState(false);
   // const messaging = getMessaging(fireBaseApp);
   isSupported().then((payload) => {
     console.log("payload - ", payload);
@@ -68,120 +71,123 @@ function App() {
 
   return (
     <div className="App">
-      <BrowserRouter>
-        <Routes>
-          {/* Default landing page */}
-          <Route path="/" element={<Navigate to="/auth/login" />} />
+      <ContextAPI.Provider value={{spinner,setSpinner}}>
+        {spinner && <Spinner />}
+        <BrowserRouter>
+          <Routes>
+            {/* Default landing page */}
+            <Route path="/" element={<Navigate to="/auth/login" />} />
 
-          {/* Register and Login Routes */}
-          <Route path={ADMIN_ROUTE_MAP.auth} element={<Authenticate />}>
-            <Route
-              path={ADMIN_ROUTE_MAP.loginModule.login}
-              element={<AdminLogin />}
-            ></Route>
-            <Route
-              path={ADMIN_ROUTE_MAP.loginModule.loginOtp}
-              element={<LoginEnterOtp />}
-            ></Route>
-            <Route
-              path={ADMIN_ROUTE_MAP.loginModule.register}
-              element={<AdminSingUp />}
-            ></Route>
-            <Route
-              path={ADMIN_ROUTE_MAP.loginModule.registerOtp}
-              element={<EnterOtp />}
-            ></Route>
-          </Route>
-
-          {/* Dashboard routing starts here */}
-          <Route
-            path={ADMIN_ROUTE_MAP.adminModule.dashboard}
-            element={
-              //  <PrivateRoute>
-              <DashboardLandingPage />
-              /* </PrivateRoute>  */
-            }
-          >
-            <Route
-              path={ADMIN_ROUTE_MAP.adminModule.manageUsers.home}
-              element={<ManageUser />}
-            >
-              <Route index element={<ManageUsersList />}></Route>
+            {/* Register and Login Routes */}
+            <Route path={ADMIN_ROUTE_MAP.auth} element={<Authenticate />}>
               <Route
-                path={`${ADMIN_ROUTE_MAP.adminModule.manageUsers.createUser}/:userId?`}
-                element={<AdminCreateUser />}
+                path={ADMIN_ROUTE_MAP.loginModule.login}
+                element={<AdminLogin />}
+              ></Route>
+              <Route
+                path={ADMIN_ROUTE_MAP.loginModule.loginOtp}
+                element={<LoginEnterOtp />}
+              ></Route>
+              <Route
+                path={ADMIN_ROUTE_MAP.loginModule.register}
+                element={<AdminSingUp />}
+              ></Route>
+              <Route
+                path={ADMIN_ROUTE_MAP.loginModule.registerOtp}
+                element={<EnterOtp />}
               ></Route>
             </Route>
 
-            {/* Notifications routing starts here */}
+            {/* Dashboard routing starts here */}
             <Route
-              path={ADMIN_ROUTE_MAP.adminModule.notifications.home}
-              element={<Notification />}
+              path={ADMIN_ROUTE_MAP.adminModule.dashboard}
+              element={
+                //  <PrivateRoute>
+                <DashboardLandingPage />
+                /* </PrivateRoute>  */
+              }
             >
-              <Route index element={<NotificationsDetailedView />}></Route>
-            </Route>
-            {/*Manage forms routing starts here */}
-            <Route
-              path={ADMIN_ROUTE_MAP.adminModule.manageForms.home}
-              element={<ManageForms />}
-            >
-              <Route index element={<FormsOverview />}></Route>
               <Route
-                path={ADMIN_ROUTE_MAP.adminModule.manageForms.createForm}
-                element={<CreateForm />}
-              ></Route>
-              <Route
-                path={ADMIN_ROUTE_MAP.adminModule.manageForms.upload}
-                element={<UploadForm />}
-              ></Route>
-              <Route
-                path={`${ADMIN_ROUTE_MAP.adminModule.manageForms.viewForm}/:formName/:formId`}
-                element={<CreateForm />}
-              ></Route>
-            </Route>
-            <Route
-              path={ADMIN_ROUTE_MAP.adminModule.desktopAnalysis.home}
-              element={<DesktopAnalysis />}
-            >
-              <Route index element={<DesktopAnalysisList />}></Route>
-              <Route
-                path={`${ADMIN_ROUTE_MAP.adminModule.desktopAnalysis.viewForm}/:formName/:formId`}
-                element={<DesktopAnalysisView />}
-              ></Route>
-            </Route>
-            {/*Ground Inspection routing starts here  */}
-            <Route
-              path={ADMIN_ROUTE_MAP.adminModule.onGroundInspection.home}
-              element={<GroundInspectionAnalysis />}
-            >
-              <Route index element={<GroundInspectionListForms />}></Route>
-              <Route
-                path={`${ADMIN_ROUTE_MAP.adminModule.onGroundInspection.viewForm}/:formName/:formId/:instituteName/:round`}
-                element={<GroundInspectionViewForm />}
-              ></Route>
+                path={ADMIN_ROUTE_MAP.adminModule.manageUsers.home}
+                element={<ManageUser />}
+              >
+                <Route index element={<ManageUsersList />}></Route>
+                <Route
+                  path={`${ADMIN_ROUTE_MAP.adminModule.manageUsers.createUser}/:userId?`}
+                  element={<AdminCreateUser />}
+                ></Route>
+              </Route>
 
+              {/* Notifications routing starts here */}
               <Route
-                path={`${ADMIN_ROUTE_MAP.adminModule.onGroundInspection.nocIssued}`}
-                element={<NocIssued />}
-              ></Route>
+                path={ADMIN_ROUTE_MAP.adminModule.notifications.home}
+                element={<Notification />}
+              >
+                <Route index element={<NotificationsDetailedView />}></Route>
+              </Route>
+              {/*Manage forms routing starts here */}
+              <Route
+                path={ADMIN_ROUTE_MAP.adminModule.manageForms.home}
+                element={<ManageForms />}
+              >
+                <Route index element={<FormsOverview />}></Route>
+                <Route
+                  path={ADMIN_ROUTE_MAP.adminModule.manageForms.createForm}
+                  element={<CreateForm />}
+                ></Route>
+                <Route
+                  path={ADMIN_ROUTE_MAP.adminModule.manageForms.upload}
+                  element={<UploadForm />}
+                ></Route>
+                <Route
+                  path={`${ADMIN_ROUTE_MAP.adminModule.manageForms.viewForm}/:formName/:formId`}
+                  element={<CreateForm />}
+                ></Route>
+              </Route>
+              <Route
+                path={ADMIN_ROUTE_MAP.adminModule.desktopAnalysis.home}
+                element={<DesktopAnalysis />}
+              >
+                <Route index element={<DesktopAnalysisList />}></Route>
+                <Route
+                  path={`${ADMIN_ROUTE_MAP.adminModule.desktopAnalysis.viewForm}/:formName/:formId`}
+                  element={<DesktopAnalysisView />}
+                ></Route>
+              </Route>
+              {/*Ground Inspection routing starts here  */}
+              <Route
+                path={ADMIN_ROUTE_MAP.adminModule.onGroundInspection.home}
+                element={<GroundInspectionAnalysis />}
+              >
+                <Route index element={<GroundInspectionListForms />}></Route>
+                <Route
+                  path={`${ADMIN_ROUTE_MAP.adminModule.onGroundInspection.viewForm}/:formName/:formId/:instituteName/:round`}
+                  element={<GroundInspectionViewForm />}
+                ></Route>
+
+                <Route
+                  path={`${ADMIN_ROUTE_MAP.adminModule.onGroundInspection.nocIssued}`}
+                  element={<NocIssued />}
+                ></Route>
+              </Route>
+              {/* Certificate management routing starts here */}
+              <Route
+                path={ADMIN_ROUTE_MAP.adminModule.certificateManagement.home}
+                element={<CertificateManagement />}
+              >
+                <Route index element={<CertificateManagementList />}></Route>
+              </Route>
+              {/* Schedule management routing starts here */}
+              <Route
+                path={ADMIN_ROUTE_MAP.adminModule.scheduleManagement.home}
+                element={<ScheduleManagement />}
+              >
+                <Route index element={<ScheduleManagementList />}></Route>
+              </Route>
             </Route>
-            {/* Certificate management routing starts here */}
-            <Route
-              path={ADMIN_ROUTE_MAP.adminModule.certificateManagement.home}
-              element={<CertificateManagement />}
-            >
-              <Route index element={<CertificateManagementList />}></Route>
-            </Route>
-            {/* Schedule management routing starts here */}
-            <Route
-              path={ADMIN_ROUTE_MAP.adminModule.scheduleManagement.home}
-              element={<ScheduleManagement />}
-            >
-              <Route index element={<ScheduleManagementList />}></Route>
-            </Route>
-          </Route>
-        </Routes>
-      </BrowserRouter>
+          </Routes>
+        </BrowserRouter>
+      </ContextAPI.Provider>
     </div>
   );
 }

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 import { Select, Option } from "@material-tailwind/react";
@@ -15,6 +15,7 @@ import {
   searchOGA,
 } from "../../api";
 import ADMIN_ROUTE_MAP from "../../routes/adminRouteMap";
+import { ContextAPI } from "../../utils/ContextAPI";
 
 export default function OnGroundInspectionAnalysis() {
   const navigation = useNavigate();
@@ -33,6 +34,7 @@ export default function OnGroundInspectionAnalysis() {
   });
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [isFilterOpen, setIsFilterOpen] = useState(false);
+  const {setSpinner} = useContext(ContextAPI)
 
   const COLUMN = [
     {
@@ -108,9 +110,12 @@ export default function OnGroundInspectionAnalysis() {
 
   const markStatus = async (postData) => {
     try {
+      setSpinner(true)
       const res = await markReviewStatus(postData);
     } catch (error) {
       console.log("error - ", error);
+    }finally{
+      setSpinner(false)
     }
   };
 
@@ -127,6 +132,7 @@ export default function OnGroundInspectionAnalysis() {
       formStatus: state.menu_selected,
     };
     try {
+      setSpinner(true)
       const res = await getOnGroundAssessorData(postData);
       setPaginationInfo((prevState) => ({
         ...prevState,
@@ -135,6 +141,8 @@ export default function OnGroundInspectionAnalysis() {
       setFormsList(res?.data?.form_submissions);
     } catch (error) {
       console.log("error - ", error);
+    }finally{
+      setSpinner(false)
     }
   };
 
@@ -170,6 +178,7 @@ export default function OnGroundInspectionAnalysis() {
       ...customFilters,
     };
     try {
+      setSpinner(true)
       const res = await filterOGA(postData);
       setPaginationInfo((prevState) => ({
         ...prevState,
@@ -178,6 +187,8 @@ export default function OnGroundInspectionAnalysis() {
       setFormsList(res?.data?.form_submissions);
     } catch (error) {
       console.log("error - ", error);
+    }finally{
+      setSpinner(false)
     }
   };
 

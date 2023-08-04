@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Card, Button } from "../../components";
 import FilteringTable from "../../components/table/FilteringTable";
@@ -28,6 +28,7 @@ import {
 
 import AlertModal from "../../components/AlertModal";
 import Nav from "../../components/Nav";
+import { ContextAPI } from "../../utils/ContextAPI";
 
 const FormsOverview = () => {
   const navigation = useNavigate();
@@ -63,6 +64,7 @@ const FormsOverview = () => {
 
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [isFilterOpen, setIsFilterOpen] = useState(false);
+  const{setSpinner} = useContext(ContextAPI)
 
   const COLUMN_DRAFTS = [
     {
@@ -224,6 +226,7 @@ const FormsOverview = () => {
     const formData = new FormData();
     formData.append("form_id", form_Id);
     try {
+      setSpinner(true)
       const response = await viewForm(formData);
       const formDetail = response.data.forms[0];
       const postData = {
@@ -268,6 +271,8 @@ const FormsOverview = () => {
           })),
         3000
       );
+    }finally{
+      setSpinner(false)
     }
   };
 
@@ -278,6 +283,7 @@ const FormsOverview = () => {
       formStatus: state.menu_selected,
     };
     try {
+      setSpinner(true)
       const res = await getForms(postData);
       setPaginationInfo((prevState) => ({
         ...prevState,
@@ -286,6 +292,8 @@ const FormsOverview = () => {
       setFormsList(res?.data?.forms);
     } catch (error) {
       console.log("error - ", error);
+    }finally{
+      setSpinner(false)
     }
   };
 
@@ -321,6 +329,7 @@ const FormsOverview = () => {
       ...customFilters,
     };
     try {
+      setSpinner(true)
       const res = await filterForms(postData);
       setPaginationInfo((prevState) => ({
         ...prevState,
@@ -329,6 +338,8 @@ const FormsOverview = () => {
       setFormsList(res?.data?.forms);
     } catch (error) {
       console.log("error - ", error);
+    }finally{
+      setSpinner(false)
     }
   };
 
@@ -533,6 +544,7 @@ const FormsOverview = () => {
     const formData = new FormData();
     formData.append("form_id", form_id);
     try {
+      setSpinner(true)
       const response = await publishForms(formData);
       setToast((prevState) => ({
         ...prevState,
@@ -568,6 +580,8 @@ const FormsOverview = () => {
           })),
         3000
       );
+    }finally{
+      setSpinner(false)
     }
   };
 
@@ -632,6 +646,7 @@ const FormsOverview = () => {
     const formData = new FormData();
     formData.append("form_id", form_id);
     try {
+      setSpinner(true)
       const response = await unpublishForms(formData);
       setToast((prevState) => ({
         ...prevState,
@@ -666,6 +681,8 @@ const FormsOverview = () => {
           })),
         3000
       );
+    }finally{
+      setSpinner(false)
     }
   };
 
@@ -673,6 +690,7 @@ const FormsOverview = () => {
     const formData = new FormData();
     formData.append("form_id", form_id);
     try {
+      setSpinner(true)
       await deleteForm(formData).then(
         setToast((prevState) => ({
           ...prevState,
@@ -709,6 +727,8 @@ const FormsOverview = () => {
           })),
         3000
       );
+    }finally{
+      setSpinner(false)
     }
   };
 
