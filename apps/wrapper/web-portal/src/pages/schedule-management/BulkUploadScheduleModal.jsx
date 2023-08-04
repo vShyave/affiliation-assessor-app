@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 
 import FilteringTable from "../../components/table/FilteringTable";
 
@@ -9,9 +9,11 @@ import { Link } from "react-router-dom";
 import { Button } from "../../components";
 import { addAssessmentSchedule } from "../../api";
 import Toast from "../../components/Toast";
+import { ContextAPI } from "../../utils/ContextAPI";
 
 function BulkUploadScheduleModal({ setBulkUploadSchduleModal }) {
   const [file, setFile] = useState();
+  const { setSpinner } = useContext(ContextAPI);
 
   const [tableAssessmentList, setTableAssessmentList] = useState([]);
 
@@ -19,9 +21,12 @@ function BulkUploadScheduleModal({ setBulkUploadSchduleModal }) {
 
   const [tableDataReady, setTableDataReady] = useState(false);
 
-  const [invalidTableAssessmentList, setInvalidTableAssessmentList] = useState([]);
+  const [invalidTableAssessmentList, setInvalidTableAssessmentList] = useState(
+    []
+  );
 
-  const [invalidAssessmentDataFlag, setInvalidAssessmentDataFlag] = useState(false);
+  const [invalidAssessmentDataFlag, setInvalidAssessmentDataFlag] =
+    useState(false);
 
   const [allAssessmentsList, setAllAssessmentsList] = useState([]);
 
@@ -252,6 +257,7 @@ function BulkUploadScheduleModal({ setBulkUploadSchduleModal }) {
 
   const bulkSchedule = async () => {
     try {
+      setSpinner(true);
       const postData = {
         assessment_schedule: selectedRows.map((item) => {
           let tempObj = {
@@ -299,6 +305,8 @@ function BulkUploadScheduleModal({ setBulkUploadSchduleModal }) {
           })),
         3000
       );
+    } finally {
+      setSpinner(false);
     }
   };
 
@@ -320,12 +328,12 @@ function BulkUploadScheduleModal({ setBulkUploadSchduleModal }) {
 
               <div className="flex flex-row m-auto">
                 {tableDataReady && (
-                    <Switch
-                      id="show-with-errors"
-                      label={<span className="text-sm">Show with errors</span>}
-                      onChange={handleToggleChange}
-                    />
-                  )}
+                  <Switch
+                    id="show-with-errors"
+                    label={<span className="text-sm">Show with errors</span>}
+                    onChange={handleToggleChange}
+                  />
+                )}
               </div>
 
               <div className=" flex-row text-blue-500">

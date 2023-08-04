@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 
 // import { MdFileUpload, MdEdit, MdDelete } from "react-icons/md";
@@ -8,6 +8,7 @@ import FilteringTable from "../../components/table/FilteringTable";
 import Card from "../../components/Card";
 import { Button } from "../../components";
 import Nav from "../../components/Nav";
+import { ContextAPI } from "../../utils/ContextAPI";
 
 import {
   filterAssessments,
@@ -30,6 +31,7 @@ import Toast from "../../components/Toast";
 
 const ScheduleManagementList = () => {
   const navigation = useNavigate();
+  const { setSpinner } = useContext(ContextAPI);
   var resUserData = [];
   const [assessmentScheduleList, setAssessmentScheduleList] = useState();
   const [scheduleTableList, setScheduleTableList] = useState([]);
@@ -166,7 +168,7 @@ const ScheduleManagementList = () => {
                   <RiDeleteBin6Line />
                 </div>
                 <div className="text-semibold">
-                  <span >Delete</span>
+                  <span>Delete</span>
                 </div>
               </div>{" "}
             </MenuItem>
@@ -183,6 +185,7 @@ const ScheduleManagementList = () => {
     const postData = { id: formId[0]?.id };
 
     try {
+      setSpinner(true);
       const response = await deleteSchedule(postData);
       if (response.status === 200) {
         setToast((prevState) => ({
@@ -220,6 +223,8 @@ const ScheduleManagementList = () => {
           })),
         3000
       );
+    } finally {
+      setSpinner(false);
     }
     setShowAlert(false);
   };
@@ -231,6 +236,7 @@ const ScheduleManagementList = () => {
       ...filters,
     };
     try {
+      setSpinner(true);
       const res = await filterAssessments(postData);
       setAssessmentScheduleList(res?.data?.assessment_schedule);
       const data = res?.data?.assessment_schedule;
@@ -241,6 +247,8 @@ const ScheduleManagementList = () => {
       setScheduleTableList(data.map(setTableData));
     } catch (error) {
       console.log("error - ", error);
+    } finally {
+      setSpinner(false);
     }
   };
 
@@ -251,6 +259,7 @@ const ScheduleManagementList = () => {
       ...searchData,
     };
     try {
+      setSpinner(true)
       const res = await searchAssessments(postData);
       setAssessmentScheduleList(res?.data?.assessment_schedule);
       const data = res?.data?.assessment_schedule;
@@ -261,6 +270,8 @@ const ScheduleManagementList = () => {
       setScheduleTableList(data.map(setTableData));
     } catch (error) {
       console.log("error - ", error);
+    }finally{
+      setSpinner(false)
     }
   };
 
@@ -270,6 +281,7 @@ const ScheduleManagementList = () => {
       limit: paginationInfo.limit,
     };
     try {
+      setSpinner(true);
       const res = await getAssessmentSchedule(pagination);
       setAssessmentScheduleList(res?.data?.assessment_schedule);
       const data = res?.data?.assessment_schedule;
@@ -280,6 +292,8 @@ const ScheduleManagementList = () => {
       setScheduleTableList(data.map(setTableData));
     } catch (error) {
       console.log("error - ", error);
+    } finally {
+      setSpinner(false);
     }
   };
 

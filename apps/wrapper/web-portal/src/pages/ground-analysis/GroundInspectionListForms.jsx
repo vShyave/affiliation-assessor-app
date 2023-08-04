@@ -154,6 +154,7 @@ export default function OnGroundInspectionAnalysis() {
       ...searchData,
     };
     try {
+      setSpinner(true)
       const res = await searchOGA(postData);
       setPaginationInfo((prevState) => ({
         ...prevState,
@@ -162,6 +163,8 @@ export default function OnGroundInspectionAnalysis() {
       setFormsList(res?.data?.form_submissions);
     } catch (error) {
       console.log("error - ", error);
+    }finally{
+      setSpinner(false)
     }
   };
 

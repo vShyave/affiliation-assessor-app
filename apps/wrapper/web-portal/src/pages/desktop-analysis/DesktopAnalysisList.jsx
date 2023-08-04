@@ -138,6 +138,7 @@ const DesktopAnalysisList = () => {
       limit: paginationInfo.limit,
     };
     try {
+      setSpinner(true)
       const res = await getDesktopAnalysisForms(pagination);
       setPaginationInfo((prevState) => ({
         ...prevState,
@@ -146,6 +147,8 @@ const DesktopAnalysisList = () => {
       setFormsList(res?.data?.form_submissions);
     } catch (error) {
       console.log("error - ", error);
+    }finally{
+      setSpinner(false)
     }
   };
 
@@ -156,6 +159,7 @@ const DesktopAnalysisList = () => {
       ...searchData,
     };
     try {
+      setSpinner(true)
       const res = await searchDesktop(postData);
       setPaginationInfo((prevState) => ({
         ...prevState,
@@ -164,6 +168,8 @@ const DesktopAnalysisList = () => {
       setFormsList(res?.data?.form_submissions);
     } catch (error) {
       console.log("error - ", error);
+    }finally{
+      setSpinner(false)
     }
   };
 
@@ -174,6 +180,7 @@ const DesktopAnalysisList = () => {
       ...filters,
     };
     try {
+      setSpinner(true)
       const res = await filterDesktopAnalysis(postData);
       setPaginationInfo((prevState) => ({
         ...prevState,
@@ -182,6 +189,8 @@ const DesktopAnalysisList = () => {
       setFormsList(res?.data?.form_submissions);
     } catch (error) {
       console.log("error - ", error);
+    }finally{
+      setSpinner(false)
     }
   };
 
