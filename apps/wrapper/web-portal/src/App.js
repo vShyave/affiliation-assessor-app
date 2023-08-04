@@ -50,14 +50,25 @@ import NotificationsDetailedView from "./pages/notifications/NotificationsDetail
 import NocIssued from "./pages/ground-analysis/NocIssuedConfirmation";
 import { getCookie, getLocalTimeInISOFormat } from "./utils";
 import { insertNotifications } from "./api";
+import Toast from "./components/Toast";
 
 function App() {
+  const [toast, setToast] = useState({
+    toastOpen: false,
+    toastMsg: "",
+    toastType: "",
+  });
   const messaging = getMessaging(fireBaseApp);
   const onMessageListener = (async () => {
     const messagingResolve = await messaging;
     if (messagingResolve) {
       onMessage(messagingResolve, (payload) => {
         console.log(payload);
+        setToast((prevState)=>({
+          ...prevState,
+          toastOpen:true,
+          toastMsg: payload.data.title
+        }))
         const postData = {
           notifications: [
             {
@@ -82,6 +93,9 @@ function App() {
 
   return (
     <div className="App">
+      {toast.toastOpen && (
+        <Toast toastMsg={toast.toastMsg} toastType={toast.toastType} />
+      )}
       <BrowserRouter>
         <Routes>
           {/* Default landing page */}
