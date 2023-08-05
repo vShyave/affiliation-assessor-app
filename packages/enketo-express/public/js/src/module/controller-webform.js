@@ -752,7 +752,7 @@ function _setEventHandlers(survey) {
         if (e.target.nodeName === "INPUT") {
             const formFiles = await fileManager.getCurrentFiles();
             if (formFiles) {
-                console.log("formFiles: " + formFiles?.length)
+                // console.log("formFiles: " + formFiles?.length)
                 if (formFiles?.length) {
                     for (let i = 0; i < formFiles.length; i++) {
                         const file = formFiles[i];
@@ -763,7 +763,7 @@ function _setEventHandlers(survey) {
                             if (file?.name?.includes(e?.target?.name?.slice(e?.target?.name?.lastIndexOf("/") + 1))) {
                                 const fileURL = await formController.uploadFile(file);
                                 if (fileURL) {
-                                    console.log({ fileURL });
+                                    // console.log({ fileURL });
                                     arrayOfFileURLs[e.target.name] = { url: fileURL, name: file.name, ref: e.target.name };
                                     // Broadcast File Remove
                                     olderFiles = JSON.parse(localStorage.getItem(keyToStorage)) || {};
