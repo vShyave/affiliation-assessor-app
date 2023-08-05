@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Card, Button } from "../../components";
 import FilteringTable from "../../components/table/FilteringTable";
@@ -15,7 +15,6 @@ import {
   duplicateForms,
 } from "../../api";
 import { getFieldName, readableDate } from "../../utils/common";
-import Toast from "../../components/Toast";
 import { VscPreview, VscCopy } from "react-icons/vsc";
 import { RiDeleteBin6Line } from "react-icons/ri";
 
@@ -28,6 +27,7 @@ import {
 
 import AlertModal from "../../components/AlertModal";
 import Nav from "../../components/Nav";
+import { ContextAPI } from "../../utils/ContextAPI";
 
 const FormsOverview = () => {
   const navigation = useNavigate();
@@ -49,11 +49,6 @@ const FormsOverview = () => {
   });
 
   const [showAlert, setShowAlert] = useState(false);
-  const [toast, setToast] = useState({
-    toastOpen: false,
-    toastMsg: "",
-    toastType: "",
-  });
 
   const [paginationInfo, setPaginationInfo] = useState({
     offsetNo: 0,
@@ -63,6 +58,7 @@ const FormsOverview = () => {
 
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [isFilterOpen, setIsFilterOpen] = useState(false);
+  const { setSpinner,setToast } = useContext(ContextAPI);
 
   const COLUMN_DRAFTS = [
     {
@@ -224,6 +220,7 @@ const FormsOverview = () => {
     const formData = new FormData();
     formData.append("form_id", form_Id);
     try {
+      setSpinner(true);
       const response = await viewForm(formData);
       const formDetail = response.data.forms[0];
       const postData = {
@@ -248,26 +245,23 @@ const FormsOverview = () => {
       };
       await duplicateForms(postData);
       fetchFormsList();
-
+      setToast((prevState) => ({
+        ...prevState,
+        toastOpen: true,
+        toastMsg: "Form Cloned!",
+        toastType: "success",
+      }));
       // setViewFormState( formDetail  )
     } catch (error) {
       console.log("error - ", error);
       setToast((prevState) => ({
         ...prevState,
         toastOpen: true,
-        toastMsg: "Error occured while uploading!",
+        toastMsg: "Error while cloning form!",
         toastType: "error",
       }));
-      setTimeout(
-        () =>
-          setToast((prevState) => ({
-            ...prevState,
-            toastOpen: false,
-            toastMsg: "",
-            toastType: "",
-          })),
-        3000
-      );
+    } finally {
+      setSpinner(false);
     }
   };
 
@@ -278,6 +272,7 @@ const FormsOverview = () => {
       formStatus: state.menu_selected,
     };
     try {
+      setSpinner(true);
       const res = await getForms(postData);
       setPaginationInfo((prevState) => ({
         ...prevState,
@@ -286,6 +281,8 @@ const FormsOverview = () => {
       setFormsList(res?.data?.forms);
     } catch (error) {
       console.log("error - ", error);
+    } finally {
+      setSpinner(false);
     }
   };
 
@@ -297,6 +294,7 @@ const FormsOverview = () => {
       ...searchData,
     };
     try {
+      setSpinner(true);
       const res = await searchForms(postData);
       setPaginationInfo((prevState) => ({
         ...prevState,
@@ -305,6 +303,8 @@ const FormsOverview = () => {
       setFormsList(res?.data?.forms);
     } catch (error) {
       console.log("error - ", error);
+    } finally {
+      setSpinner(false);
     }
   };
 
@@ -321,6 +321,7 @@ const FormsOverview = () => {
       ...customFilters,
     };
     try {
+      setSpinner(true);
       const res = await filterForms(postData);
       setPaginationInfo((prevState) => ({
         ...prevState,
@@ -329,6 +330,8 @@ const FormsOverview = () => {
       setFormsList(res?.data?.forms);
     } catch (error) {
       console.log("error - ", error);
+    } finally {
+      setSpinner(false);
     }
   };
 
@@ -533,6 +536,7 @@ const FormsOverview = () => {
     const formData = new FormData();
     formData.append("form_id", form_id);
     try {
+      setSpinner(true);
       const response = await publishForms(formData);
       setToast((prevState) => ({
         ...prevState,
@@ -540,14 +544,6 @@ const FormsOverview = () => {
         toastMsg: "Form successfully Published!",
         toastType: "success",
       }));
-      setTimeout(() => {
-        setToast((prevState) => ({
-          ...prevState,
-          toastOpen: false,
-          toastMsg: "",
-          toastType: "",
-        }));
-      }, 3000);
       // Notification.sendemail({"body":})
       fetchFormsList();
     } catch (error) {
@@ -558,16 +554,8 @@ const FormsOverview = () => {
         toastMsg: "Error occured while publishing form!",
         toastType: "error",
       }));
-      setTimeout(
-        () =>
-          setToast((prevState) => ({
-            ...prevState,
-            toastOpen: false,
-            toastMsg: "",
-            toastType: "",
-          })),
-        3000
-      );
+    } finally {
+      setSpinner(false);
     }
   };
 
@@ -590,6 +578,7 @@ const FormsOverview = () => {
 
     try {
       // console.log("formDataObj", formDataObject);
+      setSpinner(true);
       const response = await createCourse(formData);
       setToast((prevState) => ({
         ...prevState,
@@ -597,14 +586,6 @@ const FormsOverview = () => {
         toastMsg: "Form successfully Published!",
         toastType: "success",
       }));
-      setTimeout(() => {
-        setToast((prevState) => ({
-          ...prevState,
-          toastOpen: false,
-          toastMsg: "",
-          toastType: "",
-        }));
-      }, 3000);
       // Notification.sendemail({"body":})
       fetchFormsList();
     } catch (error) {
@@ -615,16 +596,8 @@ const FormsOverview = () => {
         toastMsg: "Error occured while publishing form!",
         toastType: "error",
       }));
-      setTimeout(
-        () =>
-          setToast((prevState) => ({
-            ...prevState,
-            toastOpen: false,
-            toastMsg: "",
-            toastType: "",
-          })),
-        3000
-      );
+    } finally {
+      setSpinner(false);
     }
   };
 
@@ -632,6 +605,7 @@ const FormsOverview = () => {
     const formData = new FormData();
     formData.append("form_id", form_id);
     try {
+      setSpinner(true);
       const response = await unpublishForms(formData);
       setToast((prevState) => ({
         ...prevState,
@@ -639,14 +613,6 @@ const FormsOverview = () => {
         toastMsg: "Form successfully Unpublished!",
         toastType: "success",
       }));
-      setTimeout(() => {
-        setToast((prevState) => ({
-          ...prevState,
-          toastOpen: false,
-          toastMsg: "",
-          toastType: "",
-        }));
-      }, 3000);
       fetchFormsList();
     } catch (error) {
       console.log("error - ", error);
@@ -656,16 +622,8 @@ const FormsOverview = () => {
         toastMsg: "Error occured while unpublishing form!",
         toastType: "error",
       }));
-      setTimeout(
-        () =>
-          setToast((prevState) => ({
-            ...prevState,
-            toastOpen: false,
-            toastMsg: "",
-            toastType: "",
-          })),
-        3000
-      );
+    } finally {
+      setSpinner(false);
     }
   };
 
@@ -673,6 +631,7 @@ const FormsOverview = () => {
     const formData = new FormData();
     formData.append("form_id", form_id);
     try {
+      setSpinner(true);
       await deleteForm(formData).then(
         setToast((prevState) => ({
           ...prevState,
@@ -682,14 +641,6 @@ const FormsOverview = () => {
         }))
       );
 
-      setTimeout(() => {
-        setToast((prevState) => ({
-          ...prevState,
-          toastOpen: false,
-          toastMsg: "",
-          toastType: "",
-        }));
-      }, 3000);
       fetchFormsList();
     } catch (error) {
       console.log("error - ", error);
@@ -699,25 +650,13 @@ const FormsOverview = () => {
         toastMsg: "Error occured while deleting form!",
         toastType: "error",
       }));
-      setTimeout(
-        () =>
-          setToast((prevState) => ({
-            ...prevState,
-            toastOpen: false,
-            toastMsg: "",
-            toastType: "",
-          })),
-        3000
-      );
+    } finally {
+      setSpinner(false);
     }
   };
 
   return (
     <>
-      {toast.toastOpen && (
-        <Toast toastMsg={toast.toastMsg} toastType={toast.toastType} />
-      )}
-
       {showAlert && (
         <AlertModal showAlert={setShowAlert} {...state.alertContent} />
       )}

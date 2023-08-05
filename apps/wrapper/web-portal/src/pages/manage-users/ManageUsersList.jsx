@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 
 import { MdFileUpload, MdEdit, MdDelete, MdSwapHoriz } from "react-icons/md";
@@ -29,7 +29,7 @@ import {
   MenuList,
   MenuItem,
 } from "@material-tailwind/react";
-import Toast from "../../components/Toast";
+import { ContextAPI } from "../../utils/ContextAPI";
 
 export default function ManageUsersList({
   closeDeleteUsersModal,
@@ -60,11 +60,7 @@ export default function ManageUsersList({
   });
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [isFilterOpen, setIsFilterOpen] = useState(false);
-  const [toast, setToast] = useState({
-    toastOpen: false,
-    toastMsg: "",
-    toastType: "",
-  });
+  const {setSpinner,setToast} = useContext(ContextAPI)
   let selectedRows = [];
 
   const COLUMNS = [
@@ -111,6 +107,7 @@ export default function ManageUsersList({
     formData.append("assessorId", userId);
 
     try {
+      setSpinner(true)
       const response = await handleInctiveUser(formData);
       fetchAllUsers();
     } catch (error) {
@@ -121,16 +118,8 @@ export default function ManageUsersList({
         toastMsg: "Error occured while uploading!",
         toastType: "error",
       }));
-      setTimeout(
-        () =>
-          setToast((prevState) => ({
-            ...prevState,
-            toastOpen: false,
-            toastMsg: "",
-            toastType: "",
-          })),
-        3000
-      );
+    }finally{
+      setSpinner(false)
     }
   };
   const handleUserSetValid = async (e) => {
@@ -138,6 +127,7 @@ export default function ManageUsersList({
     const formData = new FormData();
     formData.append("assessorId", userId);
     try {
+      setSpinner(true)
       const validResponse = await handleActiveUser(formData);
 
       // setUsersList((usersList) => ({ ...usersList, [validResponse]: validResponse.data.update_assessors.returning[0] }));
@@ -151,16 +141,8 @@ export default function ManageUsersList({
         toastMsg: "Error occured while uploading!",
         toastType: "error",
       }));
-      setTimeout(
-        () =>
-          setToast((prevState) => ({
-            ...prevState,
-            toastOpen: false,
-            toastMsg: "",
-            toastType: "",
-          })),
-        3000
-      );
+    }finally{
+      setSpinner(false)
     }
   };
 
@@ -252,6 +234,7 @@ export default function ManageUsersList({
       limit: paginationInfo.limit,
     };
     try {
+      setSpinner(true)
       const res = await getAllUsers(pagination);
       setPaginationInfo((prevState) => ({
         ...prevState,
@@ -263,6 +246,8 @@ export default function ManageUsersList({
       setUserTableList(resUserData);
     } catch (error) {
       console.log("error - ", error);
+    }finally{
+      setSpinner(false)
     }
   };
 
@@ -273,6 +258,7 @@ export default function ManageUsersList({
       ...searchData,
     };
     try {
+      setSpinner(true)
       const res = await searchUsers(pagination);
       setPaginationInfo((prevState) => ({
         ...prevState,
@@ -285,6 +271,9 @@ export default function ManageUsersList({
     } catch (error) {
       console.log("error - ", error);
     }
+    finally{
+      setSpinner(false)
+    }
   };
 
   const filterApiCall = async (filters) => {
@@ -294,6 +283,7 @@ export default function ManageUsersList({
       ...filters,
     };
     try {
+      setSpinner(true)
       const res = await filterUsers(postData);
       setPaginationInfo((prevState) => ({
         ...prevState,
@@ -305,6 +295,9 @@ export default function ManageUsersList({
       setUserTableList(resUserData);
     } catch (error) {
       console.log("error - ", error);
+    }
+    finally{
+      setSpinner(false)
     }
   };
 
@@ -329,6 +322,7 @@ export default function ManageUsersList({
     ];
     const hasuraPostData = { email: email };
     try {
+      setSpinner(true)
       let accessTokenObj = {
         grant_type: "client_credentials",
         client_id: "admin-api",
@@ -357,16 +351,6 @@ export default function ManageUsersList({
           toastMsg: "User Deleted!",
           toastType: "success",
         }));
-        setTimeout(
-          () =>
-            setToast((prevState) => ({
-              ...prevState,
-              toastOpen: false,
-              toastMsg: "",
-              toastType: "",
-            })),
-          3000
-        );
       }
 
       removeCookie("access_token");
@@ -378,16 +362,8 @@ export default function ManageUsersList({
         toastMsg: "Error occured while uploading!",
         toastType: "error",
       }));
-      setTimeout(
-        () =>
-          setToast((prevState) => ({
-            ...prevState,
-            toastOpen: false,
-            toastMsg: "",
-            toastType: "",
-          })),
-        3000
-      );
+    }finally{
+      setSpinner(false)
     }
   };
 
@@ -414,6 +390,7 @@ export default function ManageUsersList({
   const handleBulkDelete = async (bulkEmail) => {
     const postData = bulkEmail;
     try {
+      setSpinner(true)
       let errorFlag = false;
       let accessTokenObj = {
         grant_type: "client_credentials",
@@ -457,16 +434,6 @@ export default function ManageUsersList({
           toastMsg: "Users Deleted!",
           toastType: "success",
         }));
-        setTimeout(
-          () =>
-            setToast((prevState) => ({
-              ...prevState,
-              toastOpen: false,
-              toastMsg: "",
-              toastType: "",
-            })),
-          3000
-        );
       }
 
       removeCookie("access_token");
@@ -478,24 +445,13 @@ export default function ManageUsersList({
         toastMsg: "Error occured while uploading!",
         toastType: "error",
       }));
-      setTimeout(
-        () =>
-          setToast((prevState) => ({
-            ...prevState,
-            toastOpen: false,
-            toastMsg: "",
-            toastType: "",
-          })),
-        3000
-      );
+    }finally{
+      setSpinner(false)
     }
   };
 
   return (
     <>
-      {toast.toastOpen && (
-        <Toast toastMsg={toast.toastMsg} toastType={toast.toastType} />
-      )}
       <Nav />
 
       <div className={`container m-auto min-h-[calc(100vh-148px)] px-3 py-12`}>

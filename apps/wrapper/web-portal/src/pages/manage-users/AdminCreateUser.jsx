@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { Select, Option } from "@material-tailwind/react";
 
@@ -8,6 +8,7 @@ import { useForm } from "react-hook-form";
 
 import ADMIN_ROUTE_MAP from "../../routes/adminRouteMap";
 import { Button, Label } from "../../components";
+import { ContextAPI } from "../../utils/ContextAPI";
 
 import {
   createBulkUserHasura,
@@ -18,10 +19,10 @@ import {
 } from "./../../api";
 import { userService } from "../../api/userService";
 import { removeCookie, setCookie } from "../../utils";
-import Toast from "../../components/Toast";
 
 export default function AdminCreateUser() {
   let { userId } = useParams();
+  const {setSpinner,setToast} = useContext(ContextAPI)
   const [user, setUser] = useState({
     firstname: "",
     lastname: "",
@@ -29,23 +30,25 @@ export default function AdminCreateUser() {
     phonenumber: "",
     // role: "",
   });
-  const [toast, setToast] = useState({
-    toastOpen: false,
-    toastMsg: "",
-    toastType: "",
-  });
   const navigation = useNavigate();
 
   const fetchUser = async () => {
-    const res = await getSpecificUser({ userId });
-    setUser({
-      firstname:
-        res.data.assessors[0]["fname"] || res.data.assessors[0]["name"],
-      lastname: res.data.assessors[0]["lname"],
-      email: res.data.assessors[0]["email"],
-      phonenumber: res.data.assessors[0]["phonenumber"],
-      // role: res.data.assessors[0]["role"],
-    });
+    try {
+      setSpinner(true)
+      const res = await getSpecificUser({ userId });
+      setUser({
+        firstname:
+          res.data.assessors[0]["fname"] || res.data.assessors[0]["name"],
+        lastname: res.data.assessors[0]["lname"],
+        email: res.data.assessors[0]["email"],
+        phonenumber: res.data.assessors[0]["phonenumber"],
+        // role: res.data.assessors[0]["role"],
+      });
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setSpinner(false)
+    }
   };
 
   const handleChange = (name, value) => {
@@ -70,7 +73,7 @@ export default function AdminCreateUser() {
 
   const submitUserData = async (e) => {
     e.preventDefault();
-    let errorFlag = false
+    let errorFlag = false;
     let accessTokenObj = {
       grant_type: "client_credentials",
       client_id: "admin-api",
@@ -84,14 +87,15 @@ export default function AdminCreateUser() {
       "access_token",
       "Bearer " + accessTokenResponse?.data?.access_token
     );
-    if(accessTokenResponse.status!==200){
-      errorFlag=true
+    if (accessTokenResponse.status !== 200) {
+      errorFlag = true;
     }
 
     if (userId) {
       //for edit user
-      
+
       try {
+        setSpinner(true)
         let postDataKeyCloak = {
           username: user.email,
           firstName: user.firstname,
@@ -100,8 +104,8 @@ export default function AdminCreateUser() {
         };
         //keycloak edit user
         const singleEditKeycloak = await editUserKeycloak(postDataKeyCloak);
-        if(singleEditKeycloak.status!==200){
-          errorFlag=true
+        if (singleEditKeycloak.status !== 200) {
+          errorFlag = true;
         }
 
         //hasura edit user
@@ -113,8 +117,8 @@ export default function AdminCreateUser() {
           phno: user.phonenumber,
         };
         const singleEditHasura = await editUserHasura(postDataHasura);
-        if(singleEditHasura.status!==200){
-          errorFlag=true
+        if (singleEditHasura.status !== 200) {
+          errorFlag = true;
         }
         if (!errorFlag) {
           setToast((prevState) => ({
@@ -123,19 +127,7 @@ export default function AdminCreateUser() {
             toastMsg: "User updated successfully!",
             toastType: "success",
           }));
-          setTimeout(
-            () =>
-              {setToast((prevState) => ({
-                ...prevState,
-                toastOpen: false,
-                toastMsg: "",
-                toastType: "",
-              }));
-            },
-            3000
-          );
         }
-
       } catch (error) {
         console.log(error);
         setToast((prevState) => ({
@@ -144,16 +136,8 @@ export default function AdminCreateUser() {
           toastMsg: "Error occured while updating user!",
           toastType: "error",
         }));
-        setTimeout(
-          () =>
-            setToast((prevState) => ({
-              ...prevState,
-              toastOpen: false,
-              toastMsg: "",
-              toastType: "",
-            })),
-          3000
-        );
+      }finally{
+        setSpinner(false)
       }
     } else {
       // for create user
@@ -165,6 +149,7 @@ export default function AdminCreateUser() {
       };
 
       try {
+        setSpinner(true)
         postDataKeyCloak = [
           {
             firstName: user.firstname,
@@ -179,8 +164,8 @@ export default function AdminCreateUser() {
         //keycloak API call
         const keycloakRes = await createBulkUsersKeyCloak(postDataKeyCloak);
 
-        if(keycloakRes?.data?.failedUser.length){
-          errorFlag=true
+        if (keycloakRes?.data?.failedUser.length) {
+          errorFlag = true;
         }
 
         //Hasura API call
@@ -198,8 +183,8 @@ export default function AdminCreateUser() {
         });
 
         const hasuraRes = await createBulkUserHasura(postDataHasura);
-        if(hasuraRes.status!==200){
-          errorFlag=true
+        if (hasuraRes.status !== 200) {
+          errorFlag = true;
         }
         if (!errorFlag) {
           setToast((prevState) => ({
@@ -208,18 +193,7 @@ export default function AdminCreateUser() {
             toastMsg: "User created successfully!",
             toastType: "success",
           }));
-          setTimeout(
-            () =>
-              {setToast((prevState) => ({
-                ...prevState,
-                toastOpen: false,
-                toastMsg: "",
-                toastType: "",
-              }));
-              navigation(ADMIN_ROUTE_MAP.adminModule.manageUsers.home);
-            },
-            3000
-          );
+          navigation(ADMIN_ROUTE_MAP.adminModule.manageUsers.home);
         }
       } catch (error) {
         console.log("error - ", error);
@@ -229,16 +203,8 @@ export default function AdminCreateUser() {
           toastMsg: "Error occured while creating user!",
           toastType: "error",
         }));
-        setTimeout(
-          () =>
-            setToast((prevState) => ({
-              ...prevState,
-              toastOpen: false,
-              toastMsg: "",
-              toastType: "",
-            })),
-          3000
-        );
+      }finally{
+        setSpinner(false)
       }
     }
     removeCookie("access_token");
@@ -254,10 +220,6 @@ export default function AdminCreateUser() {
     <>
       {/* Breadcrum */}
       {/* <Breadcrumb data={breadCrumbData} /> */}
-      {toast.toastOpen && (
-        <Toast toastMsg={toast.toastMsg} toastType={toast.toastType} />
-      )}
-
       <div className="h-[48px] bg-white flex justify-start drop-shadow-sm">
         <div className="container mx-auto flex px-3">
           <div className="flex flex-row font-bold gap-2 items-center">

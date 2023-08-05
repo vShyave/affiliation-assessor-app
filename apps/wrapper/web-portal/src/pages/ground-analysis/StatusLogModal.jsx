@@ -1,17 +1,24 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { getStatus } from "../../api";
 import { readableDate } from "../../utils/common";
 import { Button } from "../../components";
+import { ContextAPI } from "../../utils/ContextAPI";
 
 function StatusLogModal({ closeStatusModal, formId }) {
   const [formStatus, setFormStatus] = useState([]);
+  const { setSpinner } = useContext(ContextAPI);
   useEffect(() => {
     async function fetchData() {
       const postData = { id: formId };
-      console.log("POstdtaa", postData);
-      const res = await getStatus(postData);
-      console.log("res here - ", res);
-      setFormStatus(res.events);
+      try {
+        setSpinner(true);
+        const res = await getStatus(postData);
+        setFormStatus(res.events);
+      } catch (error) {
+        console.log(error);
+      } finally {
+        setSpinner(false);
+      }
     }
     fetchData();
   }, []);

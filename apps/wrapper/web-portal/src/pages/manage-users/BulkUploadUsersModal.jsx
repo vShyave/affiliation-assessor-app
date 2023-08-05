@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 
 import FilteringTable from "../../components/table/FilteringTable";
 
@@ -14,9 +14,11 @@ import {
 } from "../../api";
 import { userService } from "../../api/userService";
 import { removeCookie, setCookie } from "../../utils/common";
+import { ContextAPI } from "../../utils/ContextAPI";
 
 function BulkUploadUsersModal({ closeBulkUploadUsersModal }) {
   const [file, setFile] = useState();
+  const {setSpinner} = useContext(ContextAPI)
 
   const [tableUserList, setTableUserList] = useState([]);
 
@@ -297,6 +299,7 @@ function BulkUploadUsersModal({ closeBulkUploadUsersModal }) {
 
     console.log("Keycloak - ", postDataKeyCloak);
     try {
+      setSpinner(true)
       let accessTokenObj = {
         grant_type: "client_credentials",
         client_id: "admin-api",
@@ -352,6 +355,8 @@ function BulkUploadUsersModal({ closeBulkUploadUsersModal }) {
       removeCookie("access_token");
     } catch (error) {
       console.log("error - ", error);
+    }finally{
+      setSpinner(false)
     }
   };
 

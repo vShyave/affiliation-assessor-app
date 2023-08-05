@@ -1,14 +1,16 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { getRejectApplicant } from "../../api";
+import { ContextAPI } from "../../utils/ContextAPI";
 
 import { Button } from "../../components";
 
-function RejectNocModal({ closeRejectModal,setRejectStatus, setToast }) {
+function RejectNocModal({ closeRejectModal, setRejectStatus }) {
   const handleChange = (e) => {
     setComment(e.target.value);
   };
 
   const [comment, setComment] = useState("");
+  const { setSpinner,setToast } = useContext(ContextAPI);
 
   const handleRejectApplicant = async () => {
     if (comment.length === 0) {
@@ -19,27 +21,24 @@ function RejectNocModal({ closeRejectModal,setRejectStatus, setToast }) {
         remarks: comment,
         date: new Date().toISOString().substring(0, 10),
       };
-      const res = await getRejectApplicant(postData);
-      const formStatus = res?.data?.update_form_submissions?.returning[0]?.form_status
-      setRejectStatus((formStatus)==="Rejected"?true:false)
-      setToast((prevState) => ({
-        ...prevState,
-        toastOpen: true,
-        toastMsg: "The form is rejected!",
-        toastType: "success",
-      }));
-      setTimeout(
-        () =>
-          setToast((prevState) => ({
-            ...prevState,
-            toastOpen: false,
-            toastMsg: "",
-            toastType: "",
-          })),
-        3000
-      );
-    //   console.log("res", res);
-      closeRejectModal(false);
+      try {
+        setSpinner(true);
+        const res = await getRejectApplicant(postData);
+        const formStatus =
+          res?.data?.update_form_submissions?.returning[0]?.form_status;
+        setRejectStatus(formStatus === "Rejected" ? true : false);
+        setToast((prevState) => ({
+          ...prevState,
+          toastOpen: true,
+          toastMsg: "The form is rejected!",
+          toastType: "success",
+        }));
+        closeRejectModal(false);
+      } catch (error) {
+        console.log(error);
+      } finally {
+        setSpinner(false);
+      }
     }
   };
 
