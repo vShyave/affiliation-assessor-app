@@ -23,18 +23,19 @@ import { Button, Card } from "../components";
 import CommonModal from "../Modal";
 import Toast from "../components/Toast";
 
-import { getFormData, base64ToPdf } from "../api";
+import { getFormData, base64ToPdf, getLocalTimeInISOFormat } from "../api";
 import {
   getPrefillXML,
   saveFormSubmission,
   getSubmissionXML,
   getFormURI,
+  updateFormSubmission,
 } from "../api/formApi";
 
 const ENKETO_URL = process.env.REACT_APP_ENKETO_URL;
 
 const CreateForm = (props) => {
-  let { formName, formId } = useParams();
+  let { formName, formId, applicantStatus } = useParams();
   const [encodedFormURI, setEncodedFormURI] = useState("");
   const scheduleId = useRef();
   const navigate = useNavigate();
@@ -97,9 +98,15 @@ const CreateForm = (props) => {
   const fetchFormData = async () => {
     let formData = {};
 
+    console.log(
+      "key - ",
+      `${userId}_${formName}_${new Date().toISOString().split("T")[0]}`
+    );
     let data = await getFromLocalForage(
       `${userId}_${formName}_${new Date().toISOString().split("T")[0]}`
     );
+
+    console.log("data - ", data);
 
     if (data) {
       formData = data;
@@ -108,9 +115,12 @@ const CreateForm = (props) => {
         const postData = { form_id: formId };
         const res = await getFormData(postData);
         formData = res.data.form_submissions[0];
+        console.log("formData - ", formData);
         setFormDataNoc(formData);
       }
     }
+
+    console.log("formData - ", formData);
 
     let fileGCPPath =
       process.env.REACT_APP_GCP_AFFILIATION_LINK + formName + ".xml";
@@ -156,17 +166,29 @@ const CreateForm = (props) => {
     const updatedFormData = await updateFormData(formSpec.start, userId);
     const storedData = await getSpecificDataFromForage("required_data");
 
-    saveFormSubmission({
-      schedule_id: null,
-      form_data: updatedFormData,
-      assessment_type: "applicant",
-      form_name: formName,
-      submission_status: true,
-      assessor_id: null,
-      applicant_id: instituteDetails?.[0]?.id,
-      submitted_on: new Date().toJSON().slice(0, 10),
-      form_status: "Application Submitted",
-    });
+    if (applicantStatus === "returned") {
+      const res = await updateFormSubmission({
+        form_id: formId,
+        form_data: updatedFormData,
+        assessment_type: "applicant",
+        form_name: formName,
+        submission_status: true,
+        updated_at: getLocalTimeInISOFormat(),
+        form_status: "Resubmitted",
+      });
+    } else {
+      await saveFormSubmission({
+        schedule_id: null,
+        form_data: updatedFormData,
+        assessment_type: "applicant",
+        form_name: formName,
+        submission_status: true,
+        assessor_id: null,
+        applicant_id: instituteDetails?.[0]?.id,
+        submitted_on: new Date().toJSON().slice(0, 10),
+        form_status: "Application Submitted",
+      });
+    }
 
     // Delete the data from the Local Forage
     const key = `${storedData?.assessor_user_id}_${formSpec.start}_${
@@ -224,13 +246,13 @@ const CreateForm = (props) => {
       if (formData) {
         let images = JSON.parse(e.data).fileURLs;
         let prevData = await getFromLocalForage(
-          startingForm + `${new Date().toISOString().split("T")[0]}`
+          `${userId}_${startingForm}_${new Date().toISOString().split("T")[0]}`
         );
         await setToLocalForage(
           `${userId}_${startingForm}_${new Date().toISOString().split("T")[0]}`,
           {
             formData: JSON.parse(e.data).formData,
-            imageUrls: { ...prevData?.imageUrls, ...images },
+            // imageUrls: { ...prevData?.imageUrls, ...images },
           }
         );
       }

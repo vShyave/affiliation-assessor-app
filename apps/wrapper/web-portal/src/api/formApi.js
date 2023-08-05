@@ -1,6 +1,6 @@
 import axios from 'axios';
-import { registerEvent } from './index';
-import { getLocalTimeInISOFormat } from '../utils/common';
+import adminCustomPost from './adminCustomApi';
+import API_URL from './apiUrl';
 
 const ENKETO_MANAGER_URL = process.env.REACT_APP_ENKETO_MANAGER_URL;
 const HASURA_CLIENT_NAME = process.env.HASURA_CLIENT_NAME || 'hasura-console';
@@ -42,9 +42,12 @@ export const saveFormSubmission = (data) => {
     return makeHasuraCalls(query);
 };
 
-export const updateFormSubmission = (data) => {
-    // const res = await 
-    
+export const updateFormSubmission = async (data) => {
+    const res = await adminCustomPost.post(
+        API_URL.desktopAnalysis.updateFormSubmission,
+        data
+    );
+    return res;
 }
 
 export const makeHasuraCalls = async (query) => {
@@ -68,14 +71,6 @@ export const makeHasuraCalls = async (query) => {
 
 const validateResponse = async (response) => {
     const apiRes = await response.json();
-
-    // registerEvent({
-    //   created_date: getLocalTimeInISOFormat(),
-    //   entity_id: apiRes?.data?.insert_form_submissions?.returning?.[0]?.form_id.toString(),
-    //   entity_type: "form",
-    //   event_name: "",
-    //   remarks: "",
-    // });
 
     const jsonResponse = {
         ...apiRes,
