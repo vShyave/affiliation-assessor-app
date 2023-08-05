@@ -1,5 +1,8 @@
 import axios from 'axios';
 import { registerEvent, getLocalTimeInISOFormat } from './index';
+import APPLICANT_ROUTE_MAP from '../routes/ApplicantRoute';
+import customPost from "./customPost";
+import { APIS } from '../constants';
 
 const ENKETO_MANAGER_URL = process.env.REACT_APP_ENKETO_MANAGER_URL;
 const HASURA_CLIENT_NAME = process.env.HASURA_CLIENT_NAME || 'hasura-console';
@@ -41,8 +44,15 @@ export const saveFormSubmission = (data) => {
     return makeHasuraCalls(query);
 };
 
+export const updateFormSubmission = async (data) => {
+    const res = await customPost.post(
+        APIS.FORM.UPDATE_FORM,
+        data
+    );
+    return res;
+}
+
 export const makeHasuraCalls = async (query) => {
-    // const userData = getCookie("userData");
     return fetch(process.env.REACT_APP_HASURA_URL, {
         method: "POST",
         headers: {
@@ -61,7 +71,6 @@ export const makeHasuraCalls = async (query) => {
 };
 
 const validateResponse = async (response) => {
-    console.log("response - ", response);
     const apiRes = await response.json();
 
     registerEvent({
@@ -80,13 +89,8 @@ const validateResponse = async (response) => {
 };
 
 export const getSubmissionXML = async (form, prefillXML, imageUrls) => {
-    console.log("form - ", form);
-    let new_form =
-      "https://storage.googleapis.com/dev-public-upsmf/affiliation/" +
-      form +
-      ".xml";
-    console.log("prefillXML - ", prefillXML);
-    console.log("imageUrls - ", imageUrls);
+    let new_form = `${process.env.REACT_APP_GCP_AFFILIATION_LINK}${form}.xml`
+    console.log("new_form - ", new_form);
     try {
         const res = await axios.post(
             `${ENKETO_MANAGER_URL}submissionXML?form=${new_form}`, {

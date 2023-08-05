@@ -56,7 +56,7 @@ function App() {
               }
             ></Route>
             <Route
-              path={`${APPLICANT_ROUTE_MAP.dashboardModule.createForm}/:formName/:formId?`}
+              path={`${APPLICANT_ROUTE_MAP.dashboardModule.createForm}/:formName/:formId?/:applicantStatus?`}
               element={
                 <PrivateRoute>
                   <CreateForm />
