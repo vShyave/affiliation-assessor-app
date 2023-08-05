@@ -21,13 +21,13 @@ export default function Overlay() {
   const navigation = useNavigate();
   const [notificationList, setNotifcationList] = useState([]);
   const [selectedNotification, setSelectedNotification] = useState({});
- 
+
   const handleClick = async (notification) => {
     // setSelectedNotification(notification);
-    console.log(notification);
+    // console.log(notification);
     setSelectedNotification(notification);
-    console.log(selectedNotification);
-    setNotificationReadStatus({notification_id:notification.id});
+    // console.log(selectedNotification);
+    setNotificationReadStatus({ notification_id: notification.id });
     const navigationURL = `${ADMIN_ROUTE_MAP.adminModule.notifications.home}/${notification.id}`;
     navigation(navigationURL);
   };
@@ -35,7 +35,7 @@ export default function Overlay() {
   const setNotificationReadStatus = async (notifId) => {
     try {
       const res = readNotification(notifId);
-      console.log(res);
+      // console.log(res);
     } catch (error) {
       console.log(error);
     }
@@ -47,7 +47,7 @@ export default function Overlay() {
     };
     try {
       const res = await getNotifications(postData);
-      console.log(res);
+      // console.log(res);
       const notifList = res.data.notifications.map((item) => ({
         roles: [item?.user_type],
         title: item?.title,

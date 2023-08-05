@@ -1,12 +1,12 @@
-import React from 'react'
-import { Outlet } from 'react-router-dom'
+import React from "react";
+import { Outlet } from "react-router-dom";
 
 function DesktopAnalysis() {
   return (
-    <div >
-        <Outlet/>
+    <div>
+      <Outlet />
     </div>
-  )
+  );
 }
 
-export default DesktopAnalysis
+export default DesktopAnalysis;

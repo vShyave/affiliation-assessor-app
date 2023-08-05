@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from "react";
-import { useParams, Link } from "react-router-dom";
+import { useParams, Link, useNavigate } from "react-router-dom";
 import { BsArrowLeft, BsArrowRight } from "react-icons/bs";
 import { FaAngleRight } from "react-icons/fa";
 import StatusLogModal from "../ground-analysis/StatusLogModal";
 import XMLParser from "react-xml-parser";
+import { getCookie } from "../../utils";
 
 // import NocModal from "./NocModal";
 // import RejectNocModal from "./RejectNocModal";
@@ -14,7 +15,7 @@ import ScheduleInspectionModal from "./ScheduleInspectionModal";
 import Sidebar from "../../components/Sidebar";
 import Toast from "../../components/Toast";
 
-import { getFormData } from "../../api";
+import { getFormData, registerEvent } from "../../api";
 import ADMIN_ROUTE_MAP from "../../routes/adminRouteMap";
 import {
   getFormURI,
@@ -34,6 +35,7 @@ const ENKETO_URL = process.env.REACT_APP_ENKETO_URL;
 export default function DesktopAnalysisView() {
   // const [rejectModel, setRejectModel] = useState(false)
   // const [openModel, setOpenModel] = useState(false);
+  const navigate = useNavigate();
   const [openScheduleInspectionModel, setOpenSheduleInspectionModel] =
     useState(false);
   const [encodedFormURI, setEncodedFormURI] = useState("");
@@ -78,6 +80,9 @@ export default function DesktopAnalysisView() {
     encodeURI(JSON.stringify(formSpec.formId))
   );
 
+  const userDetails = getCookie("userData");
+  // console.log("userDetails - ", userDetails);
+
   const fetchFormData = async () => {
     let formData = {};
     let filePath =
@@ -116,7 +121,6 @@ export default function DesktopAnalysisView() {
 
   const afterFormSubmit = async (e) => {
     const data = typeof e.data === "string" ? JSON.parse(e.data) : e.data;
-
     try {
       const { nextForm, formData, onSuccessData, onFailureData } = data;
       if (data?.state === "ON_FORM_SUCCESS_COMPLETED") {
@@ -147,7 +151,7 @@ export default function DesktopAnalysisView() {
     const updatedFormData = await updateFormData(formSpec.start, userId);
     const storedData = await getSpecificDataFromForage("required_data");
 
-    updateFormSubmission({
+    const res = await updateFormSubmission({
       form_id: formId,
       form_data: updatedFormData,
       assessment_type: "applicant",
@@ -158,12 +162,26 @@ export default function DesktopAnalysisView() {
       form_status: "Returned",
     });
 
-    return;
+    if (res) {
+      // Register Event of the form.
+      await registerEvent({
+        created_date: getLocalTimeInISOFormat(),
+        entity_id: formId.toString(),
+        entity_type: "form",
+        event_name: "Returned",
+        remarks: `${userDetails?.userRepresentation?.username} has returned application with remarks`,
+      });
+    }
+
+    setTimeout(
+      () => navigate(`${ADMIN_ROUTE_MAP.adminModule.desktopAnalysis.home}`),
+      1500
+    );
+
     // Delete the data from the Local Forage
     const key = `${storedData?.assessor_user_id}_${formSpec.start}_${
       new Date().toISOString().split("T")[0]
     }`;
-
     removeItemFromLocalForage(key);
 
     // setOnSubmit(false);
@@ -182,11 +200,6 @@ export default function DesktopAnalysisView() {
     //       toastMsg: "",
     //       toastType: "",
     //     })),
-    //   1500
-    // );
-
-    // setTimeout(
-    //   () => navigate(`${APPLICANT_ROUTE_MAP.dashboardModule.my_applications}`),
     //   1500
     // );
   };
@@ -344,7 +357,7 @@ export default function DesktopAnalysisView() {
         </div>
       </div>
 
-      {onSubmit && (
+      {/* {onSubmit && (
         <CommonModal>
           <p className="text-secondary text-2xl text-semibold font-medium text-center">
             Are you sure, do you want to submit?
@@ -365,7 +378,7 @@ export default function DesktopAnalysisView() {
             </div>
           </div>
         </CommonModal>
-      )}
+      )} */}
     </>
   );
 }

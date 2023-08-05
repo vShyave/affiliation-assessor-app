@@ -396,7 +396,7 @@ export const registerEvent = async (postData) => {
     events: [],
   };
   events.events.push(postData);
-  console.log("events - ", events);
+  // console.log("events - ", events);
 
   const res = await adminCustomPost.post(API_URL.common.registerEvent, events);
   return res;

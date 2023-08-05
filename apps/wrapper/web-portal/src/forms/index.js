@@ -47,14 +47,13 @@ export const updateFormData = async (fileName, userId) => {
             `${userId}_${fileName}_${new Date().toISOString().split("T")[0]}`
         );
         
-        console.log("data - ", data);
         let prefilledForm = await getSubmissionXML(
             fileName,
             data?.formData,
             data?.imageUrls
         );
-        console.log("prefilledForm - ", prefilledForm);
         return prefilledForm;
+        
     } catch (err) {}
 };
 
