@@ -23,12 +23,12 @@ export default function NotificationsDetailedView(props) {
   const navigation = useNavigate();
   const [selectedNotification, setselectedNotification] = useState([]);
   const [notificationList, setNotifcationList] = useState([]);
-  const {setSpinner} = useContext(ContextAPI)
+  const { setSpinner } = useContext(ContextAPI);
 
   const navigate = useNavigate();
 
   const goBack = () => {
-    navigate(-1)
+    navigate(-1);
   };
 
   const handleClick = (notification) => {
@@ -42,7 +42,7 @@ export default function NotificationsDetailedView(props) {
       user_id: getCookie("regulator")?.[0]?.user_id,
     };
     try {
-      setSpinner(true)
+      setSpinner(true);
       const res = await getNotifications(postData);
       console.log(res);
       const notifList = res.data.notifications.map((item) => ({
@@ -51,7 +51,10 @@ export default function NotificationsDetailedView(props) {
         body: item?.body,
         date: readableDate(item?.date),
         text: item?.body,
-        subText: item?.body.substr(0, 20) + "...",
+        subText:
+          item?.body?.length > 40
+            ? item?.body.substr(0, 40) + " ..."
+            : item?.body,
         read_status: item?.read_status,
         id: item?.id,
       }));
@@ -63,8 +66,8 @@ export default function NotificationsDetailedView(props) {
       }
     } catch (error) {
       console.log(error);
-    }finally{
-      setSpinner(false)
+    } finally {
+      setSpinner(false);
     }
   };
 
@@ -80,7 +83,7 @@ export default function NotificationsDetailedView(props) {
       {/* Breadcrum */}
       {/* <Breadcrumb data={breadCrumbData} /> */}
 
-      <div className="h-[48px] bg-white flex justify-start drop-shadow-sm">
+      <div className="flex bg-white justify-start h-[48px]">
         <div className="container mx-auto flex px-3">
           <div className="flex flex-row font-bold gap-2 items-center">
             <BiArrowBack
@@ -97,33 +100,43 @@ export default function NotificationsDetailedView(props) {
           </div>
         </div>
       </div>
-      <div className={`container m-auto min-h-[calc(100vh-148px)] px-3 py-12`}>
-        <div className="flex flex-row gap-1">
-          <div className="flex w-[30%] border w-[276px] overflow-y-auto h-[720px] shadow-xl flex-col justify-between bg-white">
-            <div className="flex flex-col gap-2">
-              <div className="flex items-center py-2 pl-2">
-                <div className="flex flex-row gap-28 items-center">
-                  <div variant="small" color="gray" className="font-normal ">
-                    <span className="text-base font-semibold text-gray-900">
-                      Notification
-                    </span>
-                  </div>
 
-                  <div className="text-black pr-2 text-xl">...</div>
+      <div className={`container m-auto min-h-[calc(100vh-148px)] px-3 py-12`}>
+        <div className="flex flex-row gap-5">
+          <div className="flex flex-col w-[24%] border bg-white rounded-md shadow-md">
+            <div className="flex flex-col">
+              <div className="flex flex-row p-4 border-b-[2px]">
+                <div className="flex flex-grow text-base font-medium text-gray-900">
+                  Notification
                 </div>
+                <div className="text-black text-xl leading-3 relative">...</div>
               </div>
-              <hr />
-              {notificationList.length &&
-                notificationList.map((item, index) => (
-                  <div key={item.id + "_" + index}>
-                    <MenuItem
-                      key={index}
-                      className="flex flex-row justify-between gap-2 py-2 pl-2 hover:bg-[#FFE5B4]"
-                      onClick={() => handleClick(item)}
+
+              <div className="flex flex-col overflow-y-auto">
+                {notificationList.length &&
+                  notificationList.map((item, index) => (
+                    <div
+                      key={item.id + "_" + index}
+                      className="p-2 border-b-[1px]"
                     >
-                      <div className="flex flex-col gap-2">
-                        <div className="w-fit bg-[#f6a192] text-white border-[#009A2B] py-1 px-3 text-[12px] rounded-[24px] capitalize font-semibold">
-                          {"" + item.roles}
+                      <MenuItem
+                        key={index}
+                        className="flex flex-col justify-between gap-2 py-2 pl-2 hover:bg-[#FFE5B4]"
+                        onClick={() => handleClick(item)}
+                      >
+                        <div className="flex flex-row gap-3 w-full">
+                          <div className="bg-[#f6a192] text-white border-[#009A2B] py-1 px-2 text-[12px] rounded-[4px] capitalize font-bold">
+                            {"" + item.roles}
+                          </div>
+                          <div
+                            className={`flex flex-grow items-center justify-end text-sm ${
+                              item.read_status === "Read"
+                                ? "font-medium"
+                                : "font-bold"
+                            }`}
+                          >
+                            {item.date}
+                          </div>
                         </div>
                         <div className="flex flex-col gap-1">
                           <Typography
@@ -151,29 +164,14 @@ export default function NotificationsDetailedView(props) {
                             </div>
                           </Typography>
                         </div>
-                      </div>
-                      <Typography
-                        variant="small"
-                        className="flex items-center gap-1 text-xs text-gray-900"
-                      >
-                        <div
-                          className={`${
-                            item.read_status === "Read"
-                              ? "font-medium"
-                              : "font-bold"
-                          }`}
-                        >
-                          {item.date}
-                        </div>
-                      </Typography>
-                    </MenuItem>
-                    <hr />
-                  </div>
-                ))}
+                      </MenuItem>
+                    </div>
+                  ))}
+              </div>
             </div>
           </div>
-          <div>
-            {/* <DetailedNotification user={selectedNotification} /> */}
+
+          <div className="w-[74%]">
             {selectedNotification && (
               <DetailedNotification notification={selectedNotification} />
             )}

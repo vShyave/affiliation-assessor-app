@@ -4,24 +4,31 @@ import { Card } from "./../../components";
 
 const DetailedNotification = ({ notification }) => {
   if (!notification) {
-    return <div></div>;
+    return (
+      <div className="flex flex-row items-center justify-center">
+        <h1>No Notifications found!</h1>
+      </div>
+    );
   } else
     return (
-      <Card moreClass="shadow-md w-[1024px] h-[720px]">
-        <div className="flex flex-row justify-between">
-          <div className="flex flex-col gap-4">
-            <div className="w-fit bg-[#f6a192] text-white border-[#009A2B] py-1 px-3 text-[12px] rounded-[24px] capitalize font-semibold mt-4">
+      <Card moreClass="shadow-md h-[720px] p-8">
+        <div className="flex flex-col gap-6">
+          <div className="flex flex-row gap-4">
+            <div className="bg-[#f6a192] text-white border-[#009A2B] py-1 px-2 text-[12px] rounded-[4px] capitalize font-bold">
               {"" + notification.roles}
             </div>
+            <div className="flex flex-grow justify-end items-center text-md text-gray-900">
+              {notification.date}
+            </div>
+          </div>
+          <div className="flex flex-col gap-3 text-[16px]">
             <div className="font-semibold text-gray-900 text-2xl">
               {notification.title}
             </div>
-            <div>
+            <div className="overflow-y-auto h-[558px]">
               <div>{notification.body}</div>
+              <div>{notification.text}</div>
             </div>
-          </div>
-          <div className="flex items-top text-md mt-4 text-gray-900">
-            {notification.date}
           </div>
         </div>
       </Card>
