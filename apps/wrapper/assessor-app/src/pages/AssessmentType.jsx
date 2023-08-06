@@ -122,7 +122,7 @@ const AssessmentType = () => {
       setActiveTabValue(tabs[0].value);
       setActiveButtonValue(tabs[0].level[0]);
     } catch (error) {
-      console.debug(error)
+      console.debug(error);
     }
   };
 
@@ -145,6 +145,7 @@ const AssessmentType = () => {
         let courses_data = response?.data?.courses;
         if (courses_data.length) {
           courses_data = courses_data.map((obj) => {
+            console.log("form obj", obj?.formObject);
             if (obj?.formObject) {
               obj.formObject = obj.formObject?.replace(/\\/g, "");
               obj.formObject = JSON.parse(obj.formObject);
