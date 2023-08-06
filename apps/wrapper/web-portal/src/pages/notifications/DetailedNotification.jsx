@@ -19,9 +19,6 @@ const DetailedNotification = ({ notification }) => {
             <div>
               <div>{notification.body}</div>
             </div>
-            <div>
-              <div>{notification.text}</div>
-            </div>
           </div>
           <div className="flex items-top text-md mt-4 text-gray-900">
             {notification.date}
