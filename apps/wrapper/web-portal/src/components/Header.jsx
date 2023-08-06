@@ -4,7 +4,14 @@ import "./Header.css";
 
 import { getCookie, removeCookie, getInitials } from "../utils/common";
 import ADMIN_ROUTE_MAP from "../routes/adminRouteMap";
-import Overlay from "../pages/notifications/Overlay";
+
+import {
+  Menu,
+  MenuHandler,
+  MenuList,
+  MenuItem,
+  Button,
+} from "@material-tailwind/react";
 
 export default function Header() {
   const [showProfileDropdown, setShowProfileDropdown] = useState(false);
@@ -37,9 +44,30 @@ export default function Header() {
                 <img src="/images/upsmf.png" alt="logo" className="h-[64px]" />
               </div>
               <div className="relative inline-block text-left flex gap-12 items-center">
-                <Overlay className="text-3xl text-gray-500" />
                 <div>
-                  <button
+                  <Menu>
+                    <MenuHandler>
+                      <Button
+                        className="border-green-500 bg-green-500 inline-flex w-full justify-center gap-x-1.5 rounded-md px-2 py-2 text-sm font-semibold text-white-500 shadow-sm hover:bg-green-400"
+                        aria-expanded="true"
+                        aria-haspopup="true"
+                      >
+                        {getInitials(
+                          `${userData?.userRepresentation?.firstName.trim()} ${userData?.userRepresentation?.lastName.trim()}`
+                        )}{" "}
+                      </Button>
+                    </MenuHandler>
+                    <MenuList>
+                      <MenuItem
+                        className="text-gray-700 font-semibold block w-full px-4 py-2 text-left text-sm"
+                        onClick={logout}
+                      >
+                        Sign out{" "}
+                      </MenuItem>
+                    </MenuList>
+                  </Menu>
+
+                  {/* <button
                     type="button"
                     className="border-green-500 bg-green-500 inline-flex w-full justify-center gap-x-1.5 rounded-md px-2 py-2 text-sm font-semibold text-white-500 shadow-sm hover:bg-green-400"
                     id="menu-button"
@@ -52,9 +80,9 @@ export default function Header() {
                     {getInitials(
                       `${userData?.userRepresentation?.firstName.trim()} ${userData?.userRepresentation?.lastName.trim()}`
                     )}
-                  </button>
+                  </button> */}
 
-                  {showProfileDropdown && (
+                  {/* {showProfileDropdown && (
                     <div
                       className="absolute right-0 z-10 mt-2 w-56 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
                       role="menu"
@@ -75,7 +103,7 @@ export default function Header() {
                         </button>
                       </div>
                     </div>
-                  )}
+                  )} */}
                 </div>
               </div>
             </div>
