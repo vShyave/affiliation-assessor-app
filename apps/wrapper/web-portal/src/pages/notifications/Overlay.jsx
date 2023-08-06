@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 
 import { useNavigate } from "react-router-dom";
 import { NavLink } from "react-router-dom";
@@ -16,28 +16,30 @@ import {
 import { MdNotifications } from "react-icons/md";
 import { getCookie, readableDate } from "../../utils";
 import { getNotifications, readNotification } from "../../api";
+import { ContextAPI } from "../../utils/ContextAPI";
 
 export default function Overlay() {
   const navigation = useNavigate();
   const [notificationList, setNotifcationList] = useState([]);
   const [selectedNotification, setSelectedNotification] = useState({});
- 
+  const { setSpinner } = useContext(ContextAPI);
+
   const handleClick = async (notification) => {
-    // setSelectedNotification(notification);
-    console.log(notification);
     setSelectedNotification(notification);
-    console.log(selectedNotification);
-    setNotificationReadStatus({notification_id:notification.id});
+    setNotificationReadStatus({ notification_id: notification.id });
     const navigationURL = `${ADMIN_ROUTE_MAP.adminModule.notifications.home}/${notification.id}`;
     navigation(navigationURL);
   };
 
   const setNotificationReadStatus = async (notifId) => {
     try {
+      setSpinner(true);
       const res = readNotification(notifId);
-      console.log(res);
+      // console.log(res);
     } catch (error) {
       console.log(error);
+    } finally {
+      setSpinner(false);
     }
   };
 
@@ -46,8 +48,9 @@ export default function Overlay() {
       user_id: getCookie("regulator")[0]["user_id"],
     };
     try {
+      setSpinner(true);
       const res = await getNotifications(postData);
-      console.log(res);
+      // console.log(res);
       const notifList = res.data.notifications.map((item) => ({
         roles: [item?.user_type],
         title: item?.title,
@@ -61,6 +64,8 @@ export default function Overlay() {
       setNotifcationList(notifList);
     } catch (error) {
       console.log(error);
+    } finally {
+      setSpinner(false);
     }
   };
 

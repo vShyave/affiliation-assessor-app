@@ -39,7 +39,6 @@ ADMIN_ROUTE_MAP.adminModule = {
     list: `/${GROUND_INSPECTION}/list`,
     viewForm: `/${GROUND_INSPECTION}/view`,
     nocIssued: `/${GROUND_INSPECTION}/noc-issued`,
-
   },
   certificateManagement: {
     home: `/${CERTIFICATE_MANAGEMENT}`,

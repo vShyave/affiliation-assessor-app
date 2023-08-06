@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 
 import { Link, useNavigate, useParams } from "react-router-dom";
 
@@ -7,9 +7,9 @@ import Button from "../../components/Button";
 import { FaAngleRight } from "react-icons/fa";
 import UploadForm from "./UploadForm";
 import { convertODKtoXML, createForm, updateForms, viewForm } from "../../api";
-import Toast from "../../components/Toast";
 import { Label } from "../../components";
 import ADMIN_ROUTE_MAP from "../../routes/adminRouteMap";
+import { ContextAPI } from "../../utils/ContextAPI";
 
 const CreateForm = () => {
   const [formStatus, setFormStatus] = useState("");
@@ -21,11 +21,7 @@ const CreateForm = () => {
   const [formData, setFormData] = useState({
     title: "",
   });
-  const [toast, setToast] = useState({
-    toastOpen: false,
-    toastMsg: "",
-    toastType: "",
-  });
+  const { setSpinner, setToast } = useContext(ContextAPI);
 
   const handleChange = (e) => {
     setFormData((prevState) => ({
@@ -53,6 +49,7 @@ const CreateForm = () => {
     postData.append("form_status", "Draft");
 
     try {
+      setSpinner(true);
       setLoading(true);
       if (action === "save") {
         const formResponse = await createForm(postData);
@@ -61,21 +58,13 @@ const CreateForm = () => {
         postData.append("form_id", formId);
         const formResponse = await updateForms(postData);
       }
+      navigate(ADMIN_ROUTE_MAP.adminModule.manageForms.home);
       setToast((prevState) => ({
         ...prevState,
         toastOpen: true,
         toastMsg: "Form successfully saved as draft!",
         toastType: "success",
       }));
-      setTimeout(() => {
-        setToast((prevState) => ({
-          ...prevState,
-          toastOpen: false,
-          toastMsg: "",
-          toastType: "",
-        }));
-        navigate(ADMIN_ROUTE_MAP.adminModule.manageForms.home);
-      }, 3000);
     } catch (error) {
       console.log("error - ", error);
       setToast((prevState) => ({
@@ -84,21 +73,14 @@ const CreateForm = () => {
         toastMsg: "Error occured while saving form!",
         toastType: "error",
       }));
-      setTimeout(
-        () =>
-          setToast((prevState) => ({
-            ...prevState,
-            toastOpen: false,
-            toastMsg: "",
-            toastType: "",
-          })),
-        3000
-      );
+    } finally {
+      setSpinner(false);
     }
   };
 
   const uploadOdkForm = async (postData) => {
     try {
+      setSpinner(true);
       const res = await convertODKtoXML(postData);
       setXmlData(res.data);
       setFormData((prevState) => ({
@@ -114,16 +96,6 @@ const CreateForm = () => {
         toastMsg: "File successfully converted to XML format!",
         toastType: "success",
       }));
-      setTimeout(
-        () =>
-          setToast((prevState) => ({
-            ...prevState,
-            toastOpen: false,
-            toastMsg: "",
-            toastType: "",
-          })),
-        3000
-      );
     } catch (error) {
       console.log("error - ", error);
       setToast((prevState) => ({
@@ -132,21 +104,14 @@ const CreateForm = () => {
         toastMsg: "Error occured while uploading!",
         toastType: "error",
       }));
-      setTimeout(
-        () =>
-          setToast((prevState) => ({
-            ...prevState,
-            toastOpen: false,
-            toastMsg: "",
-            toastType: "",
-          })),
-        3000
-      );
+    } finally {
+      setSpinner(false);
     }
   };
 
   const getFormDetails = async (formData) => {
     try {
+      setSpinner(true);
       const response = await viewForm(formData);
       const formDetail = response.data.forms[0];
       setFormStatus(formDetail?.form_status);
@@ -171,16 +136,8 @@ const CreateForm = () => {
         toastMsg: "Error occured while uploading!",
         toastType: "error",
       }));
-      setTimeout(
-        () =>
-          setToast((prevState) => ({
-            ...prevState,
-            toastOpen: false,
-            toastMsg: "",
-            toastType: "",
-          })),
-        3000
-      );
+    } finally {
+      setSpinner(false);
     }
   };
 
@@ -195,12 +152,6 @@ const CreateForm = () => {
 
   return (
     <>
-      {toast.toastOpen && (
-        <Toast toastMsg={toast.toastMsg} toastType={toast.toastType} />
-      )}
-      {/* Breadcrum */}
-      {/* <Breadcrumb data={breadCrumbData} /> */}
-
       <div className="h-[48px] bg-white flex justify-start drop-shadow-sm">
         <div className="container mx-auto flex px-3">
           <div className="flex flex-row font-bold gap-2 items-center">

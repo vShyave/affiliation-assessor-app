@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import {
   getAcceptApplicant,
   getAcceptApplicantCertificate,
@@ -8,7 +8,7 @@ import {
 import ADMIN_ROUTE_MAP from "../../routes/adminRouteMap";
 import { useNavigate } from "react-router-dom";
 import { Button } from "../../components";
-import Toast from "../../components/Toast";
+import { ContextAPI } from "../../utils/ContextAPI";
 
 function IssueNocModal({
   setOpenIssueNocModel,
@@ -20,13 +20,9 @@ function IssueNocModal({
   const [file, setFile] = useState({});
   const [comment, setComment] = useState("");
   const [fileTypeError, setFileTypeError] = useState(false);
-  const [toast, setToast] = useState({
-    toastOpen: false,
-    toastMsg: "",
-    toastType: "",
-  });
   let pathName = "";
   let nocorCertificateFileName = "";
+  const { setSpinner,setToast } = useContext(ContextAPI);
   // console.log(selectRound);
   // console.log(selectInstituteName);
   // console.log("file",file);
@@ -50,13 +46,11 @@ function IssueNocModal({
   };
 
   const handleChangeComments = (e) => {
-        setComment(e.target.value);
-      };
+    setComment(e.target.value);
+  };
 
   const handleChange = (e) => {
-
     const fileUploaded = e.target.files[0];
-    console.log("fileUploaded",fileUploaded)
     if (!fileUploaded.name.includes(".pdf") || fileUploaded.size > 5000000) {
       setFileTypeError(true);
     } else {
@@ -75,12 +69,13 @@ function IssueNocModal({
 
   const getNocOrCertificatePdf = async (postData) => {
     try {
+      setSpinner(true);
       const res = await nocPdfUploader(postData);
       console.log("postData", postData);
       console.log("res", res);
       pathName = res?.data?.fileUrl;
       nocorCertificateFileName = res?.data?.fileName;
-      
+
       postData.type == "noc"
         ? handleAcceptApplicantRoundOne()
         : handleAcceptApplicantRoundTwo();
@@ -92,15 +87,7 @@ function IssueNocModal({
           toastMsg: "File uploaded successfully!",
           toastType: "success",
         }));
-        setTimeout(() => {
-          setToast((prevState) => ({
-            ...prevState,
-            toastOpen: false,
-            toastMsg: "",
-            toastType: "",
-          }));
-          navigate("/groundInspection/noc-issued");
-        }, 3000);
+        navigate("/groundInspection/noc-issued");
       }
     } catch (error) {
       console.log("error - ", error);
@@ -110,18 +97,11 @@ function IssueNocModal({
         toastMsg: "Error occured while uploading!",
         toastType: "error",
       }));
-      setTimeout(
-        () =>
-          setToast((prevState) => ({
-            ...prevState,
-            toastOpen: false,
-            toastMsg: "",
-            toastType: "",
-          })),
-        3000
-      );
+    } finally {
+      setSpinner(false);
     }
   };
+
   const handleAcceptApplicantRoundOne = async () => {
     const postData = {
       form_id: 23,
@@ -130,11 +110,19 @@ function IssueNocModal({
       noc_Path: pathName,
       noc_fileName: nocorCertificateFileName,
     };
-    const responseNoc = await getAcceptApplicantNoc(postData);
-    console.log("noc hasura done");
-     pathName = "";
-     nocorCertificateFileName = "";
+    try {
+      setSpinner(true);
+      const responseNoc = await getAcceptApplicantNoc(postData);
+      console.log("noc hasura done");
+      pathName = "";
+      nocorCertificateFileName = "";
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setSpinner(false);
+    }
   };
+
   const handleAcceptApplicantRoundTwo = async () => {
     const postData = {
       form_id: 23,
@@ -143,10 +131,17 @@ function IssueNocModal({
       noc_Path: pathName,
       noc_fileName: nocorCertificateFileName,
     };
-    const responseCertificate = await getAcceptApplicantCertificate(postData);
-    console.log("hasura certificate done");
-     pathName = "";
-     nocorCertificateFileName = "";
+    try {
+      setSpinner(true);
+      const responseCertificate = await getAcceptApplicantCertificate(postData);
+      console.log("hasura certificate done");
+      pathName = "";
+      nocorCertificateFileName = "";
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setSpinner(false);
+    }
   };
   // const handleAcceptApplicant = async () => {
   // navigate to next page
@@ -155,9 +150,6 @@ function IssueNocModal({
 
   return (
     <>
-      {toast.toastOpen && (
-        <Toast toastMsg={toast.toastMsg} toastType={toast.toastType} />
-      )}
       <div className="flex justify-center items-center fixed inset-0 bg-opacity-25 backdrop-blur-sm">
         <div className="flex justify-center p-4 rounded-xl shadow-xl border border-gray-400 bg-gray-100 w-[580px] h-fit">
           <div className="flex flex-col gap-4">
@@ -182,9 +174,11 @@ function IssueNocModal({
                 onClick={handleClick}
               />{" "}
               {fileTypeError && (
-                <div className="text-red-500">{"Only pdf files accepted!(max size 5MB)"}</div>
+                <div className="text-red-500">
+                  {"Only pdf files accepted!(max size 5MB)"}
+                </div>
               )}
-                <textarea
+              <textarea
                 onChange={handleChangeComments}
                 placeholder="Remarks"
                 className="border w-[480px] h-[120px] p-2 mt-[8px] rounded-xl resize-none"

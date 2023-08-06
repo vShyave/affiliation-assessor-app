@@ -50,7 +50,6 @@ const API_URL = {
     deleteUser: `${rest}deleteUser`,
     editUser: `${rest}editUser`,
   },
-
   desktopAnalysis: {
     getUsersForSchedulingAssessment: `${rest}getUsersForSchedulingAssessment`,
     scheduleAssessment: `${rest}addAssessmentSchedule`,

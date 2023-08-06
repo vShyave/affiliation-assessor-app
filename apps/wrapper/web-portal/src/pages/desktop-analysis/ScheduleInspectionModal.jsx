@@ -1,7 +1,8 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, useContext } from "react";
 import { Stepper, Step } from "@material-tailwind/react";
 import { GrDocumentPdf } from "react-icons/gr";
 import { AiOutlineClose } from "react-icons/ai";
+import { ContextAPI } from "../../utils/ContextAPI";
 
 import Calendar from "react-calendar";
 import Select from "react-select";
@@ -27,10 +28,11 @@ import {
 
 // import Toast from "../../components/Toast";
 
-function ScheduleInspectionModal({ closeSchedule, setToast, otherInfo }) {
+function ScheduleInspectionModal({ closeSchedule, otherInfo }) {
   const [activeStep, setActiveStep] = React.useState(0);
   const [isLastStep, setIsLastStep] = React.useState(false);
   const [isFirstStep, setIsFirstStep] = React.useState(false);
+  const { setSpinner, setToast } = useContext(ContextAPI);
 
   const handleNext = () => !isLastStep && setActiveStep((cur) => cur + 1);
   const handlePrev = () => !isFirstStep && setActiveStep((cur) => cur - 1);
@@ -62,15 +64,22 @@ function ScheduleInspectionModal({ closeSchedule, setToast, otherInfo }) {
 
     setPayload((prevState) => ({ ...prevState, date: tempDate }));
     const postData = { todayDate: tempDate };
-    const res = await getUsersForScheduling(postData);
-    setAssessorList(
-      res?.data?.assessors.map((item) => ({
-        value: item.code,
-        label: item.name,
-        phonenumber: item.phonenumber,
-        other: item,
-      }))
-    );
+    try {
+      setSpinner(true);
+      const res = await getUsersForScheduling(postData);
+      setAssessorList(
+        res?.data?.assessors.map((item) => ({
+          value: item.code,
+          label: item.name,
+          phonenumber: item.phonenumber,
+          other: item,
+        }))
+      );
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setSpinner(false);
+    }
   };
 
   const handleSelectOGA = (e) => {
@@ -114,14 +123,22 @@ function ScheduleInspectionModal({ closeSchedule, setToast, otherInfo }) {
       course_type: otherInfo?.course_type,
       course_level: otherInfo?.course_level,
     };
-    const res = await getAllTheCourses(payload);
-    setFormList(
-      res?.data?.courses?.map((item) => ({
-        value: item.course_name,
-        label: item.course_name,
-        level: item.course_level,
-      }))
-    );
+
+    try {
+      setSpinner(true);
+      const res = await getAllTheCourses(payload);
+      setFormList(
+        res?.data?.courses?.map((item) => ({
+          value: item.course_name,
+          label: item.course_name,
+          level: item.course_level,
+        }))
+      );
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setSpinner(false);
+    }
   };
 
   const handleFormSelection = (e) => {
@@ -170,6 +187,7 @@ function ScheduleInspectionModal({ closeSchedule, setToast, otherInfo }) {
     };
 
     try {
+      setSpinner(true);
       const res = await getScheduleAssessment(formData);
       const addCourse = await addInstituteCourse(postData);
       setToast((prevState) => ({
@@ -178,16 +196,6 @@ function ScheduleInspectionModal({ closeSchedule, setToast, otherInfo }) {
         toastMsg: "Inspection scheduled successfully!",
         toastType: "success",
       }));
-      setTimeout(
-        () =>
-          setToast((prevState) => ({
-            ...prevState,
-            toastOpen: false,
-            toastMsg: "",
-            toastType: "",
-          })),
-        3000
-      );
       closeSchedule(false);
 
       registerEvent({
@@ -212,16 +220,6 @@ function ScheduleInspectionModal({ closeSchedule, setToast, otherInfo }) {
             "Inspection already scheduled for " + date.toDateString() + ".",
           toastType: "error",
         }));
-        setTimeout(
-          () =>
-            setToast((prevState) => ({
-              ...prevState,
-              toastOpen: false,
-              toastMsg: "",
-              toastType: "",
-            })),
-          3000
-        );
       } else {
         setToast((prevState) => ({
           ...prevState,
@@ -229,17 +227,9 @@ function ScheduleInspectionModal({ closeSchedule, setToast, otherInfo }) {
           toastMsg: "Error occurred while scheduling inspection!",
           toastType: "error",
         }));
-        setTimeout(
-          () =>
-            setToast((prevState) => ({
-              ...prevState,
-              toastOpen: false,
-              toastMsg: "",
-              toastType: "",
-            })),
-          3000
-        );
       }
+    } finally {
+      setSpinner(false);
     }
   };
 

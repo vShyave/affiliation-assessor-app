@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import { useParams, Link } from "react-router-dom";
 import { AiOutlineClose, AiOutlineCheck } from "react-icons/ai";
 import { FaAngleRight } from "react-icons/fa";
@@ -14,9 +14,9 @@ import Sidebar from "../../components/Sidebar";
 import ADMIN_ROUTE_MAP from "../../routes/adminRouteMap";
 import { getFormData } from "../../api";
 import { getPrefillXML } from "./../../api/formApi";
-import Toast from "../../components/Toast";
 import jsPDF from "jspdf";
 import html2canvas from "html2canvas";
+import { ContextAPI } from "../../utils/ContextAPI";
 
 const ENKETO_URL = process.env.REACT_APP_ENKETO_URL;
 
@@ -37,11 +37,7 @@ export default function ApplicationPage({
   let [instituteNameModal, setInstituteNameModal] = useState(instituteName);
   let [selectRound, setSelectRound] = useState(round);
   console.log(instituteNameModal);
-  const [toast, setToast] = useState({
-    toastOpen: false,
-    toastMsg: "",
-    toastType: "",
-  });
+  const {setSpinner} = useContext(ContextAPI)
 
   const userId = "427d473d-d8ea-4bb3-b317-f230f1c9b2f7";
   const formSpec = {
@@ -77,7 +73,9 @@ export default function ApplicationPage({
 
   const fetchFormData = async () => {
     const postData = { form_id: formId };
-    const res = await getFormData(postData);
+    try{
+      setSpinner(true)
+      const res = await getFormData(postData);
     const formData = res.data.form_submissions[0];
 
     let formURI = await getPrefillXML(
@@ -87,6 +85,12 @@ export default function ApplicationPage({
       formData.imageUrls
     );
     setEncodedFormURI(formURI);
+    }catch(error){
+      console.log(error)
+    }finally{
+      setSpinner(false)
+    }
+    
   };
 
   const handleGeneratePdf = () => {
@@ -123,10 +127,6 @@ export default function ApplicationPage({
 
   return (
     <>
-      {toast.toastOpen && (
-        <Toast toastMsg={toast.toastMsg} toastType={toast.toastType} />
-      )}
-
       {/* Breadcrum */}
       {/* <Breadcrumb data={breadCrumbData} /> */}
 
@@ -235,7 +235,6 @@ export default function ApplicationPage({
         <RejectNocModal
           closeRejectModal={setRejectModel}
           setRejectStatus={setRejectStatus}
-          setToast={setToast}
         />
       )}
       {/* {openCertificateModel && <IssueCertificateModal closeCertificateModal={setOpenCertificateModel}/>} */}
@@ -247,7 +246,6 @@ export default function ApplicationPage({
           selectRound={round}
           selectInstituteName={instituteName}
           setOpenIssueNocModel={setOpenIssueNocModel}
-          setToast={setToast}
         />
       )}
     </>
