@@ -7,6 +7,8 @@ import { FaAngleRight } from "react-icons/fa";
 
 import Toast from "../components/Toast";
 
+// import { removeCookie, getCookie, getInitials } from "../utils";
+
 import { getCookie } from "../utils";
 
 import APPLICANT_ROUTE_MAP from "../routes/ApplicantRoute";
@@ -15,6 +17,7 @@ import { profileService } from "../services";
 
 export default function Profile() {
   const instituteData = getCookie("institutes");
+  const userData = getCookie("userData");
 
   const [text, setText] = useState("Edit");
   const [formData, setFormData] = useState({
@@ -52,7 +55,7 @@ export default function Profile() {
   }, []);
 
   const handleEditProfile = async () => {
-    console.log("data", formData);
+    console.log("data", userData);
     const {
       firstName,
       lastName,
@@ -150,8 +153,8 @@ export default function Profile() {
         first_name: formDetail?.institute_pocs[0].fname,
         last_name: formDetail?.institute_pocs[0].lname,
         phone_number: formDetail?.institute_pocs[0].number,
-        email: formDetail?.email,
-        name: formDetail?.institute_pocs[0].name,
+        email: userData?.userRepresentation?.email,
+         name: formDetail?.institute_pocs[0].name,
         // applicant_type: [applicantType],
         course_type: formDetail?.course_applied,
       });
@@ -420,16 +423,12 @@ export default function Profile() {
                   <div className="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6"></div>
                 </div>
 
-                <div className="flex flex-row justify-end h-1/2 my-auto mb-0 gap-2">
+                <div className="flex flex-row justify-end h-1/2 my-auto mb-0 gap-4">
                   <button
                     className="bg-gray-50 px-6 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                    onClick={() => {
-                      navigate(
-                        APPLICANT_ROUTE_MAP.dashboardModule.my_applications
-                      );
-                    }}
+                    onClick={() => setIsPreview(true)}
                   >
-                    Clear
+                    Cancel
                   </button>
                   <Button
                     moreClass="px-6 text-white"
