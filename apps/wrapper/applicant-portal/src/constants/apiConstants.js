@@ -30,5 +30,11 @@ export const APIS = {
   },
   FORM: {
     UPDATE_FORM: "/rest/updateFormSubmission"
+  },
+  notifications:{
+    insertNotifications: `rest/insertNotifications`,
+    getNotifications: `rest/getNotifications`,
+    readNotification: `rest/readNotification`,
+    viewNotification: `rest/viewNotification`
   }
 };

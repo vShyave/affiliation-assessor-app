@@ -3,10 +3,6 @@ import { Link, useNavigate } from "react-router-dom";
 import { BiArrowBack } from "react-icons/bi";
 import { FaAngleRight } from "react-icons/fa";
 
-import ADMIN_ROUTE_MAP from "../../routes/adminRouteMap";
-
-import DetailedNotification from "../notifications/DetailedNotification";
-
 import {
   Menu,
   MenuHandler,
@@ -17,33 +13,33 @@ import {
 } from "@material-tailwind/react";
 import { getCookie, readableDate } from "../../utils";
 import { getNotifications } from "../../api";
-import { ContextAPI } from "../../utils/ContextAPI";
+import DetailedNotification from "./DetailedNotification";
+import APPLICANT_ROUTE_MAP from "../../routes/ApplicantRoute";
+import { applicantService } from "../../services";
 
 export default function NotificationsDetailedView(props) {
   const navigation = useNavigate();
   const [selectedNotification, setselectedNotification] = useState([]);
   const [notificationList, setNotifcationList] = useState([]);
-  const {setSpinner} = useContext(ContextAPI)
 
   const navigate = useNavigate();
 
   const goBack = () => {
-    navigate(-1)
+    navigate(-1);
   };
 
   const handleClick = (notification) => {
-    const navigationURL = `${ADMIN_ROUTE_MAP.adminModule.notifications.home}/${notification.id}`;
+    const navigationURL = `${APPLICANT_ROUTE_MAP.dashboardModule.notifications}/${notification.id}`;
     navigation(navigationURL);
     setselectedNotification(notification);
   };
 
   const getAllNotifications = async () => {
     const postData = {
-      user_id: getCookie("regulator")?.[0]?.user_id,
+      user_id: `${getCookie("institutes")?.[0]?.id}`,
     };
     try {
-      setSpinner(true)
-      const res = await getNotifications(postData);
+      const res = await applicantService.getNotifications(postData);
       console.log(res);
       const notifList = res.data.notifications.map((item) => ({
         roles: [item?.user_type],
@@ -58,13 +54,12 @@ export default function NotificationsDetailedView(props) {
       setNotifcationList(notifList);
       if (!Object.keys(selectedNotification).length) {
         setselectedNotification(notifList[0]);
-        const navigationURL = `${ADMIN_ROUTE_MAP.adminModule.notifications.home}/${notifList[0].id}`;
+        const navigationURL = `${APPLICANT_ROUTE_MAP.dashboardModule.notifications}/${notifList[0].id}`;
         navigation(navigationURL);
       }
     } catch (error) {
       console.log(error);
-    }finally{
-      setSpinner(false)
+    } finally {
     }
   };
 
