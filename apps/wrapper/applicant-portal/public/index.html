@@ -25,10 +25,53 @@
       work correctly both with client-side routing and a non-root public URL.
       Learn how to configure a non-root public URL by running `npm run build`.
     -->
+    <style type="text/css">
+      .loader {
+        width: 48px;
+        height: 48px;
+        border: 5px solid #111;
+        border-bottom-color: transparent;
+        border-radius: 50%;
+        display: inline-block;
+        box-sizing: border-box;
+        animation: rotation 1s linear infinite;
+      }
+
+      @keyframes rotation {
+        0% {
+          transform: rotate(0deg);
+        }
+        100% {
+          transform: rotate(360deg);
+        }
+      } 
+      
+      #backdrop {
+        position:absolute;
+        top:0;
+        width: 100vw;
+        height: 100vh;
+        z-index: 999;
+        background-color: rgb(0,0,0,0.2);
+        display: none;
+        justify-content: center;
+        align-items: center;
+      }
+    </style>
+
     <title>React App</title>
   </head>
+
   <body class="bg-gray-100 w-full min-h-screen">
     <noscript>You need to enable JavaScript to run this app.</noscript>
+    <div id="backdrop" className="api_spinner">
+      <div
+        role="status"
+        className="absolute -translate-x-1/2 -translate-y-1/2 top-2/4 left-1/2"
+      >
+        <div class="loader"></div>
+      </div>
+    </div>
     <div id="root"></div>
     <!--
       This HTML file is a template.

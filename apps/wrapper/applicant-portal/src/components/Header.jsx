@@ -3,6 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { removeCookie, getCookie, getInitials } from "../utils";
 import Button from "./Button";
 import APPLICANT_ROUTE_MAP from "../routes/ApplicantRoute";
+import Overlay from "../pages/notifications/Overlay";
 
 const Header = () => {
   const [showProfileDropdown, setShowProfileDropdown] = useState(false);
@@ -49,6 +50,9 @@ const Header = () => {
               {userData?.userRepresentation && (
                 <div className="relative inline-block text-left">
                   <div>
+                    <Overlay className="text-3xl text-gray-500" />
+                  </div>
+                  <div>
                     <button
                       type="button"
                       className="border-green-500 bg-green-500 inline-flex w-full justify-center gap-x-1.5 rounded-md px-2 py-2 text-sm font-semibold text-white-500 shadow-sm hover:bg-green-400"
@@ -59,7 +63,11 @@ const Header = () => {
                         setShowProfileDropdown(!showProfileDropdown);
                       }}
                     >
-                      {getInitials(userData.userRepresentation.firstName+" "+userData.userRepresentation.lastName)}
+                      {getInitials(
+                        userData.userRepresentation.firstName +
+                          " " +
+                          userData.userRepresentation.lastName
+                      )}
                     </button>
                   </div>
                   {showProfileDropdown && (
@@ -72,15 +80,15 @@ const Header = () => {
                     >
                       <div className="py-1" role="none">
                         <Link to={APPLICANT_ROUTE_MAP.dashboardModule.profile}>
-                      <button
-                          type="button"
-                          className="text-gray-700 font-semibold block w-full px-4 py-2 text-left text-sm"
-                          role="menuitem"
-                          tabIndex="-1"
-                          id="menu-item-3"
-                        >
-                          My Profile
-                        </button>
+                          <button
+                            type="button"
+                            className="text-gray-700 font-semibold block w-full px-4 py-2 text-left text-sm"
+                            role="menuitem"
+                            tabIndex="-1"
+                            id="menu-item-3"
+                          >
+                            My Profile
+                          </button>
                         </Link>
                         <hr />
                         <button
