@@ -1,8 +1,15 @@
 import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { removeCookie, getCookie, getInitials } from "../utils";
-import Button from "./Button";
+// import Button from "./Button";
 import APPLICANT_ROUTE_MAP from "../routes/ApplicantRoute";
+import {
+  Menu,
+  MenuHandler,
+  MenuList,
+  MenuItem,
+  Button,
+} from "@material-tailwind/react";
 
 const Header = () => {
   const [showProfileDropdown, setShowProfileDropdown] = useState(false);
@@ -49,7 +56,40 @@ const Header = () => {
               {userData?.userRepresentation && (
                 <div className="relative inline-block text-left">
                   <div>
-                    <button
+                    <Menu>
+                      <MenuHandler>
+                        <Button
+                          className="border-green-500 bg-green-500 inline-flex w-full justify-center gap-x-1.5 rounded-md px-2 py-2 text-sm font-semibold text-white-500 shadow-sm hover:bg-green-400"
+                          aria-expanded="true"
+                          aria-haspopup="true"
+                        >
+                          {getInitials(
+                            userData.userRepresentation.firstName +
+                              " " +
+                              userData.userRepresentation.lastName
+                          )}
+                        </Button>
+                      </MenuHandler>
+                      <MenuList>
+                        <div className="py-1" role="none">
+                          <Link
+                            to={APPLICANT_ROUTE_MAP.dashboardModule.profile}
+                          >
+                            <MenuItem className="text-gray-700 font-semibold block w-full px-4 py-2 text-left text-sm">
+                              My Profile
+                            </MenuItem>
+                          </Link>
+                          <hr />
+                          <MenuItem
+                            className="text-gray-700 font-semibold block w-full px-4 py-2 text-left text-sm"
+                            onClick={logout}
+                          >
+                            Sign out
+                          </MenuItem>
+                        </div>
+                      </MenuList>
+                    </Menu>
+                    {/* <button
                       type="button"
                       className="border-green-500 bg-green-500 inline-flex w-full justify-center gap-x-1.5 rounded-md px-2 py-2 text-sm font-semibold text-white-500 shadow-sm hover:bg-green-400"
                       id="menu-button"
@@ -59,10 +99,14 @@ const Header = () => {
                         setShowProfileDropdown(!showProfileDropdown);
                       }}
                     >
-                      {getInitials(userData.userRepresentation.firstName+" "+userData.userRepresentation.lastName)}
-                    </button>
+                      {getInitials(
+                        userData.userRepresentation.firstName +
+                          " " +
+                          userData.userRepresentation.lastName
+                      )}
+                    </button> */}
                   </div>
-                  {showProfileDropdown && (
+                  {/* {showProfileDropdown && (
                     <div
                       className="absolute right-0 z-10 mt-2 w-56 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
                       role="menu"
@@ -72,15 +116,15 @@ const Header = () => {
                     >
                       <div className="py-1" role="none">
                         <Link to={APPLICANT_ROUTE_MAP.dashboardModule.profile}>
-                      <button
-                          type="button"
-                          className="text-gray-700 font-semibold block w-full px-4 py-2 text-left text-sm"
-                          role="menuitem"
-                          tabIndex="-1"
-                          id="menu-item-3"
-                        >
-                          My Profile
-                        </button>
+                          <button
+                            type="button"
+                            className="text-gray-700 font-semibold block w-full px-4 py-2 text-left text-sm"
+                            role="menuitem"
+                            tabIndex="-1"
+                            id="menu-item-3"
+                          >
+                            My Profile
+                          </button>
                         </Link>
                         <hr />
                         <button
@@ -94,8 +138,8 @@ const Header = () => {
                           Sign out
                         </button>
                       </div>
-                    </div>
-                  )}
+                    </div> */}
+                  {/* )} */}
                 </div>
               )}
             </div>

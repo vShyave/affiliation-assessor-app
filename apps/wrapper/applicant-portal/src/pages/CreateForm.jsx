@@ -358,7 +358,7 @@ const CreateForm = () => {
         <div className="flex flex-row justify-between">
           <h1 className="font-bold text-[20px]">
             {" "}
-            {formName.split("-")[2].toUpperCase()}
+            {formName.split("-").join(" ")}
           </h1>
           <div className="flex flex-grow gap-3 justify-end">
             <button
@@ -370,7 +370,7 @@ const CreateForm = () => {
 
             <button
               onClick={handleDownloadNocOrCertificate}
-              disabled= {formData.form_status=="Approved"}
+              // disabled= {(formData.form_status=="Approved") ? false : true}
               className="bg-primary-900 py-2 mb-8 font-medium rounded-[4px] px-2 text-white flex flex-row items-center gap-3"
             >
               Download NOC/Certificate
