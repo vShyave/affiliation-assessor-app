@@ -12,7 +12,7 @@ import { Label } from "../../components";
 import ADMIN_ROUTE_MAP from "../../routes/adminRouteMap";
 
 const CreateForm = () => {
-  const [formStatus,setFormStatus] = useState("")
+  const [formStatus, setFormStatus] = useState("");
   const navigate = useNavigate();
   const { formId } = useParams();
   const [formStage, setFormStage] = useState(1);
@@ -51,13 +51,14 @@ const CreateForm = () => {
     // TODO: make user_id dynamic
     postData.append("user_id", "53c57d13-d33d-439a-bd72-1f56b189642d");
     postData.append("form_status", "Draft");
+
     try {
       setLoading(true);
       if (action === "save") {
         const formResponse = await createForm(postData);
       }
-      if(action==="update"){
-        postData.append("form_id",formId)
+      if (action === "update") {
+        postData.append("form_id", formId);
         const formResponse = await updateForms(postData);
       }
       setToast((prevState) => ({
@@ -144,12 +145,11 @@ const CreateForm = () => {
     }
   };
 
-
   const getFormDetails = async (formData) => {
     try {
       const response = await viewForm(formData);
       const formDetail = response.data.forms[0];
-      setFormStatus(formDetail?.form_status)
+      setFormStatus(formDetail?.form_status);
 
       setFormData({
         application_type: formDetail?.application_type,
@@ -239,7 +239,7 @@ const CreateForm = () => {
                       : "text-white border"
                   } px-6`}
                   text="Update"
-                  onClick={()=>(handleSaveUpdateDraft("update"))}
+                  onClick={() => handleSaveUpdateDraft("update")}
                   otherProps={{
                     disabled: Object.values(formData).length !== 10,
                     style: { display: formStatus !== "Draft" ? "none" : "" },
@@ -252,7 +252,7 @@ const CreateForm = () => {
                       : "text-white border"
                   } px-6`}
                   text="Save as draft"
-                  onClick={()=>(handleSaveUpdateDraft("save"))}
+                  onClick={() => handleSaveUpdateDraft("save")}
                   otherProps={{
                     disabled: Object.values(formData).length !== 10,
                     style: {
@@ -312,7 +312,10 @@ const CreateForm = () => {
                             id="title"
                             name="title"
                             onChange={handleChange}
-                            disabled={formStatus=="Published" || formStatus=="Unpublished"}
+                            disabled={
+                              formStatus == "Published" ||
+                              formStatus == "Unpublished"
+                            }
                             className="block w-full rounded-md border-0 p-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                           />
                         </div>
@@ -332,8 +335,11 @@ const CreateForm = () => {
                             id="form_desc"
                             name="form_desc"
                             onChange={handleChange}
-                            disabled={formStatus=="Published" || formStatus=="Unpublished"}
-                            className= "resize-none block w-full rounded-md border-0 p-1 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                            disabled={
+                              formStatus == "Published" ||
+                              formStatus == "Unpublished"
+                            }
+                            className="resize-none block w-full rounded-md border-0 p-1 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                           />
                         </div>
                       </div>
@@ -351,7 +357,10 @@ const CreateForm = () => {
                           name="application_type"
                           id="application_type"
                           onChange={handleChange}
-                          disabled={formStatus=="Published" || formStatus=="Unpublished"}
+                          disabled={
+                            formStatus == "Published" ||
+                            formStatus == "Unpublished"
+                          }
                           className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                         >
                           <option value="">Select here</option>
@@ -376,7 +385,10 @@ const CreateForm = () => {
                           name="round_no"
                           id="round_no"
                           onChange={handleChange}
-                          disabled={formStatus=="Published" || formStatus=="Unpublished"}
+                          disabled={
+                            formStatus == "Published" ||
+                            formStatus == "Unpublished"
+                          }
                           className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                         >
                           <option value="">Select here</option>
@@ -398,12 +410,15 @@ const CreateForm = () => {
                           name="course_type"
                           id="course_type"
                           onChange={handleChange}
-                          disabled={formStatus=="Published" || formStatus=="Unpublished"}
+                          disabled={
+                            formStatus == "Published" ||
+                            formStatus == "Unpublished"
+                          }
                           className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                         >
                           <option value="">Select here</option>
-                          <option value="nursing">Nursing</option>
-                          <option value="paramedical">Paramedical</option>
+                          <option value="Nursing">Nursing</option>
+                          <option value="Paramedical">Paramedical</option>
                         </select>
                       </div>
                       <div className="sm:col-span-3">
@@ -420,12 +435,15 @@ const CreateForm = () => {
                           name="course_level"
                           id="course_level"
                           onChange={handleChange}
-                          disabled={formStatus=="Published" || formStatus=="Unpublished"}
+                          disabled={
+                            formStatus == "Published" ||
+                            formStatus == "Unpublished"
+                          }
                           className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                         >
                           <option value="">Select here</option>
-                          <option value="degree">Degree</option>
-                          <option value="diploma">Diploma</option>
+                          <option value="Degree">Degree</option>
+                          <option value="Diploma">Diploma</option>
                         </select>
                       </div>
 
@@ -443,7 +461,10 @@ const CreateForm = () => {
                           name="labels"
                           id="labels"
                           onChange={handleChange}
-                          disabled={formStatus=="Published" || formStatus=="Unpublished"}
+                          disabled={
+                            formStatus == "Published" ||
+                            formStatus == "Unpublished"
+                          }
                           className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                         >
                           <option value="">Select here</option>
@@ -470,7 +491,10 @@ const CreateForm = () => {
                           name="assignee"
                           id="assignee"
                           onChange={handleChange}
-                          disabled={formStatus=="Published" || formStatus=="Unpublished"}
+                          disabled={
+                            formStatus == "Published" ||
+                            formStatus == "Unpublished"
+                          }
                           className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                         >
                           <option value="">Select here</option>

@@ -20,6 +20,7 @@ import {
   getUsersForScheduling,
   getAllTheCourses,
   getScheduleAssessment,
+  addInstituteCourse,
   registerEvent,
   updateFormStatus,
 } from "../../api";
@@ -109,9 +110,11 @@ function ScheduleInspectionModal({ closeSchedule, setToast, otherInfo }) {
   };
 
   const getTheCourses = async () => {
-    let courseApplied = { course_applied: otherInfo?.instituteName };
-
-    const res = await getAllTheCourses(courseApplied);
+    let payload = {
+      course_type: otherInfo?.course_type,
+      course_level: otherInfo?.course_level,
+    };
+    const res = await getAllTheCourses(payload);
     setFormList(
       res?.data?.courses?.map((item) => ({
         value: item.course_name,
@@ -126,6 +129,35 @@ function ScheduleInspectionModal({ closeSchedule, setToast, otherInfo }) {
   };
 
   const handleScheduleAssessment = async () => {
+    // console.log("Selected forms", selectedFormList);
+
+    // let coursesObj = selectedFormList.map((obj) => {
+    //   let courses = {};
+    //   const formObjStringify = {};
+    //   formObjStringify.name = obj.value; bsc_nursing_p1
+    //   formObjStringify.path = obj.value.toLowerCase() + ".xml";
+    //   courses.course_type = otherInfo?.course_applied;
+    //   courses.course_level = otherInfo.course_level;
+    //   courses.formObject = JSON.stringify([formObjStringify]);
+    //   courses.institute_id = otherInfo?.instituteId;
+    //   courses.course_name = obj.value;
+    //   return courses;
+    // });
+    const postData = {
+      institute_course: [
+        {
+          institute_id: otherInfo?.instituteId,
+          institute_type: JSON.stringify([
+            {
+              courseType: otherInfo?.course_applied,
+              courseLevel: otherInfo.course_level,
+            },
+          ]),
+        },
+      ],
+      courses: [],
+    };
+    console.log(postData);
     const formData = {
       assessment_schedule: [
         {
@@ -139,6 +171,7 @@ function ScheduleInspectionModal({ closeSchedule, setToast, otherInfo }) {
 
     try {
       const res = await getScheduleAssessment(formData);
+      const addCourse = await addInstituteCourse(postData);
       setToast((prevState) => ({
         ...prevState,
         toastOpen: true,
@@ -171,7 +204,7 @@ function ScheduleInspectionModal({ closeSchedule, setToast, otherInfo }) {
       });
     } catch (error) {
       let date = new Date(formData.assessment_schedule.date);
-      if (error.response.data.code === "constraint-violation") {
+      if (error?.response?.data.code === "constraint-violation") {
         setToast((prevState) => ({
           ...prevState,
           toastOpen: true,
@@ -420,10 +453,7 @@ function ScheduleInspectionModal({ closeSchedule, setToast, otherInfo }) {
 
                         <div className="bg-gray-100  items-center flex gap-4 border border-gray-100 rounded-md">
                           <span className="font-semibold p-2">
-                            {otherInfo?.instituteName
-                              ?.split("_")
-                              ?.join(" ")
-                              .toUpperCase()}
+                            {otherInfo?.course_type}- {otherInfo?.course_level}
                           </span>
                         </div>
                       </div>

@@ -94,6 +94,7 @@ export default function DesktopAnalysisView() {
     const postData = { form_id: formId };
     const res = await getFormData(postData);
     formData = res.data.form_submissions[0];
+    console.log("Form data", formData);
     setFormDataFromApi(res.data.form_submissions[0]);
 
     await setToLocalForage(
@@ -232,8 +233,10 @@ export default function DesktopAnalysisView() {
 
   const otherInfo = {
     instituteId: formDataFromApi?.institute?.id,
-    instituteName: formDataFromApi?.institute?.course_applied,
+    course_applied: formDataFromApi?.institute?.course_applied,
     formId: formId,
+    course_type: formDataFromApi?.course_type,
+    course_level: formDataFromApi?.course_level,
   };
 
   useEffect(() => {
