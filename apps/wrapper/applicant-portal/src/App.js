@@ -78,6 +78,9 @@ function App() {
 
   return (
     <div className="App">
+      {toast.toastOpen && (
+          <Toast toastMsg={toast.toastMsg} toastType={toast.toastType} />
+        )}
       <BrowserRouter>
         <Routes>
           <Route path={APPLICANT_ROUTE_MAP.auth} element={<Authenticate />}>

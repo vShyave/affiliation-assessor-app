@@ -39,7 +39,7 @@ export default function NotificationsDetailedView(props) {
 
   const getAllNotifications = async () => {
     const postData = {
-      user_id: getCookie("regulator")[0]["user_id"],
+      user_id: getCookie("regulator")?.[0]?.user_id,
     };
     try {
       setSpinner(true)

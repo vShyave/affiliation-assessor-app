@@ -56,10 +56,6 @@ const ScheduleManagementList = () => {
 
   const COLUMNS = [
     {
-      Header: "#",
-      accessor: "scheduled_application_sno",
-    },
-    {
       Header: "District",
       accessor: "district",
     },
