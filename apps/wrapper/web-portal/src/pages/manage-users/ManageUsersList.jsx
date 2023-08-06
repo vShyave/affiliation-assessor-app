@@ -44,6 +44,7 @@ export default function ManageUsersList({
   // const[onRowSelected,setOnRowSelected] = useState([])
   const [deleteFlag, setDeleteFlag] = useState(false);
   const [bulkDeleteFlag, setBulkDeleteFlag] = useState(false);
+  const[listArray,setListArray] = useState()
 
   const [bulkUploadUsersModel, setBulkUploadUsersModel] = useState(false);
   const [usersList, setUsersList] = useState();
@@ -118,7 +119,7 @@ export default function ManageUsersList({
       setToast((prevState) => ({
         ...prevState,
         toastOpen: true,
-        toastMsg: "Error occured while uploading!",
+        toastMsg: "Error occured while deactivating!",
         toastType: "error",
       }));
       setTimeout(
@@ -148,7 +149,7 @@ export default function ManageUsersList({
       setToast((prevState) => ({
         ...prevState,
         toastOpen: true,
-        toastMsg: "Error occured while uploading!",
+        toastMsg: "Error occured while activating!",
         toastType: "error",
       }));
       setTimeout(
@@ -375,7 +376,7 @@ export default function ManageUsersList({
       setToast((prevState) => ({
         ...prevState,
         toastOpen: true,
-        toastMsg: "Error occured while uploading!",
+        toastMsg: "Error occured while deleting the user!",
         toastType: "error",
       }));
       setTimeout(
@@ -409,6 +410,7 @@ export default function ManageUsersList({
       checkboxArr.push(checkboxObj);
     });
     selectedRows = checkboxArr;
+    setListArray(selectedRows.length)
   };
 
   const handleBulkDelete = async (bulkEmail) => {
@@ -475,7 +477,7 @@ export default function ManageUsersList({
       setToast((prevState) => ({
         ...prevState,
         toastOpen: true,
-        toastMsg: "Error occured while uploading!",
+        toastMsg: "Error occured while deleting!",
         toastType: "error",
       }));
       setTimeout(
@@ -508,16 +510,15 @@ export default function ManageUsersList({
               <div className="flex justify-end">
                 <span className="flex gap-4">
                   <Button moreClass="text-white" text="Make inactive"></Button>
-                  {console.log(selectedRows)}
                   <Button
                     // moreClass="text-white"
                     otherProps={{
-                      disabled: !selectedRows.length ?  true : false,
+                      disabled: (listArray==0) ?  true : false,
                     }}
                     moreClass={`${
-                      !selectedRows.length
+                      (listArray==0)
                         ? "cursor-not-allowed border border-gray-500 bg-white text-gray-500 px-8 h-[44px]"
-                        : "px-8 text-white bg-blue-900"
+                        : "px-8 text-white"
                     }`}
                     onClick={() => selectedRows.length ? setDeleteBulkUsersModel(true): setDeleteBulkUsersModel(false)}
                     text="Delete user"
