@@ -102,8 +102,8 @@ export default function NotificationsDetailedView(props) {
       </div>
 
       <div className={`container m-auto min-h-[calc(100vh-148px)] px-3 py-12`}>
-        <div className="flex flex-row gap-4">
-          <div className="flex flex-col w-[24%] border bg-white rounded-md">
+        <div className="flex flex-row gap-5">
+          <div className="flex flex-col w-[24%] border bg-white rounded-md shadow-md">
             <div className="flex flex-col">
               <div className="flex flex-row p-4 border-b-[2px]">
                 <div className="flex flex-grow text-base font-medium text-gray-900">
