@@ -12,7 +12,7 @@ export const getCookie = (cname) => {
   try {
     let cookie = Cookies.get(cname);
     if (cookie) return JSON.parse(cookie);
-    console.log('cookievalue', cookie)
+    // console.log('cookievalue', cookie)
   } catch (error) {
     return false;
   }
@@ -29,9 +29,7 @@ export const removeCookie = (cname) => {
 
 export const getInitials = (name) => {
   if(!name)return(
-    <>
-    
-    </>
+    <></>
   );
   const names = name.split(" ");
 

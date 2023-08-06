@@ -1,8 +1,7 @@
-import React, { useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { BiArrowBack } from "react-icons/bi";
 import { FaAngleRight } from "react-icons/fa";
-
 
 import ADMIN_ROUTE_MAP from "../../routes/adminRouteMap";
 
@@ -16,77 +15,62 @@ import {
   IconButton,
   Typography,
 } from "@material-tailwind/react";
+import { getCookie, readableDate } from "../../utils";
+import { getNotifications } from "../../api";
+import { ContextAPI } from "../../utils/ContextAPI";
 
-export default function NotificationsDetailedView({ notification }) {
-  const [selectedUser, setSelectedUser] = useState([]);
+export default function NotificationsDetailedView(props) {
+  const navigation = useNavigate();
+  const [selectedNotification, setselectedNotification] = useState([]);
+  const [notificationList, setNotifcationList] = useState([]);
+  const {setSpinner} = useContext(ContextAPI)
 
   const navigate = useNavigate();
 
   const goBack = () => {
-      navigate(-1);
+    navigate(-1)
   };
 
-  //   const [toast, setToast] = useState({
-  //     toastOpen: false,
-  //     toastMsg: "",
-  //     toastType: "",
-  //   });
-
-  const DUMMY_DATA = [
-    {
-      roles: ["Admin"],
-      title: "Title One",
-      body: "Creation of user role",
-      date: "16/02/2023",
-      text: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Ab sed voluptatum ut nihil voluptate, praesentium veritatis consequatur, exercitationem molestias voluptates aperiam aliquam nam! Voluptas eveniet suscipit nihil fugit debitis est!",
-    },
-    {
-      roles: ["Admin", "User"],
-      title: "Title Two",
-      body: "Creation of user role two",
-      date: "16/04/2023",
-      text: "Lorem ipsum dolor sit, amet consectetur adipisicing elit. Magni, commodi perferendis aliquam ipsum sit explicabo impedit ad possimus doloremque doloribus cumque magnam veritatis repudiandae facere architecto. Fuga perferendis quisquam ducimus!",
-    },
-    {
-      roles: ["Application"],
-      title: "Title Three",
-      body: "Creation of user role",
-      date: "16/06/2023",
-      text: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Natus assumenda consequatur ea illo voluptate fuga facere pariatur est mollitia voluptatum iure quas vitae in, rerum, debitis exercitationem dolorem non dolores.",
-    },
-    {
-      roles: ["Admin", "Assessor"],
-      title: "Title Four",
-      body: "Creation of user role fourth",
-      date: "16/05/2023",
-      text: "Lorem ipsum dolor sit, amet consectetur adipisicing elit. Optio quod quasi mollitia quisquam reiciendis autem! Voluptatem odit, quos at obcaecati tempore veritatis excepturi, autem perspiciatis omnis amet doloremque numquam ipsam?",
-    },
-    {
-      roles: ["Admin", "Assessor"],
-      title: "Title Five",
-      body: "Creation of user role fifth",
-      date: "16/05/2023",
-      text: "Lorem ipsum dolor sit, amet consectetur adipisicing elit. Optio quod quasi mollitia quisquam reiciendis autem! Voluptatem odit, quos at obcaecati tempore veritatis excepturi, autem perspiciatis omnis amet doloremque numquam ipsam?",
-    },
-    {
-      roles: ["Admin", "Assessor"],
-      title: "Title Six",
-      body: "Creation of user role fifth",
-      date: "16/05/2023",
-      text: "Lorem ipsum dolor sit, amet consectetur adipisicing elit. Optio quod quasi mollitia quisquam reiciendis autem! Voluptatem odit, quos at obcaecati tempore veritatis excepturi, autem perspiciatis omnis amet doloremque numquam ipsam?",
-    },
-    {
-      roles: ["Admin", "Assessor"],
-      title: "Title Seven",
-      body: "Creation of user role fifth",
-      date: "16/05/2023",
-      text: "Lorem ipsum dolor sit, amet consectetur adipisicing elit. Optio quod quasi mollitia quisquam reiciendis autem! Voluptatem odit, quos at obcaecati tempore veritatis excepturi, autem perspiciatis omnis amet doloremque numquam ipsam?",
-    },
-  ];
-
-  const handleClick = (userDetails) => {
-    setSelectedUser(userDetails);
+  const handleClick = (notification) => {
+    const navigationURL = `${ADMIN_ROUTE_MAP.adminModule.notifications.home}/${notification.id}`;
+    navigation(navigationURL);
+    setselectedNotification(notification);
   };
+
+  const getAllNotifications = async () => {
+    const postData = {
+      user_id: getCookie("regulator")[0]["user_id"],
+    };
+    try {
+      setSpinner(true)
+      const res = await getNotifications(postData);
+      console.log(res);
+      const notifList = res.data.notifications.map((item) => ({
+        roles: [item?.user_type],
+        title: item?.title,
+        body: item?.body,
+        date: readableDate(item?.date),
+        text: item?.body,
+        subText: item?.body.substr(0, 20) + "...",
+        read_status: item?.read_status,
+        id: item?.id,
+      }));
+      setNotifcationList(notifList);
+      if (!Object.keys(selectedNotification).length) {
+        setselectedNotification(notifList[0]);
+        const navigationURL = `${ADMIN_ROUTE_MAP.adminModule.notifications.home}/${notifList[0].id}`;
+        navigation(navigationURL);
+      }
+    } catch (error) {
+      console.log(error);
+    }finally{
+      setSpinner(false)
+    }
+  };
+
+  useEffect(() => {
+    getAllNotifications();
+  }, []);
 
   return (
     <>
@@ -99,8 +83,11 @@ export default function NotificationsDetailedView({ notification }) {
       <div className="h-[48px] bg-white flex justify-start drop-shadow-sm">
         <div className="container mx-auto flex px-3">
           <div className="flex flex-row font-bold gap-2 items-center">
-          <BiArrowBack onClick={goBack} className="text-blue-400 text-[16px]" />
-            <Link >
+            <BiArrowBack
+              onClick={goBack}
+              className="text-blue-400 text-[16px]"
+            />
+            <Link>
               <span onClick={goBack} className="text-blue-400 cursor-pointer">
                 Back
               </span>
@@ -126,49 +113,69 @@ export default function NotificationsDetailedView({ notification }) {
                 </div>
               </div>
               <hr />
-
-              {DUMMY_DATA.map((item, index) => (
-                <>
-                  <MenuItem
-                    key={index}
-                    className="flex flex-row justify-between gap-2 py-2 pl-2 hover:bg-[#FFE5B4]"
-                    onClick={() => handleClick(item)}
-                  >
-                    <div className="flex flex-col gap-2">
-                      <div className="w-fit bg-[#f6a192] text-white border-[#009A2B] py-1 px-3 text-[12px] rounded-[24px] capitalize font-semibold">
-                        {"" + item.roles}
-                      </div>
-                      <div className="flex flex-col gap-1">
-                        <Typography
-                          variant="small"
-                          color="gray"
-                          className="font-normal"
-                        >
-                          <div className="font-medium text-gray-900">
-                            {item.title}
-                          </div>
-                          <p>{item.body}</p>
-                        </Typography>
-                      </div>
-                    </div>
-                    <Typography
-                      variant="small"
-                      className="flex items-center gap-1 text-xs text-gray-900"
+              {notificationList.length &&
+                notificationList.map((item, index) => (
+                  <div key={item.id + "_" + index}>
+                    <MenuItem
+                      key={index}
+                      className="flex flex-row justify-between gap-2 py-2 pl-2 hover:bg-[#FFE5B4]"
+                      onClick={() => handleClick(item)}
                     >
-                      {item.date}
-                    </Typography>
-                  </MenuItem>
-                  <hr />
-                </>
-              ))}
+                      <div className="flex flex-col gap-2">
+                        <div className="w-fit bg-[#f6a192] text-white border-[#009A2B] py-1 px-3 text-[12px] rounded-[24px] capitalize font-semibold">
+                          {"" + item.roles}
+                        </div>
+                        <div className="flex flex-col gap-1">
+                          <Typography
+                            variant="small"
+                            color="gray"
+                            className="font-normal"
+                          >
+                            <div
+                              className={`${
+                                item.read_status === "Read"
+                                  ? "font-medium"
+                                  : "font-bold"
+                              } text-gray-900`}
+                            >
+                              {item.title}
+                            </div>
+                            <div
+                              className={`${
+                                item.read_status === "Read"
+                                  ? "font-medium"
+                                  : "font-bold"
+                              }`}
+                            >
+                              {item.subText}
+                            </div>
+                          </Typography>
+                        </div>
+                      </div>
+                      <Typography
+                        variant="small"
+                        className="flex items-center gap-1 text-xs text-gray-900"
+                      >
+                        <div
+                          className={`${
+                            item.read_status === "Read"
+                              ? "font-medium"
+                              : "font-bold"
+                          }`}
+                        >
+                          {item.date}
+                        </div>
+                      </Typography>
+                    </MenuItem>
+                    <hr />
+                  </div>
+                ))}
             </div>
           </div>
           <div>
-            {/* <DetailedNotification user={selectedUser} /> */}
-            {selectedUser ? (
-              <DetailedNotification user={selectedUser} />
-            ) : (
-              <DetailedNotification user={notification} />
+            {/* <DetailedNotification user={selectedNotification} /> */}
+            {selectedNotification && (
+              <DetailedNotification notification={selectedNotification} />
             )}
           </div>
         </div>

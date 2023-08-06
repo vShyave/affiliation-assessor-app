@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import ADMIN_ROUTE_MAP from "../routes/adminRouteMap";
 import { userService } from "../api/userService";
@@ -8,7 +8,8 @@ import { useForm } from "react-hook-form";
 import { setCookie, getCookie, removeCookie } from "../utils/common";
 import { forkJoin, lastValueFrom, from } from "rxjs";
 import { mergeMap } from "rxjs/operators";
-import Toast from "../components/Toast";
+import { ContextAPI } from "../utils/ContextAPI";
+
 const AdminLogin = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [enableOtp, setEnableOtp] = useState(false);
@@ -16,17 +17,14 @@ const AdminLogin = () => {
   const [emailId, setEmailId] = useState(null);
   const [verifyEnteredOtp, setVerifyEnteredOtp] = useState(true);
   const navigate = useNavigate();
+  const {setSpinner,setToast,toast} = useContext(ContextAPI)
 
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm();
-  const [toast, setToast] = useState({
-    toastOpen: false,
-    toastMsg: "",
-    toastType: "",
-  });
+
   useEffect(() => {
     // Check if user is already logged in (e.g., using your authentication logic)
     const checkLoggedInStatus = () => {
@@ -85,21 +83,12 @@ const AdminLogin = () => {
         toastMsg: "User not registered.",
         toastType: "error",
       }));
-      setTimeout(
-        () =>
-          setToast((prevState) => ({
-            ...prevState,
-            toastOpen: false,
-            toastMsg: "",
-            toastType: "",
-          })),
-        3000
-      );
     }
   };
 
   const verifyOtp = async (data) => {
     try {
+      setSpinner(true)
       const loginDetails = {
         email: data.email,
         otp: Number(data.otp),
@@ -142,16 +131,6 @@ const AdminLogin = () => {
           toastMsg: "Invalid user.",
           toastType: "error",
         }));
-        setTimeout(
-          () =>
-            setToast((prevState) => ({
-              ...prevState,
-              toastOpen: false,
-              toastMsg: "",
-              toastType: "",
-            })),
-          3000
-        );
       }
     } catch (error) {
       console.log(
@@ -160,15 +139,14 @@ const AdminLogin = () => {
       );
       removeCookie("regulator");
       removeCookie("userData");
+    }finally{
+      setSpinner(false)
     }
   };
 
   if (!isLoggedIn) {
     return (
       <>
-        {toast.toastOpen && (
-          <Toast toastMsg={toast.toastMsg} toastType={toast.toastType} />
-        )}
         <Card moreClass="shadow-md w-screen sm:px-24 sm:w-[480px] md:w-[600px] py-16">
           <div className="flex flex-col">
             <h1 className="text-2xl font-medium text-center mb-8">Login</h1>
@@ -197,14 +175,14 @@ const AdminLogin = () => {
                       noValidate
                     />
                     {errors?.email?.type === "required" && (
-                      <p className="text-red-500 mt-2 text-sm">
+                      <div className="text-red-500 mt-2 text-sm">
                         This field is required
-                      </p>
+                      </div>
                     )}
                     {errors?.email?.type === "pattern" && (
-                      <p className="text-red-500 mt-2 text-sm">
+                      <div className="text-red-500 mt-2 text-sm">
                         This is not a valid email format
-                      </p>
+                      </div>
                     )}
                   </div>
                   {/* <div className="flex flex-col gap-2">
@@ -226,14 +204,14 @@ const AdminLogin = () => {
                       noValidate
                     />
                     {errors?.phone?.type === "required" && (
-                      <p className="text-red-500 mt-2 text-sm">
+                      <div className="text-red-500 mt-2 text-sm">
                         This field is required
-                      </p>
+                      </div>
                     )}
                     {errors?.phone?.type === "pattern" && (
-                      <p className="text-red-500 mt-2 text-sm">
+                      <div className="text-red-500 mt-2 text-sm">
                         This is not a valid mobile number format
-                      </p>
+                      </div>
                     )}
                   </div> */}
                   <Button
@@ -241,7 +219,7 @@ const AdminLogin = () => {
                     text="Get Otp"
                     type="submit"
                   ></Button>
-                  <p className="flex justify-center my-6">
+                  <div className="flex justify-center my-6">
                     <span className="text-gray-400">Create an account, </span>
                     &nbsp;
                     <Link
@@ -250,7 +228,7 @@ const AdminLogin = () => {
                     >
                       Sign up
                     </Link>
-                  </p>
+                  </div>
                 </form>
               </>
             )}
@@ -277,24 +255,24 @@ const AdminLogin = () => {
                       noValidate
                     />
                     {errors?.otp?.type === "required" && (
-                      <p className="text-red-500 mt-2 text-sm">
+                      <div className="text-red-500 mt-2 text-sm">
                         This field is required
-                      </p>
+                      </div>
                     )}
                     {errors?.otp?.type === "pattern" && (
-                      <p className="text-red-500 mt-2 text-sm">
+                      <div className="text-red-500 mt-2 text-sm">
                         Please enter 6 digit otp
-                      </p>
+                      </div>
                     )}
                     {verifyEnteredOtp == false && (
-                      <p className="text-red-500 mt-2 text-sm">
+                      <div className="text-red-500 mt-2 text-sm">
                         Please enter the correct OTP
-                      </p>
+                      </div>
                     )}
                     {toast.toastOpen && (
-                      <p className="text-red-500 mt-2 text-sm">
+                      <div className="text-red-500 mt-2 text-sm">
                         You are not a registered admin.
-                      </p>
+                      </div>
                     )}
                   </div>
                   <Button
@@ -302,7 +280,7 @@ const AdminLogin = () => {
                     text="Sign in"
                     type="submit"
                   ></Button>
-                  <p className="flex justify-center my-6">
+                  <div className="flex justify-center my-6">
                     <span
                       className="text-primary-700 cursor-pointer"
                       onClick={() => {
@@ -311,7 +289,7 @@ const AdminLogin = () => {
                     >
                       Go back, re-enter the email id
                     </span>
-                  </p>
+                  </div>
                 </form>
               </>
             )}

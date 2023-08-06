@@ -59,7 +59,9 @@ const MyApplications = () => {
 
   const handleViewApplicationHandler = (formObj) => {
     navigate(
-      `${APPLICANT_ROUTE_MAP.dashboardModule.createForm}/${formObj.form_name}/${formObj.form_id}`
+      `${APPLICANT_ROUTE_MAP.dashboardModule.createForm}/${
+        formObj?.form_name
+      }/${formObj?.form_id}/${formObj.form_status?.toLowerCase()}`
     );
   };
 

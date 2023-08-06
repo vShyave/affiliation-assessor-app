@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 
 import FilteringTable from "../../components/table/FilteringTable";
 
@@ -14,9 +14,11 @@ import {
 } from "../../api";
 import { userService } from "../../api/userService";
 import { removeCookie, setCookie } from "../../utils/common";
+import { ContextAPI } from "../../utils/ContextAPI";
 
 function BulkUploadUsersModal({ closeBulkUploadUsersModal }) {
   const [file, setFile] = useState();
+  const {setSpinner} = useContext(ContextAPI)
 
   const [tableUserList, setTableUserList] = useState([]);
 
@@ -90,7 +92,7 @@ function BulkUploadUsersModal({ closeBulkUploadUsersModal }) {
       accessor: "code",
 
       // Cell: (props) => {
-      //   return <p>{isDataValid(props.value)}</p>;
+      //   return <div>{isDataValid(props.value)}</div>;
       // },
     },
     {
@@ -99,7 +101,7 @@ function BulkUploadUsersModal({ closeBulkUploadUsersModal }) {
       accessor: "email",
 
       Cell: (props) => {
-        return <p>{isEmailValid(props.value)}</p>;
+        return <div>{isEmailValid(props.value)}</div>;
       },
     },
     {
@@ -108,7 +110,7 @@ function BulkUploadUsersModal({ closeBulkUploadUsersModal }) {
       accessor: "full_name",
 
       Cell: (props) => {
-        return <p>{isDataValid(props.value)}</p>;
+        return <div>{isDataValid(props.value)}</div>;
       },
     },
 
@@ -118,7 +120,7 @@ function BulkUploadUsersModal({ closeBulkUploadUsersModal }) {
       accessor: "fname",
 
       Cell: (props) => {
-        return <p>{isDataValid(props.value)}</p>;
+        return <div>{isDataValid(props.value)}</div>;
       },
     },
 
@@ -128,7 +130,7 @@ function BulkUploadUsersModal({ closeBulkUploadUsersModal }) {
       accessor: "lname",
 
       Cell: (props) => {
-        return <p>{isDataValid(props.value)}</p>;
+        return <div>{isDataValid(props.value)}</div>;
       },
     },
     {
@@ -137,7 +139,7 @@ function BulkUploadUsersModal({ closeBulkUploadUsersModal }) {
       accessor: "mobile_number",
 
       Cell: (props) => {
-        return <p>{ismobileNumberValid(props.value)}</p>;
+        return <div>{ismobileNumberValid(props.value)}</div>;
       },
     },
     {
@@ -146,7 +148,7 @@ function BulkUploadUsersModal({ closeBulkUploadUsersModal }) {
       accessor: "role",
 
       Cell: (props) => {
-        return <p>{isDataValid(props.value)}</p>;
+        return <div>{isDataValid(props.value)}</div>;
       },
     },
   ];
@@ -297,6 +299,7 @@ function BulkUploadUsersModal({ closeBulkUploadUsersModal }) {
 
     console.log("Keycloak - ", postDataKeyCloak);
     try {
+      setSpinner(true)
       let accessTokenObj = {
         grant_type: "client_credentials",
         client_id: "admin-api",
@@ -352,6 +355,8 @@ function BulkUploadUsersModal({ closeBulkUploadUsersModal }) {
       removeCookie("access_token");
     } catch (error) {
       console.log("error - ", error);
+    }finally{
+      setSpinner(false)
     }
   };
 
@@ -370,9 +375,9 @@ function BulkUploadUsersModal({ closeBulkUploadUsersModal }) {
 
               <div className="flex flex-row m-auto">
                 {tableDataReady && (
-                    <p className="text-sm">
+                    <div className="text-sm">
                       <small>Show all users</small>
-                    </p>
+                    </div>
                   ) && (
                     <Switch
                       id="show-with-errors"
@@ -383,7 +388,11 @@ function BulkUploadUsersModal({ closeBulkUploadUsersModal }) {
               </div>
 
               <div className=" flex-row text-blue-500">
-                <Link to="/download-template">
+                <Link
+                  to="/files/Template_bulk_user_create.csv"
+                  target="_blank"
+                  download
+                >
                   <small>Download Template</small>
                 </Link>
               </div>

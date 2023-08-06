@@ -34,6 +34,7 @@ export const setToLocalForage = async (key, value) => {
     const storedData = await getSpecificDataFromForage(key);
     if (storedData) {
         const newData = { ...storedData, ...value };
+        
         await localforage.setItem(key, newData);
     } else {
         await localforage.setItem(key, value);
@@ -45,12 +46,14 @@ export const updateFormData = async (fileName, userId) => {
         let data = await getFromLocalForage(
             `${userId}_${fileName}_${new Date().toISOString().split("T")[0]}`
         );
-        console.log("storage data - ", data);
+        
         let prefilledForm = await getSubmissionXML(
             fileName,
             data?.formData,
             data?.imageUrls
         );
         return prefilledForm;
+        
     } catch (err) {}
 };
+

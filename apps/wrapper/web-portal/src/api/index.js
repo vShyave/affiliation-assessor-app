@@ -38,6 +38,7 @@ export const getAcceptApplicantNoc = async (postData) => {
   );
   return res;
 };
+
 export const getAcceptApplicantCertificate = async (postData) => {
   const res = await adminCustomPost.put(
     API_URL.groundAnalysis.acceptApplicantCertificate,
@@ -54,9 +55,9 @@ export const getRejectApplicant = async (postData) => {
   return res;
 };
 
-export const getOnGroundViewStatus = async (postData) => {
+export const getStatus = async (postData) => {
   const res = await adminCustomPost.post(
-    API_URL.groundAnalysis.ViewStatus.getViewStatus,
+    API_URL.viewStatus.getViewStatus,
     postData
   );
   return res.data;
@@ -133,6 +134,7 @@ export const viewForm = async (postData) => {
   );
   return res;
 };
+
 export const duplicateForms = async (postData) => {
   const res = await adminCustomPost.post(
     API_URL.manageForms.duplicateForm,
@@ -154,6 +156,7 @@ export const filterForms = async (postData) => {
   );
   return res;
 };
+
 export const createCourse = async (postData) => {
   const res = await adminCustomPost.post(
     API_URL.manageForms.createCourses,
@@ -161,6 +164,15 @@ export const createCourse = async (postData) => {
   );
   return res;
 };
+
+export const updateForms = async (postData) => {
+  const res = await adminCustomPost.post(
+    API_URL.manageForms.updateForms,
+    postData
+  );
+  return res;
+};
+
 // Manage users API's...
 export const getAllUsers = async (postData) => {
   const res = await adminCustomPost.post(
@@ -223,7 +235,7 @@ export const editUserHasura = async (postData) => {
   return res;
 };
 
-//Desktop Analysis APIs...
+// Desktop Analysis APIs...
 export const getScheduleAssessment = async (postData) => {
   const res = await adminCustomPost.post(
     API_URL.desktopAnalysis.scheduleAssessment,
@@ -256,7 +268,7 @@ export const filterDesktopAnalysis = async (postData) => {
   return res;
 };
 
-//Schedule Management APIs...
+// Schedule Management APIs...
 export const getAssessmentSchedule = async (postData) => {
   const res = await adminCustomPost.post(
     API_URL.scheduleManagement.getAssessmentSchedule,
@@ -282,9 +294,12 @@ export const addAssessmentSchedule = async (postData) => {
 };
 
 export const deleteSchedule = async (postData) => {
-  return await adminCustomPost.delete(API_URL.scheduleManagement.deleteSchedule, {
-    data: postData,
-  });
+  return await adminCustomPost.delete(
+    API_URL.scheduleManagement.deleteSchedule,
+    {
+      data: postData,
+    }
+  );
 };
 
 // Bulk create users keycloak
@@ -302,7 +317,7 @@ export const createBulkUsersKeyCloak = async (postData) => {
   return res;
 };
 
-//Edit user keycloak
+// Edit user keycloak
 export const editUserKeycloak = async (postData) => {
   const res = await axios.post(
     `${BASE_URL_KEYCLOAK}${API_URL.SIGNUP.EDIT_USER}`,
@@ -317,7 +332,7 @@ export const editUserKeycloak = async (postData) => {
   return res;
 };
 
-//Bulk create users Hasura
+// Bulk create users Hasura
 export const createBulkUserHasura = async (postData) => {
   const res = await adminCustomPost.post(
     API_URL.manageUsers.addUsers,
@@ -325,6 +340,7 @@ export const createBulkUserHasura = async (postData) => {
   );
   return res;
 };
+
 // delete users
 // export const deleteUsers = async (postData) => {
 //   const res = await adminCustomPost.post(
@@ -377,14 +393,52 @@ export const searchAssessments = async (postData) => {
 
 export const registerEvent = async (postData) => {
   const events = {
-    events: []
+    events: [],
   };
   events.events.push(postData);
-  console.log("events - ", events);
+  // console.log("events - ", events);
 
+  const res = await adminCustomPost.post(API_URL.common.registerEvent, events);
+  return res;
+}
+
+// Notifications APIs
+export const insertNotifications = async (postData) => {
   const res = await adminCustomPost.post(
-    API_URL.common.registerEvent,
-    events
+    API_URL.notifications.insertNotifications,
+    postData
+  );
+  return res;
+}
+
+export const getNotifications = async (postData) => {
+  const res = await adminCustomPost.post(
+    API_URL.notifications.getNotifications,
+    postData
+  );
+  return res;
+}
+
+export const readNotification = async (postData) => {
+  const res = await adminCustomPost.put(
+    API_URL.notifications.readNotification,
+    postData
+  );
+  return res;
+}
+
+export const viewNotification = async (postData) => {
+  const res = await adminCustomPost.post(
+    API_URL.notifications.viewNotification,
+    postData
+  );
+  return res;
+}
+
+export const updateFormStatus = async (postData) => {
+  const res = await adminCustomPost.put (
+    API_URL.common.updateForm,
+    postData
   );
   return res;
 }

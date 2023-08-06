@@ -14,7 +14,7 @@ APPLICANT_ROUTE_MAP.dashboardModule = {
     all_applications: `${APPLICANT_ROUTE_MAP.dashboard}all_applications`,
     congratulations: `${APPLICANT_ROUTE_MAP.dashboard}congratulations`,
     profile: `${APPLICANT_ROUTE_MAP.dashboard}profile`,
-    createForm: `${APPLICANT_ROUTE_MAP.dashboard}create-form`
+    createForm: `${APPLICANT_ROUTE_MAP.dashboard}view-form`,
 };
 
 APPLICANT_ROUTE_MAP.root_star =  "/*";

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 
 // import { MdFileUpload, MdEdit, MdDelete } from "react-icons/md";
@@ -8,6 +8,7 @@ import FilteringTable from "../../components/table/FilteringTable";
 import Card from "../../components/Card";
 import { Button } from "../../components";
 import Nav from "../../components/Nav";
+import { ContextAPI } from "../../utils/ContextAPI";
 
 import {
   filterAssessments,
@@ -26,10 +27,10 @@ import {
   MenuList,
   MenuItem,
 } from "@material-tailwind/react";
-import Toast from "../../components/Toast";
 
 const ScheduleManagementList = () => {
   const navigation = useNavigate();
+  const { setSpinner,setToast,toast } = useContext(ContextAPI);
   var resUserData = [];
   const [assessmentScheduleList, setAssessmentScheduleList] = useState();
   const [scheduleTableList, setScheduleTableList] = useState([]);
@@ -43,11 +44,6 @@ const ScheduleManagementList = () => {
   const [bulkUploadScheduleModal, setBulkUploadSchduleModal] = useState(false);
 
   const [showAlert, setShowAlert] = useState(false);
-  const [toast, setToast] = useState({
-    toastOpen: false,
-    toastMsg: "",
-    toastType: "",
-  });
 
   const [state, setState] = useState({
     menu_selected: "create_new",
@@ -166,7 +162,7 @@ const ScheduleManagementList = () => {
                   <RiDeleteBin6Line />
                 </div>
                 <div className="text-semibold">
-                  <span >Delete</span>
+                  <span>Delete</span>
                 </div>
               </div>{" "}
             </MenuItem>
@@ -183,6 +179,7 @@ const ScheduleManagementList = () => {
     const postData = { id: formId[0]?.id };
 
     try {
+      setSpinner(true);
       const response = await deleteSchedule(postData);
       if (response.status === 200) {
         setToast((prevState) => ({
@@ -191,14 +188,6 @@ const ScheduleManagementList = () => {
           toastMsg: "Schedule successfully Deleted!",
           toastType: "success",
         }));
-        setTimeout(() => {
-          setToast((prevState) => ({
-            ...prevState,
-            toastOpen: false,
-            toastMsg: "",
-            toastType: "",
-          }));
-        }, 3000);
         fetchAllAssessmentSchedule();
       }
       // Notification.sendemail({"body":})
@@ -210,16 +199,8 @@ const ScheduleManagementList = () => {
         toastMsg: "Error occured while deleting form!",
         toastType: "error",
       }));
-      setTimeout(
-        () =>
-          setToast((prevState) => ({
-            ...prevState,
-            toastOpen: false,
-            toastMsg: "",
-            toastType: "",
-          })),
-        3000
-      );
+    } finally {
+      setSpinner(false);
     }
     setShowAlert(false);
   };
@@ -231,6 +212,7 @@ const ScheduleManagementList = () => {
       ...filters,
     };
     try {
+      setSpinner(true);
       const res = await filterAssessments(postData);
       setAssessmentScheduleList(res?.data?.assessment_schedule);
       const data = res?.data?.assessment_schedule;
@@ -241,6 +223,8 @@ const ScheduleManagementList = () => {
       setScheduleTableList(data.map(setTableData));
     } catch (error) {
       console.log("error - ", error);
+    } finally {
+      setSpinner(false);
     }
   };
 
@@ -251,6 +235,7 @@ const ScheduleManagementList = () => {
       ...searchData,
     };
     try {
+      setSpinner(true)
       const res = await searchAssessments(postData);
       setAssessmentScheduleList(res?.data?.assessment_schedule);
       const data = res?.data?.assessment_schedule;
@@ -261,6 +246,8 @@ const ScheduleManagementList = () => {
       setScheduleTableList(data.map(setTableData));
     } catch (error) {
       console.log("error - ", error);
+    }finally{
+      setSpinner(false)
     }
   };
 
@@ -270,6 +257,7 @@ const ScheduleManagementList = () => {
       limit: paginationInfo.limit,
     };
     try {
+      setSpinner(true);
       const res = await getAssessmentSchedule(pagination);
       setAssessmentScheduleList(res?.data?.assessment_schedule);
       const data = res?.data?.assessment_schedule;
@@ -280,6 +268,8 @@ const ScheduleManagementList = () => {
       setScheduleTableList(data.map(setTableData));
     } catch (error) {
       console.log("error - ", error);
+    } finally {
+      setSpinner(false);
     }
   };
 
@@ -291,10 +281,6 @@ const ScheduleManagementList = () => {
 
   return (
     <>
-      {toast.toastOpen && (
-        <Toast toastMsg={toast.toastMsg} toastType={toast.toastType} />
-      )}
-
       {showAlert && (
         <AlertModal showAlert={setShowAlert} {...state.alertContent} />
       )}
@@ -308,15 +294,7 @@ const ScheduleManagementList = () => {
               </div>
               <div className="flex flex-grow justify-end">
                 <span className="flex gap-4">
-                  <button className="flex flex-wrap items-center justify-center gap-2 border border-gray-500 text-gray-500 bg-white w-[200px] h-[45px] text-md font-medium rounded-[4px]">
-                    Download CSV template
-                  </button>
                   <Button
-                    // onClick={() =>
-                    //   navigation(
-                    //     ADMIN_ROUTE_MAP.adminModule.scheduleManagement.uploadForm
-                    //   )
-                    // }
                     onClick={() => setBulkUploadSchduleModal(true)}
                     moreClass="text-white"
                     text="Upload CSV for scheduling"
@@ -332,9 +310,9 @@ const ScheduleManagementList = () => {
                 >
                   <div className="flex flex-col place-items-start justify-center gap-2">
                     <h3 className="text-xl font-semibold">{obj.value}</h3>
-                    <p className="text-sm font-medium text-gray-700">
+                    <div className="text-sm font-medium text-gray-700">
                       {obj.text}
-                    </p>
+                    </div>
                   </div>
                 </Card>
               ))}

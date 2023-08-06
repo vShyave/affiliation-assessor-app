@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 
 import FilteringTable from "../../components/table/FilteringTable";
 
@@ -8,29 +8,29 @@ import { Link } from "react-router-dom";
 
 import { Button } from "../../components";
 import { addAssessmentSchedule } from "../../api";
-import Toast from "../../components/Toast";
+import { ContextAPI } from "../../utils/ContextAPI";
 
-function BulkUploadUsersModal({ setBulkUploadSchduleModal }) {
+function BulkUploadScheduleModal({ setBulkUploadSchduleModal }) {
   const [file, setFile] = useState();
+  const { setSpinner,setToast } = useContext(ContextAPI);
 
-  const [tableUserList, setTableUserList] = useState([]);
+  const [tableAssessmentList, setTableAssessmentList] = useState([]);
 
   const hiddenFileInput = React.useRef(null);
 
   const [tableDataReady, setTableDataReady] = useState(false);
 
-  const [invalidTableUserList, setInvalidTableUserList] = useState([]);
+  const [invalidTableAssessmentList, setInvalidTableAssessmentList] = useState(
+    []
+  );
 
-  const [invalidUserDataFlag, setInvalidUserDataFlag] = useState(false);
+  const [invalidAssessmentDataFlag, setInvalidAssessmentDataFlag] =
+    useState(false);
 
-  const [allUsersList, setAllUsersList] = useState([]);
+  const [allAssessmentsList, setAllAssessmentsList] = useState([]);
 
-  const [selectedUserList, setSelectedUserList] = useState(false);
-  const [toast, setToast] = useState({
-    toastOpen: false,
-    toastMsg: "",
-    toastType: "",
-  });
+  const [selectedAssessmentList, setSelectedAssessmentList] = useState(false);
+  
 
   let selectedRows = [];
 
@@ -92,7 +92,7 @@ function BulkUploadUsersModal({ setBulkUploadSchduleModal }) {
       accessor: "assessor_code",
 
       Cell: (props) => {
-        return <p>{isDataValid(props.value)}</p>;
+        return <div>{isDataValid(props.value)}</div>;
       },
     },
 
@@ -101,7 +101,7 @@ function BulkUploadUsersModal({ setBulkUploadSchduleModal }) {
       accessor: "date",
 
       Cell: (props) => {
-        return <p>{isDataValid(props.value)}</p>;
+        return <div>{isDataValid(props.value)}</div>;
       },
     },
 
@@ -110,7 +110,7 @@ function BulkUploadUsersModal({ setBulkUploadSchduleModal }) {
       accessor: "institute_id",
 
       Cell: (props) => {
-        return <p>{isDataValid(props.value)}</p>;
+        return <div>{isDataValid(props.value)}</div>;
       },
     },
 
@@ -119,7 +119,7 @@ function BulkUploadUsersModal({ setBulkUploadSchduleModal }) {
       accessor: "assisstant_code",
 
       // Cell: (props) => {
-      //   return <p>{isDataValid(props.value)}</p>;
+      //   return <div>{isDataValid(props.value)}</div>;
       // },
     },
   ];
@@ -163,7 +163,7 @@ function BulkUploadUsersModal({ setBulkUploadSchduleModal }) {
       reader.readAsBinaryString(file);
 
       reader.onload = (e) => {
-        var invalidUserData = [];
+        var invalidAssessmentData = [];
 
         var headers = [];
 
@@ -188,7 +188,7 @@ function BulkUploadUsersModal({ setBulkUploadSchduleModal }) {
             }
           }
 
-          const isValidUserEntry = Object.values(rowData).every(
+          const isValidAssessmentEntry = Object.values(rowData).every(
             (value) => !!value
           );
           console.log(rowData);
@@ -197,16 +197,16 @@ function BulkUploadUsersModal({ setBulkUploadSchduleModal }) {
             if (
               i > 0 &&
               (rowData[key] == null || rowData[key] == "") &&
-              isValidUserEntry &&
+              isValidAssessmentEntry &&
               !Object.keys(rowData).length &&
               key !== "assisstant_code"
             ) {
               rowData["isRowInvalid"] = true;
             }
           }
-          invalidUserData.push(rowData);
+          invalidAssessmentData.push(rowData);
 
-          setInvalidTableUserList(invalidUserData);
+          setInvalidTableAssessmentList(invalidAssessmentData);
         }
       };
     } catch (e) {
@@ -222,7 +222,7 @@ function BulkUploadUsersModal({ setBulkUploadSchduleModal }) {
 
     const csvRows = string.slice(string.indexOf("\n") + 1).split("\n");
 
-    const tableUserList = csvRows.map((i) => {
+    const tableAssessmentList = csvRows.map((i) => {
       const values = i.split(",");
 
       let obj = csvHeader.reduce((object, header, index) => {
@@ -239,19 +239,20 @@ function BulkUploadUsersModal({ setBulkUploadSchduleModal }) {
       return obj;
     });
 
-    setTableUserList(tableUserList);
+    setTableAssessmentList(tableAssessmentList);
 
-    setAllUsersList(tableUserList); // setting the all user list again to use it in on toggle
+    setAllAssessmentsList(tableAssessmentList); // setting the all user list again to use it in on toggle
 
     setTableDataReady(true);
   };
 
   const handleToggleChange = (e) => {
-    setInvalidUserDataFlag(!invalidUserDataFlag);
+    setInvalidAssessmentDataFlag(!invalidAssessmentDataFlag);
   };
 
   const bulkSchedule = async () => {
     try {
+      setSpinner(true);
       const postData = {
         assessment_schedule: selectedRows.map((item) => {
           let tempObj = {
@@ -272,15 +273,7 @@ function BulkUploadUsersModal({ setBulkUploadSchduleModal }) {
         toastMsg: "Assessments Scheduled Successfully!!",
         toastType: "success",
       }));
-      setTimeout(() => {
-        setToast((prevState) => ({
-          ...prevState,
-          toastOpen: false,
-          toastMsg: "",
-          toastType: "",
-        }));
-        setBulkUploadSchduleModal(false);
-      }, 3000);
+      setBulkUploadSchduleModal(false);
     } catch (error) {
       console.log("error - ", error);
       setToast((prevState) => ({
@@ -289,16 +282,8 @@ function BulkUploadUsersModal({ setBulkUploadSchduleModal }) {
         toastMsg: error.response.data.error,
         toastType: "error",
       }));
-      setTimeout(
-        () =>
-          setToast((prevState) => ({
-            ...prevState,
-            toastOpen: false,
-            toastMsg: "",
-            toastType: "",
-          })),
-        3000
-      );
+    } finally {
+      setSpinner(false);
     }
   };
 
@@ -309,31 +294,28 @@ function BulkUploadUsersModal({ setBulkUploadSchduleModal }) {
 
   return (
     <>
-      {toast.toastOpen && (
-        <Toast toastMsg={toast.toastMsg} toastType={toast.toastType} />
-      )}
       <div className="flex flex-col justify-center items-center fixed inset-0 bg-opacity-25 backdrop-blur-sm">
         <div className="flex bg-white rounded-xl shadow-xl border border-gray-400 w-[860px] h-[560px] p-8">
           <div className="flex flex-col justify-between w-full ">
             <div className="flex text-xl font-semibold">
-              <h1>Bulk upload users</h1>
+              <h1>Bulk upload assessments</h1>
 
               <div className="flex flex-row m-auto">
                 {tableDataReady && (
-                    <p className="text-sm">
-                      <small>Show all users</small>
-                    </p>
-                  ) && (
-                    <Switch
-                      id="show-with-errors"
-                      label={<span className="text-sm">Show with errors</span>}
-                      onChange={handleToggleChange}
-                    />
-                  )}
+                  <Switch
+                    id="show-with-errors"
+                    label={<span className="text-sm">Show with errors</span>}
+                    onChange={handleToggleChange}
+                  />
+                )}
               </div>
 
               <div className=" flex-row text-blue-500">
-                <Link to="/download-template">
+                <Link
+                  to="/files/Template_bulk_assessment_schedule.csv"
+                  target="_blank"
+                  download
+                >
                   <small>Download Template</small>
                 </Link>
               </div>
@@ -365,9 +347,9 @@ function BulkUploadUsersModal({ setBulkUploadSchduleModal }) {
                       moreHeight="h-[300px]"
                       pagination={false}
                       dataList={
-                        invalidUserDataFlag
-                          ? invalidTableUserList
-                          : tableUserList
+                        invalidAssessmentDataFlag
+                          ? invalidTableAssessmentList
+                          : tableAssessmentList
                       }
                       columns={COLUMNS}
                       navigateFunc={() => {}}
@@ -410,4 +392,4 @@ function BulkUploadUsersModal({ setBulkUploadSchduleModal }) {
   );
 }
 
-export default BulkUploadUsersModal;
+export default BulkUploadScheduleModal;

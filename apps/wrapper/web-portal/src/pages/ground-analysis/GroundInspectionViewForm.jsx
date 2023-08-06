@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import { useParams, Link } from "react-router-dom";
 import { AiOutlineClose, AiOutlineCheck } from "react-icons/ai";
 import { FaAngleRight } from "react-icons/fa";
@@ -14,9 +14,9 @@ import Sidebar from "../../components/Sidebar";
 import ADMIN_ROUTE_MAP from "../../routes/adminRouteMap";
 import { getFormData } from "../../api";
 import { getPrefillXML } from "./../../api/formApi";
-import Toast from "../../components/Toast";
 import jsPDF from "jspdf";
 import html2canvas from "html2canvas";
+import { ContextAPI } from "../../utils/ContextAPI";
 
 const ENKETO_URL = process.env.REACT_APP_ENKETO_URL;
 
@@ -27,21 +27,17 @@ export default function ApplicationPage({
   closeCertificateModal,
 }) {
   const reportTemplateRef = useRef(null);
-  const[rejectStatus,setRejectStatus]=useState(false)
+  const [rejectStatus, setRejectStatus] = useState(false);
   const [rejectModel, setRejectModel] = useState(false);
   const [openModel, setOpenModel] = useState(false);
   const [openStatusModel, setOpenStatusModel] = useState(false);
   const [openIssueNocModel, setOpenIssueNocModel] = useState(false);
   const [encodedFormURI, setEncodedFormURI] = useState("");
-  let { formName, formId , instituteName, round} = useParams();
-  let [instituteNameModal,setInstituteNameModal] = useState(instituteName)
-  let [selectRound,setSelectRound] = useState(round)
-  console.log(instituteNameModal)
-  const [toast, setToast] = useState({
-    toastOpen: false,
-    toastMsg: "",
-    toastType: "",
-  });
+  let { formName, formId, instituteName, round } = useParams();
+  let [instituteNameModal, setInstituteNameModal] = useState(instituteName);
+  let [selectRound, setSelectRound] = useState(round);
+  console.log(instituteNameModal);
+  const {setSpinner} = useContext(ContextAPI)
 
   const userId = "427d473d-d8ea-4bb3-b317-f230f1c9b2f7";
   const formSpec = {
@@ -77,7 +73,9 @@ export default function ApplicationPage({
 
   const fetchFormData = async () => {
     const postData = { form_id: formId };
-    const res = await getFormData(postData);
+    try{
+      setSpinner(true)
+      const res = await getFormData(postData);
     const formData = res.data.form_submissions[0];
 
     let formURI = await getPrefillXML(
@@ -87,6 +85,12 @@ export default function ApplicationPage({
       formData.imageUrls
     );
     setEncodedFormURI(formURI);
+    }catch(error){
+      console.log(error)
+    }finally{
+      setSpinner(false)
+    }
+    
   };
 
   const handleGeneratePdf = () => {
@@ -123,10 +127,6 @@ export default function ApplicationPage({
 
   return (
     <>
-      {toast.toastOpen && (
-        <Toast toastMsg={toast.toastMsg} toastType={toast.toastType} />
-      )}
-
       {/* Breadcrum */}
       {/* <Breadcrumb data={breadCrumbData} /> */}
 
@@ -158,9 +158,11 @@ export default function ApplicationPage({
               <button
                 onClick={() => setRejectModel(true)}
                 disabled={rejectStatus}
-                className={!rejectStatus
-                ?  "flex flex-wrap items-center justify-center gap-2 border border-gray-500 text-gray-500 bg-white w-[140px] h-[40px] font-medium rounded-[4px]"
-                : "cursor-not-allowed flex flex-wrap items-center justify-center gap-2 border border-gray-500 text-gray-500 bg-white w-[140px] h-[40px] font-medium rounded-[4px]"}
+                className={
+                  !rejectStatus
+                    ? "flex flex-wrap items-center justify-center gap-2 border border-gray-500 text-gray-500 bg-white w-[140px] h-[40px] font-medium rounded-[4px]"
+                    : "cursor-not-allowed flex flex-wrap items-center justify-center gap-2 border border-gray-500 text-gray-500 bg-white w-[140px] h-[40px] font-medium rounded-[4px]"
+                }
               >
                 Reject{" "}
                 <span>
@@ -168,12 +170,13 @@ export default function ApplicationPage({
                 </span>{" "}
               </button>
               <button
-                onClick={() => setOpenIssueNocModel(true)
-                }
+                onClick={() => setOpenIssueNocModel(true)}
                 disabled={rejectStatus}
-                className={!rejectStatus
-                  ? "flex flex-wrap items-center justify-center gap-2 border border-gray-500 text-gray-500 bg-white w-[140px] h-[40px] font-medium rounded-[4px]"
-                  : "cursor-not-allowed flex flex-wrap items-center justify-center gap-2 border border-gray-500 text-gray-500 bg-white w-[140px] h-[40px] font-medium rounded-[4px]"}
+                className={
+                  !rejectStatus
+                    ? "flex flex-wrap items-center justify-center gap-2 border border-gray-500 text-gray-500 bg-white w-[140px] h-[40px] font-medium rounded-[4px]"
+                    : "cursor-not-allowed flex flex-wrap items-center justify-center gap-2 border border-gray-500 text-gray-500 bg-white w-[140px] h-[40px] font-medium rounded-[4px]"
+                }
                 // className="flex flex-wrap items-center justify-center gap-2 border border-gray-500 text-gray-500 bg-white w-[140px] h-[40px] font-medium rounded-[4px]"
               >
                 Approve{" "}
@@ -229,13 +232,22 @@ export default function ApplicationPage({
 
       {/* {openModel && <NocModal closeModal={setOpenModel}  setOpenIssueNocModel={setOpenIssueNocModel} setToast={setToast} />} */}
       {rejectModel && (
-        <RejectNocModal closeRejectModal={setRejectModel} setRejectStatus={setRejectStatus} setToast={setToast} />
+        <RejectNocModal
+          closeRejectModal={setRejectModel}
+          setRejectStatus={setRejectStatus}
+        />
       )}
       {/* {openCertificateModel && <IssueCertificateModal closeCertificateModal={setOpenCertificateModel}/>} */}
       {openStatusModel && (
-        <StatusLogModal closeStatusModal={setOpenStatusModel} />
+        <StatusLogModal closeStatusModal={setOpenStatusModel} formId={formId} />
       )}
-      {openIssueNocModel && <IssueNocModal selectRound={round} selectInstituteName={instituteName} setOpenIssueNocModel={setOpenIssueNocModel} setToast={setToast} />}
+      {openIssueNocModel && (
+        <IssueNocModal
+          selectRound={round}
+          selectInstituteName={instituteName}
+          setOpenIssueNocModel={setOpenIssueNocModel}
+        />
+      )}
     </>
   );
 }
