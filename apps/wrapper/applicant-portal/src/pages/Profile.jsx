@@ -30,13 +30,12 @@ export default function Profile() {
   //   handleSubmit,
   //   formState: { errors },
   // } = useForm();
-  
+
   const handleSubmit = (e) => {
     e.preventDefault();
-    // setFormStage(2);
-    if(!isPreview){
-    handleEditProfile()
-  }
+    if (!isPreview) {
+      handleEditProfile();
+    }
   };
 
   const [formState, setFormState] = useState(1);
@@ -82,7 +81,7 @@ export default function Profile() {
     const instituteEditDetails = {
       institute_id: instituteData[0]?.id,
       institute_name: instituteDetails.instituteName,
-      institute_email: instituteDetails.email,
+      // institute_email: instituteDetails.email,
       institute_course: instituteDetails.course_applied,
       institutePOC_fname: formData?.first_name,
       institutePOC_lname: formData?.last_name,
@@ -93,24 +92,24 @@ export default function Profile() {
     try {
       const response = await profileService.getProfileEdit(
         instituteEditDetails,
-        
+
         setToast((prevState) => ({
           ...prevState,
           toastOpen: true,
           toastMsg: "User successfully edited",
           toastType: "success",
-        })));
-        setTimeout(
-          () =>
-            setToast((prevState) => ({
-              ...prevState,
-              toastOpen: false,
-              toastMsg: "",
-              toastType: "",
-            })),
-          3000
-        )
-      
+        }))
+      );
+      setTimeout(
+        () =>
+          setToast((prevState) => ({
+            ...prevState,
+            toastOpen: false,
+            toastMsg: "",
+            toastType: "",
+          })),
+        3000
+      );
     } catch (error) {
       setToast((prevState) => ({
         ...prevState,
@@ -156,8 +155,7 @@ export default function Profile() {
         // applicant_type: [applicantType],
         course_type: formDetail?.course_applied,
       });
-      console.log("formData", formData.course_type);
-      console.log("formDetail",formDetail)
+      console.log("formDetail", formDetail);
     } catch (error) {
       setToast((prevState) => ({
         ...prevState,
@@ -178,7 +176,6 @@ export default function Profile() {
       console.error("Can not see profile due to some error:", error);
     }
   };
-
 
   return (
     <>
@@ -202,9 +199,7 @@ export default function Profile() {
         <div className="flex flex-col gap-4">
           <h1 className="text-xl font-semibold">My Profile</h1>
 
-          <form
-            
-          >
+          <form>
             {formState === 1 && (
               <div className="flex flex-row justify-between bg-white rounded-[4px] w-full p-8 mx-auto">
                 <div className="w-1/2">
@@ -296,7 +291,7 @@ export default function Profile() {
                       <div className="mt-2">
                         <input
                           defaultValue={formData.email}
-                          disabled={isPreview}
+                          disabled={true}
                           onChange={handleChange}
                           type="email"
                           placeholder="Type here"
@@ -426,6 +421,16 @@ export default function Profile() {
                 </div>
 
                 <div className="flex flex-row justify-end h-1/2 my-auto mb-0 gap-2">
+                  <button
+                    className="bg-gray-50 px-6 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                    onClick={() => {
+                      navigate(
+                        APPLICANT_ROUTE_MAP.dashboardModule.my_applications
+                      );
+                    }}
+                  >
+                    Clear
+                  </button>
                   <Button
                     moreClass="px-6 text-white"
                     text={text}
@@ -433,7 +438,7 @@ export default function Profile() {
                       setText("Save");
                       setIsPreview(false);
                       // {text==="Save" && navigate(APPLICANT_ROUTE_MAP.dashboardModule.my_applications)}
-                      handleSubmit(e)
+                      handleSubmit(e);
                     }}
                   ></Button>
                 </div>
