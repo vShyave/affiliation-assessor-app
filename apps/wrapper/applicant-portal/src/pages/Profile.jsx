@@ -25,11 +25,20 @@ export default function Profile() {
     course_type: "",
   });
   const navigate = useNavigate();
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm();
+  // const {
+  //   register,
+  //   handleSubmit,
+  //   formState: { errors },
+  // } = useForm();
+  
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    // setFormStage(2);
+    if(!isPreview){
+    handleEditProfile()
+  }
+  };
+
   const [formState, setFormState] = useState(1);
   const [isPreview, setIsPreview] = useState(true);
 
@@ -43,8 +52,8 @@ export default function Profile() {
     getProfileDetails();
   }, []);
 
-  const handleEditProfile = async (data) => {
-    console.log("data", data);
+  const handleEditProfile = async () => {
+    console.log("data", formData);
     const {
       firstName,
       lastName,
@@ -53,7 +62,7 @@ export default function Profile() {
       courseType,
       email,
       mobilePhone,
-    } = data;
+    } = formData;
     const instituteDetails = {
       instituteName: applicantName,
       district: "Varanasi", // Capture it from UI once field is added
@@ -75,10 +84,10 @@ export default function Profile() {
       institute_name: instituteDetails.instituteName,
       institute_email: instituteDetails.email,
       institute_course: instituteDetails.course_applied,
-      institutePOC_fname: institutePocDetils.fname,
-      institutePOC_lname: institutePocDetils.lname,
-      institutePOC_name: institutePocDetils.name,
-      institutePOC_phno: institutePocDetils.phoneNumber,
+      institutePOC_fname: formData?.first_name,
+      institutePOC_lname: formData?.last_name,
+      institutePOC_name: formData?.name,
+      institutePOC_phno: formData?.phone_number,
     };
 
     try {
@@ -143,10 +152,12 @@ export default function Profile() {
         last_name: formDetail?.institute_pocs[0].lname,
         phone_number: formDetail?.institute_pocs[0].number,
         email: formDetail?.email,
+        name: formDetail?.institute_pocs[0].name,
         // applicant_type: [applicantType],
         course_type: formDetail?.course_applied,
       });
       console.log("formData", formData.course_type);
+      console.log("formDetail",formDetail)
     } catch (error) {
       setToast((prevState) => ({
         ...prevState,
@@ -192,9 +203,7 @@ export default function Profile() {
           <h1 className="text-xl font-semibold">My Profile</h1>
 
           <form
-            onSubmit={handleSubmit((data) => {
-              handleEditProfile(data);
-            })}
+            
           >
             {formState === 1 && (
               <div className="flex flex-row justify-between bg-white rounded-[4px] w-full p-8 mx-auto">
@@ -217,13 +226,13 @@ export default function Profile() {
                           id="first_name"
                           name="first_name"
                           className="block w-full rounded-md border-0 p-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                          {...register("firstName", {
-                            required: true,
-                            maxLength: 20,
-                            pattern: /^[A-Za-z]+$/i,
-                          })}
+                          // {...register("firstName", {
+                          //   required: true,
+                          //   maxLength: 20,
+                          //   pattern: /^[A-Za-z]+$/i,
+                          // })}
                         />
-                        {errors?.firstName?.type === "required" && (
+                        {/* {errors?.firstName?.type === "required" && (
                           <p className="text-red-500 mt-2 text-sm">
                             This field is required
                           </p>
@@ -237,7 +246,7 @@ export default function Profile() {
                           <p className="text-red-500 mt-2 text-sm">
                             Alphabetical characters only
                           </p>
-                        )}
+                        )} */}
                       </div>
                     </div>
                     <div className="sm:col-span-3">
@@ -256,13 +265,13 @@ export default function Profile() {
                           name="last_name"
                           id="last_name"
                           className="block w-full rounded-md border-0 p-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                          {...register("lastName", {
-                            required: true,
-                            maxLength: 20,
-                            pattern: /^[A-Za-z]+$/i,
-                          })}
+                          // {...register("lastName", {
+                          //   required: true,
+                          //   maxLength: 20,
+                          //   pattern: /^[A-Za-z]+$/i,
+                          // })}
                         />
-                        {errors?.lastName?.type === "required" && (
+                        {/* {errors?.lastName?.type === "required" && (
                           <p className="text-red-500 mt-2 text-sm">
                             This field is required
                           </p>
@@ -276,7 +285,7 @@ export default function Profile() {
                           <p className="text-red-500 mt-2 text-sm">
                             Alphabetical characters only
                           </p>
-                        )}
+                        )} */}
                       </div>
                     </div>
                   </div>
@@ -294,13 +303,13 @@ export default function Profile() {
                           id="email"
                           name="email"
                           className="block w-full rounded-md border-0 p-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                          {...register("email", {
-                            required: true,
-                            pattern:
-                              /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/i,
-                          })}
+                          // {...register("email", {
+                          //   required: true,
+                          //   pattern:
+                          //     /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/i,
+                          // })}
                         />
-                        {errors?.email?.type === "required" && (
+                        {/* {errors?.email?.type === "required" && (
                           <p className="text-red-500 mt-2 text-sm">
                             This field is required
                           </p>
@@ -309,7 +318,7 @@ export default function Profile() {
                           <p className="text-red-500 mt-2 text-sm">
                             This is not a valid email format
                           </p>
-                        )}
+                        )} */}
                       </div>
                     </div>
                     <div className="sm:col-span-3">
@@ -328,13 +337,13 @@ export default function Profile() {
                           name="phone_number"
                           id="phone_number"
                           className="block w-full rounded-md border-0 p-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                          {...register("mobilePhone", {
-                            required: true,
-                            maxLength: 10,
-                            pattern: /^([+]\d{2})?\d{10}$/,
-                          })}
+                          // {...register("mobilePhone", {
+                          //   required: true,
+                          //   maxLength: 10,
+                          //   pattern: /^([+]\d{2})?\d{10}$/,
+                          // })}
                         />
-                        {errors?.mobilePhone?.type === "required" && (
+                        {/* {errors?.mobilePhone?.type === "required" && (
                           <p className="text-red-500 mt-2 text-sm">
                             This field is required
                           </p>
@@ -348,7 +357,7 @@ export default function Profile() {
                           <p className="text-red-500 mt-2 text-sm">
                             Please provide valid phone number
                           </p>
-                        )}
+                        )} */}
                       </div>
                     </div>
                   </div>
@@ -369,17 +378,17 @@ export default function Profile() {
                           label="Select here"
                           id="applicant_type"
                           name="applicant_type"
-                          {...register("applicantType", {
-                            required: true,
-                          })}
+                          // {...register("applicantType", {
+                          //   required: true,
+                          // })}
                         >
                           <option value="Institute">Institute</option>
                         </select>
-                        {errors?.applicantType?.type === "required" && (
+                        {/* {errors?.applicantType?.type === "required" && (
                           <p className="text-red-500 mt-2 text-sm">
                             This field is required
                           </p>
-                        )}
+                        )} */}
                       </div>
                     </div>
                     <div className="sm:col-span-3 ">
@@ -397,18 +406,18 @@ export default function Profile() {
                           label="Select here"
                           id="course_type"
                           name="course_type"
-                          {...register("courseType", {
-                            required: true,
-                          })}
+                          // {...register("courseType", {
+                          //   required: true,
+                          // })}
                         >
                           <option value="Nursing">Nursing</option>
                           <option value="Paramedical">Paramedical</option>
                         </select>
-                        {errors?.courseType?.type === "required" && (
+                        {/* {errors?.courseType?.type === "required" && (
                           <p className="text-red-500 mt-2 text-sm">
                             This field is required
                           </p>
-                        )}
+                        )} */}
                       </div>
                     </div>
                   </div>
@@ -420,12 +429,11 @@ export default function Profile() {
                   <Button
                     moreClass="px-6 text-white"
                     text={text}
-                    type="edit"
-                    onClick={function () {
+                    onClick={function (e) {
                       setText("Save");
                       setIsPreview(false);
                       // {text==="Save" && navigate(APPLICANT_ROUTE_MAP.dashboardModule.my_applications)}
-                      
+                      handleSubmit(e)
                     }}
                   ></Button>
                 </div>

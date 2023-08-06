@@ -127,9 +127,9 @@ const GenericForm = (props) => {
         />
         <div className={styles.jsonResponse}>
           <div className={styles.toggleBtn}>
-            <label class={styles.switch}>
+            <label className={styles.switch}>
               <input type="checkbox" value={isXml} onChange={e => handleFormView(e.target.checked)} />
-              <span class={styles.slider}></span>
+              <span className={styles.slider}></span>
             </label>
             {isXml ? <span className='animate__animated animate__fadeIn'>XML</span> : <span className='animate__animated animate__fadeIn'>JSON</span>}
           </div>
