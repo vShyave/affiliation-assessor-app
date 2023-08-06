@@ -10,11 +10,10 @@ import {
   MenuHandler,
   MenuList,
   MenuItem,
-  Button,
 } from "@material-tailwind/react";
+import Overlay from "./../pages/notifications/Overlay";
 
 export default function Header() {
-  const [showProfileDropdown, setShowProfileDropdown] = useState(false);
   const [showButtons, setshowButtons] = useState(false);
   const navigate = useNavigate();
   const regulator = getCookie("regulator");
@@ -44,27 +43,30 @@ export default function Header() {
                 <img src="/images/upsmf.png" alt="logo" className="h-[64px]" />
               </div>
               <div className="flex flex-grow items-center justify-end">
-                <Menu placement="bottom-end">
-                  <MenuHandler>
-                    <button
-                      className="w-[44px] h-[44px] border-green-500 bg-green-500 hover:bg-green-400 justify-center items-center rounded-md font-bold shadow-sm p-2 tracking-wider text-base text-white"
-                      aria-expanded="true"
-                      aria-haspopup="true"
-                    >
-                      {getInitials(
-                        `${userData?.userRepresentation?.firstName?.trim()} ${userData?.userRepresentation?.lastName?.trim()}`
-                      )}
-                    </button>
-                  </MenuHandler>
-                  <MenuList className="p-[4px]">
-                    <MenuItem
-                      className="text-gray-700 font-semibold block w-full text-left text-sm p-3"
-                      onClick={logout}
-                    >
-                      Sign out
-                    </MenuItem>
-                  </MenuList>
-                </Menu>
+                <div className="flex flex-row gap-12 items-center">
+                  <Overlay className="text-3xl text-gray-500" />
+                  <Menu placement="bottom-end">
+                    <MenuHandler>
+                      <button
+                        className="w-[44px] h-[44px] border-green-500 bg-green-500 hover:bg-green-400 justify-center items-center rounded-md font-bold shadow-sm p-2 tracking-wider text-base text-white"
+                        aria-expanded="true"
+                        aria-haspopup="true"
+                      >
+                        {getInitials(
+                          `${userData?.userRepresentation?.firstName?.trim()} ${userData?.userRepresentation?.lastName?.trim()}`
+                        )}
+                      </button>
+                    </MenuHandler>
+                    <MenuList className="p-[4px]">
+                      <MenuItem
+                        className="text-gray-700 font-semibold block w-full text-left text-sm p-3"
+                        onClick={logout}
+                      >
+                        Sign out
+                      </MenuItem>
+                    </MenuList>
+                  </Menu>
+                </div>
               </div>
             </div>
           </div>
