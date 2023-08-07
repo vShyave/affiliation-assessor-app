@@ -238,30 +238,52 @@ function ScheduleInspectionModal({ closeSchedule, otherInfo }) {
       <div className="flex flex-col justify-center items-center fixed inset-0 bg-opacity-24 z-10 backdrop-blur-sm">
         <div className="flex bg-white rounded-xl shadow-xl border border-gray-400 w-[900px] h-fit">
           <div className="flex flex-col w-full">
-            <div className="flex justify-center p-4 h-[100px]">
-              <div className="w-[36%]">
-                <Stepper
-                  activeStep={activeStep}
-                  isLastStep={(value) => setIsLastStep(value)}
-                  isFirstStep={(value) => setIsFirstStep(value)}
-                >
-                  <Step>
+            <div className="flex p-4">
+              <div className="flex flex-col items-center w-full">
+              {/* <div className="w-[40%] p-3"> */}
+                {/* <div
+                  className="flex flex-col" */}
+                {/* activeStep={activeStep}
+                 isLastStep={(value) => setIsLastStep(value)}
+                   isFirstStep={(value) => setIsFirstStep(value)} */}
+                {/* > */}
+                <div className="flex flex-row gap-2 items-center w-[40%] p-3">
+                  <div className=
+                  {`${
+                    (activeStep==1)
+                      ? "flex items-center bg-gray-300 text-white justify-center text-[18px] font-bold rounded-[50%] h-[48px] w-[48px] p-5"
+                      : "flex items-center bg-blue-500 text-white justify-center text-[18px] font-bold rounded-[50%] h-[48px] w-[48px] p-5"
+                  }`}
+                  // className="flex items-center bg-blue-500 text-white justify-center text-[18px] font-bold rounded-[50%] h-[48px] w-[48px] p-5"
+                  >
                     1
-                    <div className="absolute -bottom-[2rem] w-max text-center">
-                      <div className="font-semibold text-[#000]">
-                        Schedule inspection
-                      </div>
-                    </div>
-                  </Step>
-                  <Step>
+                  </div>
+                  <span className="w-full h-0 border-t-[2px] border-gray-500"></span>
+                  <div 
+                  className=
+                  {`${
+                    (activeStep==0)
+                      ? "flex items-center bg-gray-300 text-white justify-center text-[18px] font-bold rounded-[50%] h-[48px] w-[48px] p-5"
+                      : "flex items-center bg-blue-500 text-white justify-center text-[18px] font-bold rounded-[50%] h-[48px] w-[48px] p-5"
+                  }`}
+                  // className="flex items-center text-white bg-blue-500 justify-center text-[18px] font-bold rounded-[50%] h-[48px] w-[48px] p-5"
+                  >
                     2
-                    <div className="absolute -bottom-[2rem] w-max text-center">
-                      <div className="font-semibold text-[#000]">
-                        Select the applications
-                      </div>
-                    </div>
-                  </Step>
-                </Stepper>
+                  </div>
+                </div>
+
+                {/* </div> */}
+              {/* </div> */}
+              {/* <div className="w-[60%] p-2"> */}
+                <div className="flex flex-row w-[48%] justify-between">
+                  <div className="flex font-semibold justify-center text-[#000]">
+                    Schedule inspection
+                  </div>
+                  <div className="flex font-semibold justify-center text-[#000]">
+                    Select the applications
+                  </div>
+                </div>
+              {/* </div> */}
               </div>
             </div>
 
