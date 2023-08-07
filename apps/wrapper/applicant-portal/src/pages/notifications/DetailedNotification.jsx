@@ -21,12 +21,14 @@ const DetailedNotification = ({ notification }) => {
               {notification.date}
             </div>
           </div>
-          <div className="flex flex-col gap-3 text-[16px]">
+          <div className="flex flex-col gap-3">
             <div className="font-semibold text-gray-900 text-2xl">
               {notification.title}
             </div>
-            <div className="overflow-y-auto h-[558px]">
+            <div>
               <div>{notification.body}</div>
+            </div>
+            <div>
               <div>{notification.text}</div>
             </div>
           </div>

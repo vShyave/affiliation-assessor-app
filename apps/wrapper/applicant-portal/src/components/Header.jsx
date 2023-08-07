@@ -1,27 +1,31 @@
 import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { removeCookie, getCookie, getInitials } from "../utils";
-// import Button from "./Button";
+import Button from "./Button";
+
 import APPLICANT_ROUTE_MAP from "../routes/ApplicantRoute";
 import {
   Menu,
   MenuHandler,
   MenuList,
   MenuItem,
-  Button,
 } from "@material-tailwind/react";
+import Overlay from "../pages/notifications/Overlay";
 
 const Header = () => {
-  const [showProfileDropdown, setShowProfileDropdown] = useState(false);
   const [showButtons, setshowButtons] = useState(false);
   const navigate = useNavigate();
   const userData = getCookie("userData");
   const instituteData = getCookie("institutes");
 
-  const logout = () => {
+  const handleLogout = () => {
     removeCookie("userData");
     removeCookie("institutes");
     navigate(APPLICANT_ROUTE_MAP.loginModule.login);
+  };
+
+  const handleNavigateProfile = () => {
+    navigate(APPLICANT_ROUTE_MAP.dashboardModule.profile);
   };
 
   useEffect(() => {
@@ -35,10 +39,10 @@ const Header = () => {
       <div className="top-0 fixed left-0 right-0 bg-white">
         <div className="container py-2 px-3 mx-auto">
           <div className="flex flex-row">
-            <div className="flex grow">
+            <div className="flex flex-grow items-center">
               <img src="/images/upsmf.png" alt="logo" className="h-[64px]" />
             </div>
-            <div className="flex grow justify-end items-center gap-4">
+            <div className="flex flex-grow items-center justify-end gap-4">
               {!showButtons && (
                 <div className="flex space-x-4">
                   <Link to={APPLICANT_ROUTE_MAP.dashboardModule.register}>
@@ -53,93 +57,39 @@ const Header = () => {
                   </Link>
                 </div>
               )}
+
               {userData?.userRepresentation && (
-                <div className="relative inline-block text-left">
+                <div className="flex flex-row gap-8 items-center">
                   <div>
-                    <Menu>
-                      <MenuHandler>
-                        <Button
-                          className="border-green-500 bg-green-500 inline-flex w-full justify-center gap-x-1.5 rounded-md px-2 py-2 text-sm font-semibold text-white-500 shadow-sm hover:bg-green-400"
-                          aria-expanded="true"
-                          aria-haspopup="true"
-                        >
-                          {getInitials(
-                            userData.userRepresentation.firstName +
-                              " " +
-                              userData.userRepresentation.lastName
-                          )}
-                        </Button>
-                      </MenuHandler>
-                      <MenuList>
-                        <div className="py-1" role="none">
-                          <Link
-                            to={APPLICANT_ROUTE_MAP.dashboardModule.profile}
-                          >
-                            <MenuItem className="text-gray-700 font-semibold block w-full px-4 py-2 text-left text-sm">
-                              My Profile
-                            </MenuItem>
-                          </Link>
-                          <hr />
-                          <MenuItem
-                            className="text-gray-700 font-semibold block w-full px-4 py-2 text-left text-sm"
-                            onClick={logout}
-                          >
-                            Sign out
-                          </MenuItem>
-                        </div>
-                      </MenuList>
-                    </Menu>
-                    {/* <button
-                      type="button"
-                      className="border-green-500 bg-green-500 inline-flex w-full justify-center gap-x-1.5 rounded-md px-2 py-2 text-sm font-semibold text-white-500 shadow-sm hover:bg-green-400"
-                      id="menu-button"
-                      aria-expanded="true"
-                      aria-haspopup="true"
-                      onClick={() => {
-                        setShowProfileDropdown(!showProfileDropdown);
-                      }}
-                    >
-                      {getInitials(
-                        userData.userRepresentation.firstName +
-                          " " +
-                          userData.userRepresentation.lastName
-                      )}
-                    </button> */}
+                    <Overlay className="text-3xl text-gray-500" />
                   </div>
-                  {/* {showProfileDropdown && (
-                    <div
-                      className="absolute right-0 z-10 mt-2 w-56 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
-                      role="menu"
-                      aria-orientation="vertical"
-                      aria-labelledby="menu-button"
-                      tabIndex="-1"
-                    >
-                      <div className="py-1" role="none">
-                        <Link to={APPLICANT_ROUTE_MAP.dashboardModule.profile}>
-                          <button
-                            type="button"
-                            className="text-gray-700 font-semibold block w-full px-4 py-2 text-left text-sm"
-                            role="menuitem"
-                            tabIndex="-1"
-                            id="menu-item-3"
-                          >
-                            My Profile
-                          </button>
-                        </Link>
-                        <hr />
-                        <button
-                          type="button"
-                          className="text-gray-700 font-semibold block w-full px-4 py-2 text-left text-sm"
-                          role="menuitem"
-                          tabIndex="-1"
-                          id="menu-item-3"
-                          onClick={logout}
-                        >
-                          Sign out
-                        </button>
-                      </div>
-                    </div> */}
-                  {/* )} */}
+                  <Menu placement="bottom-end">
+                    <MenuHandler>
+                      <button
+                        className="w-[44px] h-[44px] border-green-500 bg-green-500 hover:bg-green-400 justify-center items-center rounded-md font-bold shadow-sm p-2 tracking-wider text-base text-white"
+                        aria-expanded="true"
+                        aria-haspopup="true"
+                      >
+                        {getInitials(
+                          `${userData?.userRepresentation?.firstName?.trim()} ${userData?.userRepresentation?.lastName?.trim()}`
+                        )}
+                      </button>
+                    </MenuHandler>
+                    <MenuList className="p-[4px]">
+                      <MenuItem
+                        className="text-gray-700 font-semibold block w-full text-left text-sm p-3"
+                        onClick={handleNavigateProfile}
+                      >
+                        My Profile
+                      </MenuItem>
+                      <MenuItem
+                        className="text-gray-700 font-semibold block w-full text-left text-sm p-3"
+                        onClick={handleLogout}
+                      >
+                        Sign out
+                      </MenuItem>
+                    </MenuList>
+                  </Menu>
                 </div>
               )}
             </div>

@@ -2,7 +2,6 @@ import { useContext, useEffect, useState } from "react";
 
 import { useNavigate } from "react-router-dom";
 import { NavLink } from "react-router-dom";
-import ADMIN_ROUTE_MAP from "../../routes/adminRouteMap";
 
 import {
   Menu,
@@ -15,41 +14,38 @@ import {
 
 import { MdNotifications } from "react-icons/md";
 import { getCookie, readableDate } from "../../utils";
-import { getNotifications, readNotification } from "../../api";
-import { ContextAPI } from "../../utils/ContextAPI";
+import { applicantService } from "../../services";
+import APPLICANT_ROUTE_MAP from "../../routes/ApplicantRoute";
+// import { ContextAPI } from "../../utils/ContextAPI";
 
 export default function Overlay() {
   const navigation = useNavigate();
   const [notificationList, setNotifcationList] = useState([]);
   const [selectedNotification, setSelectedNotification] = useState({});
-  const { setSpinner } = useContext(ContextAPI);
 
   const handleClick = async (notification) => {
     setSelectedNotification(notification);
     setNotificationReadStatus({ notification_id: notification.id });
-    const navigationURL = `${ADMIN_ROUTE_MAP.adminModule.notifications.home}/${notification.id}`;
+    const navigationURL = `${APPLICANT_ROUTE_MAP.dashboardModule.notifications}/${notification.id}`;
     navigation(navigationURL);
   };
 
   const setNotificationReadStatus = async (notifId) => {
     try {
-      setSpinner(true);
-      const res = readNotification(notifId);
+      const res = applicantService.readNotification(notifId);
       // console.log(res);
     } catch (error) {
       console.log(error);
     } finally {
-      setSpinner(false);
     }
   };
 
   const getAllNotifications = async () => {
     const postData = {
-      user_id: getCookie("regulator")?.[0]?.user_id,
+      user_id: `${getCookie("institutes")?.[0]?.id}`,
     };
     try {
-      setSpinner(true);
-      const res = await getNotifications(postData);
+      const res = await applicantService.getNotifications(postData);
       // console.log(res);
       const notifList = res.data.notifications.map((item) => ({
         roles: [item?.user_type],
@@ -65,7 +61,6 @@ export default function Overlay() {
     } catch (error) {
       console.log(error);
     } finally {
-      setSpinner(false);
     }
   };
 
@@ -76,10 +71,6 @@ export default function Overlay() {
   return (
     <>
       <Menu>
-        {/* <MenuHandler>
-          <button className="leading-3 position-relative">...</button>
-          <MdNotifications className="text-2xl text-gray-500" />
-        </MenuHandler> */}
         <MenuHandler>
           <IconButton variant="text">
             <MdNotifications className="text-2xl text-gray-500" />
@@ -98,7 +89,7 @@ export default function Overlay() {
                 className="flex items-center text-s text-gray-600"
               >
                 <NavLink
-                  to={ADMIN_ROUTE_MAP.adminModule.notifications.home}
+                  to={APPLICANT_ROUTE_MAP.dashboardModule.notifications}
                   className="text-blue-600 pr-2"
                 >
                   View all

@@ -10,11 +10,10 @@ import {
   MenuHandler,
   MenuList,
   MenuItem,
-  Button,
 } from "@material-tailwind/react";
+import Overlay from "./../pages/notifications/Overlay";
 
 export default function Header() {
-  const [showProfileDropdown, setShowProfileDropdown] = useState(false);
   const [showButtons, setshowButtons] = useState(false);
   const navigate = useNavigate();
   const regulator = getCookie("regulator");
@@ -40,70 +39,33 @@ export default function Header() {
         <div className="top-0 fixed left-0 right-0 bg-white">
           <div className="container py-2 px-3 mx-auto">
             <div className="flex flex-row">
-              <div className="flex grow">
+              <div className="flex flex-grow items-center">
                 <img src="/images/upsmf.png" alt="logo" className="h-[64px]" />
               </div>
-              <div className="relative inline-block text-left flex gap-12 items-center">
-                <div>
-                  <Menu>
+              <div className="flex flex-grow items-center justify-end">
+                <div className="flex flex-row gap-12 items-center">
+                  <Overlay className="text-3xl text-gray-500" />
+                  <Menu placement="bottom-end">
                     <MenuHandler>
-                      <Button
-                        className="border-green-500 bg-green-500 inline-flex w-full justify-center gap-x-1.5 rounded-md px-2 py-2 text-sm font-semibold text-white-500 shadow-sm hover:bg-green-400"
+                      <button
+                        className="w-[44px] h-[44px] border-green-500 bg-green-500 hover:bg-green-400 justify-center items-center rounded-md font-bold shadow-sm p-2 tracking-wider text-base text-white"
                         aria-expanded="true"
                         aria-haspopup="true"
                       >
                         {getInitials(
-                          `${userData?.userRepresentation?.firstName.trim()} ${userData?.userRepresentation?.lastName.trim()}`
-                        )}{" "}
-                      </Button>
+                          `${userData?.userRepresentation?.firstName?.trim()} ${userData?.userRepresentation?.lastName?.trim()}`
+                        )}
+                      </button>
                     </MenuHandler>
-                    <MenuList>
+                    <MenuList className="p-[4px]">
                       <MenuItem
-                        className="text-gray-700 font-semibold block w-full px-4 py-2 text-left text-sm"
+                        className="text-gray-700 font-semibold block w-full text-left text-sm p-3"
                         onClick={logout}
                       >
-                        Sign out{" "}
+                        Sign out
                       </MenuItem>
                     </MenuList>
                   </Menu>
-
-                  {/* <button
-                    type="button"
-                    className="border-green-500 bg-green-500 inline-flex w-full justify-center gap-x-1.5 rounded-md px-2 py-2 text-sm font-semibold text-white-500 shadow-sm hover:bg-green-400"
-                    id="menu-button"
-                    aria-expanded="true"
-                    aria-haspopup="true"
-                    onClick={() => {
-                      setShowProfileDropdown(!showProfileDropdown);
-                    }}
-                  >
-                    {getInitials(
-                      `${userData?.userRepresentation?.firstName.trim()} ${userData?.userRepresentation?.lastName.trim()}`
-                    )}
-                  </button> */}
-
-                  {/* {showProfileDropdown && (
-                    <div
-                      className="absolute right-0 z-10 mt-2 w-56 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
-                      role="menu"
-                      aria-orientation="vertical"
-                      aria-labelledby="menu-button"
-                      tabIndex="-1"
-                    >
-                      <div className="py-1" role="none">
-                        <button
-                          type="button"
-                          className="text-gray-700 block w-full px-4 py-2 text-left text-sm"
-                          role="menuitem"
-                          tabIndex="-1"
-                          id="menu-item-3"
-                          onClick={logout}
-                        >
-                          Sign out
-                        </button>
-                      </div>
-                    </div>
-                  )} */}
                 </div>
               </div>
             </div>

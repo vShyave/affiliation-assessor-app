@@ -186,7 +186,7 @@ const FormsOverview = () => {
   const publish = (e) => {
     let publishFormId = [e[0]?.form_id];
     setShowAlert(false);
-    // console.log(e);
+    //console.log(e);
     publishForm(publishFormId);
     HandlecreateCourse(e);
   };
@@ -562,7 +562,7 @@ const FormsOverview = () => {
   const HandlecreateCourse = async (formDataObject) => {
     // const formData = new FormData();
     // formData.append("form_id", form_id);]
-    // console.log(formDataObject);
+    //console.log(formDataObject);
     let objectRes = JSON.stringify([
       { name: formDataObject[0]?.file_name, path: formDataObject[0]?.path },
     ]);
