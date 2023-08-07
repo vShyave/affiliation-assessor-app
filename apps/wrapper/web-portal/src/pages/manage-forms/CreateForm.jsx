@@ -47,6 +47,7 @@ const CreateForm = () => {
     // TODO: make user_id dynamic
     postData.append("user_id", "53c57d13-d33d-439a-bd72-1f56b189642d");
     postData.append("form_status", "Draft");
+
     try {
       setSpinner(true);
       setLoading(true);
@@ -367,8 +368,8 @@ const CreateForm = () => {
                           className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                         >
                           <option value="">Select here</option>
-                          <option value="nursing">Nursing</option>
-                          <option value="paramedical">Paramedical</option>
+                          <option value="Nursing">Nursing</option>
+                          <option value="Paramedical">Paramedical</option>
                         </select>
                       </div>
                       <div className="sm:col-span-3">
@@ -392,8 +393,8 @@ const CreateForm = () => {
                           className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                         >
                           <option value="">Select here</option>
-                          <option value="degree">Degree</option>
-                          <option value="diploma">Diploma</option>
+                          <option value="Degree">Degree</option>
+                          <option value="Diploma">Diploma</option>
                         </select>
                       </div>
 

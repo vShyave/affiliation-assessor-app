@@ -98,6 +98,15 @@ export const getPastInspections = async (postData) => {
   return res;
 };
 
+export const registerEvent = async (postData) => {
+  const events = {
+    events: [],
+  };
+  events.events.push(postData);
+  const res = await customPost.post("rest/addEvents", events);
+  return res;
+};
+
 export const UploadImage = async (postData) => {
   const res = await axios.post(
     `${ENKETO_MANAGER_URL}/form/uploadFile`,
@@ -293,8 +302,6 @@ export const createUser = async (data) => {
 
 export const saveFormSubmission = (data) => {
   console.log("data - ", data);
-  return;
-  
   const query = {
     query: `mutation ($object: [form_submissions_insert_input!] = {}) {
       insert_form_submissions(objects: $object) {

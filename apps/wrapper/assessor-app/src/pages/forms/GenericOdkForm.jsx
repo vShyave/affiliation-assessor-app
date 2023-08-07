@@ -1,9 +1,9 @@
 import React, { useState, useEffect, useContext, useRef } from "react";
 import { Routes, useNavigate, useParams } from "react-router-dom";
 import ROUTE_MAP from "../../routing/routeMap";
-
+//registerEvent
 import { StateContext } from "../../App";
-import { saveFormSubmission } from "../../api";
+import { saveFormSubmission, registerEvent } from "../../api";
 import {
   getCookie,
   getFormData,
@@ -99,7 +99,7 @@ const GenericOdkForm = (props) => {
         const updatedFormData = await updateFormData(formSpec.start);
         const storedData = await getSpecificDataFromForage("required_data");
 
-        saveFormSubmission({
+        const res = await saveFormSubmission({
           schedule_id: scheduleId.current,
           form_data: updatedFormData,
           assessment_type: formName.startsWith("hospital")
@@ -110,7 +110,17 @@ const GenericOdkForm = (props) => {
           assessor_id: storedData?.assessor_user_id,
           applicant_id: storedData?.institute_id,
           submitted_on: new Date().toJSON().slice(0, 10),
+          form_status: "OGA Completed",
         });
+        console.log(res);
+        // Register Event of the form.
+        // await registerEvent({
+        //   created_date: getLocalTimeInISOFormat(),
+        //   entity_id: formId.toString(),
+        //   entity_type: "form",
+        //   event_name: "Returned",
+        //   remarks: `${userDetails?.userRepresentation?.username} has returned application with remarks`,
+        // });
 
         // Delete the data from the Local Forage
         const key = `${storedData?.assessor_user_id}_${formSpec.start}${
