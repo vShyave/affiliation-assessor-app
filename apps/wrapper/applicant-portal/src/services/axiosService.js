@@ -11,9 +11,12 @@ const axiosService = axios.create({
   baseURL: BASE_URL,
 });
 
+const spinner = document.getElementById("backdrop")
+
 axiosService.interceptors.request.use(
   (request) => {
     // const user_data = getCookie('userData');
+    spinner.style.display="flex";
     request.headers["Accept"] = "application/json";
     request.headers["Content-Type"] = "application/json";
     request.headers["Hasura-Client-Name"] = HASURA_CLIENT_NAME;
@@ -22,15 +25,18 @@ axiosService.interceptors.request.use(
     return request;
   },
   (error) => {
+    spinner.style.display="none"
     return Promise.reject(error);
   }
 );
 
 axiosService.interceptors.response.use(
   function (response) {
+    spinner.style.display="none"
     return response;
   },
   function (error) {
+    spinner.style.display="none"
     let res = error.response;
     if (res.status === 401) {
       console.error("Unauthorized  user. Status Code: " + res.status);

@@ -1,11 +1,11 @@
 import React from "react";
-import "./spinner.css";
+import "./Spinner.css";
 
 function Spinner() {
   return (
     <>
       {/* <!-- backdrop & spinner --> */}
-      <div id="backdrop">
+      <div id="backdrop" className="api_spinner">
         <div
           role="status"
           className="absolute -translate-x-1/2 -translate-y-1/2 top-2/4 left-1/2"

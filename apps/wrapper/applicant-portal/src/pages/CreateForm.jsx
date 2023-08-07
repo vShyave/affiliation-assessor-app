@@ -336,8 +336,7 @@ const CreateForm = (props) => {
       <div className="container mx-auto py-12 px-3 min-h-[40vh]">
         <div className="flex flex-row justify-between">
           <h1 className="font-bold text-[20px]">
-            {/* {" "}
-            {formName.split("-")[2].toUpperCase()} */}
+            {formName.split("-")?.join(" ")}
           </h1>
           <div className="flex flex-grow gap-3 justify-end">
             <button

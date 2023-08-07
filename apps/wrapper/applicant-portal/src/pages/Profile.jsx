@@ -7,6 +7,8 @@ import { FaAngleRight } from "react-icons/fa";
 
 import Toast from "../components/Toast";
 
+// import { removeCookie, getCookie, getInitials } from "../utils";
+
 import { getCookie } from "../utils";
 
 import APPLICANT_ROUTE_MAP from "../routes/ApplicantRoute";
@@ -15,6 +17,7 @@ import { profileService } from "../services";
 
 export default function Profile() {
   const instituteData = getCookie("institutes");
+  const userData = getCookie("userData");
 
   const [text, setText] = useState("Edit");
   const [formData, setFormData] = useState({
@@ -25,11 +28,19 @@ export default function Profile() {
     course_type: "",
   });
   const navigate = useNavigate();
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm();
+  // const {
+  //   register,
+  //   handleSubmit,
+  //   formState: { errors },
+  // } = useForm();
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (!isPreview) {
+      handleEditProfile();
+    }
+  };
+
   const [formState, setFormState] = useState(1);
   const [isPreview, setIsPreview] = useState(true);
 
@@ -43,8 +54,8 @@ export default function Profile() {
     getProfileDetails();
   }, []);
 
-  const handleEditProfile = async (data) => {
-    console.log("data", data);
+  const handleEditProfile = async () => {
+    console.log("data", userData);
     const {
       firstName,
       lastName,
@@ -53,7 +64,7 @@ export default function Profile() {
       courseType,
       email,
       mobilePhone,
-    } = data;
+    } = formData;
     const instituteDetails = {
       instituteName: applicantName,
       district: "Varanasi", // Capture it from UI once field is added
@@ -73,35 +84,35 @@ export default function Profile() {
     const instituteEditDetails = {
       institute_id: instituteData[0]?.id,
       institute_name: instituteDetails.instituteName,
-      institute_email: instituteDetails.email,
+      // institute_email: instituteDetails.email,
       institute_course: instituteDetails.course_applied,
-      institutePOC_fname: institutePocDetils.fname,
-      institutePOC_lname: institutePocDetils.lname,
-      institutePOC_name: institutePocDetils.name,
-      institutePOC_phno: institutePocDetils.phoneNumber,
+      institutePOC_fname: formData?.first_name,
+      institutePOC_lname: formData?.last_name,
+      institutePOC_name: formData?.name,
+      institutePOC_phno: formData?.phone_number,
     };
 
     try {
       const response = await profileService.getProfileEdit(
         instituteEditDetails,
-        
+
         setToast((prevState) => ({
           ...prevState,
           toastOpen: true,
           toastMsg: "User successfully edited",
           toastType: "success",
-        })));
-        setTimeout(
-          () =>
-            setToast((prevState) => ({
-              ...prevState,
-              toastOpen: false,
-              toastMsg: "",
-              toastType: "",
-            })),
-          3000
-        )
-      
+        }))
+      );
+      setTimeout(
+        () =>
+          setToast((prevState) => ({
+            ...prevState,
+            toastOpen: false,
+            toastMsg: "",
+            toastType: "",
+          })),
+        3000
+      );
     } catch (error) {
       setToast((prevState) => ({
         ...prevState,
@@ -142,11 +153,12 @@ export default function Profile() {
         first_name: formDetail?.institute_pocs[0].fname,
         last_name: formDetail?.institute_pocs[0].lname,
         phone_number: formDetail?.institute_pocs[0].number,
-        email: formDetail?.email,
+        email: userData?.userRepresentation?.email,
+         name: formDetail?.institute_pocs[0].name,
         // applicant_type: [applicantType],
         course_type: formDetail?.course_applied,
       });
-      console.log("formData", formData.course_type);
+      console.log("formDetail", formDetail);
     } catch (error) {
       setToast((prevState) => ({
         ...prevState,
@@ -167,7 +179,6 @@ export default function Profile() {
       console.error("Can not see profile due to some error:", error);
     }
   };
-
 
   return (
     <>
@@ -191,11 +202,7 @@ export default function Profile() {
         <div className="flex flex-col gap-4">
           <h1 className="text-xl font-semibold">My Profile</h1>
 
-          <form
-            onSubmit={handleSubmit((data) => {
-              handleEditProfile(data);
-            })}
-          >
+          <form>
             {formState === 1 && (
               <div className="flex flex-row justify-between bg-white rounded-[4px] w-full p-8 mx-auto">
                 <div className="w-1/2">
@@ -217,13 +224,13 @@ export default function Profile() {
                           id="first_name"
                           name="first_name"
                           className="block w-full rounded-md border-0 p-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                          {...register("firstName", {
-                            required: true,
-                            maxLength: 20,
-                            pattern: /^[A-Za-z]+$/i,
-                          })}
+                          // {...register("firstName", {
+                          //   required: true,
+                          //   maxLength: 20,
+                          //   pattern: /^[A-Za-z]+$/i,
+                          // })}
                         />
-                        {errors?.firstName?.type === "required" && (
+                        {/* {errors?.firstName?.type === "required" && (
                           <p className="text-red-500 mt-2 text-sm">
                             This field is required
                           </p>
@@ -237,7 +244,7 @@ export default function Profile() {
                           <p className="text-red-500 mt-2 text-sm">
                             Alphabetical characters only
                           </p>
-                        )}
+                        )} */}
                       </div>
                     </div>
                     <div className="sm:col-span-3">
@@ -256,13 +263,13 @@ export default function Profile() {
                           name="last_name"
                           id="last_name"
                           className="block w-full rounded-md border-0 p-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                          {...register("lastName", {
-                            required: true,
-                            maxLength: 20,
-                            pattern: /^[A-Za-z]+$/i,
-                          })}
+                          // {...register("lastName", {
+                          //   required: true,
+                          //   maxLength: 20,
+                          //   pattern: /^[A-Za-z]+$/i,
+                          // })}
                         />
-                        {errors?.lastName?.type === "required" && (
+                        {/* {errors?.lastName?.type === "required" && (
                           <p className="text-red-500 mt-2 text-sm">
                             This field is required
                           </p>
@@ -276,7 +283,7 @@ export default function Profile() {
                           <p className="text-red-500 mt-2 text-sm">
                             Alphabetical characters only
                           </p>
-                        )}
+                        )} */}
                       </div>
                     </div>
                   </div>
@@ -287,20 +294,20 @@ export default function Profile() {
                       <div className="mt-2">
                         <input
                           defaultValue={formData.email}
-                          disabled={isPreview}
+                          disabled={true}
                           onChange={handleChange}
                           type="email"
                           placeholder="Type here"
                           id="email"
                           name="email"
                           className="block w-full rounded-md border-0 p-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                          {...register("email", {
-                            required: true,
-                            pattern:
-                              /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/i,
-                          })}
+                          // {...register("email", {
+                          //   required: true,
+                          //   pattern:
+                          //     /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/i,
+                          // })}
                         />
-                        {errors?.email?.type === "required" && (
+                        {/* {errors?.email?.type === "required" && (
                           <p className="text-red-500 mt-2 text-sm">
                             This field is required
                           </p>
@@ -309,7 +316,7 @@ export default function Profile() {
                           <p className="text-red-500 mt-2 text-sm">
                             This is not a valid email format
                           </p>
-                        )}
+                        )} */}
                       </div>
                     </div>
                     <div className="sm:col-span-3">
@@ -328,13 +335,13 @@ export default function Profile() {
                           name="phone_number"
                           id="phone_number"
                           className="block w-full rounded-md border-0 p-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                          {...register("mobilePhone", {
-                            required: true,
-                            maxLength: 10,
-                            pattern: /^([+]\d{2})?\d{10}$/,
-                          })}
+                          // {...register("mobilePhone", {
+                          //   required: true,
+                          //   maxLength: 10,
+                          //   pattern: /^([+]\d{2})?\d{10}$/,
+                          // })}
                         />
-                        {errors?.mobilePhone?.type === "required" && (
+                        {/* {errors?.mobilePhone?.type === "required" && (
                           <p className="text-red-500 mt-2 text-sm">
                             This field is required
                           </p>
@@ -348,7 +355,7 @@ export default function Profile() {
                           <p className="text-red-500 mt-2 text-sm">
                             Please provide valid phone number
                           </p>
-                        )}
+                        )} */}
                       </div>
                     </div>
                   </div>
@@ -369,17 +376,17 @@ export default function Profile() {
                           label="Select here"
                           id="applicant_type"
                           name="applicant_type"
-                          {...register("applicantType", {
-                            required: true,
-                          })}
+                          // {...register("applicantType", {
+                          //   required: true,
+                          // })}
                         >
                           <option value="Institute">Institute</option>
                         </select>
-                        {errors?.applicantType?.type === "required" && (
+                        {/* {errors?.applicantType?.type === "required" && (
                           <p className="text-red-500 mt-2 text-sm">
                             This field is required
                           </p>
-                        )}
+                        )} */}
                       </div>
                     </div>
                     <div className="sm:col-span-3 ">
@@ -397,18 +404,18 @@ export default function Profile() {
                           label="Select here"
                           id="course_type"
                           name="course_type"
-                          {...register("courseType", {
-                            required: true,
-                          })}
+                          // {...register("courseType", {
+                          //   required: true,
+                          // })}
                         >
                           <option value="Nursing">Nursing</option>
                           <option value="Paramedical">Paramedical</option>
                         </select>
-                        {errors?.courseType?.type === "required" && (
+                        {/* {errors?.courseType?.type === "required" && (
                           <p className="text-red-500 mt-2 text-sm">
                             This field is required
                           </p>
-                        )}
+                        )} */}
                       </div>
                     </div>
                   </div>
@@ -416,16 +423,21 @@ export default function Profile() {
                   <div className="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6"></div>
                 </div>
 
-                <div className="flex flex-row justify-end h-1/2 my-auto mb-0 gap-2">
+                <div className="flex flex-row justify-end h-1/2 my-auto mb-0 gap-4">
+                  <button
+                    className="bg-gray-50 px-6 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                    onClick={() => setIsPreview(true)}
+                  >
+                    Cancel
+                  </button>
                   <Button
                     moreClass="px-6 text-white"
                     text={text}
-                    type="edit"
-                    onClick={function () {
+                    onClick={function (e) {
                       setText("Save");
                       setIsPreview(false);
                       // {text==="Save" && navigate(APPLICANT_ROUTE_MAP.dashboardModule.my_applications)}
-                      
+                      handleSubmit(e);
                     }}
                   ></Button>
                 </div>
