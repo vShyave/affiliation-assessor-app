@@ -348,8 +348,13 @@ const CreateForm = (props) => {
 
             <button
               onClick={handleDownloadNocOrCertificate}
-              disabled={formData.form_status == "Approved"}
-              className="bg-primary-900 py-2 mb-8 font-medium rounded-[4px] px-2 text-white flex flex-row items-center gap-3"
+              // disabled={formData.form_status !== "Approved"}
+              className={`${
+                (formData.form_status == "Approved")
+                  ? "cursor-not-allowed border border-gray-500 bg-white text-gray-200 px-8 h-[44px]"
+                  : "border border-blue-900 bg-blue-900 text-white rounded-[4px] px-2 h-[44px] text-white"
+              }`}
+              // className="bg-primary-900 py-2 mb-8 font-medium rounded-[4px] px-2 text-white flex flex-row items-center gap-3"
             >
               Download NOC/Certificate
             </button>

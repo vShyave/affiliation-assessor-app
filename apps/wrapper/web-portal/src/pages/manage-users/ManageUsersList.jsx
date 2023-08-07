@@ -102,15 +102,78 @@ export default function ManageUsersList({
     },
   ];
 
-  const handleUsersetInvalid = async (e) => {
-    const userId = e?.user_id;
+  const handleUsersetInvalid = async (user) => {
+    const userId = user?.user_id;
     const formData = new FormData();
     formData.append("assessorId", userId);
-
+    let e = user
     try {
       setSpinner(true)
       const response = await handleInctiveUser(formData);
-      fetchAllUsers();
+      e["workingstatus"]="Invalid"
+      resUserData.forEach((item)=>{
+        if(item.id===userId){
+          item.status="Inactive"
+          item.more_actions= (
+            <div className="flex flex-row text-2xl font-semibold">
+              <Menu>
+                <MenuHandler>
+                  <button className="leading-3 position-relative">...</button>
+                </MenuHandler>
+                <MenuList>
+                  <MenuItem
+                    onClick={() =>
+                      navigation(
+                        `${ADMIN_ROUTE_MAP.adminModule.manageUsers.createUser}/${e.user_id}`
+                      )
+                    }
+                  >
+                    <div className="flex flex-row gap-4 mt-4">
+                      <div>
+                        <MdEdit />
+                      </div>
+                      <div className="text-semibold m-">
+                        <span>Edit</span>
+                      </div>
+                    </div>{" "}
+                  </MenuItem>
+                  <MenuItem
+                    onClick={() =>
+                      e?.workingstatus === "Invalid"
+                        ? handleUserSetValid(e)
+                        : handleUsersetInvalid(e)
+                    }
+                  >
+                    <div className="flex flex-row gap-4 mt-4">
+                      <div>
+                        <MdSwapHoriz />
+                      </div>
+                      <div className="text-semibold m-">
+                        <span>
+                          {e?.workingstatus === "Invalid"
+                            ? "Activate"
+                            : "Deactivate"}
+                        </span>
+                      </div>
+                    </div>
+                  </MenuItem>
+                  <MenuItem onClick={() => handleUserDelete(e)}>
+                    <div className="flex flex-row gap-4 mt-4">
+                      <div>
+                        <MdDelete />
+                      </div>
+                      <div className="text-semibold m-">
+                        <span>Delete</span>
+                      </div>
+                    </div>{" "}
+                  </MenuItem>
+                </MenuList>
+              </Menu>
+            </div>
+          )
+        }
+      })
+      setUserTableList(resUserData)
     } catch (error) {
       console.log("error - ", error);
       setToast((prevState) => ({
@@ -123,17 +186,78 @@ export default function ManageUsersList({
       setSpinner(false)
     }
   };
-  const handleUserSetValid = async (e) => {
-    const userId = e?.user_id;
+  const handleUserSetValid = async (user) => {
+    const userId = user?.user_id;
     const formData = new FormData();
     formData.append("assessorId", userId);
+    let e = user
     try {
       setSpinner(true)
       const validResponse = await handleActiveUser(formData);
-
-      // setUsersList((usersList) => ({ ...usersList, [validResponse]: validResponse.data.update_assessors.returning[0] }));
-
-      fetchAllUsers();
+      e["workingstatus"]="Valid"
+      resUserData.forEach((item)=>{
+        if(item.id===userId){
+          item.status="Active"
+          item.more_actions= (
+        <div className="flex flex-row text-2xl font-semibold">
+          <Menu>
+            <MenuHandler>
+              <button className="leading-3 position-relative">...</button>
+            </MenuHandler>
+            <MenuList>
+              <MenuItem
+                onClick={() =>
+                  navigation(
+                    `${ADMIN_ROUTE_MAP.adminModule.manageUsers.createUser}/${e.user_id}`
+                  )
+                }
+              >
+                <div className="flex flex-row gap-4 mt-4">
+                  <div>
+                    <MdEdit />
+                  </div>
+                  <div className="text-semibold m-">
+                    <span>Edit</span>
+                  </div>
+                </div>{" "}
+              </MenuItem>
+              <MenuItem
+                onClick={() =>
+                  e?.workingstatus === "Invalid"
+                    ? handleUserSetValid(e)
+                    : handleUsersetInvalid(e)
+                }
+              >
+                <div className="flex flex-row gap-4 mt-4">
+                  <div>
+                    <MdSwapHoriz />
+                  </div>
+                  <div className="text-semibold m-">
+                    <span>
+                      {e?.workingstatus === "Invalid"
+                        ? "Activate"
+                        : "Deactivate"}
+                    </span>
+                  </div>
+                </div>{" "}
+              </MenuItem>
+              <MenuItem onClick={() => handleUserDelete(e)}>
+                <div className="flex flex-row gap-4 mt-4">
+                  <div>
+                    <MdDelete />
+                  </div>
+                  <div className="text-semibold m-">
+                    <span>Delete</span>
+                  </div>
+                </div>{" "}
+              </MenuItem>
+            </MenuList>
+          </Menu>
+        </div>
+      )
+        }
+      })
+      setUserTableList(resUserData)
     } catch (error) {
       console.log("error - ", error);
       setToast((prevState) => ({
@@ -473,7 +597,7 @@ export default function ManageUsersList({
                     }}
                     moreClass={`${
                       (listArray==0)
-                        ? "cursor-not-allowed border border-gray-500 bg-white text-gray-500 px-8 h-[44px]"
+                        ? "cursor-not-allowed border border-gray-500 bg-white text-gray-200 px-8 h-[44px]"
                         : "px-8 text-white"
                     }`}
                     onClick={() => selectedRows.length ? setDeleteBulkUsersModel(true): setDeleteBulkUsersModel(false)}
@@ -481,7 +605,7 @@ export default function ManageUsersList({
                   ></Button>
                   <button
                     onClick={() => setBulkUploadUsersModel(true)}
-                    className="flex flex-wrap items-center justify-center gap-2 border border-gray-500 text-gray-500 bg-white w-[200px] h-[45px] text-md font-medium rounded-[4px]"
+                    className="flex flex-wrap items-center justify-center gap-2 border border-gray-500 text-gray-900 bg-white w-[200px] h-[45px] text-md font-medium rounded-[4px]"
                   >
                     Bulk upload users
                     <span className="text-xl">
