@@ -243,7 +243,13 @@ export const getScheduleAssessment = async (postData) => {
   );
   return res;
 };
-
+export const addInstituteCourse = async (postData) => {
+  const res = await adminCustomPost.post(
+    API_URL.desktopAnalysis.addInstituteCourse,
+    postData
+  );
+  return res;
+};
 export const getDesktopAnalysisForms = async (postData) => {
   const res = await adminCustomPost.post(
     API_URL.desktopAnalysis.getDesktopAnalysisForms,
@@ -400,7 +406,7 @@ export const registerEvent = async (postData) => {
 
   const res = await adminCustomPost.post(API_URL.common.registerEvent, events);
   return res;
-}
+};
 
 // Notifications APIs
 export const insertNotifications = async (postData) => {
@@ -409,7 +415,7 @@ export const insertNotifications = async (postData) => {
     postData
   );
   return res;
-}
+};
 
 export const getNotifications = async (postData) => {
   const res = await adminCustomPost.post(
@@ -417,7 +423,7 @@ export const getNotifications = async (postData) => {
     postData
   );
   return res;
-}
+};
 
 export const readNotification = async (postData) => {
   const res = await adminCustomPost.put(
@@ -425,7 +431,7 @@ export const readNotification = async (postData) => {
     postData
   );
   return res;
-}
+};
 
 export const viewNotification = async (postData) => {
   const res = await adminCustomPost.post(
@@ -433,12 +439,9 @@ export const viewNotification = async (postData) => {
     postData
   );
   return res;
-}
+};
 
 export const updateFormStatus = async (postData) => {
-  const res = await adminCustomPost.put (
-    API_URL.common.updateForm,
-    postData
-  );
+  const res = await adminCustomPost.put(API_URL.common.updateForm, postData);
   return res;
-}
+};

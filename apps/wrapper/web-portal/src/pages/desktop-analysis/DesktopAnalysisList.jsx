@@ -36,7 +36,7 @@ const DesktopAnalysisList = () => {
   });
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [isFilterOpen, setIsFilterOpen] = useState(false);
-  const {setSpinner} = useContext(ContextAPI)
+  const { setSpinner } = useContext(ContextAPI);
 
   const COLUMNS = [
     {
@@ -117,12 +117,12 @@ const DesktopAnalysisList = () => {
 
   const markStatus = async (postData) => {
     try {
-      setSpinner(true)
+      setSpinner(true);
       const res = await markReviewStatus(postData);
     } catch (error) {
       console.log("error - ", error);
-    }finally{
-      setSpinner(false)
+    } finally {
+      setSpinner(false);
     }
   };
 
@@ -138,7 +138,7 @@ const DesktopAnalysisList = () => {
       limit: paginationInfo.limit,
     };
     try {
-      setSpinner(true)
+      setSpinner(true);
       const res = await getDesktopAnalysisForms(pagination);
       setPaginationInfo((prevState) => ({
         ...prevState,
@@ -147,8 +147,8 @@ const DesktopAnalysisList = () => {
       setFormsList(res?.data?.form_submissions);
     } catch (error) {
       console.log("error - ", error);
-    }finally{
-      setSpinner(false)
+    } finally {
+      setSpinner(false);
     }
   };
 
@@ -159,7 +159,7 @@ const DesktopAnalysisList = () => {
       ...searchData,
     };
     try {
-      setSpinner(true)
+      setSpinner(true);
       const res = await searchDesktop(postData);
       setPaginationInfo((prevState) => ({
         ...prevState,
@@ -168,8 +168,8 @@ const DesktopAnalysisList = () => {
       setFormsList(res?.data?.form_submissions);
     } catch (error) {
       console.log("error - ", error);
-    }finally{
-      setSpinner(false)
+    } finally {
+      setSpinner(false);
     }
   };
 
@@ -180,7 +180,7 @@ const DesktopAnalysisList = () => {
       ...filters,
     };
     try {
-      setSpinner(true)
+      setSpinner(true);
       const res = await filterDesktopAnalysis(postData);
       setPaginationInfo((prevState) => ({
         ...prevState,
@@ -189,8 +189,8 @@ const DesktopAnalysisList = () => {
       setFormsList(res?.data?.form_submissions);
     } catch (error) {
       console.log("error - ", error);
-    }finally{
-      setSpinner(false)
+    } finally {
+      setSpinner(false);
     }
   };
 
@@ -222,10 +222,12 @@ const DesktopAnalysisList = () => {
       status_obj.submitted_today++;
     }
     if (e.form_status === null) {
-      status_obj.pending++;
+      status_obj.pending++; //red bg-red-500
     } else if (e.form_status?.toLowerCase() === "in progress") {
+      //yellow bg-yellow-400
       status_obj.in_progress++;
     } else if (e.form_status?.toLowerCase() === "reviewed") {
+      //green bg-green-400
       status_obj.reviewed++;
     }
   });
