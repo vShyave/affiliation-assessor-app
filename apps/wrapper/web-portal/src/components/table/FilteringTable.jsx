@@ -156,6 +156,7 @@ const FilteringTable = (props) => {
           setIsFilterOpen={props.setIsFilterOpen}
           paginationInfo={props.paginationInfo}
           setPaginationInfo={props.setPaginationInfo}
+          selectedRound={props?.selectedRound}
         />
       )}
 
