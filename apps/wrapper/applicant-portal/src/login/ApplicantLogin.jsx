@@ -121,8 +121,10 @@ const ApplicantLogin = () => {
       // );
 
       console.log(loginRes);
-      let roles = []
-      loginRes.data.roleRepresentationList.forEach((item) => roles.push(item.name));
+      let roles = [];
+      loginRes.data.roleRepresentationList.forEach((item) =>
+        roles.push(item.name)
+      );
       console.log(roles);
 
       const applicantDetailsRes = await applicantService.getApplicantDetails({
@@ -152,6 +154,12 @@ const ApplicantLogin = () => {
         );
       }
     } catch (error) {
+      setToast((prevState) => ({
+        ...prevState,
+        toastOpen: true,
+        toastMsg: "Enter the correct OTP.",
+        toastType: "error",
+      }));
       console.log(
         "Otp veriification and login failed due to some error",
         error

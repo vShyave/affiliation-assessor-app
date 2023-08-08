@@ -122,7 +122,7 @@ const AssessmentType = () => {
       setActiveTabValue(tabs[0].value);
       setActiveButtonValue(tabs[0].level[0]);
     } catch (error) {
-      console.debug(error)
+      console.debug(error);
     }
   };
 

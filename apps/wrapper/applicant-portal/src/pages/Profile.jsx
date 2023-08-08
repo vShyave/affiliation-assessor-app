@@ -93,16 +93,14 @@ export default function Profile() {
     };
 
     try {
-      const response = await profileService.getProfileEdit(
-        instituteEditDetails,
-
+      const response = await profileService.getProfileEdit(instituteEditDetails)
         setToast((prevState) => ({
           ...prevState,
           toastOpen: true,
           toastMsg: "User successfully edited",
           toastType: "success",
         }))
-      );
+      ;
       setTimeout(
         () =>
           setToast((prevState) => ({

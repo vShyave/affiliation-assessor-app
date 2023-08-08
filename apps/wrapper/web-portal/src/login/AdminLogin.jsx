@@ -17,7 +17,7 @@ const AdminLogin = () => {
   const [emailId, setEmailId] = useState(null);
   const [verifyEnteredOtp, setVerifyEnteredOtp] = useState(true);
   const navigate = useNavigate();
-  const {setSpinner,setToast,toast} = useContext(ContextAPI)
+  const { setSpinner, setToast, toast } = useContext(ContextAPI);
 
   const {
     register,
@@ -76,19 +76,19 @@ const AdminLogin = () => {
       //   );
       // }
     } catch (error) {
-      console.log("Otp not sent due to some error", error);
       setToast((prevState) => ({
         ...prevState,
         toastOpen: true,
         toastMsg: "User not registered.",
         toastType: "error",
       }));
+      console.log("Otp not sent due to some error", error);
     }
   };
 
   const verifyOtp = async (data) => {
     try {
-      setSpinner(true)
+      setSpinner(true);
       const loginDetails = {
         email: data.email,
         otp: Number(data.otp),
@@ -133,14 +133,20 @@ const AdminLogin = () => {
         }));
       }
     } catch (error) {
+      setToast((prevState) => ({
+        ...prevState,
+        toastOpen: true,
+        toastMsg: "Enter the correct OTP.",
+        toastType: "error",
+      }));
       console.log(
         "Otp veriification and login failed due to some error",
         error
       );
       removeCookie("regulator");
       removeCookie("userData");
-    }finally{
-      setSpinner(false)
+    } finally {
+      setSpinner(false);
     }
   };
 

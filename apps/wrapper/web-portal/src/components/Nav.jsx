@@ -47,13 +47,13 @@ export default function Nav() {
                     On Ground Inspection Analysis
                   </NavLink>
                 </li>
-                <li className="flex hover:text-primary-600 hover:cursor-pointer">
+                {/* <li className="flex hover:text-primary-600 hover:cursor-pointer">
                   <NavLink
                     to={ADMIN_ROUTE_MAP.adminModule.certificateManagement.home }
                   >
                     Certificate Management
                   </NavLink>
-                </li>
+                </li> */}
                 <li className="flex hover:text-primary-600 hover:cursor-pointer">
                   <NavLink
                     to={ADMIN_ROUTE_MAP.adminModule.scheduleManagement.home}

@@ -198,11 +198,26 @@ const FilteringTable = (props) => {
           <tbody {...getTableBodyProps()}>
             {page?.map((row, index) => {
               prepareRow(row);
-
               return (
                 <tr
                   {...row.getRowProps()}
-                  className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 cursor-pointer"
+                  className={`bg-opacity-25 border-b dark:bg-gray-800 dark:border-gray-700 cursor-pointer ${
+                    row.original.status.toLowerCase() === "in progress"
+                      ? "bg-yellow-400"
+                      : row.original.status.toLowerCase() === "resubmitted"
+                      ? "bg-orange-400"
+                      : row.original.status.toLowerCase() ===
+                        "inspection scheduled"
+                      ? "bg-blue-400"
+                      : row.original.status.toLowerCase() ===
+                        "application submitted"
+                      ? "bg-green-400"
+                      : row.original.status.toLowerCase() === "na"
+                      ? "bg-red-400"
+                      : row.original.status.toLowerCase() === "oga completed"
+                      ? "bg-purple-400"
+                      : "bg-white"
+                  }`}
                   onClick={() => props.navigateFunc(row)}
                   key={index}
                 >
