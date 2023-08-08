@@ -2,7 +2,7 @@ import XMLParser from "react-xml-parser";
 import localforage from "localforage";
 import Cookies from "js-cookie";
 
-import { getMedicalAssessments, getPrefillXML, getSubmissionXML } from "../api";
+import { getMedicalAssessments, getPrefillXML, getSubmissionXML, registerEvent } from "../api";
 
 const ENKETO_URL = process.env.REACT_APP_ENKETO_URL;
 
@@ -25,6 +25,19 @@ export const makeHasuraCalls = async (query) => {
 
 const validateResponse = async (response) => {
   const apiRes = await response.json();
+  const { user } = getCookie('userData');
+
+  console.log("apiRes - ", apiRes);
+  if (apiRes?.data?.insert_form_submissions) {
+    registerEvent({
+      created_date: getLocalTimeInISOFormat(),
+      entity_id: apiRes?.data?.insert_form_submissions?.returning?.[0]?.form_id.toString(),
+      entity_type: "form",
+      event_name: "OGA Completed",
+      remarks: `${user.firstName} ${user.lastName} has completed the On Ground Inspection Analysis`,
+    });
+  }
+
   const jsonResponse = {
     ...apiRes,
     responseStatus: false,
@@ -235,3 +248,10 @@ export const getFormData = async ({
   } else setData(null);
   loading.current = false;
 };
+
+export const getLocalTimeInISOFormat = () => {
+  const now = new Date();
+  const offset = now.getTimezoneOffset();
+  const localTime = new Date(now - offset * 60 * 1000);
+  return localTime.toISOString();
+}

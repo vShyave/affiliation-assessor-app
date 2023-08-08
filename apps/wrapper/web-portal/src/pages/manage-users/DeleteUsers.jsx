@@ -3,7 +3,7 @@ import { getOnGroundViewStatus } from "../../api";
 
 import { Button } from "../../components";
 
-function DeleteUsersModal({ closeDeleteUsersModal,setDeleteFlags }) {
+function DeleteUsersModal({ closeDeleteUsersModal, setDeleteFlags }) {
   //   const [formStatus, setFormStatus] = useState({})
 
   //   useEffect(()=>{
@@ -16,8 +16,6 @@ function DeleteUsersModal({ closeDeleteUsersModal,setDeleteFlags }) {
   // fetchData();
   //   },[])
 
-
-
   return (
     <>
       <div className="flex flex-col justify-center items-center fixed inset-0 bg-opacity-25 backdrop-blur-sm">
@@ -28,8 +26,8 @@ function DeleteUsersModal({ closeDeleteUsersModal,setDeleteFlags }) {
             </div>
             <div>
               <div className="text-base">
-              Are you sure, you want to delete the user/s ? Once deleted, 
-                this action cannot be reverted.
+                Are you sure, you want to delete the user/s ? Once deleted, this
+                action cannot be reverted.
               </div>
             </div>
             <hr />
@@ -37,7 +35,6 @@ function DeleteUsersModal({ closeDeleteUsersModal,setDeleteFlags }) {
               <Button
                 onClick={() => {
                   closeDeleteUsersModal(false);
-                  
                 }}
                 moreClass="border border-gray-200 bg-white text-blue-600 w-[120px]"
                 text="Cancel"
@@ -45,7 +42,7 @@ function DeleteUsersModal({ closeDeleteUsersModal,setDeleteFlags }) {
               <Button
                 onClick={() => {
                   closeDeleteUsersModal(false);
-                  setDeleteFlags(true)
+                  setDeleteFlags(true);
                 }}
                 moreClass="border border-red-600 bg-red-600 text-white w-[120px]"
                 text="Delete"

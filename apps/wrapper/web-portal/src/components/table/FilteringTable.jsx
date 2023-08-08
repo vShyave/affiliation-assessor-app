@@ -97,7 +97,6 @@ const FilteringTable = (props) => {
 
     setPaginationInfo((prevState) => ({
       ...prevState,
-
       offsetNo: offsetNo - pageSize,
     }));
   };
