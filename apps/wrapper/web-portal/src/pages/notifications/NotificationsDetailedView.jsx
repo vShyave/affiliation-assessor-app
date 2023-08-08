@@ -138,31 +138,25 @@ export default function NotificationsDetailedView(props) {
                             {item.date}
                           </div>
                         </div>
-                        <div className="flex flex-col gap-1">
-                          <Typography
-                            variant="small"
-                            color="gray"
-                            className="font-normal"
+                        <div className="flex flex-col text-sm">
+                          <div
+                            className={`${
+                              item.read_status === "Read"
+                                ? "font-medium"
+                                : "font-bold"
+                            } text-gray-900`}
                           >
-                            <div
-                              className={`${
-                                item.read_status === "Read"
-                                  ? "font-medium"
-                                  : "font-bold"
-                              } text-gray-900`}
-                            >
-                              {item.title}
-                            </div>
-                            <div
-                              className={`${
-                                item.read_status === "Read"
-                                  ? "font-medium"
-                                  : "font-bold"
-                              }`}
-                            >
-                              {item.subText}
-                            </div>
-                          </Typography>
+                            {item.title}
+                          </div>
+                          <div
+                            className={`${
+                              item.read_status === "Read"
+                                ? "font-medium"
+                                : "font-bold"
+                            }`}
+                          >
+                            {item.subText}
+                          </div>
                         </div>
                       </MenuItem>
                     </div>

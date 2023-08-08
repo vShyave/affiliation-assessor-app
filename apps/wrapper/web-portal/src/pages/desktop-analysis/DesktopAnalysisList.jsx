@@ -36,7 +36,8 @@ const DesktopAnalysisList = () => {
   });
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [isFilterOpen, setIsFilterOpen] = useState(false);
-  const { setSpinner } = useContext(ContextAPI);
+  const {setSpinner} = useContext(ContextAPI)
+  const [selectedRound, setSelectedRound] = useState(1)
 
   const COLUMNS = [
     {
@@ -130,16 +131,17 @@ const DesktopAnalysisList = () => {
     if (!isSearchOpen && !isFilterOpen) {
       fetchDesktopAnalysisForms();
     }
-  }, [paginationInfo.offsetNo, paginationInfo.limit]);
+  }, [paginationInfo.offsetNo, paginationInfo.limit,selectedRound]);
 
   const fetchDesktopAnalysisForms = async () => {
-    const pagination = {
+    const postData = {
       offsetNo: paginationInfo.offsetNo,
       limit: paginationInfo.limit,
+      round: selectedRound
     };
     try {
-      setSpinner(true);
-      const res = await getDesktopAnalysisForms(pagination);
+      setSpinner(true)
+      const res = await getDesktopAnalysisForms(postData);
       setPaginationInfo((prevState) => ({
         ...prevState,
         totalCount: res.data.form_submissions_aggregate.aggregate.totalCount,
@@ -156,6 +158,7 @@ const DesktopAnalysisList = () => {
     const postData = {
       offsetNo: paginationInfo.offsetNo,
       limit: paginationInfo.limit,
+      round: selectedRound,
       ...searchData,
     };
     try {
@@ -174,10 +177,17 @@ const DesktopAnalysisList = () => {
   };
 
   const filterApiCall = async (filters) => {
+    let customFilters = {
+      condition: {...filters['condition'],
+      round: {
+        _eq: selectedRound
+      }
+    }
+    }
     const postData = {
       offsetNo: paginationInfo.offsetNo,
       limit: paginationInfo.limit,
-      ...filters,
+      ...customFilters,
     };
     try {
       setSpinner(true);
@@ -271,14 +281,14 @@ const DesktopAnalysisList = () => {
               <div className="sm:col-span-3">
                 <div className="w-72 bg-white rounded-[8px]">
                   <Select
-                    value="1"
+                    value={selectedRound}
                     label="Select round"
                     onChange={(value) => {
-                      console.log(value);
+                      setSelectedRound(value)
                     }}
                   >
-                    <Option value="1">Round one</Option>
-                    <Option value="2">Round two</Option>
+                    <Option value={1}>Round one</Option>
+                    <Option value={2}>Round two</Option>
                   </Select>
                 </div>
               </div>
@@ -357,6 +367,7 @@ const DesktopAnalysisList = () => {
                 searchApiCall={searchApiCall}
                 setIsSearchOpen={setIsSearchOpen}
                 setIsFilterOpen={setIsFilterOpen}
+                selectedRound={selectedRound}
               />
             </div>
           </div>

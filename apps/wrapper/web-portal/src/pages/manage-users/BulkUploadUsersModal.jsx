@@ -181,65 +181,12 @@ function BulkUploadUsersModal({ closeBulkUploadUsersModal }) {
 
       fileReader.readAsText(file);
 
-      csvToJSON(file);
     }
   };
 
-  const csvToJSON = (file) => {
-    try {
-      var reader = new FileReader();
-
-      reader.readAsBinaryString(file);
-
-      reader.onload = (e) => {
-        var invalidUserData = [];
-
-        var headers = [];
-
-        var rows = e.target.result.split("\r\n");
-
-        for (var i = 0; i < rows.length; i++) {
-          var cells = rows[i].split(",");
-
-          var rowData = {};
-
-          for (var j = 0; j < cells.length; j++) {
-            if (i == 0) {
-              var headerName = cells[j].trim();
-
-              headers.push(headerName);
-            } else {
-              var key = headers[j];
-
-              if (key) {
-                rowData[key] = cells[j].trim();
-              }
-            }
-          }
-
-          const isValidUserEntry = Object.values(rowData).every(
-            (value) => !!value
-          );
-
-          if (
-            (i > 0 &&
-              isValidUserEntry &&
-              (rowData.mobile_number.toString().length < 10 ||
-                !emailExp.test(rowData.email.toString()))) ||
-            !isValidUserEntry
-          ) {
-            invalidUserData.push({ ...rowData, isRowInvalid: true });
-          }
-
-          setInvalidTableUserList(invalidUserData);
-        }
-      };
-    } catch (e) {
-      console.error(e);
-    }
-  };
-
+  
   const csvFileToArray = (string) => {
+    let invalidUserData = []
     const csvHeader = string.slice(0, string.indexOf("\n")).split(",");
     if (!csvHeader[csvHeader.length - 1]) {
       csvHeader.pop();
@@ -264,6 +211,7 @@ function BulkUploadUsersModal({ closeBulkUploadUsersModal }) {
         obj?.role == ""
       ) {
         obj["isRowInvalid"] = true;
+        invalidUserData.push(obj)
       }
 
       return obj;
@@ -272,6 +220,8 @@ function BulkUploadUsersModal({ closeBulkUploadUsersModal }) {
     setTableUserList(tableUserList);
 
     setAllUsersList(tableUserList); // setting the all user list again to use it in on toggle
+
+    setInvalidTableUserList(invalidUserData);
 
     setTableDataReady(true);
   };

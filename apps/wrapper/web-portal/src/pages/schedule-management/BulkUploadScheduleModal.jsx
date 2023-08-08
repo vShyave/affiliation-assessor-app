@@ -12,7 +12,7 @@ import { ContextAPI } from "../../utils/ContextAPI";
 
 function BulkUploadScheduleModal({ setBulkUploadSchduleModal }) {
   const [file, setFile] = useState();
-  const { setSpinner,setToast } = useContext(ContextAPI);
+  const { setSpinner, setToast } = useContext(ContextAPI);
 
   const [tableAssessmentList, setTableAssessmentList] = useState([]);
 
@@ -30,7 +30,6 @@ function BulkUploadScheduleModal({ setBulkUploadSchduleModal }) {
   const [allAssessmentsList, setAllAssessmentsList] = useState([]);
 
   const [selectedAssessmentList, setSelectedAssessmentList] = useState(false);
-  
 
   let selectedRows = [];
 
@@ -151,70 +150,11 @@ function BulkUploadScheduleModal({ setBulkUploadSchduleModal }) {
       };
 
       fileReader.readAsText(file);
-
-      csvToJSON(file);
-    }
-  };
-
-  const csvToJSON = (file) => {
-    try {
-      var reader = new FileReader();
-
-      reader.readAsBinaryString(file);
-
-      reader.onload = (e) => {
-        var invalidAssessmentData = [];
-
-        var headers = [];
-
-        var rows = e.target.result.split("\n");
-
-        for (var i = 0; i < rows.length; i++) {
-          var cells = rows[i].split(",");
-
-          var rowData = {};
-
-          for (var j = 0; j < cells.length; j++) {
-            if (i == 0) {
-              var headerName = cells[j].trim();
-
-              headers.push(headerName);
-            } else {
-              var key = headers[j];
-
-              if (key) {
-                rowData[key] = cells[j].trim();
-              }
-            }
-          }
-
-          const isValidAssessmentEntry = Object.values(rowData).every(
-            (value) => !!value
-          );
-          console.log(rowData);
-
-          for (let key in rowData) {
-            if (
-              i > 0 &&
-              (rowData[key] == null || rowData[key] == "") &&
-              isValidAssessmentEntry &&
-              !Object.keys(rowData).length &&
-              key !== "assisstant_code"
-            ) {
-              rowData["isRowInvalid"] = true;
-            }
-          }
-          invalidAssessmentData.push(rowData);
-
-          setInvalidTableAssessmentList(invalidAssessmentData);
-        }
-      };
-    } catch (e) {
-      console.error(e);
     }
   };
 
   const csvFileToArray = (string) => {
+    let invalidAssessmentData = [];
     const csvHeader = string.slice(0, string.indexOf("\n")).split(",");
     if (!csvHeader[csvHeader.length - 1]) {
       csvHeader.pop();
@@ -235,6 +175,9 @@ function BulkUploadScheduleModal({ setBulkUploadSchduleModal }) {
           obj["isRowInvalid"] = true;
         }
       }
+      if (obj["isRowInvalid"]) {
+        invalidAssessmentData.push(obj);
+      }
 
       return obj;
     });
@@ -242,6 +185,8 @@ function BulkUploadScheduleModal({ setBulkUploadSchduleModal }) {
     setTableAssessmentList(tableAssessmentList);
 
     setAllAssessmentsList(tableAssessmentList); // setting the all user list again to use it in on toggle
+
+    setInvalidTableAssessmentList(invalidAssessmentData);
 
     setTableDataReady(true);
   };
