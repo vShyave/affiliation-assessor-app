@@ -36,7 +36,6 @@ export default function ApplicationPage({
   let { formName, formId, instituteName, round } = useParams();
   let [instituteNameModal, setInstituteNameModal] = useState(instituteName);
   let [selectRound, setSelectRound] = useState(round);
-  console.log(instituteNameModal);
   const {setSpinner} = useContext(ContextAPI)
 
   const userId = "427d473d-d8ea-4bb3-b317-f230f1c9b2f7";
@@ -164,10 +163,10 @@ export default function ApplicationPage({
                     : "cursor-not-allowed flex flex-wrap items-center justify-center gap-2 border border-gray-500 text-gray-500 bg-white w-[140px] h-[40px] font-medium rounded-[4px]"
                 }
               >
-                Reject{" "}
+                Reject
                 <span>
                   <AiOutlineClose />
-                </span>{" "}
+                </span>
               </button>
               <button
                 onClick={() => setOpenIssueNocModel(true)}
@@ -179,7 +178,7 @@ export default function ApplicationPage({
                 }
                 // className="flex flex-wrap items-center justify-center gap-2 border border-gray-500 text-gray-500 bg-white w-[140px] h-[40px] font-medium rounded-[4px]"
               >
-                Approve{" "}
+                Approve
                 <span>
                   <AiOutlineCheck />
                 </span>
@@ -239,11 +238,12 @@ export default function ApplicationPage({
       )}
       {/* {openCertificateModel && <IssueCertificateModal closeCertificateModal={setOpenCertificateModel}/>} */}
       {openStatusModel && (
-        <StatusLogModal closeStatusModal={setOpenStatusModel} formId={formId} />
+        <StatusLogModal  closeStatusModal={setOpenStatusModel} formId={formId} />
       )}
       {openIssueNocModel && (
         <IssueNocModal
           selectRound={round}
+          setRejectStatus={setRejectStatus}
           selectInstituteName={instituteName}
           setOpenIssueNocModel={setOpenIssueNocModel}
         />

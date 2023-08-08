@@ -14,6 +14,7 @@ function IssueNocModal({
   setOpenIssueNocModel,
   selectRound,
   selectInstituteName,
+  setRejectStatus,
 }) {
   const navigate = useNavigate();
   const [fileName, setFileName] = useState("");
@@ -22,7 +23,7 @@ function IssueNocModal({
   const [fileTypeError, setFileTypeError] = useState(false);
   let pathName = "";
   let nocorCertificateFileName = "";
-  const { setSpinner,setToast } = useContext(ContextAPI);
+  const { setSpinner, setToast } = useContext(ContextAPI);
   // console.log(selectRound);
   // console.log(selectInstituteName);
   // console.log("file",file);
@@ -87,7 +88,7 @@ function IssueNocModal({
           toastMsg: "File uploaded successfully!",
           toastType: "success",
         }));
-        navigate("/groundInspection/noc-issued");
+        // navigate("/groundInspection/noc-issued");
       }
     } catch (error) {
       console.log("error - ", error);
@@ -113,6 +114,10 @@ function IssueNocModal({
     try {
       setSpinner(true);
       const responseNoc = await getAcceptApplicantNoc(postData);
+      const formStatus =
+        responseNoc?.data?.update_form_submissions?.returning[0]?.form_status;
+      setRejectStatus(formStatus === "Approved" ? true : false);
+      console.log("responseNoc", responseNoc);
       console.log("noc hasura done");
       pathName = "";
       nocorCertificateFileName = "";
@@ -134,6 +139,11 @@ function IssueNocModal({
     try {
       setSpinner(true);
       const responseCertificate = await getAcceptApplicantCertificate(postData);
+      const formStatus =
+        responseCertificate?.data?.update_form_submissions?.returning[0]
+          ?.form_status;
+      setRejectStatus(formStatus === "Approved" ? true : false);
+      console.log("responseCertificate", responseCertificate);
       console.log("hasura certificate done");
       pathName = "";
       nocorCertificateFileName = "";
