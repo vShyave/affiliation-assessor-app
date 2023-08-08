@@ -1,9 +1,9 @@
 import React, { useState, useEffect, useContext, useRef } from "react";
 import { Routes, useNavigate, useParams } from "react-router-dom";
 import ROUTE_MAP from "../../routing/routeMap";
-//registerEvent
+
 import { StateContext } from "../../App";
-import { saveFormSubmission, registerEvent } from "../../api";
+import { saveFormSubmission } from "../../api";
 import {
   getCookie,
   getFormData,
@@ -102,9 +102,7 @@ const GenericOdkForm = (props) => {
         const res = await saveFormSubmission({
           schedule_id: scheduleId.current,
           form_data: updatedFormData,
-          assessment_type: formName.startsWith("hospital")
-            ? "hospital"
-            : "institute",
+          assessment_type: "assessor",
           form_name: formSpec.start,
           submission_status: true,
           assessor_id: storedData?.assessor_user_id,
@@ -113,21 +111,12 @@ const GenericOdkForm = (props) => {
           form_status: "OGA Completed",
         });
         console.log(res);
-        // Register Event of the form.
-        // await registerEvent({
-        //   created_date: getLocalTimeInISOFormat(),
-        //   entity_id: formId.toString(),
-        //   entity_type: "form",
-        //   event_name: "Returned",
-        //   remarks: `${userDetails?.userRepresentation?.username} has returned application with remarks`,
-        // });
 
         // Delete the data from the Local Forage
         const key = `${storedData?.assessor_user_id}_${formSpec.start}${
           new Date().toISOString().split("T")[0]
         }`;
         removeItemFromLocalForage(key);
-
         setTimeout(() => navigate(`${ROUTE_MAP.thank_you}${formName}`), 2000);
       }
 
