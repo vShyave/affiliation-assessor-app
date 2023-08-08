@@ -27,7 +27,7 @@ const DesktopAnalysisList = () => {
   var formsDataList = [];
   const [formsList, setFormsList] = useState();
   const [state, setState] = useState({
-    menu_selected: "In Progress",
+    menu_selected: "Application Submitted",
   });
   const [paginationInfo, setPaginationInfo] = useState({
     offsetNo: 0,
@@ -308,18 +308,6 @@ const DesktopAnalysisList = () => {
 
           <div className="flex flex-col gap-4">
             <ul className="flex flex-wrap gap-3 -mb-px">
-              <li className="" onClick={() => handleSelectMenu("In Progress")}>
-                <a
-                  href="#"
-                  className={`inline-block p-4 rounded-t-lg dark:text-blue-500 dark:border-blue-600 ${
-                    state.menu_selected === "In Progress"
-                      ? "text-blue-600 border-b-2 border-blue-600"
-                      : ""
-                  }`}
-                >
-                  New
-                </a>
-              </li>
               <li
                 className=""
                 onClick={() => handleSelectMenu("Application Submitted")}
@@ -332,7 +320,7 @@ const DesktopAnalysisList = () => {
                       : ""
                   }`}
                 >
-                  Submitted
+                  New
                 </a>
               </li>
               <li className="" onClick={() => handleSelectMenu("Resubmitted")}>
@@ -379,23 +367,6 @@ const DesktopAnalysisList = () => {
 
             {/* table creation starts here */}
             <div className="flex flex-col gap-4">
-              {state.menu_selected === "In Progress" && (
-                <FilteringTable
-                  dataList={formsDataList}
-                  navigateFunc={navigateToView}
-                  columns={COLUMNS}
-                  pagination={true}
-                  onRowSelect={() => {}}
-                  filterApiCall={filterApiCall}
-                  showFilter={true}
-                  paginationInfo={paginationInfo}
-                  setPaginationInfo={setPaginationInfo}
-                  searchApiCall={searchApiCall}
-                  setIsSearchOpen={setIsSearchOpen}
-                  setIsFilterOpen={setIsFilterOpen}
-                  selectedRound={selectedRound}
-                />
-              )}
               {state.menu_selected === "Application Submitted" && (
                 <FilteringTable
                   dataList={formsDataList}
