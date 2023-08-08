@@ -216,9 +216,9 @@ const FilteringTable = (props) => {
                       ? "bg-red-400"
                       : row.original.status?.toLowerCase() === "oga completed"
                       ? "bg-purple-400"
-                      : row.original.status.toLowerCase() === "approved"
+                      : row.original.status?.toLowerCase() === "approved"
                       ? "bg-teal-400"
-                      : row.original.status.toLowerCase() === "rejected"
+                      : row.original.status?.toLowerCase() === "rejected"
                       ? "bg-pink-400"
                       : "bg-white"
                   }`}
