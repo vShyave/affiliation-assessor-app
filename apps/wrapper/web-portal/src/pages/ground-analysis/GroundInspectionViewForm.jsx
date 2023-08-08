@@ -27,8 +27,9 @@ export default function ApplicationPage({
   closeCertificateModal,
 }) {
   const reportTemplateRef = useRef(null);
-  const [rejectStatus, setRejectStatus] = useState(false);
+  const [formStatus, setFormStatus] = useState(false);
   const [rejectModel, setRejectModel] = useState(false);
+  const[rejectStatus,setRejectStatus] = useState(false)
   const [openModel, setOpenModel] = useState(false);
   const [openStatusModel, setOpenStatusModel] = useState(false);
   const [openIssueNocModel, setOpenIssueNocModel] = useState(false);
@@ -76,6 +77,8 @@ export default function ApplicationPage({
       setSpinner(true)
       const res = await getFormData(postData);
     const formData = res.data.form_submissions[0];
+    const statusOfForm = formData?.form_status
+    setFormStatus(statusOfForm)
 
     let formURI = await getPrefillXML(
       `${formData?.form_name}`,
@@ -156,11 +159,11 @@ export default function ApplicationPage({
             <div className="flex grow gap-4 justify-end items-center">
               <button
                 onClick={() => setRejectModel(true)}
-                disabled={rejectStatus}
+                disabled={(formStatus=="Approved")||(formStatus=="Rejected")||(rejectStatus)? true:false}
                 className={
-                  !rejectStatus
-                    ? "flex flex-wrap items-center justify-center gap-2 border border-gray-500 text-gray-500 bg-white w-[140px] h-[40px] font-medium rounded-[4px]"
-                    : "cursor-not-allowed flex flex-wrap items-center justify-center gap-2 border border-gray-500 text-gray-500 bg-white w-[140px] h-[40px] font-medium rounded-[4px]"
+                  (formStatus=="Approved")||(formStatus=="Rejected")||(rejectStatus)
+                    ? "invisible cursor-not-allowed flex flex-wrap items-center justify-center gap-2 border border-gray-500 text-gray-500 bg-white w-[140px] h-[40px] font-medium rounded-[4px]"
+                    : "flex flex-wrap items-center justify-center gap-2 border border-gray-500 text-gray-500 bg-white w-[140px] h-[40px] font-medium rounded-[4px]"
                 }
               >
                 Reject
@@ -170,11 +173,11 @@ export default function ApplicationPage({
               </button>
               <button
                 onClick={() => setOpenIssueNocModel(true)}
-                disabled={rejectStatus}
+                disabled={(formStatus=="Approved")||(formStatus=="Rejected")||(rejectStatus) ? true:false}
                 className={
-                  !rejectStatus
-                    ? "flex flex-wrap items-center justify-center gap-2 border border-gray-500 text-gray-500 bg-white w-[140px] h-[40px] font-medium rounded-[4px]"
-                    : "cursor-not-allowed flex flex-wrap items-center justify-center gap-2 border border-gray-500 text-gray-500 bg-white w-[140px] h-[40px] font-medium rounded-[4px]"
+                  (formStatus=="Approved")||(formStatus=="Rejected")||(rejectStatus)
+                    ?  "invisible cursor-not-allowed flex flex-wrap items-center justify-center gap-2 border border-gray-500 text-gray-500 bg-white w-[140px] h-[40px] font-medium rounded-[4px]"
+                    :"flex flex-wrap items-center justify-center gap-2 border border-gray-500 text-gray-500 bg-white w-[140px] h-[40px] font-medium rounded-[4px]"
                 }
                 // className="flex flex-wrap items-center justify-center gap-2 border border-gray-500 text-gray-500 bg-white w-[140px] h-[40px] font-medium rounded-[4px]"
               >
@@ -183,7 +186,10 @@ export default function ApplicationPage({
                   <AiOutlineCheck />
                 </span>
               </button>
-              <div className="inline-block h-[40px] min-h-[1em] w-0.5 border opacity-100 dark:opacity-50"></div>
+              <div className={
+                 (formStatus=="Approved")||(formStatus=="Rejected")||(rejectStatus)?
+                 "invisible" 
+              : "inline-block h-[40px] min-h-[1em] w-0.5 border opacity-100 dark:opacity-50" }></div>
               <button
                 onClick={() => setOpenStatusModel(true)}
                 className="border border-gray-500 text-blue-600 bg-gray-100 w-[140px] h-[40px] font-medium rounded-[4px]"
@@ -234,6 +240,7 @@ export default function ApplicationPage({
         <RejectNocModal
           closeRejectModal={setRejectModel}
           setRejectStatus={setRejectStatus}
+          formId={formId}
         />
       )}
       {/* {openCertificateModel && <IssueCertificateModal closeCertificateModal={setOpenCertificateModel}/>} */}
@@ -243,8 +250,9 @@ export default function ApplicationPage({
       {openIssueNocModel && (
         <IssueNocModal
           selectRound={round}
-          setRejectStatus={setRejectStatus}
+          // setRejectStatus={setRejectStatus}
           selectInstituteName={instituteName}
+          formId={formId}
           setOpenIssueNocModel={setOpenIssueNocModel}
         />
       )}
