@@ -4,16 +4,23 @@ import {
   getAcceptApplicantCertificate,
   nocPdfUploader,
   getAcceptApplicantNoc,
+  registerEvent,
+  updateFormStatus,
 } from "../../api";
 import ADMIN_ROUTE_MAP from "../../routes/adminRouteMap";
+import { getCookie } from "../../utils";
+
 import { useNavigate } from "react-router-dom";
 import { Button } from "../../components";
 import { ContextAPI } from "../../utils/ContextAPI";
+import { getLocalTimeInISOFormat } from "../../utils";
 
 function IssueNocModal({
   setOpenIssueNocModel,
   selectRound,
+  formId,
   selectInstituteName,
+  setRejectStatus,
 }) {
   const navigate = useNavigate();
   const [fileName, setFileName] = useState("");
@@ -22,11 +29,10 @@ function IssueNocModal({
   const [fileTypeError, setFileTypeError] = useState(false);
   let pathName = "";
   let nocorCertificateFileName = "";
-  const { setSpinner,setToast } = useContext(ContextAPI);
-  // console.log(selectRound);
-  // console.log(selectInstituteName);
-  // console.log("file",file);
+  const { setSpinner, setToast } = useContext(ContextAPI);
+  const userDetails = getCookie("userData");
 
+ const user_details = userDetails?.userRepresentation
   const hiddenFileInput = React.useRef(null);
   let selectedRound = "";
   if (selectRound == 1) {
@@ -76,7 +82,7 @@ function IssueNocModal({
       pathName = res?.data?.fileUrl;
       nocorCertificateFileName = res?.data?.fileName;
 
-      postData.type == "noc"
+      postData?.type?.toLowerCase() === "noc"
         ? handleAcceptApplicantRoundOne()
         : handleAcceptApplicantRoundTwo();
 
@@ -104,7 +110,7 @@ function IssueNocModal({
 
   const handleAcceptApplicantRoundOne = async () => {
     const postData = {
-      form_id: 23,
+      form_id: formId,
       remarks: comment,
       date: new Date().toISOString().substring(0, 10),
       noc_Path: pathName,
@@ -113,7 +119,22 @@ function IssueNocModal({
     try {
       setSpinner(true);
       const responseNoc = await getAcceptApplicantNoc(postData);
-      console.log("noc hasura done");
+      // const formStatus =
+      //   responseNoc?.data?.update_form_submissions?.returning[0]?.form_status;
+      // setRejectStatus(formStatus === "Approved" ? true : false);
+      // console.log("responseNoc", responseNoc);
+      registerEvent({
+        created_date: getLocalTimeInISOFormat(),
+        entity_id: formId.toString(),
+        entity_type: "form",
+        event_name: "Approved",
+        remarks: `${user_details?.firstName} ${user_details?.lastName} has approved the form!`,
+      });
+
+      updateFormStatus({           
+        form_id: formId * 1,
+        form_status: "Approved",
+      });
       pathName = "";
       nocorCertificateFileName = "";
     } catch (error) {
@@ -125,7 +146,7 @@ function IssueNocModal({
 
   const handleAcceptApplicantRoundTwo = async () => {
     const postData = {
-      form_id: 23,
+      form_id: formId,
       remarks: comment,
       date: new Date().toISOString().substring(0, 10),
       noc_Path: pathName,
@@ -134,7 +155,24 @@ function IssueNocModal({
     try {
       setSpinner(true);
       const responseCertificate = await getAcceptApplicantCertificate(postData);
+      const formStatus =
+        responseCertificate?.data?.update_form_submissions?.returning[0]
+          ?.form_status;
+      setRejectStatus(formStatus === "Approved" ? true : false);
+      console.log("responseCertificate", responseCertificate);
       console.log("hasura certificate done");
+      registerEvent({
+        created_date: getLocalTimeInISOFormat(),
+        entity_id: formId,
+        entity_type: "form",
+        event_name: "Approve",
+        remarks: `${user_details?.firstName} ${user_details?.lastName} has approved the form!`
+      });
+
+      updateFormStatus({
+        form_id: formId * 1,
+        form_status: "Approved",
+      });
       pathName = "";
       nocorCertificateFileName = "";
     } catch (error) {

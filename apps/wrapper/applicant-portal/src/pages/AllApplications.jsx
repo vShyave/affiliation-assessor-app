@@ -56,7 +56,13 @@ const AllApplications = () => {
   };
 
   const handleClearFilter = () => {
-    setFormData({ condition: {} });
+    setFormData({
+      condition: {
+        assignee: {
+          _eq: "applicant",
+        },
+      },
+    });
   };
 
   useEffect(() => {
