@@ -27,7 +27,7 @@ const DesktopAnalysisList = () => {
   var formsDataList = [];
   const [formsList, setFormsList] = useState();
   const [state, setState] = useState({
-    menu_selected: "new",
+    menu_selected: "Application Submitted",
   });
   const [paginationInfo, setPaginationInfo] = useState({
     offsetNo: 0,
@@ -37,6 +37,7 @@ const DesktopAnalysisList = () => {
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [isFilterOpen, setIsFilterOpen] = useState(false);
   const { setSpinner } = useContext(ContextAPI);
+  const [selectedRound, setSelectedRound] = useState(1);
 
   const COLUMNS = [
     {
@@ -130,16 +131,23 @@ const DesktopAnalysisList = () => {
     if (!isSearchOpen && !isFilterOpen) {
       fetchDesktopAnalysisForms();
     }
-  }, [paginationInfo.offsetNo, paginationInfo.limit]);
+  }, [
+    paginationInfo.offsetNo,
+    paginationInfo.limit,
+    selectedRound,
+    state.menu_selected,
+  ]);
 
   const fetchDesktopAnalysisForms = async () => {
-    const pagination = {
+    const postData = {
       offsetNo: paginationInfo.offsetNo,
       limit: paginationInfo.limit,
+      round: selectedRound,
+      formStatus: state.menu_selected,
     };
     try {
       setSpinner(true);
-      const res = await getDesktopAnalysisForms(pagination);
+      const res = await getDesktopAnalysisForms(postData);
       setPaginationInfo((prevState) => ({
         ...prevState,
         totalCount: res.data.form_submissions_aggregate.aggregate.totalCount,
@@ -156,7 +164,9 @@ const DesktopAnalysisList = () => {
     const postData = {
       offsetNo: paginationInfo.offsetNo,
       limit: paginationInfo.limit,
+      round: selectedRound,
       ...searchData,
+      formStatus: state.menu_selected,
     };
     try {
       setSpinner(true);
@@ -174,10 +184,21 @@ const DesktopAnalysisList = () => {
   };
 
   const filterApiCall = async (filters) => {
+    let customFilters = {
+      condition: {
+        ...filters["condition"],
+        round: {
+          _eq: selectedRound,
+        },
+        form_status: {
+          _eq: state.menu_selected,
+        },
+      },
+    };
     const postData = {
       offsetNo: paginationInfo.offsetNo,
       limit: paginationInfo.limit,
-      ...filters,
+      ...customFilters,
     };
     try {
       setSpinner(true);
@@ -271,14 +292,14 @@ const DesktopAnalysisList = () => {
               <div className="sm:col-span-3">
                 <div className="w-72 bg-white rounded-[8px]">
                   <Select
-                    value="1"
+                    value={selectedRound}
                     label="Select round"
                     onChange={(value) => {
-                      console.log(value);
+                      setSelectedRound(value);
                     }}
                   >
-                    <Option value="1">Round one</Option>
-                    <Option value="2">Round two</Option>
+                    <Option value={1}>Round one</Option>
+                    <Option value={2}>Round two</Option>
                   </Select>
                 </div>
               </div>
@@ -287,11 +308,14 @@ const DesktopAnalysisList = () => {
 
           <div className="flex flex-col gap-4">
             <ul className="flex flex-wrap gap-3 -mb-px">
-              <li className="" onClick={() => handleSelectMenu("new")}>
+              <li
+                className=""
+                onClick={() => handleSelectMenu("Application Submitted")}
+              >
                 <a
                   href="#"
                   className={`inline-block p-4 rounded-t-lg dark:text-blue-500 dark:border-blue-600 ${
-                    state.menu_selected === "new"
+                    state.menu_selected === "Application Submitted"
                       ? "text-blue-600 border-b-2 border-blue-600"
                       : ""
                   }`}
@@ -299,24 +323,11 @@ const DesktopAnalysisList = () => {
                   New
                 </a>
               </li>
-              <li className="" onClick={() => handleSelectMenu("rejected")}>
+              <li className="" onClick={() => handleSelectMenu("Resubmitted")}>
                 <a
                   href="#"
                   className={`inline-block p-4 rounded-t-lg dark:text-blue-500 dark:border-blue-600 ${
-                    state.menu_selected === "rejected"
-                      ? "text-blue-600 border-b-2 border-blue-600"
-                      : ""
-                  }`}
-                  aria-current="page"
-                >
-                  Rejected
-                </a>
-              </li>
-              <li className="" onClick={() => handleSelectMenu("resubmitted")}>
-                <a
-                  href="#"
-                  className={`inline-block p-4 rounded-t-lg dark:text-blue-500 dark:border-blue-600 ${
-                    state.menu_selected === "resubmitted"
+                    state.menu_selected === "Resubmitted"
                       ? "text-blue-600 border-b-2 border-blue-600"
                       : ""
                   }`}
@@ -326,38 +337,104 @@ const DesktopAnalysisList = () => {
               </li>
               <li
                 className=""
-                onClick={() => handleSelectMenu("sent_for_inspection")}
+                onClick={() => handleSelectMenu("Inspection Scheduled")}
               >
                 <a
                   href="#"
                   className={`inline-block p-4 rounded-t-lg dark:text-blue-500 dark:border-blue-600 ${
-                    state.menu_selected === "sent_for_inspection"
+                    state.menu_selected === "Inspection Scheduled"
                       ? "text-blue-600 border-b-2 border-blue-600"
                       : ""
                   }`}
                 >
-                  Sent for inspection
+                  Sent for Inspection
+                </a>
+              </li>
+              <li className="" onClick={() => handleSelectMenu("Rejected")}>
+                <a
+                  href="#"
+                  className={`inline-block p-4 rounded-t-lg dark:text-blue-500 dark:border-blue-600 ${
+                    state.menu_selected === "Rejected"
+                      ? "text-blue-600 border-b-2 border-blue-600"
+                      : ""
+                  }`}
+                  aria-current="page"
+                >
+                  Rejected
                 </a>
               </li>
             </ul>
 
-            {/* <div>create a search bar and filter component here</div> */}
             {/* table creation starts here */}
             <div className="flex flex-col gap-4">
-              <FilteringTable
-                dataList={formsDataList}
-                navigateFunc={navigateToView}
-                columns={COLUMNS}
-                pagination={true}
-                onRowSelect={() => {}}
-                filterApiCall={filterApiCall}
-                showFilter={true}
-                paginationInfo={paginationInfo}
-                setPaginationInfo={setPaginationInfo}
-                searchApiCall={searchApiCall}
-                setIsSearchOpen={setIsSearchOpen}
-                setIsFilterOpen={setIsFilterOpen}
-              />
+              {state.menu_selected === "Application Submitted" && (
+                <FilteringTable
+                  dataList={formsDataList}
+                  navigateFunc={navigateToView}
+                  columns={COLUMNS}
+                  pagination={true}
+                  onRowSelect={() => {}}
+                  filterApiCall={filterApiCall}
+                  showFilter={true}
+                  paginationInfo={paginationInfo}
+                  setPaginationInfo={setPaginationInfo}
+                  searchApiCall={searchApiCall}
+                  setIsSearchOpen={setIsSearchOpen}
+                  setIsFilterOpen={setIsFilterOpen}
+                  selectedRound={selectedRound}
+                />
+              )}
+              {state.menu_selected === "Resubmitted" && (
+                <FilteringTable
+                  dataList={formsDataList}
+                  navigateFunc={navigateToView}
+                  columns={COLUMNS}
+                  pagination={true}
+                  onRowSelect={() => {}}
+                  filterApiCall={filterApiCall}
+                  showFilter={true}
+                  paginationInfo={paginationInfo}
+                  setPaginationInfo={setPaginationInfo}
+                  searchApiCall={searchApiCall}
+                  setIsSearchOpen={setIsSearchOpen}
+                  setIsFilterOpen={setIsFilterOpen}
+                  selectedRound={selectedRound}
+                />
+              )}
+              {state.menu_selected === "Inspection Scheduled" && (
+                <FilteringTable
+                  dataList={formsDataList}
+                  navigateFunc={navigateToView}
+                  columns={COLUMNS}
+                  pagination={true}
+                  onRowSelect={() => {}}
+                  filterApiCall={filterApiCall}
+                  showFilter={true}
+                  paginationInfo={paginationInfo}
+                  setPaginationInfo={setPaginationInfo}
+                  searchApiCall={searchApiCall}
+                  setIsSearchOpen={setIsSearchOpen}
+                  setIsFilterOpen={setIsFilterOpen}
+                  selectedRound={selectedRound}
+                />
+              )}
+              {state.menu_selected === "Rejected" && (
+                <FilteringTable
+                  dataList={formsDataList}
+                  navigateFunc={navigateToView}
+                  columns={COLUMNS}
+                  pagination={true}
+                  onRowSelect={() => {}}
+                  filterApiCall={filterApiCall}
+                  showFilter={true}
+                  paginationInfo={paginationInfo}
+                  setPaginationInfo={setPaginationInfo}
+                  searchApiCall={searchApiCall}
+                  setIsSearchOpen={setIsSearchOpen}
+                  setIsFilterOpen={setIsFilterOpen}
+                  selectedRound={selectedRound}
+                />
+              )}
             </div>
           </div>
         </div>

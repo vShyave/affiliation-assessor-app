@@ -21,6 +21,7 @@ const GlobalFilter = ({
   setIsFilterOpen,
   paginationInfo,
   setPaginationInfo,
+  selectedRound
 }) => {
   const [value, setValue] = useState("");
   const [isFilter, setIsFilter] = useState(false);
@@ -68,7 +69,7 @@ const GlobalFilter = ({
         await searchApiCall({ searchString: `%${value}%` });
       }
     })();
-  }, [paginationInfo.offsetNo, paginationInfo.limit]);
+  }, [paginationInfo.offsetNo, paginationInfo.limit,selectedRound]);
 
   return (
     <div className="flex flex-col gap-4">
@@ -131,6 +132,7 @@ const GlobalFilter = ({
                     paginationInfo={paginationInfo}
                     setIsFilterOpen={setIsFilterOpen}
                     setPaginationInfo={setPaginationInfo}
+                    selectedRound={selectedRound}
                   />
                 );
               //On-Ground Inspection Analysis
@@ -141,6 +143,7 @@ const GlobalFilter = ({
                     paginationInfo={paginationInfo}
                     setIsFilterOpen={setIsFilterOpen}
                     setPaginationInfo={setPaginationInfo}
+                    selectedRound={selectedRound}
                   />
                 );
               //Schedule Management

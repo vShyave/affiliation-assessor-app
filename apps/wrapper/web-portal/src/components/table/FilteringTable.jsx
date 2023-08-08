@@ -156,6 +156,7 @@ const FilteringTable = (props) => {
           setIsFilterOpen={props.setIsFilterOpen}
           paginationInfo={props.paginationInfo}
           setPaginationInfo={props.setPaginationInfo}
+          selectedRound={props?.selectedRound}
         />
       )}
 
@@ -201,20 +202,24 @@ const FilteringTable = (props) => {
                 <tr
                   {...row.getRowProps()}
                   className={`bg-opacity-25 border-b dark:bg-gray-800 dark:border-gray-700 cursor-pointer ${
-                    row.original.status.toLowerCase() === "in progress"
+                    row.original.status?.toLowerCase() === "in progress"
                       ? "bg-yellow-400"
-                      : row.original.status.toLowerCase() === "resubmitted"
+                      : row.original.status?.toLowerCase() === "resubmitted"
                       ? "bg-orange-400"
-                      : row.original.status.toLowerCase() ===
+                      : row.original.status?.toLowerCase() ===
                         "inspection scheduled"
                       ? "bg-blue-400"
-                      : row.original.status.toLowerCase() ===
+                      : row.original.status?.toLowerCase() ===
                         "application submitted"
                       ? "bg-green-400"
-                      : row.original.status.toLowerCase() === "na"
+                      : row.original.status?.toLowerCase() === "na"
                       ? "bg-red-400"
-                      : row.original.status.toLowerCase() === "oga completed"
+                      : row.original.status?.toLowerCase() === "oga completed"
                       ? "bg-purple-400"
+                      : row.original.status.toLowerCase() === "approved"
+                      ? "bg-teal-400"
+                      : row.original.status.toLowerCase() === "rejected"
+                      ? "bg-pink-400"
                       : "bg-white"
                   }`}
                   onClick={() => props.navigateFunc(row)}

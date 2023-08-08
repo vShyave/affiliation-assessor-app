@@ -59,7 +59,7 @@ export default function OnGroundInspectionAnalysis() {
     },
     {
       Header: "Status",
-      accessor: "review_status",
+      accessor: "status",
     },
   ];
 
@@ -123,13 +123,14 @@ export default function OnGroundInspectionAnalysis() {
     if (!isSearchOpen && !isFilterOpen) {
       fetchOnGroundAssessorData();
     }
-  }, [paginationInfo.offsetNo, paginationInfo.limit, state.menu_selected]);
+  }, [paginationInfo.offsetNo, paginationInfo.limit, state.menu_selected, round]);
 
   const fetchOnGroundAssessorData = async () => {
     const postData = {
       offsetNo: paginationInfo.offsetNo,
       limit: paginationInfo.limit,
       formStatus: state.menu_selected,
+      round: round
     };
     try {
       setSpinner(true)
@@ -151,6 +152,7 @@ export default function OnGroundInspectionAnalysis() {
       offsetNo: paginationInfo.offsetNo,
       limit: paginationInfo.limit,
       formStatus: state.menu_selected,
+      round: round,
       ...searchData,
     };
     try {
@@ -173,6 +175,7 @@ export default function OnGroundInspectionAnalysis() {
       condition: {
         ...filters["condition"],
         form_status: { _eq: state.menu_selected },
+        round: {_eq: round}
       },
     };
     const postData = {
@@ -219,7 +222,7 @@ export default function OnGroundInspectionAnalysis() {
         e?.assessor?.assisstant == null ? "None" : e?.assessor?.assisstant,
       published_on: readableDate(e?.submitted_on),
       id: e.form_id,
-      status: e?.review_status || "NA",
+      status: e?.form_status || "NA",
       form_status: e?.form_status,
       review_status: e?.review_status,
       institute: e?.institute
@@ -277,12 +280,12 @@ export default function OnGroundInspectionAnalysis() {
             <div className="sm:col-span-3">
               <div className="w-72 bg-white rounded-[8px]">
                 <Select
-                  value="1"
+                  value={round}
                   label="Select round"
                   onChange={(value) => setRound(value)}
                 >
-                  <Option value="1">Round one</Option>
-                  <Option value="2">Round two</Option>
+                  <Option value={1}>Round one</Option>
+                  <Option value={2}>Round two</Option>
                 </Select>
               </div>
             </div>
@@ -352,6 +355,7 @@ export default function OnGroundInspectionAnalysis() {
                 searchApiCall={searchApiCall}
                 setIsSearchOpen={setIsSearchOpen}
                 setIsFilterOpen={setIsFilterOpen}
+                selectedRound={round}
               />
             </div>
           )}
@@ -373,6 +377,7 @@ export default function OnGroundInspectionAnalysis() {
                 searchApiCall={searchApiCall}
                 setIsSearchOpen={setIsSearchOpen}
                 setIsFilterOpen={setIsFilterOpen}
+                selectedRound={round}
               />
             </div>
           )}
@@ -394,6 +399,7 @@ export default function OnGroundInspectionAnalysis() {
                 searchApiCall={searchApiCall}
                 setIsSearchOpen={setIsSearchOpen}
                 setIsFilterOpen={setIsFilterOpen}
+                selectedRound={round}
               />
             </div>
           )}
