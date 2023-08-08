@@ -1,10 +1,17 @@
 import React, { useContext, useState } from "react";
-import { getRejectApplicant } from "../../api";
+import { getRejectApplicant, registerEvent, updateFormStatus } from "../../api";
 import { ContextAPI } from "../../utils/ContextAPI";
+import { getCookie, getLocalTimeInISOFormat } from "../../utils";
+
 
 import { Button } from "../../components";
 
-function RejectNocModal({ closeRejectModal, setRejectStatus }) {
+function RejectNocModal({ closeRejectModal, setRejectStatus, formId }) {
+
+  const userDetails = getCookie("userData");
+
+  const user_details = userDetails?.userRepresentation
+
   const handleChange = (e) => {
     setComment(e.target.value);
   };
@@ -14,10 +21,10 @@ function RejectNocModal({ closeRejectModal, setRejectStatus }) {
 
   const handleRejectApplicant = async () => {
     if (comment.length === 0) {
-      console.log("enter something");
+      // console.log("enter something");
     } else {
       const postData = {
-        form_id: 22,
+        form_id: formId,
         remarks: comment,
         date: new Date().toISOString().substring(0, 10),
       };
@@ -27,6 +34,18 @@ function RejectNocModal({ closeRejectModal, setRejectStatus }) {
         const formStatus =
           res?.data?.update_form_submissions?.returning[0]?.form_status;
         setRejectStatus(formStatus === "Rejected" ? true : false);
+        registerEvent({
+          created_date: getLocalTimeInISOFormat(),
+          entity_id: formId.toString(),
+          entity_type: "form",
+          event_name: "Rejected",
+          remarks: `${user_details?.firstName} ${user_details?.lastName} has rejected the form!`,
+        });
+  
+        updateFormStatus({           
+          form_id: formId * 1,
+          form_status: "Rejected",
+        });
         setToast((prevState) => ({
           ...prevState,
           toastOpen: true,
