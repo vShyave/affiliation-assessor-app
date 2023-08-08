@@ -15,7 +15,7 @@ import { ContextAPI } from "../../utils/ContextAPI";
 
 function BulkUploadUsersModal({ closeBulkUploadUsersModal }) {
   const [file, setFile] = useState();
-  const { setSpinner } = useContext(ContextAPI);
+  const { setSpinner, setToast } = useContext(ContextAPI);
   const [tableUserList, setTableUserList] = useState([]);
   const hiddenFileInput = React.useRef(null);
   const [tableDataReady, setTableDataReady] = useState(false);
@@ -77,13 +77,13 @@ function BulkUploadUsersModal({ closeBulkUploadUsersModal }) {
   };
 
   const COLUMNS = [
-    {
-      Header: "Code",
-      accessor: "code",
-      // Cell: (props) => {
-      //   return <div>{isDataValid(props.value)}</div>;
-      // },
-    },
+    // {
+    //   Header: "Code",
+    //   accessor: "code",
+    //   Cell: (props) => {
+    //     return <div>{isDataValid(props.value)}</div>;
+    //   },
+    // },
     {
       Header: "Email",
       accessor: "email",
@@ -154,16 +154,19 @@ function BulkUploadUsersModal({ closeBulkUploadUsersModal }) {
 
   const csvFileToArray = (string) => {
     let invalidUserData = [];
-    const csvHeader = string.slice(0, string.indexOf("\n")).split(",");
+    const csvHeader = string.trim().slice(0, string.indexOf("\n")).split(",");
     if (!csvHeader[csvHeader.length - 1]) {
       csvHeader.pop();
     }
 
-    const csvRows = string.slice(string.indexOf("\n") + 1).split("\n");
+    const csvRows = string
+      .slice(string.indexOf("\n") + 1)
+      .split("\n")
+      .filter((item) => item);
     const tableUserList = csvRows.map((i) => {
       const values = i.split(",");
       let obj = csvHeader.reduce((object, header, index) => {
-        object[header] = values[index];
+        object[header.trim()] = values[index]?.trim()?.replace("\r", "");
         return object;
       }, {});
 
@@ -193,6 +196,7 @@ function BulkUploadUsersModal({ closeBulkUploadUsersModal }) {
   };
 
   const createUsers = async () => {
+    let errorFlag = false;
     const postDataKeyCloak = selectedRows.map((item) => ({
       firstName: item.values.fname,
       lastName: item.values.lname,
@@ -219,19 +223,25 @@ function BulkUploadUsersModal({ closeBulkUploadUsersModal }) {
       const accessTokenResponse = await userService.getAccessToken(
         accessTokenObj
       );
+      if (accessTokenResponse.status !== 200) {
+        errorFlag = true;
+      }
       setCookie(
         "access_token",
-        "Bearer " + accessTokenResponse.data.access_token
+        "Bearer " + accessTokenResponse?.data?.access_token
       );
 
       //keycloak API call
       const keycloakRes = await createBulkUsersKeyCloak(postDataKeyCloak);
+      if (keycloakRes?.data?.failedUser.length) {
+        errorFlag = true;
+      }
 
       //Hasura API call
       selectedRows.forEach((item) => {
         if (item.values.role.includes("Assessor")) {
           postDataHasura["assessors"].push({
-            code: item.values.code,
+            code: `${Math.floor(1000 + Math.random() * 9000)}`,
             user_id: keycloakRes.data.succeedUser.filter(
               (user) => user.email === item.values.email
             )[0].userId,
@@ -257,16 +267,52 @@ function BulkUploadUsersModal({ closeBulkUploadUsersModal }) {
       });
 
       const hasuraRes = await createBulkUserHasura(postDataHasura);
+      if (hasuraRes.status !== 200) {
+        errorFlag = true;
+      }
+
+      if (!errorFlag) {
+        setToast((prevState) => ({
+          ...prevState,
+          toastOpen: true,
+          toastMsg: "User(s) Created Successfully!!",
+          toastType: "success",
+        }));
+        closeBulkUploadUsersModal(false);
+      }
       removeCookie("access_token");
     } catch (error) {
       console.log("error - ", error);
+      setToast((prevState) => ({
+        ...prevState,
+        toastOpen: true,
+        toastMsg: "Error occured while creating user(s)!",
+        toastType: "error",
+      }));
     } finally {
       setSpinner(false);
     }
   };
 
+  const isFileValid = () => {
+    let flag = true;
+    COLUMNS.forEach((item) => {
+      if (!Object.keys(tableUserList[0]).includes(item.accessor)) {
+        flag = false;
+        return;
+      }
+    });
+    return flag;
+  };
+
   const setSelectedRows = (rowList) => {
     selectedRows = [...rowList];
+    if (selectedRows.length) {
+      document.getElementById("schedule-bulk-assessment").style.display = "";
+    } else {
+      document.getElementById("schedule-bulk-assessment").style.display =
+        "none";
+    }
     console.log(selectedRows);
   };
 
@@ -280,16 +326,12 @@ function BulkUploadUsersModal({ closeBulkUploadUsersModal }) {
 
               <div className="flex flex-row m-auto">
                 {tableDataReady && (
-                    <div className="text-sm">
-                      <small>Show all users</small>
-                    </div>
-                  ) && (
-                    <Switch
-                      id="show-with-errors"
-                      label={<span className="text-sm">Show with errors</span>}
-                      onChange={handleToggleChange}
-                    />
-                  )}
+                  <Switch
+                    id="show-with-errors"
+                    label={<span className="text-sm">Show with errors</span>}
+                    onChange={handleToggleChange}
+                  />
+                )}
               </div>
 
               <div className=" flex-row text-blue-500">
@@ -304,7 +346,7 @@ function BulkUploadUsersModal({ closeBulkUploadUsersModal }) {
             </div>
 
             <div className="justify-center flex flex-col items-center gap-4">
-              {!tableDataReady && (
+              {(!tableDataReady || (tableDataReady && !isFileValid())) && (
                 <div className="flex flex-row m-auto">
                   <input
                     type={"file"}
@@ -321,8 +363,13 @@ function BulkUploadUsersModal({ closeBulkUploadUsersModal }) {
                   />
                 </div>
               )}
-
-              {tableDataReady && (
+              {tableDataReady && !isFileValid() && (
+                <div className="text-xl flex-row text-blue-500">
+                  Please upload csv file with supported data format. Kindly
+                  refer the template!
+                </div>
+              )}
+              {tableDataReady && isFileValid() && (
                 <div className="items-center">
                   <div className="text-2xl w-full mt-4 font-medium">
                     <FilteringTable
@@ -358,8 +405,12 @@ function BulkUploadUsersModal({ closeBulkUploadUsersModal }) {
 
                 {tableDataReady && (
                   <Button
+                    id="schedule-bulk-assessment"
                     onClick={() => {
                       createUsers();
+                    }}
+                    otherProps={{
+                      style: { display: "none" },
                     }}
                     moreClass="border text-white w-[120px]"
                     text="Create users"
