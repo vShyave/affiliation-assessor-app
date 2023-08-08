@@ -59,7 +59,7 @@ export default function OnGroundInspectionAnalysis() {
     },
     {
       Header: "Status",
-      accessor: "review_status",
+      accessor: "status",
     },
   ];
 
@@ -222,7 +222,7 @@ export default function OnGroundInspectionAnalysis() {
         e?.assessor?.assisstant == null ? "None" : e?.assessor?.assisstant,
       published_on: readableDate(e?.submitted_on),
       id: e.form_id,
-      status: e?.review_status || "NA",
+      status: e?.form_status || "NA",
       form_status: e?.form_status,
       review_status: e?.review_status,
       institute: e?.institute

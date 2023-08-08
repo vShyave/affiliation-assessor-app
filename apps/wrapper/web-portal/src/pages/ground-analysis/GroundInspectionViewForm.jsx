@@ -222,9 +222,6 @@ export default function ApplicationPage({
                   ref={reportTemplateRef}
                 />
               </Card>
-              <button className="button" onClick={handleGeneratePdf}>
-                Generate PDF
-              </button>
             </div>
           </div>
         </div>
