@@ -347,6 +347,14 @@ export const createBulkUserHasura = async (postData) => {
   return res;
 };
 
+export const getScheduleDetails = async (postData) => {
+  const res = await adminCustomPost.post(
+    API_URL.manageUsers.viewSchedule,
+    postData
+  );
+  return res;
+}
+
 // delete users
 // export const deleteUsers = async (postData) => {
 //   const res = await adminCustomPost.post(
