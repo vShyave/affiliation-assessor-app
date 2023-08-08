@@ -210,6 +210,7 @@ export const DesktopAnalysisFilters = ({
   setIsFilterOpen,
   paginationInfo,
   setPaginationInfo,
+  selectedRound
 }) => {
   const [showCalendar, setShowCalendar] = useState(false);
   const [buttonText, setButtonText] = useState("Published On");
@@ -302,7 +303,7 @@ export const DesktopAnalysisFilters = ({
 
   useEffect(() => {
     filterApiCall(filters);
-  }, [filters, paginationInfo.offsetNo, paginationInfo.limit]);
+  }, [filters, paginationInfo.offsetNo, paginationInfo.limit,selectedRound]);
 
   return (
     <div className="flex flex-grow text-gray-700 dark:text-gray-400 gap-8">
@@ -380,6 +381,7 @@ export const OnGroundInspectionFilters = ({
   setIsFilterOpen,
   paginationInfo,
   setPaginationInfo,
+  selectedRound
 }) => {
   const [showCalendar, setShowCalendar] = useState(false);
   const [buttonText, setButtonText] = useState("Published On");
@@ -442,7 +444,7 @@ export const OnGroundInspectionFilters = ({
 
   useEffect(() => {
     filterApiCall(filters);
-  }, [filters, paginationInfo.offsetNo, paginationInfo.limit]);
+  }, [filters, paginationInfo.offsetNo, paginationInfo.limit,selectedRound]);
 
   return (
     <div className="flex flex-grow text-gray-700 dark:text-gray-400 gap-8">
