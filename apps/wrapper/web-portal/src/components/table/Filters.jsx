@@ -457,7 +457,6 @@ export const OnGroundInspectionFilters = ({
             console.log(value);
           }}
           label="Assessor"
-          disabled
           className="bg-gray-50"
         >
           {/* <Option value="">--Select Assessor--</Option> */}
