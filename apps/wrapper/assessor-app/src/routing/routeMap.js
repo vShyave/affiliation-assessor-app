@@ -4,6 +4,7 @@ const ROUTE_MAP = {
   register: "/register",
   medical_assessments: "/medical-assessments",
   upcoming_medical_assessments: "/upcoming-medical-assessments",
+  pending_inspections: "/pending-inspections",
   past_inspections: "/past-inspections",
   past_application_list: "/past-application-list",
   past_application_list_view: "/past-application-list/view",
