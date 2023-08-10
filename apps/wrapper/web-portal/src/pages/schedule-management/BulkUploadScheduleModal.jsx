@@ -247,11 +247,11 @@ function BulkUploadScheduleModal({ setBulkUploadSchduleModal }) {
   };
 
   const setSelectedRows = (rowList) => {
-    selectedRows = [...rowList];
+    selectedRows = [...rowList].filter((item)=>!item.original.isRowInvalid);
     if (selectedRows.length) {
-      document.getElementById("create-bulk-users").style.display = "";
+      document.getElementById("create-bulk-users").disabled = false;
     } else {
-      document.getElementById("create-bulk-users").style.display = "none";
+      document.getElementById("create-bulk-users").disabled = true;
     }
     console.log(selectedRows);
   };
@@ -285,7 +285,7 @@ function BulkUploadScheduleModal({ setBulkUploadSchduleModal }) {
               </div>
             </div>
 
-            <div className="justify-center flex flex-col items-center gap-4">
+            <div className="flex flex-col items-center gap-4">
               {(!tableDataReady || (tableDataReady && !isFileValid())) && (
                 <div className="flex flex-row m-auto">
                   <input
@@ -310,8 +310,8 @@ function BulkUploadScheduleModal({ setBulkUploadSchduleModal }) {
                 </div>
               )}
               {tableDataReady && isFileValid() && (
-                <div className="items-center">
-                  <div className="text-2xl w-full mt-4 font-medium">
+                
+                  <div className="text-2xl w-full font-medium">
                     <FilteringTable
                       moreHeight="h-[300px]"
                       pagination={false}
@@ -327,7 +327,7 @@ function BulkUploadScheduleModal({ setBulkUploadSchduleModal }) {
                       setSelectedRows={setSelectedRows}
                     />
                   </div>
-                </div>
+                
               )}
             </div>
 
@@ -350,10 +350,10 @@ function BulkUploadScheduleModal({ setBulkUploadSchduleModal }) {
                       bulkSchedule();
                     }}
                     otherProps={{
-                      style: { display: "none" },
+                      disabled: true
                     }}
                     moreClass="border text-white w-[120px]"
-                    text="Schedule Assessments"
+                    text="Schedule"
                   ></Button>
                 )}
               </div>

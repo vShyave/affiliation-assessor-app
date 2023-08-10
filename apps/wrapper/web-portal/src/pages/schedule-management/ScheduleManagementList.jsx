@@ -27,6 +27,7 @@ import {
   MenuList,
   MenuItem,
 } from "@material-tailwind/react";
+import { readableDate } from "../../utils";
 
 const ScheduleManagementList = () => {
   const navigation = useNavigate();
@@ -128,7 +129,7 @@ const ScheduleManagementList = () => {
     child_center_code: "-",
     institute_name: e?.institute?.name,
     type: "-",
-    assessment_date: e?.date,
+    assessment_date: readableDate(e?.date),
     assessor_id: e?.assessor_code,
     status: e?.status,
     more_actions: (

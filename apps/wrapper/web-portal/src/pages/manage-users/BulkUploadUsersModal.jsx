@@ -306,12 +306,11 @@ function BulkUploadUsersModal({ closeBulkUploadUsersModal }) {
   };
 
   const setSelectedRows = (rowList) => {
-    selectedRows = [...rowList];
+    selectedRows = [...rowList].filter((item)=>!item.original.isRowInvalid);
     if (selectedRows.length) {
-      document.getElementById("schedule-bulk-assessment").style.display = "";
+      document.getElementById("schedule-bulk-assessment").disabled = false;
     } else {
-      document.getElementById("schedule-bulk-assessment").style.display =
-        "none";
+      document.getElementById("schedule-bulk-assessment").disabled = true;
     }
     console.log(selectedRows);
   };
@@ -410,7 +409,7 @@ function BulkUploadUsersModal({ closeBulkUploadUsersModal }) {
                       createUsers();
                     }}
                     otherProps={{
-                      style: { display: "none" },
+                      disabled: true,
                     }}
                     moreClass="border text-white w-[120px]"
                     text="Create users"
