@@ -317,6 +317,7 @@ export const saveFormSubmission = (data) => {
     }`,
     variables: { object: data },
   };
+  
   return makeHasuraCalls(query);
 };
 

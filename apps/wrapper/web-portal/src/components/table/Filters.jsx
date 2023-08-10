@@ -64,8 +64,8 @@ export const ManageUsersFilters = ({
           className="bg-gray-50"
         >
           {/* <Option value="">--Select Role--</Option> */}
-          <Option value="assessor">Assessor</Option>
-          {/* <Option value="applicant">Applicant</Option> */}
+          <Option value="Assessor">Assessor</Option>
+          <Option value="Assessor-Medical">Assessor-Medical</Option>
         </Select>
       </div>
       <div className="flex">
@@ -79,7 +79,7 @@ export const ManageUsersFilters = ({
         >
           {/* <Option value="">Account Status</Option> */}
           <Option value="Valid">Active</Option>
-          <Option value="invalid">Inactive</Option>
+          <Option value="Invalid">Inactive</Option>
         </Select>
       </div>
       <div>
@@ -210,6 +210,7 @@ export const DesktopAnalysisFilters = ({
   setIsFilterOpen,
   paginationInfo,
   setPaginationInfo,
+  selectedRound
 }) => {
   const [showCalendar, setShowCalendar] = useState(false);
   const [buttonText, setButtonText] = useState("Published On");
@@ -302,7 +303,7 @@ export const DesktopAnalysisFilters = ({
 
   useEffect(() => {
     filterApiCall(filters);
-  }, [filters, paginationInfo.offsetNo, paginationInfo.limit]);
+  }, [filters, paginationInfo.offsetNo, paginationInfo.limit,selectedRound]);
 
   return (
     <div className="flex flex-grow text-gray-700 dark:text-gray-400 gap-8">
@@ -380,6 +381,7 @@ export const OnGroundInspectionFilters = ({
   setIsFilterOpen,
   paginationInfo,
   setPaginationInfo,
+  selectedRound
 }) => {
   const [showCalendar, setShowCalendar] = useState(false);
   const [buttonText, setButtonText] = useState("Published On");
@@ -442,7 +444,7 @@ export const OnGroundInspectionFilters = ({
 
   useEffect(() => {
     filterApiCall(filters);
-  }, [filters, paginationInfo.offsetNo, paginationInfo.limit]);
+  }, [filters, paginationInfo.offsetNo, paginationInfo.limit,selectedRound]);
 
   return (
     <div className="flex flex-grow text-gray-700 dark:text-gray-400 gap-8">
@@ -455,7 +457,6 @@ export const OnGroundInspectionFilters = ({
             console.log(value);
           }}
           label="Assessor"
-          disabled
           className="bg-gray-50"
         >
           {/* <Option value="">--Select Assessor--</Option> */}

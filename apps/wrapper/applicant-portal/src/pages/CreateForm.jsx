@@ -106,7 +106,7 @@ const CreateForm = (props) => {
       `${userId}_${formName}_${new Date().toISOString().split("T")[0]}`
     );
 
-    console.log("data - ", data);
+    // console.log("data - ", data);
 
     if (data) {
       formData = data;
@@ -115,12 +115,11 @@ const CreateForm = (props) => {
         const postData = { form_id: formId };
         const res = await getFormData(postData);
         formData = res.data.form_submissions[0];
-        console.log("formData - ", formData);
+        // console.log("formData - ", formData);
         setFormDataNoc(formData);
       }
     }
 
-    console.log("formData - ", formData);
 
     let fileGCPPath =
       process.env.REACT_APP_GCP_AFFILIATION_LINK + formName + ".xml";
@@ -348,8 +347,13 @@ const CreateForm = (props) => {
 
             <button
               onClick={handleDownloadNocOrCertificate}
-              disabled={formData.form_status == "Approved"}
-              className="bg-primary-900 py-2 mb-8 font-medium rounded-[4px] px-2 text-white flex flex-row items-center gap-3"
+              disabled={(formData.form_status !== "Approved")?true:false}
+              className={`${
+                (formData.form_status !== "Approved")
+                  ? "cursor-not-allowed border border-gray-500 bg-white rounded-[4px] text-gray-200 px-2 h-[44px]"
+                  : "border border-blue-900 bg-blue-900 text-white rounded-[4px] px-2 h-[44px]"
+              }`}
+              // className="bg-primary-900 py-2 mb-8 font-medium rounded-[4px] px-2 text-white flex flex-row items-center gap-3"
             >
               Download NOC/Certificate
             </button>

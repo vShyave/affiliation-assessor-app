@@ -30,10 +30,12 @@ import {
   MenuItem,
 } from "@material-tailwind/react";
 import { ContextAPI } from "../../utils/ContextAPI";
+import ViewScheduleModal from "./ViewScheduleModal";
 
 export default function ManageUsersList({
   closeDeleteUsersModal,
   closeBulkUploadUsersModal,
+  closeViewSchedulesModal,
   setDeleteFlags,
 }) {
   const navigation = useNavigate();
@@ -44,9 +46,11 @@ export default function ManageUsersList({
   // const[onRowSelected,setOnRowSelected] = useState([])
   const [deleteFlag, setDeleteFlag] = useState(false);
   const [bulkDeleteFlag, setBulkDeleteFlag] = useState(false);
-  const[listArray,setListArray] = useState()
+  const [listArray, setListArray] = useState();
 
   const [bulkUploadUsersModel, setBulkUploadUsersModel] = useState(false);
+  const [viewScheduleModal, setViewScheduleModal] = useState(false);
+  const [scheduleUserData, setScheduleUserData] = useState({});
   const [usersList, setUsersList] = useState();
   const [userTableList, setUserTableList] = useState([]);
 
@@ -59,9 +63,10 @@ export default function ManageUsersList({
     limit: 10,
     totalCount: 0,
   });
+
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [isFilterOpen, setIsFilterOpen] = useState(false);
-  const {setSpinner,setToast} = useContext(ContextAPI)
+  const { setSpinner, setToast } = useContext(ContextAPI);
   let selectedRows = [];
 
   const COLUMNS = [
@@ -102,15 +107,78 @@ export default function ManageUsersList({
     },
   ];
 
-  const handleUsersetInvalid = async (e) => {
-    const userId = e?.user_id;
+  const handleUsersetInvalid = async (user) => {
+    const userId = user?.user_id;
     const formData = new FormData();
     formData.append("assessorId", userId);
-
+    let e = user;
     try {
-      setSpinner(true)
+      setSpinner(true);
       const response = await handleInctiveUser(formData);
-      fetchAllUsers();
+      e["workingstatus"] = "Invalid";
+      resUserData.forEach((item) => {
+        if (item.id === userId) {
+          item.status = "Inactive";
+          item.more_actions = (
+            <div className="flex flex-row text-2xl font-semibold">
+              <Menu>
+                <MenuHandler>
+                  <button className="leading-3 position-relative">...</button>
+                </MenuHandler>
+                <MenuList>
+                  <MenuItem
+                    onClick={() =>
+                      navigation(
+                        `${ADMIN_ROUTE_MAP.adminModule.manageUsers.createUser}/${e.user_id}`
+                      )
+                    }
+                  >
+                    <div className="flex flex-row gap-4 mt-4">
+                      <div>
+                        <MdEdit />
+                      </div>
+                      <div className="text-semibold m-">
+                        <span>Edit</span>
+                      </div>
+                    </div>{" "}
+                  </MenuItem>
+                  <MenuItem
+                    onClick={() =>
+                      e?.workingstatus === "Invalid"
+                        ? handleUserSetValid(e)
+                        : handleUsersetInvalid(e)
+                    }
+                  >
+                    <div className="flex flex-row gap-4 mt-4">
+                      <div>
+                        <MdSwapHoriz />
+                      </div>
+                      <div className="text-semibold m-">
+                        <span>
+                          {e?.workingstatus === "Invalid"
+                            ? "Activate"
+                            : "Deactivate"}
+                        </span>
+                      </div>
+                    </div>
+                  </MenuItem>
+                  <MenuItem onClick={() => handleUserDelete(e)}>
+                    <div className="flex flex-row gap-4 mt-4">
+                      <div>
+                        <MdDelete />
+                      </div>
+                      <div className="text-semibold m-">
+                        <span>Delete</span>
+                      </div>
+                    </div>{" "}
+                  </MenuItem>
+                </MenuList>
+              </Menu>
+            </div>
+          );
+        }
+      });
+      setUserTableList(resUserData);
     } catch (error) {
       console.log("error - ", error);
       setToast((prevState) => ({
@@ -119,21 +187,89 @@ export default function ManageUsersList({
         toastMsg: "Error occured while deactivating!",
         toastType: "error",
       }));
-    }finally{
-      setSpinner(false)
+    } finally {
+      setSpinner(false);
     }
   };
-  const handleUserSetValid = async (e) => {
-    const userId = e?.user_id;
+
+  const handleViewSchedule = (data) => {
+    console.log("data - ", data);
+    setScheduleUserData(data);
+    setViewScheduleModal(true);
+  };
+
+  const handleUserSetValid = async (user) => {
+    const userId = user?.user_id;
     const formData = new FormData();
     formData.append("assessorId", userId);
+    let e = user;
     try {
-      setSpinner(true)
+      setSpinner(true);
       const validResponse = await handleActiveUser(formData);
-
-      // setUsersList((usersList) => ({ ...usersList, [validResponse]: validResponse.data.update_assessors.returning[0] }));
-
-      fetchAllUsers();
+      e["workingstatus"] = "Valid";
+      resUserData.forEach((item) => {
+        if (item.id === userId) {
+          item.status = "Active";
+          item.more_actions = (
+            <div className="flex flex-row text-2xl font-semibold">
+              <Menu>
+                <MenuHandler>
+                  <button className="leading-3 position-relative">...</button>
+                </MenuHandler>
+                <MenuList>
+                  <MenuItem
+                    onClick={() =>
+                      navigation(
+                        `${ADMIN_ROUTE_MAP.adminModule.manageUsers.createUser}/${e.user_id}`
+                      )
+                    }
+                  >
+                    <div className="flex flex-row gap-4 mt-4">
+                      <div>
+                        <MdEdit />
+                      </div>
+                      <div className="text-semibold m-">
+                        <span>Edit</span>
+                      </div>
+                    </div>{" "}
+                  </MenuItem>
+                  <MenuItem
+                    onClick={() =>
+                      e?.workingstatus === "Invalid"
+                        ? handleUserSetValid(e)
+                        : handleUsersetInvalid(e)
+                    }
+                  >
+                    <div className="flex flex-row gap-4 mt-4">
+                      <div>
+                        <MdSwapHoriz />
+                      </div>
+                      <div className="text-semibold m-">
+                        <span>
+                          {e?.workingstatus === "Invalid"
+                            ? "Activate"
+                            : "Deactivate"}
+                        </span>
+                      </div>
+                    </div>{" "}
+                  </MenuItem>
+                  <MenuItem onClick={() => handleUserDelete(e)}>
+                    <div className="flex flex-row gap-4 mt-4">
+                      <div>
+                        <MdDelete />
+                      </div>
+                      <div className="text-semibold m-">
+                        <span>Delete</span>
+                      </div>
+                    </div>{" "}
+                  </MenuItem>
+                </MenuList>
+              </Menu>
+            </div>
+          );
+        }
+      });
+      setUserTableList(resUserData);
     } catch (error) {
       console.log("error - ", error);
       setToast((prevState) => ({
@@ -142,8 +278,8 @@ export default function ManageUsersList({
         toastMsg: "Error occured while activating!",
         toastType: "error",
       }));
-    }finally{
-      setSpinner(false)
+    } finally {
+      setSpinner(false);
     }
   };
 
@@ -154,7 +290,7 @@ export default function ManageUsersList({
 
   const setTableData = (e) => {
     var usersData = {
-      full_name: e.fname || e.lname ? e.fname +" "+ e.lname : e.name,
+      full_name: e.fname || e.lname ? e.fname + " " + e.lname : e.name,
       email: e.email?.toLowerCase(),
       mobile_number: e.phonenumber,
       role: e.role || "Assessor",
@@ -166,7 +302,12 @@ export default function ManageUsersList({
           : "-",
       id: e.user_id,
       schedule: (
-        <a className={`px-6 text-primary-600 pl-0 bg-white`}>View Schedule</a>
+        <div
+          className={`px-6 text-primary-600 pl-0`}
+          onClick={() => handleViewSchedule(e)}
+        >
+          View Schedule
+        </div>
       ),
       more_actions: (
         <div className="flex flex-row text-2xl font-semibold">
@@ -235,7 +376,7 @@ export default function ManageUsersList({
       limit: paginationInfo.limit,
     };
     try {
-      setSpinner(true)
+      setSpinner(true);
       const res = await getAllUsers(pagination);
       setPaginationInfo((prevState) => ({
         ...prevState,
@@ -247,8 +388,8 @@ export default function ManageUsersList({
       setUserTableList(resUserData);
     } catch (error) {
       console.log("error - ", error);
-    }finally{
-      setSpinner(false)
+    } finally {
+      setSpinner(false);
     }
   };
 
@@ -259,7 +400,7 @@ export default function ManageUsersList({
       ...searchData,
     };
     try {
-      setSpinner(true)
+      setSpinner(true);
       const res = await searchUsers(pagination);
       setPaginationInfo((prevState) => ({
         ...prevState,
@@ -271,9 +412,8 @@ export default function ManageUsersList({
       setUserTableList(resUserData);
     } catch (error) {
       console.log("error - ", error);
-    }
-    finally{
-      setSpinner(false)
+    } finally {
+      setSpinner(false);
     }
   };
 
@@ -284,7 +424,7 @@ export default function ManageUsersList({
       ...filters,
     };
     try {
-      setSpinner(true)
+      setSpinner(true);
       const res = await filterUsers(postData);
       setPaginationInfo((prevState) => ({
         ...prevState,
@@ -296,9 +436,8 @@ export default function ManageUsersList({
       setUserTableList(resUserData);
     } catch (error) {
       console.log("error - ", error);
-    }
-    finally{
-      setSpinner(false)
+    } finally {
+      setSpinner(false);
     }
   };
 
@@ -323,7 +462,7 @@ export default function ManageUsersList({
     ];
     const hasuraPostData = { email: email };
     try {
-      setSpinner(true)
+      setSpinner(true);
       let accessTokenObj = {
         grant_type: "client_credentials",
         client_id: "admin-api",
@@ -363,14 +502,10 @@ export default function ManageUsersList({
         toastMsg: "Error occured while deleting the user!",
         toastType: "error",
       }));
-    }finally{
-      setSpinner(false)
+    } finally {
+      setSpinner(false);
     }
   };
-
-  // const handleDelete = () => {
-
-  // };
 
   useEffect(() => {
     if (!isSearchOpen && !isFilterOpen) {
@@ -386,13 +521,13 @@ export default function ManageUsersList({
       checkboxArr.push(checkboxObj);
     });
     selectedRows = checkboxArr;
-    setListArray(selectedRows.length)
+    setListArray(selectedRows.length);
   };
 
   const handleBulkDelete = async (bulkEmail) => {
     const postData = bulkEmail;
     try {
-      setSpinner(true)
+      setSpinner(true);
       let errorFlag = false;
       let accessTokenObj = {
         grant_type: "client_credentials",
@@ -447,8 +582,8 @@ export default function ManageUsersList({
         toastMsg: "Error occured while deleting!",
         toastType: "error",
       }));
-    }finally{
-      setSpinner(false)
+    } finally {
+      setSpinner(false);
     }
   };
 
@@ -469,19 +604,23 @@ export default function ManageUsersList({
                   <Button
                     // moreClass="text-white"
                     otherProps={{
-                      disabled: (listArray==0) ?  true : false,
+                      disabled: listArray == 0 ? true : false,
                     }}
                     moreClass={`${
-                      (listArray==0)
-                        ? "cursor-not-allowed border border-gray-500 bg-white text-gray-500 px-8 h-[44px]"
+                      listArray == 0
+                        ? "cursor-not-allowed border border-gray-500 bg-white text-gray-200 px-8 h-[44px]"
                         : "px-8 text-white"
                     }`}
-                    onClick={() => selectedRows.length ? setDeleteBulkUsersModel(true): setDeleteBulkUsersModel(false)}
+                    onClick={() =>
+                      selectedRows.length
+                        ? setDeleteBulkUsersModel(true)
+                        : setDeleteBulkUsersModel(false)
+                    }
                     text="Delete user"
                   ></Button>
                   <button
                     onClick={() => setBulkUploadUsersModel(true)}
-                    className="flex flex-wrap items-center justify-center gap-2 border border-gray-500 text-gray-500 bg-white w-[200px] h-[45px] text-md font-medium rounded-[4px]"
+                    className="flex flex-wrap items-center justify-center gap-2 border border-gray-500 text-gray-900 bg-white w-[200px] h-[45px] text-md font-medium rounded-[4px]"
                   >
                     Bulk upload users
                     <span className="text-xl">
@@ -522,22 +661,32 @@ export default function ManageUsersList({
           </div>
         </div>
       </div>
+
       {deleteUsersModel && (
         <DeleteUsersModal
           setDeleteFlags={setDeleteFlag}
           closeDeleteUsersModal={setDeleteUsersModel}
         />
       )}
+
       {deleteBulkUsersModel && (
         <DeleteUsersModal
           setDeleteFlags={setBulkDeleteFlag}
           closeDeleteUsersModal={setDeleteBulkUsersModel}
         />
       )}
+
       {bulkUploadUsersModel && (
         <BulkUploadUsersModal
           closeBulkUploadUsersModal={setBulkUploadUsersModel}
         />
+      )}
+
+      {viewScheduleModal && (
+        <ViewScheduleModal
+          closeViewSchedulesModal={setViewScheduleModal}
+          scheduleUserData={scheduleUserData}
+        ></ViewScheduleModal>
       )}
     </>
   );

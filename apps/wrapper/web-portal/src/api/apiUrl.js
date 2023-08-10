@@ -21,7 +21,6 @@ const API_URL = {
     markStatus: `${rest}inProgress`,
     acceptApplicantNoc: `${rest}acceptFormR1`,
     acceptApplicantCertificate: `${rest}acceptFormR2`,
-
     rejectApplicant: `${rest}rejectForm`,
     getGroundInspectionAnalysis: `${rest}getGroundInspectionAnalysis`,
     filterOGA: `${rest}filterOGA`,
@@ -49,6 +48,7 @@ const API_URL = {
     addUsers: `${rest}addUsers`,
     deleteUser: `${rest}deleteUser`,
     editUser: `${rest}editUser`,
+    viewSchedule: `${rest}viewSchedule`
   },
   desktopAnalysis: {
     getUsersForSchedulingAssessment: `${rest}getUsersForSchedulingAssessment`,

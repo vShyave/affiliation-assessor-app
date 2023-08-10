@@ -28,6 +28,10 @@ const Header = () => {
     navigate(APPLICANT_ROUTE_MAP.dashboardModule.profile);
   };
 
+  const handleNavigateToHome = () => {
+    navigate(APPLICANT_ROUTE_MAP.dashboardModule.my_applications);
+  };
+
   useEffect(() => {
     if (instituteData != null) {
       setshowButtons(true);
@@ -40,7 +44,12 @@ const Header = () => {
         <div className="container py-2 px-3 mx-auto">
           <div className="flex flex-row">
             <div className="flex flex-grow items-center">
-              <img src="/images/upsmf.png" alt="logo" className="h-[64px]" />
+              <img
+                className="h-[64px] cursor-pointer"
+                onClick={handleNavigateToHome}
+                src="/images/upsmf.png"
+                alt="logo"
+              />
             </div>
             <div className="flex flex-grow items-center justify-end gap-4">
               {!showButtons && (
@@ -60,9 +69,7 @@ const Header = () => {
 
               {userData?.userRepresentation && (
                 <div className="flex flex-row gap-8 items-center">
-                  <div>
-                    <Overlay className="text-3xl text-gray-500" />
-                  </div>
+                  <Overlay className="text-3xl text-gray-500" />
                   <Menu placement="bottom-end">
                     <MenuHandler>
                       <button

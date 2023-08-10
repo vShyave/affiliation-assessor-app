@@ -1,7 +1,6 @@
 import { useContext, useEffect, useState } from "react";
 
 import { useNavigate } from "react-router-dom";
-import { NavLink } from "react-router-dom";
 
 import {
   Menu,
@@ -53,7 +52,9 @@ export default function Overlay() {
         body: item?.body,
         date: readableDate(item?.date),
         text: item?.body,
-        subText: item?.body.substr(0, 20) + "...",
+        subText: item?.body?.length > 40
+            ? item?.body.substr(0, 40) + " ..."
+            : item?.body,
         read_status: item?.read_status,
         id: item?.id,
       }));
@@ -63,6 +64,10 @@ export default function Overlay() {
     } finally {
     }
   };
+
+  const handleNavigateToNotification = () => {
+    navigation(APPLICANT_ROUTE_MAP.dashboardModule.notifications)
+  }
 
   useEffect(() => {
     getAllNotifications();
@@ -76,73 +81,32 @@ export default function Overlay() {
             <MdNotifications className="text-2xl text-gray-500" />
           </IconButton>
         </MenuHandler>
-        <MenuList className="flex flex-col gap-2 overflow-y-auto h-[520px]">
-          <div className="flex items-center py-2 pl-2">
-            <div className="flex flex-row gap-40 ">
-              <Typography variant="small" color="gray" className="font-normal">
-                <span className="text-base font-semibold text-gray-900">
-                  Notification
-                </span>
-              </Typography>
-              <Typography
-                variant="small"
-                className="flex items-center text-s text-gray-600"
-              >
-                <NavLink
-                  to={APPLICANT_ROUTE_MAP.dashboardModule.notifications}
-                  className="text-blue-600 pr-2"
-                >
-                  View all
-                </NavLink>
-              </Typography>
+        <MenuList className="flex flex-col overflow-y-auto max-h-[520px] p-0">
+          <div className="flex flex-row p-4 border-b-[2px]">
+            <div className="flex flex-grow text-base font-semibold text-gray-900 ">
+              Notification
+            </div>
+            <div
+              onClick={handleNavigateToNotification}
+              className="flex text-blue-600 pr-2 cursor-pointer items-center"
+            >
+              View all
             </div>
           </div>
-          <hr />
 
           {notificationList.length &&
             notificationList.map((item, index) => (
-              <div key={item.id + "_" + index}>
+              <div key={item.id + "_" + index} className="p-2">
                 <MenuItem
-                  className="flex flex-row justify-between gap-2 py-2 pl-2 hover:bg-[#FFE5B4]"
+                  className="flex flex-col justify-between gap-3 hover:bg-[#FFE5B4] p-2"
                   onClick={() => handleClick(item)}
                 >
-                  <div className="flex flex-col gap-2">
-                    <div className="w-fit bg-[#f6a192] text-white border-[#009A2B] py-1 px-3 text-[12px] rounded-[24px] capitalize font-semibold">
+                  <div className="flex flex-row gap-3 w-full">
+                    <div className="bg-[#f6a192] text-white border-[#009A2B] py-1 px-2 text-[12px] rounded-[4px] capitalize font-bold">
                       {"" + item.roles}
                     </div>
-                    <div className="flex flex-col gap-1">
-                      <Typography
-                        variant="small"
-                        color="gray"
-                        className="font-normal"
-                      >
-                        <div
-                          className={`${
-                            item.read_status === "Read"
-                              ? "font-medium"
-                              : "font-bold"
-                          } text-gray-900`}
-                        >
-                          {item.title}
-                        </div>
-                        <div
-                          className={`${
-                            item.read_status === "Read"
-                              ? "font-medium"
-                              : "font-bold"
-                          }`}
-                        >
-                          {item.subText}
-                        </div>
-                      </Typography>
-                    </div>
-                  </div>
-                  <Typography
-                    variant="small"
-                    className="flex items-center gap-1 text-xs text-gray-900"
-                  >
                     <div
-                      className={`${
+                      className={`flex flex-grow items-center justify-end text-sm ${
                         item.read_status === "Read"
                           ? "font-medium"
                           : "font-bold"
@@ -150,9 +114,31 @@ export default function Overlay() {
                     >
                       {item.date}
                     </div>
-                  </Typography>
+                  </div>
+                  <div
+                    color="gray"
+                    className="font-normal flex flex-col gap-1"
+                  >
+                    <div
+                      className={`${
+                        item.read_status === "Read"
+                          ? "font-medium"
+                          : "font-bold"
+                      } text-gray-900`}
+                    >
+                      {item.title}
+                    </div>
+                    <div
+                      className={`${
+                        item.read_status === "Read"
+                          ? "font-medium"
+                          : "font-bold"
+                      }`}
+                    >
+                      {item.subText}
+                    </div>
+                  </div>
                 </MenuItem>
-                <hr />
               </div>
             ))}
         </MenuList>

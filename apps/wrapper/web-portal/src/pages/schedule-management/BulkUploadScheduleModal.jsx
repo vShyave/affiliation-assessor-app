@@ -12,7 +12,7 @@ import { ContextAPI } from "../../utils/ContextAPI";
 
 function BulkUploadScheduleModal({ setBulkUploadSchduleModal }) {
   const [file, setFile] = useState();
-  const { setSpinner,setToast } = useContext(ContextAPI);
+  const { setSpinner, setToast } = useContext(ContextAPI);
 
   const [tableAssessmentList, setTableAssessmentList] = useState([]);
 
@@ -30,7 +30,6 @@ function BulkUploadScheduleModal({ setBulkUploadSchduleModal }) {
   const [allAssessmentsList, setAllAssessmentsList] = useState([]);
 
   const [selectedAssessmentList, setSelectedAssessmentList] = useState(false);
-  
 
   let selectedRows = [];
 
@@ -151,82 +150,26 @@ function BulkUploadScheduleModal({ setBulkUploadSchduleModal }) {
       };
 
       fileReader.readAsText(file);
-
-      csvToJSON(file);
-    }
-  };
-
-  const csvToJSON = (file) => {
-    try {
-      var reader = new FileReader();
-
-      reader.readAsBinaryString(file);
-
-      reader.onload = (e) => {
-        var invalidAssessmentData = [];
-
-        var headers = [];
-
-        var rows = e.target.result.split("\n");
-
-        for (var i = 0; i < rows.length; i++) {
-          var cells = rows[i].split(",");
-
-          var rowData = {};
-
-          for (var j = 0; j < cells.length; j++) {
-            if (i == 0) {
-              var headerName = cells[j].trim();
-
-              headers.push(headerName);
-            } else {
-              var key = headers[j];
-
-              if (key) {
-                rowData[key] = cells[j].trim();
-              }
-            }
-          }
-
-          const isValidAssessmentEntry = Object.values(rowData).every(
-            (value) => !!value
-          );
-          console.log(rowData);
-
-          for (let key in rowData) {
-            if (
-              i > 0 &&
-              (rowData[key] == null || rowData[key] == "") &&
-              isValidAssessmentEntry &&
-              !Object.keys(rowData).length &&
-              key !== "assisstant_code"
-            ) {
-              rowData["isRowInvalid"] = true;
-            }
-          }
-          invalidAssessmentData.push(rowData);
-
-          setInvalidTableAssessmentList(invalidAssessmentData);
-        }
-      };
-    } catch (e) {
-      console.error(e);
     }
   };
 
   const csvFileToArray = (string) => {
-    const csvHeader = string.slice(0, string.indexOf("\n")).split(",");
+    let invalidAssessmentData = [];
+    const csvHeader = string.trim().slice(0, string.indexOf("\n")).split(",");
     if (!csvHeader[csvHeader.length - 1]) {
       csvHeader.pop();
     }
 
-    const csvRows = string.slice(string.indexOf("\n") + 1).split("\n");
+    const csvRows = string
+      .slice(string.indexOf("\n") + 1)
+      .split("\n")
+      .filter((item) => item);
 
     const tableAssessmentList = csvRows.map((i) => {
       const values = i.split(",");
 
       let obj = csvHeader.reduce((object, header, index) => {
-        object[header] = values[index];
+        object[header.trim()] = values[index]?.trim()?.replace("\r", "");
         return object;
       }, {});
 
@@ -235,6 +178,9 @@ function BulkUploadScheduleModal({ setBulkUploadSchduleModal }) {
           obj["isRowInvalid"] = true;
         }
       }
+      if (obj["isRowInvalid"]) {
+        invalidAssessmentData.push(obj);
+      }
 
       return obj;
     });
@@ -242,6 +188,8 @@ function BulkUploadScheduleModal({ setBulkUploadSchduleModal }) {
     setTableAssessmentList(tableAssessmentList);
 
     setAllAssessmentsList(tableAssessmentList); // setting the all user list again to use it in on toggle
+
+    setInvalidTableAssessmentList(invalidAssessmentData);
 
     setTableDataReady(true);
   };
@@ -287,8 +235,24 @@ function BulkUploadScheduleModal({ setBulkUploadSchduleModal }) {
     }
   };
 
+  const isFileValid = () => {
+    let flag = true;
+    COLUMNS.forEach((item) => {
+      if (!Object.keys(tableAssessmentList[0]).includes(item.accessor)) {
+        flag = false;
+        return;
+      }
+    });
+    return flag;
+  };
+
   const setSelectedRows = (rowList) => {
     selectedRows = [...rowList];
+    if (selectedRows.length) {
+      document.getElementById("create-bulk-users").style.display = "";
+    } else {
+      document.getElementById("create-bulk-users").style.display = "none";
+    }
     console.log(selectedRows);
   };
 
@@ -322,7 +286,7 @@ function BulkUploadScheduleModal({ setBulkUploadSchduleModal }) {
             </div>
 
             <div className="justify-center flex flex-col items-center gap-4">
-              {!tableDataReady && (
+              {(!tableDataReady || (tableDataReady && !isFileValid())) && (
                 <div className="flex flex-row m-auto">
                   <input
                     type={"file"}
@@ -339,8 +303,13 @@ function BulkUploadScheduleModal({ setBulkUploadSchduleModal }) {
                   />
                 </div>
               )}
-
-              {tableDataReady && (
+              {tableDataReady && !isFileValid() && (
+                <div className="text-xl flex-row text-blue-500">
+                  Please upload csv file with supported data format. Kindly
+                  refer the template!
+                </div>
+              )}
+              {tableDataReady && isFileValid() && (
                 <div className="items-center">
                   <div className="text-2xl w-full mt-4 font-medium">
                     <FilteringTable
@@ -376,8 +345,12 @@ function BulkUploadScheduleModal({ setBulkUploadSchduleModal }) {
 
                 {tableDataReady && (
                   <Button
+                    id="create-bulk-users"
                     onClick={() => {
                       bulkSchedule();
+                    }}
+                    otherProps={{
+                      style: { display: "none" },
                     }}
                     moreClass="border text-white w-[120px]"
                     text="Schedule Assessments"
