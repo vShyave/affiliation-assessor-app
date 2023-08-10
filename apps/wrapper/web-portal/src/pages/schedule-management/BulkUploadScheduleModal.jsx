@@ -155,18 +155,21 @@ function BulkUploadScheduleModal({ setBulkUploadSchduleModal }) {
 
   const csvFileToArray = (string) => {
     let invalidAssessmentData = [];
-    const csvHeader = string.slice(0, string.indexOf("\n")).split(",");
+    const csvHeader = string.trim().slice(0, string.indexOf("\n")).split(",");
     if (!csvHeader[csvHeader.length - 1]) {
       csvHeader.pop();
     }
 
-    const csvRows = string.slice(string.indexOf("\n") + 1).split("\n");
+    const csvRows = string
+      .slice(string.indexOf("\n") + 1)
+      .split("\n")
+      .filter((item) => item);
 
     const tableAssessmentList = csvRows.map((i) => {
       const values = i.split(",");
 
       let obj = csvHeader.reduce((object, header, index) => {
-        object[header] = values[index];
+        object[header.trim()] = values[index]?.trim()?.replace("\r", "");
         return object;
       }, {});
 
@@ -232,8 +235,24 @@ function BulkUploadScheduleModal({ setBulkUploadSchduleModal }) {
     }
   };
 
+  const isFileValid = () => {
+    let flag = true;
+    COLUMNS.forEach((item) => {
+      if (!Object.keys(tableAssessmentList[0]).includes(item.accessor)) {
+        flag = false;
+        return;
+      }
+    });
+    return flag;
+  };
+
   const setSelectedRows = (rowList) => {
     selectedRows = [...rowList];
+    if (selectedRows.length) {
+      document.getElementById("create-bulk-users").style.display = "";
+    } else {
+      document.getElementById("create-bulk-users").style.display = "none";
+    }
     console.log(selectedRows);
   };
 
@@ -267,7 +286,7 @@ function BulkUploadScheduleModal({ setBulkUploadSchduleModal }) {
             </div>
 
             <div className="justify-center flex flex-col items-center gap-4">
-              {!tableDataReady && (
+              {(!tableDataReady || (tableDataReady && !isFileValid())) && (
                 <div className="flex flex-row m-auto">
                   <input
                     type={"file"}
@@ -284,8 +303,13 @@ function BulkUploadScheduleModal({ setBulkUploadSchduleModal }) {
                   />
                 </div>
               )}
-
-              {tableDataReady && (
+              {tableDataReady && !isFileValid() && (
+                <div className="text-xl flex-row text-blue-500">
+                  Please upload csv file with supported data format. Kindly
+                  refer the template!
+                </div>
+              )}
+              {tableDataReady && isFileValid() && (
                 <div className="items-center">
                   <div className="text-2xl w-full mt-4 font-medium">
                     <FilteringTable
@@ -321,8 +345,12 @@ function BulkUploadScheduleModal({ setBulkUploadSchduleModal }) {
 
                 {tableDataReady && (
                   <Button
+                    id="create-bulk-users"
                     onClick={() => {
                       bulkSchedule();
+                    }}
+                    otherProps={{
+                      style: { display: "none" },
                     }}
                     moreClass="border text-white w-[120px]"
                     text="Schedule Assessments"
