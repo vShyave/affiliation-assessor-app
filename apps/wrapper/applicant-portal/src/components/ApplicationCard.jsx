@@ -18,7 +18,28 @@ const ApplicationCard = (props) => {
         <div className="text-sm">
           {" "}
           <span
-            className="text-xs text-green-500 p-1 rounded-md"
+            className={`text-xs p-1 rounded-md ${
+              props.application.form_status?.toLowerCase() === "in progress"
+                ? "text-yellow-800"
+                : props.application.form_status?.toLowerCase() === "resubmitted"
+                ? "text-indigo-700"
+                : props.application.form_status?.toLowerCase() ===
+                  "inspection scheduled"
+                ? "text-blue-400"
+                : props.application.form_status?.toLowerCase() ===
+                  "application submitted"
+                ? "text-green-400"
+                : props.application.form_status?.toLowerCase() === "returned"
+                ? "text-red-400"
+                : props.application.form_status?.toLowerCase() ===
+                  "oga completed"
+                ? "text-purple-400"
+                : props.application.form_status?.toLowerCase() === "approved"
+                ? "text-teal-400"
+                : props.application.form_status?.toLowerCase() === "rejected"
+                ? "text-pink-400"
+                : "text-black-500"
+            }`}
             style={{ backgroundColor: "#eee" }}
           >
             Status: {props.application.form_status}

@@ -240,7 +240,7 @@ function ScheduleInspectionModal({ closeSchedule, otherInfo }) {
           <div className="flex flex-col w-full">
             <div className="flex p-4">
               <div className="flex flex-col items-center w-full">
-              {/* <div className="w-[40%] p-3"> */}
+                {/* <div className="w-[40%] p-3"> */}
                 {/* <div
                   className="flex flex-col" */}
                 {/* activeStep={activeStep}
@@ -248,33 +248,32 @@ function ScheduleInspectionModal({ closeSchedule, otherInfo }) {
                    isFirstStep={(value) => setIsFirstStep(value)} */}
                 {/* > */}
                 <div className="flex flex-row gap-2 items-center w-[40%] p-3">
-                  <div className=
-                  {`${
-                    (activeStep==1)
-                      ? "flex items-center bg-gray-300 text-white justify-center text-[18px] font-bold rounded-[50%] h-[48px] w-[48px] p-5"
-                      : "flex items-center bg-blue-500 text-white justify-center text-[18px] font-bold rounded-[50%] h-[48px] w-[48px] p-5"
-                  }`}
-                  // className="flex items-center bg-blue-500 text-white justify-center text-[18px] font-bold rounded-[50%] h-[48px] w-[48px] p-5"
+                  <div
+                    className={`${
+                      activeStep == 1
+                        ? "flex items-center bg-gray-300 text-white justify-center text-[18px] font-bold rounded-[50%] h-[48px] w-[48px] p-5"
+                        : "flex items-center bg-blue-500 text-white justify-center text-[18px] font-bold rounded-[50%] h-[48px] w-[48px] p-5"
+                    }`}
+                    // className="flex items-center bg-blue-500 text-white justify-center text-[18px] font-bold rounded-[50%] h-[48px] w-[48px] p-5"
                   >
                     1
                   </div>
                   <span className="w-full h-0 border-t-[2px] border-gray-500"></span>
-                  <div 
-                  className=
-                  {`${
-                    (activeStep==0)
-                      ? "flex items-center bg-gray-300 text-white justify-center text-[18px] font-bold rounded-[50%] h-[48px] w-[48px] p-5"
-                      : "flex items-center bg-blue-500 text-white justify-center text-[18px] font-bold rounded-[50%] h-[48px] w-[48px] p-5"
-                  }`}
-                  // className="flex items-center text-white bg-blue-500 justify-center text-[18px] font-bold rounded-[50%] h-[48px] w-[48px] p-5"
+                  <div
+                    className={`${
+                      activeStep == 0
+                        ? "flex items-center bg-gray-300 text-white justify-center text-[18px] font-bold rounded-[50%] h-[48px] w-[48px] p-5"
+                        : "flex items-center bg-blue-500 text-white justify-center text-[18px] font-bold rounded-[50%] h-[48px] w-[48px] p-5"
+                    }`}
+                    // className="flex items-center text-white bg-blue-500 justify-center text-[18px] font-bold rounded-[50%] h-[48px] w-[48px] p-5"
                   >
                     2
                   </div>
                 </div>
 
                 {/* </div> */}
-              {/* </div> */}
-              {/* <div className="w-[60%] p-2"> */}
+                {/* </div> */}
+                {/* <div className="w-[60%] p-2"> */}
                 <div className="flex flex-row w-[48%] justify-between">
                   <div className="flex font-semibold justify-center text-[#000]">
                     Schedule inspection
@@ -283,7 +282,7 @@ function ScheduleInspectionModal({ closeSchedule, otherInfo }) {
                     Select the applications
                   </div>
                 </div>
-              {/* </div> */}
+                {/* </div> */}
               </div>
             </div>
 
@@ -465,7 +464,7 @@ function ScheduleInspectionModal({ closeSchedule, otherInfo }) {
 
                         <div className="bg-gray-100  items-center flex gap-4 border border-gray-100 rounded-md">
                           <span className="font-semibold p-2">
-                            {otherInfo?.course_type}- {otherInfo?.course_level}
+                            {otherInfo?.course_type} - {otherInfo?.course_level}
                           </span>
                         </div>
                       </div>
