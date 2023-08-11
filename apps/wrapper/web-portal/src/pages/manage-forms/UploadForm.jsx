@@ -11,12 +11,17 @@ import { getPrefillXML } from "../../api/formApi";
 
 const ENKETO_URL = process.env.REACT_APP_ENKETO_URL;
 
-const UploadForm = ({ setFormStage, handleFile, xmlData, formData, formStatus }) => {
+const UploadForm = ({
+  setFormStage,
+  handleFile,
+  xmlData,
+  formData,
+  formStatus,
+}) => {
   const [fileName, setFileName] = useState("");
   const hiddenFileInput = React.useRef(null);
   const [encodedFormURI, setEncodedFormURI] = useState("");
   let formURI = "";
-console.log(formData)
 
   const handleClick = (e) => {
     hiddenFileInput.current.click();
@@ -85,7 +90,7 @@ console.log(formData)
   const handleFormPreview = async () => {
     console.log("inside handle preview- ", formData);
     await fetchFormData();
-    let src = `${ENKETO_URL}preview?formSpec=${encodeURI(
+    let src = `${ENKETO_URL}/preview?formSpec=${encodeURI(
       JSON.stringify(formSpec)
     )}&xform=${formURI}&userId=${userId}`;
     console.log("Preview Url", src);
@@ -157,14 +162,17 @@ console.log(formData)
                     // disabled={formStatus=="Published" || formStatus=="Unpublished"}
 
                     moreClass={`${
-                      (formStatus=="Published" || formStatus=="Unpublished")
-                        ?  "cursor-not-allowed border w-full px-6 border-gray-500 bg-white text-gray-500 "
+                      formStatus == "Published" || formStatus == "Unpublished"
+                        ? "cursor-not-allowed border w-full px-6 border-gray-500 bg-white text-gray-500 "
                         : "text-white w-full px-6"
                     }`}
                     text="Browse file to upload"
                     onClick={handleClick}
                     otherProps={{
-                      disabled: (formStatus=="Published" || formStatus=="Unpublished") ?  true : false  ,
+                      disabled:
+                        formStatus == "Published" || formStatus == "Unpublished"
+                          ? true
+                          : false,
                     }}
                   />
                   {formData?.path && (

@@ -58,7 +58,7 @@ const FormsOverview = () => {
 
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [isFilterOpen, setIsFilterOpen] = useState(false);
-  const { setSpinner,setToast } = useContext(ContextAPI);
+  const { setSpinner, setToast } = useContext(ContextAPI);
 
   const COLUMN_DRAFTS = [
     {
@@ -186,9 +186,8 @@ const FormsOverview = () => {
   const publish = (e) => {
     let publishFormId = [e[0]?.form_id];
     setShowAlert(false);
-    //console.log(e);
     publishForm(publishFormId);
-    HandlecreateCourse(e);
+    handleCreateCourse(e);
   };
 
   const unpublish = (formId) => {
@@ -559,25 +558,23 @@ const FormsOverview = () => {
     }
   };
 
-  const HandlecreateCourse = async (formDataObject) => {
-    // const formData = new FormData();
-    // formData.append("form_id", form_id);]
-    //console.log(formDataObject);
+  const handleCreateCourse = async (formDataObject) => {
     let objectRes = JSON.stringify([
       { name: formDataObject[0]?.file_name, path: formDataObject[0]?.path },
     ]);
+
     const formData = {
       course_type: formDataObject[0]?.course_type,
       course_level: formDataObject[0]?.course_level,
       course_name: formDataObject[0]?.title,
       formObject: objectRes,
+      form_id: formDataObject?.[0]?.form_id,
       application_type: formDataObject[0]?.application_type,
       course_desc: formDataObject[0]?.form_desc,
       assignee: formDataObject[0]?.assignee,
     };
 
     try {
-      // console.log("formDataObj", formDataObject);
       setSpinner(true);
       const response = await createCourse(formData);
       setToast((prevState) => ({

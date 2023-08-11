@@ -45,7 +45,7 @@ export const updateFormData = async (fileName, userId) => {
         let data = await getFromLocalForage(
             `${userId}_${fileName}_${new Date().toISOString().split("T")[0]}`
         );
-        console.log("storage data - ", data);
+        
         let prefilledForm = await getSubmissionXML(
             fileName,
             data?.formData,
