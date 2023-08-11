@@ -9,11 +9,13 @@ import Toast from "../components/Toast";
 
 // import { removeCookie, getCookie, getInitials } from "../utils";
 
-import { getCookie } from "../utils";
+import { getCookie, setCookie } from "../utils";
 
 import APPLICANT_ROUTE_MAP from "../routes/ApplicantRoute";
 
-import { profileService } from "../services";
+import { profileService , userService} from "../services";
+import { editUserKeycloak } from "../services/userService";
+
 
 export default function Profile() {
   const instituteData = getCookie("institutes");
@@ -55,37 +57,16 @@ export default function Profile() {
   }, []);
 
   const handleEditProfile = async () => {
-    console.log("data", userData);
-    const {
-      firstName,
-      lastName,
-      applicantName,
-      applicantType,
-      courseType,
-      email,
-      mobilePhone,
-    } = formData;
-    const instituteDetails = {
-      instituteName: applicantName,
-      district: "Varanasi", // Capture it from UI once field is added
-      email: email,
-      address: "Shivpur, Varanasi", // Capture it from UI once field is added
-      course_applied: courseType,
-    };
+    console.log("data", formData)
+  
 
-    const institutePocDetils = {
-      fname: firstName,
-      lname: lastName,
-      name: `${firstName} ${lastName}`,
-      phoneNumber: mobilePhone,
-      user_id: "",
-      institute_id: "",
-    };
-    const instituteEditDetails = {
+    
+    const instituteEditDetails = 
+    {
       institute_id: instituteData[0]?.id,
-      institute_name: instituteDetails.instituteName,
+      institute_name: instituteData[0]?.name,
       // institute_email: instituteDetails.email,
-      institute_course: instituteDetails.course_applied,
+      institute_course: instituteData[0]?.course_applied,
       institutePOC_fname: formData?.first_name,
       institutePOC_lname: formData?.last_name,
       institutePOC_name: formData?.name,
@@ -93,14 +74,43 @@ export default function Profile() {
     };
 
     try {
-      const response = await profileService.getProfileEdit(instituteEditDetails)
-        setToast((prevState) => ({
-          ...prevState,
-          toastOpen: true,
-          toastMsg: "User successfully edited",
-          toastType: "success",
-        }))
-      ;
+
+      let accessTokenObj = {
+        grant_type: "client_credentials",
+        client_id: "admin-api",
+        client_secret: "edd0e83d-56b9-4c01-8bf8-bad1870a084a",
+      };
+      // Access Token API call
+      const accessTokenResponse = await userService.getAccessToken(
+        accessTokenObj
+      );
+      setCookie(
+        "access_token",
+        "Bearer " + accessTokenResponse?.data?.access_token
+      );
+
+      let postDataKeyCloak = {
+        username: userData?.userRepresentation?.email,
+        firstName: formData?.first_name,
+        lastName: formData?.last_name,
+        roleNames: ["Institute", "default-roles-ndear"],
+      };
+      // keycloak edit user
+      const singleEditKeycloak = await editUserKeycloak(postDataKeyCloak);
+      if (singleEditKeycloak.status !== 200) {
+      }
+
+
+      const response = await profileService.getProfileEdit(
+        instituteEditDetails
+      );
+      console.log("response ",response)
+      setToast((prevState) => ({
+        ...prevState,
+        toastOpen: true,
+        toastMsg: "User successfully edited",
+        toastType: "success",
+      }));
       setTimeout(
         () =>
           setToast((prevState) => ({
@@ -133,8 +143,8 @@ export default function Profile() {
   };
 
   const handleChange = (e) => {
-    console.log("handlechange", e.target);
-    setFormData((prevState) => ({ ...prevState, [e.target]: e.target.value }));
+    console.log("handlechange", e.target.value);
+    setFormData((prevState) => ({ ...prevState, [e.target.name]: e.target.value }));
   };
 
   const getProfileDetails = async () => {
@@ -148,11 +158,11 @@ export default function Profile() {
       );
       const formDetail = response.data.institutes[0];
       setFormData({
-        first_name: formDetail?.institute_pocs[0].fname,
-        last_name: formDetail?.institute_pocs[0].lname,
-        phone_number: formDetail?.institute_pocs[0].number,
+        first_name: formDetail?.institute_pocs[0]?.fname,
+        last_name: formDetail?.institute_pocs[0]?.lname,
+        phone_number: formDetail?.institute_pocs[0]?.number,
         email: userData?.userRepresentation?.email,
-         name: formDetail?.institute_pocs[0].name,
+        name: formDetail?.institute_pocs[0]?.name,
         // applicant_type: [applicantType],
         course_type: formDetail?.course_applied,
       });
@@ -434,7 +444,6 @@ export default function Profile() {
                     onClick={function (e) {
                       setText("Save");
                       setIsPreview(false);
-                      // {text==="Save" && navigate(APPLICANT_ROUTE_MAP.dashboardModule.my_applications)}
                       handleSubmit(e);
                     }}
                   ></Button>

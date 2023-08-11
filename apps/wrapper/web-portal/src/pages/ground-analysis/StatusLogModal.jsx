@@ -13,6 +13,7 @@ function StatusLogModal({ closeStatusModal, formId }) {
       try {
         setSpinner(true);
         const res = await getStatus(postData);
+        console.log("res",res)
         setFormStatus(res.events);
       } catch (error) {
         console.log(error);

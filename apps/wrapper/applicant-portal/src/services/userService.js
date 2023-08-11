@@ -90,6 +90,21 @@ const signup = (userDetails) => {
   );
 };
 
+// Edit user keycloak
+export const editUserKeycloak = async (postData) => {
+  const res = await axios.post(
+    `${BASE_URL}${APIS.EDITUSERS.EDIT_USER}`,
+    postData,
+    {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: getCookie("access_token"),
+      },
+    }
+  );
+  return res;
+};
+
 const login = (userDetails) => {
   return keyCloakAxiosService.post(APIS.LOGIN.USERLOGIN, userDetails);
 };
