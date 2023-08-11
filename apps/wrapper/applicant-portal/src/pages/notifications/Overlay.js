@@ -52,7 +52,8 @@ export default function Overlay() {
         body: item?.body,
         date: readableDate(item?.date),
         text: item?.body,
-        subText: item?.body?.length > 40
+        subText:
+          item?.body?.length > 40
             ? item?.body.substr(0, 40) + " ..."
             : item?.body,
         read_status: item?.read_status,
@@ -66,8 +67,8 @@ export default function Overlay() {
   };
 
   const handleNavigateToNotification = () => {
-    navigation(APPLICANT_ROUTE_MAP.dashboardModule.notifications)
-  }
+    navigation(APPLICANT_ROUTE_MAP.dashboardModule.notifications);
+  };
 
   useEffect(() => {
     getAllNotifications();
@@ -86,12 +87,14 @@ export default function Overlay() {
             <div className="flex flex-grow text-base font-semibold text-gray-900 ">
               Notification
             </div>
-            <div
-              onClick={handleNavigateToNotification}
-              className="flex text-blue-600 pr-2 cursor-pointer items-center"
-            >
-              View all
-            </div>
+            {notificationList.length && (
+              <div
+                onClick={handleNavigateToNotification}
+                className="flex text-blue-600 pr-2 cursor-pointer items-center"
+              >
+                View all
+              </div>
+            )}
           </div>
 
           {notificationList.length &&
@@ -115,10 +118,7 @@ export default function Overlay() {
                       {item.date}
                     </div>
                   </div>
-                  <div
-                    color="gray"
-                    className="font-normal flex flex-col gap-1"
-                  >
+                  <div color="gray" className="font-normal flex flex-col gap-1">
                     <div
                       className={`${
                         item.read_status === "Read"
