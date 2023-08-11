@@ -608,7 +608,7 @@ export default function ManageUsersList({
                     }}
                     moreClass={`${
                       listArray == 0
-                        ? "cursor-not-allowed border border-gray-500 bg-white text-gray-200 px-8 h-[44px]"
+                        ? "cursor-not-allowed border border-gray-500 bg-white w-fit text-gray-200 px-8 h-fit"
                         : "px-8 text-white"
                     }`}
                     onClick={() =>
