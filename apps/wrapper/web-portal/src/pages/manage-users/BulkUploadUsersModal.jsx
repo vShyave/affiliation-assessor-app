@@ -328,7 +328,7 @@ function BulkUploadUsersModal({ closeBulkUploadUsersModal }) {
               <h1>Bulk upload users</h1>
 
               <div className="flex flex-row m-auto">
-                {tableDataReady && (
+                {(tableUserList.length!==0 && isFileValid()) && (
                   <Switch
                     id="show-with-errors"
                     label={<span className="text-sm">Show with errors</span>}

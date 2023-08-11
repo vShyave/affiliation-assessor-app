@@ -269,7 +269,7 @@ function BulkUploadScheduleModal({ setBulkUploadSchduleModal }) {
               <h1>Bulk upload assessments</h1>
 
               <div className="flex flex-row m-auto">
-                {tableDataReady && (
+                {(tableAssessmentList.length!==0 && isFileValid()) && (
                   <Switch
                     id="show-with-errors"
                     label={<span className="text-sm">Show with errors</span>}
