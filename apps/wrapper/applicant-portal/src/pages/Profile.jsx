@@ -58,7 +58,7 @@ export default function Profile() {
 
   const handleEditProfile = async () => {
     console.log("data", formData)
-  
+    let errorFlag = false;
 
     
     const instituteEditDetails = 
@@ -88,6 +88,9 @@ export default function Profile() {
         "access_token",
         "Bearer " + accessTokenResponse?.data?.access_token
       );
+      if (accessTokenResponse.status !== 200) {
+        errorFlag = true;
+      }
 
       let postDataKeyCloak = {
         username: userData?.userRepresentation?.email,
@@ -99,18 +102,24 @@ export default function Profile() {
       const singleEditKeycloak = await editUserKeycloak(postDataKeyCloak);
       if (singleEditKeycloak.status !== 200) {
       }
+      if (singleEditKeycloak.status !== 200) {
+        errorFlag = true;
+      }
 
 
       const response = await profileService.getProfileEdit(
         instituteEditDetails
       );
-      console.log("response ",response)
+      if (response.status !== 200) {
+        errorFlag = true;
+      }
+      if (!errorFlag) {
       setToast((prevState) => ({
         ...prevState,
         toastOpen: true,
         toastMsg: "User successfully edited",
         toastType: "success",
-      }));
+      }))};
       setTimeout(
         () =>
           setToast((prevState) => ({
@@ -143,7 +152,6 @@ export default function Profile() {
   };
 
   const handleChange = (e) => {
-    console.log("handlechange", e.target.value);
     setFormData((prevState) => ({ ...prevState, [e.target.name]: e.target.value }));
   };
 
@@ -166,7 +174,6 @@ export default function Profile() {
         // applicant_type: [applicantType],
         course_type: formDetail?.course_applied,
       });
-      console.log("formDetail", formDetail);
     } catch (error) {
       setToast((prevState) => ({
         ...prevState,

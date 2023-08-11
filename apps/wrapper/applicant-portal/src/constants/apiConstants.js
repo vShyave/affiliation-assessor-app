@@ -35,6 +35,9 @@ export const APIS = {
   FORM: {
     UPDATE_FORM: "/rest/updateFormSubmission"
   },
+  SEARCH:{
+    SEARCH_FORM: "/rest/searchCourses"
+  },
   notifications:{
     insertNotifications: `rest/insertNotifications`,
     getNotifications: `rest/getNotifications`,
