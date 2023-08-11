@@ -160,7 +160,7 @@ export default function DesktopAnalysisView() {
       form_id: formId,
       form_data: updatedFormData,
       assessment_type: "applicant",
-      form_name: formName,
+      form_name: formName?.replace("admin", "applicant"),
       submission_status: true,
       applicant_id: formDataFromApi?.institute?.id,
       updated_at: getLocalTimeInISOFormat(),

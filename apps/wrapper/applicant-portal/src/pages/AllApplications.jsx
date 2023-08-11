@@ -3,6 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 
 import { FormCard } from "../components";
 import { useForm } from "react-hook-form";
+import { setToLocalForage } from "../forms";
 
 import { Select, Option } from "@material-tailwind/react";
 
@@ -23,8 +24,6 @@ const AllApplications = () => {
   const [availableForms, setAvailableForms] = useState([]);
   const instituteDetails = getCookie("institutes");
   const navigate = useNavigate();
-
- 
 
   const handleChange = (name, value) => {
     setFormData({
@@ -48,7 +47,11 @@ const AllApplications = () => {
     setLoadingForms(false);
   };
 
-  const applyFormHandler = (formObj) => {
+  const applyFormHandler = async (formObj) => {
+    console.log("formObj - ", formObj);
+
+    await setToLocalForage("course_details", formObj);
+
     let form_obj = JSON.parse(formObj.formObject);
     form_obj = form_obj[0].name;
     let file_name = form_obj.substr(0, form_obj.lastIndexOf("."));
