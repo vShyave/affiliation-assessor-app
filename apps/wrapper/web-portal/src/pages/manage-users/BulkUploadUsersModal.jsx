@@ -297,16 +297,20 @@ function BulkUploadUsersModal({ closeBulkUploadUsersModal }) {
   const isFileValid = () => {
     let flag = true;
     COLUMNS.forEach((item) => {
-      if (!Object.keys(tableUserList[0]).includes(item.accessor)) {
+      if (tableUserList.length) {
+        if (!Object.keys(tableUserList[0])?.includes(item.accessor)) {
+          flag = false;
+          return;
+        }
+      } else {
         flag = false;
-        return;
       }
     });
     return flag;
   };
 
   const setSelectedRows = (rowList) => {
-    selectedRows = [...rowList].filter((item)=>!item.original.isRowInvalid);
+    selectedRows = [...rowList].filter((item) => !item.original.isRowInvalid);
     if (selectedRows.length) {
       document.getElementById("schedule-bulk-assessment").disabled = false;
     } else {

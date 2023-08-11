@@ -238,16 +238,20 @@ function BulkUploadScheduleModal({ setBulkUploadSchduleModal }) {
   const isFileValid = () => {
     let flag = true;
     COLUMNS.forEach((item) => {
-      if (!Object.keys(tableAssessmentList[0]).includes(item.accessor)) {
+      if (tableAssessmentList.length) {
+        if (!Object.keys(tableAssessmentList[0])?.includes(item.accessor)) {
+          flag = false;
+          return;
+        }
+      } else {
         flag = false;
-        return;
       }
     });
     return flag;
   };
 
   const setSelectedRows = (rowList) => {
-    selectedRows = [...rowList].filter((item)=>!item.original.isRowInvalid);
+    selectedRows = [...rowList].filter((item) => !item.original.isRowInvalid);
     if (selectedRows.length) {
       document.getElementById("create-bulk-users").disabled = false;
     } else {
@@ -310,24 +314,22 @@ function BulkUploadScheduleModal({ setBulkUploadSchduleModal }) {
                 </div>
               )}
               {tableDataReady && isFileValid() && (
-                
-                  <div className="text-2xl w-full font-medium">
-                    <FilteringTable
-                      moreHeight="h-[300px]"
-                      pagination={false}
-                      dataList={
-                        invalidAssessmentDataFlag
-                          ? invalidTableAssessmentList
-                          : tableAssessmentList
-                      }
-                      columns={COLUMNS}
-                      navigateFunc={() => {}}
-                      showCheckbox={true}
-                      showFilter={false}
-                      setSelectedRows={setSelectedRows}
-                    />
-                  </div>
-                
+                <div className="text-2xl w-full font-medium">
+                  <FilteringTable
+                    moreHeight="h-[300px]"
+                    pagination={false}
+                    dataList={
+                      invalidAssessmentDataFlag
+                        ? invalidTableAssessmentList
+                        : tableAssessmentList
+                    }
+                    columns={COLUMNS}
+                    navigateFunc={() => {}}
+                    showCheckbox={true}
+                    showFilter={false}
+                    setSelectedRows={setSelectedRows}
+                  />
+                </div>
               )}
             </div>
 
@@ -350,7 +352,7 @@ function BulkUploadScheduleModal({ setBulkUploadSchduleModal }) {
                       bulkSchedule();
                     }}
                     otherProps={{
-                      disabled: true
+                      disabled: true,
                     }}
                     moreClass="border text-white w-[120px]"
                     text="Schedule"
