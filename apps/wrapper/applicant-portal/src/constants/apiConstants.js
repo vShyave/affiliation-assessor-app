@@ -12,6 +12,10 @@ export const APIS = {
   SIGNUP: {
     CREATE_USER: "keycloak/user/create",
   },
+  EDITUSERS:{
+    EDIT_USER: "keycloak/user/update",
+  },
+
   LOGIN: {
     GENERATE_OTP: "user/generateOtp",
     USERLOGIN: "user/login",

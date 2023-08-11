@@ -516,8 +516,11 @@ export default function ManageUsersList({
   const setSelectedRows = (rowList) => {
     let checkboxArr = [];
     rowList.forEach((item) => {
+      console.log(item);
       let checkboxObj = {};
       checkboxObj.email = item.values.email;
+      checkboxObj.status = item.values.status;
+      checkboxObj.user_id = item.original.id;
       checkboxArr.push(checkboxObj);
     });
     selectedRows = checkboxArr;
@@ -586,6 +589,30 @@ export default function ManageUsersList({
       setSpinner(false);
     }
   };
+  const handleUserStatus = async (selectedRows) => {
+    console.log(selectedRows);
+    for (let x in selectedRows) {
+      if (selectedRows[x].status.toLowerCase() === "active") {
+        const postData = { assessorId: selectedRows[x].user_id };
+        const validResponse = await handleInctiveUser(postData);
+
+        // resUserData.forEach((item) => {
+        //   if (item.id === selectedRows[x].user_id) {
+        //     item.status = "Inactive";
+        //   }
+        // });
+      } else if (selectedRows[x].status.toLowerCase() === "inactive") {
+        const postData = { assessorId: selectedRows[x].user_id };
+        const validResponse = await handleActiveUser(postData);
+        // resUserData.forEach((item) => {
+        //   if (item.id === selectedRows[x].user_id) {
+        //     item.status = "Active";
+        //   }
+        // });
+      }
+    }
+    // setUserTableList(resUserData);
+  };
 
   return (
     <>
@@ -600,7 +627,22 @@ export default function ManageUsersList({
               </div>
               <div className="flex justify-end">
                 <span className="flex gap-4">
-                  <Button moreClass="text-white" text="Make inactive"></Button>
+                  <Button
+                    otherProps={{
+                      disabled: listArray == 0 ? true : false,
+                    }}
+                    moreClass={`${
+                      listArray == 0
+                        ? "cursor-not-allowed border border-gray-500 bg-white text-gray-200 px-8 h-[44px]"
+                        : "px-8 text-white"
+                    }`}
+                    onClick={() =>
+                      selectedRows.length
+                        ? handleUserStatus(selectedRows)
+                        : "blahhh"
+                    }
+                    text="Make inactive"
+                  ></Button>
                   <Button
                     // moreClass="text-white"
                     otherProps={{

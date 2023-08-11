@@ -31,6 +31,8 @@ function RejectNocModal({ closeRejectModal, setRejectStatus, formId }) {
       try {
         setSpinner(true);
         const res = await getRejectApplicant(postData);
+        console.log("remarks",res)
+        // const rejectedRemarks = res?.data?.update_form_submissions?.returning[0]?.remarks
         const formStatus =
           res?.data?.update_form_submissions?.returning[0]?.form_status;
         setRejectStatus(formStatus === "Rejected" ? true : false);
@@ -40,6 +42,7 @@ function RejectNocModal({ closeRejectModal, setRejectStatus, formId }) {
           entity_type: "form",
           event_name: "Rejected",
           remarks: `${user_details?.firstName} ${user_details?.lastName} has rejected the form!`,
+          // remarks: rejectedRemarks
         });
   
         updateFormStatus({           
