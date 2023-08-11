@@ -92,6 +92,10 @@ export const getUpcomingAssessments = async (postData) => {
   const res = await customPost.post("rest/getUpcomingInspections", postData);
   return res;
 };
+export const getPendingInspections = async (postData) => {
+  const res = await customPost.post("rest/getPendingInspections", postData);
+  return res;
+};
 
 export const getPastInspections = async (postData) => {
   const res = await customPost.post("rest/getPastInspections", postData);

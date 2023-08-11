@@ -42,6 +42,7 @@ import CaptureSelfie from "./pages/CaptureSelfie";
 import "./App.css";
 import PastSubmittedForms from "./pages/PastSubmittedForms";
 import ComingSoon from "./pages/ComingSoon";
+import PendingInspections from "./pages/PendingInspection";
 
 export const StateContext = createContext();
 
@@ -82,6 +83,14 @@ function App() {
               }
             />
             <Route
+              path={ROUTE_MAP.pending_inspections}
+              element={
+                <PrivateRoute>
+                  <PendingInspections />
+                </PrivateRoute>
+              }
+            />
+            <Route
               path={ROUTE_MAP.past_inspections}
               element={
                 <PrivateRoute>
@@ -97,11 +106,17 @@ function App() {
                 </PrivateRoute>
               }
             />
-           <Route
+            <Route
               path={`${ROUTE_MAP.otherforms_param_formName}:formName/:date?`}
               element={
                 <PrivateRoute>
-                  <GenericOdkForm commonLayoutProps={{back:-1,logoutDisabled:true, downloadFile: true }} />
+                  <GenericOdkForm
+                    commonLayoutProps={{
+                      back: -1,
+                      logoutDisabled: true,
+                      downloadFile: true,
+                    }}
+                  />
                 </PrivateRoute>
               }
             />
