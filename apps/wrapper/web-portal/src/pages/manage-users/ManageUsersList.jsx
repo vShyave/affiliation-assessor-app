@@ -193,7 +193,6 @@ export default function ManageUsersList({
   };
 
   const handleViewSchedule = (data) => {
-    console.log("data - ", data);
     setScheduleUserData(data);
     setViewScheduleModal(true);
   };
@@ -516,7 +515,6 @@ export default function ManageUsersList({
   const setSelectedRows = (rowList) => {
     let checkboxArr = [];
     rowList.forEach((item) => {
-      console.log(item);
       let checkboxObj = {};
       checkboxObj.email = item.values.email;
       checkboxObj.status = item.values.status;
@@ -590,7 +588,6 @@ export default function ManageUsersList({
     }
   };
   const handleUserStatus = async (selectedRows) => {
-    console.log(selectedRows);
     for (let x in selectedRows) {
       if (selectedRows[x].status.toLowerCase() === "active") {
         const postData = { assessorId: selectedRows[x].user_id };
@@ -611,6 +608,7 @@ export default function ManageUsersList({
         // });
       }
     }
+    await fetchAllUsers()
     // setUserTableList(resUserData);
   };
 
@@ -636,12 +634,12 @@ export default function ManageUsersList({
                         ? "cursor-not-allowed border border-gray-500 bg-white text-gray-200 px-8 h-[44px]"
                         : "px-8 text-white"
                     }`}
-                    onClick={() =>
-                      selectedRows.length
-                        ? handleUserStatus(selectedRows)
-                        : "blahhh"
+                    onClick={() =>{
+                      if(selectedRows.length>0){
+                         handleUserStatus(selectedRows)
+                        }}
                     }
-                    text="Make inactive"
+                    text="Make Active/Inactive"
                   ></Button>
                   <Button
                     // moreClass="text-white"
