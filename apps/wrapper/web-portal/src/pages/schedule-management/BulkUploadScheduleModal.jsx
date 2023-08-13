@@ -238,20 +238,24 @@ function BulkUploadScheduleModal({ setBulkUploadSchduleModal }) {
   const isFileValid = () => {
     let flag = true;
     COLUMNS.forEach((item) => {
-      if (!Object.keys(tableAssessmentList[0]).includes(item.accessor)) {
+      if (tableAssessmentList.length) {
+        if (!Object.keys(tableAssessmentList[0])?.includes(item.accessor)) {
+          flag = false;
+          return;
+        }
+      } else {
         flag = false;
-        return;
       }
     });
     return flag;
   };
 
   const setSelectedRows = (rowList) => {
-    selectedRows = [...rowList];
+    selectedRows = [...rowList].filter((item) => !item.original.isRowInvalid);
     if (selectedRows.length) {
-      document.getElementById("create-bulk-users").style.display = "";
+      document.getElementById("create-bulk-users").disabled = false;
     } else {
-      document.getElementById("create-bulk-users").style.display = "none";
+      document.getElementById("create-bulk-users").disabled = true;
     }
     console.log(selectedRows);
   };
@@ -265,7 +269,7 @@ function BulkUploadScheduleModal({ setBulkUploadSchduleModal }) {
               <h1>Bulk upload assessments</h1>
 
               <div className="flex flex-row m-auto">
-                {tableDataReady && (
+                {(tableAssessmentList.length!==0 && isFileValid()) && (
                   <Switch
                     id="show-with-errors"
                     label={<span className="text-sm">Show with errors</span>}
@@ -285,7 +289,7 @@ function BulkUploadScheduleModal({ setBulkUploadSchduleModal }) {
               </div>
             </div>
 
-            <div className="justify-center flex flex-col items-center gap-4">
+            <div className="flex flex-col items-center gap-4">
               {(!tableDataReady || (tableDataReady && !isFileValid())) && (
                 <div className="flex flex-row m-auto">
                   <input
@@ -310,23 +314,21 @@ function BulkUploadScheduleModal({ setBulkUploadSchduleModal }) {
                 </div>
               )}
               {tableDataReady && isFileValid() && (
-                <div className="items-center">
-                  <div className="text-2xl w-full mt-4 font-medium">
-                    <FilteringTable
-                      moreHeight="h-[300px]"
-                      pagination={false}
-                      dataList={
-                        invalidAssessmentDataFlag
-                          ? invalidTableAssessmentList
-                          : tableAssessmentList
-                      }
-                      columns={COLUMNS}
-                      navigateFunc={() => {}}
-                      showCheckbox={true}
-                      showFilter={false}
-                      setSelectedRows={setSelectedRows}
-                    />
-                  </div>
+                <div className="text-2xl w-full font-medium">
+                  <FilteringTable
+                    moreHeight="h-[300px]"
+                    pagination={false}
+                    dataList={
+                      invalidAssessmentDataFlag
+                        ? invalidTableAssessmentList
+                        : tableAssessmentList
+                    }
+                    columns={COLUMNS}
+                    navigateFunc={() => {}}
+                    showCheckbox={true}
+                    showFilter={false}
+                    setSelectedRows={setSelectedRows}
+                  />
                 </div>
               )}
             </div>
@@ -350,10 +352,10 @@ function BulkUploadScheduleModal({ setBulkUploadSchduleModal }) {
                       bulkSchedule();
                     }}
                     otherProps={{
-                      style: { display: "none" },
+                      disabled: true,
                     }}
                     moreClass="border text-white w-[120px]"
-                    text="Schedule Assessments"
+                    text="Schedule"
                   ></Button>
                 )}
               </div>

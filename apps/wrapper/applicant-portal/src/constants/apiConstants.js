@@ -12,6 +12,10 @@ export const APIS = {
   SIGNUP: {
     CREATE_USER: "keycloak/user/create",
   },
+  EDITUSERS:{
+    EDIT_USER: "keycloak/user/update",
+  },
+
   LOGIN: {
     GENERATE_OTP: "user/generateOtp",
     USERLOGIN: "user/login",
@@ -30,6 +34,9 @@ export const APIS = {
   },
   FORM: {
     UPDATE_FORM: "/rest/updateFormSubmission"
+  },
+  SEARCH:{
+    SEARCH_FORM: "/rest/searchCourses"
   },
   notifications:{
     insertNotifications: `rest/insertNotifications`,

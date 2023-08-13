@@ -98,15 +98,10 @@ const CreateForm = (props) => {
   const fetchFormData = async () => {
     let formData = {};
 
-    console.log(
-      "key - ",
-      `${userId}_${formName}_${new Date().toISOString().split("T")[0]}`
-    );
     let data = await getFromLocalForage(
       `${userId}_${formName}_${new Date().toISOString().split("T")[0]}`
     );
-
-    // console.log("data - ", data);
+    console.log("data - ", data);
 
     if (data) {
       formData = data;
@@ -115,11 +110,10 @@ const CreateForm = (props) => {
         const postData = { form_id: formId };
         const res = await getFormData(postData);
         formData = res.data.form_submissions[0];
-        // console.log("formData - ", formData);
+        console.log("formData - ", formData);
         setFormDataNoc(formData);
       }
     }
-
 
     let fileGCPPath =
       process.env.REACT_APP_GCP_AFFILIATION_LINK + formName + ".xml";
@@ -164,28 +158,38 @@ const CreateForm = (props) => {
   const handleSubmit = async () => {
     const updatedFormData = await updateFormData(formSpec.start, userId);
     const storedData = await getSpecificDataFromForage("required_data");
+    const course_details = await getSpecificDataFromForage("course_details");
 
-    if (applicantStatus === "returned") {
-      const res = await updateFormSubmission({
-        form_id: formId,
-        form_data: updatedFormData,
-        assessment_type: "applicant",
-        form_name: formName,
-        submission_status: true,
-        updated_at: getLocalTimeInISOFormat(),
-        form_status: "Resubmitted",
-      });
-    } else {
+    setTimeout(() => {
+      console.log("updatedFormData - ", updatedFormData);
+    }, 1000);
+
+    const common_payload = {
+      form_data: updatedFormData,
+      assessment_type: "applicant",
+      form_name: formName,
+      submission_status: true,
+      round: course_details?.form?.round,
+      course_type: course_details?.course_type,
+      course_level: course_details?.course_level,
+      course_id: course_details?.course_id,
+    };
+
+    if (!applicantStatus) {
       await saveFormSubmission({
         schedule_id: null,
-        form_data: updatedFormData,
-        assessment_type: "applicant",
-        form_name: formName,
-        submission_status: true,
         assessor_id: null,
         applicant_id: instituteDetails?.[0]?.id,
         submitted_on: new Date().toJSON().slice(0, 10),
         form_status: "Application Submitted",
+        ...common_payload,
+      });
+    } else {
+      await updateFormSubmission({
+        form_id: formId,
+        updated_at: getLocalTimeInISOFormat(),
+        form_status: "Resubmitted",
+        ...common_payload,
       });
     }
 
@@ -244,9 +248,15 @@ const CreateForm = (props) => {
       );
       if (formData) {
         let images = JSON.parse(e.data).fileURLs;
+
         let prevData = await getFromLocalForage(
           `${userId}_${startingForm}_${new Date().toISOString().split("T")[0]}`
         );
+
+        // console.log(
+        //   "JSON.parse(e.data).formData - ",
+        //   JSON.parse(e.data).formData
+        // );
         await setToLocalForage(
           `${userId}_${startingForm}_${new Date().toISOString().split("T")[0]}`,
           {
@@ -334,9 +344,6 @@ const CreateForm = (props) => {
 
       <div className="container mx-auto py-12 px-3 min-h-[40vh]">
         <div className="flex flex-row justify-between">
-          <h1 className="font-bold text-[20px]">
-            {formName.split("-")?.join(" ")}
-          </h1>
           <div className="flex flex-grow gap-3 justify-end">
             <button
               onClick={handleGoBack}
@@ -347,13 +354,12 @@ const CreateForm = (props) => {
 
             <button
               onClick={handleDownloadNocOrCertificate}
-              disabled={(formData.form_status !== "Approved")?true:false}
+              disabled={formData.form_status !== "Approved" ? true : false}
               className={`${
-                (formData.form_status !== "Approved")
+                formData.form_status !== "Approved"
                   ? "cursor-not-allowed border border-gray-500 bg-white rounded-[4px] text-gray-200 px-2 h-[44px]"
                   : "border border-blue-900 bg-blue-900 text-white rounded-[4px] px-2 h-[44px]"
               }`}
-              // className="bg-primary-900 py-2 mb-8 font-medium rounded-[4px] px-2 text-white flex flex-row items-center gap-3"
             >
               Download NOC/Certificate
             </button>
