@@ -22,19 +22,19 @@ import { removeCookie, setCookie } from "../../utils";
 
 export default function AdminCreateUser() {
   let { userId } = useParams();
-  const {setSpinner,setToast} = useContext(ContextAPI)
+  const { setSpinner, setToast } = useContext(ContextAPI);
   const [user, setUser] = useState({
     firstname: "",
     lastname: "",
     email: "",
     phonenumber: "",
-    // role: "",
+    role: "",
   });
   const navigation = useNavigate();
 
   const fetchUser = async () => {
     try {
-      setSpinner(true)
+      setSpinner(true);
       const res = await getSpecificUser({ userId });
       setUser({
         firstname:
@@ -42,12 +42,12 @@ export default function AdminCreateUser() {
         lastname: res.data.assessors[0]["lname"],
         email: res.data.assessors[0]["email"],
         phonenumber: res.data.assessors[0]["phonenumber"],
-        // role: res.data.assessors[0]["role"],
+        role: res.data.assessors[0]["role"],
       });
     } catch (error) {
       console.log(error);
     } finally {
-      setSpinner(false)
+      setSpinner(false);
     }
   };
 
@@ -63,6 +63,7 @@ export default function AdminCreateUser() {
       user.firstname === "" ||
       user.lastname === "" ||
       user.email === "" ||
+      user.role === "" ||
       user.phonenumber === "" ||
       user.phonenumber.length > 10 ||
       user.phonenumber.length < 10
@@ -95,12 +96,12 @@ export default function AdminCreateUser() {
       //for edit user
 
       try {
-        setSpinner(true)
+        setSpinner(true);
         let postDataKeyCloak = {
           username: user.email,
           firstName: user.firstname,
           lastName: user.lastname,
-          roleNames: ["Assessor", "default-roles-ndear"],
+          roleNames: [user.role, "default-roles-ndear"],
         };
         //keycloak edit user
         const singleEditKeycloak = await editUserKeycloak(postDataKeyCloak);
@@ -136,8 +137,8 @@ export default function AdminCreateUser() {
           toastMsg: "Error occured while updating user!",
           toastType: "error",
         }));
-      }finally{
-        setSpinner(false)
+      } finally {
+        setSpinner(false);
       }
     } else {
       // for create user
@@ -149,7 +150,7 @@ export default function AdminCreateUser() {
       };
 
       try {
-        setSpinner(true)
+        setSpinner(true);
         postDataKeyCloak = [
           {
             firstName: user.firstname,
@@ -157,7 +158,7 @@ export default function AdminCreateUser() {
             email: user.email,
             username: user.email,
             password: "rkr",
-            roleName: "Assessor",
+            roleName: user.role,
           },
         ];
 
@@ -170,17 +171,31 @@ export default function AdminCreateUser() {
 
         //Hasura API call
 
-        postDataHasura["assessors"].push({
-          code: `${Math.floor(1000 + Math.random() * 9000)}`,
-          user_id: keycloakRes.data.succeedUser.filter(
-            (item) => item.email === user.email
-          )[0].userId,
-          email: user.email,
-          name: user.firstname + " " + user.lastname,
-          phonenumber: user.phonenumber,
-          fname: user.firstname,
-          lname: user.lastname,
-        });
+        if (user.role === "Assessor") {
+          postDataHasura["assessors"].push({
+            code: `${Math.floor(1000 + Math.random() * 9000)}`,
+            user_id: keycloakRes.data.succeedUser.filter(
+              (item) => item.email === user.email
+            )[0].userId,
+            email: user.email,
+            name: user.firstname + " " + user.lastname,
+            phonenumber: user.phonenumber,
+            fname: user.firstname,
+            lname: user.lastname,
+          });
+        }
+        if(user.role === "Desktop-Admin"){
+          postDataHasura["regulators"].push({
+            user_id: keycloakRes.data.succeedUser.filter(
+              (user) => user.email === user.email
+            )[0].userId,
+            email: user.email,
+            full_name: user.full_name,
+            phonenumber: user.mobile_number,
+            fname: user.fname,
+            lname: user.lname,
+          });
+        }
 
         const hasuraRes = await createBulkUserHasura(postDataHasura);
         if (hasuraRes.status !== 200) {
@@ -203,8 +218,8 @@ export default function AdminCreateUser() {
           toastMsg: "Error occured while creating user!",
           toastType: "error",
         }));
-      }finally{
-        setSpinner(false)
+      } finally {
+        setSpinner(false);
       }
     }
     removeCookie("access_token");
@@ -327,8 +342,7 @@ export default function AdminCreateUser() {
                     </div>
                   </div>
                 </div>
-                {/** TODO: role to be taken later for v2 */}
-                {/* <div className="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
+                <div className="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
                   <div className="sm:col-span-3 ">
                     <Label htmlFor="role" text="Role" required></Label>
                     <div className="mt-2">
@@ -340,13 +354,12 @@ export default function AdminCreateUser() {
                         onChange={(value) => handleChange("role",value)}
                         // disabled={userId?true:false}
                       >
-                        <Option value="admin">Admin</Option>
-                        <Option value="applicant">Applicant</Option>
-                        <Option value="assessor">Assessor</Option>
+                        <Option value="Assessor">Assessor</Option>
+                        <Option value="Desktop-Admin">Desktop Admin</Option>
                       </Select>
                     </div>
                   </div>
-                </div> */}
+                </div>
               </div>
               <div className="flex flex-col gap-4 ">
                 <div className="footer flex flex-row gap-4 justify-end">
