@@ -370,6 +370,7 @@ export default function AdminCreateUser() {
                     <select
                       required
                       value={user.role}
+                      disabled={true}
                       name="role"
                       id="role"
                       onChange={(e) => handleChange("role", e.target.value)}
