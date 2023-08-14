@@ -28,15 +28,15 @@ const validateResponse = async (response) => {
   const { user } = getCookie('userData');
 
   console.log("apiRes - ", apiRes);
-  if (apiRes?.data?.insert_form_submissions) {
-    registerEvent({
-      created_date: getLocalTimeInISOFormat(),
-      entity_id: apiRes?.data?.insert_form_submissions?.returning?.[0]?.form_id.toString(),
-      entity_type: "form",
-      event_name: "OGA Completed",
-      remarks: `${user.firstName} ${user.lastName} has completed the On Ground Inspection Analysis`,
-    });
-  }
+  // if (apiRes?.data?.insert_form_submissions) {
+  //   registerEvent({
+  //     created_date: getLocalTimeInISOFormat(),
+  //     entity_id: apiRes?.data?.insert_form_submissions?.returning?.[0]?.form_id.toString(),
+  //     entity_type: "form",
+  //     event_name: "OGA Completed",
+  //     remarks: `${user.firstName} ${user.lastName} has completed the On Ground Inspection Analysis`,
+  //   });
+  // }
 
   const jsonResponse = {
     ...apiRes,
@@ -62,14 +62,16 @@ export const makeDataForPrefill = (prev, xmlDoc, key, finalObj, formName) => {
 };
 
 export const updateFormData = async (startingForm) => {
+  console.log("accessing form from localforage - ",startingForm + `${new Date().toISOString().split("T")[0]}`)
   try {
-    let data = await getFromLocalForage(
-      startingForm + `${new Date().toISOString().split("T")[0]}`
-    );
+    // TODO: check if formdata has to have value, check line 65 for getcookie connect with Sheela
+    // let data = await getFromLocalForage(
+    //   startingForm + `${new Date().toISOString().split("T")[0]}`
+    // );
     let prefilledForm = await getSubmissionXML(
-      startingForm,
-      data.formData,
-      data.imageUrls
+      startingForm,"",""
+      // data.formData,
+      // data.imageUrls
     );
     return prefilledForm;
   } catch (err) {}

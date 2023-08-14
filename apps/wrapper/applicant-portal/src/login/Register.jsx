@@ -9,6 +9,7 @@ import Toast from "../components/Toast";
 import APPLICANT_ROUTE_MAP from "../routes/ApplicantRoute";
 import { userService, applicantService } from "../services";
 import { forkJoin, lastValueFrom } from "rxjs";
+import { UP_DISTRICTS } from "../utils/constants";
 
 export default function SelfRegistration() {
   const navigate = useNavigate();
@@ -32,6 +33,8 @@ export default function SelfRegistration() {
       courseType,
       email,
       mobilePhone,
+      district,
+      address
     } = data;
     let userDetails = {
       firstName,
@@ -43,9 +46,9 @@ export default function SelfRegistration() {
     };
     const instituteDetails = {
       instituteName: applicantName,
-      district: "Varanasi", // Capture it from UI once field is added
+      district: district, // Capture it from UI once field is added
       email: email,
-      address: "Shivpur, Varanasi", // Capture it from UI once field is added
+      address: address, // Capture it from UI once field is added
       course_applied: courseType,
     };
 
@@ -67,7 +70,10 @@ export default function SelfRegistration() {
       const accessTokenResponse = await userService.getAccessToken(
         accessTokenObj
       );
-      setCookie("access_token","Bearer "+accessTokenResponse.data.access_token)
+      setCookie(
+        "access_token",
+        "Bearer " + accessTokenResponse.data.access_token
+      );
       console.log(accessTokenResponse);
 
       const keyCloakSignupRes = await userService.signup(userDetails);
@@ -77,7 +83,7 @@ export default function SelfRegistration() {
         instituteDetails
       );
       console.log(addInstituteRes);
-      
+
       institutePocDetils.user_id = keyCloakSignupRes.data.userId;
       institutePocDetils["institute_id"] =
         addInstituteRes.data.insert_institutes_one.id;
@@ -320,7 +326,7 @@ export default function SelfRegistration() {
                     ></Label>
                     <div className="mt-2">
                       <select
-                        className="block w-full rounded-md border-0 p-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                        className="bg-white block w-full rounded-md border-0 p-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                         label="Select here"
                         id="applicanttype"
                         name="applicanttype"
@@ -338,7 +344,67 @@ export default function SelfRegistration() {
                     </div>
                   </div>
                 </div>
-
+                <div className="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
+                  <div className="sm:col-span-3 ">
+                    <Label htmlFor="district" text="District" required></Label>
+                    <div className="mt-2">
+                      <select
+                        className="bg-white block w-full rounded-md border-0 p-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                        label="Select here"
+                        id="district"
+                        name="district"
+                        {...register("district", {
+                          required: true,
+                        })}
+                      >
+                        {UP_DISTRICTS.map((district) => (
+                          <option value={district}>{district}</option>
+                        ))}
+                      </select>
+                      {errors?.applicantType?.type === "required" && (
+                        <p className="text-red-500 mt-2 text-sm">
+                          This field is required
+                        </p>
+                      )}
+                    </div>
+                  </div>
+                  <div className="sm:col-span-3">
+                    <Label
+                      htmlFor="address"
+                      text="Address"
+                      required
+                    ></Label>
+                    <div className="mt-2">
+                      <input
+                        type="text"
+                        placeholder="Type here"
+                        id="address"
+                        name="address"
+                        className="block w-full rounded-md border-0 p-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                        {...register("address", {
+                          required: true,
+                          maxLength: 50,
+                          pattern: /[A-Za-z0-9'\.\-\s\,]/,
+                        })}
+                      />
+                      {errors?.address?.type === "required" && (
+                        <p className="text-red-500 mt-2 text-sm">
+                          This field is required
+                        </p>
+                      )}
+                      {errors?.address?.type === "maxLength" && (
+                        <p className="text-red-500 mt-2 text-sm">
+                          Applicant name cannot exceed 50 characters
+                        </p>
+                      )}
+                      {errors?.address?.type === "pattern" && (
+                        <p className="text-red-500 mt-2 text-sm">
+                          Alphabetical characters only
+                        </p>
+                      )}
+                    </div>
+                  </div>
+                </div>
                 <div className="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
                   <div className="sm:col-span-3 ">
                     <Label
@@ -348,7 +414,7 @@ export default function SelfRegistration() {
                     ></Label>
                     <div className="mt-2">
                       <select
-                        className="block w-full rounded-md border-0 p-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                        className="bg-white block w-full rounded-md border-0 p-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                         label="Select here"
                         id="coursetype"
                         name="courseType"

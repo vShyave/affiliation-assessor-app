@@ -13,9 +13,8 @@ import { getCookie, setCookie } from "../utils";
 
 import APPLICANT_ROUTE_MAP from "../routes/ApplicantRoute";
 
-import { profileService , userService} from "../services";
+import { profileService, userService } from "../services";
 import { editUserKeycloak } from "../services/userService";
-
 
 export default function Profile() {
   const instituteData = getCookie("institutes");
@@ -28,6 +27,8 @@ export default function Profile() {
     email: "",
     phone_number: "",
     course_type: "",
+    district: "",
+    address: ""
   });
   const navigate = useNavigate();
   // const {
@@ -57,12 +58,10 @@ export default function Profile() {
   }, []);
 
   const handleEditProfile = async () => {
-    console.log("data", formData)
+    console.log("data", formData);
     let errorFlag = false;
 
-    
-    const instituteEditDetails = 
-    {
+    const instituteEditDetails = {
       institute_id: instituteData[0]?.id,
       institute_name: instituteData[0]?.name,
       // institute_email: instituteDetails.email,
@@ -74,7 +73,6 @@ export default function Profile() {
     };
 
     try {
-
       let accessTokenObj = {
         grant_type: "client_credentials",
         client_id: "admin-api",
@@ -106,7 +104,6 @@ export default function Profile() {
         errorFlag = true;
       }
 
-
       const response = await profileService.getProfileEdit(
         instituteEditDetails
       );
@@ -114,12 +111,13 @@ export default function Profile() {
         errorFlag = true;
       }
       if (!errorFlag) {
-      setToast((prevState) => ({
-        ...prevState,
-        toastOpen: true,
-        toastMsg: "User successfully edited",
-        toastType: "success",
-      }))};
+        setToast((prevState) => ({
+          ...prevState,
+          toastOpen: true,
+          toastMsg: "User successfully edited",
+          toastType: "success",
+        }));
+      }
       setTimeout(
         () =>
           setToast((prevState) => ({
@@ -152,7 +150,10 @@ export default function Profile() {
   };
 
   const handleChange = (e) => {
-    setFormData((prevState) => ({ ...prevState, [e.target.name]: e.target.value }));
+    setFormData((prevState) => ({
+      ...prevState,
+      [e.target.name]: e.target.value,
+    }));
   };
 
   const getProfileDetails = async () => {
@@ -173,6 +174,8 @@ export default function Profile() {
         name: formDetail?.institute_pocs[0]?.name,
         // applicant_type: [applicantType],
         course_type: formDetail?.course_applied,
+        district: formDetail?.district,
+        address: formDetail?.address
       });
     } catch (error) {
       setToast((prevState) => ({
@@ -239,27 +242,7 @@ export default function Profile() {
                           id="first_name"
                           name="first_name"
                           className="block w-full rounded-md border-0 p-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                          // {...register("firstName", {
-                          //   required: true,
-                          //   maxLength: 20,
-                          //   pattern: /^[A-Za-z]+$/i,
-                          // })}
                         />
-                        {/* {errors?.firstName?.type === "required" && (
-                          <p className="text-red-500 mt-2 text-sm">
-                            This field is required
-                          </p>
-                        )}
-                        {errors?.firstName?.type === "maxLength" && (
-                          <p className="text-red-500 mt-2 text-sm">
-                            First name cannot exceed 20 characters
-                          </p>
-                        )}
-                        {errors?.firstName?.type === "pattern" && (
-                          <p className="text-red-500 mt-2 text-sm">
-                            Alphabetical characters only
-                          </p>
-                        )} */}
                       </div>
                     </div>
                     <div className="sm:col-span-3">
@@ -278,27 +261,7 @@ export default function Profile() {
                           name="last_name"
                           id="last_name"
                           className="block w-full rounded-md border-0 p-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                          // {...register("lastName", {
-                          //   required: true,
-                          //   maxLength: 20,
-                          //   pattern: /^[A-Za-z]+$/i,
-                          // })}
                         />
-                        {/* {errors?.lastName?.type === "required" && (
-                          <p className="text-red-500 mt-2 text-sm">
-                            This field is required
-                          </p>
-                        )}
-                        {errors?.lastName?.type === "maxLength" && (
-                          <p className="text-red-500 mt-2 text-sm">
-                            First name cannot exceed 20 characters
-                          </p>
-                        )}
-                        {errors?.lastName?.type === "pattern" && (
-                          <p className="text-red-500 mt-2 text-sm">
-                            Alphabetical characters only
-                          </p>
-                        )} */}
                       </div>
                     </div>
                   </div>
@@ -316,22 +279,7 @@ export default function Profile() {
                           id="email"
                           name="email"
                           className="block w-full rounded-md border-0 p-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                          // {...register("email", {
-                          //   required: true,
-                          //   pattern:
-                          //     /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/i,
-                          // })}
                         />
-                        {/* {errors?.email?.type === "required" && (
-                          <p className="text-red-500 mt-2 text-sm">
-                            This field is required
-                          </p>
-                        )}
-                        {errors?.email?.type === "pattern" && (
-                          <p className="text-red-500 mt-2 text-sm">
-                            This is not a valid email format
-                          </p>
-                        )} */}
                       </div>
                     </div>
                     <div className="sm:col-span-3">
@@ -350,27 +298,7 @@ export default function Profile() {
                           name="phone_number"
                           id="phone_number"
                           className="block w-full rounded-md border-0 p-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                          // {...register("mobilePhone", {
-                          //   required: true,
-                          //   maxLength: 10,
-                          //   pattern: /^([+]\d{2})?\d{10}$/,
-                          // })}
                         />
-                        {/* {errors?.mobilePhone?.type === "required" && (
-                          <p className="text-red-500 mt-2 text-sm">
-                            This field is required
-                          </p>
-                        )}
-                        {errors?.mobilePhone?.type === "maxLength" && (
-                          <p className="text-red-500 mt-2 text-sm">
-                            Phonenumber cannot exceed 10 characters
-                          </p>
-                        )}
-                        {errors?.mobilePhone?.type === "pattern" && (
-                          <p className="text-red-500 mt-2 text-sm">
-                            Please provide valid phone number
-                          </p>
-                        )} */}
                       </div>
                     </div>
                   </div>
@@ -387,21 +315,13 @@ export default function Profile() {
                           defaultValue={formData.applicant_type}
                           disabled={isPreview}
                           onChange={handleChange}
-                          className="block w-full rounded-md border-0 p-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                          className="bg-white block w-full rounded-md border-0 p-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                           label="Select here"
                           id="applicant_type"
                           name="applicant_type"
-                          // {...register("applicantType", {
-                          //   required: true,
-                          // })}
                         >
                           <option value="Institute">Institute</option>
                         </select>
-                        {/* {errors?.applicantType?.type === "required" && (
-                          <p className="text-red-500 mt-2 text-sm">
-                            This field is required
-                          </p>
-                        )} */}
                       </div>
                     </div>
                     <div className="sm:col-span-3 ">
@@ -415,27 +335,58 @@ export default function Profile() {
                           defaultValue={formData.course_type}
                           disabled={isPreview}
                           onChange={handleChange}
-                          className="block w-full rounded-md border-0 p-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                          className="bg-white block w-full rounded-md border-0 p-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                           label="Select here"
                           id="course_type"
                           name="course_type"
-                          // {...register("courseType", {
-                          //   required: true,
-                          // })}
                         >
                           <option value="Nursing">Nursing</option>
                           <option value="Paramedical">Paramedical</option>
                         </select>
-                        {/* {errors?.courseType?.type === "required" && (
-                          <p className="text-red-500 mt-2 text-sm">
-                            This field is required
-                          </p>
-                        )} */}
                       </div>
                     </div>
                   </div>
 
-                  <div className="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6"></div>
+                  <div className="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
+                    <div className="sm:col-span-3">
+                      <Label
+                        htmlFor="district"
+                        text="District"
+                        required
+                      ></Label>
+                      <div className="mt-2">
+                        <input
+                          onChange={handleChange}
+                          defaultValue={formData.district}
+                          type="text"
+                          placeholder="Type here"
+                          disabled={true}
+                          id="district"
+                          name="district"
+                          className="block w-full rounded-md border-0 p-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                        />
+                      </div>
+                    </div>
+                    <div className="sm:col-span-3">
+                      <Label
+                        htmlFor="address"
+                        text="Address"
+                        required
+                      ></Label>
+                      <div className="mt-2">
+                        <input
+                          onChange={handleChange}
+                          defaultValue={formData.address}
+                          type="text"
+                          placeholder="Type here"
+                          disabled={true}
+                          id="address"
+                          name="address"
+                          className="block w-full rounded-md border-0 p-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                        />
+                      </div>
+                    </div>
+                  </div>
                 </div>
 
                 <div className="flex flex-row justify-end h-1/2 my-auto mb-0 gap-4">

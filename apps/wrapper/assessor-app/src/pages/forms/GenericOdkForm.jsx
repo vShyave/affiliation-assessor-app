@@ -3,7 +3,7 @@ import { Routes, useNavigate, useParams } from "react-router-dom";
 import ROUTE_MAP from "../../routing/routeMap";
 
 import { StateContext } from "../../App";
-import { saveFormSubmission } from "../../api";
+import { getStatusOfForms, registerEvent, saveFormSubmission, updateFormStatus } from "../../api";
 import {
   getCookie,
   getFormData,
@@ -11,6 +11,7 @@ import {
   updateFormData,
   removeItemFromLocalForage,
   getSpecificDataFromForage,
+  getLocalTimeInISOFormat,
 } from "../../utils";
 
 import CommonLayout from "../../components/CommonLayout";
@@ -85,6 +86,56 @@ const GenericOdkForm = (props) => {
     longitude: null,
   });
 
+  const getFormStatus = async () => {
+
+    const { user } = getCookie('userData');
+
+    const postData = {
+      date: new Date().toJSON().slice(0, 10),
+      assessor_id: user.id,
+    };
+
+    try {
+      const response = await getStatusOfForms(postData);
+      let formStatus = response?.data?.form_submissions;
+      formStatus = formStatus.map((obj) => {
+        return obj.form_name;
+      });
+      let isComplete = false;
+      let parent_form_id = Object.values(getCookie("courses_data"))[0]
+      if (
+        Object.keys(getCookie("courses_data")).length ===
+        response?.data?.form_submissions.length
+      ) {
+        Object.keys(getCookie("courses_data")).forEach((form) => {
+          response?.data?.form_submissions.filter((item) => {
+            if (item.form_name === form && item.submission_status)
+              isComplete = true;
+            else  isComplete=false
+          });
+        });
+      }
+      console.log(getCookie("courses_data"))
+      console.log(response?.data?.form_submissions)
+      if(isComplete){
+        // call event
+        registerEvent({
+          created_date: getLocalTimeInISOFormat(),
+          entity_id: `${parent_form_id}`,
+          entity_type: "form",
+          event_name: "OGA Completed",
+          remarks: `${user.firstName} ${user.lastName} has completed the On Ground Inspection Analysis`,
+        });
+        updateFormStatus({
+          form_id: `${parent_form_id}`,
+          form_status: "OGA Completed",
+        });
+      }
+    } catch (error) {
+      navigate(ROUTE_MAP.login);
+    }
+  };
+
   async function afterFormSubmit(e, saveFlag) {
     const data = typeof e.data === "string" ? JSON.parse(e.data) : e.data;
 
@@ -108,9 +159,13 @@ const GenericOdkForm = (props) => {
           assessor_id: storedData?.assessor_user_id,
           applicant_id: storedData?.institute_id,
           submitted_on: new Date().toJSON().slice(0, 10),
-          form_status: saveFlag === "draft" ? "" : "OGA Completed",
+          applicant_form_id: getCookie("courses_data")[formName],
+          round: getCookie("parent_form_round"),
+          form_status: saveFlag === "draft" ? "" : "In Progress",
         });
         console.log(res);
+
+        await getFormStatus();
 
         // Delete the data from the Local Forage
         const key = `${storedData?.assessor_user_id}_${formSpec.start}${
@@ -222,7 +277,6 @@ const GenericOdkForm = (props) => {
       isPreview,
     });
   }, [isPreview]);
-
   return (
     <>
       <CommonLayout
@@ -231,6 +285,9 @@ const GenericOdkForm = (props) => {
         formPreview={true}
         setIsPreview={setIsPreview}
       >
+        {console.log(
+          `${ENKETO_URL}/preview?formSpec=${encodedFormSpec}&xform=${encodedFormURI}&userId=${user.user.id}`
+        )}
         {!isPreview && (
           <div className="flex flex-col items-center">
             {encodedFormURI && assData && (
