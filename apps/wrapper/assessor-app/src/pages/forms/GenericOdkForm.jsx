@@ -85,9 +85,9 @@ const GenericOdkForm = (props) => {
     longitude: null,
   });
 
-  async function afterFormSubmit(e) {
+  async function afterFormSubmit(e, saveFlag) {
     const data = typeof e.data === "string" ? JSON.parse(e.data) : e.data;
-    // console.log("formData - ", data?.formData);
+
     try {
       const { nextForm, formData, onSuccessData, onFailureData } = data;
       if (data?.state === "ON_FORM_SUCCESS_COMPLETED") {
@@ -104,11 +104,11 @@ const GenericOdkForm = (props) => {
           form_data: updatedFormData,
           assessment_type: "assessor",
           form_name: formSpec.start,
-          submission_status: true,
+          submission_status: saveFlag === "draft" ? false : true,
           assessor_id: storedData?.assessor_user_id,
           applicant_id: storedData?.institute_id,
           submitted_on: new Date().toJSON().slice(0, 10),
-          form_status: "OGA Completed",
+          form_status: saveFlag === "draft" ? "" : "OGA Completed",
         });
         console.log(res);
 
@@ -157,6 +157,36 @@ const GenericOdkForm = (props) => {
     window.removeEventListener("message", handleEventTrigger);
   };
 
+  const checkIframeLoaded = () => {
+    console.log("window.location.host - ", window.location.host);
+    if (window.location.host.includes("localhost")) {
+      return;
+    }
+
+    const iframeElem = document.getElementById("enketo-form");
+    console.log("iframeElem - ", iframeElem);
+    var iframeContent =
+      iframeElem?.contentDocument || iframeElem?.contentWindow.document;
+    if (date) {
+      var section = iframeContent?.getElementsByClassName("or-group");
+      if (!section) return;
+      for (var i = 0; i < section?.length; i++) {
+        var inputElements = section[i].querySelectorAll("input");
+        inputElements.forEach((input) => {
+          input.disabled = true;
+        });
+      }
+      iframeElem.getElementById("submit-form").style.display = "none";
+      iframeElem.getElementById("save-draft").style.display = "none";
+    }
+
+    var draftButton = iframeContent.getElementById("save-draft");
+    draftButton.addEventListener("click", function () {
+      alert("Hello world!");
+      afterFormSubmit("", "draft");
+    });
+  };
+
   useEffect(() => {
     bindEventListener();
     getFormData({
@@ -169,6 +199,9 @@ const GenericOdkForm = (props) => {
       setEncodedFormSpec,
       setEncodedFormURI,
     });
+    setTimeout(() => {
+      checkIframeLoaded();
+    }, 1500);
     return () => {
       detachEventBinding();
       setData(null);
@@ -204,6 +237,7 @@ const GenericOdkForm = (props) => {
               <>
                 <iframe
                   title="form"
+                  id="enketo-form"
                   src={`${ENKETO_URL}/preview?formSpec=${encodedFormSpec}&xform=${encodedFormURI}&userId=${user.user.id}`}
                   style={{ height: "80vh", width: "100%" }}
                 />
