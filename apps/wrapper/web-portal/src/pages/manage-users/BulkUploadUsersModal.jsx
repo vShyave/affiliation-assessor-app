@@ -252,7 +252,7 @@ function BulkUploadUsersModal({ closeBulkUploadUsersModal }) {
             lname: item.values.lname,
           });
         }
-        if (item.values.role.includes("Regulator")) {
+        if (item.values.role.includes("Desktop-Admin")) {
           postDataHasura["regulators"].push({
             user_id: keycloakRes.data.succeedUser.filter(
               (user) => user.email === item.values.email
@@ -297,21 +297,24 @@ function BulkUploadUsersModal({ closeBulkUploadUsersModal }) {
   const isFileValid = () => {
     let flag = true;
     COLUMNS.forEach((item) => {
-      if (!Object.keys(tableUserList[0]).includes(item.accessor)) {
+      if (tableUserList.length) {
+        if (!Object.keys(tableUserList[0])?.includes(item.accessor)) {
+          flag = false;
+          return;
+        }
+      } else {
         flag = false;
-        return;
       }
     });
     return flag;
   };
 
   const setSelectedRows = (rowList) => {
-    selectedRows = [...rowList];
+    selectedRows = [...rowList].filter((item) => !item.original.isRowInvalid);
     if (selectedRows.length) {
-      document.getElementById("schedule-bulk-assessment").style.display = "";
+      document.getElementById("schedule-bulk-assessment").disabled = false;
     } else {
-      document.getElementById("schedule-bulk-assessment").style.display =
-        "none";
+      document.getElementById("schedule-bulk-assessment").disabled = true;
     }
     console.log(selectedRows);
   };
@@ -325,7 +328,7 @@ function BulkUploadUsersModal({ closeBulkUploadUsersModal }) {
               <h1>Bulk upload users</h1>
 
               <div className="flex flex-row m-auto">
-                {tableDataReady && (
+                {(tableUserList.length!==0 && isFileValid()) && (
                   <Switch
                     id="show-with-errors"
                     label={<span className="text-sm">Show with errors</span>}
@@ -408,9 +411,6 @@ function BulkUploadUsersModal({ closeBulkUploadUsersModal }) {
                     id="schedule-bulk-assessment"
                     onClick={() => {
                       createUsers();
-                    }}
-                    otherProps={{
-                      style: { display: "none" },
                     }}
                     moreClass="border text-white w-[120px]"
                     text="Create users"

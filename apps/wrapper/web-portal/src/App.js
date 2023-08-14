@@ -55,6 +55,7 @@ import { insertNotifications } from "./api";
 import Toast from "./components/Toast";
 
 function App() {
+  const loggedInUser = getCookie("regulator")?.[0];
   const [spinner, setSpinner] = useState(false);
   const [toast, setToast] = useState({
     toastOpen: false,
@@ -108,7 +109,7 @@ function App() {
 
   return (
     <div className="App">
-      <ContextAPI.Provider value={{ setSpinner, setToast,toast }}>
+      <ContextAPI.Provider value={{ setSpinner, setToast, toast }}>
         {spinner && <Spinner />}
         {toast.toastOpen && (
           <Toast toastMsg={toast.toastMsg} toastType={toast.toastType} />
@@ -128,35 +129,33 @@ function App() {
                 path={ADMIN_ROUTE_MAP.loginModule.loginOtp}
                 element={<LoginEnterOtp />}
               ></Route>
-              <Route
+              {/* <Route
                 path={ADMIN_ROUTE_MAP.loginModule.register}
                 element={<AdminSingUp />}
-              ></Route>
-              <Route
-                path={ADMIN_ROUTE_MAP.loginModule.registerOtp}
-                element={<EnterOtp />}
-              ></Route>
+              ></Route> */}
             </Route>
 
             {/* Dashboard routing starts here */}
             <Route
               path={ADMIN_ROUTE_MAP.adminModule.dashboard}
               element={
-                //  <PrivateRoute>
-                <DashboardLandingPage />
-                /* </PrivateRoute>  */
+                <PrivateRoute>
+                  <DashboardLandingPage />
+                </PrivateRoute>
               }
             >
-              <Route
-                path={ADMIN_ROUTE_MAP.adminModule.manageUsers.home}
-                element={<ManageUser />}
-              >
-                <Route index element={<ManageUsersList />}></Route>
+              {loggedInUser?.role === "Super-Admin" && (
                 <Route
-                  path={`${ADMIN_ROUTE_MAP.adminModule.manageUsers.createUser}/:userId?`}
-                  element={<AdminCreateUser />}
-                ></Route>
-              </Route>
+                  path={ADMIN_ROUTE_MAP.adminModule.manageUsers.home}
+                  element={<ManageUser />}
+                >
+                  <Route index element={<ManageUsersList />}></Route>
+                  <Route
+                    path={`${ADMIN_ROUTE_MAP.adminModule.manageUsers.createUser}/:userId?`}
+                    element={<AdminCreateUser />}
+                  ></Route>
+                </Route>
+              )}
 
               {/* Notifications routing starts here */}
               <Route
@@ -224,6 +223,18 @@ function App() {
               >
                 <Route index element={<ScheduleManagementList />}></Route>
               </Route>
+              <Route
+                path="*"
+                element={
+                  <Navigate
+                    to={`${
+                      loggedInUser?.role === "Super-Admin"
+                        ? ADMIN_ROUTE_MAP.adminModule.manageUsers.home
+                        : ADMIN_ROUTE_MAP.adminModule.manageForms.home
+                    }`}
+                  />
+                }
+              />
             </Route>
           </Routes>
         </BrowserRouter>

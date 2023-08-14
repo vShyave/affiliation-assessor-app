@@ -9,11 +9,12 @@ import FilteringTable from "../../components/table/FilteringTable";
 import { readableDate, removeCookie, setCookie } from "../../utils/common";
 import {
   filterUsers,
-  getAllUsers,
+  getAllAssessors,
   searchUsers,
   handleActiveUser,
   handleInctiveUser,
   handleDeleteUser,
+  getAllRegulators,
 } from "../../api";
 
 import { userService } from "../../api/userService";
@@ -57,6 +58,9 @@ export default function ManageUsersList({
   const [invalidUserRowFlag] = useState(false);
   const [selectedEmail, setSelectedEmail] = useState([{ email: "" }]);
   const [isOpen, setIsOpen] = useState(false);
+  const [state, setState] = useState({
+    menu_selected: "Assessor",
+  });
 
   const [paginationInfo, setPaginationInfo] = useState({
     offsetNo: 0,
@@ -106,6 +110,43 @@ export default function ManageUsersList({
       },
     },
   ];
+
+  const ADMIN_COLUMN = [
+    {
+      Header: "Full name",
+      accessor: "full_name",
+    },
+    {
+      Header: "Email",
+      accessor: "email",
+    },
+    {
+      Header: "Mobile number",
+      accessor: "mobile_number",
+    },
+    {
+      Header: "Role",
+      accessor: "role",
+    },
+    {
+      Header: "",
+      accessor: "more_actions",
+    },
+    {
+      Header: "",
+      accessor: "isRowInvalid",
+      Cell: () => {
+        return invalidUserRowFlag;
+      },
+    },
+  ];
+
+  const handleSelectMenu = (menuItem) => {
+    setState((prevState) => ({ ...prevState, menu_selected: menuItem }));
+    setPaginationInfo((prevState) => ({ ...prevState, offsetNo: 0 }));
+    setIsFilterOpen(false);
+    setIsSearchOpen(false);
+  };
 
   const handleUsersetInvalid = async (user) => {
     const userId = user?.user_id;
@@ -193,7 +234,6 @@ export default function ManageUsersList({
   };
 
   const handleViewSchedule = (data) => {
-    console.log("data - ", data);
     setScheduleUserData(data);
     setViewScheduleModal(true);
   };
@@ -369,15 +409,76 @@ export default function ManageUsersList({
     };
     resUserData.push(usersData);
   };
+  const setAdminTableData = (e) => {
+    var usersData = {
+      full_name: e.fname || e.lname ? e.fname + " " + e.lname : e.name,
+      email: e.email?.toLowerCase(),
+      mobile_number: e.phonenumber,
+      role: e.role || "Assessor",
+      status:
+        e.workingstatus === "Valid"
+          ? "Active"
+          : e.workingstatus === "Invalid"
+          ? "Inactive"
+          : "-",
+      id: e.user_id,
+      schedule: (
+        <div
+          className={`px-6 text-primary-600 pl-0`}
+          onClick={() => handleViewSchedule(e)}
+        >
+          View Schedule
+        </div>
+      ),
+      more_actions: (
+        <div className="flex flex-row text-2xl font-semibold">
+          <Menu>
+            <MenuHandler>
+              <button className="leading-3 position-relative">...</button>
+            </MenuHandler>
+            <MenuList>
+              <MenuItem
+                onClick={() =>
+                  navigation(
+                    `${ADMIN_ROUTE_MAP.adminModule.manageUsers.createUser}/${e.user_id}`
+                  )
+                }
+              >
+                <div className="flex flex-row gap-4 mt-4">
+                  <div>
+                    <MdEdit />
+                  </div>
+                  <div className="text-semibold m-">
+                    <span>Edit</span>
+                  </div>
+                </div>{" "}
+              </MenuItem>
+              <MenuItem onClick={() => handleUserDelete(e)}>
+                <div className="flex flex-row gap-4 mt-4">
+                  <div>
+                    <MdDelete />
+                  </div>
+                  <div className="text-semibold m-">
+                    <span>Delete</span>
+                  </div>
+                </div>{" "}
+              </MenuItem>
+            </MenuList>
+          </Menu>
+        </div>
+      ),
+    };
+    resUserData.push(usersData);
+  };
 
-  const fetchAllUsers = async () => {
+  const fetchAllAssessors = async () => {
     const pagination = {
       offsetNo: paginationInfo.offsetNo,
       limit: paginationInfo.limit,
     };
     try {
       setSpinner(true);
-      const res = await getAllUsers(pagination);
+      const res = await getAllAssessors(pagination);
       setPaginationInfo((prevState) => ({
         ...prevState,
         totalCount: res.data.assessors_aggregate.aggregate.totalCount,
@@ -385,6 +486,29 @@ export default function ManageUsersList({
       setUsersList(res?.data?.assessors);
       const data = res?.data?.assessors;
       data.forEach(setTableData);
+      setUserTableList(resUserData);
+    } catch (error) {
+      console.log("error - ", error);
+    } finally {
+      setSpinner(false);
+    }
+  };
+
+  const fetchAllRegulators = async () => {
+    const pagination = {
+      offsetNo: paginationInfo.offsetNo,
+      limit: paginationInfo.limit,
+    };
+    try {
+      setSpinner(true);
+      const res = await getAllRegulators(pagination);
+      setPaginationInfo((prevState) => ({
+        ...prevState,
+        totalCount: res.data.regulator_aggregate.aggregate.totalCount,
+      }));
+      setUsersList(res?.data?.regulator);
+      const data = res?.data?.regulator;
+      data.forEach(setAdminTableData);
       setUserTableList(resUserData);
     } catch (error) {
       console.log("error - ", error);
@@ -441,19 +565,6 @@ export default function ManageUsersList({
     }
   };
 
-  useEffect(() => {
-    if (deleteFlag) {
-      handleDelete(selectedEmail);
-    }
-  }, [deleteFlag]);
-
-  useEffect(() => {
-    if (bulkDeleteFlag) {
-      // handleDelete(selectedEmail);
-      handleBulkDelete(selectedRows);
-    }
-  }, [bulkDeleteFlag]);
-
   const handleDelete = async (email) => {
     const postData = [
       {
@@ -480,7 +591,12 @@ export default function ManageUsersList({
       if (response.status === 200) {
         hasuraResponse = await handleDeleteUser(hasuraPostData);
       }
-      await fetchAllUsers();
+      if (state.menu_selected === "Assessor") {
+        await fetchAllAssessors();
+      }
+      if (state.menu_selected === "Desktop-Admin") {
+        await fetchAllRegulators();
+      }
       setDeleteFlag(false);
       setSelectedEmail([]);
 
@@ -507,16 +623,9 @@ export default function ManageUsersList({
     }
   };
 
-  useEffect(() => {
-    if (!isSearchOpen && !isFilterOpen) {
-      fetchAllUsers();
-    }
-  }, [paginationInfo.offsetNo, paginationInfo.limit]);
-
   const setSelectedRows = (rowList) => {
     let checkboxArr = [];
     rowList.forEach((item) => {
-      console.log(item);
       let checkboxObj = {};
       checkboxObj.email = item.values.email;
       checkboxObj.status = item.values.status;
@@ -563,7 +672,7 @@ export default function ManageUsersList({
       });
 
       //  const res = await userService.deleteUsers(postData);
-      fetchAllUsers();
+      fetchAllAssessors();
       setBulkDeleteFlag(false);
       setDeleteBulkUsersModel(false);
       selectedRows = [];
@@ -590,7 +699,6 @@ export default function ManageUsersList({
     }
   };
   const handleUserStatus = async (selectedRows) => {
-    console.log(selectedRows);
     for (let x in selectedRows) {
       if (selectedRows[x].status.toLowerCase() === "active") {
         const postData = { assessorId: selectedRows[x].user_id };
@@ -611,8 +719,33 @@ export default function ManageUsersList({
         // });
       }
     }
+    await fetchAllAssessors();
     // setUserTableList(resUserData);
   };
+
+  useEffect(() => {
+    if (deleteFlag) {
+      handleDelete(selectedEmail);
+    }
+  }, [deleteFlag]);
+
+  useEffect(() => {
+    if (bulkDeleteFlag) {
+      // handleDelete(selectedEmail);
+      handleBulkDelete(selectedRows);
+    }
+  }, [bulkDeleteFlag]);
+
+  useEffect(() => {
+    if (!isSearchOpen && !isFilterOpen) {
+      if (state.menu_selected === "Assessor") {
+        fetchAllAssessors();
+      }
+      if (state.menu_selected === "Desktop-Admin") {
+        fetchAllRegulators();
+      }
+    }
+  }, [paginationInfo.offsetNo, paginationInfo.limit, state.menu_selected]);
 
   return (
     <>
@@ -627,22 +760,24 @@ export default function ManageUsersList({
               </div>
               <div className="flex justify-end">
                 <span className="flex gap-4">
-                  <Button
-                    otherProps={{
-                      disabled: listArray == 0 ? true : false,
-                    }}
-                    moreClass={`${
-                      listArray == 0
-                        ? "cursor-not-allowed border border-gray-500 bg-white text-gray-200 px-8 h-[44px]"
-                        : "px-8 text-white"
-                    }`}
-                    onClick={() =>
-                      selectedRows.length
-                        ? handleUserStatus(selectedRows)
-                        : "blahhh"
-                    }
-                    text="Make inactive"
-                  ></Button>
+                  {state.menu_selected === "Assessor" && (
+                    <Button
+                      otherProps={{
+                        disabled: listArray == 0 ? true : false,
+                      }}
+                      moreClass={`${
+                        listArray == 0
+                          ? "cursor-not-allowed border border-gray-500 bg-white text-gray-200 px-8 h-[44px]"
+                          : "px-8 text-white"
+                      }`}
+                      onClick={() => {
+                        if (selectedRows.length > 0) {
+                          handleUserStatus(selectedRows);
+                        }
+                      }}
+                      text="Make Active/Inactive"
+                    ></Button>
+                  )}
                   <Button
                     // moreClass="text-white"
                     otherProps={{
@@ -650,7 +785,7 @@ export default function ManageUsersList({
                     }}
                     moreClass={`${
                       listArray == 0
-                        ? "cursor-not-allowed border border-gray-500 bg-white text-gray-200 px-8 h-[44px]"
+                        ? "cursor-not-allowed border border-gray-500 bg-white w-fit text-gray-200 px-8 h-fit"
                         : "px-8 text-white"
                     }`}
                     onClick={() =>
@@ -681,24 +816,79 @@ export default function ManageUsersList({
                 </span>
               </div>
             </div>
+            <div className="flex flex-col gap-4">
+              <ul className="flex flex-wrap gap-3 -mb-px">
+                <li onClick={() => handleSelectMenu("Assessor")}>
+                  <a
+                    href="#"
+                    className={`inline-block p-4 rounded-t-lg dark:text-blue-500 dark:border-blue-600 ${
+                      state.menu_selected === "Assessor"
+                        ? "text-blue-600 border-b-2 border-blue-600"
+                        : ""
+                    }`}
+                  >
+                    Assessor
+                  </a>
+                </li>
 
-            <div className="flex flex-col gap-4 mt-4">
-              <FilteringTable
-                dataList={userTableList}
-                columns={COLUMNS}
-                navigateFunc={() => {}}
-                showCheckbox={true}
-                paginationInfo={paginationInfo}
-                setPaginationInfo={setPaginationInfo}
-                setOnRowSelect={() => {}}
-                setSelectedRows={setSelectedRows}
-                showFilter={true}
-                pagination={true}
-                filterApiCall={filterApiCall}
-                searchApiCall={searchApiCall}
-                setIsSearchOpen={setIsSearchOpen}
-                setIsFilterOpen={setIsFilterOpen}
-              />
+                <li
+                  className="mr-2"
+                  onClick={() => handleSelectMenu("Desktop-Admin")}
+                >
+                  <a
+                    href="#"
+                    className={`inline-block p-4 rounded-t-lg dark:text-blue-500 dark:border-blue-600 ${
+                      state.menu_selected === "Desktop-Admin"
+                        ? "text-blue-600 border-b-2 border-blue-600"
+                        : ""
+                    }`}
+                    aria-current="page"
+                  >
+                    Desktop Admin
+                  </a>
+                </li>
+              </ul>
+              {/* filtering table here */}
+              {state.menu_selected === "Assessor" && (
+                <div className="flex flex-col gap-3">
+                  <FilteringTable
+                    dataList={userTableList}
+                    columns={COLUMNS}
+                    navigateFunc={() => {}}
+                    showCheckbox={true}
+                    paginationInfo={paginationInfo}
+                    setPaginationInfo={setPaginationInfo}
+                    setOnRowSelect={() => {}}
+                    setSelectedRows={setSelectedRows}
+                    showFilter={true}
+                    pagination={true}
+                    filterApiCall={filterApiCall}
+                    searchApiCall={searchApiCall}
+                    setIsSearchOpen={setIsSearchOpen}
+                    setIsFilterOpen={setIsFilterOpen}
+                  />
+                </div>
+              )}
+              {state.menu_selected === "Desktop-Admin" && (
+                <div className="flex flex-col gap-3">
+                  <FilteringTable
+                    dataList={userTableList}
+                    columns={ADMIN_COLUMN}
+                    navigateFunc={() => {}}
+                    showCheckbox={true}
+                    paginationInfo={paginationInfo}
+                    setPaginationInfo={setPaginationInfo}
+                    setOnRowSelect={() => {}}
+                    setSelectedRows={setSelectedRows}
+                    showFilter={true}
+                    pagination={true}
+                    filterApiCall={filterApiCall}
+                    searchApiCall={searchApiCall}
+                    setIsSearchOpen={setIsSearchOpen}
+                    setIsFilterOpen={setIsFilterOpen}
+                  />
+                </div>
+              )}
             </div>
           </div>
         </div>

@@ -22,32 +22,45 @@ import { removeCookie, setCookie } from "../../utils";
 
 export default function AdminCreateUser() {
   let { userId } = useParams();
-  const {setSpinner,setToast} = useContext(ContextAPI)
+  const { setSpinner, setToast } = useContext(ContextAPI);
   const [user, setUser] = useState({
     firstname: "",
     lastname: "",
     email: "",
     phonenumber: "",
-    // role: "",
+    role: "",
   });
   const navigation = useNavigate();
 
   const fetchUser = async () => {
     try {
-      setSpinner(true)
+      setSpinner(true);
       const res = await getSpecificUser({ userId });
-      setUser({
-        firstname:
-          res.data.assessors[0]["fname"] || res.data.assessors[0]["name"],
-        lastname: res.data.assessors[0]["lname"],
-        email: res.data.assessors[0]["email"],
-        phonenumber: res.data.assessors[0]["phonenumber"],
-        // role: res.data.assessors[0]["role"],
-      });
+      if (res.data.assessors.length) {
+        setUser({
+          firstname:
+            res.data.assessors[0]["fname"] || res.data.assessors[0]["name"],
+          lastname: res.data.assessors[0]["lname"],
+          email: res.data.assessors[0]["email"],
+          phonenumber: res.data.assessors[0]["phonenumber"],
+          role: res.data.assessors[0]["role"],
+        });
+      }
+      if (res.data.regulator.length) {
+        setUser({
+          firstname:
+            res.data.regulator[0]["fname"] ||
+            res.data.regulator[0]["full_name"],
+          lastname: res.data.regulator[0]["lname"],
+          email: res.data.regulator[0]["email"],
+          phonenumber: res.data.regulator[0]["phonenumber"],
+          role: res.data.regulator[0]["role"],
+        });
+      }
     } catch (error) {
       console.log(error);
     } finally {
-      setSpinner(false)
+      setSpinner(false);
     }
   };
 
@@ -63,6 +76,7 @@ export default function AdminCreateUser() {
       user.firstname === "" ||
       user.lastname === "" ||
       user.email === "" ||
+      user.role === "" ||
       user.phonenumber === "" ||
       user.phonenumber.length > 10 ||
       user.phonenumber.length < 10
@@ -95,12 +109,12 @@ export default function AdminCreateUser() {
       //for edit user
 
       try {
-        setSpinner(true)
+        setSpinner(true);
         let postDataKeyCloak = {
           username: user.email,
           firstName: user.firstname,
           lastName: user.lastname,
-          roleNames: ["Assessor", "default-roles-ndear"],
+          roleNames: [user.role, "default-roles-ndear"],
         };
         //keycloak edit user
         const singleEditKeycloak = await editUserKeycloak(postDataKeyCloak);
@@ -117,7 +131,8 @@ export default function AdminCreateUser() {
           phno: user.phonenumber,
         };
         const singleEditHasura = await editUserHasura(postDataHasura);
-        if (singleEditHasura.status !== 200) {
+        if (
+          singleEditHasura.status !== 200) {
           errorFlag = true;
         }
         if (!errorFlag) {
@@ -136,8 +151,8 @@ export default function AdminCreateUser() {
           toastMsg: "Error occured while updating user!",
           toastType: "error",
         }));
-      }finally{
-        setSpinner(false)
+      } finally {
+        setSpinner(false);
       }
     } else {
       // for create user
@@ -149,7 +164,7 @@ export default function AdminCreateUser() {
       };
 
       try {
-        setSpinner(true)
+        setSpinner(true);
         postDataKeyCloak = [
           {
             firstName: user.firstname,
@@ -157,7 +172,7 @@ export default function AdminCreateUser() {
             email: user.email,
             username: user.email,
             password: "rkr",
-            roleName: "Assessor",
+            roleName: user.role,
           },
         ];
 
@@ -170,17 +185,33 @@ export default function AdminCreateUser() {
 
         //Hasura API call
 
-        postDataHasura["assessors"].push({
-          code: `${Math.floor(1000 + Math.random() * 9000)}`,
-          user_id: keycloakRes.data.succeedUser.filter(
-            (item) => item.email === user.email
-          )[0].userId,
-          email: user.email,
-          name: user.firstname + " " + user.lastname,
-          phonenumber: user.phonenumber,
-          fname: user.firstname,
-          lname: user.lastname,
-        });
+        if (user.role === "Assessor") {
+          postDataHasura["assessors"].push({
+            code: `${Math.floor(1000 + Math.random() * 9000)}`,
+            user_id: keycloakRes.data.succeedUser.filter(
+              (item) => item.email === user.email
+            )[0].userId,
+            email: user.email,
+            name: user.firstname + " " + user.lastname,
+            phonenumber: user.phonenumber,
+            fname: user.firstname,
+            lname: user.lastname,
+            role: user.role,
+          });
+        }
+        if (user.role === "Desktop-Admin") {
+          postDataHasura["regulators"].push({
+            user_id: keycloakRes.data.succeedUser.filter(
+              (user) => user.email === user.email
+            )[0].userId,
+            email: user.email,
+            full_name: user.firstname + " " + user.lastname,
+            phonenumber: user.phonenumber,
+            fname: user.firstname,
+            lname: user.lastname,
+            role: user.role,
+          });
+        }
 
         const hasuraRes = await createBulkUserHasura(postDataHasura);
         if (hasuraRes.status !== 200) {
@@ -203,8 +234,8 @@ export default function AdminCreateUser() {
           toastMsg: "Error occured while creating user!",
           toastType: "error",
         }));
-      }finally{
-        setSpinner(false)
+      } finally {
+        setSpinner(false);
       }
     }
     removeCookie("access_token");
@@ -327,26 +358,30 @@ export default function AdminCreateUser() {
                     </div>
                   </div>
                 </div>
-                {/** TODO: role to be taken later for v2 */}
-                {/* <div className="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
+                <div className="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
                   <div className="sm:col-span-3 ">
-                    <Label htmlFor="role" text="Role" required></Label>
-                    <div className="mt-2">
-                      <Select
-                        name="role"
-                        id="role"
-                        label="Select here"
-                        defaultValue={user.role}
-                        onChange={(value) => handleChange("role",value)}
-                        // disabled={userId?true:false}
-                      >
-                        <Option value="admin">Admin</Option>
-                        <Option value="applicant">Applicant</Option>
-                        <Option value="assessor">Assessor</Option>
-                      </Select>
-                    </div>
+                    <Label
+                      required
+                      text="Role"
+                      htmlFor="role"
+                      moreClass="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-400"
+                    />
+
+                    <select
+                      required
+                      value={user.role}
+                      disabled={true}
+                      name="role"
+                      id="role"
+                      onChange={(e) => handleChange("role", e.target.value)}
+                      className="bg-white border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                    >
+                      <option value="">Select role</option>
+                      <option value="Assessor">Assessor</option>
+                      <option value="Desktop-Admin">Desktop Admin</option>
+                    </select>
                   </div>
-                </div> */}
+                </div>
               </div>
               <div className="flex flex-col gap-4 ">
                 <div className="footer flex flex-row gap-4 justify-end">

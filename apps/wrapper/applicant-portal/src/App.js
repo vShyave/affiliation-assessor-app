@@ -126,26 +126,48 @@ function App() {
             ></Route>
             <Route
               path={APPLICANT_ROUTE_MAP.dashboardModule.congratulations}
-              element={<Congratulations />}
+              element={
+                <PrivateRoute>
+                  <Congratulations />
+                </PrivateRoute>
+              }
             ></Route>
             <Route
               path={APPLICANT_ROUTE_MAP.dashboardModule.profile}
-              element={<Profile />}
+              element={
+                <PrivateRoute>
+                  <Profile />
+                </PrivateRoute>
+              }
             ></Route>
             <Route
-            path={`${APPLICANT_ROUTE_MAP.dashboardModule.notifications}/:notificationId?`}
-            element={<Notification />}
-          >
-            <Route index element={<NotificationsDetailedView />}></Route>
-          </Route>
+              path={`${APPLICANT_ROUTE_MAP.dashboardModule.notifications}/:notificationId?`}
+              element={
+                <PrivateRoute>
+                  <Notification />
+                </PrivateRoute>
+              }
+            >
+              <Route
+                index
+                element={
+                  <PrivateRoute>
+                    <NotificationsDetailedView />
+                  </PrivateRoute>
+                }
+              ></Route>
+            </Route>
           </Route>
 
           <Route
             path={APPLICANT_ROUTE_MAP.root_star}
-            element={<MyApplications />}
+            element={
+              <PrivateRoute>
+                <MyApplications />
+              </PrivateRoute>
+            }
           />
           {/* Notifications routing starts here */}
-          
         </Routes>
       </BrowserRouter>
     </div>
