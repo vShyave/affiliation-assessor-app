@@ -254,6 +254,7 @@ export default function DesktopAnalysisView() {
     formId: formId,
     course_type: formDataFromApi?.course_type,
     course_level: formDataFromApi?.course_level,
+    round: formDataFromApi?.round
   };
 
   useEffect(() => {
