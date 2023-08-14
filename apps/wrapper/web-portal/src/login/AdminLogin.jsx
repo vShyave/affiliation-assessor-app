@@ -120,7 +120,7 @@ const AdminLogin = () => {
         email: data.email,
       });
 
-      if (roles.includes("Regulator")) {
+      if (roles.includes("Super-Admin") || roles.includes("Desktop-Admin")) {
         setCookie("userData", loginRes.data);
         setCookie("regulator", adminDetailsRes.data.regulator);
         navigate(ADMIN_ROUTE_MAP.adminModule.manageUsers.home);
@@ -225,7 +225,7 @@ const AdminLogin = () => {
                     text="Get Otp"
                     type="submit"
                   ></Button>
-                  <div className="flex justify-center my-6">
+                  {/* <div className="flex justify-center my-6">
                     <span className="text-gray-400">Create an account, </span>
                     &nbsp;
                     <Link
@@ -234,7 +234,7 @@ const AdminLogin = () => {
                     >
                       Sign up
                     </Link>
-                  </div>
+                  </div> */}
                 </form>
               </>
             )}

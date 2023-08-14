@@ -351,9 +351,6 @@ function BulkUploadScheduleModal({ setBulkUploadSchduleModal }) {
                     onClick={() => {
                       bulkSchedule();
                     }}
-                    otherProps={{
-                      disabled: true,
-                    }}
                     moreClass="border text-white w-[120px]"
                     text="Schedule"
                   ></Button>
