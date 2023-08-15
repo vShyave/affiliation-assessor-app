@@ -25,18 +25,6 @@ export const makeHasuraCalls = async (query) => {
 
 const validateResponse = async (response) => {
   const apiRes = await response.json();
-  const { user } = getCookie('userData');
-
-  console.log("apiRes - ", apiRes);
-  // if (apiRes?.data?.insert_form_submissions) {
-  //   registerEvent({
-  //     created_date: getLocalTimeInISOFormat(),
-  //     entity_id: apiRes?.data?.insert_form_submissions?.returning?.[0]?.form_id.toString(),
-  //     entity_type: "form",
-  //     event_name: "OGA Completed",
-  //     remarks: `${user.firstName} ${user.lastName} has completed the On Ground Inspection Analysis`,
-  //   });
-  // }
 
   const jsonResponse = {
     ...apiRes,
@@ -165,7 +153,7 @@ export const removeItemFromLocalForage = (key) => {
 
 export const handleFormEvents = async (startingForm, afterFormSubmit, e) => {
   const user = getCookie("userData");
-  console.log('e - ', e);
+  
   if (
     (e.origin + '/enketo') === ENKETO_URL &&
     typeof e?.data === "string" &&
