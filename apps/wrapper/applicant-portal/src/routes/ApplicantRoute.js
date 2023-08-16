@@ -16,7 +16,8 @@ APPLICANT_ROUTE_MAP.dashboardModule = {
     profile: `${APPLICANT_ROUTE_MAP.dashboard}profile`,
     createForm: `${APPLICANT_ROUTE_MAP.dashboard}view-form`,
     notifications:`${APPLICANT_ROUTE_MAP.dashboard}notifications`,
-    notificatonView: `${APPLICANT_ROUTE_MAP.dashboard}notifications-view`
+    notificatonView: `${APPLICANT_ROUTE_MAP.dashboard}notifications-view`,
+    paymentResult: `${APPLICANT_ROUTE_MAP.dashboard}payment-response`
 };
 
 APPLICANT_ROUTE_MAP.root_star =  "/*";
