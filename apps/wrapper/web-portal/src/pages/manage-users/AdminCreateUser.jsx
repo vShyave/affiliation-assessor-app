@@ -131,8 +131,7 @@ export default function AdminCreateUser() {
           phno: user.phonenumber,
         };
         const singleEditHasura = await editUserHasura(postDataHasura);
-        if (
-          singleEditHasura.status !== 200) {
+        if (singleEditHasura.status !== 200) {
           errorFlag = true;
         }
         if (!errorFlag) {
@@ -370,7 +369,7 @@ export default function AdminCreateUser() {
                     <select
                       required
                       value={user.role}
-                      disabled={true}
+                      disabled={userId ? true : false}
                       name="role"
                       id="role"
                       onChange={(e) => handleChange("role", e.target.value)}
