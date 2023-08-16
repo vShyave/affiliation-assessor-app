@@ -25,18 +25,6 @@ export const makeHasuraCalls = async (query) => {
 
 const validateResponse = async (response) => {
   const apiRes = await response.json();
-  const { user } = getCookie('userData');
-
-  console.log("apiRes - ", apiRes);
-  // if (apiRes?.data?.insert_form_submissions) {
-  //   registerEvent({
-  //     created_date: getLocalTimeInISOFormat(),
-  //     entity_id: apiRes?.data?.insert_form_submissions?.returning?.[0]?.form_id.toString(),
-  //     entity_type: "form",
-  //     event_name: "OGA Completed",
-  //     remarks: `${user.firstName} ${user.lastName} has completed the On Ground Inspection Analysis`,
-  //   });
-  // }
 
   const jsonResponse = {
     ...apiRes,
@@ -62,16 +50,14 @@ export const makeDataForPrefill = (prev, xmlDoc, key, finalObj, formName) => {
 };
 
 export const updateFormData = async (startingForm) => {
-  console.log("accessing form from localforage - ",startingForm + `${new Date().toISOString().split("T")[0]}`)
   try {
     // TODO: check if formdata has to have value, check line 65 for getcookie connect with Sheela
-    // let data = await getFromLocalForage(
-    //   startingForm + `${new Date().toISOString().split("T")[0]}`
-    // );
+    let data = await getFromLocalForage(`${startingForm}_${new Date().toISOString().split("T")[0]}`);
+      
     let prefilledForm = await getSubmissionXML(
-      startingForm,"",""
-      // data.formData,
-      // data.imageUrls
+      startingForm,
+      data.formData,
+      data.imageUrls
     );
     return prefilledForm;
   } catch (err) {}
@@ -130,7 +116,7 @@ export const isImage = (key, filename) => {
 export const getFromLocalForage = async (key) => {
   const user = getCookie("userData");
   try {
-    return await localforage.getItem(user.user.id + "_" + key);
+    return await localforage.getItem(`${user.user.id}_${key}`);
   } catch (err) {
     console.log(err);
     return null;
@@ -165,7 +151,7 @@ export const removeItemFromLocalForage = (key) => {
 
 export const handleFormEvents = async (startingForm, afterFormSubmit, e) => {
   const user = getCookie("userData");
-  console.log('e - ', e);
+  
   if (
     (e.origin + '/enketo') === ENKETO_URL &&
     typeof e?.data === "string" &&
@@ -177,11 +163,7 @@ export const handleFormEvents = async (startingForm, afterFormSubmit, e) => {
       let prevData = await getFromLocalForage(
         startingForm + `${new Date().toISOString().split("T")[0]}`
       );
-      await setToLocalForage(
-        user.user.id +
-          "_" +
-          startingForm +
-          `${new Date().toISOString().split("T")[0]}`,
+      await setToLocalForage(`${user.user.id}_${startingForm}_${new Date().toISOString().split("T")[0]}`,
         {
           formData: JSON.parse(e.data).formData,
           imageUrls: { ...prevData?.imageUrls, ...images },
@@ -207,19 +189,19 @@ export const getFormData = async ({
   let formData, prefillXMLArgs;
   if (res?.data?.assessment_schedule?.[0]) {
     loading.current = true;
-    let ass = res?.data?.assessment_schedule?.[0];
-    scheduleId.current = ass.id;
+    let assessment = res?.data?.assessment_schedule?.[0];
+    scheduleId.current = assessment.id;
     setData({
-      schedule_id: ass.id,
-      id: ass.institute.id,
-      district: ass.institute.district,
-      instituteName: ass.institute.name,
+      schedule_id: assessment.id,
+      id: assessment.institute.id,
+      district: assessment.institute.district,
+      instituteName: assessment.institute.name,
       specialization:
-        ass.institute?.institute_specializations?.[0]?.specializations,
-      courses: ass.institute?.institute_types?.[0]?.types,
-      type: ass.institute.sector,
-      latitude: ass.institute.latitude,
-      longitude: ass.institute.longitude,
+        assessment.institute?.institute_specializations?.[0]?.specializations,
+      courses: assessment.institute?.institute_types?.[0]?.types,
+      type: assessment.institute.sector,
+      latitude: assessment.institute.latitude,
+      longitude: assessment.institute.longitude,
     });
 
     if (formSpec.date) {
@@ -231,9 +213,7 @@ export const getFormData = async ({
         formData.imageUrls,
       ];
     } else {
-      formData = await getFromLocalForage(
-        startingForm + `${new Date().toISOString().split("T")[0]}`
-      );
+      formData = await getFromLocalForage(`${startingForm}_${new Date().toISOString().split("T")[0]}`);
       if (formData) {
         setEncodedFormSpec(encodeURI(JSON.stringify(formSpec.forms[formId])));
         prefillXMLArgs = [

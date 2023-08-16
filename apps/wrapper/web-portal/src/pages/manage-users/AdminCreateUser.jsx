@@ -259,9 +259,9 @@ export default function AdminCreateUser() {
               </span>
             </Link>
             <FaAngleRight className="text-gray-500 text-[16px]" />
-            <Link to={ADMIN_ROUTE_MAP.adminModule.manageUsers.home}>
+            {/* <Link to={ADMIN_ROUTE_MAP.adminModule.manageUsers.home}> */}
               <span className="text-gray-500">Create user</span>
-            </Link>
+            {/* </Link> */}
             {/* <FaAngleRight className="text-[16px]" />
             <span className="text-gray-500 uppercase">User details</span> */}
           </div>

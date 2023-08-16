@@ -1,9 +1,17 @@
 import React, { useState, useEffect, useContext, useRef } from "react";
 import { Routes, useNavigate, useParams } from "react-router-dom";
-import ROUTE_MAP from "../../routing/routeMap";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faXmark } from "@fortawesome/free-solid-svg-icons";
 
+import ROUTE_MAP from "../../routing/routeMap";
 import { StateContext } from "../../App";
-import { getStatusOfForms, registerEvent, saveFormSubmission, updateFormStatus } from "../../api";
+
+import {
+  getStatusOfForms,
+  registerEvent,
+  saveFormSubmission,
+  updateFormStatus,
+} from "../../api";
 import {
   getCookie,
   getFormData,
@@ -74,6 +82,8 @@ const GenericOdkForm = (props) => {
   const [encodedFormURI, setEncodedFormURI] = useState("");
   const [prefilledFormData, setPrefilledFormData] = useState();
   const [errorModal, setErrorModal] = useState(false);
+  const [previewModal, setPreviewModal] = useState(false);
+  let previewFlag = false;
 
   const loading = useRef(false);
   const [assData, setData] = useState({
@@ -87,8 +97,7 @@ const GenericOdkForm = (props) => {
   });
 
   const getFormStatus = async () => {
-
-    const { user } = getCookie('userData');
+    const { user } = getCookie("userData");
 
     const postData = {
       date: new Date().toJSON().slice(0, 10),
@@ -102,7 +111,7 @@ const GenericOdkForm = (props) => {
         return obj.form_name;
       });
       let isComplete = false;
-      let parent_form_id = Object.values(getCookie("courses_data"))[0]
+      let parent_form_id = Object.values(getCookie("courses_data"))[0];
       if (
         Object.keys(getCookie("courses_data")).length ===
         response?.data?.form_submissions.length
@@ -111,13 +120,12 @@ const GenericOdkForm = (props) => {
           response?.data?.form_submissions.filter((item) => {
             if (item.form_name === form && item.submission_status)
               isComplete = true;
-            else  isComplete=false
+            else isComplete = false;
           });
         });
       }
-      console.log(getCookie("courses_data"))
-      console.log(response?.data?.form_submissions)
-      if(isComplete){
+
+      if (isComplete) {
         // call event
         registerEvent({
           created_date: getLocalTimeInISOFormat(),
@@ -142,37 +150,41 @@ const GenericOdkForm = (props) => {
     try {
       const { nextForm, formData, onSuccessData, onFailureData } = data;
       if (data?.state === "ON_FORM_SUCCESS_COMPLETED") {
-        if (date) {
-          setErrorModal(true);
-          return;
+        if (!previewFlag) {
+          handleRenderPreview();
+        } else {
+          // For read-only forms, it will disable the Submit...
+          if (date) {
+            setErrorModal(true);
+            return;
+          }
+
+          const updatedFormData = await updateFormData(formSpec.start);
+          const storedData = await getSpecificDataFromForage("required_data");
+
+          const res = await saveFormSubmission({
+            schedule_id: scheduleId.current,
+            form_data: updatedFormData,
+            assessment_type: "assessor",
+            form_name: formSpec.start,
+            submission_status: saveFlag === "draft" ? false : true,
+            assessor_id: storedData?.assessor_user_id,
+            applicant_id: storedData?.institute_id,
+            submitted_on: new Date().toJSON().slice(0, 10),
+            applicant_form_id: getCookie("courses_data")[formName],
+            round: getCookie("parent_form_round"),
+            form_status: saveFlag === "draft" ? "" : "In Progress",
+          });
+
+          await getFormStatus();
+
+          // Delete the data from the Local Forage
+          const key = `${storedData?.assessor_user_id}_${formSpec.start}_${
+            new Date().toISOString().split("T")[0]
+          }`;
+          removeItemFromLocalForage(key);
+          setTimeout(() => navigate(`${ROUTE_MAP.thank_you}${formName}`), 2000);
         }
-
-        const updatedFormData = await updateFormData(formSpec.start);
-        const storedData = await getSpecificDataFromForage("required_data");
-
-        const res = await saveFormSubmission({
-          schedule_id: scheduleId.current,
-          form_data: updatedFormData,
-          assessment_type: "assessor",
-          form_name: formSpec.start,
-          submission_status: saveFlag === "draft" ? false : true,
-          assessor_id: storedData?.assessor_user_id,
-          applicant_id: storedData?.institute_id,
-          submitted_on: new Date().toJSON().slice(0, 10),
-          applicant_form_id: getCookie("courses_data")[formName],
-          round: getCookie("parent_form_round"),
-          form_status: saveFlag === "draft" ? "" : "In Progress",
-        });
-        console.log(res);
-
-        await getFormStatus();
-
-        // Delete the data from the Local Forage
-        const key = `${storedData?.assessor_user_id}_${formSpec.start}${
-          new Date().toISOString().split("T")[0]
-        }`;
-        removeItemFromLocalForage(key);
-        setTimeout(() => navigate(`${ROUTE_MAP.thank_you}${formName}`), 2000);
       }
 
       if (nextForm?.type === "form") {
@@ -213,13 +225,11 @@ const GenericOdkForm = (props) => {
   };
 
   const checkIframeLoaded = () => {
-    console.log("window.location.host - ", window.location.host);
     if (window.location.host.includes("localhost")) {
       return;
     }
 
     const iframeElem = document.getElementById("enketo-form");
-    console.log("iframeElem - ", iframeElem);
     var iframeContent =
       iframeElem?.contentDocument || iframeElem?.contentWindow.document;
     if (date) {
@@ -231,15 +241,38 @@ const GenericOdkForm = (props) => {
           input.disabled = true;
         });
       }
-      iframeElem.getElementById("submit-form").style.display = "none";
-      iframeElem.getElementById("save-draft").style.display = "none";
+
+      iframeContent.getElementById("submit-form").style.display = "none";
+      iframeContent.getElementById("save-draft").style.display = "none";
     }
 
     var draftButton = iframeContent.getElementById("save-draft");
-    draftButton.addEventListener("click", function () {
+    draftButton?.addEventListener("click", function () {
       alert("Hello world!");
-      afterFormSubmit("", "draft");
     });
+  };
+
+  const handleRenderPreview = () => {
+    setPreviewModal(true);
+    previewFlag = true;
+    setTimeout(() => {
+      const iframeElem = document.getElementById("preview-enketo-form");
+      if (window.location.host.includes("localhost")) {
+        return;
+      }
+      let iframeContent =
+        iframeElem?.contentDocument || iframeElem?.contentWindow.document;
+      if (!iframeContent) return;
+      let section = iframeContent?.getElementsByClassName("or-group");
+      if (!section) return;
+      for (var i = 0; i < section?.length; i++) {
+        var inputElements = section[i].querySelectorAll("input");
+        inputElements.forEach((input) => {
+          input.disabled = true;
+        });
+      }
+      iframeContent.getElementById("save-draft").style.display = "none";
+    }, 1500);
   };
 
   useEffect(() => {
@@ -254,9 +287,11 @@ const GenericOdkForm = (props) => {
       setEncodedFormSpec,
       setEncodedFormURI,
     });
+
     setTimeout(() => {
       checkIframeLoaded();
-    }, 1500);
+    }, 2500);
+
     return () => {
       detachEventBinding();
       setData(null);
@@ -277,6 +312,7 @@ const GenericOdkForm = (props) => {
       isPreview,
     });
   }, [isPreview]);
+
   return (
     <>
       <CommonLayout
@@ -285,9 +321,6 @@ const GenericOdkForm = (props) => {
         formPreview={true}
         setIsPreview={setIsPreview}
       >
-        {console.log(
-          `${ENKETO_URL}/preview?formSpec=${encodedFormSpec}&xform=${encodedFormURI}&userId=${user.user.id}`
-        )}
         {!isPreview && (
           <div className="flex flex-col items-center">
             {encodedFormURI && assData && (
@@ -303,6 +336,7 @@ const GenericOdkForm = (props) => {
           </div>
         )}
       </CommonLayout>
+
       {errorModal && (
         <CommonModal>
           <div>
@@ -320,6 +354,41 @@ const GenericOdkForm = (props) => {
                 Close
               </div>
             </div>
+          </div>
+        </CommonModal>
+      )}
+
+      {previewModal && (
+        <CommonModal
+          moreStyles={{
+            padding: "1rem",
+            maxWidth: "95%",
+            minWidth: "90%",
+            maxHeight: "90%",
+          }}
+        >
+          <div className="flex flex-row w-full items-center cursor-pointer gap-4">
+            <div className="flex flex-grow font-bold text-xl">
+              Preview and Submit form
+            </div>
+            <div className="flex flex-grow justify-end">
+              <FontAwesomeIcon
+                icon={faXmark}
+                className="text-2xl lg:text-4xl"
+                onClick={() => {
+                  setPreviewModal(false);
+                  previewFlag = false;
+                }}
+              />
+            </div>
+          </div>
+          <div className="flex flex-col justify-center w-full py-4">
+            <iframe
+              title="form"
+              id="preview-enketo-form"
+              src={`${ENKETO_URL}/preview?formSpec=${encodedFormSpec}&xform=${encodedFormURI}&userId=${user.user.id}`}
+              style={{ height: "80vh", width: "100%" }}
+            />
           </div>
         </CommonModal>
       )}
