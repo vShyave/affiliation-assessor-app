@@ -24,6 +24,7 @@ import { getLocalTimeInISOFormat } from "./api";
 import { applicantService } from "./services";
 import Notification from "./pages/notifications/Notification";
 import NotificationsDetailedView from "./pages/notifications/NotificationsDetailedView";
+import PaymentResult from "./pages/PaymentResult";
 
 function App() {
   const [toast, setToast] = useState({
@@ -164,6 +165,14 @@ function App() {
             element={
               <PrivateRoute>
                 <MyApplications />
+              </PrivateRoute>
+            }
+          />
+             <Route
+            path= {`${APPLICANT_ROUTE_MAP.dashboardModule.paymentResult}`}
+            element={
+              <PrivateRoute>
+                <PaymentResult/>
               </PrivateRoute>
             }
           />
