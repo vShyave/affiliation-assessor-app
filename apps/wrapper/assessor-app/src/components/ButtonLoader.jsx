@@ -3,7 +3,7 @@ import React from "react";
 function ButtonLoader() {
   return (
     <>
-      <div class="lds-ring">
+      <div className="lds-ring">
         <div></div>
         <div></div>
         <div></div>

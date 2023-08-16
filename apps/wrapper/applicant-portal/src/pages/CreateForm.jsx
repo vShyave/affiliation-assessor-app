@@ -101,7 +101,6 @@ const CreateForm = (props) => {
     let data = await getFromLocalForage(
       `${userId}_${formName}_${new Date().toISOString().split("T")[0]}`
     );
-    console.log("data - ", data);
 
     if (data) {
       formData = data;
