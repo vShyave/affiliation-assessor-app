@@ -378,7 +378,7 @@ export default function AdminCreateUser() {
                     >
                       <option value="">Select role</option>
                       <option value="Assessor">Assessor</option>
-                      <option value="Desktop-Admin">Desktop Admin</option>
+                      <option value="Desktop-Admin">Admin</option>
                     </select>
                   </div>
                 </div>

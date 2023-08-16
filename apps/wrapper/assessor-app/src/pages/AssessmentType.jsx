@@ -24,6 +24,7 @@ import {
   getAllKeysFromForage,
   getCookie,
   getSpecificDataFromForage,
+  setCookie,
 } from "../utils";
 
 import CommonLayout from "../components/CommonLayout";
@@ -161,7 +162,10 @@ const AssessmentType = () => {
             return obj;
           });
         }
-
+        let courses_parent_id = {}
+        courses_data.forEach((item)=>{courses_parent_id[item.formObject[0].path]=item.applicant_form_id})
+        setCookie("courses_data",courses_parent_id)
+        setCookie("parent_form_round",courses_data?.[0]?.round)
         setActiveAccordionValue(courses_data?.[0]?.course_id);
         setAccordionData(courses_data);
       } catch (error) {

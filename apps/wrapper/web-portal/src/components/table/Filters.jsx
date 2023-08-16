@@ -54,7 +54,7 @@ export const ManageUsersFilters = ({
   }, [filters, paginationInfo.offsetNo, paginationInfo.limit]);
   return (
     <div className="flex flex-grow text-gray-700 z-10 dark:text-gray-400 gap-8">
-      <div className="flex">
+      {/* <div className="flex">
         <Select
           name="role"
           id="role"
@@ -63,11 +63,10 @@ export const ManageUsersFilters = ({
           label="Role"
           className="bg-gray-50"
         >
-          {/* <Option value="">--Select Role--</Option> */}
           <Option value="Assessor">Assessor</Option>
           <Option value="Assessor-Medical">Assessor-Medical</Option>
         </Select>
-      </div>
+      </div> */}
       <div className="flex">
         <Select
           name="workingstatus"

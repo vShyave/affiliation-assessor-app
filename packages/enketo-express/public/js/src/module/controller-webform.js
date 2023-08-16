@@ -470,11 +470,11 @@ function _saveRecord(survey, draft = true, recordName, confirmed, errorMsg) {
     }
 
     // check whether record name is confirmed if necessary
-    if (draft && !confirmed) {
-        return _confirmRecordName(recordName, errorMsg)
-            .then(name => _saveRecord(survey, draft, name, true))
-            .catch(() => { });
-    }
+    // if (draft && !confirmed) {
+    //     return _confirmRecordName(recordName, errorMsg)
+    //         .then(name => _saveRecord(survey, draft, name, true))
+    //         .catch(() => { });
+    // }
 
     return fileManager.getCurrentFiles()
         .then(files => {
@@ -539,7 +539,7 @@ function _saveRecord(survey, draft = true, recordName, confirmed, errorMsg) {
             } else if (!errorMsg) {
                 errorMsg = t('confirm.save.unkownerror');
             }
-            gui.alert(errorMsg, 'Save Error');
+            // gui.alert(errorMsg, 'Save Error');
         });
 }
 

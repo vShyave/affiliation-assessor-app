@@ -111,6 +111,11 @@ export const registerEvent = async (postData) => {
   return res;
 };
 
+export const updateFormStatus = async (postData) => {
+  const res = await customPost.put("rest/updateForm", postData);
+  return res;
+};
+
 export const UploadImage = async (postData) => {
   const res = await axios.post(
     `${ENKETO_MANAGER_URL}/form/uploadFile`,

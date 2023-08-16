@@ -844,7 +844,7 @@ export default function ManageUsersList({
                     }`}
                     aria-current="page"
                   >
-                    Desktop Admin
+                    Admin
                   </a>
                 </li>
               </ul>

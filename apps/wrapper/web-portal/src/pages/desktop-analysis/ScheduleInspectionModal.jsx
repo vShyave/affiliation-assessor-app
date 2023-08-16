@@ -25,6 +25,7 @@ import {
   registerEvent,
   updateFormStatus,
 } from "../../api";
+import { useParams } from "react-router-dom";
 
 // import Toast from "../../components/Toast";
 
@@ -33,6 +34,7 @@ function ScheduleInspectionModal({ closeSchedule, otherInfo }) {
   const [isLastStep, setIsLastStep] = React.useState(false);
   const [isFirstStep, setIsFirstStep] = React.useState(false);
   const { setSpinner, setToast } = useContext(ContextAPI);
+  const {formId} = useParams()
 
   const handleNext = () => !isLastStep && setActiveStep((cur) => cur + 1);
   const handlePrev = () => !isFirstStep && setActiveStep((cur) => cur - 1);
@@ -132,6 +134,7 @@ function ScheduleInspectionModal({ closeSchedule, otherInfo }) {
           value: item.course_name,
           label: item.course_name,
           level: item.course_level,
+          formObj: item.formObject
         }))
       );
     } catch (error) {
@@ -146,20 +149,19 @@ function ScheduleInspectionModal({ closeSchedule, otherInfo }) {
   };
 
   const handleScheduleAssessment = async () => {
-    // console.log("Selected forms", selectedFormList);
+    console.log("Selected forms", selectedFormList);
 
-    // let coursesObj = selectedFormList.map((obj) => {
-    //   let courses = {};
-    //   const formObjStringify = {};
-    //   formObjStringify.name = obj.value; bsc_nursing_p1
-    //   formObjStringify.path = obj.value.toLowerCase() + ".xml";
-    //   courses.course_type = otherInfo?.course_applied;
-    //   courses.course_level = otherInfo.course_level;
-    //   courses.formObject = JSON.stringify([formObjStringify]);
-    //   courses.institute_id = otherInfo?.instituteId;
-    //   courses.course_name = obj.value;
-    //   return courses;
-    // });
+    let coursesObj = selectedFormList.map((obj) => {
+      let courses = {};
+      courses.course_type = otherInfo?.course_applied;
+      courses.course_level = otherInfo.course_level;
+      courses.formObject = obj.formObj;
+      courses.institute_id = otherInfo?.instituteId;
+      courses.course_name = obj.value;
+      courses.applicant_form_id = +formId;
+      courses.round = otherInfo?.round;
+      return courses;
+    });
     const postData = {
       institute_course: [
         {
@@ -172,7 +174,7 @@ function ScheduleInspectionModal({ closeSchedule, otherInfo }) {
           ]),
         },
       ],
-      courses: [],
+      courses: coursesObj,
     };
     console.log(postData);
     const formData = {
