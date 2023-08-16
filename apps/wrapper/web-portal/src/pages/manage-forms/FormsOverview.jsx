@@ -360,7 +360,7 @@ const FormsOverview = () => {
       labels: e?.labels,
       publish: (
         <a
-          className={`text-primary-600 bg-white`}
+          className={`text-primary-600`}
           onClick={() => {
             setShowAlert(true);
             setState((prevState) => ({
@@ -380,7 +380,7 @@ const FormsOverview = () => {
       ),
       title: (
         <a
-          className={`px-6 text-primary-600 pl-0 bg-white`}
+          className={`px-6 text-primary-600 pl-0`}
           onClick={() => {
             setShowAlert(true);
             setState((prevState) => ({
@@ -400,7 +400,7 @@ const FormsOverview = () => {
       ),
       unpublish: (
         <a
-          className={`px-6 text-primary-600 pl-0 bg-white`}
+          className={`px-6 text-primary-600 pl-0`}
           onClick={() => {
             setShowAlert(true);
             setState((prevState) => ({
@@ -427,7 +427,7 @@ const FormsOverview = () => {
       ),
       delete: (
         <a
-          className={`px-6 text-gray-600 pl-0 bg-white`}
+          className={`px-6 text-gray-600 pl-0`}
           onClick={() => {
             setShowAlert(true);
             setState((prevState) => ({
