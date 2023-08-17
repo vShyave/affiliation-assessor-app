@@ -1,6 +1,7 @@
 import XMLParser from "react-xml-parser";
 import localforage from "localforage";
 import Cookies from "js-cookie";
+import * as serviceWorkerRegistration from '../serviceWorkerRegistration';
 
 import { getMedicalAssessments, getPrefillXML, getSubmissionXML, registerEvent } from "../api";
 
@@ -86,6 +87,7 @@ export const logout = () => {
   localforage.clear();
   window.location = "/";
   removeCookie("userData");
+  serviceWorkerRegistration.unregister();
 };
 
 export const removeCookie = (cname) => {

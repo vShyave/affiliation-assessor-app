@@ -20,19 +20,17 @@ const isLocalhost = Boolean(
 
 export function register(config) {
   if (process.env.NODE_ENV === 'production' && 'serviceWorker' in navigator) {
-    console.log("Running Environment", process.env.NODE_ENV);
     // The URL constructor is available in all browsers that support SW.
     const publicUrl = new URL(process.env.PUBLIC_URL, window.location.href);
-    // const publicUrl = new URL("http://127.0.0.1:3001/public", window.location.href);
     if (publicUrl.origin !== window.location.origin) {
       // Our service worker won't work if PUBLIC_URL is on a different origin
       // from what our page is served on. This might happen if a CDN is used to
       // serve assets; see https://github.com/facebook/create-react-app/issues/2374
-      return; 
+      return;
     }
 
     window.addEventListener('load', () => {
-      console.log(process.env.PUBLIC_URL)
+      console.log(`${process.env.PUBLIC_URL}`)
       const swUrl = `${process.env.PUBLIC_URL}/service-worker.js`;
 
       if (isLocalhost) {
@@ -59,6 +57,11 @@ function registerValidSW(swUrl, config) {
   navigator.serviceWorker
     .register(swUrl)
     .then((registration) => {
+      if (registration.waiting) {
+        console.log("onupdatefound")
+        // An update is available, you might want to prompt the user to refresh the page
+        // or show a notification indicating that a new version is available.
+      }
       registration.onupdatefound = () => {
         const installingWorker = registration.installing;
         if (installingWorker == null) {
@@ -131,6 +134,11 @@ export function unregister() {
   if ('serviceWorker' in navigator) {
     navigator.serviceWorker.ready
       .then((registration) => {
+        caches.keys().then(cacheNames => {
+          cacheNames.forEach(cacheName => {
+            caches.delete(cacheName);
+          });
+        })
         registration.unregister();
       })
       .catch((error) => {
