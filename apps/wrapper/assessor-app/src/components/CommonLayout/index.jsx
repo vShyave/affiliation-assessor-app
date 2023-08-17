@@ -9,7 +9,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { useNavigate } from "react-router-dom";
 import CommonModal from "../Modal";
-import isOnline from "is-online";
+// import isOnline from "is-online";
 import { logout } from "../../utils/index.js";
 import { useEffect } from "react";
 import { base64ToPdf } from "../../api";
@@ -43,13 +43,13 @@ const CommonLayout = (props) => {
     }
   };
 
-  useEffect(() => {
-    onlineInterval.current = setInterval(async () => {
-      let status = await isOnline();
-      setOnline(status);
-    }, 1000);
-    return () => clearInterval(onlineInterval.current);
-  }, []);
+  // useEffect(() => {
+  //   onlineInterval.current = setInterval(async () => {
+  //     let status = await isOnline();
+  //     setOnline(status);
+  //   }, 1000);
+  //   return () => clearInterval(onlineInterval.current);
+  // }, []);
 
   return (
     <>
