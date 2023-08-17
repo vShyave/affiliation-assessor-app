@@ -71,6 +71,7 @@ export default function DesktopAnalysisView() {
   const startingForm = formSpec.start;
   const [onFormSuccessData, setOnFormSuccessData] = useState(undefined);
   const [onFormFailureData, setOnFormFailureData] = useState(undefined);
+  const [paymentStatus, setPaymentStatus] = useState("")
   const [formStatus , setFormStatus] = useState("")
   const [onSubmit, setOnSubmit] = useState(false);
   const [encodedFormSpec, setEncodedFormSpec] = useState(
@@ -89,16 +90,14 @@ export default function DesktopAnalysisView() {
       `${userId}_${formName}_${new Date().toISOString().split("T")[0]}`
     );
 
-    // if (data) {
-    //   formData = data;
-    // } else {
-
     const postData = { form_id: formId };
     try {
       setSpinner(true);
       const res = await getFormData(postData);
+      console.log("res-",res)
       formData = res.data.form_submissions[0];
-  
+      
+      // setPaymentStatus(res?.data?.form_submissions[0]?.payment_status)
       setFormDataFromApi(res.data.form_submissions[0]);
       // setFormStatus(res?.data?.)
       await setToLocalForage(

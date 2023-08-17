@@ -61,6 +61,10 @@ const DesktopAnalysisList = () => {
       accessor: "status",
     },
     {
+      Header: "Payment status",
+      accessor: "payment_status",
+    },
+    {
       Header: "",
       accessor: "schedule",
     },
@@ -236,6 +240,8 @@ const DesktopAnalysisList = () => {
       published_on: readableDate(e?.submitted_on),
       id: e.form_id,
       status: e?.form_status || "NA",
+      payment_status: e?.payment_status || "NA",
+
     };
     formsDataList.push(formsData);
 
