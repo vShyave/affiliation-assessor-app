@@ -105,7 +105,6 @@ export default function DesktopAnalysisView() {
           imageUrls: { ...data?.imageUrls },
         }
       );
-      // }
 
       let formURI = await getPrefillXML(
         `${filePath}`,
@@ -127,7 +126,6 @@ export default function DesktopAnalysisView() {
       const { nextForm, formData, onSuccessData, onFailureData } = data;
       if (data?.state === "ON_FORM_SUCCESS_COMPLETED") {
         handleSubmit();
-        // setOnSubmit(true);
       }
 
       if (nextForm?.type === "form") {
@@ -251,7 +249,7 @@ export default function DesktopAnalysisView() {
     formId: formId,
     course_type: formDataFromApi?.course_type,
     course_level: formDataFromApi?.course_level,
-    round: formDataFromApi?.round
+    round: formDataFromApi?.round,
   };
 
   useEffect(() => {
@@ -281,12 +279,12 @@ export default function DesktopAnalysisView() {
         <div className="flex flex-col gap-12">
           <div className="flex flex-row">
             <div className="flex grow gap-4 justify-end items-center">
-              <button 
-              className={`${
-                     (formDataFromApi?.form_status === "Inspection Scheduled")
-                        ? "invisible"
-                        : "flex flex-wrap items-center justify-center gap-2 border border-gray-500 bg-white text-gray-500 w-fit h-fit p-2 font-semibold rounded-[4px]"
-                    }`}
+              <button
+                className={`${
+                  formDataFromApi?.form_status === "Inspection Scheduled"
+                    ? "invisible"
+                    : "flex flex-wrap items-center justify-center gap-2 border border-gray-500 bg-white text-gray-500 w-fit h-fit p-2 font-semibold rounded-[4px]"
+                }`}
               >
                 <span>
                   <BsArrowLeft />
@@ -307,11 +305,13 @@ export default function DesktopAnalysisView() {
                   <BsArrowRight />
                 </span>
               </button>
-              <div  className={`${
-                     (formDataFromApi?.form_status === "Inspection Scheduled")
-                        ? "invisible"
-                        : "inline-block h-[40px] min-h-[1em] w-0.5 border opacity-100 dark:opacity-50"
-                    }`}/>
+              <div
+                className={`${
+                  formDataFromApi?.form_status === "Inspection Scheduled"
+                    ? "invisible"
+                    : "inline-block h-[40px] min-h-[1em] w-0.5 border opacity-100 dark:opacity-50"
+                }`}
+              />
               <button
                 onClick={() => setOpenStatusModel(true)}
                 className="border border-gray-500 text-blue-600 bg-gray-100 w-[140px] h-[40px] font-medium rounded-[4px]"
@@ -343,7 +343,7 @@ export default function DesktopAnalysisView() {
               <Card moreClass="shadow-md">
                 <iframe
                   title="form"
-                  src={`${ENKETO_URL}preview?formSpec=${encodeURI(
+                  src={`${ENKETO_URL}/preview?formSpec=${encodeURI(
                     JSON.stringify(formSpec)
                   )}&xform=${encodedFormURI}&userId=${userId}`}
                   style={{ minHeight: "100vh", width: "100%" }}
