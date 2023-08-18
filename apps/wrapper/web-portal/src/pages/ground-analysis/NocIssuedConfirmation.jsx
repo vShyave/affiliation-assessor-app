@@ -53,7 +53,7 @@ export default function NocIssued({ notification }) {
         </div>
         <div className="flex place-items-end mx-auto gap-4">
           <Button
-            onClick={() => navigate("/groundInspection")}
+            onClick={() => navigate(`${ADMIN_ROUTE_MAP.adminModule.onGroundInspection.home}`)}
             moreClass="px-6 m-2 text-white"
             text="Back to applications"
           />

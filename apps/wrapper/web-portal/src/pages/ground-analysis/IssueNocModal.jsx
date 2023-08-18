@@ -93,7 +93,7 @@ function IssueNocModal({
           toastMsg: "File uploaded successfully!",
           toastType: "success",
         }));
-        navigate("/groundInspection/noc-issued");
+        navigate(`${ADMIN_ROUTE_MAP.adminModule.onGroundInspection.nocIssued}`);
       }
     } catch (error) {
       console.log("error - ", error);

@@ -60,6 +60,36 @@ const DesktopAnalysisList = () => {
       Header: "Status",
       accessor: "status",
     },
+    // {
+    //   Header: "Payment status",
+    //   accessor: "payment_status",
+    // },
+    {
+      Header: "",
+      accessor: "schedule",
+    },
+  ];
+  const NEWCOLUMNS = [
+    {
+      Header: "Form title",
+      accessor: "form_title",
+    },
+    {
+      Header: "Application type",
+      accessor: "application_type",
+    },
+    {
+      Header: "Course name",
+      accessor: "course_name",
+    },
+    {
+      Header: "Submitted on",
+      accessor: "published_on",
+    },
+    {
+      Header: "Status",
+      accessor: "status",
+    },
     {
       Header: "Payment status",
       accessor: "payment_status",
@@ -377,7 +407,7 @@ const DesktopAnalysisList = () => {
                 <FilteringTable
                   dataList={formsDataList}
                   navigateFunc={navigateToView}
-                  columns={COLUMNS}
+                  columns={NEWCOLUMNS}
                   pagination={true}
                   onRowSelect={() => {}}
                   filterApiCall={filterApiCall}

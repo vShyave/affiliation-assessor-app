@@ -94,12 +94,10 @@ export default function DesktopAnalysisView() {
     try {
       setSpinner(true);
       const res = await getFormData(postData);
-      console.log("res-",res)
       formData = res.data.form_submissions[0];
       
-      // setPaymentStatus(res?.data?.form_submissions[0]?.payment_status)
+      setPaymentStatus(formData?.payment_status)
       setFormDataFromApi(res.data.form_submissions[0]);
-      // setFormStatus(res?.data?.)
       await setToLocalForage(
         `${userId}_${startingForm}_${new Date().toISOString().split("T")[0]}`,
         {
@@ -263,9 +261,6 @@ export default function DesktopAnalysisView() {
 
   return (
     <>
-      {/* Breadcrum */}
-      {/* <Breadcrumb data={breadCrumbData} /> */}
-
       <div className="h-[48px] bg-white flex justify-start drop-shadow-sm">
         <div className="container mx-auto flex px-3">
           <div className="flex flex-row font-bold gap-2 items-center">
@@ -302,11 +297,12 @@ export default function DesktopAnalysisView() {
               <button
                 onClick={() => setOpenSheduleInspectionModel(true)}
                 className={`${
-                  (formDataFromApi?.form_status === "Inspection Scheduled")
+                  (formDataFromApi?.form_status === "Inspection Scheduled" ||  paymentStatus!=="Paid")
                      ? "invisible" 
                      : "flex flex-wrap items-center justify-center gap-2 border border-gray-500 bg-white text-gray-500 w-fit h-fit p-2 font-semibold rounded-[4px]"
-                 }`}              >
-                Send for inspection
+                 }`}   
+                           >
+                          Send for inspection
                 <span>
                   <BsArrowRight />
                 </span>
