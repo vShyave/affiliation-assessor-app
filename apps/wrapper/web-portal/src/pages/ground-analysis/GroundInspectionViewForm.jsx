@@ -27,9 +27,9 @@ export default function ApplicationPage({
   closeCertificateModal,
 }) {
   const reportTemplateRef = useRef(null);
-  const [formStatus, setFormStatus] = useState(false);
+  const [formStatus, setFormStatus] = useState("");
   const [rejectModel, setRejectModel] = useState(false);
-  const[rejectStatus,setRejectStatus] = useState(false)
+  const [rejectStatus, setRejectStatus] = useState(false);
   const [openModel, setOpenModel] = useState(false);
   const [openStatusModel, setOpenStatusModel] = useState(false);
   const [openIssueNocModel, setOpenIssueNocModel] = useState(false);
@@ -37,7 +37,7 @@ export default function ApplicationPage({
   let { formName, formId, instituteName, round } = useParams();
   let [instituteNameModal, setInstituteNameModal] = useState(instituteName);
   let [selectRound, setSelectRound] = useState(round);
-  const {setSpinner} = useContext(ContextAPI)
+  const { setSpinner } = useContext(ContextAPI);
 
   const userId = "427d473d-d8ea-4bb3-b317-f230f1c9b2f7";
   const formSpec = {
@@ -73,28 +73,27 @@ export default function ApplicationPage({
 
   const fetchFormData = async () => {
     const postData = { form_id: formId };
-    try{
-      setSpinner(true)
+    try {
+      setSpinner(true);
       const res = await getFormData(postData);
-    const formData = res.data.form_submissions[0];
-    const statusOfForm = formData?.form_status
-    setFormStatus(statusOfForm)
+      const formData = res.data.form_submissions[0];
+      console.log(formData);
+      const statusOfForm = formData?.form_status;
+      setFormStatus(statusOfForm);
 
-    let formURI = await getPrefillXML(
-      `${formData?.form_name}`,
-      "",
-      formData.form_data,
-      formData.imageUrls
-    );
-    setEncodedFormURI(formURI);
-    }catch(error){
-      console.log(error)
-    }finally{
-      setSpinner(false)
+      let formURI = await getPrefillXML(
+        `${formData?.form_name}`,
+        "",
+        formData.form_data,
+        formData.imageUrls
+      );
+      setEncodedFormURI(formURI);
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setSpinner(false);
     }
-    
   };
-
   const handleGeneratePdf = () => {
     // const doc = new jsPDF({
     //   format: "a4",
@@ -159,9 +158,17 @@ export default function ApplicationPage({
             <div className="flex grow gap-4 justify-end items-center">
               <button
                 onClick={() => setRejectModel(true)}
-                disabled={(formStatus=="Approved")||(formStatus=="Rejected")||(rejectStatus)? true:false}
+                disabled={
+                  formStatus == "Approved" ||
+                  formStatus == "Rejected" ||
+                  rejectStatus
+                    ? true
+                    : false
+                }
                 className={
-                  (formStatus=="Approved")||(formStatus=="Rejected")||(rejectStatus)
+                  formStatus == "Approved" ||
+                  formStatus == "Rejected" ||
+                  rejectStatus
                     ? "invisible cursor-not-allowed flex flex-wrap items-center justify-center gap-2 border border-gray-500 text-gray-500 bg-white w-[140px] h-[40px] font-medium rounded-[4px]"
                     : "flex flex-wrap items-center justify-center gap-2 border border-gray-500 text-gray-500 bg-white w-[140px] h-[40px] font-medium rounded-[4px]"
                 }
@@ -173,11 +180,19 @@ export default function ApplicationPage({
               </button>
               <button
                 onClick={() => setOpenIssueNocModel(true)}
-                disabled={(formStatus=="Approved")||(formStatus=="Rejected")||(rejectStatus) ? true:false}
+                disabled={
+                  formStatus == "Approved" ||
+                  formStatus == "Rejected" ||
+                  rejectStatus
+                    ? true
+                    : false
+                }
                 className={
-                  (formStatus=="Approved")||(formStatus=="Rejected")||(rejectStatus)
-                    ?  "invisible cursor-not-allowed flex flex-wrap items-center justify-center gap-2 border border-gray-500 text-gray-500 bg-white w-[140px] h-[40px] font-medium rounded-[4px]"
-                    :"flex flex-wrap items-center justify-center gap-2 border border-gray-500 text-gray-500 bg-white w-[140px] h-[40px] font-medium rounded-[4px]"
+                  formStatus == "Approved" ||
+                  formStatus == "Rejected" ||
+                  rejectStatus
+                    ? "invisible cursor-not-allowed flex flex-wrap items-center justify-center gap-2 border border-gray-500 text-gray-500 bg-white w-[140px] h-[40px] font-medium rounded-[4px]"
+                    : "flex flex-wrap items-center justify-center gap-2 border border-gray-500 text-gray-500 bg-white w-[140px] h-[40px] font-medium rounded-[4px]"
                 }
                 // className="flex flex-wrap items-center justify-center gap-2 border border-gray-500 text-gray-500 bg-white w-[140px] h-[40px] font-medium rounded-[4px]"
               >
@@ -186,10 +201,15 @@ export default function ApplicationPage({
                   <AiOutlineCheck />
                 </span>
               </button>
-              <div className={
-                 (formStatus=="Approved")||(formStatus=="Rejected")||(rejectStatus)?
-                 "invisible" 
-              : "inline-block h-[40px] min-h-[1em] w-0.5 border opacity-100 dark:opacity-50" }></div>
+              <div
+                className={
+                  formStatus == "Approved" ||
+                  formStatus == "Rejected" ||
+                  rejectStatus
+                    ? "invisible"
+                    : "inline-block h-[40px] min-h-[1em] w-0.5 border opacity-100 dark:opacity-50"
+                }
+              ></div>
               <button
                 onClick={() => setOpenStatusModel(true)}
                 className="border border-gray-500 text-blue-600 bg-gray-100 w-[140px] h-[40px] font-medium rounded-[4px]"
@@ -211,8 +231,29 @@ export default function ApplicationPage({
                   className="p-1 flex justify-center border border-[#D9D9D9] rounded-[4px]"
                   style={{ backgroundColor: "#EBEBEB" }}
                 >
-                  <h4 className="text-secondary font-medium">
-                    Status: Inspection completed
+                  <h4
+                    className={`font-medium ${
+                      formStatus.toLowerCase() === "in progress"
+                        ? "text-yellow-400"
+                        : formStatus.toLowerCase() === "resubmitted"
+                        ? "text-orange-400"
+                        : formStatus.toLowerCase() === "inspection scheduled"
+                        ? "text-blue-400"
+                        : formStatus.toLowerCase() === "application submitted"
+                        ? "text-green-400"
+                        : formStatus.toLowerCase() === "na"
+                        ? "text-red-400"
+                        : formStatus.toLowerCase() === "oga completed"
+                        ? "text-purple-400"
+                        : formStatus.toLowerCase() === "approved"
+                        ? "text-teal-400"
+                        : formStatus.toLowerCase() === "rejected"
+                        ? "text-pink-400"
+                        : "text-white"
+                    }`}
+                  >
+                    {" "}
+                    Status: {formStatus}
                   </h4>
                 </div>
               </Card>
@@ -242,7 +283,7 @@ export default function ApplicationPage({
       )}
       {/* {openCertificateModel && <IssueCertificateModal closeCertificateModal={setOpenCertificateModel}/>} */}
       {openStatusModel && (
-        <StatusLogModal  closeStatusModal={setOpenStatusModel} formId={formId} />
+        <StatusLogModal closeStatusModal={setOpenStatusModel} formId={formId} />
       )}
       {openIssueNocModel && (
         <IssueNocModal

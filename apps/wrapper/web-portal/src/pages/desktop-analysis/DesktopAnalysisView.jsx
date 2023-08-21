@@ -4,7 +4,7 @@ import { BsArrowLeft, BsArrowRight } from "react-icons/bs";
 import { FaAngleRight } from "react-icons/fa";
 import StatusLogModal from "../ground-analysis/StatusLogModal";
 import XMLParser from "react-xml-parser";
-import { getCookie } from "../../utils";
+import { getCookie, readableDate } from "../../utils";
 
 // import NocModal from "./NocModal";
 // import RejectNocModal from "./RejectNocModal";
@@ -14,7 +14,7 @@ import CommonModal from "./../../Modal";
 import ScheduleInspectionModal from "./ScheduleInspectionModal";
 import Sidebar from "../../components/Sidebar";
 
-import { getFormData, registerEvent } from "../../api";
+import { getFormData, registerEvent, getStatus } from "../../api";
 import ADMIN_ROUTE_MAP from "../../routes/adminRouteMap";
 import {
   getFormURI,
@@ -71,7 +71,7 @@ export default function DesktopAnalysisView() {
   const startingForm = formSpec.start;
   const [onFormSuccessData, setOnFormSuccessData] = useState(undefined);
   const [onFormFailureData, setOnFormFailureData] = useState(undefined);
-  const [formStatus , setFormStatus] = useState("")
+  const [formStatus, setFormStatus] = useState("");
   const [onSubmit, setOnSubmit] = useState(false);
   const [encodedFormSpec, setEncodedFormSpec] = useState(
     encodeURI(JSON.stringify(formSpec.formId))
@@ -98,9 +98,10 @@ export default function DesktopAnalysisView() {
       setSpinner(true);
       const res = await getFormData(postData);
       formData = res.data.form_submissions[0];
-  
+      const postDataEvents = { id: formId };
+      const events = await getStatus(postDataEvents);
+      setFormStatus(events?.events);
       setFormDataFromApi(res.data.form_submissions[0]);
-      // setFormStatus(res?.data?.)
       await setToLocalForage(
         `${userId}_${startingForm}_${new Date().toISOString().split("T")[0]}`,
         {
@@ -286,12 +287,12 @@ export default function DesktopAnalysisView() {
         <div className="flex flex-col gap-12">
           <div className="flex flex-row">
             <div className="flex grow gap-4 justify-end items-center">
-              <button 
-              className={`${
-                     (formDataFromApi?.form_status === "Inspection Scheduled")
-                        ? "invisible"
-                        : "flex flex-wrap items-center justify-center gap-2 border border-gray-500 bg-white text-gray-500 w-fit h-fit p-2 font-semibold rounded-[4px]"
-                    }`}
+              <button
+                className={`${
+                  formDataFromApi?.form_status === "Inspection Scheduled"
+                    ? "invisible"
+                    : "flex flex-wrap items-center justify-center gap-2 border border-gray-500 bg-white text-gray-500 w-fit h-fit p-2 font-semibold rounded-[4px]"
+                }`}
               >
                 <span>
                   <BsArrowLeft />
@@ -302,20 +303,23 @@ export default function DesktopAnalysisView() {
               <button
                 onClick={() => setOpenSheduleInspectionModel(true)}
                 className={`${
-                  (formDataFromApi?.form_status === "Inspection Scheduled")
-                     ? "invisible" 
-                     : "flex flex-wrap items-center justify-center gap-2 border border-gray-500 bg-white text-gray-500 w-fit h-fit p-2 font-semibold rounded-[4px]"
-                 }`}              >
+                  formDataFromApi?.form_status === "Inspection Scheduled"
+                    ? "invisible"
+                    : "flex flex-wrap items-center justify-center gap-2 border border-gray-500 bg-white text-gray-500 w-fit h-fit p-2 font-semibold rounded-[4px]"
+                }`}
+              >
                 Send for inspection
                 <span>
                   <BsArrowRight />
                 </span>
               </button>
-              <div  className={`${
-                     (formDataFromApi?.form_status === "Inspection Scheduled")
-                        ? "invisible"
-                        : "inline-block h-[40px] min-h-[1em] w-0.5 border opacity-100 dark:opacity-50"
-                    }`}/>
+              <div
+                className={`${
+                  formDataFromApi?.form_status === "Inspection Scheduled"
+                    ? "invisible"
+                    : "inline-block h-[40px] min-h-[1em] w-0.5 border opacity-100 dark:opacity-50"
+                }`}
+              />
               <button
                 onClick={() => setOpenStatusModel(true)}
                 className="border border-gray-500 text-blue-600 bg-gray-100 w-[140px] h-[40px] font-medium rounded-[4px]"
@@ -338,10 +342,40 @@ export default function DesktopAnalysisView() {
                   className="p-1 flex justify-center border border-[#D9D9D9] rounded-[4px]"
                   style={{ backgroundColor: "#EBEBEB" }}
                 >
-                  <h4 className="text-secondary font-medium">Status: New</h4>
+                  <h4
+                    className={`font-medium ${
+                      formDataFromApi?.form_status?.toLowerCase() ===
+                      "in progress"
+                        ? "text-yellow-400"
+                        : formDataFromApi?.form_status?.toLowerCase() ===
+                          "resubmitted"
+                        ? "text-orange-400"
+                        : formDataFromApi?.form_status?.toLowerCase() ===
+                          "inspection scheduled"
+                        ? "text-blue-400"
+                        : formDataFromApi?.form_status?.toLowerCase() ===
+                          "application submitted"
+                        ? "text-green-400"
+                        : formDataFromApi?.form_status?.toLowerCase() === "na"
+                        ? "text-red-400"
+                        : formDataFromApi?.form_status?.toLowerCase() ===
+                          "oga completed"
+                        ? "text-purple-400"
+                        : formDataFromApi?.form_status?.toLowerCase() ===
+                          "approved"
+                        ? "text-teal-400"
+                        : formDataFromApi?.form_status?.toLowerCase() ===
+                          "rejected"
+                        ? "text-pink-400"
+                        : "text-white"
+                    }`}
+                  >
+                    Status: {formDataFromApi?.form_status}
+                  </h4>
                 </div>
                 <div className="flex text-gray-500 justify-center">
-                  Your application is on-hold 23/03/2023
+                  This application was last updated on{" "}
+                  {readableDate(formStatus?.[0]?.created_date)}
                 </div>
               </Card>
               <Card moreClass="shadow-md">
