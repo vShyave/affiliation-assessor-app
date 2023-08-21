@@ -27,6 +27,7 @@ const MedicalAssessments = () => {
   const { state, setState } = useContext(StateContext);
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
+  const [isOnline, setIsOnline] = useState(navigator.onLine);
   const [role, setRole] = useState("");
   const [buttonText, setButtonText] = useState("Start Assessing");
   const [data, setData] = useState({
@@ -127,7 +128,10 @@ const MedicalAssessments = () => {
   }, []);
 
   return (
-    <CommonLayout back={ROUTE_MAP.root} pageTitle="Today's Inspection">
+    <CommonLayout back={ROUTE_MAP.root}       
+    logoutDisabled ={isOnline ? false : true}
+
+    pageTitle="Today's Inspection">
       <div
         className={`flex flex-col px-6 min-h-[calc(100vh-214px)] overflow-y-scroll pb-6 ${
           !data?.id ? "justify-center" : ""

@@ -80,8 +80,8 @@ function App() {
   return (
     <div className="App">
       {toast.toastOpen && (
-          <Toast toastMsg={toast.toastMsg} toastType={toast.toastType} />
-        )}
+        <Toast toastMsg={toast.toastMsg} toastType={toast.toastType} />
+      )}
       <BrowserRouter>
         <Routes>
           <Route path={APPLICANT_ROUTE_MAP.auth} element={<Authenticate />}>
@@ -168,11 +168,11 @@ function App() {
               </PrivateRoute>
             }
           />
-             <Route
-            path= {`${APPLICANT_ROUTE_MAP.dashboardModule.paymentResult}`}
+          <Route
+            path={`${APPLICANT_ROUTE_MAP.dashboardModule.paymentResult}`}
             element={
               <PrivateRoute>
-                <PaymentResult/>
+                <PaymentResult />
               </PrivateRoute>
             }
           />
