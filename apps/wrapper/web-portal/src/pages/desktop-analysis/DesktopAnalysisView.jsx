@@ -4,7 +4,7 @@ import { BsArrowLeft, BsArrowRight } from "react-icons/bs";
 import { FaAngleRight } from "react-icons/fa";
 import StatusLogModal from "../ground-analysis/StatusLogModal";
 import XMLParser from "react-xml-parser";
-import { getCookie } from "../../utils";
+import { getCookie, readableDate } from "../../utils";
 
 // import NocModal from "./NocModal";
 // import RejectNocModal from "./RejectNocModal";
@@ -14,7 +14,7 @@ import CommonModal from "./../../Modal";
 import ScheduleInspectionModal from "./ScheduleInspectionModal";
 import Sidebar from "../../components/Sidebar";
 
-import { getFormData, registerEvent } from "../../api";
+import { getFormData, registerEvent, getStatus } from "../../api";
 import ADMIN_ROUTE_MAP from "../../routes/adminRouteMap";
 import {
   getFormURI,
@@ -94,7 +94,9 @@ export default function DesktopAnalysisView() {
       setSpinner(true);
       const res = await getFormData(postData);
       formData = res.data.form_submissions[0];
-
+      const postDataEvents = { id: formId };
+      const events = await getStatus(postDataEvents);
+      setFormStatus(events?.events);
       setFormDataFromApi(res.data.form_submissions[0]);
       await setToLocalForage(
         `${userId}_${startingForm}_${new Date().toISOString().split("T")[0]}`,
@@ -335,10 +337,40 @@ export default function DesktopAnalysisView() {
                   className="p-1 flex justify-center border border-[#D9D9D9] rounded-[4px]"
                   style={{ backgroundColor: "#EBEBEB" }}
                 >
-                  <h4 className="text-secondary font-medium">Status: New</h4>
+                  <h4
+                    className={`font-medium ${
+                      formDataFromApi?.form_status?.toLowerCase() ===
+                      "in progress"
+                        ? "text-yellow-400"
+                        : formDataFromApi?.form_status?.toLowerCase() ===
+                          "resubmitted"
+                        ? "text-orange-400"
+                        : formDataFromApi?.form_status?.toLowerCase() ===
+                          "inspection scheduled"
+                        ? "text-blue-400"
+                        : formDataFromApi?.form_status?.toLowerCase() ===
+                          "application submitted"
+                        ? "text-green-400"
+                        : formDataFromApi?.form_status?.toLowerCase() === "na"
+                        ? "text-red-400"
+                        : formDataFromApi?.form_status?.toLowerCase() ===
+                          "oga completed"
+                        ? "text-purple-400"
+                        : formDataFromApi?.form_status?.toLowerCase() ===
+                          "approved"
+                        ? "text-teal-400"
+                        : formDataFromApi?.form_status?.toLowerCase() ===
+                          "rejected"
+                        ? "text-pink-400"
+                        : "text-white"
+                    }`}
+                  >
+                    Status: {formDataFromApi?.form_status}
+                  </h4>
                 </div>
                 <div className="flex text-gray-500 justify-center">
-                  Your application is on-hold 23/03/2023
+                  This application was last updated on{" "}
+                  {readableDate(formStatus?.[0]?.created_date)}
                 </div>
               </Card>
               <Card moreClass="shadow-md">
