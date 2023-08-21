@@ -89,10 +89,6 @@ export default function DesktopAnalysisView() {
       `${userId}_${formName}_${new Date().toISOString().split("T")[0]}`
     );
 
-    // if (data) {
-    //   formData = data;
-    // } else {
-
     const postData = { form_id: formId };
     try {
       setSpinner(true);
@@ -109,7 +105,6 @@ export default function DesktopAnalysisView() {
           imageUrls: { ...data?.imageUrls },
         }
       );
-      // }
 
       let formURI = await getPrefillXML(
         `${filePath}`,
@@ -131,7 +126,6 @@ export default function DesktopAnalysisView() {
       const { nextForm, formData, onSuccessData, onFailureData } = data;
       if (data?.state === "ON_FORM_SUCCESS_COMPLETED") {
         handleSubmit();
-        // setOnSubmit(true);
       }
 
       if (nextForm?.type === "form") {
@@ -255,6 +249,7 @@ export default function DesktopAnalysisView() {
     formId: formId,
     course_type: formDataFromApi?.course_type,
     course_level: formDataFromApi?.course_level,
+    round: formDataFromApi?.round,
   };
 
   useEffect(() => {
@@ -381,7 +376,7 @@ export default function DesktopAnalysisView() {
               <Card moreClass="shadow-md">
                 <iframe
                   title="form"
-                  src={`${ENKETO_URL}preview?formSpec=${encodeURI(
+                  src={`${ENKETO_URL}/preview?formSpec=${encodeURI(
                     JSON.stringify(formSpec)
                   )}&xform=${encodedFormURI}&userId=${userId}`}
                   style={{ minHeight: "100vh", width: "100%" }}

@@ -40,7 +40,8 @@ const API_URL = {
     updateForms: `${rest}updateForms`,
   },
   manageUsers: {
-    userList: `${rest}getAllUsers`,
+    getAllAssessors: `${rest}getAllAssessors`,
+    getAllRegulators: `${rest}getAllRegulators`,
     specificUser: `${rest}getSpecificUser`,
     filterUsers: `${rest}filterUsers`,
     setActivate: `${rest}setValid`,

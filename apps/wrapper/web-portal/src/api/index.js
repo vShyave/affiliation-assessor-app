@@ -174,12 +174,20 @@ export const updateForms = async (postData) => {
 };
 
 // Manage users API's...
-export const getAllUsers = async (postData) => {
+export const getAllAssessors = async (postData) => {
   const res = await adminCustomPost.post(
-    API_URL.manageUsers.userList,
+    API_URL.manageUsers.getAllAssessors,
     postData
   );
   return res;
+};
+
+export const getAllRegulators = async (postData) => {
+  const res = await adminCustomPost.post(
+    API_URL.manageUsers.getAllRegulators,
+    postData
+  );
+  return res
 };
 
 export const getUsersForScheduling = async (postData) => {
@@ -353,7 +361,7 @@ export const getScheduleDetails = async (postData) => {
     postData
   );
   return res;
-}
+};
 
 // delete users
 // export const deleteUsers = async (postData) => {

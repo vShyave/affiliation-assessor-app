@@ -36,14 +36,27 @@ export default function AdminCreateUser() {
     try {
       setSpinner(true);
       const res = await getSpecificUser({ userId });
-      setUser({
-        firstname:
-          res.data.assessors[0]["fname"] || res.data.assessors[0]["name"],
-        lastname: res.data.assessors[0]["lname"],
-        email: res.data.assessors[0]["email"],
-        phonenumber: res.data.assessors[0]["phonenumber"],
-        role: res.data.assessors[0]["role"],
-      });
+      if (res.data.assessors.length) {
+        setUser({
+          firstname:
+            res.data.assessors[0]["fname"] || res.data.assessors[0]["name"],
+          lastname: res.data.assessors[0]["lname"],
+          email: res.data.assessors[0]["email"],
+          phonenumber: res.data.assessors[0]["phonenumber"],
+          role: res.data.assessors[0]["role"],
+        });
+      }
+      if (res.data.regulator.length) {
+        setUser({
+          firstname:
+            res.data.regulator[0]["fname"] ||
+            res.data.regulator[0]["full_name"],
+          lastname: res.data.regulator[0]["lname"],
+          email: res.data.regulator[0]["email"],
+          phonenumber: res.data.regulator[0]["phonenumber"],
+          role: res.data.regulator[0]["role"],
+        });
+      }
     } catch (error) {
       console.log(error);
     } finally {
@@ -182,18 +195,20 @@ export default function AdminCreateUser() {
             phonenumber: user.phonenumber,
             fname: user.firstname,
             lname: user.lastname,
+            role: user.role,
           });
         }
-        if(user.role === "Desktop-Admin"){
+        if (user.role === "Desktop-Admin") {
           postDataHasura["regulators"].push({
             user_id: keycloakRes.data.succeedUser.filter(
               (user) => user.email === user.email
             )[0].userId,
             email: user.email,
-            full_name: user.full_name,
-            phonenumber: user.mobile_number,
-            fname: user.fname,
-            lname: user.lname,
+            full_name: user.firstname + " " + user.lastname,
+            phonenumber: user.phonenumber,
+            fname: user.firstname,
+            lname: user.lastname,
+            role: user.role,
           });
         }
 
@@ -244,9 +259,9 @@ export default function AdminCreateUser() {
               </span>
             </Link>
             <FaAngleRight className="text-gray-500 text-[16px]" />
-            <Link to={ADMIN_ROUTE_MAP.adminModule.manageUsers.home}>
+            {/* <Link to={ADMIN_ROUTE_MAP.adminModule.manageUsers.home}> */}
               <span className="text-gray-500">Create user</span>
-            </Link>
+            {/* </Link> */}
             {/* <FaAngleRight className="text-[16px]" />
             <span className="text-gray-500 uppercase">User details</span> */}
           </div>
@@ -344,20 +359,26 @@ export default function AdminCreateUser() {
                 </div>
                 <div className="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
                   <div className="sm:col-span-3 ">
-                    <Label htmlFor="role" text="Role" required></Label>
-                    <div className="mt-2">
-                      <Select
-                        name="role"
-                        id="role"
-                        label="Select here"
-                        defaultValue={user.role}
-                        onChange={(value) => handleChange("role",value)}
-                        // disabled={userId?true:false}
-                      >
-                        <Option value="Assessor">Assessor</Option>
-                        <Option value="Desktop-Admin">Desktop Admin</Option>
-                      </Select>
-                    </div>
+                    <Label
+                      required
+                      text="Role"
+                      htmlFor="role"
+                      moreClass="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-400"
+                    />
+
+                    <select
+                      required
+                      value={user.role}
+                      disabled={userId ? true : false}
+                      name="role"
+                      id="role"
+                      onChange={(e) => handleChange("role", e.target.value)}
+                      className="bg-white border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                    >
+                      <option value="">Select role</option>
+                      <option value="Assessor">Assessor</option>
+                      <option value="Desktop-Admin">Admin</option>
+                    </select>
                   </div>
                 </div>
               </div>

@@ -252,7 +252,7 @@ function BulkUploadUsersModal({ closeBulkUploadUsersModal }) {
             lname: item.values.lname,
           });
         }
-        if (item.values.role.includes("Regulator")) {
+        if (item.values.role.includes("Desktop-Admin")) {
           postDataHasura["regulators"].push({
             user_id: keycloakRes.data.succeedUser.filter(
               (user) => user.email === item.values.email
@@ -411,9 +411,6 @@ function BulkUploadUsersModal({ closeBulkUploadUsersModal }) {
                     id="schedule-bulk-assessment"
                     onClick={() => {
                       createUsers();
-                    }}
-                    otherProps={{
-                      disabled: true,
                     }}
                     moreClass="border text-white w-[120px]"
                     text="Create users"

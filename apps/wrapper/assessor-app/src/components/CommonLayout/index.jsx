@@ -9,7 +9,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { useNavigate } from "react-router-dom";
 import CommonModal from "../Modal";
-import isOnline from "is-online";
+// import isOnline from "is-online";
 import { logout } from "../../utils/index.js";
 import { useEffect } from "react";
 import { base64ToPdf } from "../../api";
@@ -26,29 +26,30 @@ const CommonLayout = (props) => {
 
   const handleFormDownload = async () => {
     try {
-      setIsLoading(true);
-      const res = await base64ToPdf(props.formUrl);
+      // setIsLoading(true);
+      console.log("props.formUrl - ", props.formUrl);
 
-      const linkSource = `data:application/pdf;base64,${res.data}`;
-      const downloadLink = document.createElement("a");
-      const fileName = "enketo_form.pdf";
-      downloadLink.href = linkSource;
-      downloadLink.download = fileName;
-      downloadLink.target = window.safari ? "" : "_blank";
-      downloadLink.click();
-      setIsLoading(false);
+      // var strWindowFeatures = "fullscreen=1,channelmode=1,status=1,resizable=1";
+      var win = window.open(props.formUrl, "_blank");
+
+      // const MutationObserver = window.MutationObserver || window.WebKitMutationObserver;
+      console.log("win.document - ", win);
+      setTimeout(() => {
+        win.print();
+        win.close();
+      }, 2000);
     } catch (error) {
       console.log(error);
     }
   };
 
-  useEffect(() => {
-    onlineInterval.current = setInterval(async () => {
-      let status = await isOnline();
-      setOnline(status);
-    }, 1000);
-    return () => clearInterval(onlineInterval.current);
-  }, []);
+  // useEffect(() => {
+  //   onlineInterval.current = setInterval(async () => {
+  //     let status = await isOnline();
+  //     setOnline(status);
+  //   }, 1000);
+  //   return () => clearInterval(onlineInterval.current);
+  // }, []);
 
   return (
     <>
@@ -141,7 +142,14 @@ const CommonLayout = (props) => {
         </div>
       </div>
       {previewModal && (
-        <CommonModal  moreStyles={{padding: "1rem", maxWidth: "95%", minWidth: "90%", maxHeight: "90%"}}>
+        <CommonModal
+          moreStyles={{
+            padding: "1rem",
+            maxWidth: "95%",
+            minWidth: "90%",
+            maxHeight: "90%",
+          }}
+        >
           <div className="flex flex-row w-full items-center cursor-pointer gap-4">
             <div className="flex flex-grow">Preview</div>
             <div className="flex flex-grow justify-end">
