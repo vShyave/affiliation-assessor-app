@@ -120,21 +120,9 @@ registerRoute(
   })
 );
 
-function customRouteMatchCallback({ url, request, event })  {
-  // Check whether the request URL matches a specific pattern
-  // For example, match requests to an API with a specific path
-  console.log(event)
-/*   let data;
-  self.addEventListener('fetch', (event) => {
-    if(event.request.url.endsWith('getTodaysInspections')){
-      return 
-      data = (event.request.url.endsWith('getTodaysInspections'))
-    }
-    return (event.request.url.endsWith('getTodaysInspections'))
-   // return url;
-  })
-return data */
-}
+
+
+
 
 
 self.addEventListener('fetch', (event) => {
@@ -143,13 +131,38 @@ self.addEventListener('fetch', (event) => {
   if (event.request.method ==='POST') {
     event.respondWith(handleNonGetRequests(event.request, event.request.url));
   } 
-  if (event.request.method ==='GET') {
-   console.log("GETGETGETGETGETGETGETGETGET")
-  } 
+
 }); 
+
+/* async function loadJS() {
+  let cacheName="enketowebformjs";
+  console.log("loadJSloadJSloadJSloadJS")
+  const cache = await caches.open(cacheName);
+const cacheKey = "enketowebformjs";
+
+await cache.put(cacheKey, ars);
+
+  
+} */
+
+self.addEventListener('install', event => {
+  event.waitUntil(
+    caches.open('my-cache').then(cache => {
+      return cache.addAll([
+        'enketo-webform.js', 
+        'theme-kobo.css',
+        'theme-kobo.print.css',
+        'OpenSans-Bold-webfont.woff',
+        'fontawesome-webfont.woff',
+        'OpenSans-Regular-webfont.woff'
+      ]);
+    })
+  );
+});
 
  async function handleNonGetRequests(request, url) {
   console.log(url)
+  //loadJS();
   let cacheName="other";
 
   if( url.includes('Inspections')){
