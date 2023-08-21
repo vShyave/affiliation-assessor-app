@@ -35,6 +35,7 @@ function IssueNocModal({
  const user_details = userDetails?.userRepresentation
   const hiddenFileInput = React.useRef(null);
   let selectedRound = "";
+
   if (selectRound == 1) {
     selectedRound = "noc";
   } else {
@@ -93,7 +94,7 @@ function IssueNocModal({
           toastMsg: "File uploaded successfully!",
           toastType: "success",
         }));
-        navigate(`${ADMIN_ROUTE_MAP.adminModule.onGroundInspection.nocIssued}`);
+        navigate(`${ADMIN_ROUTE_MAP.adminModule.onGroundInspection.nocIssued}/${selectRound}`);
       }
     } catch (error) {
       console.log("error - ", error);

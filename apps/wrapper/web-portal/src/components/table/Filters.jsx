@@ -347,7 +347,7 @@ export const DesktopAnalysisFilters = ({
           <Calendar value={state.submitted_on} onChange={handleDateSelect} />
         )}
       </div>
-      <div className="flex">
+      {/* <div className="flex">
         <Select
           name="review_status"
           id="review_status"
@@ -356,12 +356,12 @@ export const DesktopAnalysisFilters = ({
           onChange={(value) => handleChange("review_status", value)}
           className="bg-gray-50"
         >
-          {/* <Option value="">--Select Review Status--</Option> */}
+          <Option value="">--Select Review Status--</Option>
           <Option value="In Progress">In Progress</Option>
           <Option value="Reviewed">Reviewed</Option>
           <Option value="Rejected">Rejected</Option>
         </Select>
-      </div>
+      </div> */}
       <div>
         <button
           className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"

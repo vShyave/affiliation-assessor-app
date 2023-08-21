@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useNavigate, Link } from "react-router-dom";
+import { useNavigate, Link, useParams } from "react-router-dom";
 
 import { FaAngleRight } from "react-icons/fa";
 
@@ -11,6 +11,7 @@ import ADMIN_ROUTE_MAP from "../../routes/adminRouteMap";
 
 export default function NocIssued({ notification }) {
   const navigate = useNavigate();
+  let { round } = useParams();
 
   const goBack = () => {
     navigate(-1);
@@ -43,7 +44,10 @@ export default function NocIssued({ notification }) {
         <div className="rounded-full w-[60px] h-[60px] items-center flex mx-auto bg-gray-300">
           <FaThumbsUp className="text-green-700 w-full text-2xl" />
         </div>
-        <h2 className="text-xl font-semibold m-2">NOC has been issued</h2>
+        <h2 className="text-xl font-semibold m-2">
+          {(round === 1) ? "NOC has been issued" : "Certificate has been issued"}
+          
+          </h2>
         <div className="text-m">
           We will review your application and proceed with next steps.
         </div>
