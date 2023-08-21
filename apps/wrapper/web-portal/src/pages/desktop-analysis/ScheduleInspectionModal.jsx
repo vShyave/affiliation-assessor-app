@@ -34,7 +34,7 @@ function ScheduleInspectionModal({ closeSchedule, otherInfo }) {
   const [isLastStep, setIsLastStep] = React.useState(false);
   const [isFirstStep, setIsFirstStep] = React.useState(false);
   const { setSpinner, setToast } = useContext(ContextAPI);
-  const {formId} = useParams()
+  const { formId } = useParams();
 
   const handleNext = () => !isLastStep && setActiveStep((cur) => cur + 1);
   const handlePrev = () => !isFirstStep && setActiveStep((cur) => cur - 1);
@@ -134,7 +134,7 @@ function ScheduleInspectionModal({ closeSchedule, otherInfo }) {
           value: item.course_name,
           label: item.course_name,
           level: item.course_level,
-          formObj: item.formObject
+          formObj: item.formObject,
         }))
       );
     } catch (error) {
@@ -153,8 +153,8 @@ function ScheduleInspectionModal({ closeSchedule, otherInfo }) {
 
     let coursesObj = selectedFormList.map((obj) => {
       let courses = {};
-      courses.course_type = otherInfo?.course_applied;
-      courses.course_level = otherInfo.course_level;
+      courses.course_type = otherInfo?.course_type;
+      courses.course_level = otherInfo?.course_level;
       courses.formObject = obj.formObj;
       courses.institute_id = otherInfo?.instituteId;
       courses.course_name = obj.value;
@@ -162,21 +162,24 @@ function ScheduleInspectionModal({ closeSchedule, otherInfo }) {
       courses.round = otherInfo?.round;
       return courses;
     });
+
     const postData = {
       institute_course: [
         {
           institute_id: otherInfo?.instituteId,
           institute_type: JSON.stringify([
             {
-              courseType: otherInfo?.course_applied,
-              courseLevel: otherInfo.course_level,
+              courseType: otherInfo?.course_type,
+              courseLevel: otherInfo?.course_level,
             },
           ]),
         },
       ],
       courses: coursesObj,
     };
+
     console.log(postData);
+
     const formData = {
       assessment_schedule: [
         {
@@ -464,7 +467,7 @@ function ScheduleInspectionModal({ closeSchedule, otherInfo }) {
                           moreClass="text-[16px]"
                         ></Label>
 
-                        <div className="bg-gray-100  items-center flex gap-4 border border-gray-100 rounded-md">
+                        <div className="bg-gray-100 items-center flex gap-4 border border-gray-100 rounded-md">
                           <span className="font-semibold p-2">
                             {otherInfo?.course_type} - {otherInfo?.course_level}
                           </span>

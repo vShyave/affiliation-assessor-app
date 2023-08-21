@@ -3,10 +3,7 @@ import { Card, Button } from "./index";
 import { readableDate } from "../utils";
 
 const ApplicationCard = (props) => {
-  let formName = props.application.form_name.slice(
-    props.application.form_name.lastIndexOf("-") + 1
-  );
-  formName = formName.toUpperCase();
+  let formName = props?.application?.course?.course_name?.trim() || "NA";
 
   return (
     <Card moreClass="flex flex-col border-gray-100 m-3 gap-5 w-[300px] border-[1px] drop-shadow justify-between">
