@@ -71,6 +71,7 @@ export default function DesktopAnalysisView() {
   const startingForm = formSpec.start;
   const [onFormSuccessData, setOnFormSuccessData] = useState(undefined);
   const [onFormFailureData, setOnFormFailureData] = useState(undefined);
+  const [paymentStatus, setPaymentStatus] = useState("");
   const [formStatus, setFormStatus] = useState("");
   const [onSubmit, setOnSubmit] = useState(false);
   const [encodedFormSpec, setEncodedFormSpec] = useState(
@@ -94,6 +95,9 @@ export default function DesktopAnalysisView() {
       setSpinner(true);
       const res = await getFormData(postData);
       formData = res.data.form_submissions[0];
+      
+
+      setPaymentStatus(formData?.payment_status);
       const postDataEvents = { id: formId };
       const events = await getStatus(postDataEvents);
       setFormStatus(events?.events);
@@ -259,9 +263,6 @@ export default function DesktopAnalysisView() {
 
   return (
     <>
-      {/* Breadcrum */}
-      {/* <Breadcrumb data={breadCrumbData} /> */}
-
       <div className="h-[48px] bg-white flex justify-start drop-shadow-sm">
         <div className="container mx-auto flex px-3">
           <div className="flex flex-row font-bold gap-2 items-center">
@@ -298,7 +299,8 @@ export default function DesktopAnalysisView() {
               <button
                 onClick={() => setOpenSheduleInspectionModel(true)}
                 className={`${
-                  formDataFromApi?.form_status === "Inspection Scheduled"
+                  formDataFromApi?.form_status === "Inspection Scheduled" ||
+                  paymentStatus !== "Paid"
                     ? "invisible"
                     : "flex flex-wrap items-center justify-center gap-2 border border-gray-500 bg-white text-gray-500 w-fit h-fit p-2 font-semibold rounded-[4px]"
                 }`}
@@ -310,7 +312,7 @@ export default function DesktopAnalysisView() {
               </button>
               <div
                 className={`${
-                  formDataFromApi?.form_status === "Inspection Scheduled"
+                  formDataFromApi?.form_status === "Inspection Scheduled" 
                     ? "invisible"
                     : "inline-block h-[40px] min-h-[1em] w-0.5 border opacity-100 dark:opacity-50"
                 }`}
