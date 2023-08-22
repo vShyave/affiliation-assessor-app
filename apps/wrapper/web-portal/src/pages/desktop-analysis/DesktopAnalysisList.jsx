@@ -21,6 +21,7 @@ import {
   getLocalTimeInISOFormat,
 } from "../../utils/common";
 import ADMIN_ROUTE_MAP from "../../routes/adminRouteMap";
+import PaymentModal from "./PaymentModal";
 
 const DesktopAnalysisList = () => {
   const navigation = useNavigate();
@@ -34,6 +35,7 @@ const DesktopAnalysisList = () => {
     limit: 10,
     totalCount: 0,
   });
+  const [paymentModal, setPaymentModal] = useState(false);
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [isFilterOpen, setIsFilterOpen] = useState(false);
   const { setSpinner } = useContext(ContextAPI);
@@ -217,6 +219,11 @@ const DesktopAnalysisList = () => {
     }
   };
 
+  const handleViewSchedule = (data) => {
+    // setScheduleUserData(data);
+    setPaymentModal(true);
+  };
+
   const filterApiCall = async (filters) => {
     let customFilters = {
       condition: {
@@ -270,7 +277,15 @@ const DesktopAnalysisList = () => {
       published_on: readableDate(e?.submitted_on),
       id: e.form_id,
       status: e?.form_status || "NA",
-      payment_status: e?.payment_status || "NA",
+      // payment_status: e?.payment_status || "NA",
+      payment_status: (
+        <div
+          className={`px-6 text-primary-600 pl-0`}
+          onClick={() => handleViewSchedule(e)}
+        >
+          {e?.payment_status}
+        </div>
+      ),
 
     };
     formsDataList.push(formsData);
@@ -475,6 +490,12 @@ const DesktopAnalysisList = () => {
           </div>
         </div>
       </div>
+      {paymentModal && (
+        <PaymentModal
+          closeViewSchedulesModal={setPaymentModal}
+          // scheduleUserData={scheduleUserData}
+        ></PaymentModal>
+      )}
     </>
   );
 };
