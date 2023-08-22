@@ -16,6 +16,7 @@ import {
   updateFormData,
   getSpecificDataFromForage,
   removeItemFromLocalForage,
+  removeAllFromLocalForage,
 } from "./../forms";
 
 import APPLICANT_ROUTE_MAP from "../routes/ApplicantRoute";
@@ -33,6 +34,9 @@ import {
 } from "../api/formApi";
 
 const ENKETO_URL = process.env.REACT_APP_ENKETO_URL;
+const GCP_URL =
+  process.env.REACT_APP_GCP_AFFILIATION_LINK ||
+  "https://storage.googleapis.com/dev-public-upsmf/affiliation/";
 
 const CreateForm = (props) => {
   let { formName, formId, applicantStatus } = useParams();
@@ -116,6 +120,7 @@ const CreateForm = (props) => {
 
     let fileGCPPath =
       process.env.REACT_APP_GCP_AFFILIATION_LINK + formName + ".xml";
+    console.log("fileGCPPath - ", fileGCPPath);
 
     let formURI = await getPrefillXML(
       `${fileGCPPath}`,
@@ -192,12 +197,8 @@ const CreateForm = (props) => {
       });
     }
 
-    // Delete the data from the Local Forage
-    const key = `${storedData?.assessor_user_id}_${formSpec.start}_${
-      new Date().toISOString().split("T")[0]
-    }`;
-
-    removeItemFromLocalForage(key);
+    // Delete the form and course details data from the Local Forage
+    removeAllFromLocalForage();
 
     setOnSubmit(false);
     setToast((prevState) => ({

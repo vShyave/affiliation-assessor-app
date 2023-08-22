@@ -17,7 +17,7 @@ import APPLICANT_ROUTE_MAP from "../routes/ApplicantRoute";
 const AllApplications = () => {
   const [loadingForms, setLoadingForms] = useState(false);
   const [value, setValue] = useState("");
-  const [isSearchOpen,setIsSearchOpen] = useState("false")
+  const [isSearchOpen, setIsSearchOpen] = useState("false");
   const [formData, setFormData] = useState({
     condition: {
       assignee: {
@@ -58,7 +58,7 @@ const AllApplications = () => {
         setAvailableForms(formsResponse?.data?.courses);
       }
     }
-  }
+  };
 
   const getAvailableForms = async () => {
     const formsResponse = await formService.getData(formData);
@@ -68,14 +68,14 @@ const AllApplications = () => {
     setLoadingForms(false);
   };
 
-  const applyFormHandler = async (formObj) => {
-    console.log("formObj - ", formObj);
-
-    await setToLocalForage("course_details", formObj);
-
-    let form_obj = JSON.parse(formObj.formObject);
-    form_obj = form_obj[0].name;
-    let file_name = form_obj.substr(0, form_obj.lastIndexOf("."));
+  const applyFormHandler = async (obj) => {
+    await setToLocalForage("course_details", obj);
+    let form_obj = obj?.formObject;
+    if (typeof form_obj === "string") {
+      form_obj = JSON.parse(form_obj);
+    }
+    let file_name = form_obj[0].name;
+    file_name = file_name.substr(0, file_name.lastIndexOf("."));
     navigate(`${APPLICANT_ROUTE_MAP.dashboardModule.createForm}/${file_name}`);
   };
 
@@ -189,7 +189,7 @@ const AllApplications = () => {
                   id="global_search_input"
                   value={value || ""}
                   onChange={(e) => {
-                  setValue(e.target.value);
+                    setValue(e.target.value);
                     handleSearch(e.target.value);
                   }}
                   type="search"

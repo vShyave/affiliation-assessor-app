@@ -156,10 +156,6 @@ export const getMedicalAssessments = (submittedDate) => {
               id
               types
             }
-            institute_specializations {
-              id
-              specializations
-            }
             institute_pocs {
               id
               name

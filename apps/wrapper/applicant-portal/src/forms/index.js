@@ -30,6 +30,10 @@ export const removeItemFromLocalForage = (key) => {
     localforage.removeItem(key);
 };
 
+export const removeAllFromLocalForage = (key) => {
+    localforage.clear();
+}
+
 export const setToLocalForage = async (key, value) => {
     const storedData = await getSpecificDataFromForage(key);
     if (storedData) {
