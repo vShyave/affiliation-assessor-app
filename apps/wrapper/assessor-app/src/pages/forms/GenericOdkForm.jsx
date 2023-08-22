@@ -64,8 +64,6 @@ const GenericOdkForm = (props) => {
   const { state } = useContext(StateContext);
 
   const getFormURI = (form, ofsd, prefillSpec) => {
-    const GCP_form_url = `${GCP_URL}${form}.xml`;
-    console.log("GCP_form_url - ", GCP_form_url);
     return encodeURIComponent(
       `${ENKETO_MANAGER_URL}/prefillXML?formUrl=${form}&onFormSuccessData=${encodeFunction(
         ofsd
@@ -153,41 +151,41 @@ const GenericOdkForm = (props) => {
     try {
       const { nextForm, formData, onSuccessData, onFailureData } = data;
       if (data?.state === "ON_FORM_SUCCESS_COMPLETED") {
-        // if (!previewFlag) {
-        //   handleRenderPreview();
-        // } else {
-        // For read-only forms, it will disable the Submit...
-        if (date) {
-          setErrorModal(true);
-          return;
+        if (!previewFlag) {
+          handleRenderPreview();
+        } else {
+          // For read-only forms, it will disable the Submit...
+          if (date) {
+            setErrorModal(true);
+            return;
+          }
+
+          const updatedFormData = await updateFormData(formSpec.start);
+          const storedData = await getSpecificDataFromForage("required_data");
+
+          const res = await saveFormSubmission({
+            schedule_id: scheduleId.current,
+            form_data: updatedFormData,
+            assessment_type: "assessor",
+            form_name: formSpec.start,
+            submission_status: saveFlag === "draft" ? false : true,
+            assessor_id: storedData?.assessor_user_id,
+            applicant_id: storedData?.institute_id,
+            submitted_on: new Date().toJSON().slice(0, 10),
+            applicant_form_id: getCookie("courses_data")[formName],
+            round: getCookie("parent_form_round"),
+            form_status: saveFlag === "draft" ? "" : "In Progress",
+          });
+
+          await getFormStatus();
+
+          // Delete the data from the Local Forage
+          const key = `${storedData?.assessor_user_id}_${formSpec.start}_${
+            new Date().toISOString().split("T")[0]
+          }`;
+          removeItemFromLocalForage(key);
+          setTimeout(() => navigate(`${ROUTE_MAP.thank_you}${formName}`), 2000);
         }
-
-        const updatedFormData = await updateFormData(formSpec.start);
-        const storedData = await getSpecificDataFromForage("required_data");
-
-        const res = await saveFormSubmission({
-          schedule_id: scheduleId.current,
-          form_data: updatedFormData,
-          assessment_type: "assessor",
-          form_name: formSpec.start,
-          submission_status: saveFlag === "draft" ? false : true,
-          assessor_id: storedData?.assessor_user_id,
-          applicant_id: storedData?.institute_id,
-          submitted_on: new Date().toJSON().slice(0, 10),
-          applicant_form_id: getCookie("courses_data")[formName],
-          round: getCookie("parent_form_round"),
-          form_status: saveFlag === "draft" ? "" : "In Progress",
-        });
-
-        await getFormStatus();
-
-        // Delete the data from the Local Forage
-        const key = `${storedData?.assessor_user_id}_${formSpec.start}_${
-          new Date().toISOString().split("T")[0]
-        }`;
-        removeItemFromLocalForage(key);
-        setTimeout(() => navigate(`${ROUTE_MAP.thank_you}${formName}`), 2000);
-        // }
       }
 
       if (nextForm?.type === "form") {
@@ -291,9 +289,9 @@ const GenericOdkForm = (props) => {
       setEncodedFormURI,
     });
 
-    // setTimeout(() => {
-    //   checkIframeLoaded();
-    // }, 2500);
+    setTimeout(() => {
+      checkIframeLoaded();
+    }, 2500);
 
     return () => {
       detachEventBinding();
