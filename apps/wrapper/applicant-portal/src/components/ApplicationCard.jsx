@@ -1,12 +1,53 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Card, Button } from "./index";
-import { readableDate } from "../utils";
+import { generate_uuidv4, getCookie, readableDate } from "../utils";
+import { applicantService } from "../services";
+import { useNavigate } from "react-router-dom";
 
 const ApplicationCard = (props) => {
-  let formName = props.application.form_name.slice(
-    props.application.form_name.lastIndexOf("-") + 1
+  let formName = props?.application.form_name.slice(
+    props?.application.form_name.lastIndexOf("-") + 1
   );
   formName = formName.toUpperCase();
+
+  const handlePayment = async () => {
+    const instituteDetails = getCookie("institutes");
+    const instituteId = instituteDetails?.[0]?.id;
+    const postData = {
+      endpoint: "https://eazypayuat.icicibank.com/EazyPG",
+      returnUrl: "https://payment.uphrh.in/api/v1/user/payment",
+      paymode: "9",
+      secret: "",
+      merchantId: "600547",
+      mandatoryFields: {
+        referenceNo: generate_uuidv4(),
+        submerchantId: "45",
+        transactionAmount: "10",
+        invoiceId: "x1",
+        invoiceDate: "x",
+        invoiceTime: "x",
+        merchantId: "x",
+        payerType: "Institute",
+        payerId: instituteId,
+        transactionId: "x",
+        transactionDate: "x",
+        transactionTime: "x",
+        transactionStatus: "x",
+        refundId: "x",
+        refundDate: "x",
+        refundTime: "x",
+        refundStatus: "x",
+      },
+      optionalFields: "",
+    };
+    try {
+      const paymentRes = await applicantService.initiatePayment(postData);
+      console.log(paymentRes);
+      await window.open(paymentRes?.data?.redirectUrl);
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   return (
     <Card moreClass="flex flex-col border-gray-100 m-3 gap-5 w-[300px] border-[1px] drop-shadow justify-between">
@@ -15,8 +56,7 @@ const ApplicationCard = (props) => {
         <div className="text-sm">
           Submitted on: {readableDate(props.application.submitted_on)}
         </div>
-        <div className="text-sm">
-          {" "}
+        <div className="flex flex-row gap-2 text-sm">
           <span
             className={`text-xs p-1 rounded-md ${
               props.application.form_status?.toLowerCase() === "in progress"
@@ -44,15 +84,53 @@ const ApplicationCard = (props) => {
           >
             Status: {props.application.form_status}
           </span>
+          <span
+            className={`text-xs p-1 rounded-md ${
+              props.application.payment_status?.toLowerCase() === "in progress"
+                ? "text-yellow-800"
+                : props.application.payment_status?.toLowerCase() === "resubmitted"
+                ? "text-indigo-700"
+                : props.application.payment_status?.toLowerCase() ===
+                  "inspection scheduled"
+                ? "text-blue-400"
+                : props.application.payment_status?.toLowerCase() ===
+                  "application submitted"
+                ? "text-green-400"
+                : props.application.payment_status?.toLowerCase() === "returned"
+                ? "text-red-400"
+                : props.application.payment_status?.toLowerCase() ===
+                  "oga completed"
+                ? "text-purple-400"
+                : props.application.payment_status?.toLowerCase() === "approved"
+                ? "text-teal-400"
+                : props.application.payment_status?.toLowerCase() === "rejected"
+                ? "text-pink-400"
+                : "text-black-500"
+            }`}
+            style={{ backgroundColor: "#eee" }}
+          >
+            Payment:{" "}
+            {props?.application?.payment_status !== null
+              ? props?.application?.payment_status
+              : "NA"}
+          </span>
         </div>
       </div>
 
-      <div className="flex">
+      <div className="flex flex-row gap-2">
         <Button
           moreClass="text-primary-500 font-bold uppercase border-gray-500 text-primary-400"
           style={{ backgroundColor: "#fff" }}
           text="View Application "
           onClick={props.onView ? () => props.onView(props.application) : null}
+        ></Button>
+        <Button
+          moreClass="w-fit text-white font-bold uppercase px-4"
+          text="Pay"
+          onClick={handlePayment}
+          otherProps={{
+            disabled: props?.application?.payment_status !== "Pending" 
+          }}
         ></Button>
       </div>
     </Card>
