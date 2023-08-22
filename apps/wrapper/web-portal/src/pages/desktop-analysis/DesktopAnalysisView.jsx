@@ -95,7 +95,6 @@ export default function DesktopAnalysisView() {
       setSpinner(true);
       const res = await getFormData(postData);
       formData = res.data.form_submissions[0];
-      
 
       setPaymentStatus(formData?.payment_status);
       const postDataEvents = { id: formId };
@@ -283,36 +282,40 @@ export default function DesktopAnalysisView() {
         <div className="flex flex-col gap-12">
           <div className="flex flex-row">
             <div className="flex grow gap-4 justify-end items-center">
-              <button
-                className={`${
-                  formDataFromApi?.form_status === "Inspection Scheduled"
-                    ? "invisible"
-                    : "flex flex-wrap items-center justify-center gap-2 border border-gray-500 bg-white text-gray-500 w-fit h-fit p-2 font-semibold rounded-[4px]"
-                }`}
-              >
+              <button className="flex flex-wrap items-center justify-center gap-2 border border-gray-500 bg-white text-gray-500 w-fit h-fit p-2 font-semibold rounded-[4px]">
                 <span>
                   <BsArrowLeft />
                 </span>
                 {}
-                Return to institute{" "}
+                Return to institute
               </button>
+              {paymentStatus?.toLowerCase() === "paid" &&
+                formDataFromApi?.form_status?.toLowerCase() ===
+                  "desktop approved" && (
+                  <button
+                    onClick={() => setOpenSheduleInspectionModel(true)}
+                    className="flex flex-wrap items-center justify-center gap-2 border border-gray-500 bg-white text-gray-500 w-fit h-fit p-2 font-semibold rounded-[4px]"
+                  >
+                    Send for inspection
+                    <span>
+                      <BsArrowRight />
+                    </span>
+                  </button>
+                )}
+
               <button
                 onClick={() => setOpenSheduleInspectionModel(true)}
-                className={`${
-                  formDataFromApi?.form_status === "Inspection Scheduled" ||
-                  paymentStatus !== "Paid"
-                    ? "invisible"
-                    : "flex flex-wrap items-center justify-center gap-2 border border-gray-500 bg-white text-gray-500 w-fit h-fit p-2 font-semibold rounded-[4px]"
-                }`}
+                className="flex flex-wrap items-center justify-center gap-2 border border-gray-500 bg-white text-gray-500 w-fit h-fit p-2 font-semibold rounded-[4px]"
               >
                 Send for inspection
                 <span>
                   <BsArrowRight />
                 </span>
               </button>
+
               <div
                 className={`${
-                  formDataFromApi?.form_status === "Inspection Scheduled" 
+                  formDataFromApi?.form_status === "Inspection Scheduled"
                     ? "invisible"
                     : "inline-block h-[40px] min-h-[1em] w-0.5 border opacity-100 dark:opacity-50"
                 }`}

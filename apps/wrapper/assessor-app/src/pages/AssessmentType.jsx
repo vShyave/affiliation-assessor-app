@@ -149,12 +149,36 @@ const AssessmentType = () => {
               obj.formObject = obj.formObject?.replace(/\\/g, "");
               obj.formObject = JSON.parse(obj.formObject);
               obj.formObject.forEach((eachObj) => {
-                if (formNames.includes(eachObj.path.trim())) {
-                  eachObj.status = "continue";
-                } else if (completedForms.includes(eachObj.path.trim())) {
-                  eachObj.status = "completed";
+                if (eachObj.path.includes("storage.googleapis")) {
+                  if (
+                    formNames.includes(
+                      eachObj.name.substring(
+                        0,
+                        eachObj.name.lastIndexOf(".xml")
+                      )
+                    )
+                  ) {
+                    eachObj.status = "continue";
+                  } else if (
+                    completedForms.includes(
+                      eachObj.name.substring(
+                        0,
+                        eachObj.name.lastIndexOf(".xml")
+                      )
+                    )
+                  ) {
+                    eachObj.status = "completed";
+                  } else {
+                    eachObj.status = "";
+                  }
                 } else {
-                  eachObj.status = "";
+                  if (formNames.includes(eachObj.path.trim())) {
+                    eachObj.status = "continue";
+                  } else if (completedForms.includes(eachObj.path.trim())) {
+                    eachObj.status = "completed";
+                  } else {
+                    eachObj.status = "";
+                  }
                 }
               });
             }
@@ -165,6 +189,7 @@ const AssessmentType = () => {
         courses_data.forEach((item) => {
           courses_parent_id[item.formObject[0].path] = item.applicant_form_id;
         });
+        console.log("courses_data - ", courses_data);
         setCookie("courses_data", courses_parent_id);
         setCookie("parent_form_round", courses_data?.[0]?.round);
         setActiveAccordionValue(courses_data?.[0]?.course_id);
@@ -181,7 +206,14 @@ const AssessmentType = () => {
 
   const handleNavigateToForms = (formObj) => {
     if (formObj?.status !== "completed" || !formObj?.status) {
-      navigate(`${ROUTE_MAP.otherforms_param_formName}${formObj.path?.trim()}`);
+      let form_name = "";
+      if (formObj.name.includes(".xml")) {
+        form_name = formObj.name.substring(0, formObj.name.lastIndexOf("."));
+      } else {
+        form_name = formObj.path?.trim();
+      }
+
+      navigate(`${ROUTE_MAP.otherforms_param_formName}${form_name}`);
     } else {
       setError("The form has already completed!");
       setTimeout(() => {
