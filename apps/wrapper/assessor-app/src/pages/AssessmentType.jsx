@@ -133,65 +133,50 @@ const AssessmentType = () => {
 
       let course_type = tabValue || activeTabValue;
       const postData = {
-        courseType: course_type.charAt(0).toUpperCase() + course_type.substr(1),
-        courseLevel:
-          activeButtonValue.charAt(0).toUpperCase() +
-          activeButtonValue.substr(1),
         institute_id: instituteId,
+        assessment_date: new Date().toJSON().slice(0, 10),
       };
 
       try {
         const response = await getCoursesForAccordions(postData);
-        let courses_data = response?.data?.courses;
-        if (courses_data.length) {
+        console.log("response - ", response);
+        let courses_data = response?.data?.institute_form;
+        console.log("courses_data - ", courses_data);
+        if (courses_data?.length) {
           courses_data = courses_data.map((obj) => {
-            if (obj?.formObject) {
-              obj.formObject = obj.formObject?.replace(/\\/g, "");
-              obj.formObject = JSON.parse(obj.formObject);
-              obj.formObject.forEach((eachObj) => {
-                if (eachObj.path.includes("storage.googleapis")) {
-                  if (
-                    formNames.includes(
-                      eachObj.name.substring(
-                        0,
-                        eachObj.name.lastIndexOf(".xml")
-                      )
-                    )
-                  ) {
-                    eachObj.status = "continue";
-                  } else if (
-                    completedForms.includes(
-                      eachObj.name.substring(
-                        0,
-                        eachObj.name.lastIndexOf(".xml")
-                      )
-                    )
-                  ) {
-                    eachObj.status = "completed";
-                  } else {
-                    eachObj.status = "";
-                  }
+            if (obj?.course?.formObject) {
+              obj.course.formObject = obj.course.formObject?.replace(/\\/g, "");
+              obj.course.formObject = JSON.parse(obj.course.formObject);
+              obj.course.formObject.forEach((eachObj) => {
+                if (
+                  formNames.includes(
+                    eachObj.name.substring(0, eachObj.name.lastIndexOf(".xml"))
+                  )
+                ) {
+                  eachObj.status = "continue";
+                } else if (
+                  completedForms.includes(
+                    eachObj.name.substring(0, eachObj.name.lastIndexOf(".xml"))
+                  )
+                ) {
+                  eachObj.status = "completed";
                 } else {
-                  if (formNames.includes(eachObj.path.trim())) {
-                    eachObj.status = "continue";
-                  } else if (completedForms.includes(eachObj.path.trim())) {
-                    eachObj.status = "completed";
-                  } else {
-                    eachObj.status = "";
-                  }
+                  eachObj.status = "";
                 }
               });
             }
+            console.log("obj - ", obj);
             return obj;
           });
         }
         let courses_parent_id = {};
         courses_data.forEach((item) => {
-          courses_parent_id[item.formObject[0].path] = item.applicant_form_id;
+          courses_parent_id[item.course.formObject[0].path] =
+            item.applicant_form_id;
         });
         console.log("courses_data - ", courses_data);
         setCookie("courses_data", courses_parent_id);
-        setCookie("parent_form_round", courses_data?.[0]?.round);
+        setCookie("parent_form_round", courses_data?.[0]?.course.round);
         setActiveAccordionValue(courses_data?.[0]?.course_id);
         setAccordionData(courses_data);
       } catch (error) {
@@ -289,8 +274,7 @@ const AssessmentType = () => {
                     }`}
                     onClick={() => handleChangeTabValue(value)}
                   >
-                    {" "}
-                    {label.toUpperCase()}{" "}
+                    {label?.toUpperCase()}
                   </Tab>
                 ))}
               </TabsHeader>
@@ -320,24 +304,22 @@ const AssessmentType = () => {
                         </div>
 
                         <div className="flex flex-col gap-4">
-                          {accordionData?.map((course) => {
+                          {accordionData?.map((obj) => {
                             return (
                               <Accordion
-                                open={
-                                  course?.course_id === activeAccordionValue
-                                }
-                                key={course?.course_id}
+                                open={obj?.course_id === activeAccordionValue}
+                                key={obj?.course_id}
                               >
                                 <AccordionHeader
-                                  onClick={() => handleOpen(course?.course_id)}
+                                  onClick={() => handleOpen(obj?.course_id)}
                                   className={`bg-primary p-4 font-semibold text-[14px]`}
                                   style={{ color: "#fff" }}
                                 >
-                                  {course.course_name}
+                                  {obj.course.course_name}
                                 </AccordionHeader>
                                 <AccordionBody className="border-b-[1px] border-l-[1px] border-r-[1px] border-primary px-4 bg-orange-500/10 py-0">
-                                  {course?.formObject?.length &&
-                                    course.formObject.map((form, idx) => {
+                                  {obj?.course?.formObject?.length &&
+                                    obj?.course.formObject.map((form, idx) => {
                                       return (
                                         <div
                                           key={idx}
