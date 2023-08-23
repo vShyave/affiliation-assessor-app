@@ -1,10 +1,12 @@
 import XMLParser from "react-xml-parser";
 import localforage from "localforage";
 import Cookies from "js-cookie";
+import * as serviceWorkerRegistration from '../serviceWorkerRegistration';
 
 import { getMedicalAssessments, getPrefillXML, getSubmissionXML, registerEvent } from "../api";
 
 const ENKETO_URL = process.env.REACT_APP_ENKETO_URL;
+const GCP_URL = process.env.REACT_APP_GCP_AFFILIATION_LINK;
 
 export const makeHasuraCalls = async (query) => {
   const userData = getCookie("userData");
@@ -53,9 +55,10 @@ export const updateFormData = async (startingForm) => {
   try {
     // TODO: check if formdata has to have value, check line 65 for getcookie connect with Sheela
     let data = await getFromLocalForage(`${startingForm}_${new Date().toISOString().split("T")[0]}`);
-      
+    
+    const GCP_form_url = `${GCP_URL}${startingForm}.xml`;
     let prefilledForm = await getSubmissionXML(
-      startingForm,
+      GCP_form_url,
       data.formData,
       data.imageUrls
     );
@@ -86,6 +89,7 @@ export const logout = () => {
   localforage.clear();
   window.location = "/";
   removeCookie("userData");
+  serviceWorkerRegistration.unregister();
 };
 
 export const removeCookie = (cname) => {
@@ -185,6 +189,7 @@ export const getFormData = async ({
   setEncodedFormURI,
   isPreview
 }) => {
+  const GCP_form_url = `${GCP_URL}${startingForm}.xml`;
   const res = await getMedicalAssessments(formSpec.date);
   let formData, prefillXMLArgs;
   if (res?.data?.assessment_schedule?.[0]) {
@@ -217,13 +222,13 @@ export const getFormData = async ({
       if (formData) {
         setEncodedFormSpec(encodeURI(JSON.stringify(formSpec.forms[formId])));
         prefillXMLArgs = [
-          `${isPreview?"readonly_"+startingForm:startingForm}`,
+          `${isPreview ? "readonly_"+startingForm : GCP_form_url}`,
           formSpec.forms[formId].onSuccess,
           formData.formData,
           formData.imageUrls,
         ];
       } else {
-        prefillXMLArgs = [`${isPreview?"readonly_"+startingForm:startingForm}`, formSpec.forms[formId].onSuccess];
+        prefillXMLArgs = [`${isPreview ? "readonly_"+startingForm : GCP_form_url}`, formSpec.forms[formId].onSuccess];
       }
     }
     let prefilledForm = await getPrefillXML(...prefillXMLArgs);

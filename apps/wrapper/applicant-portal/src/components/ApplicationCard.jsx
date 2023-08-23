@@ -5,10 +5,7 @@ import { applicantService } from "../services";
 import { useNavigate } from "react-router-dom";
 
 const ApplicationCard = (props) => {
-  let formName = props?.application.form_name.slice(
-    props?.application.form_name.lastIndexOf("-") + 1
-  );
-  formName = formName.toUpperCase();
+  let formName = props?.application?.course?.course_name?.trim() || "NA";
 
   const handlePayment = async () => {
     const instituteDetails = getCookie("institutes");

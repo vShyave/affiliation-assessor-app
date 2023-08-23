@@ -205,7 +205,7 @@ function App() {
                 ></Route>
 
                 <Route
-                  path={`${ADMIN_ROUTE_MAP.adminModule.onGroundInspection.nocIssued}`}
+                  path={`${ADMIN_ROUTE_MAP.adminModule.onGroundInspection.nocIssued}/:round`}
                   element={<NocIssued />}
                 ></Route>
               </Route>

@@ -1,12 +1,12 @@
 import axios from 'axios';
 import { registerEvent, getLocalTimeInISOFormat } from './index';
-import APPLICANT_ROUTE_MAP from '../routes/ApplicantRoute';
 import customPost from "./customPost";
 import { APIS } from '../constants';
 
 const ENKETO_MANAGER_URL = process.env.REACT_APP_ENKETO_MANAGER_URL;
 const HASURA_CLIENT_NAME = process.env.HASURA_CLIENT_NAME || 'hasura-console';
 const X_HASURA_ADMIN_SECRET_KEY = process.env.X_HASURA_ADMIN_SECRET_KEY || 'myadminsecretkey';
+const HASURA_URL = process.env.REACT_APP_HASURA_URL || 'https://hasura.upsmfac.org/v1/graphql';
 
 export const getPrefillXML = async (form, onFormSuccessData, prefillXML, imageUrls) => {
     try {
@@ -52,7 +52,7 @@ export const updateFormSubmission = async (data) => {
 }
 
 export const makeHasuraCalls = async (query) => {
-    return fetch(process.env.REACT_APP_HASURA_URL, {
+    return fetch(HASURA_URL, {
         method: "POST",
         headers: {
             Accept: "application/json",

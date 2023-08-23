@@ -564,15 +564,22 @@ const FormsOverview = () => {
     ]);
 
     const formData = {
-      course_type: formDataObject[0]?.course_type,
-      course_level: formDataObject[0]?.course_level,
-      course_name: formDataObject[0]?.title,
-      formObject: objectRes,
-      form_id: formDataObject?.[0]?.form_id,
-      application_type: formDataObject[0]?.application_type,
-      course_desc: formDataObject[0]?.form_desc,
-      assignee: formDataObject[0]?.assignee,
+      courses: [
+        {
+          course_type: formDataObject[0]?.course_type,
+          course_level: formDataObject[0]?.course_level,
+          course_name: formDataObject[0]?.title,
+          formObject: objectRes,
+          form_id: formDataObject?.[0]?.form_id,
+          application_type: formDataObject[0]?.application_type,
+          course_desc: formDataObject[0]?.form_desc,
+          assignee: formDataObject[0]?.assignee,
+          round: formDataObject[0]?.round,
+        },
+      ],
     };
+
+    console.log("formData - ", formData);
 
     try {
       setSpinner(true);
