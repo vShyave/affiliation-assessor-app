@@ -70,16 +70,15 @@ const API_URL = {
     getViewStatus: `${rest}getEvents`,
   },
   SIGNUP: {
-    CREATE_BULK_USER: "keycloak/createBulkUser",
-    CREATE_USER: "keycloak/user/create",
-    EDIT_USER: "keycloak/user/update",
+    CREATE_USER: "create",
+    EDIT_USER: "update",
   },
   LOGIN: {
-    GENERATE_OTP: "user/generateOtp",
-    USERLOGIN: "user/login",
+    GENERATE_OTP: "keycloak/otp",
+    USERLOGIN: "keycloak/login",
   },
   DELETE: {
-    DELETE_USER: "keycloak/user/delete",
+    DELETE_USER: "deactivate",
   },
   NOTIFICATION: {
     SEND_SMS: "",

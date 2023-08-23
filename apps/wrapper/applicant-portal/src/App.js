@@ -27,10 +27,12 @@ import NotificationsDetailedView from "./pages/notifications/NotificationsDetail
 import PaymentResult from "./pages/PaymentResult";
 
 function App() {
+  const { userRepresentation } = getCookie("userData");
+  const userId = userRepresentation?.id;
   const [toast, setToast] = useState({
     toastOpen: false,
     toastMsg: "",
-    toastType: "",
+    toastType: "success",
   });
 
   const messaging = getMessaging(fireBaseApp);
@@ -50,7 +52,7 @@ function App() {
               title: payload.data.title,
               body: payload.data.body,
               date: getLocalTimeInISOFormat(),
-              user_id: getCookie("regulator")[0]["user_id"],
+              user_id: userId,
               user_type: "Applicant",
               read_status: "Unread",
             },

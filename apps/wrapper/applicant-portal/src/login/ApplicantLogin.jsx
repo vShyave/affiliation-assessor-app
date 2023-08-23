@@ -121,17 +121,14 @@ const ApplicantLogin = () => {
       // );
 
       console.log(loginRes);
-      let roles = [];
-      loginRes.data.roleRepresentationList.forEach((item) =>
-        roles.push(item.name)
-      );
-      console.log(roles);
 
       const applicantDetailsRes = await applicantService.getApplicantDetails({
         user_id: loginRes.data.userRepresentation.id,
       });
 
-      if (roles.includes("Institute")) {
+      const role = loginRes?.data?.userRepresentation?.attributes?.Role?.[0];
+
+      if (role === "Institute") {
         setCookie("userData", loginRes.data);
         setCookie("institutes", applicantDetailsRes.data.institutes);
         navigate(APPLICANT_ROUTE_MAP.dashboardModule.my_applications);
