@@ -184,7 +184,6 @@ export const ManageFormsFilters = ({
           value={state.course_type}
           onChange={(value) => handleChange("course_type", value)}
           className="bg-gray-50"
-
         >
           {/* <Option value="">Course Type</Option> */}
           <Option value="nursing">Nursing</Option>
@@ -209,7 +208,7 @@ export const DesktopAnalysisFilters = ({
   setIsFilterOpen,
   paginationInfo,
   setPaginationInfo,
-  selectedRound
+  selectedRound,
 }) => {
   const [showCalendar, setShowCalendar] = useState(false);
   const [buttonText, setButtonText] = useState("Published On");
@@ -220,7 +219,7 @@ export const DesktopAnalysisFilters = ({
   });
   const [state, setState] = useState({
     assessment_type: null,
-    course_applied: null,
+    course_type: null,
     submitted_on: null,
     review_status: null,
   });
@@ -234,11 +233,11 @@ export const DesktopAnalysisFilters = ({
       delete filters?.condition[name];
       return;
     }
-    if (name === "course_applied") {
+    if (name === "course_type") {
       setFilters({
         condition: {
           ...filters.condition,
-          institute: {
+          course: {
             [name]: {
               _eq: value,
             },
@@ -284,7 +283,7 @@ export const DesktopAnalysisFilters = ({
   const handleClearFilter = () => {
     setState({
       assessment_type: null,
-      course_applied: null,
+      course_type: null,
       submitted_on: null,
       review_status: null,
     });
@@ -302,7 +301,7 @@ export const DesktopAnalysisFilters = ({
 
   useEffect(() => {
     filterApiCall(filters);
-  }, [filters, paginationInfo.offsetNo, paginationInfo.limit,selectedRound]);
+  }, [filters, paginationInfo.offsetNo, paginationInfo.limit, selectedRound]);
 
   return (
     <div className="flex flex-grow text-gray-700 dark:text-gray-400 gap-8">
@@ -322,11 +321,11 @@ export const DesktopAnalysisFilters = ({
       </div>
       <div className="flex">
         <Select
-          name="course_applied"
-          id="course_applied"
-          label="Course Name"
-          value={state.course_applied}
-          onChange={(value) => handleChange("course_applied", value)}
+          name="course_type"
+          id="course_type"
+          label="Course Type"
+          value={state.course_type}
+          onChange={(value) => handleChange("course_type", value)}
           className="bg-gray-50"
         >
           {/* <Option value="">Course Name</Option> */}
@@ -380,7 +379,7 @@ export const OnGroundInspectionFilters = ({
   setIsFilterOpen,
   paginationInfo,
   setPaginationInfo,
-  selectedRound
+  selectedRound,
 }) => {
   const [showCalendar, setShowCalendar] = useState(false);
   const [buttonText, setButtonText] = useState("Published On");
@@ -443,7 +442,7 @@ export const OnGroundInspectionFilters = ({
 
   useEffect(() => {
     filterApiCall(filters);
-  }, [filters, paginationInfo.offsetNo, paginationInfo.limit,selectedRound]);
+  }, [filters, paginationInfo.offsetNo, paginationInfo.limit, selectedRound]);
 
   return (
     <div className="flex flex-grow text-gray-700 dark:text-gray-400 gap-8">

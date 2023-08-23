@@ -49,7 +49,7 @@ const DesktopAnalysisList = () => {
       accessor: "application_type",
     },
     {
-      Header: "Course name",
+      Header: "Course Type",
       accessor: "course_name",
     },
     {
@@ -79,7 +79,7 @@ const DesktopAnalysisList = () => {
       accessor: "application_type",
     },
     {
-      Header: "Course name",
+      Header: "Course Type",
       accessor: "course_name",
     },
     {
@@ -259,19 +259,16 @@ const DesktopAnalysisList = () => {
 
   formsList?.forEach((e) => {
     var formsData = {
-      form_title: getFieldName(e?.form_name),
+      form_title: e?.course?.course_name || "NA",
       file_name: e?.form_name,
       application_type:
         e?.assessment_type?.charAt(0).toUpperCase() +
         e?.assessment_type?.substring(1).toLowerCase(),
-      course_name:
-        e?.institute?.course_applied?.charAt(0).toUpperCase() +
-          e?.institute?.course_applied?.substring(1).toLowerCase() || "NA",
+      course_name: e?.course_type || "NA",
       published_on: readableDate(e?.submitted_on),
       id: e.form_id,
       status: e?.form_status || "NA",
       payment_status: e?.payment_status || "NA",
-
     };
     formsDataList.push(formsData);
 
