@@ -18,7 +18,7 @@ import {
   getSpecificUser,
 } from "./../../api";
 import { userService } from "../../api/userService";
-import { removeCookie, setCookie } from "../../utils";
+import { getCookie, removeCookie, setCookie } from "../../utils";
 
 export default function AdminCreateUser() {
   let { userId } = useParams();
@@ -111,10 +111,25 @@ export default function AdminCreateUser() {
       try {
         setSpinner(true);
         let postDataKeyCloak = {
-          username: user.email,
-          firstName: user.firstname,
-          lastName: user.lastname,
-          roleNames: [user.role, "default-roles-ndear"],
+          userName: getCookie("regulator")[0]["user_id"],
+          request: {
+            firstName: user.firstname,
+            lastName: user.lastname,
+            email: user.email,
+            username: user.email,
+            enabled: true,
+            emailVerified: false,
+            credentials: [
+              {
+                type: "password",
+                value: `${user.phonenumber}`,
+                temporary: "false",
+              },
+            ],
+            attributes: {
+              Role: user.role,
+            },
+          },
         };
         //keycloak edit user
         const singleEditKeycloak = await editUserKeycloak(postDataKeyCloak);
@@ -155,7 +170,7 @@ export default function AdminCreateUser() {
       }
     } else {
       // for create user
-      let postDataKeyCloak = [];
+      let postDataKeyCloak = {};
 
       let postDataHasura = {
         assessors: [],
@@ -164,16 +179,26 @@ export default function AdminCreateUser() {
 
       try {
         setSpinner(true);
-        postDataKeyCloak = [
-          {
+        postDataKeyCloak = {
+          request: {
             firstName: user.firstname,
             lastName: user.lastname,
             email: user.email,
             username: user.email,
-            password: "rkr",
-            roleName: user.role,
+            enabled: true,
+            emailVerified: false,
+            credentials: [
+              {
+                type: "password",
+                value: `${user.phonenumber}`,
+                temporary: "false",
+              },
+            ],
+            attributes: {
+              Role: user.role,
+            },
           },
-        ];
+        };
 
         //keycloak API call
         const keycloakRes = await createBulkUsersKeyCloak(postDataKeyCloak);
@@ -260,7 +285,7 @@ export default function AdminCreateUser() {
             </Link>
             <FaAngleRight className="text-gray-500 text-[16px]" />
             {/* <Link to={ADMIN_ROUTE_MAP.adminModule.manageUsers.home}> */}
-              <span className="text-gray-500">Create user</span>
+            <span className="text-gray-500">Create user</span>
             {/* </Link> */}
             {/* <FaAngleRight className="text-[16px]" />
             <span className="text-gray-500 uppercase">User details</span> */}

@@ -34,15 +34,27 @@ export default function SelfRegistration() {
       email,
       mobilePhone,
       district,
-      address
+      address,
     } = data;
     let userDetails = {
-      firstName,
-      lastName,
-      email,
-      username: email,
-      password: "rkr",
-      roleName: applicantType,
+      request: {
+        firstName,
+        lastName,
+        email,
+        username: email,
+        enabled: true,
+        emailVerified: false,
+        credentials: [
+          {
+            type: "password",
+            value: `${mobilePhone}`,
+            temporary: "false",
+          },
+        ],
+        attributes: {
+          Role: applicantType,
+        },
+      },
     };
     const instituteDetails = {
       instituteName: applicantName,
@@ -84,7 +96,7 @@ export default function SelfRegistration() {
       );
       console.log(addInstituteRes);
 
-      institutePocDetils.user_id = keyCloakSignupRes.data.userId;
+      institutePocDetils.user_id = keyCloakSignupRes.data;
       institutePocDetils["institute_id"] =
         addInstituteRes.data.insert_institutes_one.id;
       const addInstitutePocRes = await applicantService.addInstitutePoc(
@@ -369,11 +381,7 @@ export default function SelfRegistration() {
                     </div>
                   </div>
                   <div className="sm:col-span-3">
-                    <Label
-                      htmlFor="address"
-                      text="Address"
-                      required
-                    ></Label>
+                    <Label htmlFor="address" text="Address" required></Label>
                     <div className="mt-2">
                       <input
                         type="text"

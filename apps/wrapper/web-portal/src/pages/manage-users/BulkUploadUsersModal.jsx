@@ -197,14 +197,7 @@ function BulkUploadUsersModal({ closeBulkUploadUsersModal }) {
 
   const createUsers = async () => {
     let errorFlag = false;
-    const postDataKeyCloak = selectedRows.map((item) => ({
-      firstName: item.values.fname,
-      lastName: item.values.lname,
-      email: item.values.email,
-      username: item.values.email,
-      password: "rkr",
-      roleName: item.values.role,
-    }));
+    let postDataKeyCloak = {};
 
     let postDataHasura = {
       assessors: [],
@@ -220,56 +213,78 @@ function BulkUploadUsersModal({ closeBulkUploadUsersModal }) {
         client_secret: "edd0e83d-56b9-4c01-8bf8-bad1870a084a",
       };
       //Access Token API call
-      const accessTokenResponse = await userService.getAccessToken(
-        accessTokenObj
-      );
-      if (accessTokenResponse.status !== 200) {
-        errorFlag = true;
-      }
+      // const accessTokenResponse = await userService.getAccessToken(
+      //   accessTokenObj
+      // );
+      // if (accessTokenResponse.status !== 200) {
+      //   errorFlag = true;
+      // }
+      // setCookie(
+      //   "access_token",
+      //   "Bearer " + accessTokenResponse?.data?.access_token
+      // );
       setCookie(
         "access_token",
-        "Bearer " + accessTokenResponse?.data?.access_token
+        "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJSR3RkMkZzeG1EMnJER3I4dkJHZ0N6MVhyalhZUzBSSyJ9.kMLn6177rvY53i0RAN3SPD5m3ctwaLb32pMYQ65nBdA"
       );
 
       //keycloak API call
-      const keycloakRes = await createBulkUsersKeyCloak(postDataKeyCloak);
-      if (keycloakRes?.data?.failedUser.length) {
-        errorFlag = true;
-      }
-
-      //Hasura API call
-      selectedRows.forEach((item) => {
-        if (item.values.role.includes("Assessor")) {
+      selectedRows.map(async (item) => {
+        postDataKeyCloak = {
+          request: {
+            firstName: item.values.fname,
+            lastName: item.values.lname,
+            email: item.values.email,
+            username: item.values.email,
+            enabled: true,
+            emailVerified: false,
+            credentials: [
+              {
+                type: "password",
+                value: `${item.values.mobile_number}`,
+                temporary: "false",
+              },
+            ],
+            attributes: {
+              Role: item.values.role,
+            },
+          },
+        };
+        
+        const keycloakRes = await createBulkUsersKeyCloak(postDataKeyCloak);
+        
+        if (item.values.role === "Assessor") {
           postDataHasura["assessors"].push({
             code: `${Math.floor(1000 + Math.random() * 9000)}`,
-            user_id: keycloakRes.data.succeedUser.filter(
-              (user) => user.email === item.values.email
-            )[0].userId,
+            user_id: keycloakRes.data,
             email: item.values.email,
             name: item.values.full_name,
             phonenumber: item.values.mobile_number,
             fname: item.values.fname,
             lname: item.values.lname,
+            role: item.values.role
           });
         }
-        if (item.values.role.includes("Desktop-Admin")) {
+        if (item.values.role === "Desktop-Admin") {
           postDataHasura["regulators"].push({
-            user_id: keycloakRes.data.succeedUser.filter(
-              (user) => user.email === item.values.email
-            )[0].userId,
+            user_id: keycloakRes.data,
             email: item.values.email,
             full_name: item.values.full_name,
             phonenumber: item.values.mobile_number,
             fname: item.values.fname,
             lname: item.values.lname,
+            role: item.values.role
           });
         }
       });
-
-      const hasuraRes = await createBulkUserHasura(postDataHasura);
-      if (hasuraRes.status !== 200) {
-        errorFlag = true;
-      }
+      setTimeout(async () => {
+        console.log(postDataHasura);
+        //Hasura API call
+        const hasuraRes = await createBulkUserHasura(postDataHasura);
+        if (hasuraRes.status !== 200) {
+          errorFlag = true;
+        }
+      }, 2000);
 
       if (!errorFlag) {
         setToast((prevState) => ({
@@ -316,7 +331,7 @@ function BulkUploadUsersModal({ closeBulkUploadUsersModal }) {
     } else {
       document.getElementById("schedule-bulk-assessment").disabled = true;
     }
-    console.log(selectedRows);
+    // console.log(selectedRows);
   };
 
   return (
@@ -328,7 +343,7 @@ function BulkUploadUsersModal({ closeBulkUploadUsersModal }) {
               <h1>Bulk upload users</h1>
 
               <div className="flex flex-row m-auto">
-                {(tableUserList.length!==0 && isFileValid()) && (
+                {tableUserList.length !== 0 && isFileValid() && (
                   <Switch
                     id="show-with-errors"
                     label={<span className="text-sm">Show with errors</span>}

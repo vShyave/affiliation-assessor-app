@@ -10,15 +10,15 @@ export const APIS = {
     VIEW_FORM: `/rest/getFormData`,
   },
   SIGNUP: {
-    CREATE_USER: "keycloak/user/create",
+    CREATE_USER: "create",
   },
   EDITUSERS:{
-    EDIT_USER: "keycloak/user/update",
+    EDIT_USER: "update",
   },
 
   LOGIN: {
-    GENERATE_OTP: "user/generateOtp",
-    USERLOGIN: "user/login",
+    GENERATE_OTP: "keycloak/otp",
+    USERLOGIN: "keycloak/login",
   },
   APPLICANT: {
     ADD_INSTITUTE: "rest/addInstitute",
@@ -43,5 +43,8 @@ export const APIS = {
     getNotifications: `rest/getNotifications`,
     readNotification: `rest/readNotification`,
     viewNotification: `rest/viewNotification`
+  },
+  PAYMENT:{
+    GENERATE_LINK: `payment/generatelink`
   }
 };

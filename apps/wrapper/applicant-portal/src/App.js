@@ -27,10 +27,12 @@ import NotificationsDetailedView from "./pages/notifications/NotificationsDetail
 import PaymentResult from "./pages/PaymentResult";
 
 function App() {
+  const { userRepresentation } = getCookie("userData");
+  const userId = userRepresentation?.id;
   const [toast, setToast] = useState({
     toastOpen: false,
     toastMsg: "",
-    toastType: "",
+    toastType: "success",
   });
 
   const messaging = getMessaging(fireBaseApp);
@@ -50,7 +52,7 @@ function App() {
               title: payload.data.title,
               body: payload.data.body,
               date: getLocalTimeInISOFormat(),
-              user_id: getCookie("regulator")[0]["user_id"],
+              user_id: userId,
               user_type: "Applicant",
               read_status: "Unread",
             },
@@ -80,8 +82,8 @@ function App() {
   return (
     <div className="App">
       {toast.toastOpen && (
-          <Toast toastMsg={toast.toastMsg} toastType={toast.toastType} />
-        )}
+        <Toast toastMsg={toast.toastMsg} toastType={toast.toastType} />
+      )}
       <BrowserRouter>
         <Routes>
           <Route path={APPLICANT_ROUTE_MAP.auth} element={<Authenticate />}>
@@ -168,11 +170,11 @@ function App() {
               </PrivateRoute>
             }
           />
-             <Route
-            path= {`${APPLICANT_ROUTE_MAP.dashboardModule.paymentResult}`}
+          <Route
+            path={`${APPLICANT_ROUTE_MAP.dashboardModule.paymentResult}`}
             element={
               <PrivateRoute>
-                <PaymentResult/>
+                <PaymentResult />
               </PrivateRoute>
             }
           />
