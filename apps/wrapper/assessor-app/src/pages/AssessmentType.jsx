@@ -139,9 +139,7 @@ const AssessmentType = () => {
 
       try {
         const response = await getCoursesForAccordions(postData);
-        console.log("response - ", response);
         let courses_data = response?.data?.institute_form;
-        console.log("courses_data - ", courses_data);
         if (courses_data?.length) {
           courses_data = courses_data.map((obj) => {
             if (obj?.course?.formObject) {
@@ -165,7 +163,6 @@ const AssessmentType = () => {
                 }
               });
             }
-            console.log("obj - ", obj);
             return obj;
           });
         }
@@ -174,7 +171,6 @@ const AssessmentType = () => {
           courses_parent_id[item.course.formObject[0].path] =
             item.applicant_form_id;
         });
-        console.log("courses_data - ", courses_data);
         setCookie("courses_data", courses_parent_id);
         setCookie("parent_form_round", courses_data?.[0]?.course.round);
         setActiveAccordionValue(courses_data?.[0]?.course_id);
