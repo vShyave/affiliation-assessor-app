@@ -260,13 +260,11 @@ const DesktopAnalysisList = () => {
   formsList?.forEach((e) => {
     var formsData = {
       form_title: e?.course?.course_name || "NA",
-      //getFieldName(e?.form_name),
       file_name: e?.form_name,
       application_type:
         e?.assessment_type?.charAt(0).toUpperCase() +
         e?.assessment_type?.substring(1).toLowerCase(),
       course_name: e?.course_type || "NA",
-
       published_on: readableDate(e?.submitted_on),
       id: e.form_id,
       status: e?.form_status || "NA",
