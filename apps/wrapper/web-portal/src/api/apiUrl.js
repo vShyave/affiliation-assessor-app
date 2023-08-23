@@ -59,6 +59,7 @@ const API_URL = {
     filterDesktopAnalysis: `${rest}filterDesktopAnalysis`,
     updateFormSubmission: `${rest}updateFormSubmission`,
     addInstituteCourse: `${rest}addInstituteCourse`,
+    updatePaymentStatus: `${rest}updatePaymentStatus`
   },
   scheduleManagement: {
     getAssessmentSchedule: `${rest}getAssessmentSchedule`,

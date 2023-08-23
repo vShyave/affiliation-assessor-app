@@ -14,7 +14,13 @@ import CommonModal from "./../../Modal";
 import ScheduleInspectionModal from "./ScheduleInspectionModal";
 import Sidebar from "../../components/Sidebar";
 
-import { getFormData, registerEvent, getStatus } from "../../api";
+import {
+  getFormData,
+  registerEvent,
+  getStatus,
+  updateFormStatus,
+  updatePaymentStatus,
+} from "../../api";
 import ADMIN_ROUTE_MAP from "../../routes/adminRouteMap";
 import {
   getFormURI,
@@ -255,6 +261,28 @@ export default function DesktopAnalysisView() {
     round: formDataFromApi?.round,
   };
 
+  const desktopVerification = () => {
+    updatePaymentStatus({ form_id: formId, payment_status: "Pending" });
+    registerEvent({
+      created_date: getLocalTimeInISOFormat(),
+      entity_id: formId,
+      entity_type: "form",
+      event_name: "DA Completed",
+      remarks: `${
+        getCookie("regulator")[0]["full_name"]
+      } has completed the Desktop Analysis`,
+    });
+
+    updateFormStatus({
+      form_id: formId * 1,
+      form_status: "DA Completed",
+    });
+    setTimeout(
+      () => navigate(`${ADMIN_ROUTE_MAP.adminModule.desktopAnalysis.home}`),
+      1500
+    );
+  };
+
   useEffect(() => {
     fetchFormData();
     bindEventListener();
@@ -282,16 +310,19 @@ export default function DesktopAnalysisView() {
         <div className="flex flex-col gap-12">
           <div className="flex flex-row">
             <div className="flex grow gap-4 justify-end items-center">
-              <button className="flex flex-wrap items-center justify-center gap-2 border border-gray-500 bg-white text-gray-500 w-fit h-fit p-2 font-semibold rounded-[4px]">
-                <span>
-                  <BsArrowLeft />
-                </span>
-                {}
-                Return to institute
-              </button>
               {paymentStatus?.toLowerCase() === "paid" &&
                 formDataFromApi?.form_status?.toLowerCase() ===
-                  "desktop approved" && (
+                  "da completed" && (
+                  <button className="flex flex-wrap items-center justify-center gap-2 border border-gray-500 bg-white text-gray-500 w-fit h-fit p-2 font-semibold rounded-[4px]">
+                    <span>
+                      <BsArrowLeft />
+                    </span>
+                    Return to institute
+                  </button>
+                )}
+              {paymentStatus?.toLowerCase() === "paid" &&
+                formDataFromApi?.form_status?.toLowerCase() ===
+                  "da completed" && (
                   <button
                     onClick={() => setOpenSheduleInspectionModel(true)}
                     className="flex flex-wrap items-center justify-center gap-2 border border-gray-500 bg-white text-gray-500 w-fit h-fit p-2 font-semibold rounded-[4px]"
@@ -304,13 +335,10 @@ export default function DesktopAnalysisView() {
                 )}
 
               <button
-                onClick={() => setOpenSheduleInspectionModel(true)}
+                onClick={() => desktopVerification()}
                 className="flex flex-wrap items-center justify-center gap-2 border border-gray-500 bg-white text-gray-500 w-fit h-fit p-2 font-semibold rounded-[4px]"
               >
-                Send for inspection
-                <span>
-                  <BsArrowRight />
-                </span>
+                Initiate Payment
               </button>
 
               <div

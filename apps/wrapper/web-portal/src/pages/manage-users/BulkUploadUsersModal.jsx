@@ -250,31 +250,33 @@ function BulkUploadUsersModal({ closeBulkUploadUsersModal }) {
             },
           },
         };
-        
+
         const keycloakRes = await createBulkUsersKeyCloak(postDataKeyCloak);
-        
-        if (item.values.role === "Assessor") {
-          postDataHasura["assessors"].push({
-            code: `${Math.floor(1000 + Math.random() * 9000)}`,
-            user_id: keycloakRes.data,
-            email: item.values.email,
-            name: item.values.full_name,
-            phonenumber: item.values.mobile_number,
-            fname: item.values.fname,
-            lname: item.values.lname,
-            role: item.values.role
-          });
-        }
-        if (item.values.role === "Desktop-Admin") {
-          postDataHasura["regulators"].push({
-            user_id: keycloakRes.data,
-            email: item.values.email,
-            full_name: item.values.full_name,
-            phonenumber: item.values.mobile_number,
-            fname: item.values.fname,
-            lname: item.values.lname,
-            role: item.values.role
-          });
+        console.log("keycloak response - ", keycloakRes)
+        if (keycloakRes?.data) {
+          if (item.values.role === "Assessor") {
+            postDataHasura["assessors"].push({
+              code: `${Math.floor(1000 + Math.random() * 9000)}`,
+              user_id: keycloakRes.data,
+              email: item.values.email,
+              name: item.values.full_name,
+              phonenumber: item.values.mobile_number,
+              fname: item.values.fname,
+              lname: item.values.lname,
+              role: item.values.role,
+            });
+          }
+          if (item.values.role === "Desktop-Admin") {
+            postDataHasura["regulators"].push({
+              user_id: keycloakRes.data,
+              email: item.values.email,
+              full_name: item.values.full_name,
+              phonenumber: item.values.mobile_number,
+              fname: item.values.fname,
+              lname: item.values.lname,
+              role: item.values.role,
+            });
+          }
         }
       });
       setTimeout(async () => {
@@ -284,7 +286,7 @@ function BulkUploadUsersModal({ closeBulkUploadUsersModal }) {
         if (hasuraRes.status !== 200) {
           errorFlag = true;
         }
-      }, 2000);
+      }, 3000);
 
       if (!errorFlag) {
         setToast((prevState) => ({

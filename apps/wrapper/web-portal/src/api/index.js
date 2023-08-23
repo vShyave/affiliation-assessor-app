@@ -465,3 +465,8 @@ export const updateFormStatus = async (postData) => {
   const res = await adminCustomPost.put(API_URL.common.updateForm, postData);
   return res;
 };
+
+export const updatePaymentStatus = async(postData) =>{
+  const res = await adminCustomPost.put(API_URL.desktopAnalysis.updatePaymentStatus,postData);
+  return res;
+}

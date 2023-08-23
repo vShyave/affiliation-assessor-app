@@ -39,10 +39,8 @@ const ApplicationCard = (props) => {
     };
     try {
       const paymentRes = await applicantService.initiatePayment(postData);
-      console.log(paymentRes);
       await window.open(paymentRes?.data?.redirectUrl);
     } catch (error) {
-      console.log(error);
     }
   };
 
