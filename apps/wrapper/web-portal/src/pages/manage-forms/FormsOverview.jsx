@@ -74,7 +74,7 @@ const FormsOverview = () => {
       accessor: "round",
     },
     {
-      Header: "Course type",
+      Header: "Course Type",
       accessor: "course_type",
     },
     {
@@ -114,7 +114,7 @@ const FormsOverview = () => {
       accessor: "round",
     },
     {
-      Header: "Course Name",
+      Header: "Course Type",
       accessor: "course_type",
     },
     {
@@ -149,7 +149,7 @@ const FormsOverview = () => {
       accessor: "round",
     },
     {
-      Header: "Course Name",
+      Header: "Course Type",
       accessor: "course_type",
     },
     {
