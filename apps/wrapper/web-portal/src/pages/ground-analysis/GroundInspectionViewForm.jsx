@@ -19,6 +19,7 @@ import html2canvas from "html2canvas";
 import { ContextAPI } from "../../utils/ContextAPI";
 
 const ENKETO_URL = process.env.REACT_APP_ENKETO_URL;
+const GCP_URL = process.env.REACT_APP_GCP_AFFILIATION_LINK;
 
 export default function ApplicationPage({
   closeModal,
@@ -60,29 +61,19 @@ export default function ApplicationPage({
     },
   };
 
-  // const breadCrumbData = [
-  //   {
-  //     link: "ADMIN_ROUTE_MAP.adminModule.manageForms.home",
-  //     text: "Home",
-  //   },
-  //   {
-  //     link: "ADMIN_ROUTE_MAP.adminModule.onGroundInspection.home",
-  //     text: "All applications",
-  //   },
-  // ];
-
   const fetchFormData = async () => {
     const postData = { form_id: formId };
     try {
       setSpinner(true);
       const res = await getFormData(postData);
       const formData = res.data.form_submissions[0];
-      console.log(formData);
+      console.log("formData - ", formData);
       const statusOfForm = formData?.form_status;
       setFormStatus(statusOfForm);
+      const form_path = `${GCP_URL}${formData?.form_name}.xml`;
 
       let formURI = await getPrefillXML(
-        `${formData?.form_name}`,
+        `${form_path}`,
         "",
         formData.form_data,
         formData.imageUrls
@@ -93,33 +84,6 @@ export default function ApplicationPage({
     } finally {
       setSpinner(false);
     }
-  };
-  const handleGeneratePdf = () => {
-    // const doc = new jsPDF({
-    //   format: "a4",
-    //   unit: "px",
-    // });
-
-    // // Adding the fonts.
-    // doc.setFont("Inter-Regular", "normal");
-
-    html2canvas(
-      window.document
-        .querySelector("iframe")
-        .contentWindow.document.querySelector(".main")
-    ).then((canvas) => {
-      let base64image = canvas.toDataURL("image/png");
-      console.log(base64image);
-      let pdf = new jsPDF("p", "px", [1600, 1131]);
-      pdf.addImage(base64image, "PNG", 15, 15, 1110, 360);
-      pdf.save("enketo-form.pdf");
-    });
-
-    // doc.html(reportTemplateRef.current, {
-    //   async callback(doc) {
-    //     await doc.save("document");
-    //   },
-    // });
   };
 
   useEffect(() => {
@@ -150,11 +114,7 @@ export default function ApplicationPage({
       <div className={`container m-auto min-h-[calc(100vh-148px)] px-3 py-12`}>
         <div className="flex flex-col gap-12">
           <div className="flex flex-row">
-            <div className="flex grow justify-start items-center">
-              <h1 className="text-2xl font-bold uppercase">
-                {formName.split("_").join(" ")}
-              </h1>
-            </div>
+            <div className="flex grow justify-start items-center"></div>
             <div className="flex grow gap-4 justify-end items-center">
               <button
                 onClick={() => setRejectModel(true)}
