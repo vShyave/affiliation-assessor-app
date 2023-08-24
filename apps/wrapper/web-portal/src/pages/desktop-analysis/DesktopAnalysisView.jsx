@@ -29,7 +29,6 @@ import {
 } from "./../../api/formApi";
 import {
   updateFormData,
-  getSpecificDataFromForage,
   removeItemFromLocalForage,
   getFromLocalForage,
   setToLocalForage,
@@ -47,12 +46,9 @@ export default function DesktopAnalysisView() {
   const [encodedFormURI, setEncodedFormURI] = useState("");
   let { formName, formId } = useParams();
   const [formDataFromApi, setFormDataFromApi] = useState();
-
   const [openStatusModel, setOpenStatusModel] = useState(false);
+  const { setSpinner, setToast } = useContext(ContextAPI);
 
-  const { setSpinner } = useContext(ContextAPI);
-
-  const userId = "427d473d-d8ea-4bb3-b317-f230f1c9b2f7";
   const formSpec = {
     skipOnSuccessMessage: true,
     prefill: {},
@@ -85,7 +81,7 @@ export default function DesktopAnalysisView() {
   );
 
   const userDetails = getCookie("userData");
-  // console.log("userDetails - ", userDetails);
+  const userId = userDetails?.userRepresentation?.id;
 
   const fetchFormData = async () => {
     let formData = {};
@@ -135,7 +131,7 @@ export default function DesktopAnalysisView() {
       const { nextForm, formData, onSuccessData, onFailureData } = data;
       if (data?.state === "ON_FORM_SUCCESS_COMPLETED") {
         setSpinner(true);
-        // handleSubmit();
+        handleSubmit();
       }
 
       if (nextForm?.type === "form") {
@@ -159,7 +155,6 @@ export default function DesktopAnalysisView() {
 
   const handleSubmit = async () => {
     const updatedFormData = await updateFormData(formSpec.start, userId);
-    const storedData = await getSpecificDataFromForage("required_data");
 
     const res = await updateFormSubmission({
       form_id: formId,
@@ -183,35 +178,25 @@ export default function DesktopAnalysisView() {
       });
     }
 
-    setTimeout(
-      () => navigate(`${ADMIN_ROUTE_MAP.adminModule.desktopAnalysis.home}`),
-      1500
-    );
-
     // Delete the data from the Local Forage
-    const key = `${storedData?.assessor_user_id}_${formSpec.start}_${
+    const key = `${userId}_${formSpec.start}_${
       new Date().toISOString().split("T")[0]
     }`;
     removeItemFromLocalForage(key);
 
     // setOnSubmit(false);
-    // setToast((prevState) => ({
-    //   ...prevState,
-    //   toastOpen: true,
-    //   toastMsg: "Form Submitted Successfully!.",
-    //   toastType: "success",
-    // }));
+    setToast((prevState) => ({
+      ...prevState,
+      toastOpen: true,
+      toastMsg: "Remarks added successfully!",
+      toastType: "success",
+    }));
 
-    // setTimeout(
-    //   () =>
-    //     setToast((prevState) => ({
-    //       ...prevState,
-    //       toastOpen: false,
-    //       toastMsg: "",
-    //       toastType: "",
-    //     })),
-    //   1500
-    // );
+    setSpinner(false);
+    setTimeout(
+      () => navigate(`${ADMIN_ROUTE_MAP.adminModule.desktopAnalysis.home}`),
+      1500
+    );
   };
 
   const handleFormEvents = async (startingForm, afterFormSubmit, e) => {
@@ -278,6 +263,7 @@ export default function DesktopAnalysisView() {
       form_id: formId * 1,
       form_status: "DA Completed",
     });
+
     setTimeout(
       () => navigate(`${ADMIN_ROUTE_MAP.adminModule.desktopAnalysis.home}`),
       1500
