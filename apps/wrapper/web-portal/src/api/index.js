@@ -187,7 +187,7 @@ export const getAllRegulators = async (postData) => {
     API_URL.manageUsers.getAllRegulators,
     postData
   );
-  return res
+  return res;
 };
 
 export const getUsersForScheduling = async (postData) => {
@@ -319,12 +319,14 @@ export const deleteSchedule = async (postData) => {
 // Bulk create users keycloak
 export const createBulkUsersKeyCloak = async (postData) => {
   const res = await axios.post(
-    `${BASE_URL_KEYCLOAK}${API_URL.SIGNUP.CREATE_BULK_USER}`,
+    `${BASE_URL_KEYCLOAK}${API_URL.SIGNUP.CREATE_USER}`,
     postData,
     {
       headers: {
         "Content-Type": "application/json",
-        Authorization: getCookie("access_token"),
+        // "Authorization": getCookie("access_token")
+        Authorization:
+          "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJSR3RkMkZzeG1EMnJER3I4dkJHZ0N6MVhyalhZUzBSSyJ9.kMLn6177rvY53i0RAN3SPD5m3ctwaLb32pMYQ65nBdA",
       },
     }
   );
@@ -333,13 +335,15 @@ export const createBulkUsersKeyCloak = async (postData) => {
 
 // Edit user keycloak
 export const editUserKeycloak = async (postData) => {
-  const res = await axios.post(
+  const res = await axios.put(
     `${BASE_URL_KEYCLOAK}${API_URL.SIGNUP.EDIT_USER}`,
     postData,
     {
       headers: {
         "Content-Type": "application/json",
-        Authorization: getCookie("access_token"),
+        // "Authorization": getCookie("access_token")
+        Authorization:
+          "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJSR3RkMkZzeG1EMnJER3I4dkJHZ0N6MVhyalhZUzBSSyJ9.kMLn6177rvY53i0RAN3SPD5m3ctwaLb32pMYQ65nBdA",
       },
     }
   );
@@ -461,3 +465,8 @@ export const updateFormStatus = async (postData) => {
   const res = await adminCustomPost.put(API_URL.common.updateForm, postData);
   return res;
 };
+
+export const updatePaymentStatus = async(postData) =>{
+  const res = await adminCustomPost.put(API_URL.desktopAnalysis.updatePaymentStatus,postData);
+  return res;
+}
