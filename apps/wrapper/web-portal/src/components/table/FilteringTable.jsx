@@ -204,7 +204,7 @@ const FilteringTable = (props) => {
                     row.original.status?.toLowerCase() === "in progress"
                       ? "bg-yellow-400"
                       : row.original.status?.toLowerCase() === "resubmitted"
-                      ? "bg-lime-400"
+                      ? "bg-orange-400"
                       : row.original.status?.toLowerCase() ===
                         "inspection scheduled"
                       ? "bg-blue-400"
