@@ -179,9 +179,9 @@ export default function ApplicationPage({
             </div>
           </div>
           <div className="flex flex-row gap-4">
-            <div className="flex w-[30%]">
+            {/* <div className="flex w-[30%]">
               <Sidebar />
-            </div>
+            </div> */}
             <div className="flex w-full flex-col gap-4">
               <Card
                 moreClass="flex flex-col shadow-md border border-[#F5F5F5] gap-4"
