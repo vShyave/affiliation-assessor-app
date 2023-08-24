@@ -194,9 +194,7 @@ const FilteringTable = (props) => {
             ))}
           </thead>
 
-          <tbody
-           {...getTableBodyProps()}
-          >
+          <tbody {...getTableBodyProps()}>
             {page?.map((row, index) => {
               prepareRow(row);
               return (
@@ -206,7 +204,7 @@ const FilteringTable = (props) => {
                     row.original.status?.toLowerCase() === "in progress"
                       ? "bg-yellow-400"
                       : row.original.status?.toLowerCase() === "resubmitted"
-                      ? "bg-orange-400"
+                      ? "bg-lime-400"
                       : row.original.status?.toLowerCase() ===
                         "inspection scheduled"
                       ? "bg-blue-400"
@@ -245,7 +243,7 @@ const FilteringTable = (props) => {
       </div>
 
       {props.pagination && (
-        <div className="flex flex-row font-normal text-[16px] py-8 gap-8">
+        <div className="flex bg-blue-400 flex-row font-normal text-[16px] py-8 gap-8">
           <div className="flex flex-row flex-grow gap-12 items-center">
             <div className="font-bold">
               Total number of record(s): {totalCount}

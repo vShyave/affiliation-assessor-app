@@ -54,7 +54,7 @@ export default function OnGroundInspectionAnalysis() {
       accessor: "assisting_assessor",
     },
     {
-      Header: "Published on",
+      Header: "Submitted on",
       accessor: "published_on",
     },
     {
@@ -253,7 +253,7 @@ export default function OnGroundInspectionAnalysis() {
       <Nav />
       <div className={`container m-auto min-h-[calc(100vh-148px)] px-3 py-12`}>
         <div className="flex flex-col gap-8">
-          <div className="flex flex-col gap-4">
+          {/* <div className="flex flex-col gap-4">
             <div>
               <h1 className="text-2xl font-medium">Your activity</h1>
             </div>
@@ -272,11 +272,11 @@ export default function OnGroundInspectionAnalysis() {
                 </Card>
               ))}
             </div>
-          </div>
+          </div> */}
 
           <div className="flex flex-col gap-4">
             <div>
-              <h1 className="text-2xl font-medium">All applications</h1>
+              <h1 className="text-xl font-semibold">All Applications</h1>
             </div>
 
             <div className="grid grid-cols-1 gap-x-6 gap-y-6 sm:grid-cols-6">
