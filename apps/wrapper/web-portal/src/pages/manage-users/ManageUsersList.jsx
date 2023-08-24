@@ -79,6 +79,10 @@ export default function ManageUsersList({
       accessor: "full_name",
     },
     {
+      Header: "Code",
+      accessor: "code",
+    },
+    {
       Header: "Email",
       accessor: "email",
     },
@@ -219,6 +223,7 @@ export default function ManageUsersList({
           );
         }
       });
+      console.log("data", resUserData);
       setUserTableList(resUserData);
     } catch (error) {
       console.log("error - ", error);
@@ -341,6 +346,7 @@ export default function ManageUsersList({
           ? "Inactive"
           : "-",
       id: e.user_id,
+      code: e.code,
       schedule: (
         <div
           className={`px-6 text-primary-600 pl-0`}
