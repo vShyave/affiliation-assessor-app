@@ -27,8 +27,6 @@ import NotificationsDetailedView from "./pages/notifications/NotificationsDetail
 import PaymentResult from "./pages/PaymentResult";
 
 function App() {
-  const { userRepresentation } = getCookie("userData");
-  const userId = userRepresentation?.id;
   const [toast, setToast] = useState({
     toastOpen: false,
     toastMsg: "",
@@ -52,7 +50,7 @@ function App() {
               title: payload.data.title,
               body: payload.data.body,
               date: getLocalTimeInISOFormat(),
-              user_id: userId,
+              user_id: getCookie("userData")?.userRepresentation?.id,
               user_type: "Applicant",
               read_status: "Unread",
             },

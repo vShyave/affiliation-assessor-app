@@ -223,10 +223,7 @@ function BulkUploadUsersModal({ closeBulkUploadUsersModal }) {
       //   "access_token",
       //   "Bearer " + accessTokenResponse?.data?.access_token
       // );
-      setCookie(
-        "access_token",
-        "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJSR3RkMkZzeG1EMnJER3I4dkJHZ0N6MVhyalhZUzBSSyJ9.kMLn6177rvY53i0RAN3SPD5m3ctwaLb32pMYQ65nBdA"
-      );
+      setCookie("access_token", process.env.REACT_APP_AUTH_TOKEN);
 
       //keycloak API call
       selectedRows.map(async (item) => {
@@ -250,31 +247,33 @@ function BulkUploadUsersModal({ closeBulkUploadUsersModal }) {
             },
           },
         };
-        
+
         const keycloakRes = await createBulkUsersKeyCloak(postDataKeyCloak);
-        
-        if (item.values.role === "Assessor") {
-          postDataHasura["assessors"].push({
-            code: `${Math.floor(1000 + Math.random() * 9000)}`,
-            user_id: keycloakRes.data,
-            email: item.values.email,
-            name: item.values.full_name,
-            phonenumber: item.values.mobile_number,
-            fname: item.values.fname,
-            lname: item.values.lname,
-            role: item.values.role
-          });
-        }
-        if (item.values.role === "Desktop-Admin") {
-          postDataHasura["regulators"].push({
-            user_id: keycloakRes.data,
-            email: item.values.email,
-            full_name: item.values.full_name,
-            phonenumber: item.values.mobile_number,
-            fname: item.values.fname,
-            lname: item.values.lname,
-            role: item.values.role
-          });
+        console.log("keycloak response - ", keycloakRes);
+        if (keycloakRes?.data) {
+          if (item.values.role === "Assessor") {
+            postDataHasura["assessors"].push({
+              code: `${Math.floor(1000 + Math.random() * 9000)}`,
+              user_id: keycloakRes.data,
+              email: item.values.email,
+              name: item.values.full_name,
+              phonenumber: item.values.mobile_number,
+              fname: item.values.fname,
+              lname: item.values.lname,
+              role: item.values.role,
+            });
+          }
+          if (item.values.role === "Desktop-Admin") {
+            postDataHasura["regulators"].push({
+              user_id: keycloakRes.data,
+              email: item.values.email,
+              full_name: item.values.full_name,
+              phonenumber: item.values.mobile_number,
+              fname: item.values.fname,
+              lname: item.values.lname,
+              role: item.values.role,
+            });
+          }
         }
       });
       setTimeout(async () => {
@@ -284,7 +283,7 @@ function BulkUploadUsersModal({ closeBulkUploadUsersModal }) {
         if (hasuraRes.status !== 200) {
           errorFlag = true;
         }
-      }, 2000);
+      }, 3000);
 
       if (!errorFlag) {
         setToast((prevState) => ({

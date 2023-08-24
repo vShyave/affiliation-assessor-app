@@ -398,6 +398,19 @@ const DesktopAnalysisList = () => {
                   Rejected
                 </a>
               </li>
+              <li className="" onClick={() => handleSelectMenu("DA Completed")}>
+                <a
+                  href="#"
+                  className={`inline-block p-4 rounded-t-lg dark:text-blue-500 dark:border-blue-600 ${
+                    state.menu_selected === "DA Completed"
+                      ? "text-blue-600 border-b-2 border-blue-600"
+                      : ""
+                  }`}
+                  aria-current="page"
+                >
+                  DA Completed
+                </a>
+              </li>
             </ul>
 
             {/* table creation starts here */}
@@ -406,7 +419,7 @@ const DesktopAnalysisList = () => {
                 <FilteringTable
                   dataList={formsDataList}
                   navigateFunc={navigateToView}
-                  columns={NEWCOLUMNS}
+                  columns={COLUMNS}
                   pagination={true}
                   onRowSelect={() => {}}
                   filterApiCall={filterApiCall}
@@ -458,6 +471,23 @@ const DesktopAnalysisList = () => {
                   dataList={formsDataList}
                   navigateFunc={navigateToView}
                   columns={COLUMNS}
+                  pagination={true}
+                  onRowSelect={() => {}}
+                  filterApiCall={filterApiCall}
+                  showFilter={true}
+                  paginationInfo={paginationInfo}
+                  setPaginationInfo={setPaginationInfo}
+                  searchApiCall={searchApiCall}
+                  setIsSearchOpen={setIsSearchOpen}
+                  setIsFilterOpen={setIsFilterOpen}
+                  selectedRound={selectedRound}
+                />
+              )}
+              {state.menu_selected === "DA Completed" && (
+                <FilteringTable
+                  dataList={formsDataList}
+                  navigateFunc={navigateToView}
+                  columns={NEWCOLUMNS}
                   pagination={true}
                   onRowSelect={() => {}}
                   filterApiCall={filterApiCall}

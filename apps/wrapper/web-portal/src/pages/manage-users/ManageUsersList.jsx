@@ -675,10 +675,7 @@ export default function ManageUsersList({
       //   "access_token",
       //   "Bearer " + accessTokenResponse.data.access_token
       // );
-      setCookie(
-        "access_token",
-        "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJSR3RkMkZzeG1EMnJER3I4dkJHZ0N6MVhyalhZUzBSSyJ9.kMLn6177rvY53i0RAN3SPD5m3ctwaLb32pMYQ65nBdA"
-      );
+      setCookie("access_token", process.env.REACT_APP_AUTH_TOKEN);
 
       // const res = await userService.deleteUsers(postData);
 
