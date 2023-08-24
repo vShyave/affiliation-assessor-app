@@ -270,10 +270,47 @@ export default function DesktopAnalysisView() {
     );
   };
 
+  const checkIframeLoaded = () => {
+    if (window.location.host.includes("regulator.upsmfac")) {
+      const iframeElem = document.getElementById("enketo_DA_preview");
+      var iframeContent =
+        iframeElem?.contentDocument || iframeElem?.contentWindow.document;
+      if (
+        formDataFromApi &&
+        formDataFromApi?.form_status?.toLowerCase() !==
+          "application submitted" &&
+        formDataFromApi?.form_status?.toLowerCase() !== "resubmitted"
+      ) {
+        var section = iframeContent?.getElementsByClassName("or-group");
+        if (!section) return;
+        for (var i = 0; i < section?.length; i++) {
+          var inputElements = section[i].querySelectorAll("input");
+          inputElements.forEach((input) => {
+            input.disabled = true;
+          });
+        }
+
+        iframeContent.getElementById("submit-form").style.display = "none";
+        iframeContent.getElementById("save-draft").style.display = "none";
+      }
+
+      var draftButton = iframeContent.getElementById("save-draft");
+      draftButton?.addEventListener("click", function () {
+        alert("Hello world!");
+      });
+    }
+  };
+
   useEffect(() => {
     fetchFormData();
     bindEventListener();
   }, []);
+
+  useEffect(() => {
+    setTimeout(() => {
+      checkIframeLoaded();
+    }, 2500);
+  }, [formDataFromApi]);
 
   return (
     <>
@@ -395,6 +432,7 @@ export default function DesktopAnalysisView() {
               </Card>
               <Card moreClass="shadow-md">
                 <iframe
+                  id="enketo_DA_preview"
                   title="form"
                   src={`${ENKETO_URL}/preview?formSpec=${encodeURI(
                     JSON.stringify(formSpec)
