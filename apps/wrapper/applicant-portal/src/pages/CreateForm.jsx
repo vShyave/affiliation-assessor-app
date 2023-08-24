@@ -2,12 +2,7 @@ import React, { useEffect, useState, useRef } from "react";
 import { Link, useParams, useNavigate } from "react-router-dom";
 import XMLParser from "react-xml-parser";
 
-import {
-  FaAngleRight,
-  FaArrowLeft,
-  FaEye,
-  FaFileDownload,
-} from "react-icons/fa";
+import { FaAngleRight, FaArrowLeft, FaFileDownload } from "react-icons/fa";
 
 import {
   getCookie,
@@ -15,12 +10,11 @@ import {
   setToLocalForage,
   updateFormData,
   getSpecificDataFromForage,
-  removeItemFromLocalForage,
   removeAllFromLocalForage,
 } from "./../forms";
 
 import APPLICANT_ROUTE_MAP from "../routes/ApplicantRoute";
-import { Button, Card } from "../components";
+import { Card } from "../components";
 import CommonModal from "../Modal";
 import Toast from "../components/Toast";
 
@@ -28,7 +22,6 @@ import { getFormData, base64ToPdf, getLocalTimeInISOFormat } from "../api";
 import {
   getPrefillXML,
   saveFormSubmission,
-  getSubmissionXML,
   getFormURI,
   updateFormSubmission,
 } from "../api/formApi";
@@ -41,7 +34,6 @@ const GCP_URL =
 const CreateForm = (props) => {
   let { formName, formId, applicantStatus } = useParams();
   const [encodedFormURI, setEncodedFormURI] = useState("");
-  const scheduleId = useRef();
   const navigate = useNavigate();
   const [onFormSuccessData, setOnFormSuccessData] = useState(undefined);
   const [formDataNoc, setFormDataNoc] = useState({});
@@ -57,7 +49,6 @@ const CreateForm = (props) => {
     latitude: null,
     longitude: null,
   });
-  const [prefilledFormData, setPrefilledFormData] = useState();
   const [onSubmit, setOnSubmit] = useState(false);
 
   const { userRepresentation } = getCookie("userData");
@@ -113,14 +104,12 @@ const CreateForm = (props) => {
         const postData = { form_id: formId };
         const res = await getFormData(postData);
         formData = res.data.form_submissions[0];
-        console.log("formData - ", formData);
         setFormDataNoc(formData);
       }
     }
 
     let fileGCPPath =
       process.env.REACT_APP_GCP_AFFILIATION_LINK + formName + ".xml";
-    console.log("fileGCPPath - ", fileGCPPath);
 
     let formURI = await getPrefillXML(
       `${fileGCPPath}`,
@@ -161,7 +150,6 @@ const CreateForm = (props) => {
 
   const handleSubmit = async () => {
     const updatedFormData = await updateFormData(formSpec.start, userId);
-    const storedData = await getSpecificDataFromForage("required_data");
     const course_details = await getSpecificDataFromForage("course_details");
 
     setTimeout(() => {
@@ -253,10 +241,6 @@ const CreateForm = (props) => {
           `${userId}_${startingForm}_${new Date().toISOString().split("T")[0]}`
         );
 
-        // console.log(
-        //   "JSON.parse(e.data).formData - ",
-        //   JSON.parse(e.data).formData
-        // );
         await setToLocalForage(
           `${userId}_${startingForm}_${new Date().toISOString().split("T")[0]}`,
           {
@@ -302,19 +286,39 @@ const CreateForm = (props) => {
     }
   };
 
-  // const handlePrintPdf = () => {
-  //   const URL = `${ENKETO_URL}/preview?formSpec=${encodeURI(
-  //     JSON.stringify(formSpec)
-  //   )}&xform=${encodedFormURI}&userId=${userId}`;
+  const checkIframeLoaded = () => {
+    if (window.location.host.includes("applicant.upsmfac")) {
+      const iframeElem = document.getElementById("enketo_DA_preview");
+      var iframeContent =
+        iframeElem?.contentDocument || iframeElem?.contentWindow.document;
+      if (applicantStatus && applicantStatus?.toLowerCase() !== "returned") {
+        var section = iframeContent?.getElementsByClassName("or-group");
+        if (!section) return;
+        for (var i = 0; i < section?.length; i++) {
+          var inputElements = section[i].querySelectorAll("input");
+          inputElements.forEach((input) => {
+            input.disabled = true;
+          });
+        }
 
-  //   var strWindowFeatures =
-  //     "fullscreen=1, channelmode=1, status=1, resizable=1";
-  //   var win = window.open(URL, "_blank", strWindowFeatures);
-  // };
+        iframeContent.getElementById("submit-form").style.display = "none";
+        iframeContent.getElementById("save-draft").style.display = "none";
+      }
+
+      var draftButton = iframeContent.getElementById("save-draft");
+      draftButton?.addEventListener("click", function () {
+        alert("Hello world!");
+      });
+    }
+  };
 
   useEffect(() => {
     fetchFormData();
     bindEventListener();
+
+    setTimeout(() => {
+      checkIframeLoaded();
+    }, 2500);
   }, []);
 
   return (
@@ -368,11 +372,6 @@ const CreateForm = (props) => {
         <Card moreClass="shadow-md">
           <div className="flex flex-col gap-5">
             <div className="flex flex-grow gap-3 justify-end">
-              <button className="bg-primary-900 py-3 font-medium rounded-[4px] px-6 text-white flex flex-row items-center gap-3">
-                <FaEye />
-                <span>Preview</span>
-              </button>
-
               <button
                 className={`bg-primary-900 py-3 font-medium rounded-[4px] px-6 text-white flex flex-row items-center gap-3 ${
                   isDownloading ? "cursor-not-allowed" : ""
@@ -386,6 +385,7 @@ const CreateForm = (props) => {
             </div>
             <div className="flex">
               <iframe
+                id="enketo-applicant-form"
                 title="form"
                 src={`${ENKETO_URL}/preview?formSpec=${encodeURI(
                   JSON.stringify(formSpec)
