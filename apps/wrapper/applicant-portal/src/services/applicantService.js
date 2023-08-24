@@ -1,5 +1,6 @@
 import { APIS } from "../constants";
 import axiosService from "./axiosService";
+import paymentService from "./paymentService";
 
 const addInstitute = (instituteDetails) => {
   return axiosService.post(APIS.APPLICANT.ADD_INSTITUTE, instituteDetails);
@@ -44,11 +45,18 @@ const readNotification = async (postData) => {
   return res;
 };
 
+// payment service
+const initiatePayment = async (postData) => {
+  const res = await paymentService.post(APIS.PAYMENT.GENERATE_LINK, postData);
+  return res;
+};
+
 export const applicantService = {
   addInstitute,
   addInstitutePoc,
   getApplicantDetails,
   insertNotifications,
   getNotifications,
-  readNotification
+  readNotification,
+  initiatePayment,
 };

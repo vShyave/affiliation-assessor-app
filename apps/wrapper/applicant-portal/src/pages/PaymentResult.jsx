@@ -16,12 +16,12 @@ export default function PaymentResult() {
   const navigate = useNavigate();
 
   const goBack = () => {
-    navigate(-1);
+    navigate(APPLICANT_ROUTE_MAP.dashboardModule.my_applications);
   };
 
   return (
     <>
-    <Header/>
+      <Header />
       <div className="h-[48px] bg-white drop-shadow-sm">
         <div className="container mx-auto px-3 py-3">
           <div className="flex flex-row font-bold gap-2 items-center">
@@ -60,16 +60,10 @@ export default function PaymentResult() {
           </h2>
           <div className="flex flex-col gap-4">
             <h2 className="text-xl font-semibold text-black">
-              Transaction amount : 10000
+              Transaction amount : {params.get("transaction_amount")}
             </h2>
-            <h2
-              className={`${
-                params.get("resp") == "success"
-                  ? "text-xl font-semibold text-black"
-                  : "invisible"
-              }`}
-            >
-              Tranction Id : 1234
+            <h2 className={"text-xl font-semibold text-black"}>
+              Tranction Id : {params.get("transaction_id")}
             </h2>
             <div className="flex place-items-end mx-auto gap-4">
               <Button

@@ -56,7 +56,7 @@ export default function ManageUsersList({
   const [userTableList, setUserTableList] = useState([]);
 
   const [invalidUserRowFlag] = useState(false);
-  const [selectedEmail, setSelectedEmail] = useState([{ email: "" }]);
+  const [selectedUserId, setSelectedUserId] = useState([{ userId: "" }]);
   const [isOpen, setIsOpen] = useState(false);
   const [state, setState] = useState({
     menu_selected: "Assessor",
@@ -324,7 +324,7 @@ export default function ManageUsersList({
   };
 
   const handleUserDelete = (e) => {
-    setSelectedEmail(e.email);
+    setSelectedUserId(e.user_id);
     setDeleteUsersModel(true);
   };
 
@@ -414,7 +414,7 @@ export default function ManageUsersList({
       full_name: e.fname || e.lname ? e.fname + " " + e.lname : e.name,
       email: e.email?.toLowerCase(),
       mobile_number: e.phonenumber,
-      role: e.role || "Assessor",
+      role: e.role === "Desktop-Admin" ? "Admin" : "Admin",
       status:
         e.workingstatus === "Valid"
           ? "Active"
@@ -526,13 +526,24 @@ export default function ManageUsersList({
     try {
       setSpinner(true);
       const res = await searchUsers(pagination);
-      setPaginationInfo((prevState) => ({
-        ...prevState,
-        totalCount: res.data.assessors_aggregate.aggregate.totalCount,
-      }));
-      setUsersList(res?.data?.assessors);
-      const data = res?.data?.assessors;
-      data.forEach(setTableData);
+      if (state.menu_selected === "Assessor") {
+        setPaginationInfo((prevState) => ({
+          ...prevState,
+          totalCount: res.data.assessors_aggregate.aggregate.totalCount,
+        }));
+        setUsersList(res?.data?.assessors);
+        const data = res?.data?.assessors;
+        data.forEach(setTableData);
+      }
+      if (state.menu_selected === "Desktop-Admin") {
+        setPaginationInfo((prevState) => ({
+          ...prevState,
+          totalCount: res.data.regulator_aggregate.aggregate.totalCount,
+        }));
+        setUsersList(res?.data?.regulator);
+        const data = res?.data?.regulator;
+        data.forEach(setAdminTableData);
+      }
       setUserTableList(resUserData);
     } catch (error) {
       console.log("error - ", error);
@@ -565,13 +576,15 @@ export default function ManageUsersList({
     }
   };
 
-  const handleDelete = async (email) => {
+  const handleDelete = async (userId) => {
     const postData = [
       {
-        email: email,
+        request: {
+          userName: userId,
+        },
       },
     ];
-    const hasuraPostData = { email: email };
+    const hasuraPostData = { user_id: userId };
     try {
       setSpinner(true);
       let accessTokenObj = {
@@ -598,7 +611,7 @@ export default function ManageUsersList({
         await fetchAllRegulators();
       }
       setDeleteFlag(false);
-      setSelectedEmail([]);
+      setSelectedUserId([]);
 
       if (hasuraResponse.status === 200) {
         setToast((prevState) => ({
@@ -646,32 +659,43 @@ export default function ManageUsersList({
         client_id: "admin-api",
         client_secret: "edd0e83d-56b9-4c01-8bf8-bad1870a084a",
       };
-      const accessTokenResponse = await userService.getAccessToken(
-        accessTokenObj
-      );
-      if (accessTokenResponse.status !== 200) {
-        errorFlag = true;
-      }
-      setCookie(
-        "access_token",
-        "Bearer " + accessTokenResponse.data.access_token
-      );
+      // const accessTokenResponse = await userService.getAccessToken(
+      //   accessTokenObj
+      // );
+      // if (accessTokenResponse.status !== 200) {
+      //   errorFlag = true;
+      // }
+      // setCookie(
+      //   "access_token",
+      //   "Bearer " + accessTokenResponse.data.access_token
+      // );
+      setCookie("access_token", process.env.REACT_APP_AUTH_TOKEN);
 
-      const res = await userService.deleteUsers(postData);
-      if (res.status !== 200) {
-        errorFlag = true;
-      }
+      // const res = await userService.deleteUsers(postData);
 
-      let hasuraResponse = {};
-      bulkEmail.map(async (item) => {
-        let bulkHasuraPostData = { email: item.email };
-        hasuraResponse = await handleDeleteUser(bulkHasuraPostData);
-        if (hasuraResponse.status !== 200) {
-          errorFlag = true;
+      postData.forEach(async (item) => {
+        {
+          const res = await userService.deleteUsers({
+            request: {
+              userName: item?.user_id,
+            },
+          });
+          if (res.status !== 200) {
+            errorFlag = true;
+          }
         }
       });
 
-      //  const res = await userService.deleteUsers(postData);
+      if (!errorFlag) {
+        bulkEmail.map(async (item) => {
+          let bulkHasuraPostData = { user_id: item.user_id };
+          const hasuraResponse = await handleDeleteUser(bulkHasuraPostData);
+          if (hasuraResponse.status !== 200) {
+            errorFlag = true;
+          }
+        });
+      }
+
       fetchAllAssessors();
       setBulkDeleteFlag(false);
       setDeleteBulkUsersModel(false);
@@ -725,13 +749,13 @@ export default function ManageUsersList({
 
   useEffect(() => {
     if (deleteFlag) {
-      handleDelete(selectedEmail);
+      handleDelete(selectedUserId);
     }
   }, [deleteFlag]);
 
   useEffect(() => {
     if (bulkDeleteFlag) {
-      // handleDelete(selectedEmail);
+      // handleDelete(selectedUserId);
       handleBulkDelete(selectedRows);
     }
   }, [bulkDeleteFlag]);
