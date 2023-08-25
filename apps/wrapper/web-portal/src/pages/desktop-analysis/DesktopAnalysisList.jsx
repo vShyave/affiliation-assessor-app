@@ -21,6 +21,7 @@ import {
   getLocalTimeInISOFormat,
 } from "../../utils/common";
 import ADMIN_ROUTE_MAP from "../../routes/adminRouteMap";
+import PaymentModal from "./PaymentModal";
 
 const DesktopAnalysisList = () => {
   const navigation = useNavigate();
@@ -38,6 +39,18 @@ const DesktopAnalysisList = () => {
   const [isFilterOpen, setIsFilterOpen] = useState(false);
   const { setSpinner } = useContext(ContextAPI);
   const [selectedRound, setSelectedRound] = useState(1);
+  const [viewPaymentModal, setViewPaymentModal] = useState({
+    flag: false,
+    paymentDetails: {
+      dateTime: getLocalTimeInISOFormat(),
+      referenceNumber: 123,
+      transactionId: 1234,
+      amount: "Rs 20000.00",
+      applicationType: "Institute",
+      collegeName: "Muzaffarnagar Medical College & Hospital",
+      paymentStatus: "Success"
+    }
+  })
 
   const COLUMNS = [
     {
@@ -136,17 +149,17 @@ const DesktopAnalysisList = () => {
   };
 
   const navigateToView = (formObj) => {
-    if (formObj?.original?.file_name?.includes("applicant")) {
-      formObj.original.file_name = formObj?.original?.file_name?.replace(
+    if (formObj?.form_name?.includes("applicant")) {
+      formObj.form_name = formObj?.form_name?.replace(
         "applicant",
         "admin"
       );
     }
 
-    const navigationURL = `${ADMIN_ROUTE_MAP.adminModule.desktopAnalysis.viewForm}/${formObj?.original?.file_name}/${formObj?.original?.id}`;
+    const navigationURL = `${ADMIN_ROUTE_MAP.adminModule.desktopAnalysis.viewForm}/${formObj?.form_name}/${formObj?.form_id}`;
     navigation(navigationURL);
 
-    const postData = { form_id: formObj?.original?.id };
+    const postData = { form_id: formObj?.form_id };
     markStatus(postData);
   };
 
@@ -257,9 +270,24 @@ const DesktopAnalysisList = () => {
     reviewed_in_total: 0,
   };
 
+  const handleViewPayment = (e) =>{
+    setViewPaymentModal((prevState)=>({
+      ...prevState,
+      flag: true
+    }))
+  }
+
   formsList?.forEach((e) => {
     var formsData = {
-      form_title: e?.course?.course_name || "NA",
+      form_title: (
+        <div
+          className={`px-6 text-primary-600 pl-0`}
+          onClick={() => navigateToView(e)}
+        >
+          {e?.course?.course_name || "NA"}
+        </div>
+      )
+      ,
       file_name: e?.form_name,
       application_type:
         e?.assessment_type?.charAt(0).toUpperCase() +
@@ -268,7 +296,16 @@ const DesktopAnalysisList = () => {
       published_on: readableDate(e?.submitted_on),
       id: e.form_id,
       status: e?.form_status || "NA",
-      payment_status: e?.payment_status || "NA",
+      payment_status: 
+      (
+        <div
+          className={`px-6 text-primary-600 pl-0`}
+          onClick={() => handleViewPayment(e)}
+        >
+          {e?.payment_status || "NA"}
+        </div>
+      )
+      ,
     };
     formsDataList.push(formsData);
 
@@ -416,7 +453,8 @@ const DesktopAnalysisList = () => {
               {state.menu_selected === "Application Submitted" && (
                 <FilteringTable
                   dataList={formsDataList}
-                  navigateFunc={navigateToView}
+                  // navigateFunc={navigateToView}
+                  navigateFunc={()=>{}}
                   columns={COLUMNS}
                   pagination={true}
                   onRowSelect={() => {}}
@@ -433,7 +471,8 @@ const DesktopAnalysisList = () => {
               {state.menu_selected === "Resubmitted" && (
                 <FilteringTable
                   dataList={formsDataList}
-                  navigateFunc={navigateToView}
+                  // navigateFunc={navigateToView}
+                  navigateFunc={()=>{}}
                   columns={COLUMNS}
                   pagination={true}
                   onRowSelect={() => {}}
@@ -450,7 +489,8 @@ const DesktopAnalysisList = () => {
               {state.menu_selected === "Inspection Scheduled" && (
                 <FilteringTable
                   dataList={formsDataList}
-                  navigateFunc={navigateToView}
+                  // navigateFunc={navigateToView}
+                  navigateFunc={()=>{}}
                   columns={COLUMNS}
                   pagination={true}
                   onRowSelect={() => {}}
@@ -467,7 +507,8 @@ const DesktopAnalysisList = () => {
               {state.menu_selected === "Rejected" && (
                 <FilteringTable
                   dataList={formsDataList}
-                  navigateFunc={navigateToView}
+                  // navigateFunc={navigateToView}
+                  navigateFunc={()=>{}}
                   columns={COLUMNS}
                   pagination={true}
                   onRowSelect={() => {}}
@@ -484,7 +525,8 @@ const DesktopAnalysisList = () => {
               {state.menu_selected === "DA Completed" && (
                 <FilteringTable
                   dataList={formsDataList}
-                  navigateFunc={navigateToView}
+                  // navigateFunc={navigateToView}
+                  navigateFunc={()=>{}}
                   columns={NEWCOLUMNS}
                   pagination={true}
                   onRowSelect={() => {}}
@@ -501,6 +543,7 @@ const DesktopAnalysisList = () => {
             </div>
           </div>
         </div>
+        {viewPaymentModal.flag && <PaymentModal modalDetails={viewPaymentModal} setViewPaymentModal={setViewPaymentModal} />}
       </div>
     </>
   );

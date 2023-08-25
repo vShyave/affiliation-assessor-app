@@ -333,13 +333,15 @@ export default function DesktopAnalysisView() {
                     </span>
                   </button>
                 )}
-
-              <button
-                onClick={() => desktopVerification()}
-                className="flex flex-wrap items-center justify-center gap-2 border border-gray-500 bg-white text-gray-500 w-fit h-fit p-2 font-semibold rounded-[4px]"
-              >
-                Initiate Payment
-              </button>
+              {(formDataFromApi?.form_status?.toLowerCase() !==
+                  "da completed" && paymentStatus?.toLowerCase() !== "paid") && (
+                  <button
+                    onClick={() => desktopVerification()}
+                    className="flex flex-wrap items-center justify-center gap-2 border border-gray-500 bg-white text-gray-500 w-fit h-fit p-2 font-semibold rounded-[4px]"
+                  >
+                    Initiate Payment
+                  </button>
+                )}
 
               <div
                 className={`${
