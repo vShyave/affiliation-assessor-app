@@ -85,11 +85,11 @@ const MedicalAssessor = () => {
               styles="w-full bg-white font-normal border-[1px] border-[#DBDBDB] text-[#535461] animate__animated animate__fadeInDown"
               onClick={() => handleClick(ROUTE_MAP.past_inspections)}
             />
-            {/* <Button
+            <Button
               text="Pending Inspections"
               styles="w-full bg-white font-normal border-[1px] border-red-300 text-red-300 animate__animated animate__fadeInDown"
               onClick={() => handleClick(ROUTE_MAP.pending_inspections)}
-            /> */}
+            />
           </div>
         </div>
 

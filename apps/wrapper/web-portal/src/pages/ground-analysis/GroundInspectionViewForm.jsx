@@ -86,8 +86,38 @@ export default function ApplicationPage({
     }
   };
 
+  const checkIframeLoaded = () => {
+    if (window.location.host.includes("regulator.upsmfac")) {
+      const iframeElem = document.getElementById("enketo_OGA_preview");
+      var iframeContent =
+        iframeElem?.contentDocument || iframeElem?.contentWindow.document;
+      if (!iframeContent) return;
+
+      var section = iframeContent?.getElementsByClassName("or-group");
+      if (!section) return;
+      for (var i = 0; i < section?.length; i++) {
+        var inputElements = section[i].querySelectorAll("input");
+        inputElements.forEach((input) => {
+          input.disabled = true;
+        });
+      }
+
+      iframeContent.getElementById("submit-form").style.display = "none";
+      iframeContent.getElementById("save-draft").style.display = "none";
+
+      var draftButton = iframeContent.getElementById("save-draft");
+      draftButton?.addEventListener("click", function () {
+        alert("Hello world!");
+      });
+    }
+  };
+
   useEffect(() => {
     fetchFormData();
+
+    setTimeout(() => {
+      checkIframeLoaded();
+    }, 2500);
   }, []);
 
   return (
@@ -154,7 +184,6 @@ export default function ApplicationPage({
                     ? "invisible cursor-not-allowed flex flex-wrap items-center justify-center gap-2 border border-gray-500 text-gray-500 bg-white w-[140px] h-[40px] font-medium rounded-[4px]"
                     : "flex flex-wrap items-center justify-center gap-2 border border-gray-500 text-gray-500 bg-white w-[140px] h-[40px] font-medium rounded-[4px]"
                 }
-                // className="flex flex-wrap items-center justify-center gap-2 border border-gray-500 text-gray-500 bg-white w-[140px] h-[40px] font-medium rounded-[4px]"
               >
                 Approve
                 <span>
@@ -179,9 +208,9 @@ export default function ApplicationPage({
             </div>
           </div>
           <div className="flex flex-row gap-4">
-            <div className="flex w-[30%]">
+            {/* <div className="flex w-[30%]">
               <Sidebar />
-            </div>
+            </div> */}
             <div className="flex w-full flex-col gap-4">
               <Card
                 moreClass="flex flex-col shadow-md border border-[#F5F5F5] gap-4"
@@ -219,9 +248,9 @@ export default function ApplicationPage({
               </Card>
               <Card moreClass="shadow-md">
                 <iframe
-                  id="enketo_form_preview"
+                  id="enketo_OGA_preview"
                   title="form"
-                  src={`${ENKETO_URL}preview?formSpec=${encodeURI(
+                  src={`${ENKETO_URL}/preview?formSpec=${encodeURI(
                     JSON.stringify(formSpec)
                   )}&xform=${encodedFormURI}&userId=${userId}`}
                   style={{ minHeight: "100vh", width: "100%" }}
