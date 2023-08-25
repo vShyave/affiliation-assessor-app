@@ -2,7 +2,7 @@
   <h1>Workflow Module</h1>
 </p>
 
-[![Open in Gitpod](https://gitpod.io/button/open-in-gitpod.svg)](https://gitpod.io/#https://github.com/Samagra-Development/workflow/tree/dev)
+[![Open in Gitpod](https://gitpod.io/button/open-in-gitpod.svg)](https://gitpod.io/#https://github.com/devendra-tarento/affiliation-assessor-app/tree/workflow)
 
 ## About :open_book:
 
