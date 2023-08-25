@@ -91,6 +91,8 @@ export default function ApplicationPage({
       const iframeElem = document.getElementById("enketo_OGA_preview");
       var iframeContent =
         iframeElem?.contentDocument || iframeElem?.contentWindow.document;
+      if (!iframeContent) return;
+
       var section = iframeContent?.getElementsByClassName("or-group");
       if (!section) return;
       for (var i = 0; i < section?.length; i++) {
@@ -248,7 +250,7 @@ export default function ApplicationPage({
                 <iframe
                   id="enketo_OGA_preview"
                   title="form"
-                  src={`${ENKETO_URL}preview?formSpec=${encodeURI(
+                  src={`${ENKETO_URL}/preview?formSpec=${encodeURI(
                     JSON.stringify(formSpec)
                   )}&xform=${encodedFormURI}&userId=${userId}`}
                   style={{ minHeight: "100vh", width: "100%" }}
