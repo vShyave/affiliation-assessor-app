@@ -2,12 +2,7 @@ import React, { useEffect, useState, useRef } from "react";
 import { Link, useParams, useNavigate } from "react-router-dom";
 import XMLParser from "react-xml-parser";
 
-import {
-  FaAngleRight,
-  FaArrowLeft,
-  FaEye,
-  FaFileDownload,
-} from "react-icons/fa";
+import { FaAngleRight, FaArrowLeft, FaFileDownload } from "react-icons/fa";
 
 import {
   getCookie,
@@ -15,11 +10,11 @@ import {
   setToLocalForage,
   updateFormData,
   getSpecificDataFromForage,
-  removeItemFromLocalForage,
+  removeAllFromLocalForage,
 } from "./../forms";
 
 import APPLICANT_ROUTE_MAP from "../routes/ApplicantRoute";
-import { Button, Card } from "../components";
+import { Card } from "../components";
 import CommonModal from "../Modal";
 import Toast from "../components/Toast";
 
@@ -27,22 +22,26 @@ import { getFormData, base64ToPdf, getLocalTimeInISOFormat } from "../api";
 import {
   getPrefillXML,
   saveFormSubmission,
-  getSubmissionXML,
   getFormURI,
   updateFormSubmission,
 } from "../api/formApi";
 
 const ENKETO_URL = process.env.REACT_APP_ENKETO_URL;
+const GCP_URL =
+  process.env.REACT_APP_GCP_AFFILIATION_LINK ||
+  "https://storage.googleapis.com/dev-public-upsmf/affiliation/";
 
 const CreateForm = (props) => {
   let { formName, formId, applicantStatus } = useParams();
   const [encodedFormURI, setEncodedFormURI] = useState("");
-  const scheduleId = useRef();
   const navigate = useNavigate();
   const [onFormSuccessData, setOnFormSuccessData] = useState(undefined);
   const [formDataNoc, setFormDataNoc] = useState({});
   const [onFormFailureData, setOnFormFailureData] = useState(undefined);
   const [isDownloading, setIsDownloading] = useState(false);
+
+  // Spinner Element
+  const spinner = document.getElementById("backdrop");
 
   const [assData, setData] = useState({
     district: "",
@@ -53,7 +52,6 @@ const CreateForm = (props) => {
     latitude: null,
     longitude: null,
   });
-  const [prefilledFormData, setPrefilledFormData] = useState();
   const [onSubmit, setOnSubmit] = useState(false);
 
   const { userRepresentation } = getCookie("userData");
@@ -109,7 +107,6 @@ const CreateForm = (props) => {
         const postData = { form_id: formId };
         const res = await getFormData(postData);
         formData = res.data.form_submissions[0];
-        console.log("formData - ", formData);
         setFormDataNoc(formData);
       }
     }
@@ -156,7 +153,6 @@ const CreateForm = (props) => {
 
   const handleSubmit = async () => {
     const updatedFormData = await updateFormData(formSpec.start, userId);
-    const storedData = await getSpecificDataFromForage("required_data");
     const course_details = await getSpecificDataFromForage("course_details");
 
     setTimeout(() => {
@@ -192,12 +188,8 @@ const CreateForm = (props) => {
       });
     }
 
-    // Delete the data from the Local Forage
-    const key = `${storedData?.assessor_user_id}_${formSpec.start}_${
-      new Date().toISOString().split("T")[0]
-    }`;
-
-    removeItemFromLocalForage(key);
+    // Delete the form and course details data from the Local Forage
+    removeAllFromLocalForage();
 
     setOnSubmit(false);
     setToast((prevState) => ({
@@ -252,10 +244,6 @@ const CreateForm = (props) => {
           `${userId}_${startingForm}_${new Date().toISOString().split("T")[0]}`
         );
 
-        // console.log(
-        //   "JSON.parse(e.data).formData - ",
-        //   JSON.parse(e.data).formData
-        // );
         await setToLocalForage(
           `${userId}_${startingForm}_${new Date().toISOString().split("T")[0]}`,
           {
@@ -277,7 +265,7 @@ const CreateForm = (props) => {
   };
 
   const handleGoBack = () => {
-    navigate(-1);
+    navigate(`${APPLICANT_ROUTE_MAP.dashboardModule.my_applications}`);
   };
 
   const handleFormDownload = async () => {
@@ -301,19 +289,48 @@ const CreateForm = (props) => {
     }
   };
 
-  // const handlePrintPdf = () => {
-  //   const URL = `${ENKETO_URL}/preview?formSpec=${encodeURI(
-  //     JSON.stringify(formSpec)
-  //   )}&xform=${encodedFormURI}&userId=${userId}`;
+  const checkIframeLoaded = () => {
+    if (spinner) {
+      spinner.style.display = "none";
+    }
 
-  //   var strWindowFeatures =
-  //     "fullscreen=1, channelmode=1, status=1, resizable=1";
-  //   var win = window.open(URL, "_blank", strWindowFeatures);
-  // };
+    if (window.location.host.includes("applicant.upsmfac")) {
+      const iframeElem = document.getElementById("enketo_DA_preview");
+      var iframeContent =
+        iframeElem?.contentDocument || iframeElem?.contentWindow.document;
+      if (!iframeContent) return;
+      if (applicantStatus && applicantStatus?.toLowerCase() !== "returned") {
+        var section = iframeContent?.getElementsByClassName("or-group");
+        if (!section) return;
+        for (var i = 0; i < section?.length; i++) {
+          var inputElements = section[i].querySelectorAll("input");
+          inputElements.forEach((input) => {
+            input.disabled = true;
+          });
+        }
+
+        iframeContent.getElementById("submit-form").style.display = "none";
+        iframeContent.getElementById("save-draft").style.display = "none";
+      }
+
+      // Need to work on Save draft...
+      var draftButton = iframeContent.getElementById("save-draft");
+      draftButton?.addEventListener("click", function () {
+        alert("Hello world!");
+      });
+    }
+  };
 
   useEffect(() => {
     fetchFormData();
     bindEventListener();
+
+    if (spinner) {
+      spinner.style.display = "flex";
+    }
+    setTimeout(() => {
+      checkIframeLoaded();
+    }, 2500);
   }, []);
 
   return (
@@ -324,16 +341,13 @@ const CreateForm = (props) => {
       <div className="h-[48px] bg-white drop-shadow-sm">
         <div className="container mx-auto px-3 py-3">
           <div className="flex flex-row font-bold gap-2 items-center">
-            <Link>
-              <span
-                onClick={handleGoBack}
-                className="text-primary-400 flex flex-row gap-2"
-              >
+            <Link to={APPLICANT_ROUTE_MAP.dashboardModule.my_applications}>
+              <div className="text-primary-400 flex flex-row gap-2">
                 <div className="flex items-center">
                   <FaArrowLeft className="text-[16px]" />
                 </div>
-                Back
-              </span>
+                My Applications
+              </div>
             </Link>
             <FaAngleRight className="text-[16px]" />
             <span className="text-gray-500">Create form</span>
@@ -364,14 +378,10 @@ const CreateForm = (props) => {
             </button>
           </div>
         </div>
+
         <Card moreClass="shadow-md">
           <div className="flex flex-col gap-5">
             <div className="flex flex-grow gap-3 justify-end">
-              <button className="bg-primary-900 py-3 font-medium rounded-[4px] px-6 text-white flex flex-row items-center gap-3">
-                <FaEye />
-                <span>Preview</span>
-              </button>
-
               <button
                 className={`bg-primary-900 py-3 font-medium rounded-[4px] px-6 text-white flex flex-row items-center gap-3 ${
                   isDownloading ? "cursor-not-allowed" : ""
@@ -385,6 +395,7 @@ const CreateForm = (props) => {
             </div>
             <div className="flex">
               <iframe
+                id="enketo-applicant-form"
                 title="form"
                 src={`${ENKETO_URL}/preview?formSpec=${encodeURI(
                   JSON.stringify(formSpec)

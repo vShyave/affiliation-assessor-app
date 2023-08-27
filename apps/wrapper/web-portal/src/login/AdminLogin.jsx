@@ -110,17 +110,11 @@ const AdminLogin = () => {
       // );
 
       console.log(loginRes);
-      let roles = [];
-      loginRes.data.roleRepresentationList.forEach((item) =>
-        roles.push(item.name)
-      );
-      console.log(roles);
-
       const adminDetailsRes = await getRegulator({
         email: data.email,
       });
-
-      if (roles.includes("Super-Admin") || roles.includes("Desktop-Admin")) {
+      const role = loginRes?.data?.userRepresentation?.attributes?.Role?.[0];
+      if (role === "Super-Admin" || role === "Desktop-Admin") {
         setCookie("userData", loginRes.data);
         setCookie("regulator", adminDetailsRes.data.regulator);
         navigate(ADMIN_ROUTE_MAP.adminModule.manageUsers.home);

@@ -5,6 +5,7 @@ import { Button, ApplicationCard, FormCard } from "../components";
 import APPLICANT_ROUTE_MAP from "../routes/ApplicantRoute";
 import { applicationService, formService } from "../services";
 import { getCookie } from "../utils";
+import { setToLocalForage } from "../forms";
 
 const MyApplications = () => {
   const [loadingApplications, setLoadingApplications] = useState(false);
@@ -65,9 +66,15 @@ const MyApplications = () => {
     );
   };
 
-  const applyFormHandler = (formObj) => {
-    const path = formObj.course_name.toLowerCase().split(" ").join("_");
-    navigate(`${APPLICANT_ROUTE_MAP.dashboardModule.createForm}/${path}`);
+  const handleApplyFormHandler = async (obj) => {
+    await setToLocalForage("course_details", obj);
+    let form_obj = obj?.formObject;
+    if (typeof form_obj === "string") {
+      form_obj = JSON.parse(form_obj);
+    }
+    let file_name = form_obj[0].name;
+    file_name = file_name.substr(0, file_name.lastIndexOf("."));
+    navigate(`${APPLICANT_ROUTE_MAP.dashboardModule.createForm}/${file_name}`);
   };
 
   return (
@@ -95,7 +102,9 @@ const MyApplications = () => {
                   key={application.form_id}
                   onView={handleViewApplicationHandler}
                 />
-              ))}
+              ))
+          }
+              {console.log("applications",applications)}
             </div>
           )}
         </div>
@@ -142,7 +151,7 @@ const MyApplications = () => {
                   <FormCard
                     form={form}
                     key={index}
-                    onApply={applyFormHandler}
+                    onApply={handleApplyFormHandler}
                   />
                 ))}
               </div>

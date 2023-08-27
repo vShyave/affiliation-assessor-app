@@ -40,6 +40,18 @@ const DesktopAnalysisList = () => {
   const [isFilterOpen, setIsFilterOpen] = useState(false);
   const { setSpinner } = useContext(ContextAPI);
   const [selectedRound, setSelectedRound] = useState(1);
+  const [viewPaymentModal, setViewPaymentModal] = useState({
+    flag: false,
+    paymentDetails: {
+      dateTime: getLocalTimeInISOFormat(),
+      referenceNumber: 123,
+      transactionId: 1234,
+      amount: "Rs 20000.00",
+      applicationType: "Institute",
+      collegeName: "Muzaffarnagar Medical College & Hospital",
+      paymentStatus: "Success"
+    }
+  })
 
   const COLUMNS = [
     {
@@ -51,7 +63,7 @@ const DesktopAnalysisList = () => {
       accessor: "application_type",
     },
     {
-      Header: "Course name",
+      Header: "Course Type",
       accessor: "course_name",
     },
     {
@@ -81,7 +93,7 @@ const DesktopAnalysisList = () => {
       accessor: "application_type",
     },
     {
-      Header: "Course name",
+      Header: "Course Type",
       accessor: "course_name",
     },
     {
@@ -138,17 +150,17 @@ const DesktopAnalysisList = () => {
   };
 
   const navigateToView = (formObj) => {
-    if (formObj?.original?.file_name?.includes("applicant")) {
-      formObj.original.file_name = formObj?.original?.file_name?.replace(
+    if (formObj?.form_name?.includes("applicant")) {
+      formObj.form_name = formObj?.form_name?.replace(
         "applicant",
         "admin"
       );
     }
 
-    const navigationURL = `${ADMIN_ROUTE_MAP.adminModule.desktopAnalysis.viewForm}/${formObj?.original?.file_name}/${formObj?.original?.id}`;
+    const navigationURL = `${ADMIN_ROUTE_MAP.adminModule.desktopAnalysis.viewForm}/${formObj?.form_name}/${formObj?.form_id}`;
     navigation(navigationURL);
 
-    const postData = { form_id: formObj?.original?.id };
+    const postData = { form_id: formObj?.form_id };
     markStatus(postData);
   };
 
@@ -264,29 +276,42 @@ const DesktopAnalysisList = () => {
     reviewed_in_total: 0,
   };
 
+  const handleViewPayment = (e) =>{
+    setViewPaymentModal((prevState)=>({
+      ...prevState,
+      flag: true
+    }))
+  }
+
   formsList?.forEach((e) => {
     var formsData = {
-      form_title: getFieldName(e?.form_name),
+      form_title: (
+        <div
+          className={`px-6 text-primary-600 pl-0`}
+          onClick={() => navigateToView(e)}
+        >
+          {e?.course?.course_name || "NA"}
+        </div>
+      )
+      ,
       file_name: e?.form_name,
       application_type:
         e?.assessment_type?.charAt(0).toUpperCase() +
         e?.assessment_type?.substring(1).toLowerCase(),
-      course_name:
-        e?.institute?.course_applied?.charAt(0).toUpperCase() +
-          e?.institute?.course_applied?.substring(1).toLowerCase() || "NA",
+      course_name: e?.course_type || "NA",
       published_on: readableDate(e?.submitted_on),
       id: e.form_id,
       status: e?.form_status || "NA",
-      // payment_status: e?.payment_status || "NA",
-      payment_status: (
+      payment_status: 
+      (
         <div
           className={`px-6 text-primary-600 pl-0`}
-          onClick={() => handleViewSchedule(e)}
+          onClick={() => handleViewPayment(e)}
         >
-          {e?.payment_status}
+          {e?.payment_status || "NA"}
         </div>
-      ),
-
+      )
+      ,
     };
     formsDataList.push(formsData);
 
@@ -311,9 +336,11 @@ const DesktopAnalysisList = () => {
   return (
     <>
       <Nav />
-      <div className={`container m-auto min-h-[calc(100vh-148px)] px-3 py-12`}>
+      <div
+        className={`container ; m-auto min-h-[calc(100vh-148px)] px-3 py-12`}
+      >
         <div className="flex flex-col gap-8">
-          <div className="flex flex-col gap-4">
+          {/* <div className="flex flex-col gap-4">
             <div>
               <h1 className="text-2xl font-medium">Your activity</h1>
             </div>
@@ -332,11 +359,11 @@ const DesktopAnalysisList = () => {
                 </Card>
               ))}
             </div>
-          </div>
+          </div> */}
 
           <div className="flex flex-col gap-4">
             <div>
-              <h1 className="text-2xl font-medium">All applications</h1>
+              <h1 className="text-xl font-semibold">All Applications</h1>
             </div>
 
             <div className="grid grid-cols-1 gap-x-6 gap-y-6 sm:grid-cols-6">
@@ -414,6 +441,19 @@ const DesktopAnalysisList = () => {
                   Rejected
                 </a>
               </li>
+              <li className="" onClick={() => handleSelectMenu("DA Completed")}>
+                <a
+                  href="#"
+                  className={`inline-block p-4 rounded-t-lg dark:text-blue-500 dark:border-blue-600 ${
+                    state.menu_selected === "DA Completed"
+                      ? "text-blue-600 border-b-2 border-blue-600"
+                      : ""
+                  }`}
+                  aria-current="page"
+                >
+                  DA Completed
+                </a>
+              </li>
             </ul>
 
             {/* table creation starts here */}
@@ -421,8 +461,9 @@ const DesktopAnalysisList = () => {
               {state.menu_selected === "Application Submitted" && (
                 <FilteringTable
                   dataList={formsDataList}
-                  navigateFunc={navigateToView}
-                  columns={NEWCOLUMNS}
+                  // navigateFunc={navigateToView}
+                  navigateFunc={()=>{}}
+                  columns={COLUMNS}
                   pagination={true}
                   onRowSelect={() => {}}
                   filterApiCall={filterApiCall}
@@ -438,7 +479,8 @@ const DesktopAnalysisList = () => {
               {state.menu_selected === "Resubmitted" && (
                 <FilteringTable
                   dataList={formsDataList}
-                  navigateFunc={navigateToView}
+                  // navigateFunc={navigateToView}
+                  navigateFunc={()=>{}}
                   columns={COLUMNS}
                   pagination={true}
                   onRowSelect={() => {}}
@@ -455,7 +497,8 @@ const DesktopAnalysisList = () => {
               {state.menu_selected === "Inspection Scheduled" && (
                 <FilteringTable
                   dataList={formsDataList}
-                  navigateFunc={navigateToView}
+                  // navigateFunc={navigateToView}
+                  navigateFunc={()=>{}}
                   columns={COLUMNS}
                   pagination={true}
                   onRowSelect={() => {}}
@@ -472,8 +515,27 @@ const DesktopAnalysisList = () => {
               {state.menu_selected === "Rejected" && (
                 <FilteringTable
                   dataList={formsDataList}
-                  navigateFunc={navigateToView}
+                  // navigateFunc={navigateToView}
+                  navigateFunc={()=>{}}
                   columns={COLUMNS}
+                  pagination={true}
+                  onRowSelect={() => {}}
+                  filterApiCall={filterApiCall}
+                  showFilter={true}
+                  paginationInfo={paginationInfo}
+                  setPaginationInfo={setPaginationInfo}
+                  searchApiCall={searchApiCall}
+                  setIsSearchOpen={setIsSearchOpen}
+                  setIsFilterOpen={setIsFilterOpen}
+                  selectedRound={selectedRound}
+                />
+              )}
+              {state.menu_selected === "DA Completed" && (
+                <FilteringTable
+                  dataList={formsDataList}
+                  // navigateFunc={navigateToView}
+                  navigateFunc={()=>{}}
+                  columns={NEWCOLUMNS}
                   pagination={true}
                   onRowSelect={() => {}}
                   filterApiCall={filterApiCall}
@@ -489,6 +551,7 @@ const DesktopAnalysisList = () => {
             </div>
           </div>
         </div>
+        {viewPaymentModal.flag && <PaymentModal modalDetails={viewPaymentModal} setViewPaymentModal={setViewPaymentModal} />}
       </div>
       {paymentModal && (
         <PaymentModal

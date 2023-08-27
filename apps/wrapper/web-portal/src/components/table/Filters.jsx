@@ -184,7 +184,6 @@ export const ManageFormsFilters = ({
           value={state.course_type}
           onChange={(value) => handleChange("course_type", value)}
           className="bg-gray-50"
-
         >
           {/* <Option value="">Course Type</Option> */}
           <Option value="nursing">Nursing</Option>
@@ -209,10 +208,10 @@ export const DesktopAnalysisFilters = ({
   setIsFilterOpen,
   paginationInfo,
   setPaginationInfo,
-  selectedRound
+  selectedRound,
 }) => {
   const [showCalendar, setShowCalendar] = useState(false);
-  const [buttonText, setButtonText] = useState("Published On");
+  const [buttonText, setButtonText] = useState("Submitted On");
   const [filters, setFilters] = useState({
     condition: {
       assessor_id: { _is_null: true },
@@ -220,7 +219,7 @@ export const DesktopAnalysisFilters = ({
   });
   const [state, setState] = useState({
     assessment_type: null,
-    course_applied: null,
+    course_type: null,
     submitted_on: null,
     review_status: null,
   });
@@ -234,11 +233,11 @@ export const DesktopAnalysisFilters = ({
       delete filters?.condition[name];
       return;
     }
-    if (name === "course_applied") {
+    if (name === "course_type") {
       setFilters({
         condition: {
           ...filters.condition,
-          institute: {
+          course: {
             [name]: {
               _eq: value,
             },
@@ -284,11 +283,11 @@ export const DesktopAnalysisFilters = ({
   const handleClearFilter = () => {
     setState({
       assessment_type: null,
-      course_applied: null,
+      course_type: null,
       submitted_on: null,
       review_status: null,
     });
-    setButtonText("Published On");
+    setButtonText("Submitted On");
     setFilters({
       condition: {
         assessor_id: { _is_null: true },
@@ -302,7 +301,7 @@ export const DesktopAnalysisFilters = ({
 
   useEffect(() => {
     filterApiCall(filters);
-  }, [filters, paginationInfo.offsetNo, paginationInfo.limit,selectedRound]);
+  }, [filters, paginationInfo.offsetNo, paginationInfo.limit, selectedRound]);
 
   return (
     <div className="flex flex-grow text-gray-700 dark:text-gray-400 gap-8">
@@ -322,11 +321,11 @@ export const DesktopAnalysisFilters = ({
       </div>
       <div className="flex">
         <Select
-          name="course_applied"
-          id="course_applied"
-          label="Course Name"
-          value={state.course_applied}
-          onChange={(value) => handleChange("course_applied", value)}
+          name="course_type"
+          id="course_type"
+          label="Course Type"
+          value={state.course_type}
+          onChange={(value) => handleChange("course_type", value)}
           className="bg-gray-50"
         >
           {/* <Option value="">Course Name</Option> */}
@@ -339,7 +338,7 @@ export const DesktopAnalysisFilters = ({
           className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 px-8"
           onClick={() => setShowCalendar(true)}
         >
-          {buttonText.includes("Published")
+          {buttonText.includes("Submitted")
             ? buttonText
             : readableDate(buttonText)}
         </button>
@@ -380,10 +379,10 @@ export const OnGroundInspectionFilters = ({
   setIsFilterOpen,
   paginationInfo,
   setPaginationInfo,
-  selectedRound
+  selectedRound,
 }) => {
   const [showCalendar, setShowCalendar] = useState(false);
-  const [buttonText, setButtonText] = useState("Published On");
+  const [buttonText, setButtonText] = useState("Submitted On");
   const [filters, setFilters] = useState({ condition: {} });
   const [state, setState] = useState({
     role: null,
@@ -433,7 +432,7 @@ export const OnGroundInspectionFilters = ({
       submitted_on: null,
       review_status: null,
     });
-    setButtonText("Published On");
+    setButtonText("Submitted On");
     setFilters({ condition: {} });
     setPaginationInfo((prevState) => ({
       ...prevState,
@@ -443,11 +442,11 @@ export const OnGroundInspectionFilters = ({
 
   useEffect(() => {
     filterApiCall(filters);
-  }, [filters, paginationInfo.offsetNo, paginationInfo.limit,selectedRound]);
+  }, [filters, paginationInfo.offsetNo, paginationInfo.limit, selectedRound]);
 
   return (
     <div className="flex flex-grow text-gray-700 dark:text-gray-400 gap-8">
-      <div className="flex">
+      {/* <div className="flex">
         <Select
           name="role"
           id="role"
@@ -458,17 +457,17 @@ export const OnGroundInspectionFilters = ({
           label="Assessor"
           className="bg-gray-50"
         >
-          {/* <Option value="">--Select Assessor--</Option> */}
+          <Option value="">--Select Assessor--</Option>
           <Option value="admin">Admin</Option>
           <Option value="applicant">Applicant</Option>
         </Select>
-      </div>
+      </div> */}
       <div className="flex">
         <button
           className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full px-8 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
           onClick={() => setShowCalendar(true)}
         >
-          {buttonText.includes("Published")
+          {buttonText.includes("Submitted")
             ? buttonText
             : readableDate(buttonText)}
         </button>
