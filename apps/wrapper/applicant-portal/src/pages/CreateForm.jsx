@@ -379,6 +379,8 @@ const CreateForm = (props) => {
       setIsDownloading(false);
       setPreviewModal(false);
       previewFlag = false;
+      removeAllFromLocalForage();
+      console.log("Create form is closed!");
     };
   }, []);
 
