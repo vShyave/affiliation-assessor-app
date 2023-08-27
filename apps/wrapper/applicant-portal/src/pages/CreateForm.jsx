@@ -34,19 +34,17 @@ import {
 } from "../api/formApi";
 
 const ENKETO_URL = process.env.REACT_APP_ENKETO_URL;
-const GCP_URL =
-  process.env.REACT_APP_GCP_AFFILIATION_LINK ||
-  "https://storage.googleapis.com/dev-public-upsmf/affiliation/";
 
 const CreateForm = (props) => {
-  let { formName, formId, applicantStatus } = useParams();
-  const [encodedFormURI, setEncodedFormURI] = useState("");
   const navigate = useNavigate();
-  const [onFormSuccessData, setOnFormSuccessData] = useState(undefined);
-  const [formDataNoc, setFormDataNoc] = useState({});
-  const [onFormFailureData, setOnFormFailureData] = useState(undefined);
-  const [isDownloading, setIsDownloading] = useState(false);
-  const [previewModal, setPreviewModal] = useState(false);
+
+  let { formName, formId, applicantStatus } = useParams();
+  let [encodedFormURI, setEncodedFormURI] = useState("");
+  let [onFormSuccessData, setOnFormSuccessData] = useState(undefined);
+  let [formDataNoc, setFormDataNoc] = useState({});
+  let [onFormFailureData, setOnFormFailureData] = useState(undefined);
+  let [isDownloading, setIsDownloading] = useState(false);
+  let [previewModal, setPreviewModal] = useState(false);
   let previewFlag = false;
 
   // Spinner Element
@@ -138,9 +136,8 @@ const CreateForm = (props) => {
     try {
       const { nextForm, formData, onSuccessData, onFailureData } = data;
       if (data?.state === "ON_FORM_SUCCESS_COMPLETED") {
-        console.log("previewFlag - ", previewFlag);
-
         if (!previewFlag) {
+          fetchFormData();
           handleRenderPreview();
         } else {
           handleSubmit();
@@ -368,9 +365,21 @@ const CreateForm = (props) => {
     if (spinner) {
       spinner.style.display = "flex";
     }
+
     setTimeout(() => {
       checkIframeLoaded();
     }, 2500);
+
+    // To clean all variables
+    return () => {
+      setEncodedFormURI("");
+      setOnFormSuccessData(undefined);
+      setFormDataNoc({});
+      setOnFormFailureData(undefined);
+      setIsDownloading(false);
+      setPreviewModal(false);
+      previewFlag = false;
+    };
   }, []);
 
   return (
