@@ -2,7 +2,6 @@ import React from "react";
 import { Card, Button } from "./index";
 
 const FormCard = (props) => {
-  // console.log("props - ", props?.form?.course_desc);
   let name = props?.form?.course_name;
   name = name.charAt(0).toUpperCase() + name.slice(1);
 
@@ -15,7 +14,7 @@ const FormCard = (props) => {
           moreClass="text-primary-500 font-bold uppercase border-gray-500 text-primary-400"
           style={{ backgroundColor: "#fff" }}
           text="Apply"
-          onClick={props.onApply ? () => props.onApply(props.form) : null}
+          onClick={props.onApply ? () => props.onApply(props?.form) : null}
         ></Button>
       </div>
     </Card>

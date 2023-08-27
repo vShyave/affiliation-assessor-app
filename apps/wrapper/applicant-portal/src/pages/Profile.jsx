@@ -28,7 +28,7 @@ export default function Profile() {
     phone_number: "",
     course_type: "",
     district: "",
-    address: ""
+    address: "",
   });
   const navigate = useNavigate();
   // const {
@@ -90,11 +90,26 @@ export default function Profile() {
         errorFlag = true;
       }
 
-      let postDataKeyCloak = {
-        username: userData?.userRepresentation?.email,
-        firstName: formData?.first_name,
-        lastName: formData?.last_name,
-        roleNames: ["Institute", "default-roles-ndear"],
+      const postDataKeyCloak = {
+        userName: userData?.userRepresentation?.id,
+        request: {
+          firstName: formData?.first_name,
+          lastName: formData?.last_name,
+          email: userData?.userRepresentation?.email,
+          username: userData?.userRepresentation?.email,
+          enabled: true,
+          emailVerified: false,
+          credentials: [
+            {
+              type: "password",
+              value: `${formData?.phone_number}`,
+              temporary: "false",
+            },
+          ],
+          attributes: {
+            Role: "Institute",
+          },
+        },
       };
       // keycloak edit user
       const singleEditKeycloak = await editUserKeycloak(postDataKeyCloak);
@@ -132,7 +147,7 @@ export default function Profile() {
       setToast((prevState) => ({
         ...prevState,
         toastOpen: true,
-        toastMsg: "User already registered.",
+        toastMsg: "Error while editing user detail.",
         toastType: "error",
       }));
       setTimeout(
@@ -175,7 +190,7 @@ export default function Profile() {
         // applicant_type: [applicantType],
         course_type: formDetail?.course_applied,
         district: formDetail?.district,
-        address: formDetail?.address
+        address: formDetail?.address,
       });
     } catch (error) {
       setToast((prevState) => ({
@@ -368,11 +383,7 @@ export default function Profile() {
                       </div>
                     </div>
                     <div className="sm:col-span-3">
-                      <Label
-                        htmlFor="address"
-                        text="Address"
-                        required
-                      ></Label>
+                      <Label htmlFor="address" text="Address" required></Label>
                       <div className="mt-2">
                         <input
                           onChange={handleChange}

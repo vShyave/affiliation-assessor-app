@@ -135,6 +135,7 @@ function ScheduleInspectionModal({ closeSchedule, otherInfo }) {
           label: item.course_name,
           level: item.course_level,
           formObj: item.formObject,
+          course_id: item.course_id,
         }))
       );
     } catch (error) {
@@ -149,18 +150,13 @@ function ScheduleInspectionModal({ closeSchedule, otherInfo }) {
   };
 
   const handleScheduleAssessment = async () => {
-    console.log("Selected forms", selectedFormList);
-
     let coursesObj = selectedFormList.map((obj) => {
-      let courses = {};
-      courses.course_type = otherInfo?.course_type;
-      courses.course_level = otherInfo?.course_level;
-      courses.formObject = obj.formObj;
-      courses.institute_id = otherInfo?.instituteId;
-      courses.course_name = obj.value;
-      courses.applicant_form_id = +formId;
-      courses.round = otherInfo?.round;
-      return courses;
+      let institute_form = {};
+      institute_form.course_id = obj.course_id;
+      institute_form.applicant_form_id = +formId;
+      institute_form.institute_id = otherInfo?.instituteId;
+      institute_form.assessment_date = payload?.date;
+      return institute_form;
     });
 
     const postData = {
@@ -170,15 +166,13 @@ function ScheduleInspectionModal({ closeSchedule, otherInfo }) {
           institute_type: JSON.stringify([
             {
               courseType: otherInfo?.course_type,
-              courseLevel: otherInfo?.course_level,
+              courseLevel: otherInfo.course_level,
             },
           ]),
         },
       ],
-      courses: coursesObj,
+      institute_form: coursesObj,
     };
-
-    console.log(postData);
 
     const formData = {
       assessment_schedule: [

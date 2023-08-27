@@ -27,6 +27,7 @@ import CommonModal from "../../components/Modal";
 
 const ENKETO_MANAGER_URL = process.env.REACT_APP_ENKETO_MANAGER_URL;
 const ENKETO_URL = process.env.REACT_APP_ENKETO_URL;
+const GCP_URL = process.env.REACT_APP_GCP_AFFILIATION_LINK;
 
 const GenericOdkForm = (props) => {
   const user = getCookie("userData");
@@ -313,7 +314,7 @@ const GenericOdkForm = (props) => {
     });
   }, [isPreview]);
 
-/* 
+  /* 
   async function fetchIframeResources(iframeUrl) {
     try {
       const response = await fetch(iframeUrl);

@@ -19,6 +19,7 @@ import html2canvas from "html2canvas";
 import { ContextAPI } from "../../utils/ContextAPI";
 
 const ENKETO_URL = process.env.REACT_APP_ENKETO_URL;
+const GCP_URL = process.env.REACT_APP_GCP_AFFILIATION_LINK;
 
 export default function ApplicationPage({
   closeModal,
@@ -60,29 +61,18 @@ export default function ApplicationPage({
     },
   };
 
-  // const breadCrumbData = [
-  //   {
-  //     link: "ADMIN_ROUTE_MAP.adminModule.manageForms.home",
-  //     text: "Home",
-  //   },
-  //   {
-  //     link: "ADMIN_ROUTE_MAP.adminModule.onGroundInspection.home",
-  //     text: "All applications",
-  //   },
-  // ];
-
   const fetchFormData = async () => {
     const postData = { form_id: formId };
     try {
-      setSpinner(true);
+      // setSpinner(true);
       const res = await getFormData(postData);
       const formData = res.data.form_submissions[0];
-      console.log(formData);
       const statusOfForm = formData?.form_status;
       setFormStatus(statusOfForm);
+      const form_path = `${GCP_URL}${formData?.form_name}.xml`;
 
       let formURI = await getPrefillXML(
-        `${formData?.form_name}`,
+        `${form_path}`,
         "",
         formData.form_data,
         formData.imageUrls
@@ -91,39 +81,44 @@ export default function ApplicationPage({
     } catch (error) {
       console.log(error);
     } finally {
-      setSpinner(false);
+      // setSpinner(false);
     }
   };
-  const handleGeneratePdf = () => {
-    // const doc = new jsPDF({
-    //   format: "a4",
-    //   unit: "px",
-    // });
 
-    // // Adding the fonts.
-    // doc.setFont("Inter-Regular", "normal");
+  const checkIframeLoaded = () => {
+    if (window.location.host.includes("regulator.upsmfac")) {
+      const iframeElem = document.getElementById("enketo_OGA_preview");
+      var iframeContent =
+        iframeElem?.contentDocument || iframeElem?.contentWindow.document;
+      if (!iframeContent) return;
 
-    html2canvas(
-      window.document
-        .querySelector("iframe")
-        .contentWindow.document.querySelector(".main")
-    ).then((canvas) => {
-      let base64image = canvas.toDataURL("image/png");
-      console.log(base64image);
-      let pdf = new jsPDF("p", "px", [1600, 1131]);
-      pdf.addImage(base64image, "PNG", 15, 15, 1110, 360);
-      pdf.save("enketo-form.pdf");
-    });
+      var section = iframeContent?.getElementsByClassName("or-group");
+      if (!section) return;
+      for (var i = 0; i < section?.length; i++) {
+        var inputElements = section[i].querySelectorAll("input");
+        inputElements.forEach((input) => {
+          input.disabled = true;
+        });
+      }
 
-    // doc.html(reportTemplateRef.current, {
-    //   async callback(doc) {
-    //     await doc.save("document");
-    //   },
-    // });
+      iframeContent.getElementById("submit-form").style.display = "none";
+      iframeContent.getElementById("save-draft").style.display = "none";
+
+      // Need to work on Save draft...
+      var draftButton = iframeContent.getElementById("save-draft");
+      draftButton?.addEventListener("click", function () {
+        alert("Hello world!");
+      });
+    }
+    setSpinner(false);
   };
 
   useEffect(() => {
+    setSpinner(true);
     fetchFormData();
+    setTimeout(() => {
+      checkIframeLoaded();
+    }, 2500);
   }, []);
 
   return (
@@ -150,11 +145,7 @@ export default function ApplicationPage({
       <div className={`container m-auto min-h-[calc(100vh-148px)] px-3 py-12`}>
         <div className="flex flex-col gap-12">
           <div className="flex flex-row">
-            <div className="flex grow justify-start items-center">
-              <h1 className="text-2xl font-bold uppercase">
-                {formName.split("_").join(" ")}
-              </h1>
-            </div>
+            <div className="flex grow justify-start items-center"></div>
             <div className="flex grow gap-4 justify-end items-center">
               <button
                 onClick={() => setRejectModel(true)}
@@ -194,7 +185,6 @@ export default function ApplicationPage({
                     ? "invisible cursor-not-allowed flex flex-wrap items-center justify-center gap-2 border border-gray-500 text-gray-500 bg-white w-[140px] h-[40px] font-medium rounded-[4px]"
                     : "flex flex-wrap items-center justify-center gap-2 border border-gray-500 text-gray-500 bg-white w-[140px] h-[40px] font-medium rounded-[4px]"
                 }
-                // className="flex flex-wrap items-center justify-center gap-2 border border-gray-500 text-gray-500 bg-white w-[140px] h-[40px] font-medium rounded-[4px]"
               >
                 Approve
                 <span>
@@ -219,9 +209,9 @@ export default function ApplicationPage({
             </div>
           </div>
           <div className="flex flex-row gap-4">
-            <div className="flex w-[30%]">
+            {/* <div className="flex w-[30%]">
               <Sidebar />
-            </div>
+            </div> */}
             <div className="flex w-full flex-col gap-4">
               <Card
                 moreClass="flex flex-col shadow-md border border-[#F5F5F5] gap-4"
@@ -259,9 +249,9 @@ export default function ApplicationPage({
               </Card>
               <Card moreClass="shadow-md">
                 <iframe
-                  id="enketo_form_preview"
+                  id="enketo_OGA_preview"
                   title="form"
-                  src={`${ENKETO_URL}preview?formSpec=${encodeURI(
+                  src={`${ENKETO_URL}/preview?formSpec=${encodeURI(
                     JSON.stringify(formSpec)
                   )}&xform=${encodedFormURI}&userId=${userId}`}
                   style={{ minHeight: "100vh", width: "100%" }}

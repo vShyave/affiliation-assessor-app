@@ -74,7 +74,7 @@ const FormsOverview = () => {
       accessor: "round",
     },
     {
-      Header: "Course type",
+      Header: "Course Type",
       accessor: "course_type",
     },
     {
@@ -114,7 +114,7 @@ const FormsOverview = () => {
       accessor: "round",
     },
     {
-      Header: "Course Name",
+      Header: "Course Type",
       accessor: "course_type",
     },
     {
@@ -149,7 +149,7 @@ const FormsOverview = () => {
       accessor: "round",
     },
     {
-      Header: "Course Name",
+      Header: "Course Type",
       accessor: "course_type",
     },
     {
@@ -564,15 +564,22 @@ const FormsOverview = () => {
     ]);
 
     const formData = {
-      course_type: formDataObject[0]?.course_type,
-      course_level: formDataObject[0]?.course_level,
-      course_name: formDataObject[0]?.title,
-      formObject: objectRes,
-      form_id: formDataObject?.[0]?.form_id,
-      application_type: formDataObject[0]?.application_type,
-      course_desc: formDataObject[0]?.form_desc,
-      assignee: formDataObject[0]?.assignee,
+      courses: [
+        {
+          course_type: formDataObject[0]?.course_type,
+          course_level: formDataObject[0]?.course_level,
+          course_name: formDataObject[0]?.title,
+          formObject: objectRes,
+          form_id: formDataObject?.[0]?.form_id,
+          application_type: formDataObject[0]?.application_type,
+          course_desc: formDataObject[0]?.form_desc,
+          assignee: formDataObject[0]?.assignee,
+          round: formDataObject[0]?.round,
+        },
+      ],
     };
+
+    console.log("formData - ", formData);
 
     try {
       setSpinner(true);
@@ -662,7 +669,7 @@ const FormsOverview = () => {
         <div className="flex flex-col gap-8">
           <div className="flex flex-col gap-4">
             <div>
-              <h1 className="text-2xl font-medium">Manage Forms</h1>
+              <h1 className="text-xl font-semibold">Manage Forms</h1>
             </div>
           </div>
           <div className="flex flex-col gap-4">
