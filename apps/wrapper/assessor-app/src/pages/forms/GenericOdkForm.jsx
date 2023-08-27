@@ -11,6 +11,7 @@ import {
   registerEvent,
   saveFormSubmission,
   updateFormStatus,
+  getPrefillXML,
 } from "../../api";
 import {
   getCookie,
@@ -20,6 +21,7 @@ import {
   removeItemFromLocalForage,
   getSpecificDataFromForage,
   getLocalTimeInISOFormat,
+  getFromLocalForage,
 } from "../../utils";
 
 import CommonLayout from "../../components/CommonLayout";
@@ -127,7 +129,6 @@ const GenericOdkForm = (props) => {
 
       if (isComplete) {
         // call event
-
         registerEvent({
           created_date: getLocalTimeInISOFormat(),
           entity_id: `${parent_form_id}`,
@@ -145,6 +146,25 @@ const GenericOdkForm = (props) => {
     }
   };
 
+  const getDataFromLocal = async () => {
+    const id = user?.userRepresentation?.id;
+    let formData = await getFromLocalForage(
+      `${formName}_${new Date().toISOString().split("T")[0]}`
+    );
+
+    let fileGCPPath =
+      process.env.REACT_APP_GCP_AFFILIATION_LINK + formName + ".xml";
+
+    let formURI = await getPrefillXML(
+      `${fileGCPPath}`,
+      formSpec.onSuccess,
+      formData?.formData || formData?.form_data,
+      formData?.imageUrls
+    );
+
+    setEncodedFormURI(formURI);
+  };
+
   async function afterFormSubmit(e, saveFlag) {
     const data = typeof e.data === "string" ? JSON.parse(e.data) : e.data;
 
@@ -152,6 +172,7 @@ const GenericOdkForm = (props) => {
       const { nextForm, formData, onSuccessData, onFailureData } = data;
       if (data?.state === "ON_FORM_SUCCESS_COMPLETED") {
         if (!previewFlag) {
+          getDataFromLocal();
           handleRenderPreview();
         } else {
           // For read-only forms, it will disable the Submit...
@@ -175,7 +196,6 @@ const GenericOdkForm = (props) => {
             applicant_form_id: getCookie("courses_data")[formName],
             round: getCookie("parent_form_round"),
             form_status: saveFlag === "draft" ? "" : "In Progress",
-            // course_id:
           });
 
           await getFormStatus();
@@ -185,7 +205,10 @@ const GenericOdkForm = (props) => {
             new Date().toISOString().split("T")[0]
           }`;
           removeItemFromLocalForage(key);
-          setTimeout(() => navigate(`${ROUTE_MAP.thank_you}${formName}`), 2000);
+
+          setPreviewModal(false);
+          previewFlag = false;
+          setTimeout(() => navigate(`${ROUTE_MAP.thank_you}${formName}`), 1000);
         }
       }
 
@@ -257,6 +280,7 @@ const GenericOdkForm = (props) => {
   const handleRenderPreview = () => {
     setPreviewModal(true);
     previewFlag = true;
+
     setTimeout(() => {
       const iframeElem = document.getElementById("preview-enketo-form");
       if (window.location.host.includes("localhost")) {
@@ -300,20 +324,6 @@ const GenericOdkForm = (props) => {
       setPrefilledFormData(null);
     };
   }, []);
-
-  useEffect(() => {
-    getFormData({
-      loading,
-      scheduleId,
-      formSpec,
-      startingForm,
-      formId,
-      setData,
-      setEncodedFormSpec,
-      setEncodedFormURI,
-      isPreview,
-    });
-  }, [isPreview]);
 
   /* 
   async function fetchIframeResources(iframeUrl) {

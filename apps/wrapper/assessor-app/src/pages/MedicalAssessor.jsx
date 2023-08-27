@@ -45,7 +45,6 @@ const MedicalAssessor = () => {
     const user = getCookie("userData");
     const email = user?.userRepresentation?.email;
     getAssessorDetails(email);
-    console.log(user);
     const roles = user?.userRepresentation?.attributes?.Role?.[0];
     setRole(roles);
   }, []);
