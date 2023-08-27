@@ -94,7 +94,6 @@ export default function DesktopAnalysisView() {
 
     const postData = { form_id: formId };
     try {
-      setSpinner(true);
       const res = await getFormData(postData);
       formData = res.data.form_submissions[0];
 
@@ -121,7 +120,7 @@ export default function DesktopAnalysisView() {
     } catch (error) {
       console.log(error);
     } finally {
-      setSpinner(false);
+      // setSpinner(false);
     }
   };
 
@@ -294,14 +293,17 @@ export default function DesktopAnalysisView() {
         iframeContent.getElementById("save-draft").style.display = "none";
       }
 
+      // Need to work on Save draft...
       var draftButton = iframeContent.getElementById("save-draft");
       draftButton?.addEventListener("click", function () {
         alert("Hello world!");
       });
     }
+    setSpinner(false);
   };
 
   useEffect(() => {
+    setSpinner(true);
     fetchFormData();
     bindEventListener();
   }, []);

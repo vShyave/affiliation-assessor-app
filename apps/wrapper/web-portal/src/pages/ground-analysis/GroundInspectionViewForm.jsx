@@ -64,10 +64,9 @@ export default function ApplicationPage({
   const fetchFormData = async () => {
     const postData = { form_id: formId };
     try {
-      setSpinner(true);
+      // setSpinner(true);
       const res = await getFormData(postData);
       const formData = res.data.form_submissions[0];
-      console.log("formData - ", formData);
       const statusOfForm = formData?.form_status;
       setFormStatus(statusOfForm);
       const form_path = `${GCP_URL}${formData?.form_name}.xml`;
@@ -82,7 +81,7 @@ export default function ApplicationPage({
     } catch (error) {
       console.log(error);
     } finally {
-      setSpinner(false);
+      // setSpinner(false);
     }
   };
 
@@ -105,16 +104,18 @@ export default function ApplicationPage({
       iframeContent.getElementById("submit-form").style.display = "none";
       iframeContent.getElementById("save-draft").style.display = "none";
 
+      // Need to work on Save draft...
       var draftButton = iframeContent.getElementById("save-draft");
       draftButton?.addEventListener("click", function () {
         alert("Hello world!");
       });
     }
+    setSpinner(false);
   };
 
   useEffect(() => {
+    setSpinner(true);
     fetchFormData();
-
     setTimeout(() => {
       checkIframeLoaded();
     }, 2500);
