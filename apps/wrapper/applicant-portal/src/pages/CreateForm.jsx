@@ -40,6 +40,9 @@ const CreateForm = (props) => {
   const [onFormFailureData, setOnFormFailureData] = useState(undefined);
   const [isDownloading, setIsDownloading] = useState(false);
 
+  // Spinner Element
+  const spinner = document.getElementById("backdrop");
+
   const [assData, setData] = useState({
     district: "",
     instituteName: "",
@@ -262,7 +265,7 @@ const CreateForm = (props) => {
   };
 
   const handleGoBack = () => {
-    navigate(-1);
+    navigate(`${APPLICANT_ROUTE_MAP.dashboardModule.my_applications}`);
   };
 
   const handleFormDownload = async () => {
@@ -287,10 +290,15 @@ const CreateForm = (props) => {
   };
 
   const checkIframeLoaded = () => {
+    if (spinner) {
+      spinner.style.display = "none";
+    }
+
     if (window.location.host.includes("applicant.upsmfac")) {
       const iframeElem = document.getElementById("enketo_DA_preview");
       var iframeContent =
         iframeElem?.contentDocument || iframeElem?.contentWindow.document;
+      if (!iframeContent) return;
       if (applicantStatus && applicantStatus?.toLowerCase() !== "returned") {
         var section = iframeContent?.getElementsByClassName("or-group");
         if (!section) return;
@@ -305,6 +313,7 @@ const CreateForm = (props) => {
         iframeContent.getElementById("save-draft").style.display = "none";
       }
 
+      // Need to work on Save draft...
       var draftButton = iframeContent.getElementById("save-draft");
       draftButton?.addEventListener("click", function () {
         alert("Hello world!");
@@ -316,6 +325,9 @@ const CreateForm = (props) => {
     fetchFormData();
     bindEventListener();
 
+    if (spinner) {
+      spinner.style.display = "flex";
+    }
     setTimeout(() => {
       checkIframeLoaded();
     }, 2500);
@@ -329,16 +341,13 @@ const CreateForm = (props) => {
       <div className="h-[48px] bg-white drop-shadow-sm">
         <div className="container mx-auto px-3 py-3">
           <div className="flex flex-row font-bold gap-2 items-center">
-            <Link>
-              <span
-                onClick={handleGoBack}
-                className="text-primary-400 flex flex-row gap-2"
-              >
+            <Link to={APPLICANT_ROUTE_MAP.dashboardModule.my_applications}>
+              <div className="text-primary-400 flex flex-row gap-2">
                 <div className="flex items-center">
                   <FaArrowLeft className="text-[16px]" />
                 </div>
-                Back
-              </span>
+                My Applications
+              </div>
             </Link>
             <FaAngleRight className="text-[16px]" />
             <span className="text-gray-500">Create form</span>
@@ -369,6 +378,7 @@ const CreateForm = (props) => {
             </button>
           </div>
         </div>
+
         <Card moreClass="shadow-md">
           <div className="flex flex-col gap-5">
             <div className="flex flex-grow gap-3 justify-end">
