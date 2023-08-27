@@ -2,7 +2,13 @@ import React, { useEffect, useState, useRef } from "react";
 import { Link, useParams, useNavigate } from "react-router-dom";
 import XMLParser from "react-xml-parser";
 
-import { FaAngleRight, FaArrowLeft, FaFileDownload } from "react-icons/fa";
+import {
+  FaAngleRight,
+  FaArrowLeft,
+  FaFileDownload,
+  FaDownload,
+  FaRegTimesCircle,
+} from "react-icons/fa";
 
 import {
   getCookie,
@@ -17,6 +23,7 @@ import APPLICANT_ROUTE_MAP from "../routes/ApplicantRoute";
 import { Card } from "../components";
 import CommonModal from "../Modal";
 import Toast from "../components/Toast";
+import "./loading.css";
 
 import { getFormData, base64ToPdf, getLocalTimeInISOFormat } from "../api";
 import {
@@ -39,6 +46,8 @@ const CreateForm = (props) => {
   const [formDataNoc, setFormDataNoc] = useState({});
   const [onFormFailureData, setOnFormFailureData] = useState(undefined);
   const [isDownloading, setIsDownloading] = useState(false);
+  const [previewModal, setPreviewModal] = useState(false);
+  let previewFlag = false;
 
   // Spinner Element
   const spinner = document.getElementById("backdrop");
@@ -129,7 +138,13 @@ const CreateForm = (props) => {
     try {
       const { nextForm, formData, onSuccessData, onFailureData } = data;
       if (data?.state === "ON_FORM_SUCCESS_COMPLETED") {
-        setOnSubmit(true);
+        console.log("previewFlag - ", previewFlag);
+
+        if (!previewFlag) {
+          handleRenderPreview();
+        } else {
+          handleSubmit();
+        }
       }
 
       if (nextForm?.type === "form") {
@@ -151,6 +166,29 @@ const CreateForm = (props) => {
     }
   };
 
+  const handleRenderPreview = () => {
+    setPreviewModal(true);
+    previewFlag = true;
+    setTimeout(() => {
+      const iframeElem = document.getElementById("preview-enketo-form");
+      if (window.location.host.includes("localhost")) {
+        return;
+      }
+      let iframeContent =
+        iframeElem?.contentDocument || iframeElem?.contentWindow.document;
+      if (!iframeContent) return;
+      let section = iframeContent?.getElementsByClassName("or-group");
+      if (!section) return;
+      for (var i = 0; i < section?.length; i++) {
+        var inputElements = section[i].querySelectorAll("input");
+        inputElements.forEach((input) => {
+          input.disabled = true;
+        });
+      }
+      iframeContent.getElementById("save-draft").style.display = "none";
+    }, 1500);
+  };
+
   const handleSubmit = async () => {
     const updatedFormData = await updateFormData(formSpec.start, userId);
     const course_details = await getSpecificDataFromForage("course_details");
@@ -169,6 +207,8 @@ const CreateForm = (props) => {
       course_level: course_details?.course_level,
       course_id: course_details?.course_id,
     };
+
+    console.log("applicantStatus - ", applicantStatus);
 
     if (!applicantStatus) {
       await saveFormSubmission({
@@ -295,7 +335,7 @@ const CreateForm = (props) => {
     }
 
     if (window.location.host.includes("applicant.upsmfac")) {
-      const iframeElem = document.getElementById("enketo_DA_preview");
+      const iframeElem = document.getElementById("enketo-applicant-form");
       var iframeContent =
         iframeElem?.contentDocument || iframeElem?.contentWindow.document;
       if (!iframeContent) return;
@@ -426,6 +466,49 @@ const CreateForm = (props) => {
               >
                 Yes! Submit
               </div>
+            </div>
+          </CommonModal>
+        )}
+
+        {previewModal && (
+          <CommonModal
+            moreStyles={{
+              padding: "1rem",
+              maxWidth: "95%",
+              minWidth: "90%",
+              maxHeight: "90%",
+            }}
+          >
+            <div className="flex flex-row w-full items-center cursor-pointer gap-4">
+              <div className="flex flex-grow font-bold text-xl">
+                Preview and Submit form
+              </div>
+              <div className="flex flex-grow gap-3 justify-end items-center">
+                {!isDownloading && (
+                  <div onClick={handleFormDownload}>
+                    <FaDownload className="text-[36px]" />
+                  </div>
+                )}
+                {isDownloading && <div className="loader"></div>}
+
+                <FaRegTimesCircle
+                  className="text-[36px]"
+                  onClick={() => {
+                    setPreviewModal(false);
+                    previewFlag = false;
+                  }}
+                />
+              </div>
+            </div>
+            <div className="flex flex-col justify-center w-full py-4">
+              <iframe
+                title="form"
+                id="preview-enketo-form"
+                src={`${ENKETO_URL}/preview?formSpec=${encodeURI(
+                  JSON.stringify(formSpec)
+                )}&xform=${encodedFormURI}&userId=${userId}`}
+                style={{ height: "80vh", width: "100%" }}
+              />
             </div>
           </CommonModal>
         )}
