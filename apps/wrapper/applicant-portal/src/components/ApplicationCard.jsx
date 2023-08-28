@@ -40,12 +40,11 @@ const ApplicationCard = (props) => {
     try {
       const paymentRes = await applicantService.initiatePayment(postData);
       await window.open(paymentRes?.data?.redirectUrl);
-    } catch (error) {
-    }
+    } catch (error) {}
   };
 
   return (
-    <Card moreClass="flex flex-col border-gray-100 m-3 gap-5 w-[300px] border-[1px] drop-shadow justify-between">
+    <Card moreClass="flex flex-col border-gray-100 m-3 gap-5 w-[320px] border-[1px] drop-shadow justify-between">
       <div className="flex flex-col gap-2">
         <div className="text-xl font-medium">{formName}</div>
         <div className="text-sm">
@@ -83,7 +82,8 @@ const ApplicationCard = (props) => {
             className={`text-xs p-1 rounded-md ${
               props.application.payment_status?.toLowerCase() === "in progress"
                 ? "text-yellow-800"
-                : props.application.payment_status?.toLowerCase() === "resubmitted"
+                : props.application.payment_status?.toLowerCase() ===
+                  "resubmitted"
                 ? "text-indigo-700"
                 : props.application.payment_status?.toLowerCase() ===
                   "inspection scheduled"
@@ -124,7 +124,7 @@ const ApplicationCard = (props) => {
           text="Pay"
           onClick={handlePayment}
           otherProps={{
-            disabled: props?.application?.payment_status !== "Pending" 
+            disabled: props?.application?.payment_status !== "Pending",
           }}
         ></Button>
       </div>
