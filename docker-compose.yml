@@ -207,11 +207,11 @@ services:
   #   ports:
   #     - 3000:80
 
-  # centro:
-  #   image: centro
-  #   build: packages/centro
-  #   ports: 
-  #     - 3560:3560
+  centro:
+    image: centro
+    build: packages/centro
+    ports: 
+      - 3560:3560
       
 
 networks:
