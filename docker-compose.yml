@@ -212,6 +212,10 @@ services:
     build: packages/centro
     ports: 
       - 3560:3560
+    environment:
+      GCP_BUCKET_NAME: ${GCP_BUCKET_NAME}
+      GCP_PROJECT_ID: ${GCP_PROJECT_ID}
+      GOOGLE_APPLICATION_CREDENTIALS: ${GOOGLE_APPLICATION_CREDENTIALS}
       
 
 networks:

@@ -6,39 +6,73 @@ const url = require( 'url' );
 const utils = require( '../lib/utils' );
 const libxmljs = require( 'libxmljs' );
 // const debug = require( 'debug' )( 'Xform model' );
+const { Storage } = require('@google-cloud/storage');
+const storage = new Storage({
+    projectId: "upsmf-368011",
+    keyFilename: "keys/service-account-key.json"
+  });
 
+const GCS_BUCKET_NAME =  "dev-public-upsmf";
 // TODO move
 const FORMSTORAGEPATH = path.resolve( __dirname, '../../storage/forms' );
+const bucket = storage.bucket(GCS_BUCKET_NAME);
 
 class Xform {
 
     constructor( id ) {
         this.id = id;
-        this.path = path.join( FORMSTORAGEPATH, id + '.xml' );
+        // this.path = path.join( FORMSTORAGEPATH, id + '.xml' );
+        // this.path = `https://storage.googleapis.com/${GCS_BUCKET_NAME}`, `${this.id}.xml`;
     }
+
+    // initialize() {
+    //     const xform = this;
+    //     return new Promise( function( resolve, reject ) {
+    //         // mimicking future async db query
+    //         fs.readFile( xform.path, 'utf-8', ( error, data ) => {
+    //             if ( error ) {
+    //                 reject( error );
+    //             } else {
+    //                 xform.data = data;
+    //                 //that.data = '<data>dfdsa';
+    //                 try {
+    //                     xform.doc = libxmljs.parseXml( xform.data );
+    //                     xform.namespaces = xform._getNamespaces();
+    //                     //debug( 'defaultNamespace', JSON.stringify( that.defaultNamespace[ 0 ] ) );
+    //                     resolve( true );
+    //                 } catch ( e ) {
+    //                     const err = new Error( 'XML Error in form "' + xform.id + '": ' + JSON.stringify( e ) );
+    //                     reject( err );
+    //                 }
+    //             }
+    //         } );
+    //     } );
+    // }
 
     initialize() {
         const xform = this;
-        return new Promise( function( resolve, reject ) {
-            // mimicking future async db query
-            fs.readFile( xform.path, 'utf-8', ( error, data ) => {
-                if ( error ) {
-                    reject( error );
+    
+        return new Promise((resolve, reject) => {
+            // Read the XML file from GCS
+            
+            const file = bucket.file(`${xform.id}.xml`);
+            
+            file.download((err, contents) => {
+                if (err) {
+                    reject(err);
                 } else {
-                    xform.data = data;
-                    //that.data = '<data>dfdsa';
+                    xform.data = contents.toString('utf-8');
                     try {
-                        xform.doc = libxmljs.parseXml( xform.data );
+                        xform.doc = libxmljs.parseXml(xform.data);
                         xform.namespaces = xform._getNamespaces();
-                        //debug( 'defaultNamespace', JSON.stringify( that.defaultNamespace[ 0 ] ) );
-                        resolve( true );
-                    } catch ( e ) {
-                        const err = new Error( 'XML Error in form "' + xform.id + '": ' + JSON.stringify( e ) );
-                        reject( err );
+                        resolve(true);
+                    } catch (e) {
+                        const err = new Error(`XML Error in form "${xform.id}": ${JSON.stringify(e)}`);
+                        reject(err);
                     }
                 }
-            } );
-        } );
+            });
+        });
     }
 
     getProperties( baseUrl, verbose ) {
@@ -119,20 +153,41 @@ class Xform {
 
     _getDescriptionUrl() { return ''; }
 
-    _getDownloadUrl( baseUrl ) { return url.resolve( baseUrl, path.join( 'form', this.id, 'form.xml' ) ) }
+    // _getDownloadUrl( baseUrl ) { return url.resolve( baseUrl, path.join( 'form', this.id, 'form.xml' ) ) }
+    _getDownloadUrl(baseUrl) {
+        // Construct the GCS URL for the XML file
+        const gcsUrl = url.resolve(`https://storage.googleapis.com/${GCS_BUCKET_NAME}`, `${this.id}.xml`);
+        return gcsUrl;
+    }
 
-    _getManifestUrl( baseUrl ) {
+    // _getManifestUrl( baseUrl ) {
+    //     const xform = this;
+
+    //     return new Promise( ( resolve, reject ) => {
+    //         fs.readdir( path.join( FORMSTORAGEPATH, xform.id + '-media' ), ( error, files ) => {
+    //             if ( error || files.length === 0 ) {
+    //                 resolve( null );
+    //             } else {
+    //                 resolve( url.resolve( baseUrl, path.join( '/form/', xform.id, '/manifest.xml' ) ) );
+    //             }
+    //         } );
+    //     } );
+    // }
+
+    _getManifestUrl(baseUrl) {
         const xform = this;
 
-        return new Promise( ( resolve, reject ) => {
-            fs.readdir( path.join( FORMSTORAGEPATH, xform.id + '-media' ), ( error, files ) => {
-                if ( error || files.length === 0 ) {
-                    resolve( null );
+        return new Promise((resolve, reject) => {
+            // Use GCS API to list objects in the bucket
+            bucket.getFiles({ prefix: `${xform.id}-media/` }, (err, files) => {
+                if (err || files.length === 0) {
+                    resolve(null);
                 } else {
-                    resolve( url.resolve( baseUrl, path.join( '/form/', xform.id, '/manifest.xml' ) ) );
+                    const manifestUrl = url.resolve(baseUrl, path.join('/form/', xform.id, '/manifest.xml'));
+                    resolve(manifestUrl);
                 }
-            } );
-        } );
+            });
+        });
     }
 }
 
