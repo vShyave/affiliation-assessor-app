@@ -350,6 +350,7 @@ export default function OnGroundInspectionAnalysis() {
             {state.menu_selected === "In Progress" && (
               <div className="flex flex-col gap-4">
                 <FilteringTable
+
                   dataList={resData.filter(
                     (item) => item.form_status === "In Progress"
                   )}
