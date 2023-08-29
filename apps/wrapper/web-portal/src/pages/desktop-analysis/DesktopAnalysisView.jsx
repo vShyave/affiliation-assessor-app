@@ -326,7 +326,7 @@ export default function DesktopAnalysisView() {
             </Link>
             <FaAngleRight className="text-[16px]" />
             <span className="text-gray-500 uppercase">
-              {formName.split("_").join(" ")}
+              {formDataFromApi?.course?.course_name.split("_").join(" ")}
             </span>
           </div>
         </div>
