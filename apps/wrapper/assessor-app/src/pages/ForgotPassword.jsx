@@ -7,34 +7,40 @@ import Button from "../components/Button";
 import OtpInput from "react-otp-input";
 
 import { sendOtpToMobile, verifyOtpSavePassword } from "../api";
-import { logout } from "./../utils/index"; 
+import { logout } from "./../utils/index";
+import { generateOTP } from "../api";
 
 const ForgotPassword = () => {
   const navigate = useNavigate();
-  const [mobile, setMobile] = useState("");
+  const [mobile, setEmail] = useState("");
   const [otp, setOtp] = useState("");
   const [error, setError] = useState(false);
   const [otpPage, setOtpPage] = useState(false);
-  const [changePassPage, setChangePassPage] = useState(false);
+  const [changePasswordPage, setChangePasswordPage] = useState(false);
   const [passChanged, setPassChanged] = useState(false);
   const [newPass, setNewPass] = useState("");
   const [newPassConfirm, setNewPassConfirm] = useState("");
 
-  const handleMobileInput = (val) => {
-    if (/^[0-9]*$/.test(val) && val.length <= 10) setMobile(val);
+  let email = "";
+  const handleEmail = async (val) => {
+    email = val;
   };
 
   const handleResetToLogin = () => {
     logout();
-  }
+  };
 
-  const showPassScreen = () => {
-    if (mobile.length != 10) {
+  const handleVerifyEmail = async () => {
+    let emailRegex = /^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z]{2,}$/;
+    if (!emailRegex.test(email)) {
       setError(true);
       setTimeout(() => setError(false), 3000);
       return;
+    } else {
+      setEmail(email);
+      let res = await generateOTP(email);
+      setOtpPage(true);
     }
-    setChangePassPage(true);
   };
 
   const verifyOtpAndChangePassword = async () => {
@@ -88,30 +94,81 @@ const ForgotPassword = () => {
   };
 
   return (
-   <CommonLayout back={ROUTE_MAP.login} logoutDisabled pageTitle="Reset Password">
-      {!otpPage && !changePassPage && !passChanged && (
+    <CommonLayout
+      back={ROUTE_MAP.login}
+      logoutDisabled
+      pageTitle="Reset Password"
+    >
+      {/* Entering email id for password change */}
+      {!otpPage && !changePasswordPage && !passChanged && (
         <div className="flex flex-col px-10 py-8 h-100 justify-between h-[90%]">
           <div className="w-full">
             <p className="text-secondary text-2xl font-bold">
-              Enter your registered mobile number
+              Enter a valid email id
             </p>
             <input
               className={`${
                 error && "border-red-500 animate__animated animate__headShake"
               } border-2 rounded px-3 py-4 text-xl mt-10 w-full`}
-              value={mobile}
-              onChange={(e) => handleMobileInput(e.target.value)}
+              type="email"
+              onChange={(e) => handleEmail(e.target.value)}
             />
             {error && (
               <p className="text-red-500 text-sm font-bold py-1">
-                {error.length ? error : "Please enter a valid mobile number"}
+                {error.length ? error : "Please enter a valid email id"}
               </p>
             )}
           </div>
-          <Button text="Next" onClick={showPassScreen} />
+          <Button text="Next" onClick={handleVerifyEmail} />
         </div>
       )}
-      {!otpPage && changePassPage && !passChanged && (
+
+      {/* Entering OTP to change the password  */}
+      {otpPage && !passChanged && (
+        <div className="flex flex-col px-10 py-8 h-100 justify-between h-[90%]">
+          <div className="w-full">
+            <p className="text-secondary text-xl lg:text-2xl font-bold">
+              Enter OTP sent on{" "}
+            </p>
+            <p className="text-primary text-2xl lg:text-3xl font-bold py-4">
+              {email}
+            </p>
+            <style>
+              {`
+                .error-otp {
+                    border: 1.5px solid red !important;
+                }
+              `}
+            </style>
+            <OtpInput
+              value={otp}
+              onChange={setOtp}
+              numInputs={6}
+              containerStyle={"w-full py-6"}
+              inputStyle={{
+                border: "1px solid #9b9b9b",
+                borderRadius: "0.25rem",
+                marginRight: "1rem",
+                height: "4rem",
+                width: "3rem",
+                fontSize: "1.5rem",
+                color: "rgba(0,0,0,0.5)",
+              }}
+              isInputNum
+              hasErrored={error}
+              errorStyle={"animate__animated animate__headShake error-otp"}
+              shouldAutoFocus={true}
+            />
+            {error && (
+              <p className="text-red-500 text-sm font-bold py-1">{error} </p>
+            )}
+          </div>
+          <Button text="Verify OTP" onClick={verifyOtpAndChangePassword} />
+        </div>
+      )}
+
+      {/* Change password page  */}
+      {!otpPage && changePasswordPage && !passChanged && (
         <div className="flex flex-col px-10 py-8 h-100 justify-between h-[90%]">
           <div className="w-full">
             <p className="text-secondary text-xl font-bold">
@@ -150,48 +207,8 @@ const ForgotPassword = () => {
           <Button text="Next" onClick={sendOtp} />
         </div>
       )}
-      {otpPage && !passChanged && (
-        <div className="flex flex-col px-10 py-8 h-100 justify-between h-[90%]">
-          <div className="w-full">
-            <p className="text-secondary text-xl lg:text-2xl font-bold">
-              Enter OTP sent on{" "}
-            </p>
-            <p className="text-primary text-2xl lg:text-3xl font-bold py-4">
-              {mobile || "9654591151"}
-            </p>
-            <style>
-              {`
-                            .error-otp {
-                                border: 1.5px solid red !important;
-                            }
-                        `}
-            </style>
-            <OtpInput
-              value={otp}
-              onChange={setOtp}
-              numInputs={6}
-              containerStyle={"w-full py-6"}
-              inputStyle={{
-                border: "1px solid #9b9b9b",
-                borderRadius: "0.25rem",
-                marginRight: "1rem",
-                height: "4rem",
-                width: "3rem",
-                fontSize: "1.5rem",
-                color: "rgba(0,0,0,0.5)",
-              }}
-              isInputNum
-              hasErrored={error}
-              errorStyle={"animate__animated animate__headShake error-otp"}
-              shouldAutoFocus={true}
-            />
-            {error && (
-              <p className="text-red-500 text-sm font-bold py-1">{error} </p>
-            )}
-          </div>
-          <Button text="Verify OTP" onClick={verifyOtpAndChangePassword} />
-        </div>
-      )}
+
+      {/* Password changed successful page  */}
       {passChanged && (
         <div className="flex flex-col px-10 py-8 h-100 justify-between h-[90%]">
           <div className="w-full">

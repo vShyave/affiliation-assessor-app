@@ -23,6 +23,9 @@ const CreateForm = () => {
   });
   const { setSpinner, setToast } = useContext(ContextAPI);
 
+  let assigneePrefix = "";
+  assigneePrefix = formData?.assignee;
+
   const handleChange = (e) => {
     setFormData((prevState) => ({
       ...prevState,
@@ -36,8 +39,12 @@ const CreateForm = () => {
   };
 
   const handleFile = (file) => {
-    const formData = new FormData();
-    formData.append("file", file);
+    // const formData = new FormData();
+    // formData.append("file", file);
+    const formData = {
+      file: file,
+      prefix: assigneePrefix,
+    };
     uploadOdkForm(formData);
   };
 
