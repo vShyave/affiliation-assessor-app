@@ -67,17 +67,19 @@ function getXFormList( baseUrl, formId, verbose ) {
                 reject(err);
             } else {
                 files.forEach(file => {
-                    console.log("File Name", file.name);
-                    const id = file.name.substring(12, file.name.length - 4); // Extract form ID
-                    // Fetch XML content from GCS
-                    tasks.push(
-                        file.download()
-                            .then(data => new Xform(id, data.toString()).getProperties(baseUrl, verbose))
-                            .catch(error => {
-                                console.error(`Error fetching XML for form ${id}:`);
-                                return null;
-                            })
-                    );
+                    // console.log("File Name", file.name);
+                    if ( file.name.indexOf( '.xml' ) >= 0 ) {
+                        const id = file.name.substring(12, file.name.length - 4); // Extract form ID
+                        // Fetch XML content from GCS
+                        tasks.push(
+                            file.download()
+                                .then(data => new Xform(id).getProperties(baseUrl, verbose))
+                                .catch(error => {
+                                    console.error(`Error fetching XML for form ${id}:`);
+                                    return null;
+                                })
+                        );
+                    }
                 });
 
                 return Promise.all(tasks)
@@ -90,7 +92,7 @@ function getXFormList( baseUrl, formId, verbose ) {
                                 }
                             }
                         });
-                        console.log("Resolved form list", formList);
+                        // console.log("Resolved form list", formList);
                         resolve(formList);
                     })
                     .catch(error => {

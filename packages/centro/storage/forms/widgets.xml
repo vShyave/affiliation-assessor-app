@@ -7,7 +7,7 @@
         <h:title>Nursing Form-Medical (CRP)</h:title>
         <model odk:xforms-version="1.0.0">
             <instance>
-                <data id="Nursing Form-Medical (CRP)" version="1">
+                <data id="Nursing Form-Medical" version="1">
                     <username />
                     <start />
                     <end />

@@ -117,13 +117,16 @@ class Xform {
     }
 
     _getFormId() {
-        let id = this.doc.get( '//xmlns:model/xmlns:instance/node()[@id]', this.namespaces );
-        if ( !id ) {
-            throw new Error( 'id attribute not found for form "' + this.id + '"' );
-        }
-        // there has to be a better way to get this id and version...
-        id = id.attr( 'id' ).toString();
-        return id.substring( 5, id.length - 1 );
+        // let id = this.doc.get( '//xmlns:model/xmlns:instance/node()[@id]', this.namespaces );
+        // if ( !id ) {
+        //     throw new Error( 'id attribute not found for form "' + this.id + '"' );
+        // }
+        
+        // // there has to be a better way to get this id and version...
+        // id = id.attr( 'id' ).toString();
+        // console.log("Reading form Id", id);
+        // return id.substring( 5, id.length - 1 );
+        return this.id;
     }
 
     _getName() {
@@ -143,8 +146,9 @@ class Xform {
             return '';
         }
         // there has to be a better way to get this version...
-        version = version.attr( 'version' ).toString();
-        return version.substring( 10, version.length - 1 );
+        version= version.getAttribute("version")?.value();
+        // version = version.attr("version").toString();
+        return version;
     }
 
     _getHash() { return 'md5:' + utils.md5( this.data ); }
@@ -156,7 +160,7 @@ class Xform {
     // _getDownloadUrl( baseUrl ) { return url.resolve( baseUrl, path.join( 'form', this.id, 'form.xml' ) ) }
     _getDownloadUrl(baseUrl) {
         // Construct the GCS URL for the XML file
-        const gcsUrl = url.resolve(`https://storage.googleapis.com/${GCS_BUCKET_NAME}/affiliation`, `${this.id}.xml`);
+        const gcsUrl = url.resolve(`https://storage.googleapis.com/`, `/${GCS_BUCKET_NAME}/affiliation/${this.id}.xml`);
         return gcsUrl;
     }
 
