@@ -29,6 +29,7 @@ export default function ApplicationPage({
 }) {
   const reportTemplateRef = useRef(null);
   const [formStatus, setFormStatus] = useState("");
+  const [formDataFromApi, setFormDataFromApi] = useState();
   const [rejectModel, setRejectModel] = useState(false);
   const [rejectStatus, setRejectStatus] = useState(false);
   const [openModel, setOpenModel] = useState(false);
@@ -67,6 +68,8 @@ export default function ApplicationPage({
       // setSpinner(true);
       const res = await getFormData(postData);
       const formData = res.data.form_submissions[0];
+      setFormDataFromApi(res.data.form_submissions[0]);
+      console.log("formData - ", formData);
       const statusOfForm = formData?.form_status;
       setFormStatus(statusOfForm);
       const form_path = `${GCP_URL}${formData?.form_name}.xml`;
@@ -136,7 +139,7 @@ export default function ApplicationPage({
             </Link>
             <FaAngleRight className="text-[16px]" />
             <span className="text-gray-500 uppercase">
-              {formName.split("_").join(" ")}
+              {formDataFromApi?.course?.course_name.split("_").join(" ")}
             </span>
           </div>
         </div>
