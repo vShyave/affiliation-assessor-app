@@ -62,19 +62,19 @@ function getXFormList( baseUrl, formId, verbose ) {
     return new Promise((resolve, reject) => {
         const bucket = storage.bucket('dev-public-upsmf'); // Replace with your bucket name
 
-        bucket.getFiles({ prefix: '' }, (err, files) => {
+        bucket.getFiles({ prefix: 'affiliation/' }, (err, files) => {
             if (err) {
                 reject(err);
             } else {
                 files.forEach(file => {
                     console.log("File Name", file.name);
-                    const id = file.name.substring(0, file.name.length - 4); // Extract form ID
+                    const id = file.name.substring(12, file.name.length - 4); // Extract form ID
                     // Fetch XML content from GCS
                     tasks.push(
                         file.download()
                             .then(data => new Xform(id, data.toString()).getProperties(baseUrl, verbose))
                             .catch(error => {
-                                console.error(`Error fetching XML for form ${id}:`, error);
+                                console.error(`Error fetching XML for form ${id}:`);
                                 return null;
                             })
                     );
@@ -90,6 +90,7 @@ function getXFormList( baseUrl, formId, verbose ) {
                                 }
                             }
                         });
+                        console.log("Resolved form list", formList);
                         resolve(formList);
                     })
                     .catch(error => {

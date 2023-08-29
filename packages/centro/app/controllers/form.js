@@ -71,7 +71,7 @@ router
 
         try {
             
-            const file = bucket.file(`forms/${req.formId}.xml`);
+            const file = bucket.file(`affiliation/${req.formId}.xml`);
             const stream = file.createReadStream();
             stream.pipe(res);
         } catch (error) {
@@ -94,7 +94,7 @@ router
     })
     .get('/:formId/media/:filename', async (req, res, next) => {
         try {
-            const file = bucket.file(`forms/${req.formId}-media/${req.filename}`);
+            const file = bucket.file(`affiliation/${req.formId}-media/${req.filename}`);
             const stream = file.createReadStream();
             const [metadata] = await file.getMetadata();
             res.contentType(metadata.contentType);

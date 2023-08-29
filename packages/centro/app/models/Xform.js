@@ -55,7 +55,7 @@ class Xform {
         return new Promise((resolve, reject) => {
             // Read the XML file from GCS
             
-            const file = bucket.file(`${xform.id}.xml`);
+            const file = bucket.file(`affiliation/${xform.id}.xml`);
             
             file.download((err, contents) => {
                 if (err) {
@@ -156,7 +156,7 @@ class Xform {
     // _getDownloadUrl( baseUrl ) { return url.resolve( baseUrl, path.join( 'form', this.id, 'form.xml' ) ) }
     _getDownloadUrl(baseUrl) {
         // Construct the GCS URL for the XML file
-        const gcsUrl = url.resolve(`https://storage.googleapis.com/${GCS_BUCKET_NAME}`, `${this.id}.xml`);
+        const gcsUrl = url.resolve(`https://storage.googleapis.com/${GCS_BUCKET_NAME}/affiliation`, `${this.id}.xml`);
         return gcsUrl;
     }
 
@@ -179,7 +179,7 @@ class Xform {
 
         return new Promise((resolve, reject) => {
             // Use GCS API to list objects in the bucket
-            bucket.getFiles({ prefix: `${xform.id}-media/` }, (err, files) => {
+            bucket.getFiles({ prefix: `affiliation/${xform.id}-media/` }, (err, files) => {
                 if (err || files.length === 0) {
                     resolve(null);
                 } else {
