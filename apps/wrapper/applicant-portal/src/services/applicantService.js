@@ -50,6 +50,10 @@ const initiatePayment = async (postData) => {
   const res = await paymentService.post(APIS.PAYMENT.GENERATE_LINK, postData);
   return res;
 };
+const transactionStatus = async (postData) => {
+  const res = await axiosService.post(APIS.APPLICANT.ADD_TRANSACTION, postData);
+  return res;
+};
 
 export const applicantService = {
   addInstitute,
@@ -59,4 +63,5 @@ export const applicantService = {
   getNotifications,
   readNotification,
   initiatePayment,
+  transactionStatus
 };

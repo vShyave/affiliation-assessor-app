@@ -22,7 +22,6 @@ const CreateForm = () => {
     title: "",
   });
   const { setSpinner, setToast } = useContext(ContextAPI);
-
   let assigneePrefix = "";
   assigneePrefix = formData?.assignee;
 
@@ -39,15 +38,12 @@ const CreateForm = () => {
   };
 
   const handleFile = (file) => {
-    // const formData = new FormData();
-    // formData.append("file", file);
     const formData = {
       file: file,
       prefix: assigneePrefix,
     };
     uploadOdkForm(formData);
   };
-
   const handleSaveUpdateDraft = async (action) => {
     let postData = new FormData();
     Object.keys(formData).forEach((key) => postData.append(key, formData[key]));

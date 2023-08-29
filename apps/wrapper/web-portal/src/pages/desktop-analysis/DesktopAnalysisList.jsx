@@ -35,6 +35,7 @@ const DesktopAnalysisList = () => {
     limit: 10,
     totalCount: 0,
   });
+  const [paymentModal, setPaymentModal] = useState(false);
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [isFilterOpen, setIsFilterOpen] = useState(false);
   const { setSpinner } = useContext(ContextAPI);
@@ -228,6 +229,11 @@ const DesktopAnalysisList = () => {
     } finally {
       setSpinner(false);
     }
+  };
+
+  const handleViewSchedule = (data) => {
+    // setScheduleUserData(data);
+    setPaymentModal(true);
   };
 
   const filterApiCall = async (filters) => {
@@ -547,6 +553,12 @@ const DesktopAnalysisList = () => {
         </div>
         {viewPaymentModal.flag && <PaymentModal modalDetails={viewPaymentModal} setViewPaymentModal={setViewPaymentModal} />}
       </div>
+      {paymentModal && (
+        <PaymentModal
+          closeViewSchedulesModal={setPaymentModal}
+          // scheduleUserData={scheduleUserData}
+        ></PaymentModal>
+      )}
     </>
   );
 };
