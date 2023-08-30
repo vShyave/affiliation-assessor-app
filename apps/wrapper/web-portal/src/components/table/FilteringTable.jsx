@@ -64,7 +64,6 @@ const FilteringTable = (props) => {
                 } else {
                   return <Checkbox {...row.getToggleRowSelectedProps()} />;
                 }
-                // return <Checkbox {...row.getToggleRowSelectedProps()} />;
               },
             },
             ...columns,

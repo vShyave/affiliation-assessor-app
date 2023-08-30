@@ -450,3 +450,24 @@ export const getFormSubmissions = () => {
   };
   return makeHasuraCalls(query);
 };
+
+export const generateOTP = async (email) => {
+  try {
+    const res = await keyCloakAxiosService.post(
+      KEYCLOAK_BASE_URL + "keycloak/otp",
+      {
+        username: email,
+      },
+      {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: process.env.REACT_APP_AUTH_TOKEN,
+        },
+      }
+    );
+    return res.data;
+  } catch (err) {
+    console.log(err);
+    return err;
+  }
+};
