@@ -152,13 +152,14 @@ async function _uploadBatch(recordBatch, record) {
         controller.abort();
     }, settings.timeout);
 
-    // function getMeta(metaName) {
-    //     return document.querySelector(`meta[name=${metaName}]`).content;
-    // }
+    function getMeta(metaName) {
+        return document.querySelector(`meta[name=${metaName}]`).content;
+    }
 
-    // const formSpec = getMeta('formSpec') ;
-    const formController = new FormController();
-    const response = await formController.processFormNew(record.xml, record.files);
+    const formSpec = getMeta('formSpec') ;
+
+    const formController = formSpec ? new FormController(JSON.parse(formSpec)) : new FormController();
+    const response = formSpec ? await formController.processForm(record.xml, record.files) : await formController.processFormNew(record.xml, record.files);
     // TODO: transforrm the form response
     // TODO: submit the form
     formController.broadcastFormData();
