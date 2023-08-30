@@ -20,7 +20,7 @@ import {
 } from "./../forms";
 
 import APPLICANT_ROUTE_MAP from "../routes/ApplicantRoute";
-import { setCookie,  } from "../utils";
+import { setCookie } from "../utils";
 import { Button, Card } from "../components";
 import CommonModal from "../Modal";
 import Toast from "../components/Toast";
@@ -43,7 +43,7 @@ const CreateForm = (props) => {
 
   let { formName, formId, applicantStatus } = useParams();
   let [encodedFormURI, setEncodedFormURI] = useState("");
-  let [paymentDetails,setPaymentDetails] = useState("")
+  let [paymentDetails, setPaymentDetails] = useState("");
   let [onFormSuccessData, setOnFormSuccessData] = useState(undefined);
   let [formDataNoc, setFormDataNoc] = useState({});
   let [onFormFailureData, setOnFormFailureData] = useState(undefined);
@@ -118,7 +118,7 @@ const CreateForm = (props) => {
         const postData = { form_id: formId };
         const res = await getFormData(postData);
         formData = res?.data?.form_submissions[0];
-        setPaymentDetails(formData?.payment_status)
+        setPaymentDetails(formData?.payment_status);
         setFormDataNoc(formData);
       }
     }
@@ -312,9 +312,7 @@ const CreateForm = (props) => {
 
   const handlePayment = async () => {
     // setcookies here
-    setCookie(
-      "formId",formId
-    );
+    setCookie("formId", formId);
     const instituteDetails = getCookie("institutes");
     const instituteId = instituteDetails?.[0]?.id;
     const postData = {
@@ -349,7 +347,6 @@ const CreateForm = (props) => {
       await window.open(paymentRes?.data?.redirectUrl);
     } catch (error) {}
   };
-
 
   const handleFormDownload = async () => {
     try {
@@ -418,15 +415,9 @@ const CreateForm = (props) => {
 
     // To clean all variables
     return () => {
-      setEncodedFormURI("");
-      setOnFormSuccessData(undefined);
-      setFormDataNoc({});
-      setOnFormFailureData(undefined);
-      setIsDownloading(false);
-      setPreviewModal(false);
       previewFlag = false;
       removeAllFromLocalForage();
-      console.log("Create form is closed!");
+      window.removeEventListener("message", handleEventTrigger);
     };
   }, []);
 
@@ -474,15 +465,16 @@ const CreateForm = (props) => {
               Download NOC/Certificate
             </button>
             <button
-          className={`${
-            paymentDetails === "Pending"
-              ? "border border-blue-900 bg-blue-900 text-white rounded-[4px] px-2 h-[44px]"
-              : "cursor-not-allowed border border-gray-500 bg-white rounded-[4px] text-gray-200 px-2 h-[44px]"
-          }`}
-          disabled={paymentDetails === "Pending" ? false : true}
-          onClick={handlePayment}
-          
-        >Pay</button>
+              className={`${
+                paymentDetails === "Pending"
+                  ? "border border-blue-900 bg-blue-900 text-white rounded-[4px] px-2 h-[44px]"
+                  : "cursor-not-allowed border border-gray-500 bg-white rounded-[4px] text-gray-200 px-2 h-[44px]"
+              }`}
+              disabled={paymentDetails === "Pending" ? false : true}
+              onClick={handlePayment}
+            >
+              Pay
+            </button>
           </div>
         </div>
 

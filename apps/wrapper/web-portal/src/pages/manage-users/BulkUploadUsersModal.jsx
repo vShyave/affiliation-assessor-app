@@ -77,13 +77,6 @@ function BulkUploadUsersModal({ closeBulkUploadUsersModal }) {
   };
 
   const COLUMNS = [
-    // {
-    //   Header: "Code",
-    //   accessor: "code",
-    //   Cell: (props) => {
-    //     return <div>{isDataValid(props.value)}</div>;
-    //   },
-    // },
     {
       Header: "Email",
       accessor: "email",
@@ -212,17 +205,6 @@ function BulkUploadUsersModal({ closeBulkUploadUsersModal }) {
         client_id: "admin-api",
         client_secret: "edd0e83d-56b9-4c01-8bf8-bad1870a084a",
       };
-      //Access Token API call
-      // const accessTokenResponse = await userService.getAccessToken(
-      //   accessTokenObj
-      // );
-      // if (accessTokenResponse.status !== 200) {
-      //   errorFlag = true;
-      // }
-      // setCookie(
-      //   "access_token",
-      //   "Bearer " + accessTokenResponse?.data?.access_token
-      // );
       setCookie("access_token", process.env.REACT_APP_AUTH_TOKEN);
 
       //keycloak API call
@@ -330,14 +312,13 @@ function BulkUploadUsersModal({ closeBulkUploadUsersModal }) {
     } else {
       document.getElementById("schedule-bulk-assessment").disabled = true;
     }
-    // console.log(selectedRows);
   };
 
   return (
     <>
-      <div className="flex flex-col justify-center items-center fixed inset-0 bg-opacity-25 backdrop-blur-sm">
-        <div className="flex bg-white rounded-xl shadow-xl border border-gray-400 w-[860px] h-[560px] p-8">
-          <div className="flex flex-col justify-between w-full ">
+      <div className="flex flex-col justify-center items-center absolute inset-0 bg-opacity-25 backdrop-blur-sm z-100">
+        <div className="flex bg-white rounded-xl shadow-xl border border-gray-400 w-[960px] h-[560px] p-6 z-50">
+          <div className="flex flex-col justify-between w-full">
             <div className="flex text-xl font-semibold">
               <h1>Bulk upload users</h1>
 
@@ -362,7 +343,7 @@ function BulkUploadUsersModal({ closeBulkUploadUsersModal }) {
               </div>
             </div>
 
-            <div className="justify-center flex flex-col items-center gap-4">
+            <div className="flex flex-col justify-center gap-4">
               {(!tableDataReady || (tableDataReady && !isFileValid())) && (
                 <div className="flex flex-row m-auto">
                   <input
@@ -388,7 +369,7 @@ function BulkUploadUsersModal({ closeBulkUploadUsersModal }) {
               )}
               {tableDataReady && isFileValid() && (
                 <div className="items-center">
-                  <div className="text-2xl w-full mt-4 font-medium">
+                  <div className="text-2xl w-full font-medium">
                     <FilteringTable
                       moreHeight="h-[300px]"
                       pagination={false}

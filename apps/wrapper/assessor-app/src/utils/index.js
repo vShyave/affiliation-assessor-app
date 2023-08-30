@@ -123,6 +123,7 @@ export const isImage = (key, filename) => {
 export const getFromLocalForage = async (key) => {
   const user = getCookie("userData");
   try {
+    console.log(`key - ${user?.userRepresentation?.id}_${key}`);
     return await localforage.getItem(`${user?.userRepresentation?.id}_${key}`);
   } catch (err) {
     console.log(err);
@@ -167,9 +168,7 @@ export const handleFormEvents = async (startingForm, afterFormSubmit, e) => {
     var formData = new XMLParser().parseFromString(JSON.parse(e.data).formData);
     if (formData) {
       let images = JSON.parse(e.data).fileURLs;
-      let prevData = await getFromLocalForage(
-        startingForm + `${new Date().toISOString().split("T")[0]}`
-      );
+      let prevData = await getFromLocalForage(`${startingForm}_${new Date().toISOString().split("T")[0]}`);
       await setToLocalForage(`${user?.userRepresentation?.id}_${startingForm}_${new Date().toISOString().split("T")[0]}`,
         {
           formData: JSON.parse(e.data).formData,
@@ -212,21 +211,47 @@ export const getFormData = async ({
       longitude: assessment.institute.longitude,
     });
 
-    formData = await getFromLocalForage(`${startingForm}_${new Date().toISOString().split("T")[0]}`);
-    if (formData) {
-      setEncodedFormSpec(encodeURI(JSON.stringify(formSpec.forms[formId])));
+    if (formSpec.date) {
+      formData = await getSpecificDataFromForage("selected_assessment_form");
       prefillXMLArgs = [
         `${GCP_form_url}`,
-        formSpec.forms[formId].onSuccess,
-        formData.formData,
+        "",
+        formData.form_data,
         formData.imageUrls,
       ];
     } else {
-      prefillXMLArgs = [`${GCP_form_url}`, formSpec.forms[formId].onSuccess];
+      formData = await getFromLocalForage(`${startingForm}_${new Date().toISOString().split("T")[0]}`);
+      if (formData) {
+        setEncodedFormSpec(encodeURI(JSON.stringify(formSpec.forms[formId])));
+        prefillXMLArgs = [
+          `${GCP_form_url}`,
+          formSpec.forms[formId].onSuccess,
+          formData.formData,
+          formData.imageUrls,
+        ];
+      } else {
+        prefillXMLArgs = [`${GCP_form_url}`, formSpec.forms[formId].onSuccess];
+      }
     }
-
+    console.log("prefillXMLArgs - ", prefillXMLArgs);
     let prefilledForm = await getPrefillXML(...prefillXMLArgs);
     setEncodedFormURI(prefilledForm);
+
+    // formData = await getFromLocalForage(`${startingForm}_${new Date().toISOString().split("T")[0]}`);
+    // if (formData) {
+    //   setEncodedFormSpec(encodeURI(JSON.stringify(formSpec.forms[formId])));
+    //   prefillXMLArgs = [
+    //     `${GCP_form_url}`,
+    //     formSpec.forms[formId].onSuccess,
+    //     formData.formData,
+    //     formData.imageUrls,
+    //   ];
+    // } else {
+    //   prefillXMLArgs = [`${GCP_form_url}`, formSpec.forms[formId].onSuccess];
+    // }
+
+    // let prefilledForm = await getPrefillXML(...prefillXMLArgs);
+    // setEncodedFormURI(prefilledForm);
   } else setData(null);
   loading.current = false;
 };
