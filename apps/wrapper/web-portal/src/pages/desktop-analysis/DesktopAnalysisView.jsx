@@ -29,12 +29,13 @@ import {
 } from "./../../api/formApi";
 import {
   updateFormData,
-  getSpecificDataFromForage,
   removeItemFromLocalForage,
   getFromLocalForage,
   setToLocalForage,
+  removeAllFromLocalForage,
 } from "../../forms";
 import { ContextAPI } from "../../utils/ContextAPI";
+import { StrictMode } from "react";
 
 const ENKETO_URL = process.env.REACT_APP_ENKETO_URL;
 
@@ -47,12 +48,14 @@ export default function DesktopAnalysisView() {
   const [encodedFormURI, setEncodedFormURI] = useState("");
   let { formName, formId } = useParams();
   const [formDataFromApi, setFormDataFromApi] = useState();
-
   const [openStatusModel, setOpenStatusModel] = useState(false);
+  const { setSpinner, setToast } = useContext(ContextAPI);
+  const [onFormSuccessData, setOnFormSuccessData] = useState(undefined);
+  const [onFormFailureData, setOnFormFailureData] = useState(undefined);
+  const [paymentStatus, setPaymentStatus] = useState("");
+  const [formStatus, setFormStatus] = useState("");
+  const [onSubmit, setOnSubmit] = useState(false);
 
-  const { setSpinner } = useContext(ContextAPI);
-
-  const userId = "427d473d-d8ea-4bb3-b317-f230f1c9b2f7";
   const formSpec = {
     skipOnSuccessMessage: true,
     prefill: {},
@@ -75,17 +78,12 @@ export default function DesktopAnalysisView() {
   };
 
   const startingForm = formSpec.start;
-  const [onFormSuccessData, setOnFormSuccessData] = useState(undefined);
-  const [onFormFailureData, setOnFormFailureData] = useState(undefined);
-  const [paymentStatus, setPaymentStatus] = useState("");
-  const [formStatus, setFormStatus] = useState("");
-  const [onSubmit, setOnSubmit] = useState(false);
   const [encodedFormSpec, setEncodedFormSpec] = useState(
     encodeURI(JSON.stringify(formSpec.formId))
   );
 
   const userDetails = getCookie("userData");
-  // console.log("userDetails - ", userDetails);
+  const userId = userDetails?.userRepresentation?.id;
 
   const fetchFormData = async () => {
     let formData = {};
@@ -98,7 +96,6 @@ export default function DesktopAnalysisView() {
 
     const postData = { form_id: formId };
     try {
-      setSpinner(true);
       const res = await getFormData(postData);
       formData = res.data.form_submissions[0];
 
@@ -134,6 +131,7 @@ export default function DesktopAnalysisView() {
     try {
       const { nextForm, formData, onSuccessData, onFailureData } = data;
       if (data?.state === "ON_FORM_SUCCESS_COMPLETED") {
+        setSpinner(true);
         handleSubmit();
       }
 
@@ -158,7 +156,6 @@ export default function DesktopAnalysisView() {
 
   const handleSubmit = async () => {
     const updatedFormData = await updateFormData(formSpec.start, userId);
-    const storedData = await getSpecificDataFromForage("required_data");
 
     const res = await updateFormSubmission({
       form_id: formId,
@@ -182,35 +179,25 @@ export default function DesktopAnalysisView() {
       });
     }
 
-    setTimeout(
-      () => navigate(`${ADMIN_ROUTE_MAP.adminModule.desktopAnalysis.home}`),
-      1500
-    );
-
     // Delete the data from the Local Forage
-    const key = `${storedData?.assessor_user_id}_${formSpec.start}_${
+    const key = `${userId}_${formSpec.start}_${
       new Date().toISOString().split("T")[0]
     }`;
     removeItemFromLocalForage(key);
 
     // setOnSubmit(false);
-    // setToast((prevState) => ({
-    //   ...prevState,
-    //   toastOpen: true,
-    //   toastMsg: "Form Submitted Successfully!.",
-    //   toastType: "success",
-    // }));
+    setToast((prevState) => ({
+      ...prevState,
+      toastOpen: true,
+      toastMsg: "Remarks added successfully!",
+      toastType: "success",
+    }));
 
-    // setTimeout(
-    //   () =>
-    //     setToast((prevState) => ({
-    //       ...prevState,
-    //       toastOpen: false,
-    //       toastMsg: "",
-    //       toastType: "",
-    //     })),
-    //   1500
-    // );
+    setSpinner(false);
+    setTimeout(
+      () => navigate(`${ADMIN_ROUTE_MAP.adminModule.desktopAnalysis.home}`),
+      1500
+    );
   };
 
   const handleFormEvents = async (startingForm, afterFormSubmit, e) => {
@@ -277,19 +264,65 @@ export default function DesktopAnalysisView() {
       form_id: formId * 1,
       form_status: "DA Completed",
     });
+
     setTimeout(
       () => navigate(`${ADMIN_ROUTE_MAP.adminModule.desktopAnalysis.home}`),
       1500
     );
   };
 
+  const checkIframeLoaded = () => {
+    if (window.location.host.includes("regulator.upsmfac")) {
+      const iframeElem = document.getElementById("enketo_DA_preview");
+      var iframeContent =
+        iframeElem?.contentDocument || iframeElem?.contentWindow.document;
+      if (
+        formDataFromApi &&
+        formDataFromApi?.form_status?.toLowerCase() !==
+          "application submitted" &&
+        formDataFromApi?.form_status?.toLowerCase() !== "resubmitted"
+      ) {
+        var section = iframeContent?.getElementsByClassName("or-group");
+        if (!section) return;
+        for (var i = 0; i < section?.length; i++) {
+          var inputElements = section[i].querySelectorAll("input");
+          inputElements.forEach((input) => {
+            input.disabled = true;
+          });
+        }
+
+        iframeContent.getElementById("submit-form").style.display = "none";
+        iframeContent.getElementById("save-draft").style.display = "none";
+      }
+
+      // Need to work on Save draft...
+      var draftButton = iframeContent.getElementById("save-draft");
+      draftButton?.addEventListener("click", function () {
+        alert("Hello world!");
+      });
+    }
+    setSpinner(false);
+  };
+
   useEffect(() => {
+    setSpinner(true);
     fetchFormData();
     bindEventListener();
+
+    // To clean all variables
+    return () => {
+      window.removeEventListener("message", handleEventTrigger);
+    };
   }, []);
 
+  useEffect(() => {
+    setTimeout(() => {
+      checkIframeLoaded();
+    }, 2500);
+  }, [formDataFromApi]);
+
   return (
-    <>
+    <StrictMode>
       <div className="h-[48px] bg-white flex justify-start drop-shadow-sm">
         <div className="container mx-auto flex px-3">
           <div className="flex flex-row font-bold gap-2 items-center">
@@ -300,7 +333,7 @@ export default function DesktopAnalysisView() {
             </Link>
             <FaAngleRight className="text-[16px]" />
             <span className="text-gray-500 uppercase">
-              {formName.split("_").join(" ")}
+              {formDataFromApi?.course?.course_name.split("_").join(" ")}
             </span>
           </div>
         </div>
@@ -320,7 +353,7 @@ export default function DesktopAnalysisView() {
                     Return to institute
                   </button>
                 )}
-              {paymentStatus?.toLowerCase() === "paid" &&
+              {/* {paymentStatus?.toLowerCase() === "paid" &&
                 formDataFromApi?.form_status?.toLowerCase() ===
                   "da completed" && (
                   <button
@@ -332,14 +365,25 @@ export default function DesktopAnalysisView() {
                       <BsArrowRight />
                     </span>
                   </button>
-                )}
-
+                )} */}
               <button
-                onClick={() => desktopVerification()}
+                onClick={() => setOpenSheduleInspectionModel(true)}
                 className="flex flex-wrap items-center justify-center gap-2 border border-gray-500 bg-white text-gray-500 w-fit h-fit p-2 font-semibold rounded-[4px]"
               >
-                Initiate Payment
+                Send for inspection
+                <span>
+                  <BsArrowRight />
+                </span>
               </button>
+              {formDataFromApi?.form_status?.toLowerCase() !== "da completed" &&
+                paymentStatus?.toLowerCase() !== "paid" && (
+                  <button
+                    onClick={() => desktopVerification()}
+                    className="flex flex-wrap items-center justify-center gap-2 border border-gray-500 bg-white text-gray-500 w-fit h-fit p-2 font-semibold rounded-[4px]"
+                  >
+                    Initiate Payment
+                  </button>
+                )}
 
               <div
                 className={`${
@@ -358,9 +402,9 @@ export default function DesktopAnalysisView() {
           </div>
 
           <div className="flex flex-row gap-4">
-            <div className="flex w-[30%]">
+            {/* <div className="flex w-[30%]">
               <Sidebar />
-            </div>
+            </div> */}
             <div className="flex w-full flex-col gap-4">
               <Card
                 moreClass="flex flex-col shadow-md border border-[#F5F5F5] gap-4"
@@ -408,6 +452,7 @@ export default function DesktopAnalysisView() {
               </Card>
               <Card moreClass="shadow-md">
                 <iframe
+                  id="enketo_DA_preview"
                   title="form"
                   src={`${ENKETO_URL}/preview?formSpec=${encodeURI(
                     JSON.stringify(formSpec)
@@ -458,6 +503,6 @@ export default function DesktopAnalysisView() {
           </div>
         </CommonModal>
       )} */}
-    </>
+    </StrictMode>
   );
 }
