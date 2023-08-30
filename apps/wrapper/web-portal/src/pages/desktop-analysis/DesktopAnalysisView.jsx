@@ -353,7 +353,7 @@ export default function DesktopAnalysisView() {
                     Return to institute
                   </button>
                 )}
-              {paymentStatus?.toLowerCase() === "paid" &&
+              {/* {paymentStatus?.toLowerCase() === "paid" &&
                 formDataFromApi?.form_status?.toLowerCase() ===
                   "da completed" && (
                   <button
@@ -365,7 +365,16 @@ export default function DesktopAnalysisView() {
                       <BsArrowRight />
                     </span>
                   </button>
-                )}
+                )} */}
+              <button
+                onClick={() => setOpenSheduleInspectionModel(true)}
+                className="flex flex-wrap items-center justify-center gap-2 border border-gray-500 bg-white text-gray-500 w-fit h-fit p-2 font-semibold rounded-[4px]"
+              >
+                Send for inspection
+                <span>
+                  <BsArrowRight />
+                </span>
+              </button>
               {formDataFromApi?.form_status?.toLowerCase() !== "da completed" &&
                 paymentStatus?.toLowerCase() !== "paid" && (
                   <button
