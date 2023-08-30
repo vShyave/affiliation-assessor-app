@@ -366,16 +366,6 @@ export default function AdminCreateUser() {
                         disabled={userId ? true : false}
                         className="block w-full rounded-md border-0 p-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                       />
-                      {errors?.email?.type === "required" && (
-                        <div className="text-red-500 mt-2 text-sm">
-                          This field is required
-                        </div>
-                      )}
-                      {errors?.email?.type === "pattern" && (
-                        <div className="text-red-500 mt-2 text-sm">
-                          This is not a valid email format
-                        </div>
-                      )}
                     </div>
                   </div>
                   <div className="sm:col-span-3">
@@ -397,16 +387,6 @@ export default function AdminCreateUser() {
                         // disabled={userId?true:false}
                         className="block w-full rounded-md border-0 p-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                       />
-                      {errors?.phone?.type === "required" && (
-                        <div className="text-red-500 mt-2 text-sm">
-                          This field is required
-                        </div>
-                      )}
-                      {errors?.phone?.type === "pattern" && (
-                        <div className="text-red-500 mt-2 text-sm">
-                          This is not a valid mobile number format
-                        </div>
-                      )}
                     </div>
                   </div>
                 </div>
