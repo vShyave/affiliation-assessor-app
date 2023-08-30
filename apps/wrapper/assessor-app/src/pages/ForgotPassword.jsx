@@ -8,7 +8,7 @@ import OtpInput from "react-otp-input";
 
 import { sendOtpToMobile, verifyOtpSavePassword } from "../api";
 import { logout } from "./../utils/index";
-import { generateOTP } from "../api";
+import { generateOTP, getLoginDetails, editUserKeycloak } from "../api";
 
 const ForgotPassword = () => {
   const navigate = useNavigate();
@@ -19,27 +19,82 @@ const ForgotPassword = () => {
   const [changePasswordPage, setChangePasswordPage] = useState(false);
   const [passChanged, setPassChanged] = useState(false);
   const [newPass, setNewPass] = useState("");
+  const [details, setDetails] = useState({});
   const [newPassConfirm, setNewPassConfirm] = useState("");
 
   let email = "";
-  const handleEmail = async (val) => {
+  const handleEmail = (val) => {
     email = val;
+    setEmail(val);
   };
 
   const handleResetToLogin = () => {
     logout();
   };
 
+  const changePassword = async () => {
+    if (!newPass) {
+      setError({ err1: "This field is required" });
+      setTimeout(() => setError(false), 3000);
+      return;
+    }
+    if (!newPassConfirm) {
+      setError({ err2: "This field is required" });
+      setTimeout(() => setError(false), 3000);
+      return;
+    }
+    if (newPass.length < 3) {
+      setError({ err1: "Password must be atleast of 3 characters" });
+      setTimeout(() => setError(false), 3000);
+      return;
+    }
+    if (newPassConfirm.length < 3) {
+      setError({ err2: "Password must be atleast of 3 characters" });
+      setTimeout(() => setError(false), 3000);
+      return;
+    }
+    if (newPass != newPassConfirm) {
+      setError({ err: "Passwords do not match" });
+      setTimeout(() => setError(false), 3000);
+      return;
+    }
+
+    const postData = {
+      userName: details.userRepresentation.id,
+      request: {
+        firstName: details.userRepresentation.firstName,
+        lastName: details.userRepresentation.lastName,
+        email: details.userRepresentation.email,
+        username: details.userRepresentation.email,
+        enabled: true,
+        emailVerified: false,
+        credentials: [
+          {
+            type: "password",
+            value: newPass,
+            temporary: "false",
+          },
+        ],
+        attributes: {
+          Role: "Assessor",
+        },
+      },
+    };
+    const updatePass = await editUserKeycloak(postData);
+    if (updatePass) {
+      setPassChanged(true);
+    }
+  };
   const handleVerifyEmail = async () => {
     let emailRegex = /^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z]{2,}$/;
-    if (!emailRegex.test(email)) {
+    if (!emailRegex.test(mobile)) {
       setError(true);
       setTimeout(() => setError(false), 3000);
       return;
     } else {
-      setEmail(email);
-      let res = await generateOTP(email);
-      setOtpPage(true);
+      setEmail(mobile);
+      let res = await generateOTP(mobile);
+      if (res === "Sending OTP to user mail") setOtpPage(true);
     }
   };
 
@@ -49,9 +104,19 @@ const ForgotPassword = () => {
       setTimeout(() => setError(false), 3000);
       return;
     }
-    const res = await verifyOtpSavePassword(mobile, newPass, otp);
-    if (res.responseCode == "OK") setPassChanged(true);
-    else if (res?.params?.err == "INVALID_OTP_USERNAME_PAIR") {
+    const loginDetails = {
+      email: mobile,
+      otp: Number(otp),
+    };
+
+    const loginRes = await getLoginDetails(loginDetails);
+
+    setDetails(loginRes.data);
+    // const res = await verifyOtpSavePassword(mobile, newPass, otp);
+    if (loginRes.status === 200) {
+      setChangePasswordPage(true);
+      setOtpPage(false);
+    } else if (loginRes?.params?.err == "INVALID_OTP_USERNAME_PAIR") {
       setError("Wrong OTP entered");
       setTimeout(() => setError(false), 3000);
       return;
@@ -182,6 +247,7 @@ const ForgotPassword = () => {
               placeholder="New Password"
               value={newPass}
               onChange={(e) => setNewPass(e.target.value)}
+              type="password"
             />
             {(error?.err1 || error?.err) && (
               <p className="text-red-500 text-sm font-bold py-1">
@@ -195,6 +261,7 @@ const ForgotPassword = () => {
               } border-primary rounded px-3 py-3 text-lg mt-10 w-full`}
               placeholder="Confirm New Password"
               value={newPassConfirm}
+              type="password"
               onChange={(e) => setNewPassConfirm(e.target.value)}
             />
             {(error?.err2 || error?.err) && (
@@ -204,7 +271,7 @@ const ForgotPassword = () => {
             )}
             {error.length ? error : ""}
           </div>
-          <Button text="Next" onClick={sendOtp} />
+          <Button text="Reset" onClick={changePassword} />
         </div>
       )}
 
@@ -216,7 +283,7 @@ const ForgotPassword = () => {
               Your password has been changed successfully
             </p>
             <p
-              className="text-primary text-xl py-8 font-bold"
+              className="text-primary text-xl py-8 font-bold cursor-pointer"
               onClick={() => handleResetToLogin()}
             >
               Click here to login
