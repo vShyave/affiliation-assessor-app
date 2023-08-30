@@ -32,8 +32,10 @@ import {
   removeItemFromLocalForage,
   getFromLocalForage,
   setToLocalForage,
+  removeAllFromLocalForage,
 } from "../../forms";
 import { ContextAPI } from "../../utils/ContextAPI";
+import { StrictMode } from "react";
 
 const ENKETO_URL = process.env.REACT_APP_ENKETO_URL;
 
@@ -48,6 +50,11 @@ export default function DesktopAnalysisView() {
   const [formDataFromApi, setFormDataFromApi] = useState();
   const [openStatusModel, setOpenStatusModel] = useState(false);
   const { setSpinner, setToast } = useContext(ContextAPI);
+  const [onFormSuccessData, setOnFormSuccessData] = useState(undefined);
+  const [onFormFailureData, setOnFormFailureData] = useState(undefined);
+  const [paymentStatus, setPaymentStatus] = useState("");
+  const [formStatus, setFormStatus] = useState("");
+  const [onSubmit, setOnSubmit] = useState(false);
 
   const formSpec = {
     skipOnSuccessMessage: true,
@@ -71,11 +78,6 @@ export default function DesktopAnalysisView() {
   };
 
   const startingForm = formSpec.start;
-  const [onFormSuccessData, setOnFormSuccessData] = useState(undefined);
-  const [onFormFailureData, setOnFormFailureData] = useState(undefined);
-  const [paymentStatus, setPaymentStatus] = useState("");
-  const [formStatus, setFormStatus] = useState("");
-  const [onSubmit, setOnSubmit] = useState(false);
   const [encodedFormSpec, setEncodedFormSpec] = useState(
     encodeURI(JSON.stringify(formSpec.formId))
   );
@@ -120,7 +122,7 @@ export default function DesktopAnalysisView() {
     } catch (error) {
       console.log(error);
     } finally {
-      // setSpinner(false);
+      setSpinner(false);
     }
   };
 
@@ -306,6 +308,11 @@ export default function DesktopAnalysisView() {
     setSpinner(true);
     fetchFormData();
     bindEventListener();
+
+    // To clean all variables
+    return () => {
+      window.removeEventListener("message", handleEventTrigger);
+    };
   }, []);
 
   useEffect(() => {
@@ -315,7 +322,7 @@ export default function DesktopAnalysisView() {
   }, [formDataFromApi]);
 
   return (
-    <>
+    <StrictMode>
       <div className="h-[48px] bg-white flex justify-start drop-shadow-sm">
         <div className="container mx-auto flex px-3">
           <div className="flex flex-row font-bold gap-2 items-center">
@@ -359,8 +366,8 @@ export default function DesktopAnalysisView() {
                     </span>
                   </button>
                 )}
-              {(formDataFromApi?.form_status?.toLowerCase() !==
-                  "da completed" && paymentStatus?.toLowerCase() !== "paid") && (
+              {formDataFromApi?.form_status?.toLowerCase() !== "da completed" &&
+                paymentStatus?.toLowerCase() !== "paid" && (
                   <button
                     onClick={() => desktopVerification()}
                     className="flex flex-wrap items-center justify-center gap-2 border border-gray-500 bg-white text-gray-500 w-fit h-fit p-2 font-semibold rounded-[4px]"
@@ -487,6 +494,6 @@ export default function DesktopAnalysisView() {
           </div>
         </CommonModal>
       )} */}
-    </>
+    </StrictMode>
   );
 }
