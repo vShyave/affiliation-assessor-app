@@ -54,7 +54,7 @@ export default function OnGroundInspectionAnalysis() {
       accessor: "assisting_assessor",
     },
     {
-      Header: "Submitted on",
+      Header: "Date",
       accessor: "published_on",
     },
     {

@@ -20,7 +20,8 @@ import {
 } from "./../forms";
 
 import APPLICANT_ROUTE_MAP from "../routes/ApplicantRoute";
-import { Card } from "../components";
+import { setCookie,  } from "../utils";
+import { Button, Card } from "../components";
 import CommonModal from "../Modal";
 import Toast from "../components/Toast";
 import "./loading.css";
@@ -32,21 +33,22 @@ import {
   getFormURI,
   updateFormSubmission,
 } from "../api/formApi";
+import { generate_uuidv4 } from "../utils";
+import { applicantService } from "../services";
 
 const ENKETO_URL = process.env.REACT_APP_ENKETO_URL;
-const GCP_URL =
-  process.env.REACT_APP_GCP_AFFILIATION_LINK ||
-  "https://storage.googleapis.com/dev-public-upsmf/affiliation/";
 
 const CreateForm = (props) => {
-  let { formName, formId, applicantStatus } = useParams();
-  const [encodedFormURI, setEncodedFormURI] = useState("");
   const navigate = useNavigate();
-  const [onFormSuccessData, setOnFormSuccessData] = useState(undefined);
-  const [formDataNoc, setFormDataNoc] = useState({});
-  const [onFormFailureData, setOnFormFailureData] = useState(undefined);
-  const [isDownloading, setIsDownloading] = useState(false);
-  const [previewModal, setPreviewModal] = useState(false);
+
+  let { formName, formId, applicantStatus } = useParams();
+  let [encodedFormURI, setEncodedFormURI] = useState("");
+  let [paymentDetails,setPaymentDetails] = useState("")
+  let [onFormSuccessData, setOnFormSuccessData] = useState(undefined);
+  let [formDataNoc, setFormDataNoc] = useState({});
+  let [onFormFailureData, setOnFormFailureData] = useState(undefined);
+  let [isDownloading, setIsDownloading] = useState(false);
+  let [previewModal, setPreviewModal] = useState(false);
   let previewFlag = false;
 
   // Spinner Element
@@ -115,7 +117,8 @@ const CreateForm = (props) => {
       if (formId) {
         const postData = { form_id: formId };
         const res = await getFormData(postData);
-        formData = res.data.form_submissions[0];
+        formData = res?.data?.form_submissions[0];
+        setPaymentDetails(formData?.payment_status)
         setFormDataNoc(formData);
       }
     }
@@ -138,9 +141,8 @@ const CreateForm = (props) => {
     try {
       const { nextForm, formData, onSuccessData, onFailureData } = data;
       if (data?.state === "ON_FORM_SUCCESS_COMPLETED") {
-        console.log("previewFlag - ", previewFlag);
-
         if (!previewFlag) {
+          fetchFormData();
           handleRenderPreview();
         } else {
           handleSubmit();
@@ -308,6 +310,47 @@ const CreateForm = (props) => {
     navigate(`${APPLICANT_ROUTE_MAP.dashboardModule.my_applications}`);
   };
 
+  const handlePayment = async () => {
+    // setcookies here
+    setCookie(
+      "formId",formId
+    );
+    const instituteDetails = getCookie("institutes");
+    const instituteId = instituteDetails?.[0]?.id;
+    const postData = {
+      endpoint: "https://eazypayuat.icicibank.com/EazyPG",
+      returnUrl: "https://payment.uphrh.in/api/v1/user/payment",
+      paymode: "9",
+      secret: "",
+      merchantId: "600547",
+      mandatoryFields: {
+        referenceNo: generate_uuidv4(),
+        submerchantId: "45",
+        transactionAmount: "10",
+        invoiceId: "x1",
+        invoiceDate: "x",
+        invoiceTime: "x",
+        merchantId: "x",
+        payerType: "affiliation",
+        payerId: instituteId,
+        transactionId: "x",
+        transactionDate: "x",
+        transactionTime: "x",
+        transactionStatus: "x",
+        refundId: "x",
+        refundDate: "x",
+        refundTime: "x",
+        refundStatus: "x",
+      },
+      optionalFields: "",
+    };
+    try {
+      const paymentRes = await applicantService.initiatePayment(postData);
+      await window.open(paymentRes?.data?.redirectUrl);
+    } catch (error) {}
+  };
+
+
   const handleFormDownload = async () => {
     try {
       setIsDownloading(true);
@@ -368,9 +411,23 @@ const CreateForm = (props) => {
     if (spinner) {
       spinner.style.display = "flex";
     }
+
     setTimeout(() => {
       checkIframeLoaded();
     }, 2500);
+
+    // To clean all variables
+    return () => {
+      setEncodedFormURI("");
+      setOnFormSuccessData(undefined);
+      setFormDataNoc({});
+      setOnFormFailureData(undefined);
+      setIsDownloading(false);
+      setPreviewModal(false);
+      previewFlag = false;
+      removeAllFromLocalForage();
+      console.log("Create form is closed!");
+    };
   }, []);
 
   return (
@@ -416,6 +473,16 @@ const CreateForm = (props) => {
             >
               Download NOC/Certificate
             </button>
+            <button
+          className={`${
+            paymentDetails === "Pending"
+              ? "border border-blue-900 bg-blue-900 text-white rounded-[4px] px-2 h-[44px]"
+              : "cursor-not-allowed border border-gray-500 bg-white rounded-[4px] text-gray-200 px-2 h-[44px]"
+          }`}
+          disabled={paymentDetails === "Pending" ? false : true}
+          onClick={handlePayment}
+          
+        >Pay</button>
           </div>
         </div>
 

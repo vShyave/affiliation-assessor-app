@@ -29,8 +29,9 @@ const UploadForm = ({
   };
 
   const handleChange = (e) => {
-    const fileUploaded = e.target.files[0];
-    setFileName(
+    console.log("e.target.files",e.target.files[0])
+    const fileUploaded = e?.target?.files[0];    
+      setFileName(
       fileUploaded.name.substring(0, fileUploaded.name.lastIndexOf("."))
     );
     handleFile(fileUploaded);
@@ -79,6 +80,7 @@ const UploadForm = ({
 
   const fetchFormData = async () => {
     const res = await axios.get(formData?.path, { responseType: "text" });
+    console.log("res",res)
     formURI = await getPrefillXML(
       formData?.path,
       formSpec.onSuccess
