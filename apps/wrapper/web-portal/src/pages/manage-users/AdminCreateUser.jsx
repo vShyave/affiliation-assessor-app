@@ -23,7 +23,7 @@ import { getCookie, removeCookie, setCookie } from "../../utils";
 export default function AdminCreateUser() {
   let { userId } = useParams();
   const { setSpinner, setToast } = useContext(ContextAPI);
-  let [emailValue,setEmailValue] = useState("")
+  let [emailValue, setEmailValue] = useState("");
   const [user, setUser] = useState({
     firstname: "",
     lastname: "",
@@ -64,10 +64,12 @@ export default function AdminCreateUser() {
       setSpinner(false);
     }
   };
-  
-  const isEmail =  /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(user.email)
-  const isPhoneNumber = /^(?:(?:\(\s*[\-]\s*)?|[0]?)?[6789]\d{9}$/.test(user.phonenumber)
-  console.log("isPhone",isPhoneNumber)
+
+  const isEmail = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(user.email);
+  const isPhoneNumber = /^(?:(?:\(\s*[\-]\s*)?|[0]?)?[6789]\d{9}$/.test(
+    user.phonenumber
+  );
+  console.log("isPhone", isPhoneNumber);
   // setEmailValue(isEmail)
   // console.log("emailValue",emailValue)
 
@@ -82,14 +84,14 @@ export default function AdminCreateUser() {
       user.firstname === "" ||
       user.lastname === "" ||
       !isEmail ||
-      user.email === ""||
+      user.email === "" ||
       user.role === "" ||
       user.phonenumber === "" ||
-      !isPhoneNumber||
+      !isPhoneNumber ||
       user.phonenumber.length > 10 ||
       user.phonenumber.length < 10
     ) {
-      return false
+      return false;
     } else return true;
   };
 
@@ -364,6 +366,16 @@ export default function AdminCreateUser() {
                         disabled={userId ? true : false}
                         className="block w-full rounded-md border-0 p-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                       />
+                      {errors?.email?.type === "required" && (
+                        <div className="text-red-500 mt-2 text-sm">
+                          This field is required
+                        </div>
+                      )}
+                      {errors?.email?.type === "pattern" && (
+                        <div className="text-red-500 mt-2 text-sm">
+                          This is not a valid email format
+                        </div>
+                      )}
                     </div>
                   </div>
                   <div className="sm:col-span-3">
@@ -385,6 +397,16 @@ export default function AdminCreateUser() {
                         // disabled={userId?true:false}
                         className="block w-full rounded-md border-0 p-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                       />
+                      {errors?.phone?.type === "required" && (
+                        <div className="text-red-500 mt-2 text-sm">
+                          This field is required
+                        </div>
+                      )}
+                      {errors?.phone?.type === "pattern" && (
+                        <div className="text-red-500 mt-2 text-sm">
+                          This is not a valid mobile number format
+                        </div>
+                      )}
                     </div>
                   </div>
                 </div>

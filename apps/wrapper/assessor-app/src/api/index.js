@@ -471,3 +471,31 @@ export const generateOTP = async (email) => {
     return err;
   }
 };
+export const getLoginDetails = (userDetails) => {
+  return keyCloakAxiosService.post(
+    KEYCLOAK_BASE_URL + "keycloak/login",
+    userDetails,
+    {
+      headers: {
+        "Content-Type": "application/json",
+        // "Authorization": getCookie("access_token")
+        Authorization: process.env.REACT_APP_AUTH_TOKEN,
+      },
+    }
+  );
+};
+
+export const editUserKeycloak = async (postData) => {
+  const res = await keyCloakAxiosService.put(
+    KEYCLOAK_BASE_URL + "update",
+    postData,
+    {
+      headers: {
+        "Content-Type": "application/json",
+        // "Authorization": getCookie("access_token")
+        Authorization: process.env.REACT_APP_AUTH_TOKEN,
+      },
+    }
+  );
+  return res;
+};

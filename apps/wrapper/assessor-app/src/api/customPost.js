@@ -1,7 +1,7 @@
 import axios from "axios";
 import { getCookie } from "../utils";
 
-const BASE_URL = process.env.REACT_APP_HASURA_SERVICE_URL;
+const BASE_URL = process.env.REACT_APP_NODE_URL;
 const HASURA_CLIENT_NAME =
   process.env.REACT_APP_HASURA_CLIENT_NAME || "hasura-console";
 const X_HASURA_ADMIN_SECRET_KEY =
@@ -18,9 +18,9 @@ customPost.interceptors.request.use(
     const user_data = getCookie("userData");
     request.headers["Accept"] = "application/json";
     request.headers["Content-Type"] = "application/json";
-    // request.headers['Authorization'] = `Bearer ${user_data.token}`;
-    request.headers["Hasura-Client-Name"] = HASURA_CLIENT_NAME;
-    request.headers["x-hasura-admin-secret"] = X_HASURA_ADMIN_SECRET_KEY;
+    request.headers["Authorization"] = process.env.REACT_APP_AUTH_TOKEN;
+    // request.headers["Hasura-Client-Name"] = HASURA_CLIENT_NAME;
+    // request.headers["x-hasura-admin-secret"] = X_HASURA_ADMIN_SECRET_KEY;
     return request;
   },
   (error) => {
