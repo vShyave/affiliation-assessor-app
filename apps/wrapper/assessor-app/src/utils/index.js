@@ -4,7 +4,12 @@ import Cookies from "js-cookie";
 import * as serviceWorkerRegistration from '../serviceWorkerRegistration';
 import axios from "axios";
 
-import { getMedicalAssessments, getPrefillXML, getSubmissionXML, registerEvent } from "../api";
+import {
+  getMedicalAssessments,
+  getPrefillXML,
+  getSubmissionXML,
+  registerEvent,
+} from "../api";
 
 const ENKETO_URL = process.env.REACT_APP_ENKETO_URL;
 const GCP_URL = process.env.REACT_APP_GCP_AFFILIATION_LINK;
@@ -12,13 +17,14 @@ const OPEN_ROSA_SERVER_URL = process.env.REACT_APP_OPEN_ROSA_SERVER_URL;
 
 export const makeHasuraCalls = async (query) => {
   const userData = getCookie("userData");
-  return fetch(process.env.REACT_APP_HASURA_URL, {
+  return fetch(process.env.REACT_APP_NODE_URL, {
     method: "POST",
     headers: {
       Accept: "application/json",
       "Content-Type": "application/json",
-      "Hasura-Client-Name": process.env.REACT_APP_HASURA_CLIENT_NAME,
-      "x-hasura-admin-secret": process.env.REACT_APP_HASURA_ADMIN_SECRET_KEY
+      // "Hasura-Client-Name": process.env.REACT_APP_HASURA_CLIENT_NAME,
+      // "x-hasura-admin-secret": process.env.REACT_APP_HASURA_ADMIN_SECRET_KEY,
+      Authorization: process.env.REACT_APP_AUTH_TOKEN,
     },
     body: JSON.stringify(query),
   })
@@ -57,8 +63,10 @@ export const makeDataForPrefill = (prev, xmlDoc, key, finalObj, formName) => {
 export const updateFormData = async (startingForm) => {
   try {
     // TODO: check if formdata has to have value, check line 65 for getcookie connect with Sheela
-    let data = await getFromLocalForage(`${startingForm}_${new Date().toISOString().split("T")[0]}`);
-    
+    let data = await getFromLocalForage(
+      `${startingForm}_${new Date().toISOString().split("T")[0]}`
+    );
+
     const GCP_form_url = `${GCP_URL}${startingForm}.xml`;
     let prefilledForm = await getSubmissionXML(
       GCP_form_url,
@@ -159,9 +167,9 @@ export const removeItemFromLocalForage = (key) => {
 
 export const handleFormEvents = async (startingForm, afterFormSubmit, e) => {
   const user = getCookie("userData");
-  
+
   if (
-    (e.origin) === ENKETO_URL &&
+    e.origin + "/enketo" === ENKETO_URL &&
     typeof e?.data === "string" &&
     JSON.parse(e?.data)?.state !== "ON_FORM_SUCCESS_COMPLETED"
   ) {
@@ -189,7 +197,7 @@ export const getFormData = async ({
   setData,
   setEncodedFormSpec,
   setEncodedFormURI,
-  isPreview
+  isPreview,
 }) => {
   const GCP_form_url = `${GCP_URL}${startingForm}.xml`;
   const res = await getMedicalAssessments(formSpec.date);
@@ -233,7 +241,7 @@ export const getFormData = async ({
         prefillXMLArgs = [`${GCP_form_url}`, formSpec.forms[formId].onSuccess];
       }
     }
-    console.log("prefillXMLArgs - ", prefillXMLArgs);
+
     let prefilledForm = await getPrefillXML(...prefillXMLArgs);
     setEncodedFormURI(prefilledForm);
 
@@ -291,3 +299,4 @@ export const getOfflineCapableForm = async (formId) => {
     console.log(err);
   }
 }
+

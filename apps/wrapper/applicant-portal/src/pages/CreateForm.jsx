@@ -330,7 +330,7 @@ const CreateForm = (props) => {
         invoiceTime: "x",
         merchantId: "x",
         payerType: "affiliation",
-        payerId: instituteId,
+        payerId: `${instituteId}`,
         transactionId: "x",
         transactionDate: "x",
         transactionTime: "x",
@@ -339,8 +339,9 @@ const CreateForm = (props) => {
         refundDate: "x",
         refundTime: "x",
         refundStatus: "x",
+        module: "affiliation"
       },
-      optionalFields: "",
+      optionalFields: "affiliation",
     };
     try {
       const paymentRes = await applicantService.initiatePayment(postData);

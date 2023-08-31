@@ -583,13 +583,11 @@ export default function ManageUsersList({
   };
 
   const handleDelete = async (userId) => {
-    const postData = [
-      {
-        request: {
-          userName: userId,
-        },
+    const postData = {
+      request: {
+        userName: userId,
       },
-    ];
+    };
     const hasuraPostData = { user_id: userId };
     try {
       setSpinner(true);

@@ -37,12 +37,12 @@ const Register = () => {
       return;
     }
 
-    const userRes = await createUser({ mobile, role, password });
-    if (userRes?.responseCode != "OK") {
-      setError(userRes);
-      setTimeout(() => setError(""), 3000);
-      return;
-    }
+    // const userRes = await createUser({ mobile, role, password });
+    // if (userRes?.responseCode != "OK") {
+    //   setError(userRes);
+    //   setTimeout(() => setError(""), 3000);
+    //   return;
+    // }
     setUserCreated(true);
   };
 
