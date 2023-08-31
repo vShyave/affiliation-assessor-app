@@ -341,6 +341,7 @@ const CreateForm = (props) => {
         refundDate: "x",
         refundTime: "x",
         refundStatus: "x",
+        module: "affiliation"
       },
       optionalFields: "affiliation",
     };
