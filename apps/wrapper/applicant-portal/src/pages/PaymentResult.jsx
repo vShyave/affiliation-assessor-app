@@ -24,7 +24,7 @@ export default function PaymentResult() {
   const  applicantTransaction= async () => {
     const formData = {"transaction_details":[{"id": params.get("transaction_id"),"form_id": formId}]}
     const formsResponse = await applicantService.transactionStatus(formData);
-   
+   await applicantService.updatePaymentStatus({"form_id":formId,"payment_status":params.get("resp")=== "success" ? "Paid" : "Failed"})
   };
 
   useEffect(() => {
