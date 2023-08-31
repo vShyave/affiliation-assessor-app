@@ -24,7 +24,6 @@ export const makeHasuraCalls = async (query) => {
       "Content-Type": "application/json",
       "Hasura-Client-Name": process.env.REACT_APP_HASURA_CLIENT_NAME,
       "x-hasura-admin-secret": process.env.REACT_APP_HASURA_ADMIN_SECRET_KEY,
-      // Authorization: process.env.REACT_APP_AUTH_TOKEN,
     },
     body: JSON.stringify(query),
   })
