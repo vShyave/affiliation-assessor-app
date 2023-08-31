@@ -364,7 +364,7 @@ const GenericOdkForm = (props) => {
       >
         {!isPreview && (
           <div className="flex flex-col items-center">
-            {encodedFormURI && assData && date && (
+            {encodedFormURI && assData && (
               <>
                 <iframe
                   title="form"
@@ -375,7 +375,7 @@ const GenericOdkForm = (props) => {
               </>
             )}
 
-            {surveyUrl && !date && (
+            {/* {surveyUrl && !date && (
               <>
                 <iframe
                   id="enketo-form"
@@ -384,7 +384,7 @@ const GenericOdkForm = (props) => {
                   style={{ height: "80vh", width: "100%", marginTop: "20px" }}
                 />
               </>
-            )}
+            )} */}
           </div>
         )}
       </CommonLayout>

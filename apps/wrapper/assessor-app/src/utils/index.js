@@ -17,14 +17,14 @@ const OPEN_ROSA_SERVER_URL = process.env.REACT_APP_OPEN_ROSA_SERVER_URL;
 
 export const makeHasuraCalls = async (query) => {
   const userData = getCookie("userData");
-  return fetch(process.env.REACT_APP_NODE_URL, {
+  return fetch(process.env.REACT_APP_HASURA_URL, {
     method: "POST",
     headers: {
       Accept: "application/json",
       "Content-Type": "application/json",
-      // "Hasura-Client-Name": process.env.REACT_APP_HASURA_CLIENT_NAME,
-      // "x-hasura-admin-secret": process.env.REACT_APP_HASURA_ADMIN_SECRET_KEY,
-      Authorization: process.env.REACT_APP_AUTH_TOKEN,
+      "Hasura-Client-Name": process.env.REACT_APP_HASURA_CLIENT_NAME,
+      "x-hasura-admin-secret": process.env.REACT_APP_HASURA_ADMIN_SECRET_KEY,
+      // Authorization: process.env.REACT_APP_AUTH_TOKEN,
     },
     body: JSON.stringify(query),
   })
@@ -199,7 +199,7 @@ export const getFormData = async ({
   setEncodedFormURI,
   isPreview,
 }) => {
-  const GCP_form_url = `${GCP_URL}${startingForm}.xml`;
+  const GCP_form_url = `${process.env.REACT_APP_GCP_AFFILIATION_LINK}${startingForm}.xml`;
   const res = await getMedicalAssessments(formSpec.date);
   let formData, prefillXMLArgs;
   if (res?.data?.assessment_schedule?.[0]) {
