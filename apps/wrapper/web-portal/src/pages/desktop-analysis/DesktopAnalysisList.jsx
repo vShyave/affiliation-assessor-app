@@ -35,6 +35,7 @@ const DesktopAnalysisList = () => {
     limit: 10,
     totalCount: 0,
   });
+  const [paymentModal, setPaymentModal] = useState(false);
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [isFilterOpen, setIsFilterOpen] = useState(false);
   const { setSpinner } = useContext(ContextAPI);
@@ -48,9 +49,9 @@ const DesktopAnalysisList = () => {
       amount: "Rs 20000.00",
       applicationType: "Institute",
       collegeName: "Muzaffarnagar Medical College & Hospital",
-      paymentStatus: "Success"
-    }
-  })
+      paymentStatus: "Success",
+    },
+  });
 
   const COLUMNS = [
     {
@@ -66,7 +67,7 @@ const DesktopAnalysisList = () => {
       accessor: "course_name",
     },
     {
-      Header: "Submitted on",
+      Header: "Date",
       accessor: "published_on",
     },
     {
@@ -96,7 +97,7 @@ const DesktopAnalysisList = () => {
       accessor: "course_name",
     },
     {
-      Header: "Submitted on",
+      Header: "Date",
       accessor: "published_on",
     },
     {
@@ -150,10 +151,7 @@ const DesktopAnalysisList = () => {
 
   const navigateToView = (formObj) => {
     if (formObj?.form_name?.includes("applicant")) {
-      formObj.form_name = formObj?.form_name?.replace(
-        "applicant",
-        "admin"
-      );
+      formObj.form_name = formObj?.form_name?.replace("applicant", "admin");
     }
 
     const navigationURL = `${ADMIN_ROUTE_MAP.adminModule.desktopAnalysis.viewForm}/${formObj?.form_name}/${formObj?.form_id}`;
@@ -230,6 +228,11 @@ const DesktopAnalysisList = () => {
     }
   };
 
+  const handleViewSchedule = (data) => {
+    // setScheduleUserData(data);
+    setPaymentModal(true);
+  };
+
   const filterApiCall = async (filters) => {
     let customFilters = {
       condition: {
@@ -270,12 +273,12 @@ const DesktopAnalysisList = () => {
     reviewed_in_total: 0,
   };
 
-  const handleViewPayment = (e) =>{
-    setViewPaymentModal((prevState)=>({
+  const handleViewPayment = (e) => {
+    setViewPaymentModal((prevState) => ({
       ...prevState,
-      flag: true
-    }))
-  }
+      flag: true,
+    }));
+  };
 
   formsList?.forEach((e) => {
     var formsData = {
@@ -286,8 +289,7 @@ const DesktopAnalysisList = () => {
         >
           {e?.course?.course_name || "NA"}
         </div>
-      )
-      ,
+      ),
       file_name: e?.form_name,
       application_type:
         e?.assessment_type?.charAt(0).toUpperCase() +
@@ -296,16 +298,14 @@ const DesktopAnalysisList = () => {
       published_on: readableDate(e?.submitted_on),
       id: e.form_id,
       status: e?.form_status || "NA",
-      payment_status: 
-      (
+      payment_status: (
         <div
           className={`px-6 text-primary-600 pl-0`}
           onClick={() => handleViewPayment(e)}
         >
           {e?.payment_status || "NA"}
         </div>
-      )
-      ,
+      ),
     };
     formsDataList.push(formsData);
 
@@ -456,7 +456,7 @@ const DesktopAnalysisList = () => {
                 <FilteringTable
                   dataList={formsDataList}
                   // navigateFunc={navigateToView}
-                  navigateFunc={()=>{}}
+                  navigateFunc={() => {}}
                   columns={COLUMNS}
                   pagination={true}
                   onRowSelect={() => {}}
@@ -474,7 +474,7 @@ const DesktopAnalysisList = () => {
                 <FilteringTable
                   dataList={formsDataList}
                   // navigateFunc={navigateToView}
-                  navigateFunc={()=>{}}
+                  navigateFunc={() => {}}
                   columns={COLUMNS}
                   pagination={true}
                   onRowSelect={() => {}}
@@ -492,7 +492,7 @@ const DesktopAnalysisList = () => {
                 <FilteringTable
                   dataList={formsDataList}
                   // navigateFunc={navigateToView}
-                  navigateFunc={()=>{}}
+                  navigateFunc={() => {}}
                   columns={COLUMNS}
                   pagination={true}
                   onRowSelect={() => {}}
@@ -510,7 +510,7 @@ const DesktopAnalysisList = () => {
                 <FilteringTable
                   dataList={formsDataList}
                   // navigateFunc={navigateToView}
-                  navigateFunc={()=>{}}
+                  navigateFunc={() => {}}
                   columns={COLUMNS}
                   pagination={true}
                   onRowSelect={() => {}}
@@ -528,7 +528,7 @@ const DesktopAnalysisList = () => {
                 <FilteringTable
                   dataList={formsDataList}
                   // navigateFunc={navigateToView}
-                  navigateFunc={()=>{}}
+                  navigateFunc={() => {}}
                   columns={NEWCOLUMNS}
                   pagination={true}
                   onRowSelect={() => {}}
@@ -545,8 +545,19 @@ const DesktopAnalysisList = () => {
             </div>
           </div>
         </div>
-        {viewPaymentModal.flag && <PaymentModal modalDetails={viewPaymentModal} setViewPaymentModal={setViewPaymentModal} />}
+        {viewPaymentModal.flag && (
+          <PaymentModal
+            modalDetails={viewPaymentModal}
+            setViewPaymentModal={setViewPaymentModal}
+          />
+        )}
       </div>
+      {paymentModal && (
+        <PaymentModal
+          closeViewSchedulesModal={setPaymentModal}
+          // scheduleUserData={scheduleUserData}
+        ></PaymentModal>
+      )}
     </>
   );
 };

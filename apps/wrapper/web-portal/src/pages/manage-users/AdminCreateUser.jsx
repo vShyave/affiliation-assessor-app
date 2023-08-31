@@ -23,6 +23,7 @@ import { getCookie, removeCookie, setCookie } from "../../utils";
 export default function AdminCreateUser() {
   let { userId } = useParams();
   const { setSpinner, setToast } = useContext(ContextAPI);
+  let [emailValue, setEmailValue] = useState("");
   const [user, setUser] = useState({
     firstname: "",
     lastname: "",
@@ -64,20 +65,29 @@ export default function AdminCreateUser() {
     }
   };
 
+  const isEmail = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(user.email);
+  const isPhoneNumber = /^(?:(?:\(\s*[\-]\s*)?|[0]?)?[6789]\d{9}$/.test(
+    user.phonenumber
+  );
+  console.log("isPhone", isPhoneNumber);
+  // setEmailValue(isEmail)
+  // console.log("emailValue",emailValue)
+
   const handleChange = (name, value) => {
     setUser((prevState) => ({
       ...prevState,
       [name]: value,
     }));
   };
-
   const isFieldsValid = () => {
     if (
       user.firstname === "" ||
       user.lastname === "" ||
+      !isEmail ||
       user.email === "" ||
       user.role === "" ||
       user.phonenumber === "" ||
+      !isPhoneNumber ||
       user.phonenumber.length > 10 ||
       user.phonenumber.length < 10
     ) {
@@ -374,7 +384,6 @@ export default function AdminCreateUser() {
                         onChange={(e) =>
                           handleChange("phonenumber", e.target.value)
                         }
-                        // disabled={userId?true:false}
                         className="block w-full rounded-md border-0 p-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                       />
                     </div>

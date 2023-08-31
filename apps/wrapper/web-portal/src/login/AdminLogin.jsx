@@ -110,9 +110,9 @@ const AdminLogin = () => {
       // );
 
       console.log(loginRes);
-
+      let user_details = loginRes?.data?.userRepresentation;
       const adminDetailsRes = await getRegulator({
-        user_id: loginRes.data.userRepresentation.id,
+        user_id: user_details?.id,
       });
       const role = loginRes?.data?.userRepresentation?.attributes?.Role?.[0];
       if (role === "Super-Admin" || role === "Desktop-Admin") {

@@ -78,6 +78,14 @@ export const getAllRegulatorDeviceId = async (postData) => {
   return res;
 };
 
+const transactionStatus = async (postData) => {
+  const res = await axiosService.post(APIS.APPLICANT.ADD_TRANSACTION, postData);
+  return res;
+};
+const updatePaymentStatus = async (postData) => {
+  const res = await axiosService.put(APIS.PAYMENT.UPDATE_PAYMENT_STATUS, postData);
+  return res;
+};
 export const applicantService = {
   addInstitute,
   addInstitutePoc,
@@ -88,5 +96,7 @@ export const applicantService = {
   initiatePayment,
   updateApplicantDeviceId,
   sendPushNotification,
-  getAllRegulatorDeviceId
+  getAllRegulatorDeviceId,
+  transactionStatus,
+  updatePaymentStatus
 };

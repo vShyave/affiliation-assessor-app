@@ -29,6 +29,7 @@ export default function ApplicationPage({
 }) {
   const reportTemplateRef = useRef(null);
   const [formStatus, setFormStatus] = useState("");
+  const [formDataFromApi, setFormDataFromApi] = useState();
   const [rejectModel, setRejectModel] = useState(false);
   const [rejectStatus, setRejectStatus] = useState(false);
   const [openModel, setOpenModel] = useState(false);
@@ -64,9 +65,10 @@ export default function ApplicationPage({
   const fetchFormData = async () => {
     const postData = { form_id: formId };
     try {
-      setSpinner(true);
+      // setSpinner(true);
       const res = await getFormData(postData);
       const formData = res.data.form_submissions[0];
+      setFormDataFromApi(res.data.form_submissions[0]);
       console.log("formData - ", formData);
       const statusOfForm = formData?.form_status;
       setFormStatus(statusOfForm);
@@ -83,7 +85,7 @@ export default function ApplicationPage({
     } catch (error) {
       console.log(error);
     } finally {
-      setSpinner(false);
+      // setSpinner(false);
     }
   };
 
@@ -106,16 +108,18 @@ export default function ApplicationPage({
       iframeContent.getElementById("submit-form").style.display = "none";
       iframeContent.getElementById("save-draft").style.display = "none";
 
+      // Need to work on Save draft...
       var draftButton = iframeContent.getElementById("save-draft");
       draftButton?.addEventListener("click", function () {
         alert("Hello world!");
       });
     }
+    setSpinner(false);
   };
 
   useEffect(() => {
+    setSpinner(true);
     fetchFormData();
-
     setTimeout(() => {
       checkIframeLoaded();
     }, 2500);
@@ -136,7 +140,7 @@ export default function ApplicationPage({
             </Link>
             <FaAngleRight className="text-[16px]" />
             <span className="text-gray-500 uppercase">
-              {formName.split("_").join(" ")}
+              {formDataFromApi?.course?.course_name.split("_").join(" ")}
             </span>
           </div>
         </div>

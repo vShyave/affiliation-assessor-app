@@ -1,21 +1,28 @@
 import XMLParser from "react-xml-parser";
 import localforage from "localforage";
 import Cookies from "js-cookie";
-import * as serviceWorkerRegistration from '../serviceWorkerRegistration';
+import * as serviceWorkerRegistration from "../serviceWorkerRegistration";
 
-import { getMedicalAssessments, getPrefillXML, getSubmissionXML, registerEvent } from "../api";
+import {
+  getMedicalAssessments,
+  getPrefillXML,
+  getSubmissionXML,
+  registerEvent,
+} from "../api";
 
 const ENKETO_URL = process.env.REACT_APP_ENKETO_URL;
 const GCP_URL = process.env.REACT_APP_GCP_AFFILIATION_LINK;
 
 export const makeHasuraCalls = async (query) => {
   const userData = getCookie("userData");
-  return fetch(process.env.REACT_APP_HASURA_URL, {
+  return fetch(process.env.REACT_APP_NODE_URL, {
     method: "POST",
     headers: {
       Accept: "application/json",
       "Content-Type": "application/json",
-      Authorization: `Bearer ${userData.token}`,
+      // "Hasura-Client-Name": process.env.REACT_APP_HASURA_CLIENT_NAME,
+      // "x-hasura-admin-secret": process.env.REACT_APP_HASURA_ADMIN_SECRET_KEY,
+      Authorization: process.env.REACT_APP_AUTH_TOKEN,
     },
     body: JSON.stringify(query),
   })
@@ -54,8 +61,10 @@ export const makeDataForPrefill = (prev, xmlDoc, key, finalObj, formName) => {
 export const updateFormData = async (startingForm) => {
   try {
     // TODO: check if formdata has to have value, check line 65 for getcookie connect with Sheela
-    let data = await getFromLocalForage(`${startingForm}_${new Date().toISOString().split("T")[0]}`);
-    
+    let data = await getFromLocalForage(
+      `${startingForm}_${new Date().toISOString().split("T")[0]}`
+    );
+
     const GCP_form_url = `${GCP_URL}${startingForm}.xml`;
     let prefilledForm = await getSubmissionXML(
       GCP_form_url,
@@ -120,7 +129,8 @@ export const isImage = (key, filename) => {
 export const getFromLocalForage = async (key) => {
   const user = getCookie("userData");
   try {
-    return await localforage.getItem(`${user.user.id}_${key}`);
+    console.log(`key - ${user?.userRepresentation?.id}_${key}`);
+    return await localforage.getItem(`${user?.userRepresentation?.id}_${key}`);
   } catch (err) {
     console.log(err);
     return null;
@@ -155,19 +165,17 @@ export const removeItemFromLocalForage = (key) => {
 
 export const handleFormEvents = async (startingForm, afterFormSubmit, e) => {
   const user = getCookie("userData");
-  
+
   if (
-    (e.origin + '/enketo') === ENKETO_URL &&
+    e.origin + "/enketo" === ENKETO_URL &&
     typeof e?.data === "string" &&
     JSON.parse(e?.data)?.state !== "ON_FORM_SUCCESS_COMPLETED"
   ) {
     var formData = new XMLParser().parseFromString(JSON.parse(e.data).formData);
     if (formData) {
       let images = JSON.parse(e.data).fileURLs;
-      let prevData = await getFromLocalForage(
-        startingForm + `${new Date().toISOString().split("T")[0]}`
-      );
-      await setToLocalForage(`${user.user.id}_${startingForm}_${new Date().toISOString().split("T")[0]}`,
+      let prevData = await getFromLocalForage(`${startingForm}_${new Date().toISOString().split("T")[0]}`);
+      await setToLocalForage(`${user?.userRepresentation?.id}_${startingForm}_${new Date().toISOString().split("T")[0]}`,
         {
           formData: JSON.parse(e.data).formData,
           imageUrls: { ...prevData?.imageUrls, ...images },
@@ -187,7 +195,7 @@ export const getFormData = async ({
   setData,
   setEncodedFormSpec,
   setEncodedFormURI,
-  isPreview
+  isPreview,
 }) => {
   const GCP_form_url = `${GCP_URL}${startingForm}.xml`;
   const res = await getMedicalAssessments(formSpec.date);
@@ -212,7 +220,7 @@ export const getFormData = async ({
     if (formSpec.date) {
       formData = await getSpecificDataFromForage("selected_assessment_form");
       prefillXMLArgs = [
-        `readonly_${formData?.form_name}`,
+        `${GCP_form_url}`,
         "",
         formData.form_data,
         formData.imageUrls,
@@ -222,17 +230,34 @@ export const getFormData = async ({
       if (formData) {
         setEncodedFormSpec(encodeURI(JSON.stringify(formSpec.forms[formId])));
         prefillXMLArgs = [
-          `${isPreview ? "readonly_"+startingForm : GCP_form_url}`,
+          `${GCP_form_url}`,
           formSpec.forms[formId].onSuccess,
           formData.formData,
           formData.imageUrls,
         ];
       } else {
-        prefillXMLArgs = [`${isPreview ? "readonly_"+startingForm : GCP_form_url}`, formSpec.forms[formId].onSuccess];
+        prefillXMLArgs = [`${GCP_form_url}`, formSpec.forms[formId].onSuccess];
       }
     }
+
     let prefilledForm = await getPrefillXML(...prefillXMLArgs);
     setEncodedFormURI(prefilledForm);
+
+    // formData = await getFromLocalForage(`${startingForm}_${new Date().toISOString().split("T")[0]}`);
+    // if (formData) {
+    //   setEncodedFormSpec(encodeURI(JSON.stringify(formSpec.forms[formId])));
+    //   prefillXMLArgs = [
+    //     `${GCP_form_url}`,
+    //     formSpec.forms[formId].onSuccess,
+    //     formData.formData,
+    //     formData.imageUrls,
+    //   ];
+    // } else {
+    //   prefillXMLArgs = [`${GCP_form_url}`, formSpec.forms[formId].onSuccess];
+    // }
+
+    // let prefilledForm = await getPrefillXML(...prefillXMLArgs);
+    // setEncodedFormURI(prefilledForm);
   } else setData(null);
   loading.current = false;
 };
@@ -242,4 +267,4 @@ export const getLocalTimeInISOFormat = () => {
   const offset = now.getTimezoneOffset();
   const localTime = new Date(now - offset * 60 * 1000);
   return localTime.toISOString();
-}
+};

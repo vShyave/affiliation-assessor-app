@@ -35,8 +35,10 @@ import {
   removeItemFromLocalForage,
   getFromLocalForage,
   setToLocalForage,
+  removeAllFromLocalForage,
 } from "../../forms";
 import { ContextAPI } from "../../utils/ContextAPI";
+import { StrictMode } from "react";
 
 const ENKETO_URL = process.env.REACT_APP_ENKETO_URL;
 
@@ -51,6 +53,11 @@ export default function DesktopAnalysisView() {
   const [formDataFromApi, setFormDataFromApi] = useState();
   const [openStatusModel, setOpenStatusModel] = useState(false);
   const { setSpinner, setToast } = useContext(ContextAPI);
+  const [onFormSuccessData, setOnFormSuccessData] = useState(undefined);
+  const [onFormFailureData, setOnFormFailureData] = useState(undefined);
+  const [paymentStatus, setPaymentStatus] = useState("");
+  const [formStatus, setFormStatus] = useState("");
+  const [onSubmit, setOnSubmit] = useState(false);
 
   const formSpec = {
     skipOnSuccessMessage: true,
@@ -74,11 +81,6 @@ export default function DesktopAnalysisView() {
   };
 
   const startingForm = formSpec.start;
-  const [onFormSuccessData, setOnFormSuccessData] = useState(undefined);
-  const [onFormFailureData, setOnFormFailureData] = useState(undefined);
-  const [paymentStatus, setPaymentStatus] = useState("");
-  const [formStatus, setFormStatus] = useState("");
-  const [onSubmit, setOnSubmit] = useState(false);
   const [encodedFormSpec, setEncodedFormSpec] = useState(
     encodeURI(JSON.stringify(formSpec.formId))
   );
@@ -97,7 +99,6 @@ export default function DesktopAnalysisView() {
 
     const postData = { form_id: formId };
     try {
-      setSpinner(true);
       const res = await getFormData(postData);
       formData = res.data.form_submissions[0];
 
@@ -329,16 +330,24 @@ export default function DesktopAnalysisView() {
         iframeContent.getElementById("save-draft").style.display = "none";
       }
 
-      var draftButton = iframeContent?.getElementById("save-draft");
+      // Need to work on Save draft...
+      var draftButton = iframeContent.getElementById("save-draft");
       draftButton?.addEventListener("click", function () {
         alert("Hello world!");
       });
     }
+    setSpinner(false);
   };
 
   useEffect(() => {
+    setSpinner(true);
     fetchFormData();
     bindEventListener();
+
+    // To clean all variables
+    return () => {
+      window.removeEventListener("message", handleEventTrigger);
+    };
   }, []);
 
   useEffect(() => {
@@ -348,7 +357,7 @@ export default function DesktopAnalysisView() {
   }, [formDataFromApi]);
 
   return (
-    <>
+    <StrictMode>
       <div className="h-[48px] bg-white flex justify-start drop-shadow-sm">
         <div className="container mx-auto flex px-3">
           <div className="flex flex-row font-bold gap-2 items-center">
@@ -359,7 +368,7 @@ export default function DesktopAnalysisView() {
             </Link>
             <FaAngleRight className="text-[16px]" />
             <span className="text-gray-500 uppercase">
-              {formName.split("_").join(" ")}
+              {formDataFromApi?.course?.course_name.split("_").join(" ")}
             </span>
           </div>
         </div>
@@ -379,7 +388,7 @@ export default function DesktopAnalysisView() {
                     Return to institute
                   </button>
                 )}
-              {paymentStatus?.toLowerCase() === "paid" &&
+              {/* {paymentStatus?.toLowerCase() === "paid" &&
                 formDataFromApi?.form_status?.toLowerCase() ===
                   "da completed" && (
                   <button
@@ -391,16 +400,25 @@ export default function DesktopAnalysisView() {
                       <BsArrowRight />
                     </span>
                   </button>
-                )}
-              {/* {(formDataFromApi?.form_status?.toLowerCase() !==
-                  "da completed" && paymentStatus?.toLowerCase() !== "paid") && ( */}
+                )} */}
               <button
-                onClick={() => desktopVerification()}
+                onClick={() => setOpenSheduleInspectionModel(true)}
                 className="flex flex-wrap items-center justify-center gap-2 border border-gray-500 bg-white text-gray-500 w-fit h-fit p-2 font-semibold rounded-[4px]"
               >
-                Initiate Payment
+                Send for inspection
+                <span>
+                  <BsArrowRight />
+                </span>
               </button>
-              {/* )} */}
+              {formDataFromApi?.form_status?.toLowerCase() !== "da completed" &&
+                paymentStatus?.toLowerCase() !== "paid" && (
+                  <button
+                    onClick={() => desktopVerification()}
+                    className="flex flex-wrap items-center justify-center gap-2 border border-gray-500 bg-white text-gray-500 w-fit h-fit p-2 font-semibold rounded-[4px]"
+                  >
+                    Initiate Payment
+                  </button>
+                )}
 
               <div
                 className={`${
@@ -520,6 +538,6 @@ export default function DesktopAnalysisView() {
           </div>
         </CommonModal>
       )} */}
-    </>
+    </StrictMode>
   );
 }
