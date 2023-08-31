@@ -8,12 +8,20 @@ const API_URL = {
   common: {
     registerEvent: `${rest}addEvents`,
     updateForm: `${rest}updateForm`,
+    updateRegulatorDeviceId: `${rest}updateRegulatorDeviceId`
   },
   notifications: {
+    //Hasura
     insertNotifications: `${rest}insertNotifications`,
     getNotifications: `${rest}getNotifications`,
     readNotification: `${rest}readNotification`,
     viewNotification: `${rest}viewNotification`,
+    //new APIs
+    getAllNotifications: `notification/all`,
+    sendPushNotification: `notification/send`,
+    getAllRegulatorDeviceId: `${rest}getAllRegulatorDeviceId`,
+    getApplicantDeviceId: `${rest}getApplicantDeviceId`,
+    emailNotify: `email/notify`
   },
   groundAnalysis: {
     viewForm: `${rest}getFormData`,

@@ -1,5 +1,6 @@
 import { initializeApp } from "firebase/app";
 import { getMessaging, getToken, onMessage } from "firebase/messaging";
+import { setCookie } from "../utils";
 
 const VAPID_KEY = 'BHQYJFpVAvAyVm0Gnk2yDT8snQ98N6eVx5VlRAcrFgGbWWK5GBy55AJYupwCkP19OzxsdG1OFHBlPwIvqhazWV8'
 const firebaseConfig = {
@@ -30,6 +31,7 @@ export const getPermissionForToken = () => {
       return getToken(messaging, { vapidKey: `${VAPID_KEY}` }).then((currentToken) => {
         if (currentToken) {
           console.log('Client Token: ', currentToken);
+          setCookie("firebase_client_token",currentToken)
         } else {
           console.log('Failed to generate the app registration token.');
         }

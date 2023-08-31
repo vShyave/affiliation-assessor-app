@@ -2,7 +2,7 @@ import React, { useState, useEffect, useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import ADMIN_ROUTE_MAP from "../routes/adminRouteMap";
 import { userService } from "../api/userService";
-import { getRegulator } from "../api/index";
+import { getRegulator, updateRegulatorDeviceId } from "../api/index";
 import { Card, Label, Button, Input } from "../components";
 import { useForm } from "react-hook-form";
 import { setCookie, getCookie, removeCookie } from "../utils/common";
@@ -110,8 +110,9 @@ const AdminLogin = () => {
       // );
 
       console.log(loginRes);
+
       const adminDetailsRes = await getRegulator({
-        email: data.email,
+        user_id: loginRes.data.userRepresentation.id,
       });
       const role = loginRes?.data?.userRepresentation?.attributes?.Role?.[0];
       if (role === "Super-Admin" || role === "Desktop-Admin") {
@@ -125,6 +126,23 @@ const AdminLogin = () => {
           toastMsg: "Invalid user.",
           toastType: "error",
         }));
+      }
+
+      //setting device ID
+      let deviceIds =
+        JSON.parse(adminDetailsRes.data.regulator[0].device_id) || [];
+      if (!deviceIds.includes(getCookie("firebase_client_token"))) {
+        console.log(deviceIds);
+        console.log(deviceIds.includes(getCookie("firebase_client_token")));
+        deviceIds.push(getCookie("firebase_client_token"));
+        console.log({
+          user_id: loginRes.data.userRepresentation.id,
+          device_id: JSON.stringify(deviceIds),
+        });
+        await updateRegulatorDeviceId({
+          user_id: loginRes.data.userRepresentation.id,
+          device_id: JSON.stringify(deviceIds),
+        });
       }
     } catch (error) {
       setToast((prevState) => ({

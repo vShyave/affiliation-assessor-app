@@ -4,6 +4,7 @@ export const APIS = {
   },
   COMMON: {
     REGISTER_EVENT: `/rest/addEvents`,
+    UPDATE_APPLICANT_DEVICE_ID: `/rest/updateApplicantDeviceId`
   },
   FORMS: {
     LIST: "/rest/getAllCourses",
@@ -42,7 +43,11 @@ export const APIS = {
     insertNotifications: `rest/insertNotifications`,
     getNotifications: `rest/getNotifications`,
     readNotification: `rest/readNotification`,
-    viewNotification: `rest/viewNotification`
+    viewNotification: `rest/viewNotification`,
+    //new APIs
+    sendPushNotification: `notification/send`,
+    getAllRegulatorDeviceId: `rest/getAllRegulatorDeviceId`,
+
   },
   PAYMENT:{
     GENERATE_LINK: `payment/generatelink`

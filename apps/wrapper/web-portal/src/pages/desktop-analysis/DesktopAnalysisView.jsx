@@ -20,6 +20,9 @@ import {
   getStatus,
   updateFormStatus,
   updatePaymentStatus,
+  sendPushNotification,
+  getAllRegulatorDeviceId,
+  getApplicantDeviceId,
 } from "../../api";
 import ADMIN_ROUTE_MAP from "../../routes/adminRouteMap";
 import {
@@ -247,7 +250,7 @@ export default function DesktopAnalysisView() {
     round: formDataFromApi?.round,
   };
 
-  const desktopVerification = () => {
+  const desktopVerification = async () => {
     updatePaymentStatus({ form_id: formId, payment_status: "Pending" });
     registerEvent({
       created_date: getLocalTimeInISOFormat(),
@@ -263,6 +266,38 @@ export default function DesktopAnalysisView() {
       form_id: formId * 1,
       form_status: "DA Completed",
     });
+    
+    //regulator
+    const regAPIRes = await getAllRegulatorDeviceId();
+    let regDeviceIds = [];
+    regAPIRes?.data?.regulator?.forEach((item) => {
+      let tempIds = JSON.parse(item.device_id);
+      if (tempIds.length) {
+        regDeviceIds.push();
+      }
+    });
+
+    console.log("regulator device ids-", regDeviceIds);
+    sendPushNotification({
+      title: "Desktop Analysis Done",
+      body: `The desktop analysis for ${formDataFromApi?.institute?.name}'s application has been completed. Kindly review the results.`,
+      deviceToken: regDeviceIds,
+      userId: "34061b3d-dc9f-41c4-94da-405306175430",
+    });
+
+    //applicant
+    const applicantRes = await getApplicantDeviceId({
+      institute_id: formDataFromApi?.institute?.id,
+    });
+    if (applicantRes?.data) {
+      let tempIds = JSON.parse(applicantRes?.data?.institutes[0]?.institute_pocs[0]?.device_id)
+      sendPushNotification({
+        title: "Application Review",
+        body: `Your application is reviewed by the UPSMF representative. Kindly make the payment for further process.`,
+        deviceToken: tempIds,
+        userId: applicantRes?.data?.institutes[0]?.institute_pocs[0]?.user_id,
+      });
+    }
 
     setTimeout(
       () => navigate(`${ADMIN_ROUTE_MAP.adminModule.desktopAnalysis.home}`),
@@ -272,7 +307,7 @@ export default function DesktopAnalysisView() {
 
   const checkIframeLoaded = () => {
     if (window.location.host.includes("regulator.upsmfac")) {
-      const iframeElem = document.getElementById("enketo_DA_preview");
+      const iframeElem = document?.getElementById("enketo_DA_preview");
       var iframeContent =
         iframeElem?.contentDocument || iframeElem?.contentWindow.document;
       if (
@@ -294,7 +329,7 @@ export default function DesktopAnalysisView() {
         iframeContent.getElementById("save-draft").style.display = "none";
       }
 
-      var draftButton = iframeContent.getElementById("save-draft");
+      var draftButton = iframeContent?.getElementById("save-draft");
       draftButton?.addEventListener("click", function () {
         alert("Hello world!");
       });
@@ -357,15 +392,15 @@ export default function DesktopAnalysisView() {
                     </span>
                   </button>
                 )}
-              {(formDataFromApi?.form_status?.toLowerCase() !==
-                  "da completed" && paymentStatus?.toLowerCase() !== "paid") && (
-                  <button
-                    onClick={() => desktopVerification()}
-                    className="flex flex-wrap items-center justify-center gap-2 border border-gray-500 bg-white text-gray-500 w-fit h-fit p-2 font-semibold rounded-[4px]"
-                  >
-                    Initiate Payment
-                  </button>
-                )}
+              {/* {(formDataFromApi?.form_status?.toLowerCase() !==
+                  "da completed" && paymentStatus?.toLowerCase() !== "paid") && ( */}
+              <button
+                onClick={() => desktopVerification()}
+                className="flex flex-wrap items-center justify-center gap-2 border border-gray-500 bg-white text-gray-500 w-fit h-fit p-2 font-semibold rounded-[4px]"
+              >
+                Initiate Payment
+              </button>
+              {/* )} */}
 
               <div
                 className={`${
