@@ -68,7 +68,7 @@ registerRoute(
  self.addEventListener('fetch', (event) => {
   ///
 
-  if (event.request.method ==='POST') {
+  if (event.request.method === 'POST') {
     event.respondWith(handleNonGetRequests(event.request, event.request.url));
   } 
 
@@ -124,14 +124,18 @@ await cache.put(cacheKey, ars);
   console.log(url)
   //loadJS();
   let cacheName="other";
-  if( !url.includes('graphql') && !url.includes('offline')){
+  if( !url.includes('graphql') && !url.includes('prefillXML') && !url.includes('enketo') && !url.includes('Validation')){
     if(url.includes('Inspections')){
       console.log('InspectionsInspectionsInspections')
       cacheName = 'inspections';
     } else if (url.includes('Course')){
       console.log('coursescoursescourses')
       cacheName = 'courses';
+    }else if (url.includes('Assessor')){
+      console.log('coursescoursescourses')
+      cacheName = 'assessors';
     }
+
 
     // Use a cache specifically for non-GET requests
     const cache = await caches.open(cacheName);
@@ -154,9 +158,6 @@ await cache.put(cacheKey, ars);
     }
     
   }
-
-
-
 } 
 
 function generateCacheKey(request) {
