@@ -153,8 +153,8 @@ const ForgotPassword = () => {
       setTimeout(() => setError(false), 3000);
       return;
     }
-    const res = await sendOtpToMobile(mobile);
-    if (res.responseCode == "OK") setOtpPage(true);
+    // const res = await sendOtpToMobile(mobile);
+    // if (res.responseCode == "OK") setOtpPage(true);
     else setError("Unable to send OTP. Please try again later");
   };
 
