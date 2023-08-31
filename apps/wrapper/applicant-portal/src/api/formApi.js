@@ -92,22 +92,22 @@ const validateResponse = async (response) => {
     userId: getCookie("userData")?.userRepresentation?.id,
   });
 
-  const regAPIRes = await applicantService.getAllRegulatorDeviceId();
-  let regDeviceIds = [];
-  regAPIRes?.data?.regulator?.forEach((item) => {
-    let tempIds = JSON.parse(item.device_id);
-    if (tempIds.length) {
-      regDeviceIds.push();
-    }
-  });
-  console.log("regulator device ids-", regDeviceIds);
+//   const regAPIRes = await applicantService.getAllRegulatorDeviceId();
+//   let regDeviceIds = [];
+//   regAPIRes?.data?.regulator?.forEach((item) => {
+//     let tempIds = JSON.parse(item.device_id);
+//     if (tempIds.length) {
+//       regDeviceIds.push();
+//     }
+//   });
+//   console.log("regulator device ids-", regDeviceIds);
 
-  applicantService.sendPushNotification({
-    title: "Application Submission",
-    body: `A new application has been submitted by an applicant. Please review and proceed with the necessary steps.`,
-    deviceToken: regDeviceIds,
-    userId: "34061b3d-dc9f-41c4-94da-405306175430",
-  });
+//   applicantService.sendPushNotification({
+//     title: "Application Submission",
+//     body: `A new application has been submitted by an applicant. Please review and proceed with the necessary steps.`,
+//     deviceToken: regDeviceIds,
+//     userId: "34061b3d-dc9f-41c4-94da-405306175430",
+//   });
 
   const jsonResponse = {
     ...apiRes,
