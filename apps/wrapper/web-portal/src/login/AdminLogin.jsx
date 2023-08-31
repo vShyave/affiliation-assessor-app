@@ -96,7 +96,6 @@ const AdminLogin = () => {
 
       const loginRes = await userService.login(loginDetails);
       console.log(loginRes);
-
       // const verifyOtpReq = userService.verifyOtp(data.email, data.otp);
       // const fusionAuthLoginReq = from(verifyOtpReq).pipe(
       //   mergeMap((verifyOtpRes) => {
@@ -108,8 +107,6 @@ const AdminLogin = () => {
       //     }
       //   })
       // );
-
-      console.log(loginRes);
       let user_details = loginRes?.data?.userRepresentation;
       const adminDetailsRes = await getRegulator({
         user_id: user_details?.id,

@@ -1,64 +1,4 @@
-
-//  const inspectionsCache = 'inspections';
-//  const formStatusCache = "formstatus";
-//  const coursesCache= "courses";
-//  const assessorCache= "assessor";
-
-// self.addEventListener('fetch', (event) => {
-//   console.log(event)
-//   ///
-//   if (event.request.method ==='POST' && event.request.url.includes('Inspections' ))  {
-//     event.respondWith(handleNonGetRequest(event.request, inspectionsCache));
-//   }
-
-//   if (event.request.method ==='POST' && event.request.url.includes('getFormStatus' ))  {
-//     event.respondWith(handleNonGetRequest(event.request, formStatusCache));
-//   }
-
-//   if (event.request.method ==='POST' && event.request.url.includes('Course' ))  {
-//     event.respondWith(handleNonGetRequest(event.request, coursesCache));
-//   }
-
-//   if (event.request.method ==='POST' && (event.request.url.includes('getAssessor') || event.request.url.includes('getValidation')))  {
-//     event.respondWith(handleNonGetRequest(event.request, assessorCache));
-//   }
-
-//   if (event.request.method ==='POST' && event.request.url.includes('prefillXML'))  {
-//     event.respondWith(handleNonGetRequest(event.request, "prefill"));
-//   }
-
-//   // if (event.request.method ==='POST' && event.request.url.includes('graphql'))  {
-//   //   event.respondWith(handleGraphQlRequest(event.request));
-//   // }
-
-//   if (event.request.method === 'POST' && event.request.url.includes('form-endpoint')) {
-//     // Cache the form data with a unique identifier
-//     event.respondWith(handleFormSubmission(event.request));
-//   }
-// }); 
-
-
-
-
-
-
-
-
-
-
-
-// -----------------
-
-
 /* eslint-disable no-restricted-globals */
-
-// This service worker can be customized!
-// See https://developers.google.com/web/tools/workbox/modules
-// for the list of available Workbox modules, or add any other
-// code you'd like.
-// You can also remove this file if you'd prefer not to use a
-// service worker, and the Workbox build step will be skipped.
-
 import { clientsClaim } from 'workbox-core';
 import { ExpirationPlugin } from 'workbox-expiration';
 import { precacheAndRoute, createHandlerBoundToURL } from 'workbox-precaching';
@@ -125,14 +65,34 @@ registerRoute(
 
 
 
-self.addEventListener('fetch', (event) => {
+ self.addEventListener('fetch', (event) => {
   ///
- 
-  if (event.request.method ==='POST') {
+
+  if (event.request.method === 'POST') {
     event.respondWith(handleNonGetRequests(event.request, event.request.url));
   } 
 
 }); 
+
+// self.addEventListener('fetch', event => {
+//   event.respondWith(
+//     fetch(event.request)
+//       .then(response => {
+//         // Here you can check the response status code
+//         if (response.status === 200) {
+//           console.log("eventeventeventeventeventeventevent")
+//           if (event.request.method === 'POST') {
+//             event.respondWith(handleNonGetRequests(event.request, event.request.url));
+//           } 
+//           // Do something with a 200 OK response
+//         }
+//         return response;
+//       })
+//       .catch(error => {
+//         // Handle errors
+//       })
+//   );
+// }); 
 
 /* async function loadJS() {
   let cacheName="enketowebformjs";
@@ -145,7 +105,7 @@ await cache.put(cacheKey, ars);
   
 } */
 
-self.addEventListener('install', event => {
+/* self.addEventListener('install', event => {
   event.waitUntil(
     caches.open('my-cache').then(cache => {
       return cache.addAll([
@@ -158,44 +118,51 @@ self.addEventListener('install', event => {
       ]);
     })
   );
-});
+}); */
 
  async function handleNonGetRequests(request, url) {
   console.log(url)
   //loadJS();
   let cacheName="other";
+  if( !url.includes('graphql') && !url.includes('prefillXML') && !url.includes('enketo') && !url.includes('Validation')){
+    if(url.includes('Inspections')){
+      console.log('InspectionsInspectionsInspections')
+      cacheName = 'inspections';
+    } else if (url.includes('Course')){
+      console.log('coursescoursescourses')
+      cacheName = 'courses';
+    }else if (url.includes('Assessor')){
+      console.log('coursescoursescourses')
+      cacheName = 'assessors';
+    }
 
-  if( url.includes('Inspections')){
-    console.log('InspectionsInspectionsInspections')
-    cacheName = 'inspections';
-  } else if (url.includes('Course')){
-    console.log('coursescoursescourses')
-    cacheName = 'courses';
-  } else if(url.includes('Assessor')){
-    console.log('AssessorAssessorAssessor')
-    cacheName = 'assessor';
+
+    // Use a cache specifically for non-GET requests
+    const cache = await caches.open(cacheName);
+    const cacheKey = generateCacheKey(request);
+    
+    
+    if(navigator.onLine) {
+      // Fetch the network response
+      const networkResponse = await fetch(request.clone());
+      const clonedResponse = networkResponse.clone();
+      // Clone and cache the network response for future use
+        await cache.put(cacheKey, clonedResponse);
+      return networkResponse;
+    } else {
+      // Check if the response is already cached
+      const cachedResponse = await cache.match(cacheKey);
+      if (cachedResponse) {
+        return cachedResponse;
+      }
+    }
+    
   }
-
-  // Use a cache specifically for non-GET requests
-  const cache = await caches.open(cacheName);
-  const cacheKey = generateCacheKey(request);
-   // Check if the response is already cached
-   const cachedResponse = await cache.match(cacheKey);
-   if (cachedResponse) {
-     return cachedResponse;
-   }
-  // Fetch the network response
-  const networkResponse = await fetch(request.clone());
-  const clonedResponse = networkResponse.clone();
-  // Clone and cache the network response for future use
-    await cache.put(cacheKey, clonedResponse);
-  return networkResponse;
-
 } 
 
 function generateCacheKey(request) {
   // This is a simplified example; customize it based on your needs
-  return request.url + JSON.stringify(request.clone().body);
+  return request.url + JSON.stringify(request.body);
 }
 // This allows the web app to trigger skipWaiting via
 // registration.waiting.postMessage({type: 'SKIP_WAITING'})
@@ -209,7 +176,7 @@ function generateCacheKey(request) {
 
 self.addEventListener('sync', (event) => {
   if (event.tag === 'sync-form-data') {
-    event.waitUntil(syncFormData());
+   // event.waitUntil(syncFormData());
   }
 });
 
@@ -267,10 +234,10 @@ async function handleGraphQlRequest(request) {
   console.log("Graphql request Data", requestData)
   if (requestData && requestData.operationType === 'mutation') {
     // Handle mutation
-    return handleMutationRequest(request);
+   // return handleMutationRequest(request);
   } else {
     // Handle query
-    return handleQueryRequest(request);
+  //  return handleQueryRequest(request);
   }
 } 
 

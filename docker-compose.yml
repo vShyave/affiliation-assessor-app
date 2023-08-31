@@ -195,41 +195,28 @@ services:
       FORM_MANAGER_URL: ${FORM_MANAGER_URL}
       MINIO_USE_SSL: ${MINIO_USE_SSL}
 
-  assessor-wrapper:
-    image: assessor-app
-    build:
-      context: apps/wrapper/assessor-app
-      # env vars to be passed at build time as it will build a static file
-      args:
-        REACT_APP_ENKETO_URL: ${REACT_APP_ENKETO_URL}
-        REACT_APP_FORM_MANAGER_URL: ${REACT_APP_FORM_MANAGER_URL}
-        REACT_APP_HASURA_URL: ${REACT_APP_HASURA_URL}
-    ports:
-      - 3000:80
+  # assessor-wrapper:
+  #   image: assessor-app
+  #   build:
+  #     context: apps/wrapper/assessor-app
+  #     # env vars to be passed at build time as it will build a static file
+  #     args:
+  #       REACT_APP_ENKETO_URL: ${REACT_APP_ENKETO_URL}
+  #       REACT_APP_FORM_MANAGER_URL: ${REACT_APP_FORM_MANAGER_URL}
+  #       REACT_APP_HASURA_URL: ${REACT_APP_HASURA_URL}
+  #   ports:
+  #     - 3000:80
 
-  admin-wrapper:
-    image: web-portal
-    build:
-      context: apps/wrapper/web-portal
-      # env vars to be passed at build time as it will build a static file
-      args:
-        REACT_APP_ENKETO_URL: ${REACT_APP_ENKETO_URL}
-        REACT_APP_FORM_MANAGER_URL: ${REACT_APP_FORM_MANAGER_URL}
-        REACT_APP_HASURA_URL: ${REACT_APP_HASURA_URL}
-    ports:
-      - 3001:80
-
-  applicant-wrapper:
-    image: applicant-portal
-    build:
-      context: apps/wrapper/applicant-portal
-      # env vars to be passed at build time as it will build a static file
-      args:
-        REACT_APP_ENKETO_URL: ${REACT_APP_ENKETO_URL}
-        REACT_APP_FORM_MANAGER_URL: ${REACT_APP_FORM_MANAGER_URL}
-        REACT_APP_HASURA_URL: ${REACT_APP_HASURA_URL}
-    ports:
-      - 3002:80
+  centro:
+    image: centro
+    build: packages/centro
+    ports: 
+      - 3560:3560
+    environment:
+      GCP_BUCKET_NAME: ${GCP_BUCKET_NAME}
+      GCP_PROJECT_ID: ${GCP_PROJECT_ID}
+      GOOGLE_APPLICATION_CREDENTIALS: ${GOOGLE_APPLICATION_CREDENTIALS}
+      
 
 networks:
   db_net:

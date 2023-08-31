@@ -43,13 +43,13 @@ const CommonLayout = (props) => {
     }
   };
 
-  // useEffect(() => {
-  //   onlineInterval.current = setInterval(async () => {
-  //     let status = await isOnline();
-  //     setOnline(status);
-  //   }, 1000);
-  //   return () => clearInterval(onlineInterval.current);
-  // }, []);
+  useEffect(() => {
+    onlineInterval.current = setInterval(async () => {
+      let status = navigator.onLine;
+      setOnline(status);
+    }, 1000);
+    return () => clearInterval(onlineInterval.current);
+  }, []);
 
   return (
     <>
