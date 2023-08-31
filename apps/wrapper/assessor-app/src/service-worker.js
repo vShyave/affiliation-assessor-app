@@ -124,7 +124,7 @@ await cache.put(cacheKey, ars);
   console.log(url)
   //loadJS();
   let cacheName="other";
-  if( !url.includes('graphql') && !url.includes('prefillXML') && !url.includes('enketo') && !url.includes('Validation')){
+  if( !url.includes('graphql')){
     if(url.includes('Inspections')){
       console.log('InspectionsInspectionsInspections')
       cacheName = 'inspections';
