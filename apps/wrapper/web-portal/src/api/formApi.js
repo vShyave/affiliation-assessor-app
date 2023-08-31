@@ -57,15 +57,13 @@ export const updateFormSubmission = async (data) => {
 };
 
 export const makeHasuraCalls = async (query) => {
-  // const userData = getCookie("userData");
-  return fetch(process.env.REACT_APP_NODE_URL, {
+  return fetch(process.env.REACT_APP_HASURA_URL, {
     method: "POST",
     headers: {
       Accept: "application/json",
       "Content-Type": "application/json",
-      // "Hasura-Client-Name": HASURA_CLIENT_NAME,
-      // "x-hasura-admin-secret": X_HASURA_ADMIN_SECRET_KEY,
-      Authorization: process.env.REACT_APP_AUTH_TOKEN,
+      "Hasura-Client-Name": HASURA_CLIENT_NAME,
+      "x-hasura-admin-secret": X_HASURA_ADMIN_SECRET_KEY,
     },
     body: JSON.stringify(query),
   })
