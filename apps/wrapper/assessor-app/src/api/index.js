@@ -3,7 +3,7 @@ import { getCookie, makeHasuraCalls } from "../utils";
 import customPost from "./customPost";
 import customPostPdf from "./customPostPdf";
 
-const BASE_URL = process.env.REACT_APP_USER_SERVICE_URL;
+//nconst BASE_URL = process.env.REACT_APP_USER_SERVICE_URL;
 const KEYCLOAK_BASE_URL =
   process.env.REACT_APP_WEB_PORTAL_USER_SERVICE_URL ||
   "https://uphrh.in/api/api/v1/user/";
@@ -41,19 +41,19 @@ keyCloakAxiosService.interceptors.response.use(
     return Promise.reject(res?.data?.error);
   }
 );
-export const loginMedical = async (username, pass) => {
-  try {
-    const res = await axios.post(BASE_URL + "login", {
-      password: pass,
-      loginId: username,
-      applicationId: applicationId,
-    });
-    return res.data;
-  } catch (err) {
-    console.log(err);
-    return err;
-  }
-};
+// export const loginMedical = async (username, pass) => {
+//   try {
+//     const res = await axios.post(BASE_URL + "login", {
+//       password: pass,
+//       loginId: username,
+//       applicationId: applicationId,
+//     });
+//     return res.data;
+//   } catch (err) {
+//     console.log(err);
+//     return err;
+//   }
+// };
 export const login = async (username, pass) => {
   try {
     const res = await keyCloakAxiosService.post(
@@ -78,21 +78,21 @@ export const login = async (username, pass) => {
   }
 };
 
-export const sendOtpToMobile = async (mobile) => {
-  try {
-    const res = await axios.post(
-      BASE_URL + "changePassword/sendOTP",
-      {
-        username: mobile,
-      },
-      { headers: { "x-application-id": applicationId } }
-    );
-    return res.data;
-  } catch (err) {
-    console.log(err);
-    return err;
-  }
-};
+// export const sendOtpToMobile = async (mobile) => {
+//   try {
+//     const res = await axios.post(
+//       BASE_URL + "changePassword/sendOTP",
+//       {
+//         username: mobile,
+//       },
+//       { headers: { "x-application-id": applicationId } }
+//     );
+//     return res.data;
+//   } catch (err) {
+//     console.log(err);
+//     return err;
+//   }
+// };
 
 export const base64ToPdf = async (postData) => {
   const res = await customPostPdf.post("/convert-via-puppeteer/pdfpuppeteer", {
@@ -101,23 +101,23 @@ export const base64ToPdf = async (postData) => {
   return res;
 };
 
-export const verifyOtpSavePassword = async (mobile, pass, otp) => {
-  try {
-    const res = await axios.patch(
-      BASE_URL + "changePassword/update",
-      {
-        username: mobile,
-        password: pass,
-        OTP: otp,
-      },
-      { headers: { "x-application-id": applicationId } }
-    );
-    return res.data;
-  } catch (err) {
-    console.log(err);
-    return err;
-  }
-};
+// export const verifyOtpSavePassword = async (mobile, pass, otp) => {
+//   try {
+//     const res = await axios.patch(
+//       BASE_URL + "changePassword/update",
+//       {
+//         username: mobile,
+//         password: pass,
+//         OTP: otp,
+//       },
+//       { headers: { "x-application-id": applicationId } }
+//     );
+//     return res.data;
+//   } catch (err) {
+//     console.log(err);
+//     return err;
+//   }
+// };
 
 export const getAssessor = async (postData) => {
   const res = await customPost.post("rest/getAssessor", postData);
@@ -318,48 +318,48 @@ export const getRandomOsceForm = async (type, year, speciality) => {
   }
 };
 
-export const createUser = async (data) => {
-  try {
-    const body = {
-      registration: {
-        applicationId: applicationId,
-        usernameStatus: "ACTIVE",
-        roles: [data.role],
-      },
-      user: {
-        password: data?.password,
-        username: data?.mobile,
-        mobilePhone: data?.mobile,
-      },
-    };
+// export const createUser = async (data) => {
+//   try {
+//     const body = {
+//       registration: {
+//         applicationId: applicationId,
+//         usernameStatus: "ACTIVE",
+//         roles: [data.role],
+//       },
+//       user: {
+//         password: data?.password,
+//         username: data?.mobile,
+//         mobilePhone: data?.mobile,
+//       },
+//     };
 
-    const userRes = await axios.post(BASE_URL + "signup", body, {
-      headers: { "x-application-id": applicationId },
-    });
+//     const userRes = await axios.post(BASE_URL + "signup", body, {
+//       headers: { "x-application-id": applicationId },
+//     });
 
-    if (userRes?.data?.responseCode === "OK") {
-      return userRes.data;
-    } else if (userRes?.data?.status != 200) {
-      const errorStrings = [];
-      const errors = userRes?.data?.exception?.fieldErrors;
-      Object.keys(errors).forEach((key) => {
-        errorStrings.push(errors[key]?.[0]?.message);
-      });
-      return errorStrings.join(". \n");
-    }
-  } catch (error) {
-    const errorStrings = [];
-    const errors = error?.response?.data?.exception?.fieldErrors;
-    Object.keys(errors).forEach((key) => {
-      errorStrings.push(errors[key]?.[0]?.message);
-    });
-    return (
-      errorStrings.join(". \n") ||
-      "An error occured while creating user. Try again"
-    );
-  }
-  return null;
-};
+//     if (userRes?.data?.responseCode === "OK") {
+//       return userRes.data;
+//     } else if (userRes?.data?.status != 200) {
+//       const errorStrings = [];
+//       const errors = userRes?.data?.exception?.fieldErrors;
+//       Object.keys(errors).forEach((key) => {
+//         errorStrings.push(errors[key]?.[0]?.message);
+//       });
+//       return errorStrings.join(". \n");
+//     }
+//   } catch (error) {
+//     const errorStrings = [];
+//     const errors = error?.response?.data?.exception?.fieldErrors;
+//     Object.keys(errors).forEach((key) => {
+//       errorStrings.push(errors[key]?.[0]?.message);
+//     });
+//     return (
+//       errorStrings.join(". \n") ||
+//       "An error occured while creating user. Try again"
+//     );
+//   }
+//   return null;
+// };
 
 export const saveFormSubmission = (data) => {
   const query = {
