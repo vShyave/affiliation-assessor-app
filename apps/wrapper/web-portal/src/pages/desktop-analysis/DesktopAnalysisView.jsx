@@ -269,36 +269,36 @@ export default function DesktopAnalysisView() {
     });
     
     //regulator
-    const regAPIRes = await getAllRegulatorDeviceId();
-    let regDeviceIds = [];
-    regAPIRes?.data?.regulator?.forEach((item) => {
-      let tempIds = JSON.parse(item.device_id);
-      if (tempIds.length) {
-        regDeviceIds.push();
-      }
-    });
+    // const regAPIRes = await getAllRegulatorDeviceId();
+    // let regDeviceIds = [];
+    // regAPIRes?.data?.regulator?.forEach((item) => {
+    //   let tempIds = JSON.parse(item.device_id);
+    //   if (tempIds.length) {
+    //     regDeviceIds.push();
+    //   }
+    // });
 
-    console.log("regulator device ids-", regDeviceIds);
-    sendPushNotification({
-      title: "Desktop Analysis Done",
-      body: `The desktop analysis for ${formDataFromApi?.institute?.name}'s application has been completed. Kindly review the results.`,
-      deviceToken: regDeviceIds,
-      userId: "34061b3d-dc9f-41c4-94da-405306175430",
-    });
+    // console.log("regulator device ids-", regDeviceIds);
+    // sendPushNotification({
+    //   title: "Desktop Analysis Done",
+    //   body: `The desktop analysis for ${formDataFromApi?.institute?.name}'s application has been completed. Kindly review the results.`,
+    //   deviceToken: regDeviceIds,
+    //   userId: "34061b3d-dc9f-41c4-94da-405306175430",
+    // });
 
     //applicant
-    const applicantRes = await getApplicantDeviceId({
-      institute_id: formDataFromApi?.institute?.id,
-    });
-    if (applicantRes?.data) {
-      let tempIds = JSON.parse(applicantRes?.data?.institutes[0]?.institute_pocs[0]?.device_id)
-      sendPushNotification({
-        title: "Application Review",
-        body: `Your application is reviewed by the UPSMF representative. Kindly make the payment for further process.`,
-        deviceToken: tempIds,
-        userId: applicantRes?.data?.institutes[0]?.institute_pocs[0]?.user_id,
-      });
-    }
+    // const applicantRes = await getApplicantDeviceId({
+    //   institute_id: formDataFromApi?.institute?.id,
+    // });
+    // if (applicantRes?.data) {
+    //   let tempIds = JSON.parse(applicantRes?.data?.institutes[0]?.institute_pocs[0]?.device_id)
+    //   sendPushNotification({
+    //     title: "Application Review",
+    //     body: `Your application is reviewed by the UPSMF representative. Kindly make the payment for further process.`,
+    //     deviceToken: tempIds,
+    //     userId: applicantRes?.data?.institutes[0]?.institute_pocs[0]?.user_id,
+    //   });
+    // }
 
     setTimeout(
       () => navigate(`${ADMIN_ROUTE_MAP.adminModule.desktopAnalysis.home}`),
@@ -388,7 +388,7 @@ export default function DesktopAnalysisView() {
                     Return to institute
                   </button>
                 )}
-              {/* {paymentStatus?.toLowerCase() === "paid" &&
+              {paymentStatus?.toLowerCase() === "paid" &&
                 formDataFromApi?.form_status?.toLowerCase() ===
                   "da completed" && (
                   <button
@@ -400,16 +400,7 @@ export default function DesktopAnalysisView() {
                       <BsArrowRight />
                     </span>
                   </button>
-                )} */}
-              <button
-                onClick={() => setOpenSheduleInspectionModel(true)}
-                className="flex flex-wrap items-center justify-center gap-2 border border-gray-500 bg-white text-gray-500 w-fit h-fit p-2 font-semibold rounded-[4px]"
-              >
-                Send for inspection
-                <span>
-                  <BsArrowRight />
-                </span>
-              </button>
+                )}
               {formDataFromApi?.form_status?.toLowerCase() !== "da completed" &&
                 paymentStatus?.toLowerCase() !== "paid" && (
                   <button

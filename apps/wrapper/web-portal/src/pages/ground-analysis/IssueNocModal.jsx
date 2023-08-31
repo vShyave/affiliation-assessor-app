@@ -87,21 +87,19 @@ function IssueNocModal({
       pathName = res?.data?.fileUrl;
       nocorCertificateFileName = res?.data?.fileName;
 
-      handleAcceptApplicantRoundOne()
+      postData?.type?.toLowerCase() === "noc"
+        ? handleAcceptApplicantRoundOne()
+        : handleAcceptApplicantRoundTwo();
 
-      // postData?.type?.toLowerCase() === "noc"
-      //   ? handleAcceptApplicantRoundOne()
-      //   : handleAcceptApplicantRoundTwo();
-
-      // if (res.status === 200) {
-      //   setToast((prevState) => ({
-      //     ...prevState,
-      //     toastOpen: true,
-      //     toastMsg: "File uploaded successfully!",
-      //     toastType: "success",
-      //   }));
-      //   navigate(`${ADMIN_ROUTE_MAP.adminModule.onGroundInspection.nocIssued}/${selectRound}`);
-      // }
+      if (res.status === 200) {
+        setToast((prevState) => ({
+          ...prevState,
+          toastOpen: true,
+          toastMsg: "File uploaded successfully!",
+          toastType: "success",
+        }));
+        navigate(`${ADMIN_ROUTE_MAP.adminModule.onGroundInspection.nocIssued}/${selectRound}`);
+      }
     } catch (error) {
       console.log("error - ", error);
       setToast((prevState) => ({
@@ -125,19 +123,19 @@ function IssueNocModal({
     };
     try {
       setSpinner(true);
-      // const responseNoc = await getAcceptApplicantNoc(postData);
-      // registerEvent({
-      //   created_date: getLocalTimeInISOFormat(),
-      //   entity_id: formId.toString(),
-      //   entity_type: "form",
-      //   event_name: "Approved",
-      //   remarks: `${user_details?.firstName} ${user_details?.lastName} has approved the form!`,
-      // });
+      const responseNoc = await getAcceptApplicantNoc(postData);
+      registerEvent({
+        created_date: getLocalTimeInISOFormat(),
+        entity_id: formId.toString(),
+        entity_type: "form",
+        event_name: "Approved",
+        remarks: `${user_details?.firstName} ${user_details?.lastName} has approved the form!`,
+      });
 
-      // updateFormStatus({
-      //   form_id: formId * 1,
-      //   form_status: "Approved",
-      // });
+      updateFormStatus({
+        form_id: formId * 1,
+        form_status: "Approved",
+      });
 
       //applicant push notification
       const applicantRes = await getApplicantDeviceId({
@@ -151,6 +149,13 @@ function IssueNocModal({
           title: "On-Ground Schedule Information(round 1)",
           body: `The on-ground assessment for Round 1  has been scheduled. On Ground Assessor will visit your college soon.`,
           deviceToken: tempIds,
+          
+           //use this only when testing regulator
+          // deviceToken: [`${getCookie("firebase_client_token")}`],
+          
+          // following is for pavana login applicant
+          // deviceToken:[`${dfyBA3tIXcbkTuFcXvlIZB:APA91bGik1lrcpNqI7fE5cIOGetsnX-s-wPQ3X76jwfuf-KfxlVgoG0okb-wub6wNeAsdW_vS8vQGMgTVknGsazTO6Z0hcGqeHKCHiBDyEbZUOhm4NVxueeZCs9oA2qcP2Yp0wWX4ece}`]
+          
           userId: applicantRes?.data?.institutes[0]?.institute_pocs[0]?.user_id,
         });
       }
@@ -164,8 +169,8 @@ function IssueNocModal({
 
       sendEmailNotification(emailData)
 
-      // pathName = "";
-      // nocorCertificateFileName = "";
+      pathName = "";
+      nocorCertificateFileName = "";
     } catch (error) {
       console.log(error);
     } finally {
@@ -215,20 +220,26 @@ function IssueNocModal({
           title: "On-Ground Schedule Information(round 2)",
           body: `The on-ground assessment for Round 2  has been scheduled. On Ground Assessor will visit your college soon.`,
           deviceToken: tempIds,
+          //use this only when testing regulator
+          // deviceToken: [`${getCookie("firebase_client_token")}`],
+          
+          // following is for pavana login applicant
+          // deviceToken:[`${dfyBA3tIXcbkTuFcXvlIZB:APA91bGik1lrcpNqI7fE5cIOGetsnX-s-wPQ3X76jwfuf-KfxlVgoG0okb-wub6wNeAsdW_vS8vQGMgTVknGsazTO6Z0hcGqeHKCHiBDyEbZUOhm4NVxueeZCs9oA2qcP2Yp0wWX4ece}`]
+          
           userId: applicantRes?.data?.institutes[0]?.institute_pocs[0]?.user_id,
         });
       }
 
       //email notify
       const emailData = {
-        recipientEmail: [],
-        emailSubject: `Granting Affiliation to ${selectInstituteName}`,
+        recipientEmail: [`${applicantRes?.data?.institutes[0]?.email}`],
+        emailSubject: `Granting Affiliation to ${applicantRes?.data?.institutes[0]?.name}`,
         emailBody: `<!DOCTYPE html><html><head><meta charset='utf-8'><title>Your Email Title</title><link href='https://fonts.googleapis.com/css2?family=Mulish:wght@400;600&display=swap' rel='stylesheet'></head><body style='font-family: Arial, sans-serif; background-color: #f4f4f4; margin: 0; padding: 0;'><table width='100%' bgcolor='#ffffff' cellpadding='0' cellspacing='0' border='0'><tr><td style='padding: 20px; text-align: center; background-color: #F5F5F5;'><img src='https://regulator.upsmfac.org/images/upsmf.png' alt='Logo' style='max-width: 360px;'></td></tr></table><table width='100%' bgcolor='#ffffff' cellpadding='0' cellspacing='0' border='0'><tr><td style='padding: 36px;'><p style='color: #555555; font-size: 18px; font-family: 'Mulish', Arial, sans-serif;'>Dear ${applicantRes?.data?.institutes[0]?.name},</p><p style='color: #555555; font-size: 18px; line-height: 1.6; font-family: 'Mulish', Arial, sans-serif;'>We hope this email finds you well. After careful consideration and evaluation, we are delighted to inform you that UPSMF has granted affiliation to ${selectInstituteName}. We believe that this partnership will bring significant benefits to both our institutions and contribute to the advancement of healthcare in our state.</p><p style='color: #555555; font-size: 18px; line-height: 1.6; font-family: 'Mulish', Arial, sans-serif;'>Congratulations on becoming an affiliated institute with UPSMF.</p><p style='color: #555555; font-size: 18px; line-height: 1.6; font-family: 'Mulish', Arial, sans-serif;'>Attachment: Affiliation Certificate</p></td></tr></table></body></html>` };
 
       sendEmailNotification(emailData)
 
-      // pathName = "";
-      // nocorCertificateFileName = "";
+      pathName = "";
+      nocorCertificateFileName = "";
     } catch (error) {
       console.log(error);
     } finally {

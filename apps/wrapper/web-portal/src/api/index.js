@@ -8,7 +8,7 @@ const BASE_URL_KEYCLOAK =
   process.env.REACT_APP_WEB_PORTAL_USER_SERVICE_URL ||
   "https://auth.upsmfac.org/api/v1/";
 const NOTIFICATION_BASE_URL =
-  process.env.REACT_APP_PUSH_NOTIFICATION || "https://uphrh.in/api/api/";
+  process.env.REACT_APP_NODE_URL || "https://uphrh.in/api/api/";
 
 export const registerUser = async (postData) => {
   const res = await adminCustomPost.post(API_URL.auth.register, postData);
@@ -543,3 +543,8 @@ export const updateRegulatorDeviceId = async (postData) => {
   );
   return res;
 };
+
+export const getTransactionDetail = async (postData) =>{
+  const res =  await adminCustomPost.get(API_URL.desktopAnalysis.getTransactionDetail+"/"+postData)
+  return res
+}

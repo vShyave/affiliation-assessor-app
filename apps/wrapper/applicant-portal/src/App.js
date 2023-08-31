@@ -30,7 +30,7 @@ function App() {
   const [toast, setToast] = useState({
     toastOpen: false,
     toastMsg: "",
-    toastType: "success",
+    toastType: "",
   });
 
   const messaging = getMessaging(fireBaseApp);
@@ -43,20 +43,8 @@ function App() {
           ...prevState,
           toastOpen: true,
           toastMsg: payload.data.title,
+          toastType: "success"
         }));
-        const postData = {
-          notifications: [
-            {
-              title: payload.data.title,
-              body: payload.data.body,
-              date: getLocalTimeInISOFormat(),
-              user_id: getCookie("userData")?.userRepresentation?.id,
-              user_type: "Applicant",
-              read_status: "Unread",
-            },
-          ],
-        };
-        applicantService.insertNotifications(postData);
       });
     }
   })();

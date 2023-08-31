@@ -67,7 +67,8 @@ const API_URL = {
     filterDesktopAnalysis: `${rest}filterDesktopAnalysis`,
     updateFormSubmission: `${rest}updateFormSubmission`,
     addInstituteCourse: `${rest}addInstituteCourse`,
-    updatePaymentStatus: `${rest}updatePaymentStatus`
+    updatePaymentStatus: `${rest}updatePaymentStatus`,
+    getTransactionDetail: `v1/user/transaction`
   },
   scheduleManagement: {
     getAssessmentSchedule: `${rest}getAssessmentSchedule`,

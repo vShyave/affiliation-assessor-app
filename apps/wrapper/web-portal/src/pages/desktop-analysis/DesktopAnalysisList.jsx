@@ -14,6 +14,7 @@ import {
   markReviewStatus,
   searchDesktop,
   registerEvent,
+  getTransactionDetail,
 } from "../../api";
 import {
   getFieldName,
@@ -44,12 +45,11 @@ const DesktopAnalysisList = () => {
     flag: false,
     paymentDetails: {
       dateTime: getLocalTimeInISOFormat(),
-      referenceNumber: 123,
-      transactionId: 1234,
-      amount: "Rs 20000.00",
+      transactionId: "",
+      amount: "",
       applicationType: "Institute",
-      collegeName: "Muzaffarnagar Medical College & Hospital",
-      paymentStatus: "Success",
+      collegeName: "",
+      paymentStatus: "",
     },
   });
 
@@ -273,9 +273,19 @@ const DesktopAnalysisList = () => {
     reviewed_in_total: 0,
   };
 
-  const handleViewPayment = (e) => {
+  const handleViewPayment = async (e) => {
+    // TODO: to enable this when we get successful transaction page
+    // const transactionRes = await getTransactionDetail(e.transaction_details[0]?.id)
+    const transactionRes = await getTransactionDetail(2308291658908)
     setViewPaymentModal((prevState) => ({
-      ...prevState,
+      paymentDetails:{
+        ...prevState.paymentDetails,
+        dateTime: readableDate(transactionRes?.data?.transactionDate),
+        transactionId: transactionRes?.data?.uniqueRefNumber,
+        amount: transactionRes?.data?.totalAmount,
+        collegeName: e.institute.name,
+        paymentStatus: transactionRes?.data?.transaction_status     
+      },
       flag: true,
     }));
   };

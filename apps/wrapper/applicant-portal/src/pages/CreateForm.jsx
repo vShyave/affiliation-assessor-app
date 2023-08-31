@@ -324,7 +324,7 @@ const CreateForm = (props) => {
       mandatoryFields: {
         referenceNo: generate_uuidv4(),
         submerchantId: "45",
-        transactionAmount: "10",
+        transactionAmount: "2500",
         invoiceId: "x1",
         invoiceDate: "x",
         invoiceTime: "x",

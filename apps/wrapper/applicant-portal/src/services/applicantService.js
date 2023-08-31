@@ -3,7 +3,7 @@ import axiosService from "./axiosService";
 import paymentService from "./paymentService";
 
 const NOTIFICATION_BASE_URL =
-  process.env.REACT_APP_PUSH_NOTIFICATION || "http://localhost:8080/api/";
+  process.env.REACT_APP_NODE_URL || "https://uphrh.in/api/api/";
 
 const addInstitute = (instituteDetails) => {
   return axiosService.post(APIS.APPLICANT.ADD_INSTITUTE, instituteDetails);
