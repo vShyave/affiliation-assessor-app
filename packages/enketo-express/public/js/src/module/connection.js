@@ -156,9 +156,10 @@ async function _uploadBatch(recordBatch, record) {
         return document.querySelector(`meta[name=${metaName}]`).content;
     }
 
-    const formSpec = getMeta('formSpec');
-    const formController = new FormController(JSON.parse(formSpec));
-    const response = await formController.processForm(record.xml, record.files);
+    const formSpec = getMeta('formSpec') ;
+
+    const formController = formSpec ? new FormController(JSON.parse(formSpec)) : new FormController();
+    const response = formSpec ? await formController.processForm(record.xml, record.files) : await formController.processFormNew(record.xml, record.files);
     // TODO: transforrm the form response
     // TODO: submit the form
     formController.broadcastFormData();
