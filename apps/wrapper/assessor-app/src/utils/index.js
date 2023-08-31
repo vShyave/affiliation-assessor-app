@@ -170,6 +170,7 @@ export const handleFormEvents = async (startingForm, afterFormSubmit, e) => {
 
   if (
     e.origin + "/enketo" === ENKETO_URL &&
+    // e.origin === ENKETO_URL &&
     typeof e?.data === "string" &&
     JSON.parse(e?.data)?.state !== "ON_FORM_SUCCESS_COMPLETED"
   ) {
