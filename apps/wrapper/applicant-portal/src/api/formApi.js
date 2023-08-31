@@ -7,7 +7,7 @@ const ENKETO_MANAGER_URL = process.env.REACT_APP_ENKETO_MANAGER_URL;
 const HASURA_CLIENT_NAME = process.env.HASURA_CLIENT_NAME || "hasura-console";
 const X_HASURA_ADMIN_SECRET_KEY =
   process.env.X_HASURA_ADMIN_SECRET_KEY || "myadminsecretkey";
-const HASURA_URL = process.env.REACT_APP_NODE_URL || "https://uphrh.in/api/";
+const HASURA_URL = process.env.REACT_APP_HASURA_URL || 'https://hasura.upsmfac.org/v1/graphql';
 
 export const getPrefillXML = async (
   form,
@@ -60,9 +60,8 @@ export const makeHasuraCalls = async (query) => {
     headers: {
       Accept: "application/json",
       "Content-Type": "application/json",
-      //   "Hasura-Client-Name": HASURA_CLIENT_NAME,
-      //   "x-hasura-admin-secret": X_HASURA_ADMIN_SECRET_KEY,
-      Authorization: process.env.REACT_APP_AUTH_TOKEN,
+      "Hasura-Client-Name": HASURA_CLIENT_NAME,
+      "x-hasura-admin-secret": X_HASURA_ADMIN_SECRET_KEY,
     },
     body: JSON.stringify(query),
   })
