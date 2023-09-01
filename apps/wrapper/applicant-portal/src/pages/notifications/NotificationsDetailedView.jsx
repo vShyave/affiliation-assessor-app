@@ -12,7 +12,6 @@ import {
   Typography,
 } from "@material-tailwind/react";
 import { getCookie, readableDate } from "../../utils";
-import { getNotifications } from "../../api";
 import DetailedNotification from "./DetailedNotification";
 import APPLICANT_ROUTE_MAP from "../../routes/ApplicantRoute";
 import { applicantService } from "../../services";
@@ -36,30 +35,31 @@ export default function NotificationsDetailedView(props) {
 
   const getAllNotifications = async () => {
     const postData = {
-      user_id: `${getCookie("institutes")?.[0]?.id}`,
+      userId: `${getCookie("userData")?.userRepresentation?.id}`,
+      page: 0,
+      size: 10,
+      sort: { updated_date_ts: "desc" },
     };
     try {
-      const res = await applicantService.getNotifications(postData);
+      const res = await applicantService.getAllNotifications(postData);
       console.log(res);
-      const notifList = res.data.notifications.map((item) => ({
-        roles: [item?.user_type],
+      const notifList = res.data[0].data.map((item) => ({
+        roles: "Applicant",
         title: item?.title,
-        body: item?.body,
-        date: readableDate(item?.date),
-        text: item?.body,
+        body: item?.text,
+        date: readableDate(item?.createdDate),
+        text: item?.text,
         subText:
-          item?.body?.length > 40
-            ? item?.body.substr(0, 40) + " ..."
-            : item?.body,
-        read_status: item?.read_status,
+          item?.text?.length > 40
+            ? item?.text.substr(0, 40) + " ..."
+            : item?.text,
+        read_status: item?.read,
         id: item?.id,
       }));
+      const navigationURL = `${APPLICANT_ROUTE_MAP.dashboardModule.notifications}/${notifList[0]?.id}`;
+      navigation(navigationURL);
+      setselectedNotification(notifList[0]);
       setNotifcationList(notifList);
-      if (!Object.keys(selectedNotification).length) {
-        setselectedNotification(notifList[0]);
-        const navigationURL = `${APPLICANT_ROUTE_MAP.dashboardModule.notifications}/${notifList[0].id}`;
-        navigation(navigationURL);
-      }
     } catch (error) {
       console.log(error);
     } finally {

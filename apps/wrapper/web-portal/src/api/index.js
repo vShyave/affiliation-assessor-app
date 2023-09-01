@@ -428,43 +428,10 @@ export const registerEvent = async (postData) => {
   return res;
 };
 
-// Notifications APIs Hasura
-export const insertNotifications = async (postData) => {
-  const res = await adminCustomPost.post(
-    API_URL.notifications.insertNotifications,
-    postData
-  );
-  return res;
-};
-
-export const getNotifications = async (postData) => {
-  const res = await adminCustomPost.post(
-    API_URL.notifications.getNotifications,
-    postData
-  );
-  return res;
-};
-
-export const readNotification = async (postData) => {
-  const res = await adminCustomPost.put(
-    API_URL.notifications.readNotification,
-    postData
-  );
-  return res;
-};
-
-export const viewNotification = async (postData) => {
-  const res = await adminCustomPost.post(
-    API_URL.notifications.viewNotification,
-    postData
-  );
-  return res;
-};
-
 //Notifications APIs updated
 export const getAllNotifications = async (postData) => {
-  const res = await axios.post(
-    `${NOTIFICATION_BASE_URL}${API_URL.notifications.getAllNotifications}`,
+  const res = await adminCustomPost.post(
+    `${API_URL.notifications.getAllNotifications}`,
     postData,
     {
       headers: {
@@ -478,8 +445,8 @@ export const getAllNotifications = async (postData) => {
 };
 
 export const sendPushNotification = async (postData) => {
-  const res = await axios.post(
-    `${NOTIFICATION_BASE_URL}${API_URL.notifications.sendPushNotification}`,
+  const res = await adminCustomPost.post(
+    `${API_URL.notifications.sendPushNotification}`,
     postData,
     {
       headers: {
@@ -493,8 +460,8 @@ export const sendPushNotification = async (postData) => {
 };
 
 export const sendEmailNotification = async (postData) => {
-  const res = await axios.post(
-    `${NOTIFICATION_BASE_URL}${API_URL.notifications.emailNotify}`,
+  const res = await adminCustomPost.post(
+    `${API_URL.notifications.emailNotify}`,
     postData,
     {
       headers: {

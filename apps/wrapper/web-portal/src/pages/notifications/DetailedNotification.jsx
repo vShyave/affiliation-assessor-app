@@ -27,7 +27,6 @@ const DetailedNotification = ({ notification }) => {
             </div>
             <div className="overflow-y-auto h-[558px]">
               <div>{notification.body}</div>
-              <div>{notification.text}</div>
             </div>
           </div>
         </div>
