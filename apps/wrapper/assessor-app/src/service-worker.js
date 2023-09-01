@@ -68,7 +68,7 @@ registerRoute(
  self.addEventListener('fetch', (event) => {
   ///
 console.log(event.request)
-  if (event.request.method === 'POST') {
+  if (event.request.method === 'POST' && event.request.redirect === 'follow' ) {
     event.respondWith(handleNonGetRequests(event.request, event.request.url));
   } 
 
