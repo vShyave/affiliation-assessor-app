@@ -124,7 +124,7 @@ await cache.put(cacheKey, ars);
   console.log(url)
   //loadJS();
   let cacheName="other";
- // if( !url.includes('graphql')){
+ if( !url.includes('graphql')){
     if(url.includes('Inspections')){
       console.log('InspectionsInspectionsInspections')
       cacheName = 'inspections';
@@ -157,7 +157,7 @@ await cache.put(cacheKey, ars);
       }
     }
     
-  //}
+  }
 } 
 
 function generateCacheKey(request) {
