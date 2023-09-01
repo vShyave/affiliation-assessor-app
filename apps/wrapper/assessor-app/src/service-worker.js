@@ -67,32 +67,33 @@ registerRoute(
 
  self.addEventListener('fetch', (event) => {
   ///
-
+console.log(event.request)
   if (event.request.method === 'POST') {
     event.respondWith(handleNonGetRequests(event.request, event.request.url));
   } 
 
 }); 
 
-// self.addEventListener('fetch', event => {
-//   event.respondWith(
-//     fetch(event.request)
-//       .then(response => {
-//         // Here you can check the response status code
-//         if (response.status === 200) {
-//           console.log("eventeventeventeventeventeventevent")
-//           if (event.request.method === 'POST') {
-//             event.respondWith(handleNonGetRequests(event.request, event.request.url));
-//           } 
-//           // Do something with a 200 OK response
-//         }
-//         return response;
-//       })
-//       .catch(error => {
-//         // Handle errors
-//       })
-//   );
-// }); 
+/*  self.addEventListener('fetch', event => {
+   event.respondWith(
+     fetch(event.request)
+       .then(response => {
+         // Here you can check the response status code
+         if (response.status === 200) {
+           console.log("eventeventeventeventeventeventevent")
+           console.log(response)
+          if (event.request.method === 'POST') {
+             event.respondWith(handleNonGetRequests(event.request, event.request.url));
+           }  
+           // Do something with a 200 OK response
+         }
+         return response;
+       })
+       .catch(error => {
+         // Handle errors
+       })
+   );
+ }); */ 
 
 /* async function loadJS() {
   let cacheName="enketowebformjs";
@@ -173,11 +174,36 @@ async function handleNonGetRequests(request, url) {
 
     } else
     {
-      return await fetch(request.clone());
+      const networkResponse = await fetch(request.clone());
+      if(networkResponse.redirected){
+        await cleanResponse(networkResponse)
+      } else {
+        return await fetch(request.clone());
+      }
+    
     }
 
   }
 // }
+
+async function cleanResponse(clonedResponse) {
+  //const clonedResponse = response.clone();
+console.log("nw is redirect")
+  // Not all browsers support the Response.body stream, so fall back to reading
+  // the entire body into memory as a blob.
+  const bodyPromise = 'body' in clonedResponse ?
+    Promise.resolve(clonedResponse.body) :
+    clonedResponse.blob();
+
+  return bodyPromise.then((body) => {
+    // new Response() is happy when passed either a stream or a Blob.
+    return new Response(body, {
+      headers: clonedResponse.headers,
+      status: clonedResponse.status,
+      statusText: clonedResponse.statusText,
+    });
+  });
+}
 
 function generateCacheKey(request) {
   // This is a simplified example; customize it based on your needs
