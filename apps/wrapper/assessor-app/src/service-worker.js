@@ -120,45 +120,64 @@ await cache.put(cacheKey, ars);
   );
 }); */
 
- async function handleNonGetRequests(request, url) {
+async function handleNonGetRequests(request, url) {
+
   console.log(url)
+
   //loadJS();
-  let cacheName="other";
- if( !url.includes('graphql')){
-    if(url.includes('Inspections')){
+
+  //let cacheName="other";
+
+//  if( !url.includes('graphql')){
+    if(url.includes('Inspections') || url.includes('Course') || url.includes('Assessor')){
+
       console.log('InspectionsInspectionsInspections')
-      cacheName = 'inspections';
-    } else if (url.includes('Course')){
-      console.log('coursescoursescourses')
-      cacheName = 'courses';
-    }else if (url.includes('Assessor')){
-      console.log('coursescoursescourses')
-      cacheName = 'assessors';
-    }
 
-
+      let cacheName = 'inspections';
     // Use a cache specifically for non-GET requests
     const cache = await caches.open(cacheName);
+
     const cacheKey = generateCacheKey(request);
-    
-    
+
+   
+
+   
+
     if(navigator.onLine) {
+
       // Fetch the network response
+
       const networkResponse = await fetch(request.clone());
+
       const clonedResponse = networkResponse.clone();
+
       // Clone and cache the network response for future use
+
         await cache.put(cacheKey, clonedResponse);
+
       return networkResponse;
+
     } else {
+
       // Check if the response is already cached
+
       const cachedResponse = await cache.match(cacheKey);
+
       if (cachedResponse) {
+
         return cachedResponse;
+
       }
+
     }
-    
+
+    } else
+    {
+      return await fetch(request.clone());
+    }
+
   }
-} 
+// }
 
 function generateCacheKey(request) {
   // This is a simplified example; customize it based on your needs
