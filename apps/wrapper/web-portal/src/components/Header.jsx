@@ -24,6 +24,7 @@ export default function Header() {
     removeCookie("userData");
     removeCookie("institutes");
     removeCookie("regulator");
+    removeCookie("firebase_client_token")
     navigate(ADMIN_ROUTE_MAP.loginModule.login);
   };
 

@@ -21,6 +21,7 @@ const Header = () => {
   const handleLogout = () => {
     removeCookie("userData");
     removeCookie("institutes");
+    removeCookie("firebase_client_token")
     navigate(APPLICANT_ROUTE_MAP.loginModule.login);
   };
 

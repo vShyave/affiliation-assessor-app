@@ -15,7 +15,7 @@ import {
 
 import { MdNotifications } from "react-icons/md";
 import { getCookie, readableDate } from "../../utils";
-import { getNotifications, readNotification } from "../../api";
+import { getAllNotifications, getNotifications, readNotification } from "../../api";
 import { ContextAPI } from "../../utils/ContextAPI";
 
 export default function Overlay() {
@@ -42,27 +42,64 @@ export default function Overlay() {
     }
   };
 
-  const getAllNotifications = async () => {
+  {/**get all notifications API call from Hasura */}
+  // const getAllNotifications = async () => {
+  //   const postData = {
+  //     user_id: getCookie("regulator")?.[0]?.user_id,
+  //   };
+  //   try {
+  //     setSpinner(true);
+  //     const res = await getNotifications(postData);
+  //     const notifList = res.data.notifications.map((item) => ({
+  //       roles: [item?.user_type],
+  //       title: item?.title,
+  //       body: item?.body,
+  //       date: readableDate(item?.date),
+  //       text: item?.body,
+  //       subText:
+  //         item?.body?.length > 40
+  //           ? item?.body.substr(0, 40) + " ..."
+  //           : item?.body,
+  //       read_status: item?.read_status,
+  //       id: item?.id,
+  //     }));
+  //     setNotifcationList(notifList);
+  //   } catch (error) {
+  //     console.log(error);
+  //   } finally {
+  //     setSpinner(false);
+  //   }
+  // };
+
+  {/**get all notifications API call from Other backend */}
+  const getAllNotificationsAPI = async () => {
     const postData = {
-      user_id: getCookie("regulator")?.[0]?.user_id,
+      // userId: getCookie("regulator")?.[0]?.user_id,
+      userId:2,
+      page:0,
+      size:10,
+      sort:{
+        updated_date_ts:"desc"
+      }
     };
     try {
       setSpinner(true);
-      const res = await getNotifications(postData);
-      const notifList = res.data.notifications.map((item) => ({
-        roles: [item?.user_type],
-        title: item?.title,
-        body: item?.body,
-        date: readableDate(item?.date),
-        text: item?.body,
-        subText:
-          item?.body?.length > 40
-            ? item?.body.substr(0, 40) + " ..."
-            : item?.body,
-        read_status: item?.read_status,
-        id: item?.id,
-      }));
-      setNotifcationList(notifList);
+      const res = await getAllNotifications(postData);
+      console.log(res)
+      // const notifList = res.data.data.notifications.map((item) => ({
+      //   roles: [item?.user_type],
+      //   title: item?.title,
+      //   body: item?.body,
+      //   date: readableDate(item?.date),
+      //   text: item?.body,
+      //   subText:
+      //     item?.body?.length > 40
+      //       ? item?.body.substr(0, 40) + " ..."
+      //       : item?.body,
+      //   read_status: item?.read_status,
+      //   id: item?.id,
+      // }));
+      // setNotifcationList(notifList);
     } catch (error) {
       console.log(error);
     } finally {
@@ -75,7 +112,7 @@ export default function Overlay() {
   };
 
   useEffect(() => {
-    getAllNotifications();
+    getAllNotificationsAPI();
   }, []);
 
   return (

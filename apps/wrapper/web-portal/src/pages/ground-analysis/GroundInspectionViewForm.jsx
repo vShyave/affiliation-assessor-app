@@ -37,7 +37,7 @@ export default function ApplicationPage({
   const [openIssueNocModel, setOpenIssueNocModel] = useState(false);
   const [encodedFormURI, setEncodedFormURI] = useState("");
   let { formName, formId, instituteName, round } = useParams();
-  let [instituteNameModal, setInstituteNameModal] = useState(instituteName);
+  let [instituteId, setInstituteId] = useState();
   let [selectRound, setSelectRound] = useState(round);
   const { setSpinner } = useContext(ContextAPI);
 
@@ -73,6 +73,7 @@ export default function ApplicationPage({
       const statusOfForm = formData?.form_status;
       setFormStatus(statusOfForm);
       const form_path = `${GCP_URL}${formData?.form_name}.xml`;
+      setInstituteId(formData?.institute?.id)
 
       let formURI = await getPrefillXML(
         `${form_path}`,
@@ -272,6 +273,8 @@ export default function ApplicationPage({
           closeRejectModal={setRejectModel}
           setRejectStatus={setRejectStatus}
           formId={formId}
+          instituteId={instituteId}
+          instituteName={instituteName}
         />
       )}
       {/* {openCertificateModel && <IssueCertificateModal closeCertificateModal={setOpenCertificateModel}/>} */}
@@ -285,6 +288,7 @@ export default function ApplicationPage({
           selectInstituteName={instituteName}
           formId={formId}
           setOpenIssueNocModel={setOpenIssueNocModel}
+          instituteId={instituteId}
         />
       )}
     </>
