@@ -61,6 +61,7 @@ function registerValidSW(swUrl, config) {
   navigator.serviceWorker
     .register(swUrl)
     .then((registration) => {
+      console.log(registration)
       if (registration.waiting) {
         console.log("onupdatefound")
         // An update is available, you might want to prompt the user to refresh the page
