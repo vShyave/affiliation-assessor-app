@@ -51,7 +51,6 @@ ADMIN_ROUTE_MAP.adminModule = {
   },
   notifications: {
     home: `/${NOTIFICATIONS}`,
-    notificatonView: `/${NOTIFICATIONS}/notifications-view`
   }
   
 };

@@ -274,17 +274,17 @@ const DesktopAnalysisList = () => {
   };
 
   const handleViewPayment = async (e) => {
-    // TODO: to enable this when we get successful transaction page
-    // const transactionRes = await getTransactionDetail(e.transaction_details[0]?.id)
-    const transactionRes = await getTransactionDetail(2308291658908)
+    const transactionRes = await getTransactionDetail(
+      e.transaction_details[0]?.id
+    );
     setViewPaymentModal((prevState) => ({
-      paymentDetails:{
+      paymentDetails: {
         ...prevState.paymentDetails,
         dateTime: readableDate(transactionRes?.data?.transactionDate),
         transactionId: transactionRes?.data?.uniqueRefNumber,
         amount: transactionRes?.data?.totalAmount,
         collegeName: e.institute.name,
-        paymentStatus: transactionRes?.data?.transaction_status     
+        paymentStatus: transactionRes?.data?.transaction_status,
       },
       flag: true,
     }));
@@ -311,9 +311,13 @@ const DesktopAnalysisList = () => {
       payment_status: (
         <div
           className={`px-6 text-primary-600 pl-0`}
-          onClick={() => handleViewPayment(e)}
+          onClick={
+            e?.payment_status === "Paid" ? () => handleViewPayment(e) : () => {}
+          }
         >
-          {e?.payment_status || "NA"}
+          {e?.payment_status === "Paid"
+            ? "View Payment Detail"
+            : e?.payment_status || "NA"}
         </div>
       ),
     };

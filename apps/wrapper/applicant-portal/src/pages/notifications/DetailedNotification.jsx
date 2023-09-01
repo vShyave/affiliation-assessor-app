@@ -28,9 +28,6 @@ const DetailedNotification = ({ notification }) => {
             <div>
               <div>{notification.body}</div>
             </div>
-            <div>
-              <div>{notification.text}</div>
-            </div>
           </div>
         </div>
       </Card>

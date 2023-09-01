@@ -42,14 +42,10 @@ export const APIS = {
     SEARCH_FORM: "/rest/searchCourses"
   },
   notifications:{
-    insertNotifications: `rest/insertNotifications`,
-    getNotifications: `rest/getNotifications`,
-    readNotification: `rest/readNotification`,
-    viewNotification: `rest/viewNotification`,
     //new APIs
     sendPushNotification: `notification/send`,
     getAllRegulatorDeviceId: `rest/getAllRegulatorDeviceId`,
-
+    getAllNotifications: `notification/all`,
   },
   PAYMENT:{
     GENERATE_LINK: `payment/generatelink`,

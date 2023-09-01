@@ -26,7 +26,8 @@ export const onMessageListener = () => {
 };
 
 export const getPermissionForToken = () => {
-  const permission = "granted";
+  window.Notification.requestPermission();
+  const permission = window.Notification.permission;
   if (permission === "granted") {
     console.log("Notification User Permission Granted.");
     return getToken(messaging, { vapidKey: `${VAPID_KEY}` })
@@ -44,6 +45,8 @@ export const getPermissionForToken = () => {
           err
         );
       });
+  } else if (permission === "default") {
+    window.Notification.requestPermission();
   } else {
     console.log("User Permission Denied.");
   }

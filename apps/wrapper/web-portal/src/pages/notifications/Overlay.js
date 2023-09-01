@@ -15,7 +15,7 @@ import {
 
 import { MdNotifications } from "react-icons/md";
 import { getCookie, readableDate } from "../../utils";
-import { getAllNotifications, getNotifications, readNotification } from "../../api";
+import { getAllNotifications } from "../../api";
 import { ContextAPI } from "../../utils/ContextAPI";
 
 export default function Overlay() {
@@ -34,7 +34,7 @@ export default function Overlay() {
   const setNotificationReadStatus = async (notifId) => {
     try {
       setSpinner(true);
-      const res = readNotification(notifId);
+      // const res = readNotification(notifId);
     } catch (error) {
       console.log(error);
     } finally {
@@ -42,73 +42,40 @@ export default function Overlay() {
     }
   };
 
-  {/**get all notifications API call from Hasura */}
-  // const getAllNotifications = async () => {
-  //   const postData = {
-  //     user_id: getCookie("regulator")?.[0]?.user_id,
-  //   };
-  //   try {
-  //     setSpinner(true);
-  //     const res = await getNotifications(postData);
-  //     const notifList = res.data.notifications.map((item) => ({
-  //       roles: [item?.user_type],
-  //       title: item?.title,
-  //       body: item?.body,
-  //       date: readableDate(item?.date),
-  //       text: item?.body,
-  //       subText:
-  //         item?.body?.length > 40
-  //           ? item?.body.substr(0, 40) + " ..."
-  //           : item?.body,
-  //       read_status: item?.read_status,
-  //       id: item?.id,
-  //     }));
-  //     setNotifcationList(notifList);
-  //   } catch (error) {
-  //     console.log(error);
-  //   } finally {
-  //     setSpinner(false);
-  //   }
-  // };
 
-  {/**get all notifications API call from Other backend */}
+
   const getAllNotificationsAPI = async () => {
     const postData = {
-      // userId: getCookie("regulator")?.[0]?.user_id,
-      userId:2,
-      page:0,
-      size:10,
-      sort:{
-        updated_date_ts:"desc"
-      }
+      userId: `${getCookie("userData")?.userRepresentation?.id}`,
+      page: 0,
+      size: 10,
+      sort: { updated_date_ts: "desc" },
     };
     try {
-      setSpinner(true);
       const res = await getAllNotifications(postData);
-      console.log(res)
-      // const notifList = res.data.data.notifications.map((item) => ({
-      //   roles: [item?.user_type],
-      //   title: item?.title,
-      //   body: item?.body,
-      //   date: readableDate(item?.date),
-      //   text: item?.body,
-      //   subText:
-      //     item?.body?.length > 40
-      //       ? item?.body.substr(0, 40) + " ..."
-      //       : item?.body,
-      //   read_status: item?.read_status,
-      //   id: item?.id,
-      // }));
-      // setNotifcationList(notifList);
+      console.log(res);
+      const notifList = res.data[0].data.map((item) => ({
+        roles: "Admin",
+        title: item?.title,
+        body: item?.text,
+        date: readableDate(item?.createdDate),
+        text: item?.text,
+        subText:
+          item?.text?.length > 40
+            ? item?.text.substr(0, 40) + " ..."
+            : item?.text,
+        read_status: item?.read,
+        id: item?.id,
+      }));
+      setNotifcationList(notifList);
     } catch (error) {
       console.log(error);
     } finally {
-      setSpinner(false);
     }
   };
 
   const handleNavigateToNotification = () => {
-    navigation(ADMIN_ROUTE_MAP.adminModule.notifications.home);
+    navigation(`${ADMIN_ROUTE_MAP.adminModule.notifications.home}`);
   };
 
   useEffect(() => {
