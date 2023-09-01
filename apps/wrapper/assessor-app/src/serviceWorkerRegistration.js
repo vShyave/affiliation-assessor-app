@@ -50,16 +50,16 @@ export function register(config) {
         });
       } else {
         // Is not localhost. Just register service worker
-       // registerValidSW(swUrl, config);
-       checkValidServiceWorker(swUrl, config);
+        registerValidSW(swUrl, config);
+      // checkValidServiceWorker(swUrl, config);
       }
     });
   }
 }
 
 function registerValidSW(swUrl, config) {
-  navigator.serviceWorker
-    .register(swUrl)
+  if (window === window.top) {
+    navigator.serviceWorker.register(swUrl, { scope: 'https://affiliation.upsmfac.org/' })
     .then((registration) => {
       console.log(registration)
       if (registration.waiting) {
@@ -105,6 +105,10 @@ function registerValidSW(swUrl, config) {
     .catch((error) => {
       console.error('Error during service worker registration:', error);
     });
+  }
+  else {
+    console.log('Service Worker not registered because it is in an iframe.');
+  }
 }
 
 function checkValidServiceWorker(swUrl, config) {
