@@ -1,7 +1,8 @@
 import XMLParser from "react-xml-parser";
 import localforage from "localforage";
 import Cookies from "js-cookie";
-import * as serviceWorkerRegistration from "../serviceWorkerRegistration";
+import * as serviceWorkerRegistration from '../serviceWorkerRegistration';
+import axios from "axios";
 
 import {
   getMedicalAssessments,
@@ -12,6 +13,7 @@ import {
 
 const ENKETO_URL = process.env.REACT_APP_ENKETO_URL;
 const GCP_URL = process.env.REACT_APP_GCP_AFFILIATION_LINK;
+const OPEN_ROSA_SERVER_URL = process.env.REACT_APP_OPEN_ROSA_SERVER_URL;
 
 export const makeHasuraCalls = async (query) => {
   const userData = getCookie("userData");
@@ -167,6 +169,7 @@ export const handleFormEvents = async (startingForm, afterFormSubmit, e) => {
 
   if (
     e.origin + "/enketo" === ENKETO_URL &&
+    // e.origin === ENKETO_URL &&
     typeof e?.data === "string" &&
     JSON.parse(e?.data)?.state !== "ON_FORM_SUCCESS_COMPLETED"
   ) {
@@ -196,7 +199,7 @@ export const getFormData = async ({
   setEncodedFormURI,
   isPreview,
 }) => {
-  const GCP_form_url = `${GCP_URL}${startingForm}.xml`;
+  const GCP_form_url = `${process.env.REACT_APP_GCP_AFFILIATION_LINK}${startingForm}.xml`;
   const res = await getMedicalAssessments(formSpec.date);
   let formData, prefillXMLArgs;
   if (res?.data?.assessment_schedule?.[0]) {
@@ -266,4 +269,34 @@ export const getLocalTimeInISOFormat = () => {
   const offset = now.getTimezoneOffset();
   const localTime = new Date(now - offset * 60 * 1000);
   return localTime.toISOString();
-};
+}
+
+export const getOfflineCapableForm = async (formId) => {
+  try {
+    if (navigator.onLine) {
+      let res = await axios.post(ENKETO_URL + "/api/v2/survey/offline",
+        {
+          server_url: OPEN_ROSA_SERVER_URL,
+          form_id: formId
+        },
+        {
+          headers: {
+            Authorization: 'Basic ' + btoa('enketorules:')
+          }
+        });
+      if (res?.data?.offline_url) {
+        console.log("formUri is set to local forage", res?.data?.offline_url);
+        // setToLocalForage('formUri', res?.data?.offline_url)
+        await localforage.setItem('formUri', res?.data?.offline_url);
+      }
+      return res?.data?.offline_url || undefined;
+    } else {
+      let formUri = await localforage.getItem('formUri');
+      console.log(formUri);
+      return formUri;
+    }
+  } catch (err) {
+    console.log(err);
+  }
+}
+

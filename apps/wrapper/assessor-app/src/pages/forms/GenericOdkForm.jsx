@@ -22,6 +22,7 @@ import {
   getSpecificDataFromForage,
   getLocalTimeInISOFormat,
   getFromLocalForage,
+  getOfflineCapableForm,
 } from "../../utils";
 
 import CommonLayout from "../../components/CommonLayout";
@@ -36,6 +37,7 @@ const GenericOdkForm = (props) => {
   let { formName, date } = useParams();
   const scheduleId = useRef();
   const [isPreview, setIsPreview] = useState(false);
+  const [surveyUrl, setSurveyUrl] = useState("");
   let formSpec = {
     forms: {
       [formName]: {
@@ -153,7 +155,7 @@ const GenericOdkForm = (props) => {
     );
 
     let fileGCPPath =
-      process.env.REACT_APP_GCP_AFFILIATION_LINK + formName + ".xml";
+    GCP_URL + formName + ".xml";
 
     let formURI = await getPrefillXML(
       `${fileGCPPath}`,
@@ -164,6 +166,15 @@ const GenericOdkForm = (props) => {
 
     setEncodedFormURI(formURI);
   };
+
+  const getSurveyUrl = async () => {
+      let surveyUrl = await getOfflineCapableForm(formId);
+      console.log("SurveyURL:", surveyUrl);
+      if (!surveyUrl)
+        setSurveyUrl("https://8065-samagradevelop-workflow-871i2twcw0a.ws-us98.gitpod.io/x")
+      else
+        setSurveyUrl(surveyUrl);
+  }
 
   async function afterFormSubmit(e, saveFlag) {
     const data = typeof e.data === "string" ? JSON.parse(e.data) : e.data;
@@ -303,6 +314,7 @@ const GenericOdkForm = (props) => {
 
   useEffect(() => {
     bindEventListener();
+    getSurveyUrl();
     getFormData({
       loading,
       scheduleId,
@@ -352,13 +364,24 @@ const GenericOdkForm = (props) => {
       >
         {!isPreview && (
           <div className="flex flex-col items-center">
-            {encodedFormURI && assData && (
+            {encodedFormURI && assData && date && (
               <>
                 <iframe
                   title="form"
                   id="enketo-form"
                   src={`${ENKETO_URL}/preview?formSpec=${encodedFormSpec}&xform=${encodedFormURI}&userId=${user?.userRepresentation?.id}`}
                   style={{ height: "80vh", width: "100%" }}
+                />
+              </>
+            )}
+
+            {surveyUrl && !date && (
+              <>
+                <iframe
+                  id="enketo-form"
+                  title="form"
+                  src={surveyUrl}
+                  style={{ height: "80vh", width: "100%", marginTop: "20px" }}
                 />
               </>
             )}
@@ -412,12 +435,14 @@ const GenericOdkForm = (props) => {
             </div>
           </div>
           <div className="flex flex-col justify-center w-full py-4">
-            <iframe
-              title="form"
-              id="preview-enketo-form"
-              src={`${ENKETO_URL}/preview?formSpec=${encodedFormSpec}&xform=${encodedFormURI}&userId=${user?.userRepresentation?.id}`}
-              style={{ height: "80vh", width: "100%" }}
-            />
+            {surveyUrl && (
+              <iframe
+                title="form"
+                id="preview-enketo-form"
+                src={`${ENKETO_URL}/preview?formSpec=${encodedFormSpec}&xform=${encodedFormURI}&userId=${user?.userRepresentation?.id}`}
+                style={{ height: "80vh", width: "100%", marginTop: "20px" }}
+              />
+            )}
           </div>
         </CommonModal>
       )}
