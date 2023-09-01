@@ -1,15 +1,51 @@
 import React, { useEffect } from "react";
 import { Card, Button } from "./index";
-import { generate_uuidv4, getCookie, readableDate } from "../utils";
+import { generate_uuidv4, getCookie, readableDate, setCookie } from "../utils";
 import { applicantService } from "../services";
 import { useNavigate } from "react-router-dom";
 
 const ApplicationCard = (props) => {
   let formName = props?.application?.course?.course_name?.trim() || "NA";
 
-  
+  const handlePayment = async () => {
+    setCookie("formId", props?.application?.form_id);
+    const instituteDetails = getCookie("institutes");
+    const instituteId = instituteDetails?.[0]?.id;
+    const postData = {
+      endpoint: "https://eazypayuat.icicibank.com/EazyPG",
+      returnUrl: "https://payment.uphrh.in/api/v1/user/payment",
+      paymode: "9",
+      secret: "",
+      merchantId: "600547",
+      mandatoryFields: {
+        referenceNo: generate_uuidv4(),
+        submerchantId: "45",
+        transactionAmount: "2500",
+        invoiceId: "x1",
+        invoiceDate: "x",
+        invoiceTime: "x",
+        merchantId: "x",
+        payerType: "affiliation",
+        payerId: `${instituteId}`,
+        transactionId: "x",
+        transactionDate: "x",
+        transactionTime: "x",
+        transactionStatus: "x",
+        refundId: "x",
+        refundDate: "x",
+        refundTime: "x",
+        refundStatus: "x",
+      },
+      optionalFields: "",
+    };
+    try {
+      const paymentRes = await applicantService.initiatePayment(postData);
+      await window.open(paymentRes?.data?.redirectUrl);
+    } catch (error) {}
+  };
+
   return (
-    <Card moreClass="flex flex-col border-gray-100 m-3 gap-5 w-[320px] border-[1px] drop-shadow justify-between">
+    <Card moreClass="flex flex-col border-gray-100 m-3 gap-5 w-[300px] border-[1px] drop-shadow justify-between">
       <div className="flex flex-col gap-2">
         <div className="text-xl font-medium">{formName}</div>
         <div className="text-sm">
@@ -69,7 +105,7 @@ const ApplicationCard = (props) => {
             }`}
             style={{ backgroundColor: "#eee" }}
           >
-            Payment:{" "}
+            Payment:
             {props?.application?.payment_status !== null
               ? props?.application?.payment_status
               : "NA"}
@@ -84,7 +120,14 @@ const ApplicationCard = (props) => {
           text="View Application "
           onClick={props.onView ? () => props.onView(props.application) : null}
         ></Button>
-        
+        <Button
+          moreClass="w-fit text-white font-bold uppercase px-4"
+          text="Pay"
+          onClick={handlePayment}
+          otherProps={{
+            disabled: props?.application?.payment_status !== "Pending",
+          }}
+        ></Button>
       </div>
     </Card>
   );

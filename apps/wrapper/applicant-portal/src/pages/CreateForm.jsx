@@ -310,43 +310,6 @@ const CreateForm = (props) => {
     navigate(`${APPLICANT_ROUTE_MAP.dashboardModule.my_applications}`);
   };
 
-  const handlePayment = async () => {
-    // setcookies here
-    setCookie("formId", formId);
-    const instituteDetails = getCookie("institutes");
-    const instituteId = instituteDetails?.[0]?.id;
-    const postData = {
-      endpoint: "https://eazypayuat.icicibank.com/EazyPG",
-      returnUrl: "https://payment.uphrh.in/api/v1/user/payment",
-      paymode: "9",
-      secret: "",
-      merchantId: "600547",
-      mandatoryFields: {
-        referenceNo: generate_uuidv4(),
-        submerchantId: "45",
-        transactionAmount: "2500",
-        invoiceId: "x1",
-        invoiceDate: "x",
-        invoiceTime: "x",
-        merchantId: "x",
-        payerType: "affiliation",
-        payerId: `${instituteId}`,
-        transactionId: "x",
-        transactionDate: "x",
-        transactionTime: "x",
-        transactionStatus: "x",
-        refundId: "x",
-        refundDate: "x",
-        refundTime: "x",
-        refundStatus: "x"
-      },
-      optionalFields: "",
-    };
-    try {
-      const paymentRes = await applicantService.initiatePayment(postData);
-      await window.open(paymentRes?.data?.redirectUrl);
-    } catch (error) {}
-  };
 
   const handleFormDownload = async () => {
     try {
@@ -463,17 +426,6 @@ const CreateForm = (props) => {
               }`}
             >
               Download NOC/Certificate
-            </button>
-            <button
-              className={`${
-                paymentDetails === "Pending"
-                  ? "border border-blue-900 bg-blue-900 text-white rounded-[4px] px-2 h-[44px]"
-                  : "cursor-not-allowed border border-gray-500 bg-white rounded-[4px] text-gray-200 px-2 h-[44px]"
-              }`}
-              disabled={paymentDetails === "Pending" ? false : true}
-              onClick={handlePayment}
-            >
-              Pay
             </button>
           </div>
         </div>

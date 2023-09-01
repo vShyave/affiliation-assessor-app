@@ -7,7 +7,7 @@ const PaymentModal = ({ modalDetails, setViewPaymentModal }) => {
   return (
     <div>
       <div className="flex flex-col justify-center items-center fixed inset-0 bg-opacity-25 backdrop-blur-sm z-[999]">
-        <div className="flex flex-col bg-white rounded-xl shadow-xl border border-gray-400 w-[600px] h-[600px] p-8 gap-8">
+        <div className="flex flex-col bg-white rounded-xl shadow-xl border border-gray-400 w-[600px] h-[480px] p-8 gap-8">
           <section>
             <div className="flex flex-col justify-between w-full">
               <div className="font-bold text-2xl text-center mb-8">
@@ -15,9 +15,9 @@ const PaymentModal = ({ modalDetails, setViewPaymentModal }) => {
               </div>
 
               <div
-                className={`flex flex-col gap-3 min-h-[388px] max-h-[388px] overflow-y-auto justify-center`}
+                className={`flex flex-col gap-3 min-h-[272px] max-h-[320px] overflow-y-auto`}
               >
-                <div className="flex flex-col bg-gray-100 p-3 rounded-[4px] gap-3">
+                <div className="flex flex-col bg-gray-100 p-8 rounded-[4px] gap-8">
                   <div className="flex flex-row gap-4">
                     <div className="flex-1 flex-col">
                       <Label text="Institute name"></Label>
@@ -36,7 +36,7 @@ const PaymentModal = ({ modalDetails, setViewPaymentModal }) => {
                     <div className="flex-1 flex-col">
                       <Label text="Amount"></Label>
                       <div className="text-lg">
-                        Rs. {paymentDetails?.amount || "NA"}
+                        <span>&#8377;</span> {`${paymentDetails?.amount}`?.split(".")[0].replace(/(\d)(?=(\d\d)+\d$)/g, "$1,") + (`${paymentDetails?.amount}`?.split(".")[1] ? ("."+`${paymentDetails?.amount}`?.split(".")[1]): "") || "NA"}
                       </div>
                     </div>
                     <div className="flex-1 flex-col">
