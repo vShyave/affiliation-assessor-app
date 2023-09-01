@@ -124,30 +124,30 @@ services:
       - HASURA_GRAPHQL_ADMIN_SECRET=${HASURA_GRAPHQL_ADMIN_SECRET}
       - HASURA_GRAPHQL_JWT_SECRET=${HASURA_GRAPHQL_JWT_SECRET}
 
-  minio:
-    image: minio/minio
-    ports:
-      - "9000:9000"
-      - "9001:9001"
-    volumes:
-      - minio-data:/data
-    environment:
-      MINIO_ROOT_USER: ${MINIO_USERNAME}
-      MINIO_ROOT_PASSWORD: ${MINIO_PASSWORD}
-    command: server --console-address ":9001" /data
+  # minio:
+  #   image: minio/minio
+  #   ports:
+  #     - "9000:9000"
+  #     - "9001:9001"
+  #   volumes:
+  #     - minio-data:/data
+  #   environment:
+  #     MINIO_ROOT_USER: ${MINIO_USERNAME}
+  #     MINIO_ROOT_PASSWORD: ${MINIO_PASSWORD}
+  #   command: server --console-address ":9001" /data
 
-  createbuckets:
-    image: minio/mc
-    depends_on:
-      - minio
-    entrypoint: >
-      /bin/sh -c "
-      /usr/bin/mc config host add myminio http://minio:9000 ${MINIO_USERNAME} ${MINIO_PASSWORD};
-      /usr/bin/mc rm -r --force myminio/${MINIO_BUCKETNAME};
-      /usr/bin/mc mb myminio/${MINIO_BUCKETNAME};
-      /usr/bin/mc anonymous set public myminio/${MINIO_BUCKETNAME};
-      exit 0;
-      "
+  # createbuckets:
+  #   image: minio/mc
+  #   depends_on:
+  #     - minio
+  #   entrypoint: >
+  #     /bin/sh -c "
+  #     /usr/bin/mc config host add myminio http://minio:9000 ${MINIO_USERNAME} ${MINIO_PASSWORD};
+  #     /usr/bin/mc rm -r --force myminio/${MINIO_BUCKETNAME};
+  #     /usr/bin/mc mb myminio/${MINIO_BUCKETNAME};
+  #     /usr/bin/mc anonymous set public myminio/${MINIO_BUCKETNAME};
+  #     exit 0;
+  #     "
 
   enketo-express:
     image: enketo-express
@@ -179,8 +179,8 @@ services:
     build: packages/form-manager
     depends_on:
       - fm-cache
-      - minio
-      - createbuckets
+      # - minio
+      # - createbuckets
     ports:
       - 3006:3006
     environment:
@@ -194,6 +194,9 @@ services:
       REDIS_PORT: ${REDIS_PORT}
       FORM_MANAGER_URL: ${FORM_MANAGER_URL}
       MINIO_USE_SSL: ${MINIO_USE_SSL}
+      GCP_BUCKET_NAME: ${GCP_BUCKET_NAME}
+      GCP_PROJECT_ID: ${GCP_PROJECT_ID}
+      GOOGLE_APPLICATION_CREDENTIALS: ${GOOGLE_APPLICATION_CREDENTIALS}
 
   assessor-wrapper:
     image: assessor-app

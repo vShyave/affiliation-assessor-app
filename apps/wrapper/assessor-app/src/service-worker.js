@@ -67,32 +67,33 @@ registerRoute(
 
  self.addEventListener('fetch', (event) => {
   ///
-
-  if (event.request.method === 'POST') {
+console.log(event.request)
+  if (event.request.method === 'POST' && event.request.redirect === 'follow' ) {
     event.respondWith(handleNonGetRequests(event.request, event.request.url));
   } 
 
 }); 
 
-// self.addEventListener('fetch', event => {
-//   event.respondWith(
-//     fetch(event.request)
-//       .then(response => {
-//         // Here you can check the response status code
-//         if (response.status === 200) {
-//           console.log("eventeventeventeventeventeventevent")
-//           if (event.request.method === 'POST') {
-//             event.respondWith(handleNonGetRequests(event.request, event.request.url));
-//           } 
-//           // Do something with a 200 OK response
-//         }
-//         return response;
-//       })
-//       .catch(error => {
-//         // Handle errors
-//       })
-//   );
-// }); 
+/*  self.addEventListener('fetch', event => {
+   event.respondWith(
+     fetch(event.request)
+       .then(response => {
+         // Here you can check the response status code
+         if (response.status === 200) {
+           console.log("eventeventeventeventeventeventevent")
+           console.log(response)
+          if (event.request.method === 'POST') {
+             event.respondWith(handleNonGetRequests(event.request, event.request.url));
+           }  
+           // Do something with a 200 OK response
+         }
+         return response;
+       })
+       .catch(error => {
+         // Handle errors
+       })
+   );
+ }); */ 
 
 /* async function loadJS() {
   let cacheName="enketowebformjs";
@@ -120,45 +121,89 @@ await cache.put(cacheKey, ars);
   );
 }); */
 
- async function handleNonGetRequests(request, url) {
+async function handleNonGetRequests(request, url) {
+
   console.log(url)
+
   //loadJS();
-  let cacheName="other";
- if( !url.includes('graphql')){
-    if(url.includes('Inspections')){
+
+  //let cacheName="other";
+
+//  if( !url.includes('graphql')){
+    if(url.includes('Inspections') || url.includes('Course') || url.includes('Assessor')){
+
       console.log('InspectionsInspectionsInspections')
-      cacheName = 'inspections';
-    } else if (url.includes('Course')){
-      console.log('coursescoursescourses')
-      cacheName = 'courses';
-    }else if (url.includes('Assessor')){
-      console.log('coursescoursescourses')
-      cacheName = 'assessors';
-    }
 
-
+      let cacheName = 'inspections';
     // Use a cache specifically for non-GET requests
     const cache = await caches.open(cacheName);
+
     const cacheKey = generateCacheKey(request);
-    
-    
+
+   
+
+   
+
     if(navigator.onLine) {
+
       // Fetch the network response
+
       const networkResponse = await fetch(request.clone());
+
       const clonedResponse = networkResponse.clone();
+
       // Clone and cache the network response for future use
+
         await cache.put(cacheKey, clonedResponse);
+
       return networkResponse;
+
     } else {
+
       // Check if the response is already cached
+
       const cachedResponse = await cache.match(cacheKey);
+
       if (cachedResponse) {
+
         return cachedResponse;
+
       }
+
     }
+
+    } else
+    {
+      const networkResponse = await fetch(request.clone());
+      if(networkResponse.redirected){
+        await cleanResponse(networkResponse)
+      } else {
+        return await fetch(request.clone());
+      }
     
+    }
+
   }
-} 
+// }
+
+async function cleanResponse(clonedResponse) {
+  //const clonedResponse = response.clone();
+console.log("nw is redirect")
+  // Not all browsers support the Response.body stream, so fall back to reading
+  // the entire body into memory as a blob.
+  const bodyPromise = 'body' in clonedResponse ?
+    Promise.resolve(clonedResponse.body) :
+    clonedResponse.blob();
+
+  return bodyPromise.then((body) => {
+    // new Response() is happy when passed either a stream or a Blob.
+    return new Response(body, {
+      headers: clonedResponse.headers,
+      status: clonedResponse.status,
+      statusText: clonedResponse.statusText,
+    });
+  });
+}
 
 function generateCacheKey(request) {
   // This is a simplified example; customize it based on your needs
