@@ -2,6 +2,8 @@ import axios from "axios";
 import { registerEvent, getLocalTimeInISOFormat } from "./index";
 import customPost from "./customPost";
 import { APIS } from "../constants";
+import { applicantService } from "../services";
+import { getCookie } from "../utils";
 
 const ENKETO_MANAGER_URL = process.env.REACT_APP_ENKETO_MANAGER_URL;
 const HASURA_CLIENT_NAME = process.env.HASURA_CLIENT_NAME || "hasura-console";
@@ -82,6 +84,30 @@ const validateResponse = async (response) => {
     event_name: "Application Submitted",
     remarks: "",
   });
+
+  applicantService.sendPushNotification({
+    title: "Application Submission",
+    body: `Your application has been successfully submitted. Thank you for your interest. You will receive further updates regarding the review process.`,
+    deviceToken: [`${getCookie("firebase_client_token")}`],
+    userId: getCookie("userData")?.userRepresentation?.id,
+  });
+
+//   const regAPIRes = await applicantService.getAllRegulatorDeviceId();
+//   let regDeviceIds = [];
+//   regAPIRes?.data?.regulator?.forEach((item) => {
+//     let tempIds = JSON.parse(item.device_id);
+//     if (tempIds.length) {
+//       regDeviceIds.push();
+//     }
+//   });
+//   console.log("regulator device ids-", regDeviceIds);
+
+//   applicantService.sendPushNotification({
+//     title: "Application Submission",
+//     body: `A new application has been submitted by an applicant. Please review and proceed with the necessary steps.`,
+//     deviceToken: regDeviceIds,
+//     userId: "34061b3d-dc9f-41c4-94da-405306175430",
+//   });
 
   const jsonResponse = {
     ...apiRes,

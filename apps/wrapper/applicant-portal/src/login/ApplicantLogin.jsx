@@ -83,9 +83,28 @@ const ApplicantLogin = () => {
 
       const loginRes = await userService.login(loginDetails);
 
+      
+
       const applicantDetailsRes = await applicantService.getApplicantDetails({
         user_id: loginRes.data.userRepresentation.id,
       });
+
+      //setting device ID
+      let deviceIds =
+        JSON.parse(applicantDetailsRes.data.institutes[0].institute_pocs[0].device_id) || [];
+      if (!deviceIds.includes(getCookie("firebase_client_token"))) {
+        console.log(deviceIds);
+        console.log(deviceIds.includes(getCookie("firebase_client_token")));
+        deviceIds.push(getCookie("firebase_client_token"));
+        console.log({
+          user_id: loginRes.data.userRepresentation.id,
+          device_id: JSON.stringify(deviceIds),
+        });
+        await applicantService.updateApplicantDeviceId({
+          user_id: loginRes.data.userRepresentation.id,
+          device_id: JSON.stringify(deviceIds),
+        });
+      }
 
       const role = loginRes?.data?.userRepresentation?.attributes?.Role?.[0];
 

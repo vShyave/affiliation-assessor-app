@@ -73,20 +73,8 @@ function App() {
           ...prevState,
           toastOpen: true,
           toastMsg: payload.data.title,
+          toastType: "success"
         }));
-        const postData = {
-          notifications: [
-            {
-              title: payload.data.title,
-              body: payload.data.body,
-              date: getLocalTimeInISOFormat(),
-              user_id: getCookie("regulator")[0]["user_id"],
-              user_type: "Admin",
-              read_status: "Unread",
-            },
-          ],
-        };
-        insertNotifications(postData);
       });
     }
   })();

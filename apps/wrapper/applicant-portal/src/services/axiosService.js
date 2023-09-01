@@ -36,13 +36,13 @@ axiosService.interceptors.response.use(
     return response;
   },
   function (error) {
-    spinner.style.display = "none";
-    let res = error.response;
-    if (res.status === 401) {
+    spinner.style.display="none"
+    let res = error?.response;
+    if (res?.status === 401) {
       console.error("Unauthorized  user. Status Code: " + res.status);
       // window.location.href = “https://example.com/login”;
     }
-    console.error("Looks like there was a problem. Status Code: " + res.status);
+    console.error("Looks like there was a problem. Status Code: " + res?.status);
     return Promise.reject(res?.data?.error);
   }
 );

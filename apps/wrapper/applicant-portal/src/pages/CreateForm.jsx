@@ -324,7 +324,7 @@ const CreateForm = (props) => {
       mandatoryFields: {
         referenceNo: generate_uuidv4(),
         submerchantId: "45",
-        transactionAmount: "10",
+        transactionAmount: "2500",
         invoiceId: "x1",
         invoiceDate: "x",
         invoiceTime: "x",
@@ -338,10 +338,9 @@ const CreateForm = (props) => {
         refundId: "x",
         refundDate: "x",
         refundTime: "x",
-        refundStatus: "x",
-        module: "affiliation"
+        refundStatus: "x"
       },
-      optionalFields: "affiliation",
+      optionalFields: "",
     };
     try {
       const paymentRes = await applicantService.initiatePayment(postData);

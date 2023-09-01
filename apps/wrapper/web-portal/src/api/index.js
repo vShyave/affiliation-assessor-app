@@ -7,6 +7,8 @@ import { getCookie } from "../utils/common";
 const BASE_URL_KEYCLOAK =
   process.env.REACT_APP_WEB_PORTAL_USER_SERVICE_URL ||
   "https://auth.upsmfac.org/api/v1/";
+const NOTIFICATION_BASE_URL =
+  process.env.REACT_APP_NODE_URL || "https://uphrh.in/api/api/";
 
 export const registerUser = async (postData) => {
   const res = await adminCustomPost.post(API_URL.auth.register, postData);
@@ -426,7 +428,7 @@ export const registerEvent = async (postData) => {
   return res;
 };
 
-// Notifications APIs
+// Notifications APIs Hasura
 export const insertNotifications = async (postData) => {
   const res = await adminCustomPost.post(
     API_URL.notifications.insertNotifications,
@@ -459,6 +461,68 @@ export const viewNotification = async (postData) => {
   return res;
 };
 
+//Notifications APIs updated
+export const getAllNotifications = async (postData) => {
+  const res = await axios.post(
+    `${NOTIFICATION_BASE_URL}${API_URL.notifications.getAllNotifications}`,
+    postData,
+    {
+      headers: {
+        "Content-Type": "application/json",
+        // "Authorization": getCookie("access_token")
+        Authorization: process.env.REACT_APP_AUTH_TOKEN,
+      },
+    }
+  );
+  return res;
+};
+
+export const sendPushNotification = async (postData) => {
+  const res = await axios.post(
+    `${NOTIFICATION_BASE_URL}${API_URL.notifications.sendPushNotification}`,
+    postData,
+    {
+      headers: {
+        "Content-Type": "application/json",
+        // "Authorization": getCookie("access_token")
+        Authorization: process.env.REACT_APP_AUTH_TOKEN,
+      },
+    }
+  );
+  return res;
+};
+
+export const sendEmailNotification = async (postData) => {
+  const res = await axios.post(
+    `${NOTIFICATION_BASE_URL}${API_URL.notifications.emailNotify}`,
+    postData,
+    {
+      headers: {
+        "Content-Type": "application/json",
+        // "Authorization": getCookie("access_token")
+        Authorization: process.env.REACT_APP_AUTH_TOKEN,
+      },
+    }
+  );
+  return res;
+};
+
+export const getAllRegulatorDeviceId = async () => {
+  const res = await adminCustomPost.get(
+    API_URL.notifications.getAllRegulatorDeviceId
+  );
+  return res;
+};
+
+export const getApplicantDeviceId = async (postData) => {
+  const res = await adminCustomPost.post(
+    API_URL.notifications.getApplicantDeviceId,
+    postData
+  );
+  return res;
+};
+
+//other common APIs
 export const updateFormStatus = async (postData) => {
   const res = await adminCustomPost.put(API_URL.common.updateForm, postData);
   return res;
@@ -471,3 +535,16 @@ export const updatePaymentStatus = async (postData) => {
   );
   return res;
 };
+
+export const updateRegulatorDeviceId = async (postData) => {
+  const res = await adminCustomPost.put(
+    API_URL.common.updateRegulatorDeviceId,
+    postData
+  );
+  return res;
+};
+
+export const getTransactionDetail = async (postData) =>{
+  const res =  await adminCustomPost.get(API_URL.desktopAnalysis.getTransactionDetail+"/"+postData)
+  return res
+}
