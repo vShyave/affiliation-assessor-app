@@ -67,7 +67,7 @@ registerRoute(
 
 self.addEventListener('fetch', (event) => {
   console.log(event.request)
-  if (event.request.method === 'POST' && event.request.redirect === 'follow' ) {
+  if (event.request.method === 'POST') {
     event.respondWith(handleNonGetRequests(event.request, event.request.url));
   }  
 });
@@ -217,11 +217,11 @@ function generateCacheKey(request) {
 
 // Any other custom service worker logic can go here.
 
-/* self.addEventListener('sync', (event) => {
+self.addEventListener('sync', (event) => {
   if (event.tag === 'sync-form-data') {
    // event.waitUntil(syncFormData());
   }
-}); */
+});
 
 
 async function handleFormSubmission(request) {
