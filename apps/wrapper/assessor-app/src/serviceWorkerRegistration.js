@@ -29,7 +29,7 @@ export function register(config) {
       return;
     }
 
-    const swUrl = `${process.env.PUBLIC_URL}/service-worker.js`;
+    const swUrl = (isLocalhost) ? undefined : `${process.env.PUBLIC_URL}/service-worker.js`;
     if (isLocalhost) {
       checkValidServiceWorker(swUrl, config);
       navigator.serviceWorker.ready.then(() => {
