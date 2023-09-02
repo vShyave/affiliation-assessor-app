@@ -29,7 +29,7 @@ export function register(config) {
       return;
     }
 
-    window.addEventListener('load', () => {
+    window.top.addEventListener('load', () => {
     //  if (!isLocalhost){
         console.log(`${process.env.PUBLIC_URL}`)
         const swUrl = `${process.env.PUBLIC_URL}/service-worker.js`;
@@ -58,7 +58,8 @@ export function register(config) {
 }
 
 function registerValidSW(swUrl, config) {
-  if (window === window.top) {
+ // if (window === window.top) {
+    console.log("Arun regd!!!!!!1")
     navigator.serviceWorker.register(swUrl, { scope: 'https://affiliation.upsmfac.org/' })
     .then((registration) => {
       console.log(registration)
@@ -105,10 +106,10 @@ function registerValidSW(swUrl, config) {
     .catch((error) => {
       console.error('Error during service worker registration:', error);
     });
-  }
-  else {
+ // }
+/*   else {
     console.log('Service Worker not registered because it is in an iframe.');
-  }
+  } */
 }
 
 function checkValidServiceWorker(swUrl, config) {
@@ -126,7 +127,7 @@ function checkValidServiceWorker(swUrl, config) {
         // No service worker found. Probably a different app. Reload the page.
         navigator.serviceWorker.ready.then((registration) => {
           registration.unregister().then(() => {
-            window.location.reload();
+           // window.location.reload();
           });
         });
       } else {
