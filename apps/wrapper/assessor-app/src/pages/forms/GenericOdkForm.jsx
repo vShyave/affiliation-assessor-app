@@ -326,9 +326,9 @@ const GenericOdkForm = (props) => {
       setEncodedFormURI,
     });
 
-    setTimeout(() => {
-      checkIframeLoaded();
-    }, 2500);
+    // setTimeout(() => {
+    //   checkIframeLoaded();
+    // }, 2500);
 
     return () => {
       detachEventBinding();
