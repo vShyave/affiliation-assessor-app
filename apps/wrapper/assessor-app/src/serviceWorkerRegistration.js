@@ -29,38 +29,51 @@ export function register(config) {
       return;
     }
 
-    window.top.addEventListener('load', () => {
-    //  if (!isLocalhost){
-        console.log(`${process.env.PUBLIC_URL}`)
-        const swUrl = `${process.env.PUBLIC_URL}/service-worker.js`;
-        console.log("swUrl-->", swUrl)
-    //  }
-   
-      if (isLocalhost) {
-        // This is running on localhost. Let's check if a service worker still exists or not.
-        checkValidServiceWorker(swUrl, config);
+    const swUrl = `${process.env.PUBLIC_URL}/service-worker.js`;
+    if (isLocalhost) {
+      checkValidServiceWorker(swUrl, config);
+      navigator.serviceWorker.ready.then(() => {
+        console.log(
+          'This web app is being served cache-first by a service ' +
+            'worker. To learn more, visit https://cra.link/PWA'
+        );
+      });
+    } else {
+      registerValidSW(swUrl, config);
+    }
 
-        // Add some additional logging to localhost, pointing developers to the
-        // service worker/PWA documentation.
-        navigator.serviceWorker.ready.then(() => {
-          console.log(
-            'This web app is being served cache-first by a service ' +
-              'worker. To learn more, visit https://cra.link/PWA'
-          );
-        });
-      } else {
-        // Is not localhost. Just register service worker
-        registerValidSW(swUrl, config);
-      // checkValidServiceWorker(swUrl, config);
-      }
-    });
+    // window.top.addEventListener('load', () => {
+    // //  if (!isLocalhost){
+    //     console.log(`${process.env.PUBLIC_URL}`)
+    //     const swUrl = `${process.env.PUBLIC_URL}/service-worker.js`;
+    //     console.log("swUrl-->", swUrl)
+    // //  }
+   
+    //   if (isLocalhost) {
+    //     // This is running on localhost. Let's check if a service worker still exists or not.
+    //     checkValidServiceWorker(swUrl, config);
+
+    //     // Add some additional logging to localhost, pointing developers to the
+    //     // service worker/PWA documentation.
+    //     navigator.serviceWorker.ready.then(() => {
+    //       console.log(
+    //         'This web app is being served cache-first by a service ' +
+    //           'worker. To learn more, visit https://cra.link/PWA'
+    //       );
+    //     });
+    //   } else {
+    //     // Is not localhost. Just register service worker
+    //     registerValidSW(swUrl, config);
+    //   // checkValidServiceWorker(swUrl, config);
+    //   }
+    // });
   }
 }
 
 function registerValidSW(swUrl, config) {
  // if (window === window.top) {
     console.log("Arun regd!!!!!!1")
-    navigator.serviceWorker.register(swUrl, { scope: 'https://affiliation.upsmfac.org/' })
+    navigator.serviceWorker.register(swUrl, { scope: 'https://affiliation.upsmfac.org/web/' })
     .then((registration) => {
       console.log(registration)
       if (registration.waiting) {
