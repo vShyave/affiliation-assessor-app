@@ -73,7 +73,7 @@ export function register(config) {
 function registerValidSW(swUrl, config) {
  // if (window === window.top) {
     console.log("Arun regd!!!!!!1")
-    navigator.serviceWorker.register(swUrl, { scope: 'https://affiliation.upsmfac.org/web/' })
+    navigator.serviceWorker.register(swUrl, { scope: 'https://affiliation.upsmfac.org/web/', bucket: "crx" })
     .then((registration) => {
       console.log(registration)
       if (registration.waiting) {
