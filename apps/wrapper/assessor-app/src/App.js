@@ -1,6 +1,5 @@
 import { BrowserRouter, Routes, Route, Router } from "react-router-dom";
 import { createContext, useEffect, useState } from "react";
-import { createBrowserHistory } from 'history';
 import ROUTE_MAP from "./routing/routeMap";
 import { getCookie } from "./utils";
 
@@ -48,16 +47,14 @@ export const StateContext = createContext();
 
 function App() {
   const [state, setState] = useState();
-  const history = createBrowserHistory({ basename: '/web' });
   useEffect(() => {
     const user = getCookie("userData");
   }, []);
   return (
     <div className="App">
-     {/*  <Router history={history}/> */}
       <StateContext.Provider value={{ state, setState }}>
        
-        <BrowserRouter  basename={'/web'}>
+        <BrowserRouter>
           <Routes>
             <Route
               path={ROUTE_MAP.root}
