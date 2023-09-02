@@ -54,7 +54,7 @@ function App() {
     <div className="App">
       <StateContext.Provider value={{ state, setState }}>
        
-        <BrowserRouter>
+        <BrowserRouter basename={'/web'}>
           <Routes>
             <Route
               path={ROUTE_MAP.root}
