@@ -23,30 +23,6 @@ const getApplicantDetails = (applicantDetails) => {
   );
 };
 
-// Notifications APIs
-const insertNotifications = async (postData) => {
-  const res = await axiosService.post(
-    APIS.notifications.insertNotifications,
-    postData
-  );
-  return res;
-};
-
-const getNotifications = async () => {
-  const res = await axiosService.post(
-    APIS.notifications.getNotifications
-  );
-  return res;
-};
-
-const readNotification = async (postData) => {
-  const res = await axiosService.put(
-    APIS.notifications.readNotification,
-    postData
-  );
-  return res;
-};
-
 // payment service
 const initiatePayment = async (postData) => {
   const res = await paymentService.post(APIS.PAYMENT.GENERATE_LINK, postData);
@@ -64,9 +40,14 @@ const updateApplicantDeviceId = async (postData) => {
 // new notification APIs
 export const sendPushNotification = async (postData) => {
   const res = await axiosService.post(
-    `${NOTIFICATION_BASE_URL}${APIS.notifications.sendPushNotification}`,
+    APIS.notifications.sendPushNotification,
     postData
   );
+  return res;
+};
+
+export const getAllNotifications = async (postData) => {
+  const res = await axiosService.post(APIS.notifications.getAllNotifications,postData);
   return res;
 };
 
@@ -83,20 +64,21 @@ const transactionStatus = async (postData) => {
   return res;
 };
 const updatePaymentStatus = async (postData) => {
-  const res = await axiosService.put(APIS.PAYMENT.UPDATE_PAYMENT_STATUS, postData);
+  const res = await axiosService.put(
+    APIS.PAYMENT.UPDATE_PAYMENT_STATUS,
+    postData
+  );
   return res;
 };
 export const applicantService = {
   addInstitute,
   addInstitutePoc,
   getApplicantDetails,
-  insertNotifications,
-  getNotifications,
-  readNotification,
   initiatePayment,
   updateApplicantDeviceId,
   sendPushNotification,
   getAllRegulatorDeviceId,
   transactionStatus,
-  updatePaymentStatus
+  updatePaymentStatus,
+  getAllNotifications
 };

@@ -104,7 +104,6 @@ const MyApplications = () => {
                 />
               ))
           }
-              {console.log("applications",applications)}
             </div>
           )}
         </div>

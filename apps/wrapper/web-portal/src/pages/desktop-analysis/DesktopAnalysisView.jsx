@@ -268,37 +268,43 @@ export default function DesktopAnalysisView() {
       form_status: "DA Completed",
     });
     
-    //regulator
-    // const regAPIRes = await getAllRegulatorDeviceId();
-    // let regDeviceIds = [];
-    // regAPIRes?.data?.regulator?.forEach((item) => {
-    //   let tempIds = JSON.parse(item.device_id);
-    //   if (tempIds.length) {
-    //     regDeviceIds.push();
-    //   }
-    // });
+    // regulator
+    const regAPIRes = await getAllRegulatorDeviceId();
+    let regDeviceIds = [];
+    regAPIRes?.data?.regulator?.forEach((item) => {
+      let tempIds = JSON.parse(item.device_id);
+      let tempIdsFilter = tempIds.filter(function (el) {
+        return el != null;
+      });
+      if (tempIdsFilter.length) {
+        regDeviceIds.push();
+      }
+    });
 
-    // console.log("regulator device ids-", regDeviceIds);
-    // sendPushNotification({
-    //   title: "Desktop Analysis Done",
-    //   body: `The desktop analysis for ${formDataFromApi?.institute?.name}'s application has been completed. Kindly review the results.`,
-    //   deviceToken: regDeviceIds,
-    //   userId: "34061b3d-dc9f-41c4-94da-405306175430",
-    // });
+    console.log("regulator device ids-", regDeviceIds);
+    sendPushNotification({
+      title: "Desktop Analysis Done",
+      body: `The desktop analysis for ${formDataFromApi?.institute?.name}'s application has been completed. Kindly review the results.`,
+      deviceToken: [`${getCookie("firebase_client_token")}`],
+      userId: userDetails?.userRepresentation?.id,
+    });
 
-    //applicant
-    // const applicantRes = await getApplicantDeviceId({
-    //   institute_id: formDataFromApi?.institute?.id,
-    // });
-    // if (applicantRes?.data) {
-    //   let tempIds = JSON.parse(applicantRes?.data?.institutes[0]?.institute_pocs[0]?.device_id)
-    //   sendPushNotification({
-    //     title: "Application Review",
-    //     body: `Your application is reviewed by the UPSMF representative. Kindly make the payment for further process.`,
-    //     deviceToken: tempIds,
-    //     userId: applicantRes?.data?.institutes[0]?.institute_pocs[0]?.user_id,
-    //   });
-    // }
+    // applicant
+    const applicantRes = await getApplicantDeviceId({
+      institute_id: formDataFromApi?.institute?.id,
+    });
+    if (applicantRes?.data) {
+      let tempIds = JSON.parse(applicantRes?.data?.institutes[0]?.institute_pocs[0]?.device_id)
+      let tempIdsFilter = tempIds.filter(function (el) {
+        return el != null;
+      });
+      sendPushNotification({
+        title: "Application Review",
+        body: `Your application is reviewed by the UPSMF representative. Kindly make the payment for further process.`,
+        deviceToken: tempIdsFilter,
+        userId: applicantRes?.data?.institutes[0]?.institute_pocs[0]?.user_id,
+      });
+    }
 
     setTimeout(
       () => navigate(`${ADMIN_ROUTE_MAP.adminModule.desktopAnalysis.home}`),

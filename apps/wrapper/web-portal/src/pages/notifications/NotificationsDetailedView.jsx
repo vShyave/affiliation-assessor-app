@@ -16,8 +16,8 @@ import {
   Typography,
 } from "@material-tailwind/react";
 import { getCookie, readableDate } from "../../utils";
-import { getNotifications } from "../../api";
 import { ContextAPI } from "../../utils/ContextAPI";
+import { getAllNotifications } from "../../api";
 
 export default function NotificationsDetailedView(props) {
   const navigation = useNavigate();
@@ -37,42 +37,41 @@ export default function NotificationsDetailedView(props) {
     setselectedNotification(notification);
   };
 
-  const getAllNotifications = async () => {
+  const getAllNotificationsAPI = async () => {
     const postData = {
-      user_id: getCookie("regulator")?.[0]?.user_id,
+      userId: `${getCookie("userData")?.userRepresentation?.id}`,
+      page: 0,
+      size: 10,
+      sort: { updated_date_ts: "desc" },
     };
     try {
-      setSpinner(true);
-      const res = await getNotifications(postData);
+      const res = await getAllNotifications(postData);
       console.log(res);
-      const notifList = res.data.notifications.map((item) => ({
-        roles: [item?.user_type],
+      const notifList = res.data[0].data.map((item) => ({
+        roles: "Admin",
         title: item?.title,
-        body: item?.body,
-        date: readableDate(item?.date),
-        text: item?.body,
+        body: item?.text,
+        date: readableDate(item?.createdDate),
+        text: item?.text,
         subText:
-          item?.body?.length > 40
-            ? item?.body.substr(0, 40) + " ..."
-            : item?.body,
-        read_status: item?.read_status,
+          item?.text?.length > 40
+            ? item?.text.substr(0, 40) + " ..."
+            : item?.text,
+        read_status: item?.read,
         id: item?.id,
       }));
+      const navigationURL = `${ADMIN_ROUTE_MAP.adminModule.notifications.home}/${notifList[0].id}`;
+      navigation(navigationURL);
+      setselectedNotification(notifList[0]);
       setNotifcationList(notifList);
-      if (!Object.keys(selectedNotification).length) {
-        setselectedNotification(notifList[0]);
-        const navigationURL = `${ADMIN_ROUTE_MAP.adminModule.notifications.home}/${notifList[0].id}`;
-        navigation(navigationURL);
-      }
     } catch (error) {
       console.log(error);
     } finally {
-      setSpinner(false);
     }
   };
 
   useEffect(() => {
-    getAllNotifications();
+    getAllNotificationsAPI();
   }, []);
 
   return (

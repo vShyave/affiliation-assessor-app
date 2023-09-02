@@ -11,11 +11,6 @@ const API_URL = {
     updateRegulatorDeviceId: `${rest}updateRegulatorDeviceId`
   },
   notifications: {
-    //Hasura
-    insertNotifications: `${rest}insertNotifications`,
-    getNotifications: `${rest}getNotifications`,
-    readNotification: `${rest}readNotification`,
-    viewNotification: `${rest}viewNotification`,
     //new APIs
     getAllNotifications: `notification/all`,
     sendPushNotification: `notification/send`,

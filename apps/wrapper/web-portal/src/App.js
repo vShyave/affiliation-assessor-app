@@ -51,7 +51,6 @@ import NocIssued from "./pages/ground-analysis/NocIssuedConfirmation";
 import Spinner from "./components/spinner";
 import { ContextAPI } from "./utils/ContextAPI";
 import { getCookie, getLocalTimeInISOFormat } from "./utils";
-import { insertNotifications } from "./api";
 import Toast from "./components/Toast";
 
 function App() {
