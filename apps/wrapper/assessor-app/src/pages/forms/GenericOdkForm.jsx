@@ -154,8 +154,7 @@ const GenericOdkForm = (props) => {
       `${formName}_${new Date().toISOString().split("T")[0]}`
     );
 
-    let fileGCPPath =
-    GCP_URL + formName + ".xml";
+    let fileGCPPath = GCP_URL + formName + ".xml";
 
     let formURI = await getPrefillXML(
       `${fileGCPPath}`,
@@ -168,13 +167,14 @@ const GenericOdkForm = (props) => {
   };
 
   const getSurveyUrl = async () => {
-      let surveyUrl = await getOfflineCapableForm(formId);
-      console.log("SurveyURL:", surveyUrl);
-      if (!surveyUrl)
-        setSurveyUrl("https://8065-samagradevelop-workflow-871i2twcw0a.ws-us98.gitpod.io/x")
-      else
-        setSurveyUrl(surveyUrl);
-  }
+    let surveyUrl = await getOfflineCapableForm(formId);
+    console.log("SurveyURL:", surveyUrl);
+    if (!surveyUrl)
+      setSurveyUrl(
+        "https://8065-samagradevelop-workflow-871i2twcw0a.ws-us98.gitpod.io/x"
+      );
+    else setSurveyUrl(surveyUrl);
+  };
 
   async function afterFormSubmit(e, saveFlag) {
     const data = typeof e.data === "string" ? JSON.parse(e.data) : e.data;
@@ -374,18 +374,18 @@ const GenericOdkForm = (props) => {
                 />
               </>
             )}
-
-            {surveyUrl && !date && (
-              <>
-                <iframe
-                  id="enketo-form"
-                  title="form"
-                  src={surveyUrl}
-                  style={{ height: "80vh", width: "100%", marginTop: "20px" }}
-                />
-              </>
-            )}
           </div>
+        )}
+
+        {surveyUrl && !date && (
+          <>
+            <iframe
+              id="offline-enketo-form"
+              title="form"
+              src={surveyUrl}
+              style={{ height: "80vh", width: "100%", marginTop: "20px" }}
+            />
+          </>
         )}
       </CommonLayout>
 

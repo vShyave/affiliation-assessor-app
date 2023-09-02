@@ -274,7 +274,7 @@ export const getLocalTimeInISOFormat = () => {
 export const getOfflineCapableForm = async (formId) => {
   try {
     if (navigator.onLine) {
-      let res = await axios.post(ENKETO_URL + "/api/v2/survey/offline",
+      let res = await axios.post(ENKETO_URL + "api/v2/survey/offline",
         {
           server_url: OPEN_ROSA_SERVER_URL,
           form_id: formId
