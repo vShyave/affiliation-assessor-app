@@ -65,14 +65,12 @@ registerRoute(
 
 
 
-/*  self.addEventListener('fetch', (event) => {
-  ///
-console.log(event.request)
+self.addEventListener('fetch', (event) => {
+  console.log(event.request)
   if (event.request.method === 'POST' && event.request.redirect === 'follow' ) {
     event.respondWith(handleNonGetRequests(event.request, event.request.url));
   }  
-
-});  */
+});
 
 /*  self.addEventListener('fetch', event => {
    event.respondWith(
