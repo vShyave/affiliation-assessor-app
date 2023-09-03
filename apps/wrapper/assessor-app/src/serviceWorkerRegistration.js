@@ -72,10 +72,17 @@ export function register(config) {
 
 function registerValidSW(swUrl, config) {
  // if (window === window.top) {
-    console.log("Arun regd!!!!!!1")
-    navigator.serviceWorker.register(swUrl, { scope: 'https://affiliation.upsmfac.org/web/', bucket: "crx" })
+    console.log("affilliation regd!!!!!!")
+    navigator.serviceWorker.register(
+      swUrl, 
+      {
+        scope: '/web/',
+        bucket: 'affilliation' 
+      }
+      )
     .then((registration) => {
       console.log(registration)
+      console.log('Service Worker registered with scope:', registration.scope);
       if (registration.waiting) {
         console.log("onupdatefound")
         // An update is available, you might want to prompt the user to refresh the page
@@ -159,6 +166,7 @@ export function unregister() {
       .then((registration) => {
         caches.keys().then(cacheNames => {
           cacheNames.forEach(cacheName => {
+            console.log(cacheName)
             caches.delete(cacheName);
           });
         })
