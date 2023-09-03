@@ -73,36 +73,42 @@ function RejectNocModal({
         const applicantRes = await getApplicantDeviceId({
           institute_id: instituteId,
         });
-        // if (applicantRes?.data) {
-        //   let tempIds = JSON.parse(
-        //     applicantRes?.data?.institutes[0]?.institute_pocs[0]?.device_id
-        //   );
-        //   sendPushNotification({
-        //     title: "Application Termination",
-        //     body: `We regret to inform you that your application has been terminated. We appreciate your interest and encourage you to consider applying in the future.`,
-        //     deviceToken: tempIds,
-        //     userId:
-        //       applicantRes?.data?.institutes[0]?.institute_pocs[0]?.user_id,
-        //   });
-        // }
+        if (applicantRes?.data) {
+          let tempIds = JSON.parse(
+            applicantRes?.data?.institutes[0]?.institute_pocs[0]?.device_id
+          );
+          let tempIdsFilter = tempIds.filter(function (el) {
+            return el != null;
+          });
+          sendPushNotification({
+            title: "Application Termination",
+            body: `We regret to inform you that your application has been terminated. We appreciate your interest and encourage you to consider applying in the future.`,
+            deviceToken: tempIdsFilter,
+            userId:
+              applicantRes?.data?.institutes[0]?.institute_pocs[0]?.user_id,
+          });
+        }
 
         //regulator push notification
-        // const regAPIRes = await getAllRegulatorDeviceId();
-        // let regDeviceIds = [];
-        // regAPIRes?.data?.regulator?.forEach((item) => {
-        //   let tempIds = JSON.parse(item.device_id);
-        //   if (tempIds.length) {
-        //     regDeviceIds.push();
-        //   }
-        // });
+        const regAPIRes = await getAllRegulatorDeviceId();
+        let regDeviceIds = [];
+        regAPIRes?.data?.regulator?.forEach((item) => {
+          let tempIds = JSON.parse(item.device_id);
+          let tempIdsFilter = tempIds.filter(function (el) {
+            return el != null;
+          });
+          if (tempIdsFilter.length) {
+            regDeviceIds.push();
+          }
+        });
 
-        // console.log("regulator device ids-", regDeviceIds);
-        // sendPushNotification({
-        //   title: "Application Termination",
-        //   body: `Please be informed that the application ${instituteName}'s form has been terminated. Kindly update the records accordingly.`,
-        //   deviceToken: regDeviceIds,
-        //   userId: "34061b3d-dc9f-41c4-94da-405306175430",
-        // });
+        console.log("regulator device ids-", regDeviceIds);
+        sendPushNotification({
+          title: "Application Termination",
+          body: `Please be informed that the ${instituteName}'s application form has been terminated. Kindly update the records accordingly.`,
+          deviceToken: regDeviceIds,
+          userId: userDetails?.userRepresentation?.id,
+        });
 
         //email notify
         const emailData = {

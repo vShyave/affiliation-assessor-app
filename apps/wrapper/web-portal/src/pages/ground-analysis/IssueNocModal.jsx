@@ -145,10 +145,13 @@ function IssueNocModal({
         let tempIds = JSON.parse(
           applicantRes?.data?.institutes[0]?.institute_pocs[0]?.device_id
         );
+        let tempIdsFilter = tempIds.filter(function (el) {
+          return el != null;
+        });
         sendPushNotification({
           title: "On-Ground Schedule Information(round 1)",
           body: `The on-ground assessment for Round 1  has been scheduled. On Ground Assessor will visit your college soon.`,
-          deviceToken: tempIds,
+          deviceToken: tempIdsFilter,
           
            //use this only when testing regulator
           // deviceToken: [`${getCookie("firebase_client_token")}`],
@@ -216,10 +219,13 @@ function IssueNocModal({
         let tempIds = JSON.parse(
           applicantRes?.data?.institutes[0]?.institute_pocs[0]?.device_id
         );
+        let tempIdsFilter = tempIds.filter(function (el) {
+          return el != null;
+        });
         sendPushNotification({
           title: "On-Ground Schedule Information(round 2)",
           body: `The on-ground assessment for Round 2  has been scheduled. On Ground Assessor will visit your college soon.`,
-          deviceToken: tempIds,
+          deviceToken: tempIdsFilter,
           //use this only when testing regulator
           // deviceToken: [`${getCookie("firebase_client_token")}`],
           
