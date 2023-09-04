@@ -133,6 +133,7 @@ const AssessmentType = () => {
       const postData = {
         institute_id: instituteId,
         assessment_date: new Date().toJSON().slice(0, 10),
+        applicant_form_id: storedData?.applicant_form_id,
       };
 
       try {
