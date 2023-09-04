@@ -1,5 +1,5 @@
 const ROUTE_MAP = {
-  root: "/",
+  root: "/web",
   login: "/login",
   register: "/register",
   medical_assessments: "/medical-assessments",

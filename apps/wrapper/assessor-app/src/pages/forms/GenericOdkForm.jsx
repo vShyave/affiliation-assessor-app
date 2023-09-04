@@ -204,7 +204,7 @@ const GenericOdkForm = (props) => {
             assessor_id: storedData?.assessor_user_id,
             applicant_id: storedData?.institute_id,
             submitted_on: new Date().toJSON().slice(0, 10),
-            applicant_form_id: getCookie("courses_data")[formName],
+            applicant_form_id: getCookie("courses_data")[formName + ".xml"],
             round: getCookie("parent_form_round"),
             form_status: saveFlag === "draft" ? "" : "In Progress",
           });
