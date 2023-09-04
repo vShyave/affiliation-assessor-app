@@ -197,7 +197,7 @@ const GenericOdkForm = (props) => {
       // call the event update function...
       registerEvent({
         created_date: getLocalTimeInISOFormat(),
-        entity_id: courseObj.applicant_form_id,
+        entity_id: courseObj.applicant_form_id.toString(),
         entity_type: "form",
         event_name: "OGA Completed",
         remarks: `${user?.userRepresentation?.firstName} ${user?.userRepresentation?.lasttName} has completed the On Ground Inspection Analysis`,
@@ -253,7 +253,6 @@ const GenericOdkForm = (props) => {
             form_status: saveFlag === "draft" ? "" : "In Progress",
           });
 
-          console.log("res - ", res);
           if (res?.data?.insert_form_submissions) {
             updateSubmissionForms(courseObj["course_id"]);
 
