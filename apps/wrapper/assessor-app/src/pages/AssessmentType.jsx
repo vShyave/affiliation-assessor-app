@@ -167,7 +167,7 @@ const AssessmentType = () => {
         }
         let courses_parent_id = {};
         courses_data.forEach((item) => {
-          courses_parent_id[item.course.formObject[0].path] =
+          courses_parent_id[item.course.formObject[0].name] =
             item.applicant_form_id;
         });
         setCookie("courses_data", courses_parent_id);

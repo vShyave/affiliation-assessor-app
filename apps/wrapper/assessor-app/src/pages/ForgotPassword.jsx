@@ -64,8 +64,6 @@ const ForgotPassword = () => {
       request: {
         firstName: details.userRepresentation.firstName,
         lastName: details.userRepresentation.lastName,
-        email: details.userRepresentation.email,
-        username: details.userRepresentation.email,
         enabled: true,
         emailVerified: false,
         credentials: [

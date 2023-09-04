@@ -181,6 +181,7 @@ function ScheduleInspectionModal({ closeSchedule, otherInfo }) {
           date: payload?.date,
           institute_id: otherInfo?.instituteId,
           assisstant_code: selectedAA?.[0]?.other?.code,
+          applicant_form_id: +formId,
         },
       ],
     };
