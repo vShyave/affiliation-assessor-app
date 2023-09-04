@@ -209,7 +209,7 @@ export default function DesktopAnalysisView() {
     }
 
     if (
-      ENKETO_URL === e.origin + "/enketo/" &&
+      ENKETO_URL === e.origin + "/enketo" &&
       typeof e?.data === "string" &&
       JSON.parse(e?.data)?.state !== "ON_FORM_SUCCESS_COMPLETED"
     ) {
@@ -267,7 +267,7 @@ export default function DesktopAnalysisView() {
       form_id: formId * 1,
       form_status: "DA Completed",
     });
-    
+
     // regulator
     const regAPIRes = await getAllRegulatorDeviceId();
     let regDeviceIds = [];
@@ -294,7 +294,9 @@ export default function DesktopAnalysisView() {
       institute_id: formDataFromApi?.institute?.id,
     });
     if (applicantRes?.data) {
-      let tempIds = JSON.parse(applicantRes?.data?.institutes[0]?.institute_pocs[0]?.device_id)
+      let tempIds = JSON.parse(
+        applicantRes?.data?.institutes[0]?.institute_pocs[0]?.device_id
+      );
       let tempIdsFilter = tempIds.filter(function (el) {
         return el != null;
       });

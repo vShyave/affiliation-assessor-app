@@ -326,9 +326,9 @@ const GenericOdkForm = (props) => {
       setEncodedFormURI,
     });
 
-    // setTimeout(() => {
-    //   checkIframeLoaded();
-    // }, 2500);
+    setTimeout(() => {
+      checkIframeLoaded();
+    }, 2500);
 
     return () => {
       detachEventBinding();
@@ -354,6 +354,7 @@ const GenericOdkForm = (props) => {
     // Call the function with the URL of the iframe's content
     fetchIframeResources('https://enketo.upsmfac.org/enketo/preview?formSpec=%7B%22skipOnSuccessMessage%22:true,%22prefill%22:%7B%7D,%22submissionURL%22:%22%22,%22name%22:%22bsc_nursing_p7%22,%22successCheck%22:%22async%20(formData)%20=%3E%20%7B%20return%20true;%20%7D%22,%22onSuccess%22:%7B%22notificationMessage%22:%22Form%20submitted%20successfully%22,%22sideEffect%22:%22async%20(formData)%20=%3E%20%7B%20console.log(formData);%20%7D%22%7D,%22onFailure%22:%7B%22message%22:%22Form%20submission%20failed%22,%22sideEffect%22:%22async%20(formData)%20=%3E%20%7B%20console.log(formData);%20%7D%22,%22next%22:%7B%22type%22:%22url%22,%22id%22:%22google%22%7D%7D%7D&xform=https://formmanager.upsmfac.org/form/instance/48637fc6-d572-4700-a223-34582ce38538&userId=997e23bb-6801-44a1-aeb4-c3e526a85574');
     }, 2000); */
+
   return (
     <>
       <CommonLayout
