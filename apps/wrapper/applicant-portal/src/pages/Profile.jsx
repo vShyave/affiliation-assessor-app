@@ -95,8 +95,6 @@ export default function Profile() {
         request: {
           firstName: formData?.first_name,
           lastName: formData?.last_name,
-          email: userData?.userRepresentation?.email,
-          username: userData?.userRepresentation?.email,
           enabled: true,
           emailVerified: false,
           credentials: [
