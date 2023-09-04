@@ -122,7 +122,8 @@ export class FormController {
             // Compressing this file
             newFile = await imageCompression(newFile, options)
             fd.append('file', newFile, data.name);
-            const response = await fetch(`${settings.formManagerBaseURI}/form/uploadFile`, {
+            // const response = await fetch(`${settings.formManagerBaseURI}/form/uploadFile`, {
+            const response = await fetch(`https://formmanager.upsmfac.org/form/uploadFile`, {
                 method: 'POST',
                 body: fd
             }).then(s => {
@@ -171,7 +172,8 @@ export class FormController {
         
         console.log("Updated FormData:", formData);
 
-        const parseRes = await fetch(`${settings.formManagerBaseURI}/parse`, {
+        // const parseRes = await fetch(`${settings.formManagerBaseURI}/parse`, {
+        const parseRes = await fetch(`https://formmanager.upsmfac.org/parse`, {
             method: "POST",
             body: JSON.stringify({ xml: formData.toString() }),
             headers: {
