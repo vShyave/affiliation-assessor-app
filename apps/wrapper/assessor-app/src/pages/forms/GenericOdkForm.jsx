@@ -334,6 +334,7 @@ const GenericOdkForm = (props) => {
       detachEventBinding();
       setData(null);
       setPrefilledFormData(null);
+      window.removeEventListener("message", handleEventTrigger);
     };
   }, []);
 
