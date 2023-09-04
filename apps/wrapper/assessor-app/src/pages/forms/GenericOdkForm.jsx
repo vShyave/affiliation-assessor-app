@@ -27,6 +27,7 @@ import {
 
 import CommonLayout from "../../components/CommonLayout";
 import CommonModal from "../../components/Modal";
+import localforage from "localforage";
 
 const ENKETO_MANAGER_URL = process.env.REACT_APP_ENKETO_MANAGER_URL;
 const ENKETO_URL = process.env.REACT_APP_ENKETO_URL;
@@ -194,8 +195,10 @@ const GenericOdkForm = (props) => {
 
           const updatedFormData = await updateFormData(formSpec.start);
           const storedData = await getSpecificDataFromForage("required_data");
-
-          const res = await saveFormSubmission({
+          const form_submissions_arr = await getSpecificDataFromForage(
+            "submission_forms_arr"
+          );
+          const res = {
             schedule_id: scheduleId.current,
             form_data: updatedFormData,
             assessment_type: "assessor",
@@ -207,8 +210,16 @@ const GenericOdkForm = (props) => {
             applicant_form_id: getCookie("courses_data")[formName + ".xml"],
             round: getCookie("parent_form_round"),
             form_status: saveFlag === "draft" ? "" : "In Progress",
-          });
-
+            // course_id:form_submissions_arr.map((item)=>{
+            //   item.course_name.includes(formName + ".xml")
+            // })
+          };
+          console.log("form sub", res);
+          return;
+          //  console.log(form_submissions_arr);
+          //  form_submissions_arr.map((item)=>{
+          //   item.course_id=
+          //  });
           await getFormStatus();
 
           // Delete the data from the Local Forage

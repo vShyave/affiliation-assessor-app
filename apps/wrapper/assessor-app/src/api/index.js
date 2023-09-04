@@ -368,6 +368,8 @@ export const saveFormSubmission = (data) => {
         returning {
           form_id
           created_at
+          submission_status
+          course_id
         }
       }
     }`,
