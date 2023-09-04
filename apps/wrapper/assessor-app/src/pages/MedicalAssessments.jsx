@@ -20,6 +20,7 @@ import { StateContext } from "../App";
 import {
   getCookie,
   getSpecificDataFromForage,
+  setCookie,
   setToLocalForage,
 } from "../utils";
 
@@ -89,6 +90,7 @@ const MedicalAssessments = () => {
       const required_data = {
         institute_id: ass.institute.id,
         schedule_id: ass.id,
+        applicant_form_id: ass.applicant_form_id,
       };
 
       setToLocalForage("required_data", required_data);
@@ -187,7 +189,7 @@ const MedicalAssessments = () => {
                 <div className="text-gray-500">POC Numbers</div>
               </div>
               <div className="flex flex-wrap">
-              {data?.pocs?.map((el, idx) => (
+                {data?.pocs?.map((el, idx) => (
                   <a href={`tel:${el.number}`} key={idx}>
                     <div className="flex flex-col p-2 m-[4px] bg-[#DBDBDB;] grow items-center rounded-[8px] gap-2">
                       <div className="rounded-[50%] w-[36px] h-[36px] bg-[#009A2B;] flex items-center justify-center">
