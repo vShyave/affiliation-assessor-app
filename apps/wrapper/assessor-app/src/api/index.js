@@ -369,7 +369,6 @@ export const saveFormSubmission = (data) => {
           form_id
           created_at
           submission_status
-          course_id
         }
       }
     }`,
