@@ -253,7 +253,8 @@ const GenericOdkForm = (props) => {
             form_status: saveFlag === "draft" ? "" : "In Progress",
           });
 
-          if (res.form_id) {
+          console.log("res - ", res);
+          if (res?.data?.insert_form_submissions) {
             updateSubmissionForms(courseObj["course_id"]);
 
             // Delete the data from the Local Forage
