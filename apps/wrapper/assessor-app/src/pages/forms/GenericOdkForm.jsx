@@ -251,6 +251,7 @@ const GenericOdkForm = (props) => {
             applicant_form_id: courseObj["applicant_form_id"],
             round: courseObj["round"],
             form_status: saveFlag === "draft" ? "" : "In Progress",
+            course_id: courseObj["course_id"],
           });
 
           console.log("res - ", res);
