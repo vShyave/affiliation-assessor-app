@@ -169,7 +169,7 @@ export class FormController {
                 }
             }
         }
-        
+        this.formDataXml = formData.toString();
         console.log("Updated FormData:", formData);
 
         // const parseRes = await fetch(`${settings.formManagerBaseURI}/parse`, {
@@ -288,6 +288,7 @@ export class FormController {
         window.parent.postMessage(JSON.stringify({
             nextForm: this.nextForm,
             formData: this.formData,
+            formDataXml: this.formDataXml,
             onSuccessData: this._onFormSuccessData,
             onFailureData: this._onFormFailureData,
             state: this._state
