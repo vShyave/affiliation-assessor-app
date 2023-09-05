@@ -9,13 +9,11 @@ import NocModal from "./NocModal";
 import StatusLogModal from "./StatusLogModal";
 import IssueNocModal from "./IssueNocModal.jsx";
 import RejectNocModal from "./RejectNocModal";
-import Sidebar from "../../components/Sidebar";
+import OGASidebar from "./OGASidebar";
 
 import ADMIN_ROUTE_MAP from "../../routes/adminRouteMap";
-import { getFormData } from "../../api";
+import { getFormData, fetchOGAFormsList } from "../../api";
 import { getPrefillXML } from "./../../api/formApi";
-import jsPDF from "jspdf";
-import html2canvas from "html2canvas";
 import { ContextAPI } from "../../utils/ContextAPI";
 
 const ENKETO_URL = process.env.REACT_APP_ENKETO_URL;
@@ -39,6 +37,8 @@ export default function ApplicationPage({
   let { formName, formId, instituteName, round } = useParams();
   let [instituteId, setInstituteId] = useState();
   let [selectRound, setSelectRound] = useState(round);
+  let [OGAFormsList, setOGAFormsList] = useState([]);
+  let [formSelected, setFormSelected] = useState();
   const { setSpinner } = useContext(ContextAPI);
 
   const userId = "427d473d-d8ea-4bb3-b317-f230f1c9b2f7";
@@ -62,26 +62,28 @@ export default function ApplicationPage({
     },
   };
 
+  const setIframeFormURI = async (formDataObj) => {
+    console.log("formDataObj - ", formDataObj);
+    const form_path = `${GCP_URL}${formDataObj?.form_name}.xml`;
+    let formURI = await getPrefillXML(
+      `${form_path}`,
+      "",
+      formDataObj?.form_data,
+      formDataObj?.imageUrls
+    );
+    setEncodedFormURI(formURI);
+  };
+
   const fetchFormData = async () => {
     const postData = { form_id: formId };
     try {
-      // setSpinner(true);
       const res = await getFormData(postData);
       const formData = res.data.form_submissions[0];
       setFormDataFromApi(res.data.form_submissions[0]);
-      console.log("formData - ", formData);
       const statusOfForm = formData?.form_status;
       setFormStatus(statusOfForm);
-      const form_path = `${GCP_URL}${formData?.form_name}.xml`;
-      setInstituteId(formData?.institute?.id)
-
-      let formURI = await getPrefillXML(
-        `${form_path}`,
-        "",
-        formData.form_data,
-        formData.imageUrls
-      );
-      setEncodedFormURI(formURI);
+      setInstituteId(formData?.institute?.id);
+      setIframeFormURI(formData);
     } catch (error) {
       console.log(error);
     } finally {
@@ -90,7 +92,7 @@ export default function ApplicationPage({
   };
 
   const checkIframeLoaded = () => {
-    if (window.location.host.includes("regulator.upsmfac")) {
+    if (!window.location.host.includes("localhost")) {
       const iframeElem = document.getElementById("enketo_OGA_preview");
       var iframeContent =
         iframeElem?.contentDocument || iframeElem?.contentWindow.document;
@@ -114,10 +116,18 @@ export default function ApplicationPage({
         alert("Hello world!");
       });
     }
+
     setSpinner(false);
   };
 
+  const getOGAFormsList = async () => {
+    const postData = { applicant_form_id: 338, submitted_on: "2023-09-04" };
+    const res = await fetchOGAFormsList(postData);
+    setOGAFormsList(res.form_submissions);
+  };
+
   useEffect(() => {
+    getOGAFormsList();
     setSpinner(true);
     fetchFormData();
     setTimeout(() => {
@@ -125,11 +135,18 @@ export default function ApplicationPage({
     }, 2500);
   }, []);
 
+  useEffect(() => {
+    console.log("formSelected - ", formSelected);
+    if (formSelected) {
+      setIframeFormURI(formSelected);
+    } else {
+      fetchFormData();
+    }
+  }, [formSelected]);
+
   return (
     <>
       {/* Breadcrum */}
-      {/* <Breadcrumb data={breadCrumbData} /> */}
-
       <div className="h-[48px] bg-white flex justify-start drop-shadow-sm">
         <div className="container mx-auto flex px-3">
           <div className="flex flex-row font-bold gap-2 items-center">
@@ -213,44 +230,13 @@ export default function ApplicationPage({
             </div>
           </div>
           <div className="flex flex-row gap-4">
-            {/* <div className="flex w-[30%]">
-              <Sidebar />
-            </div> */}
+            <div className="flex w-[30%]">
+              <OGASidebar
+                OGAFormsList={OGAFormsList}
+                setFormSelected={setFormSelected}
+              />
+            </div>
             <div className="flex w-full flex-col gap-4">
-              <Card
-                moreClass="flex flex-col shadow-md border border-[#F5F5F5] gap-4"
-                styles={{ backgroundColor: "#F5F5F5" }}
-              >
-                <div
-                  className="p-1 flex justify-center border border-[#D9D9D9] rounded-[4px]"
-                  style={{ backgroundColor: "#EBEBEB" }}
-                >
-                  <h4
-                    className={`font-medium ${
-                      formStatus.toLowerCase() === "in progress"
-                        ? "text-yellow-400"
-                        : formStatus.toLowerCase() === "resubmitted"
-                        ? "text-orange-400"
-                        : formStatus.toLowerCase() === "inspection scheduled"
-                        ? "text-blue-400"
-                        : formStatus.toLowerCase() === "application submitted"
-                        ? "text-green-400"
-                        : formStatus.toLowerCase() === "na"
-                        ? "text-red-400"
-                        : formStatus.toLowerCase() === "oga completed"
-                        ? "text-purple-400"
-                        : formStatus.toLowerCase() === "approved"
-                        ? "text-teal-400"
-                        : formStatus.toLowerCase() === "rejected"
-                        ? "text-pink-400"
-                        : "text-white"
-                    }`}
-                  >
-                    {" "}
-                    Status: {formStatus}
-                  </h4>
-                </div>
-              </Card>
               <Card moreClass="shadow-md">
                 <iframe
                   id="enketo_OGA_preview"
