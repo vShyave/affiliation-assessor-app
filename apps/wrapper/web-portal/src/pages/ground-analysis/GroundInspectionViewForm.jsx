@@ -14,8 +14,6 @@ import Sidebar from "../../components/Sidebar";
 import ADMIN_ROUTE_MAP from "../../routes/adminRouteMap";
 import { getFormData } from "../../api";
 import { getPrefillXML } from "./../../api/formApi";
-import jsPDF from "jspdf";
-import html2canvas from "html2canvas";
 import { ContextAPI } from "../../utils/ContextAPI";
 
 const ENKETO_URL = process.env.REACT_APP_ENKETO_URL;
@@ -73,7 +71,7 @@ export default function ApplicationPage({
       const statusOfForm = formData?.form_status;
       setFormStatus(statusOfForm);
       const form_path = `${GCP_URL}${formData?.form_name}.xml`;
-      setInstituteId(formData?.institute?.id)
+      setInstituteId(formData?.institute?.id);
 
       let formURI = await getPrefillXML(
         `${form_path}`,
@@ -213,9 +211,9 @@ export default function ApplicationPage({
             </div>
           </div>
           <div className="flex flex-row gap-4">
-            {/* <div className="flex w-[30%]">
+            <div className="flex w-[30%]">
               <Sidebar />
-            </div> */}
+            </div>
             <div className="flex w-full flex-col gap-4">
               <Card
                 moreClass="flex flex-col shadow-md border border-[#F5F5F5] gap-4"

@@ -20,7 +20,8 @@ const API_URL = {
   },
   groundAnalysis: {
     viewForm: `${rest}getFormData`,
-    list: `${rest}getGroundInspectionAnalysis`,
+    list: `${rest}getOGIA`,
+    // list: `${rest}getGroundInspectionAnalysis`,
     markStatus: `${rest}inProgress`,
     acceptApplicantNoc: `${rest}acceptFormR1`,
     acceptApplicantCertificate: `${rest}acceptFormR2`,
