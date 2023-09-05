@@ -29,49 +29,16 @@ export const getFormData = async (postData) => {
 };
 
 export const getOnGroundAssessorData = async (postData) => {
-  // const res = await adminCustomPost.post(API_URL.groundAnalysis.list, postData);
-  // const res = await adminCustomPost.get(API_URL.groundAnalysis.list);
-  return fetch(process.env.REACT_APP_HASURA_SERVICE_URL + API_URL.groundAnalysis.list, {
-    method: "POST",
-    headers: {
-      Accept: "application/json",
-      "Content-Type": "application/json",
-      "Hasura-Client-Name": process.env.REACT_APP_HASURA_CLIENT_NAME,
-      "x-hasura-admin-secret": process.env.REACT_APP_HASURA_ADMIN_SECRET_KEY,
-    },
-    body: JSON.stringify(postData),
-  })
-  .then(async (response) => await validateResponse(response))
-    .catch((error) => {
-      return error;
-    });
+  const res = await adminCustomPost.post(API_URL.groundAnalysis.list, postData);
+  return res;
 };
 
 export const fetchOGAFormsList = async (postData) => {
-  return fetch(process.env.REACT_APP_HASURA_SERVICE_URL + API_URL.groundAnalysis.OGAFormsList, {
-    method: "POST",
-    headers: {
-      Accept: "application/json",
-      "Content-Type": "application/json",
-      "Hasura-Client-Name": process.env.REACT_APP_HASURA_CLIENT_NAME,
-      "x-hasura-admin-secret": process.env.REACT_APP_HASURA_ADMIN_SECRET_KEY,
-    },
-    body: JSON.stringify(postData),
-  })
-  .then(async (response) => await validateResponse(response))
-    .catch((error) => {
-      return error;
-    });
-}
-
-const validateResponse = async (response) => {
-  const apiRes = await response.json();
-
-  const jsonResponse = {
-    ...apiRes,
-    responseStatus: false,
-  };
-  return jsonResponse;
+  const res = await adminCustomPost.post(
+    API_URL.groundAnalysis.OGAFormsList,
+    postData
+  );
+  return res;
 };
 
 export const getAcceptApplicantNoc = async (postData) => {
@@ -552,7 +519,9 @@ export const updateRegulatorDeviceId = async (postData) => {
   return res;
 };
 
-export const getTransactionDetail = async (postData) =>{
-  const res =  await adminCustomPost.get(API_URL.desktopAnalysis.getTransactionDetail+"/"+postData)
-  return res
-}
+export const getTransactionDetail = async (postData) => {
+  const res = await adminCustomPost.get(
+    API_URL.desktopAnalysis.getTransactionDetail + "/" + postData
+  );
+  return res;
+};

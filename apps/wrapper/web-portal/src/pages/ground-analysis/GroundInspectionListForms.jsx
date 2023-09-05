@@ -142,12 +142,11 @@ export default function OnGroundInspectionAnalysis() {
     try {
       setSpinner(true);
       const res = await getOnGroundAssessorData(postData);
-
       setPaginationInfo((prevState) => ({
         ...prevState,
-        totalCount: res.form_submissions_aggregate.aggregate.totalCount,
+        totalCount: res?.data?.form_submissions_aggregate.aggregate.totalCount,
       }));
-      setFormsList(res?.form_submissions);
+      setFormsList(res?.data?.form_submissions);
     } catch (error) {
       console.log("error - ", error);
     } finally {
