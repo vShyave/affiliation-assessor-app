@@ -47,6 +47,23 @@ export const getOnGroundAssessorData = async (postData) => {
     });
 };
 
+export const fetchOGAFormsList = async (postData) => {
+  return fetch(process.env.REACT_APP_HASURA_SERVICE_URL + API_URL.groundAnalysis.OGAFormsList, {
+    method: "POST",
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json",
+      "Hasura-Client-Name": process.env.REACT_APP_HASURA_CLIENT_NAME,
+      "x-hasura-admin-secret": process.env.REACT_APP_HASURA_ADMIN_SECRET_KEY,
+    },
+    body: JSON.stringify(postData),
+  })
+  .then(async (response) => await validateResponse(response))
+    .catch((error) => {
+      return error;
+    });
+}
+
 const validateResponse = async (response) => {
   const apiRes = await response.json();
 

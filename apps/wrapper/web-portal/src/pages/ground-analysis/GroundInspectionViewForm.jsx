@@ -9,10 +9,10 @@ import NocModal from "./NocModal";
 import StatusLogModal from "./StatusLogModal";
 import IssueNocModal from "./IssueNocModal.jsx";
 import RejectNocModal from "./RejectNocModal";
-import Sidebar from "../../components/Sidebar";
+import OGASidebar from "./OGASidebar";
 
 import ADMIN_ROUTE_MAP from "../../routes/adminRouteMap";
-import { getFormData } from "../../api";
+import { getFormData, fetchOGAFormsList } from "../../api";
 import { getPrefillXML } from "./../../api/formApi";
 import { ContextAPI } from "../../utils/ContextAPI";
 
@@ -37,6 +37,8 @@ export default function ApplicationPage({
   let { formName, formId, instituteName, round } = useParams();
   let [instituteId, setInstituteId] = useState();
   let [selectRound, setSelectRound] = useState(round);
+  let [OGAFormsList, setOGAFormsList] = useState([]);
+  let [formSelected, setFormSelected] = useState();
   const { setSpinner } = useContext(ContextAPI);
 
   const userId = "427d473d-d8ea-4bb3-b317-f230f1c9b2f7";
@@ -88,7 +90,7 @@ export default function ApplicationPage({
   };
 
   const checkIframeLoaded = () => {
-    if (window.location.host.includes("regulator.upsmfac")) {
+    if (!window.location.host.includes("localhost")) {
       const iframeElem = document.getElementById("enketo_OGA_preview");
       var iframeContent =
         iframeElem?.contentDocument || iframeElem?.contentWindow.document;
@@ -112,10 +114,18 @@ export default function ApplicationPage({
         alert("Hello world!");
       });
     }
+
     setSpinner(false);
   };
 
+  const getOGAFormsList = async () => {
+    const postData = { applicant_form_id: 338, submitted_on: "2023-09-04" };
+    const res = await fetchOGAFormsList(postData);
+    setOGAFormsList(res.form_submissions);
+  };
+
   useEffect(() => {
+    getOGAFormsList();
     setSpinner(true);
     fetchFormData();
     setTimeout(() => {
@@ -123,11 +133,13 @@ export default function ApplicationPage({
     }, 2500);
   }, []);
 
+  useEffect(() => {
+    console.log("formSelected - ", formSelected);
+  }, [formSelected]);
+
   return (
     <>
       {/* Breadcrum */}
-      {/* <Breadcrumb data={breadCrumbData} /> */}
-
       <div className="h-[48px] bg-white flex justify-start drop-shadow-sm">
         <div className="container mx-auto flex px-3">
           <div className="flex flex-row font-bold gap-2 items-center">
@@ -212,7 +224,10 @@ export default function ApplicationPage({
           </div>
           <div className="flex flex-row gap-4">
             <div className="flex w-[30%]">
-              <Sidebar />
+              <OGASidebar
+                OGAFormsList={OGAFormsList}
+                setFormSelected={setFormSelected}
+              />
             </div>
             <div className="flex w-full flex-col gap-4">
               <Card
