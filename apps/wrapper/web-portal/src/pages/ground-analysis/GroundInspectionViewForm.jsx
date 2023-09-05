@@ -34,7 +34,7 @@ export default function ApplicationPage({
   const [openStatusModel, setOpenStatusModel] = useState(false);
   const [openIssueNocModel, setOpenIssueNocModel] = useState(false);
   const [encodedFormURI, setEncodedFormURI] = useState("");
-  let { formName, formId, instituteName, round } = useParams();
+  let { formName, formId, instituteName, round, date } = useParams();
   let [instituteId, setInstituteId] = useState();
   let [selectRound, setSelectRound] = useState(round);
   let [OGAFormsList, setOGAFormsList] = useState([]);
@@ -63,7 +63,6 @@ export default function ApplicationPage({
   };
 
   const setIframeFormURI = async (formDataObj) => {
-    console.log("formDataObj - ", formDataObj);
     const form_path = `${GCP_URL}${formDataObj?.form_name}.xml`;
     let formURI = await getPrefillXML(
       `${form_path}`,
@@ -121,7 +120,7 @@ export default function ApplicationPage({
   };
 
   const getOGAFormsList = async () => {
-    const postData = { applicant_form_id: 338, submitted_on: "2023-09-04" };
+    const postData = { applicant_form_id: formId, submitted_on: date };
     const res = await fetchOGAFormsList(postData);
     setOGAFormsList(res?.data?.form_submissions);
   };
@@ -136,7 +135,6 @@ export default function ApplicationPage({
   }, []);
 
   useEffect(() => {
-    console.log("formSelected - ", formSelected);
     if (formSelected) {
       setIframeFormURI(formSelected);
     } else {
@@ -275,7 +273,7 @@ export default function ApplicationPage({
         <RejectNocModal
           closeRejectModal={setRejectModel}
           setRejectStatus={setRejectStatus}
-          formId={formSelected.form_id}
+          formId={formId}
           instituteId={instituteId}
           instituteName={instituteName}
         />
@@ -289,7 +287,7 @@ export default function ApplicationPage({
           selectRound={round}
           // setRejectStatus={setRejectStatus}
           selectInstituteName={instituteName}
-          formId={formSelected.form_id}
+          formId={formId}
           setOpenIssueNocModel={setOpenIssueNocModel}
           instituteId={instituteId}
         />

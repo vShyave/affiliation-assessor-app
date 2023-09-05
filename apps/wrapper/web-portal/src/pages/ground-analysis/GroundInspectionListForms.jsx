@@ -103,8 +103,7 @@ export default function OnGroundInspectionAnalysis() {
   };
 
   const navigateToView = (formObj) => {
-    console.log("formObj", formObj);
-    const navigationURL = `${ADMIN_ROUTE_MAP.adminModule.onGroundInspection.viewForm}/${formObj?.original?.form_name}/${formObj?.original?.id}/${formObj?.original?.institute?.name}/${round}`;
+    const navigationURL = `${ADMIN_ROUTE_MAP.adminModule.onGroundInspection.viewForm}/${formObj?.original?.form_name}/${formObj?.original?.id}/${formObj?.original?.institute?.name}/${round}/${formObj?.original?.date}`;
     navigation(navigationURL);
     // const postData = { form_id: formObj?.original?.id };
     // markStatus(postData);
@@ -136,7 +135,7 @@ export default function OnGroundInspectionAnalysis() {
     const postData = {
       offsetNo: paginationInfo.offsetNo,
       limit: paginationInfo.limit,
-      formStatus: "Inspection Scheduled",
+      formStatus: state.menu_selected,
       round: round,
     };
     try {
@@ -225,12 +224,16 @@ export default function OnGroundInspectionAnalysis() {
       form_name: e?.form_name,
       application_type: e?.course?.application_type?.split("_")?.join(" "),
       course_type: `${e?.course?.course_type} - ${e?.course?.course_level}`,
-      assessor: e?.assessor?.name || "NA",
-      published_on: e?.submitted_on ? readableDate(e?.submitted_on) : "NA",
+      assessor:
+        e?.assessment_schedule_applicant_form?.[0]?.assessor.name || "NA",
+      published_on: e?.assessment_schedule_applicant_form?.[0]?.date
+        ? readableDate(e?.assessment_schedule_applicant_form?.[0]?.date)
+        : "NA",
       id: e.form_id,
       status: e?.form_status || "NA",
       form_status: e?.form_status,
       institute: e?.institute,
+      date: e?.assessment_schedule_applicant_form?.[0]?.date,
     };
 
     resData.push(formsData);
@@ -306,6 +309,22 @@ export default function OnGroundInspectionAnalysis() {
               </li>
               <li
                 className="gap-3"
+                onClick={() => handleSelectMenu("OGA Completed")}
+              >
+                <a
+                  href="#"
+                  className={`inline-block p-4 rounded-t-lg dark:text-blue-500 dark:border-blue-600 ${
+                    state.menu_selected === "OGA Completed"
+                      ? "text-blue-600 border-b-2 border-blue-600"
+                      : ""
+                  }`}
+                  aria-current="page"
+                >
+                  OGA Completed
+                </a>
+              </li>
+              <li
+                className="gap-3"
                 onClick={() => handleSelectMenu("Approved")}
               >
                 <a
@@ -337,7 +356,6 @@ export default function OnGroundInspectionAnalysis() {
               </li>
             </ul>
             {/* <div>create a search bar and filter component here</div> */}
-
             {/* table creation starts here */}
             {state.menu_selected === "Inspection Scheduled" && (
               <div className="flex flex-col gap-4">
@@ -359,8 +377,28 @@ export default function OnGroundInspectionAnalysis() {
                   selectedRound={round}
                 />
               </div>
+            )}{" "}
+            {state.menu_selected === "OGA Completed" && (
+              <div className="flex flex-col gap-4">
+                <FilteringTable
+                  dataList={resData.filter(
+                    (item) => item.form_status === "OGA Completed"
+                  )}
+                  navigateFunc={navigateToView}
+                  columns={COLUMN}
+                  pagination={true}
+                  onRowSelect={() => {}}
+                  filterApiCall={filterApiCall}
+                  showFilter={true}
+                  paginationInfo={paginationInfo}
+                  setPaginationInfo={setPaginationInfo}
+                  searchApiCall={searchApiCall}
+                  setIsSearchOpen={setIsSearchOpen}
+                  setIsFilterOpen={setIsFilterOpen}
+                  selectedRound={round}
+                />
+              </div>
             )}
-
             {state.menu_selected === "Approved" && (
               <div className="flex flex-col gap-4">
                 <FilteringTable
@@ -382,7 +420,6 @@ export default function OnGroundInspectionAnalysis() {
                 />
               </div>
             )}
-
             {state.menu_selected === "Rejected" && (
               <div className="flex flex-col gap-4">
                 <FilteringTable
