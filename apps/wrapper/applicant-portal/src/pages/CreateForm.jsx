@@ -195,10 +195,6 @@ const CreateForm = (props) => {
     const updatedFormData = await updateFormData(formSpec.start, userId);
     const course_details = await getSpecificDataFromForage("course_details");
 
-    setTimeout(() => {
-      console.log("updatedFormData - ", updatedFormData);
-    }, 1000);
-
     const common_payload = {
       form_data: updatedFormData,
       assessment_type: "applicant",
@@ -209,8 +205,6 @@ const CreateForm = (props) => {
       course_level: course_details?.course_level,
       course_id: course_details?.course_id,
     };
-
-    console.log("applicantStatus - ", applicantStatus);
 
     if (!applicantStatus) {
       await saveFormSubmission({
@@ -309,7 +303,6 @@ const CreateForm = (props) => {
   const handleGoBack = () => {
     navigate(`${APPLICANT_ROUTE_MAP.dashboardModule.my_applications}`);
   };
-
 
   const handleFormDownload = async () => {
     try {
@@ -418,9 +411,9 @@ const CreateForm = (props) => {
 
             <button
               onClick={handleDownloadNocOrCertificate}
-              disabled={formData.form_status !== "Approved" ? true : false}
+              disabled={formDataNoc.form_status !== "Approved" ? true : false}
               className={`${
-                formData.form_status !== "Approved"
+                formDataNoc.form_status !== "Approved"
                   ? "cursor-not-allowed border border-gray-500 bg-white rounded-[4px] text-gray-200 px-2 h-[44px]"
                   : "border border-blue-900 bg-blue-900 text-white rounded-[4px] px-2 h-[44px]"
               }`}
