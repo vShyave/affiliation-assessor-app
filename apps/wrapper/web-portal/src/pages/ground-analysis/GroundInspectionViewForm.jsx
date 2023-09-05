@@ -62,26 +62,28 @@ export default function ApplicationPage({
     },
   };
 
+  const setIframeFormURI = async (formDataObj) => {
+    console.log("formDataObj - ", formDataObj);
+    const form_path = `${GCP_URL}${formDataObj?.form_name}.xml`;
+    let formURI = await getPrefillXML(
+      `${form_path}`,
+      "",
+      formDataObj?.form_data,
+      formDataObj?.imageUrls
+    );
+    setEncodedFormURI(formURI);
+  };
+
   const fetchFormData = async () => {
     const postData = { form_id: formId };
     try {
-      // setSpinner(true);
       const res = await getFormData(postData);
       const formData = res.data.form_submissions[0];
       setFormDataFromApi(res.data.form_submissions[0]);
-      console.log("formData - ", formData);
       const statusOfForm = formData?.form_status;
       setFormStatus(statusOfForm);
-      const form_path = `${GCP_URL}${formData?.form_name}.xml`;
       setInstituteId(formData?.institute?.id);
-
-      let formURI = await getPrefillXML(
-        `${form_path}`,
-        "",
-        formData.form_data,
-        formData.imageUrls
-      );
-      setEncodedFormURI(formURI);
+      setIframeFormURI(formData);
     } catch (error) {
       console.log(error);
     } finally {
@@ -135,6 +137,11 @@ export default function ApplicationPage({
 
   useEffect(() => {
     console.log("formSelected - ", formSelected);
+    if (formSelected) {
+      setIframeFormURI(formSelected);
+    } else {
+      fetchFormData();
+    }
   }, [formSelected]);
 
   return (
@@ -230,40 +237,6 @@ export default function ApplicationPage({
               />
             </div>
             <div className="flex w-full flex-col gap-4">
-              <Card
-                moreClass="flex flex-col shadow-md border border-[#F5F5F5] gap-4"
-                styles={{ backgroundColor: "#F5F5F5" }}
-              >
-                <div
-                  className="p-1 flex justify-center border border-[#D9D9D9] rounded-[4px]"
-                  style={{ backgroundColor: "#EBEBEB" }}
-                >
-                  <h4
-                    className={`font-medium ${
-                      formStatus.toLowerCase() === "in progress"
-                        ? "text-yellow-400"
-                        : formStatus.toLowerCase() === "resubmitted"
-                        ? "text-orange-400"
-                        : formStatus.toLowerCase() === "inspection scheduled"
-                        ? "text-blue-400"
-                        : formStatus.toLowerCase() === "application submitted"
-                        ? "text-green-400"
-                        : formStatus.toLowerCase() === "na"
-                        ? "text-red-400"
-                        : formStatus.toLowerCase() === "oga completed"
-                        ? "text-purple-400"
-                        : formStatus.toLowerCase() === "approved"
-                        ? "text-teal-400"
-                        : formStatus.toLowerCase() === "rejected"
-                        ? "text-pink-400"
-                        : "text-white"
-                    }`}
-                  >
-                    {" "}
-                    Status: {formStatus}
-                  </h4>
-                </div>
-              </Card>
               <Card moreClass="shadow-md">
                 <iframe
                   id="enketo_OGA_preview"
