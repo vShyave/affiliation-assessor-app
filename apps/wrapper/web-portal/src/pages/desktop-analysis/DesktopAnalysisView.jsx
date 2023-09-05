@@ -210,7 +210,7 @@ export default function DesktopAnalysisView() {
     }
 
     if (
-      ENKETO_URL === e.origin + "/enketo/" &&
+      ENKETO_URL === e.origin + "/enketo" &&
       typeof e?.data === "string" &&
       JSON.parse(e?.data)?.state !== "ON_FORM_SUCCESS_COMPLETED"
     ) {
@@ -269,7 +269,7 @@ export default function DesktopAnalysisView() {
       form_id: formId * 1,
       form_status: "DA Completed",
     });
-    
+
     // regulator
     const regAPIRes = await getAllRegulatorDeviceId();
     let regDeviceIds = [];
