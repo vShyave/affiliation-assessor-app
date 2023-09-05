@@ -7,7 +7,6 @@ import XMLParser from "react-xml-parser";
 import { getCookie, readableDate } from "../../utils";
 
 // import NocModal from "./NocModal";
-// import RejectNocModal from "./RejectNocModal";
 import { getLocalTimeInISOFormat } from "../../utils";
 import { Card, Button } from "./../../components";
 import CommonModal from "./../../Modal";
@@ -39,11 +38,12 @@ import {
 } from "../../forms";
 import { ContextAPI } from "../../utils/ContextAPI";
 import { StrictMode } from "react";
+import ReturnToInstituteModal from "./ReturnToInstituteModal";
 
 const ENKETO_URL = process.env.REACT_APP_ENKETO_URL;
 
 export default function DesktopAnalysisView() {
-  // const [rejectModel, setRejectModel] = useState(false)
+  const [returnToInstituteModal, setReturnToInstituteModal] = useState(false);
   // const [openModel, setOpenModel] = useState(false);
   const navigate = useNavigate();
   const [openScheduleInspectionModel, setOpenSheduleInspectionModel] =
@@ -58,6 +58,7 @@ export default function DesktopAnalysisView() {
   const [paymentStatus, setPaymentStatus] = useState("");
   const [formStatus, setFormStatus] = useState("");
   const [onSubmit, setOnSubmit] = useState(false);
+  const [rejectStatus, setRejectStatus] = useState(false);
 
   const formSpec = {
     skipOnSuccessMessage: true,
@@ -244,6 +245,7 @@ export default function DesktopAnalysisView() {
 
   const otherInfo = {
     instituteId: formDataFromApi?.institute?.id,
+    instituteName: formDataFromApi?.institute?.name,
     course_applied: formDataFromApi?.institute?.course_applied,
     formId: formId,
     course_type: formDataFromApi?.course_type,
@@ -386,14 +388,29 @@ export default function DesktopAnalysisView() {
         <div className="flex flex-col gap-12">
           <div className="flex flex-row">
             <div className="flex grow gap-4 justify-end items-center">
-              {paymentStatus?.toLowerCase() === "paid" &&
-                formDataFromApi?.form_status?.toLowerCase() ===
-                  "da completed" && (
-                  <button className="flex flex-wrap items-center justify-center gap-2 border border-gray-500 bg-white text-gray-500 w-fit h-fit p-2 font-semibold rounded-[4px]">
+              {paymentStatus?.toLowerCase() !== "paid" &&
+                formDataFromApi?.form_status !== "Rejected" && (
+                  <button
+                    onClick={() => setReturnToInstituteModal(true)}
+                    disabled={
+                      formStatus == "Approved" ||
+                      formStatus == "Rejected" ||
+                      rejectStatus
+                        ? true
+                        : false
+                    }
+                    className={
+                      formStatus == "Approved" ||
+                      formStatus == "Rejected" ||
+                      rejectStatus
+                        ? "invisible cursor-not-allowed flex flex-wrap items-center justify-center gap-2 border border-gray-500 text-gray-500 bg-white w-[140px] h-[40px] font-medium rounded-[4px]"
+                        : "flex flex-wrap items-center justify-center gap-2 border border-gray-500 bg-white text-gray-500 w-fit h-fit p-2 font-semibold rounded-[4px]"
+                    }
+                  >
                     <span>
                       <BsArrowLeft />
                     </span>
-                    Return to institute
+                    Reject Application
                   </button>
                 )}
               {paymentStatus?.toLowerCase() === "paid" &&
@@ -410,7 +427,8 @@ export default function DesktopAnalysisView() {
                   </button>
                 )}
               {formDataFromApi?.form_status?.toLowerCase() !== "da completed" &&
-                paymentStatus?.toLowerCase() !== "paid" && (
+                paymentStatus?.toLowerCase() !== "paid" &&
+                formDataFromApi?.form_status !== "Rejected" && (
                   <button
                     onClick={() => desktopVerification()}
                     className="flex flex-wrap items-center justify-center gap-2 border border-gray-500 bg-white text-gray-500 w-fit h-fit p-2 font-semibold rounded-[4px]"
@@ -498,7 +516,15 @@ export default function DesktopAnalysisView() {
           </div>
 
           {/* { openModel && <NocModal closeModal={setOpenModel}/> } */}
-          {/* { rejectModel && <RejectNocModal closeRejectModal={setRejectModel}/> } */}
+          {returnToInstituteModal && (
+            <ReturnToInstituteModal
+              closeRejectModal={setReturnToInstituteModal}
+              setRejectStatus={setRejectStatus}
+              formId={formId}
+              instituteId={otherInfo?.instituteId}
+              instituteName={otherInfo?.instituteName}
+            />
+          )}
           {/* {openCertificateModel && <IssueCertificateModal closeCertificateModal={setOpenCertificateModel}/>} */}
           {openStatusModel && (
             <StatusLogModal

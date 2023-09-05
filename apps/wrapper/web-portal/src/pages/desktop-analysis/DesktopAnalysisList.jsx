@@ -421,6 +421,19 @@ const DesktopAnalysisList = () => {
                   Resubmitted
                 </a>
               </li>
+              <li className="" onClick={() => handleSelectMenu("DA Completed")}>
+                <a
+                  href="#"
+                  className={`inline-block p-4 rounded-t-lg dark:text-blue-500 dark:border-blue-600 ${
+                    state.menu_selected === "DA Completed"
+                      ? "text-blue-600 border-b-2 border-blue-600"
+                      : ""
+                  }`}
+                  aria-current="page"
+                >
+                  DA Completed
+                </a>
+              </li>
               <li
                 className=""
                 onClick={() => handleSelectMenu("Inspection Scheduled")}
@@ -447,19 +460,6 @@ const DesktopAnalysisList = () => {
                   aria-current="page"
                 >
                   Rejected
-                </a>
-              </li>
-              <li className="" onClick={() => handleSelectMenu("DA Completed")}>
-                <a
-                  href="#"
-                  className={`inline-block p-4 rounded-t-lg dark:text-blue-500 dark:border-blue-600 ${
-                    state.menu_selected === "DA Completed"
-                      ? "text-blue-600 border-b-2 border-blue-600"
-                      : ""
-                  }`}
-                  aria-current="page"
-                >
-                  DA Completed
                 </a>
               </li>
             </ul>
