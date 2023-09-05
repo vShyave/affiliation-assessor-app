@@ -98,7 +98,7 @@ function RejectNocModal({
             return el != null;
           });
           if (tempIdsFilter.length) {
-            regDeviceIds.push();
+            regDeviceIds.push(tempIdsFilter);
           }
         });
 
@@ -106,7 +106,7 @@ function RejectNocModal({
         sendPushNotification({
           title: "Application Termination",
           body: `Please be informed that the ${instituteName}'s application form has been terminated. Kindly update the records accordingly.`,
-          deviceToken: regDeviceIds,
+          deviceToken: regDeviceIds.flat(1),
           userId: userDetails?.userRepresentation?.id,
         });
 
