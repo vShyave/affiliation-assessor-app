@@ -187,7 +187,7 @@ function App() {
               >
                 <Route index element={<GroundInspectionListForms />}></Route>
                 <Route
-                  path={`${ADMIN_ROUTE_MAP.adminModule.onGroundInspection.viewForm}/:formName/:formId`}
+                  path={`${ADMIN_ROUTE_MAP.adminModule.onGroundInspection.viewForm}/:formName/:formId/:instituteName/:round`}
                   element={<GroundInspectionViewForm />}
                 ></Route>
 
