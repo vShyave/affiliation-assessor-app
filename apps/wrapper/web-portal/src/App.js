@@ -72,7 +72,7 @@ function App() {
           ...prevState,
           toastOpen: true,
           toastMsg: payload.data.title,
-          toastType: "success"
+          toastType: "success",
         }));
       });
     }
@@ -187,7 +187,7 @@ function App() {
               >
                 <Route index element={<GroundInspectionListForms />}></Route>
                 <Route
-                  path={`${ADMIN_ROUTE_MAP.adminModule.onGroundInspection.viewForm}/:formName/:formId/:instituteName/:round`}
+                  path={`${ADMIN_ROUTE_MAP.adminModule.onGroundInspection.viewForm}/:formName/:formId/:instituteName/:round/:date`}
                   element={<GroundInspectionViewForm />}
                 ></Route>
 
