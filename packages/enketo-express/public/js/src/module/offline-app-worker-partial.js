@@ -29,8 +29,9 @@ self.addEventListener( 'activate', event => {
             keys.map( key => {
                 if ( !CACHES.includes( key ) ) {
                     console.log( 'deleting cache', key );
-
-                    return caches.delete( key );
+                    if(key !== 'inspections'){
+                        return caches.delete( key );
+                    }
                 }
             } )
         ) ).then( () => {

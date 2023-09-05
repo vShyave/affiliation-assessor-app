@@ -25,7 +25,7 @@ export default function OnGroundInspectionAnalysis() {
   const [formsList, setFormsList] = useState();
   const [round, setRound] = useState(1);
   const [state, setState] = useState({
-    menu_selected: "In Progress",
+    menu_selected: "Inspection Scheduled",
   });
   const [paginationInfo, setPaginationInfo] = useState({
     offsetNo: 0,
@@ -38,20 +38,24 @@ export default function OnGroundInspectionAnalysis() {
 
   const COLUMN = [
     {
-      Header: "Applicant",
-      accessor: "applicant",
-    },
-    {
       Header: "Form name",
       accessor: "display_form_name",
     },
     {
-      Header: "Assessor",
-      accessor: "assessor",
+      Header: "Institute",
+      accessor: "applicant",
     },
     {
-      Header: "Assisting Assessor",
-      accessor: "assisting_assessor",
+      Header: "Application type",
+      accessor: "application_type",
+    },
+    {
+      Header: "Course type",
+      accessor: "course_type",
+    },
+    {
+      Header: "Assessor",
+      accessor: "assessor",
     },
     {
       Header: "Date",
@@ -100,10 +104,10 @@ export default function OnGroundInspectionAnalysis() {
 
   const navigateToView = (formObj) => {
     console.log("formObj", formObj);
-    const navigationURL = `${ADMIN_ROUTE_MAP.adminModule.onGroundInspection.viewForm}/${formObj?.original?.form_name}/${formObj?.original?.id}/${formObj?.original?.institute?.name}/${round}`;
+    const navigationURL = `${ADMIN_ROUTE_MAP.adminModule.onGroundInspection.viewForm}/${formObj?.original?.form_name}/${formObj?.original?.id}`;
     navigation(navigationURL);
-    const postData = { form_id: formObj?.original?.id };
-    markStatus(postData);
+    // const postData = { form_id: formObj?.original?.id };
+    // markStatus(postData);
   };
 
   const markStatus = async (postData) => {
@@ -132,17 +136,18 @@ export default function OnGroundInspectionAnalysis() {
     const postData = {
       offsetNo: paginationInfo.offsetNo,
       limit: paginationInfo.limit,
-      formStatus: state.menu_selected,
+      formStatus: "Inspection Scheduled",
       round: round,
     };
     try {
       setSpinner(true);
       const res = await getOnGroundAssessorData(postData);
+
       setPaginationInfo((prevState) => ({
         ...prevState,
-        totalCount: res.data.form_submissions_aggregate.aggregate.totalCount,
+        totalCount: res.form_submissions_aggregate.aggregate.totalCount,
       }));
-      setFormsList(res?.data?.form_submissions);
+      setFormsList(res?.form_submissions);
     } catch (error) {
       console.log("error - ", error);
     } finally {
@@ -210,38 +215,26 @@ export default function OnGroundInspectionAnalysis() {
   };
 
   formsList?.forEach((e) => {
-    // console.log("formlist",e)
     var formsData = {
+      display_form_name: e?.course?.course_name,
       applicant:
         e?.institute?.name?.charAt(0).toUpperCase() +
         e?.institute?.name?.substring(1).toLowerCase() +
         ", " +
         e?.institute?.district?.charAt(0).toUpperCase() +
         e?.institute?.district?.substring(1).toLowerCase(),
-      display_form_name: getFieldName(e?.form_name),
       form_name: e?.form_name,
+      application_type: e?.course?.application_type?.split("_")?.join(" "),
+      course_type: `${e?.course?.course_type} - ${e?.course?.course_level}`,
       assessor: e?.assessor?.name || "NA",
-      assisting_assessor:
-        e?.assessor?.assisstant == null ? "None" : e?.assessor?.assisstant,
-      published_on: readableDate(e?.submitted_on),
+      published_on: e?.submitted_on ? readableDate(e?.submitted_on) : "NA",
       id: e.form_id,
       status: e?.form_status || "NA",
       form_status: e?.form_status,
-      review_status: e?.review_status,
       institute: e?.institute,
     };
 
     resData.push(formsData);
-    if (e.submitted_on === new Date().toJSON().slice(0, 10)) {
-      status_obj.submitted_today++;
-    }
-    if (e.review_status === null) {
-      status_obj.pending++;
-    } else if (e.review_status?.toLowerCase() === "in progress") {
-      status_obj.in_progress++;
-    } else if (e.review_status?.toLowerCase() === "reviewed") {
-      status_obj.reviewed++;
-    }
   });
 
   cardArray.forEach((obj) => {
@@ -299,12 +292,12 @@ export default function OnGroundInspectionAnalysis() {
             <ul className="flex flex-wrap -mb-px">
               <li
                 className="gap-3"
-                onClick={() => handleSelectMenu("In Progress")}
+                onClick={() => handleSelectMenu("Inspection Scheduled")}
               >
                 <a
                   href="#"
                   className={`inline-block p-4 rounded-t-lg dark:text-blue-500 dark:border-blue-600 ${
-                    state.menu_selected === "In Progress"
+                    state.menu_selected === "Inspection Scheduled"
                       ? "text-blue-600 border-b-2 border-blue-600"
                       : ""
                   }`}
@@ -347,11 +340,11 @@ export default function OnGroundInspectionAnalysis() {
             {/* <div>create a search bar and filter component here</div> */}
 
             {/* table creation starts here */}
-            {state.menu_selected === "In Progress" && (
+            {state.menu_selected === "Inspection Scheduled" && (
               <div className="flex flex-col gap-4">
                 <FilteringTable
                   dataList={resData.filter(
-                    (item) => item.form_status === "In Progress"
+                    (item) => item.form_status === "Inspection Scheduled"
                   )}
                   navigateFunc={navigateToView}
                   columns={COLUMN}

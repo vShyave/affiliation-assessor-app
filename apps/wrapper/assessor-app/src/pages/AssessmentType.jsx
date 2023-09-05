@@ -25,6 +25,7 @@ import {
   getCookie,
   getSpecificDataFromForage,
   setCookie,
+  setToLocalForage,
 } from "../utils";
 
 import CommonLayout from "../components/CommonLayout";
@@ -133,6 +134,7 @@ const AssessmentType = () => {
       const postData = {
         institute_id: instituteId,
         assessment_date: new Date().toJSON().slice(0, 10),
+        applicant_form_id: storedData?.applicant_form_id,
       };
 
       try {
@@ -166,9 +168,26 @@ const AssessmentType = () => {
         }
         let courses_parent_id = {};
         courses_data.forEach((item) => {
-          courses_parent_id[item.course.formObject[0].path] =
+          courses_parent_id[item.course.formObject[0].name] =
             item.applicant_form_id;
         });
+        let submission_forms_arr = courses_data.map((item) => {
+          let obj = {
+            course_name: item?.course?.formObject[0].name,
+            applicant_form_id: item?.applicant_form_id,
+            course_id: item?.course_id,
+            form_status: completedForms?.includes(
+              item.course.formObject[0].name.substring(
+                0,
+                item.course.formObject[0].name.lastIndexOf(".xml")
+              )
+            ),
+            round: item?.course?.round,
+          };
+          return obj;
+        });
+
+        setToLocalForage("submission_forms_arr", submission_forms_arr);
         setCookie("courses_data", courses_parent_id);
         setCookie("parent_form_round", courses_data?.[0]?.course.round);
         setActiveAccordionValue(courses_data?.[0]?.course_id);

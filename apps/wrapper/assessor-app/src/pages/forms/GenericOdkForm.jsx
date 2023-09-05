@@ -23,10 +23,12 @@ import {
   getLocalTimeInISOFormat,
   getFromLocalForage,
   getOfflineCapableForm,
+  setToLocalForage,
 } from "../../utils";
 
 import CommonLayout from "../../components/CommonLayout";
 import CommonModal from "../../components/Modal";
+import localforage from "localforage";
 
 const ENKETO_MANAGER_URL = process.env.REACT_APP_ENKETO_MANAGER_URL;
 const ENKETO_URL = process.env.REACT_APP_ENKETO_URL;
@@ -89,6 +91,7 @@ const GenericOdkForm = (props) => {
   const [errorModal, setErrorModal] = useState(false);
   const [previewModal, setPreviewModal] = useState(false);
   let previewFlag = false;
+  let courseObj = undefined;
 
   const loading = useRef(false);
   const [assData, setData] = useState({
@@ -101,52 +104,53 @@ const GenericOdkForm = (props) => {
     longitude: null,
   });
 
-  const getFormStatus = async () => {
-    const id = user?.userRepresentation?.id;
-    const postData = {
-      date: new Date().toJSON().slice(0, 10),
-      assessor_id: id,
-    };
+  // Later I will remove it, after testing!
+  // const getFormStatus = async () => {
+  //   const id = user?.userRepresentation?.id;
+  //   const postData = {
+  //     date: new Date().toJSON().slice(0, 10),
+  //     assessor_id: id,
+  //   };
 
-    try {
-      const response = await getStatusOfForms(postData);
-      let formStatus = response?.data?.form_submissions;
-      formStatus = formStatus.map((obj) => {
-        return obj.form_name;
-      });
-      let isComplete = false;
-      let parent_form_id = Object.values(getCookie("courses_data"))[0];
-      if (
-        Object.keys(getCookie("courses_data")).length ===
-        response?.data?.form_submissions.length
-      ) {
-        Object.keys(getCookie("courses_data")).forEach((form) => {
-          response?.data?.form_submissions.filter((item) => {
-            if (item.form_name === form && item.submission_status)
-              isComplete = true;
-            else isComplete = false;
-          });
-        });
-      }
+  //   try {
+  //     const response = await getStatusOfForms(postData);
+  //     let formStatus = response?.data?.form_submissions;
+  //     formStatus = formStatus.map((obj) => {
+  //       return obj.form_name;
+  //     });
+  //     let isComplete = false;
+  //     let parent_form_id = Object.values(getCookie("courses_data"))[0];
+  //     if (
+  //       Object.keys(getCookie("courses_data")).length ===
+  //       response?.data?.form_submissions.length
+  //     ) {
+  //       Object.keys(getCookie("courses_data")).forEach((form) => {
+  //         response?.data?.form_submissions.filter((item) => {
+  //           if (item.form_name === form && item.submission_status)
+  //             isComplete = true;
+  //           else isComplete = false;
+  //         });
+  //       });
+  //     }
 
-      if (isComplete) {
-        // call event
-        registerEvent({
-          created_date: getLocalTimeInISOFormat(),
-          entity_id: `${parent_form_id}`,
-          entity_type: "form",
-          event_name: "OGA Completed",
-          remarks: `${user?.userRepresentation?.firstName} ${user?.userRepresentation?.lasttName} has completed the On Ground Inspection Analysis`,
-        });
-        updateFormStatus({
-          form_id: `${parent_form_id}`,
-          form_status: "OGA Completed",
-        });
-      }
-    } catch (error) {
-      navigate(ROUTE_MAP.login);
-    }
-  };
+  //     if (isComplete) {
+  //       // call event
+  //       registerEvent({
+  //         created_date: getLocalTimeInISOFormat(),
+  //         entity_id: `${parent_form_id}`,
+  //         entity_type: "form",
+  //         event_name: "OGA Completed",
+  //         remarks: `${user?.userRepresentation?.firstName} ${user?.userRepresentation?.lasttName} has completed the On Ground Inspection Analysis`,
+  //       });
+  //       updateFormStatus({
+  //         form_id: `${parent_form_id}`,
+  //         form_status: "OGA Completed",
+  //       });
+  //     }
+  //   } catch (error) {
+  //     navigate(ROUTE_MAP.login);
+  //   }
+  // };
 
   const getDataFromLocal = async () => {
     const id = user?.userRepresentation?.id;
@@ -154,8 +158,7 @@ const GenericOdkForm = (props) => {
       `${formName}_${new Date().toISOString().split("T")[0]}`
     );
 
-    let fileGCPPath =
-    GCP_URL + formName + ".xml";
+    let fileGCPPath = GCP_URL + formName + ".xml";
 
     let formURI = await getPrefillXML(
       `${fileGCPPath}`,
@@ -167,14 +170,55 @@ const GenericOdkForm = (props) => {
     setEncodedFormURI(formURI);
   };
 
+  const updateSubmissionForms = async (course_id) => {
+    let submission_forms_arr = await getSpecificDataFromForage(
+      "submission_forms_arr"
+    );
+    let formStatusCounter = 0;
+    if (submission_forms_arr) {
+      submission_forms_arr = Object.values(submission_forms_arr);
+      submission_forms_arr = submission_forms_arr.map((elem) => {
+        if (elem.course_id === course_id) {
+          elem.form_status = true;
+        }
+
+        if (elem.form_status) {
+          formStatusCounter++;
+        }
+        return elem;
+      });
+      setToLocalForage("submission_forms_arr", submission_forms_arr);
+      updateApplicantForm(submission_forms_arr, formStatusCounter);
+    }
+  };
+
+  const updateApplicantForm = (forms_arr, counter) => {
+    if (forms_arr.length === counter) {
+      // call the event update function...
+      registerEvent({
+        created_date: getLocalTimeInISOFormat(),
+        entity_id: courseObj.applicant_form_id,
+        entity_type: "form",
+        event_name: "OGA Completed",
+        remarks: `${user?.userRepresentation?.firstName} ${user?.userRepresentation?.lasttName} has completed the On Ground Inspection Analysis`,
+      });
+
+      updateFormStatus({
+        form_id: courseObj.applicant_form_id,
+        form_status: "OGA Completed",
+      });
+    }
+  };
+
   const getSurveyUrl = async () => {
-      let surveyUrl = await getOfflineCapableForm(formId);
-      console.log("SurveyURL:", surveyUrl);
-      if (!surveyUrl)
-        setSurveyUrl("https://8065-samagradevelop-workflow-871i2twcw0a.ws-us98.gitpod.io/x")
-      else
-        setSurveyUrl(surveyUrl);
-  }
+    let surveyUrl = await getOfflineCapableForm(formId);
+    console.log("SurveyURL:", surveyUrl);
+    if (!surveyUrl)
+      setSurveyUrl(
+        "https://8065-samagradevelop-workflow-871i2twcw0a.ws-us98.gitpod.io/x"
+      );
+    else setSurveyUrl(surveyUrl);
+  };
 
   async function afterFormSubmit(e, saveFlag) {
     const data = typeof e.data === "string" ? JSON.parse(e.data) : e.data;
@@ -204,22 +248,29 @@ const GenericOdkForm = (props) => {
             assessor_id: storedData?.assessor_user_id,
             applicant_id: storedData?.institute_id,
             submitted_on: new Date().toJSON().slice(0, 10),
-            applicant_form_id: getCookie("courses_data")[formName],
-            round: getCookie("parent_form_round"),
+            applicant_form_id: courseObj["applicant_form_id"],
+            round: courseObj["round"],
             form_status: saveFlag === "draft" ? "" : "In Progress",
+            course_id: courseObj["course_id"],
           });
 
-          await getFormStatus();
+          console.log("res - ", res);
+          if (res?.data?.insert_form_submissions) {
+            updateSubmissionForms(courseObj["course_id"]);
 
-          // Delete the data from the Local Forage
-          const key = `${storedData?.assessor_user_id}_${formSpec.start}_${
-            new Date().toISOString().split("T")[0]
-          }`;
-          removeItemFromLocalForage(key);
+            // Delete the data from the Local Forage
+            const key = `${storedData?.assessor_user_id}_${formSpec.start}_${
+              new Date().toISOString().split("T")[0]
+            }`;
+            removeItemFromLocalForage(key);
 
-          setPreviewModal(false);
-          previewFlag = false;
-          setTimeout(() => navigate(`${ROUTE_MAP.thank_you}${formName}`), 1000);
+            setPreviewModal(false);
+            previewFlag = false;
+            setTimeout(
+              () => navigate(`${ROUTE_MAP.thank_you}${formName}`),
+              1000
+            );
+          }
         }
       }
 
@@ -312,9 +363,22 @@ const GenericOdkForm = (props) => {
     }, 1500);
   };
 
+  const getCourseFormDetails = async () => {
+    let submission_forms_arr = await getSpecificDataFromForage(
+      "submission_forms_arr"
+    );
+    if (submission_forms_arr) {
+      submission_forms_arr = Object.values(submission_forms_arr);
+      courseObj = submission_forms_arr.find(
+        (obj) => obj.course_name === formName + ".xml"
+      );
+    }
+  };
+
   useEffect(() => {
     bindEventListener();
     getSurveyUrl();
+    getCourseFormDetails();
     getFormData({
       loading,
       scheduleId,
@@ -334,6 +398,7 @@ const GenericOdkForm = (props) => {
       detachEventBinding();
       setData(null);
       setPrefilledFormData(null);
+      window.removeEventListener("message", handleEventTrigger);
     };
   }, []);
 
@@ -354,6 +419,7 @@ const GenericOdkForm = (props) => {
     // Call the function with the URL of the iframe's content
     fetchIframeResources('https://enketo.upsmfac.org/enketo/preview?formSpec=%7B%22skipOnSuccessMessage%22:true,%22prefill%22:%7B%7D,%22submissionURL%22:%22%22,%22name%22:%22bsc_nursing_p7%22,%22successCheck%22:%22async%20(formData)%20=%3E%20%7B%20return%20true;%20%7D%22,%22onSuccess%22:%7B%22notificationMessage%22:%22Form%20submitted%20successfully%22,%22sideEffect%22:%22async%20(formData)%20=%3E%20%7B%20console.log(formData);%20%7D%22%7D,%22onFailure%22:%7B%22message%22:%22Form%20submission%20failed%22,%22sideEffect%22:%22async%20(formData)%20=%3E%20%7B%20console.log(formData);%20%7D%22,%22next%22:%7B%22type%22:%22url%22,%22id%22:%22google%22%7D%7D%7D&xform=https://formmanager.upsmfac.org/form/instance/48637fc6-d572-4700-a223-34582ce38538&userId=997e23bb-6801-44a1-aeb4-c3e526a85574');
     }, 2000); */
+
   return (
     <>
       <CommonLayout
@@ -374,18 +440,18 @@ const GenericOdkForm = (props) => {
                 />
               </>
             )}
-
-            {surveyUrl && !date && (
-              <>
-                <iframe
-                  id="enketo-form"
-                  title="form"
-                  src={surveyUrl}
-                  style={{ height: "80vh", width: "100%", marginTop: "20px" }}
-                />
-              </>
-            )}
           </div>
+        )}
+
+        {surveyUrl && !date && (
+          <>
+            <iframe
+              id="offline-enketo-form"
+              title="form"
+              src={surveyUrl}
+              style={{ height: "80vh", width: "100%", marginTop: "20px" }}
+            />
+          </>
         )}
       </CommonLayout>
 

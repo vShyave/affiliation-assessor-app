@@ -145,8 +145,9 @@ function getCurrentFiles() {
             const parts = newFilename.split(".");
             const extension = parts[parts.length - 1];
             const fileName = parts[0];
-            const postfix = input.name.split("/")[input.name.split("/").length - 1];
-            file.name = `${fileName}.${postfix}.${extension}`;
+            // const postfix = input.name.split("/")[input.name.split("/").length - 1];
+            // file.name = `${fileName}.${postfix}.${extension}`;
+            file.name = `${fileName}.${extension}`;
         }
 
         return file;

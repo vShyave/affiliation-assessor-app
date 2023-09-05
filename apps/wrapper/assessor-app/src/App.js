@@ -1,6 +1,5 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Router } from "react-router-dom";
 import { createContext, useEffect, useState } from "react";
-
 import ROUTE_MAP from "./routing/routeMap";
 import { getCookie } from "./utils";
 
@@ -54,7 +53,8 @@ function App() {
   return (
     <div className="App">
       <StateContext.Provider value={{ state, setState }}>
-        <BrowserRouter>
+       
+        <BrowserRouter basename={'/web'}>
           <Routes>
             <Route
               path={ROUTE_MAP.root}

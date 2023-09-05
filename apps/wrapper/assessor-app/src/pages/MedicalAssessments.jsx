@@ -20,6 +20,7 @@ import { StateContext } from "../App";
 import {
   getCookie,
   getSpecificDataFromForage,
+  setCookie,
   setToLocalForage,
 } from "../utils";
 
@@ -89,6 +90,7 @@ const MedicalAssessments = () => {
       const required_data = {
         institute_id: ass.institute.id,
         schedule_id: ass.id,
+        applicant_form_id: ass.applicant_form_id,
       };
 
       setToLocalForage("required_data", required_data);

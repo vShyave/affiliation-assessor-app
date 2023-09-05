@@ -1,7 +1,7 @@
 import XMLParser from "react-xml-parser";
 import localforage from "localforage";
 import Cookies from "js-cookie";
-import * as serviceWorkerRegistration from '../serviceWorkerRegistration';
+import * as serviceWorkerRegistration from "../serviceWorkerRegistration";
 import axios from "axios";
 
 import {
@@ -97,7 +97,7 @@ export const logout = () => {
   localStorage.clear();
   sessionStorage.clear();
   localforage.clear();
-  window.location = "/";
+  window.location = "/web";
   removeCookie("userData");
   serviceWorkerRegistration.unregister();
 };
@@ -176,8 +176,13 @@ export const handleFormEvents = async (startingForm, afterFormSubmit, e) => {
     var formData = new XMLParser().parseFromString(JSON.parse(e.data).formData);
     if (formData) {
       let images = JSON.parse(e.data).fileURLs;
-      let prevData = await getFromLocalForage(`${startingForm}_${new Date().toISOString().split("T")[0]}`);
-      await setToLocalForage(`${user?.userRepresentation?.id}_${startingForm}_${new Date().toISOString().split("T")[0]}`,
+      let prevData = await getFromLocalForage(
+        `${startingForm}_${new Date().toISOString().split("T")[0]}`
+      );
+      await setToLocalForage(
+        `${user?.userRepresentation?.id}_${startingForm}_${
+          new Date().toISOString().split("T")[0]
+        }`,
         {
           formData: JSON.parse(e.data).formData,
           imageUrls: { ...prevData?.imageUrls, ...images },
@@ -228,7 +233,9 @@ export const getFormData = async ({
         formData.imageUrls,
       ];
     } else {
-      formData = await getFromLocalForage(`${startingForm}_${new Date().toISOString().split("T")[0]}`);
+      formData = await getFromLocalForage(
+        `${startingForm}_${new Date().toISOString().split("T")[0]}`
+      );
       if (formData) {
         setEncodedFormSpec(encodeURI(JSON.stringify(formSpec.forms[formId])));
         prefillXMLArgs = [
@@ -269,34 +276,35 @@ export const getLocalTimeInISOFormat = () => {
   const offset = now.getTimezoneOffset();
   const localTime = new Date(now - offset * 60 * 1000);
   return localTime.toISOString();
-}
+};
 
 export const getOfflineCapableForm = async (formId) => {
   try {
     if (navigator.onLine) {
-      let res = await axios.post(ENKETO_URL + "/api/v2/survey/offline",
+      let res = await axios.post(
+        ENKETO_URL + "api/v2/survey/offline",
         {
           server_url: OPEN_ROSA_SERVER_URL,
-          form_id: formId
+          form_id: formId,
         },
         {
           headers: {
-            Authorization: 'Basic ' + btoa('enketorules:')
-          }
-        });
+            Authorization: "Basic " + btoa("enketorules:"),
+          },
+        }
+      );
       if (res?.data?.offline_url) {
         console.log("formUri is set to local forage", res?.data?.offline_url);
         // setToLocalForage('formUri', res?.data?.offline_url)
-        await localforage.setItem('formUri', res?.data?.offline_url);
+        await localforage.setItem("formUri", res?.data?.offline_url);
       }
       return res?.data?.offline_url || undefined;
     } else {
-      let formUri = await localforage.getItem('formUri');
+      let formUri = await localforage.getItem("formUri");
       console.log(formUri);
       return formUri;
     }
   } catch (err) {
     console.log(err);
   }
-}
-
+};

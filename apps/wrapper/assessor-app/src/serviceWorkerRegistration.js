@@ -29,39 +29,60 @@ export function register(config) {
       return;
     }
 
-    window.addEventListener('load', () => {
-    //  if (!isLocalhost){
-        console.log(`${process.env.PUBLIC_URL}`)
-        const swUrl = `${process.env.PUBLIC_URL}/service-worker.js`;
-        console.log("swUrl-->", swUrl)
-    //  }
-   
-      if (isLocalhost) {
-        // This is running on localhost. Let's check if a service worker still exists or not.
-        checkValidServiceWorker(swUrl, config);
+    const swUrl = (isLocalhost) ? undefined : `${process.env.PUBLIC_URL}/service-worker.js`;
+    if (isLocalhost) {
+      checkValidServiceWorker(swUrl, config);
+      navigator.serviceWorker.ready.then(() => {
+        console.log(
+          'This web app is being served cache-first by a service ' +
+            'worker. To learn more, visit https://cra.link/PWA'
+        );
+      });
+    } else {
+      registerValidSW(swUrl, config);
+    }
 
-        // Add some additional logging to localhost, pointing developers to the
-        // service worker/PWA documentation.
-        navigator.serviceWorker.ready.then(() => {
-          console.log(
-            'This web app is being served cache-first by a service ' +
-              'worker. To learn more, visit https://cra.link/PWA'
-          );
-        });
-      } else {
-        // Is not localhost. Just register service worker
-        registerValidSW(swUrl, config);
-      // checkValidServiceWorker(swUrl, config);
-      }
-    });
+    // window.top.addEventListener('load', () => {
+    // //  if (!isLocalhost){
+    //     console.log(`${process.env.PUBLIC_URL}`)
+    //     const swUrl = `${process.env.PUBLIC_URL}/service-worker.js`;
+    //     console.log("swUrl-->", swUrl)
+    // //  }
+   
+    //   if (isLocalhost) {
+    //     // This is running on localhost. Let's check if a service worker still exists or not.
+    //     checkValidServiceWorker(swUrl, config);
+
+    //     // Add some additional logging to localhost, pointing developers to the
+    //     // service worker/PWA documentation.
+    //     navigator.serviceWorker.ready.then(() => {
+    //       console.log(
+    //         'This web app is being served cache-first by a service ' +
+    //           'worker. To learn more, visit https://cra.link/PWA'
+    //       );
+    //     });
+    //   } else {
+    //     // Is not localhost. Just register service worker
+    //     registerValidSW(swUrl, config);
+    //   // checkValidServiceWorker(swUrl, config);
+    //   }
+    // });
   }
 }
 
 function registerValidSW(swUrl, config) {
-  if (window === window.top) {
-    navigator.serviceWorker.register(swUrl, { scope: 'https://affiliation.upsmfac.org/' })
+ // if (window === window.top) {
+    console.log("affilliation regd!!!!!!")
+    navigator.serviceWorker.register(
+      swUrl, 
+      {
+        scope: '/web/',
+        bucket: 'affilliation' 
+      }
+      )
     .then((registration) => {
       console.log(registration)
+      console.log('Service Worker registered with scope:', registration.scope);
       if (registration.waiting) {
         console.log("onupdatefound")
         // An update is available, you might want to prompt the user to refresh the page
@@ -105,10 +126,10 @@ function registerValidSW(swUrl, config) {
     .catch((error) => {
       console.error('Error during service worker registration:', error);
     });
-  }
-  else {
+ // }
+/*   else {
     console.log('Service Worker not registered because it is in an iframe.');
-  }
+  } */
 }
 
 function checkValidServiceWorker(swUrl, config) {
@@ -126,7 +147,7 @@ function checkValidServiceWorker(swUrl, config) {
         // No service worker found. Probably a different app. Reload the page.
         navigator.serviceWorker.ready.then((registration) => {
           registration.unregister().then(() => {
-            window.location.reload();
+           // window.location.reload();
           });
         });
       } else {
@@ -145,6 +166,7 @@ export function unregister() {
       .then((registration) => {
         caches.keys().then(cacheNames => {
           cacheNames.forEach(cacheName => {
+            console.log(cacheName)
             caches.delete(cacheName);
           });
         })
