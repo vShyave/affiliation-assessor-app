@@ -120,9 +120,12 @@ export class FormController {
             const fd = new FormData();
             var newFile = new File([data], data.name, { type: data.type });
             // Compressing this file
-            newFile = await imageCompression(newFile, options)
+            if(data.type.includes('image')) {
+                newFile = await imageCompression(newFile, options);
+            }
             fd.append('file', newFile, data.name);
-            const response = await fetch(`${settings.formManagerBaseURI}/form/uploadFile`, {
+            // const response = await fetch(`${settings.formManagerBaseURI}/form/uploadFile`, {
+            const response = await fetch(`https://formmanager.upsmfac.org/form/uploadFile`, {
                 method: 'POST',
                 body: fd
             }).then(s => {
@@ -168,10 +171,11 @@ export class FormController {
                 }
             }
         }
-        
+        this.formDataXml = formData.toString();
         console.log("Updated FormData:", formData);
 
-        const parseRes = await fetch(`${settings.formManagerBaseURI}/parse`, {
+        // const parseRes = await fetch(`${settings.formManagerBaseURI}/parse`, {
+        const parseRes = await fetch(`https://formmanager.upsmfac.org/parse`, {
             method: "POST",
             body: JSON.stringify({ xml: formData.toString() }),
             headers: {
@@ -286,6 +290,7 @@ export class FormController {
         window.parent.postMessage(JSON.stringify({
             nextForm: this.nextForm,
             formData: this.formData,
+            formDataXml: this.formDataXml,
             onSuccessData: this._onFormSuccessData,
             onFailureData: this._onFormFailureData,
             state: this._state
