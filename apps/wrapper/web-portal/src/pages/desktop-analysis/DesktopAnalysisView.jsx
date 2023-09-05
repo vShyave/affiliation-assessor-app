@@ -279,7 +279,7 @@ export default function DesktopAnalysisView() {
         return el != null;
       });
       if (tempIdsFilter.length) {
-        regDeviceIds.push();
+        regDeviceIds.push(tempIdsFilter);
       }
     });
 
@@ -287,7 +287,8 @@ export default function DesktopAnalysisView() {
     sendPushNotification({
       title: "Desktop Analysis Done",
       body: `The desktop analysis for ${formDataFromApi?.institute?.name}'s application has been completed. Kindly review the results.`,
-      deviceToken: [`${getCookie("firebase_client_token")}`],
+      // deviceToken: [`${getCookie("firebase_client_token")}`],
+      deviceToken: regDeviceIds.flat(1),
       userId: userDetails?.userRepresentation?.id,
     });
 
