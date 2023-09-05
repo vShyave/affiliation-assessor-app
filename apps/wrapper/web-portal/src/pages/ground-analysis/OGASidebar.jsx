@@ -8,9 +8,9 @@ import {
 export default function OGASidebar(props) {
   let [selectedValue, setSelectedValue] = useState("Applicant Form");
   const postFormSelected = (formObj) => {
+    props.setFormSelected(formObj);
     if (formObj) {
-      props.setFormSelected(formObj);
-      setSelectedValue(formObj?.course.course_name);
+      setSelectedValue(formObj?.form_id);
     } else {
       setSelectedValue("Applicant Form");
     }
@@ -36,7 +36,7 @@ export default function OGASidebar(props) {
             <li
               key={idx}
               className={`flex flex-row p-3 border-4 border-[#F3F4F6] cursor-pointer hover:bg-gray-200 hover:border-l-blue-700 hover:border-y-gray-200 hover:border-r-gray-200 ${
-                selectedValue === forms.course.course_name
+                selectedValue === forms.form_id
                   ? "bg-gray-200 border-l-blue-700 border-y-gray-200 border-r-gray-200"
                   : ""
               }`}

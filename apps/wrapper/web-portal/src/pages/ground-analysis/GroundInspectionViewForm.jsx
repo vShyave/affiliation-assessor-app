@@ -123,7 +123,7 @@ export default function ApplicationPage({
   const getOGAFormsList = async () => {
     const postData = { applicant_form_id: 338, submitted_on: "2023-09-04" };
     const res = await fetchOGAFormsList(postData);
-    setOGAFormsList(res.form_submissions);
+    setOGAFormsList(res?.data?.form_submissions);
   };
 
   useEffect(() => {
@@ -221,6 +221,7 @@ export default function ApplicationPage({
                     : "inline-block h-[40px] min-h-[1em] w-0.5 border opacity-100 dark:opacity-50"
                 }
               ></div>
+
               <button
                 onClick={() => setOpenStatusModel(true)}
                 className="border border-gray-500 text-blue-600 bg-gray-100 w-[140px] h-[40px] font-medium rounded-[4px]"
@@ -237,7 +238,23 @@ export default function ApplicationPage({
               />
             </div>
             <div className="flex w-full flex-col gap-4">
-              <Card moreClass="shadow-md">
+              <Card moreClass="flex flex-col gap-5 shadow-md">
+                {formSelected && !formSelected?.noc_recommendation && (
+                  <div className="flex grow gap-4 justify-end items-center">
+                    <button
+                      onClick={() => setOpenIssueNocModel(true)}
+                      className="border border-gray-500 text-green-600 w-[140px] h-[40px] font-medium rounded-[4px]"
+                    >
+                      Approve OGA
+                    </button>
+                    <button
+                      onClick={() => setRejectModel(true)}
+                      className="border border-gray-500 text-red-600 w-[140px] h-[40px] font-medium rounded-[4px]"
+                    >
+                      Reject OGA
+                    </button>
+                  </div>
+                )}
                 <iframe
                   id="enketo_OGA_preview"
                   title="form"
@@ -258,7 +275,7 @@ export default function ApplicationPage({
         <RejectNocModal
           closeRejectModal={setRejectModel}
           setRejectStatus={setRejectStatus}
-          formId={formId}
+          formId={formSelected.form_id}
           instituteId={instituteId}
           instituteName={instituteName}
         />
@@ -272,7 +289,7 @@ export default function ApplicationPage({
           selectRound={round}
           // setRejectStatus={setRejectStatus}
           selectInstituteName={instituteName}
-          formId={formId}
+          formId={formSelected.form_id}
           setOpenIssueNocModel={setOpenIssueNocModel}
           instituteId={instituteId}
         />
