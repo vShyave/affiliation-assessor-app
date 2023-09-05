@@ -1,8 +1,19 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
+import {
+  AiFillCheckCircle,
+  AiFillCloseCircle,
+  AiOutlineCheck,
+} from "react-icons/ai";
 
 export default function OGASidebar(props) {
+  let [selectedValue, setSelectedValue] = useState("Applicant Form");
   const postFormSelected = (formObj) => {
-    props.setFormSelected(formObj);
+    if (formObj) {
+      props.setFormSelected(formObj);
+      setSelectedValue(formObj?.course.course_name);
+    } else {
+      setSelectedValue("Applicant Form");
+    }
   };
 
   useEffect(() => {}, [props.OGAFormsList]);
@@ -10,16 +21,38 @@ export default function OGASidebar(props) {
   return (
     <div className="flex flex-col h-screen w-full">
       <ul className="flex flex-col text-sm font-medium">
-        <li className="p-3 border-4 border-[#F3F4F6] cursor-pointer hover:bg-gray-200 hover:border-l-blue-700 hover:border-y-gray-200 hover:border-r-gray-200">
+        <li
+          className={`p-3 border-4 border-[#F3F4F6] cursor-pointer hover:bg-gray-200 hover:border-l-blue-700 hover:border-y-gray-200 hover:border-r-gray-200 text-xl font-semibold ${
+            selectedValue === "Applicant Form"
+              ? "bg-gray-200 border-l-blue-700 border-y-gray-200 border-r-gray-200"
+              : ""
+          }`}
+          onClick={() => postFormSelected()}
+        >
           <span>Applicant Form</span>
         </li>
-        {props.OGAFormsList.map((forms) => {
+        {props.OGAFormsList.map((forms, idx) => {
           return (
             <li
-              className="p-3 border-4 border-[#F3F4F6] cursor-pointer hover:bg-gray-200 hover:border-l-blue-700 hover:border-y-gray-200 hover:border-r-gray-200"
+              key={idx}
+              className={`flex flex-row p-3 border-4 border-[#F3F4F6] cursor-pointer hover:bg-gray-200 hover:border-l-blue-700 hover:border-y-gray-200 hover:border-r-gray-200 ${
+                selectedValue === forms.course.course_name
+                  ? "bg-gray-200 border-l-blue-700 border-y-gray-200 border-r-gray-200"
+                  : ""
+              }`}
               onClick={() => postFormSelected(forms)}
             >
-              <span>{forms?.course?.course_name}</span>
+              <div className="flex flex-grow">{forms?.course?.course_name}</div>
+              <div className="flex items-center">
+                {forms?.noc_recommendation === null && <AiOutlineCheck />}
+                {forms?.noc_recommendation?.toLowerCase() === "recommended" && (
+                  <AiFillCheckCircle className="text-[20px] text-green-500" />
+                )}
+                {forms?.noc_recommendation?.toLowerCase() ===
+                  "not recommended" && (
+                  <AiFillCloseCircle className="text-[20px] text-red-500" />
+                )}
+              </div>
             </li>
           );
         })}
