@@ -104,7 +104,7 @@ export default function OnGroundInspectionAnalysis() {
 
   const navigateToView = (formObj) => {
     console.log("formObj", formObj);
-    const navigationURL = `${ADMIN_ROUTE_MAP.adminModule.onGroundInspection.viewForm}/${formObj?.original?.form_name}/${formObj?.original?.id}`;
+    const navigationURL = `${ADMIN_ROUTE_MAP.adminModule.onGroundInspection.viewForm}/${formObj?.original?.form_name}/${formObj?.original?.id}/${formObj?.original?.institute?.name}/${round}`;
     navigation(navigationURL);
     // const postData = { form_id: formObj?.original?.id };
     // markStatus(postData);
