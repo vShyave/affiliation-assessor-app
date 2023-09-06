@@ -173,7 +173,7 @@ export default function SelfRegistration() {
                         {...register("firstName", {
                           required: true,
                           maxLength: 20,
-                          pattern: /^[A-Za-z]+$/i,
+                          pattern: /^[A-Za-z ]+$/i,
                         })}
                       />
                       {errors?.firstName?.type === "required" && (
@@ -205,7 +205,7 @@ export default function SelfRegistration() {
                         {...register("lastName", {
                           required: true,
                           maxLength: 20,
-                          pattern: /^[A-Za-z]+$/i,
+                          pattern: /^[A-Za-z ]+$/i,
                         })}
                       />
                       {errors?.lastName?.type === "required" && (
