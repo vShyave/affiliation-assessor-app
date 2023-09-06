@@ -343,7 +343,13 @@ const AssessmentType = () => {
                                           <div className="flex flex-row gap-2 border-1 border-black py-4">
                                             <div className="flex grow items-center">
                                               <div className="text-[14px] font-medium">
-                                                {form.name}
+                                                {form.name
+                                                  .replace(
+                                                    /^(\d{1,2})\-(\d{1,2})\-(\d{4})-+/g,
+                                                    ""
+                                                  )
+                                                  .replace(".xml", "")
+                                                  .toUpperCase()}
                                               </div>
                                             </div>
                                             <div className="flex flex-row grow-0 items-center gap-4">
