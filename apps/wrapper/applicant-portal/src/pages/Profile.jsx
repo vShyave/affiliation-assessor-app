@@ -131,7 +131,7 @@ export default function Profile() {
           toastMsg: "User successfully edited",
           toastType: "success",
         }));
-        navigate(APPLICANT_ROUTE_MAP.root_star);
+        navigate(APPLICANT_ROUTE_MAP.dashboardModule.my_applications);
       }
       setTimeout(
         () =>
