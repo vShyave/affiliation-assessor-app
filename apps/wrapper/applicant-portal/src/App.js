@@ -25,6 +25,7 @@ import { applicantService } from "./services";
 import Notification from "./pages/notifications/Notification";
 import NotificationsDetailedView from "./pages/notifications/NotificationsDetailedView";
 import PaymentResult from "./pages/PaymentResult";
+import { ContextAPI } from "./utils/contextAPI";
 
 function App() {
   const [toast, setToast] = useState({
@@ -67,9 +68,11 @@ function App() {
 
   return (
     <div className="App">
-      {toast.toastOpen && (
+      <ContextAPI.Provider value={{setToast,toast}} >
+        {toast.toastOpen && (
         <Toast toastMsg={toast.toastMsg} toastType={toast.toastType} />
       )}
+
       <BrowserRouter>
         <Routes>
           <Route path={APPLICANT_ROUTE_MAP.auth} element={<Authenticate />}>
@@ -166,7 +169,8 @@ function App() {
           />
           {/* Notifications routing starts here */}
         </Routes>
-      </BrowserRouter>
+      </BrowserRouter></ContextAPI.Provider>
+      
     </div>
   );
 }

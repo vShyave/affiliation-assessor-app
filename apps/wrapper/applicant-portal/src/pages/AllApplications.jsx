@@ -141,8 +141,8 @@ const AllApplications = () => {
                 size="lg"
                 label="Course Type"
               >
-                <Option value="nursing">Nursing</Option>
-                <Option value="paramedical">Paramedical</Option>
+                <Option value="Nursing">Nursing</Option>
+                <Option value="Paramedical">Paramedical</Option>
               </Select>
             </div>
             <div className="sm:col-span-3 ">
@@ -155,8 +155,8 @@ const AllApplications = () => {
                 size="lg"
                 label="Course Level"
               >
-                <Option value="degree">Degree</Option>
-                <Option value="diploma">Diploma</Option>
+                <Option value="Degree">Degree</Option>
+                <Option value="Diploma">Diploma</Option>
               </Select>
             </div>
             <div className="sm:col-span-1">
@@ -204,10 +204,8 @@ const AllApplications = () => {
             <div className="flex flex-wrap">
               {availableForms.map((form, index) => (
                 <FormCard form={form} key={index} onApply={applyFormHandler} />
-              )
-              )
-              } 
-              {console.log("available forms-",availableForms)}
+              ))}
+              {console.log("available forms-", availableForms)}
             </div>
           )}
         </div>

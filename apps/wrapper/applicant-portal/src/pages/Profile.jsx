@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { Button, Label } from "../components";
@@ -15,6 +15,7 @@ import APPLICANT_ROUTE_MAP from "../routes/ApplicantRoute";
 
 import { profileService, userService } from "../services";
 import { editUserKeycloak } from "../services/userService";
+import { ContextAPI } from "../utils/contextAPI";
 
 export default function Profile() {
   const instituteData = getCookie("institutes");
@@ -46,12 +47,7 @@ export default function Profile() {
 
   const [formState, setFormState] = useState(1);
   const [isPreview, setIsPreview] = useState(true);
-
-  const [toast, setToast] = useState({
-    toastOpen: false,
-    toastMsg: "",
-    toastType: "",
-  });
+  const { setToast } = useContext(ContextAPI);
 
   useEffect(() => {
     getProfileDetails();
@@ -95,6 +91,7 @@ export default function Profile() {
         request: {
           firstName: formData?.first_name,
           lastName: formData?.last_name,
+          email: userData?.userRepresentation?.email,
           enabled: true,
           emailVerified: false,
           credentials: [
@@ -130,17 +127,8 @@ export default function Profile() {
           toastMsg: "User successfully edited",
           toastType: "success",
         }));
+        navigate(APPLICANT_ROUTE_MAP.dashboardModule.my_applications);
       }
-      setTimeout(
-        () =>
-          setToast((prevState) => ({
-            ...prevState,
-            toastOpen: false,
-            toastMsg: "",
-            toastType: "",
-          })),
-        3000
-      );
     } catch (error) {
       setToast((prevState) => ({
         ...prevState,
@@ -148,16 +136,6 @@ export default function Profile() {
         toastMsg: "Error while editing user detail.",
         toastType: "error",
       }));
-      setTimeout(
-        () =>
-          setToast((prevState) => ({
-            ...prevState,
-            toastOpen: false,
-            toastMsg: "",
-            toastType: "",
-          })),
-        3000
-      );
       console.error("Registration failed due to some error:", error);
     }
   };
@@ -197,25 +175,12 @@ export default function Profile() {
         toastMsg: "User already registered.",
         toastType: "error",
       }));
-      setTimeout(
-        () =>
-          setToast((prevState) => ({
-            ...prevState,
-            toastOpen: false,
-            toastMsg: "",
-            toastType: "",
-          })),
-        3000
-      );
       console.error("Can not see profile due to some error:", error);
     }
   };
 
   return (
     <>
-      {toast.toastOpen && (
-        <Toast toastMsg={toast.toastMsg} toastType={toast.toastType} />
-      )}
       <div className="h-[48px] bg-white drop-shadow-sm">
         <div className="container mx-auto px-3 py-3">
           <div className="flex flex-row font-bold gap-2 items-center">

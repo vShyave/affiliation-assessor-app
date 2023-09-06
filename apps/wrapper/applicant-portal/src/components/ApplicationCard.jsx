@@ -45,7 +45,7 @@ const ApplicationCard = (props) => {
   };
 
   return (
-    <Card moreClass="flex flex-col border-gray-100 m-3 gap-5 w-[300px] border-[1px] drop-shadow justify-between">
+    <Card moreClass="flex flex-col border-gray-100 m-3 gap-5 w-[360px] border-[1px] drop-shadow justify-between">
       <div className="flex flex-col gap-2">
         <div className="text-xl font-medium">{formName}</div>
         <div className="text-sm">

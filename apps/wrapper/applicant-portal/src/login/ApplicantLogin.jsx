@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { useForm } from "react-hook-form";
 import { Link, useNavigate } from "react-router-dom";
 import Toast from "../components/Toast";
@@ -8,6 +8,7 @@ import { userService, applicantService } from "../services";
 import { setCookie, getCookie, removeCookie } from "../utils";
 import { forkJoin, lastValueFrom, from } from "rxjs";
 import { mergeMap } from "rxjs/operators";
+import { ContextAPI } from "../utils/contextAPI";
 
 const ApplicantLogin = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -16,17 +17,13 @@ const ApplicantLogin = () => {
   const [emailId, setEmailId] = useState(null);
   const [verifyEnteredOtp, setVerifyEnteredOtp] = useState(true);
   const navigate = useNavigate();
+  const { setToast, toast } = useContext(ContextAPI);
 
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm();
-  const [toast, setToast] = useState({
-    toastOpen: false,
-    toastMsg: "",
-    toastType: "",
-  });
   useEffect(() => {
     // Check if user is already logged in (e.g., using your authentication logic)
     const checkLoggedInStatus = () => {
@@ -61,16 +58,6 @@ const ApplicantLogin = () => {
         toastMsg: "User not registered.",
         toastType: "error",
       }));
-      setTimeout(
-        () =>
-          setToast((prevState) => ({
-            ...prevState,
-            toastOpen: false,
-            toastMsg: "",
-            toastType: "",
-          })),
-        3000
-      );
     }
   };
 
@@ -83,15 +70,15 @@ const ApplicantLogin = () => {
 
       const loginRes = await userService.login(loginDetails);
 
-      
-
       const applicantDetailsRes = await applicantService.getApplicantDetails({
         user_id: loginRes.data.userRepresentation.id,
       });
 
       //setting device ID
       let deviceIds =
-        JSON.parse(applicantDetailsRes.data.institutes[0].institute_pocs[0].device_id) || [];
+        JSON.parse(
+          applicantDetailsRes.data.institutes[0].institute_pocs[0].device_id
+        ) || [];
       if (!deviceIds.includes(getCookie("firebase_client_token"))) {
         console.log(deviceIds);
         console.log(deviceIds.includes(getCookie("firebase_client_token")));
@@ -119,16 +106,6 @@ const ApplicantLogin = () => {
           toastMsg: "Invalid user.",
           toastType: "error",
         }));
-        setTimeout(
-          () =>
-            setToast((prevState) => ({
-              ...prevState,
-              toastOpen: false,
-              toastMsg: "",
-              toastType: "",
-            })),
-          3000
-        );
       }
     } catch (error) {
       setToast((prevState) => ({
@@ -149,9 +126,6 @@ const ApplicantLogin = () => {
   if (!isLoggedIn) {
     return (
       <>
-        {toast.toastOpen && (
-          <Toast toastMsg={toast.toastMsg} toastType={toast.toastType} />
-        )}
         <Card moreClass="shadow-md w-screen sm:px-24 sm:w-[480px] md:w-[600px] py-16">
           <div className="flex flex-col">
             <h1 className="text-2xl font-medium text-center mb-8">Login</h1>
