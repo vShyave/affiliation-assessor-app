@@ -67,8 +67,6 @@ const GenericOdkForm = (props) => {
     metaData: {},
   };
 
-  const { state } = useContext(StateContext);
-
   const getFormURI = (form, ofsd, prefillSpec) => {
     return encodeURIComponent(
       `${ENKETO_MANAGER_URL}/prefillXML?formUrl=${form}&onFormSuccessData=${encodeFunction(
@@ -90,6 +88,7 @@ const GenericOdkForm = (props) => {
   const [prefilledFormData, setPrefilledFormData] = useState();
   const [errorModal, setErrorModal] = useState(false);
   const [previewModal, setPreviewModal] = useState(false);
+  const { state } = useContext(StateContext);
   let previewFlag = false;
   let courseObj = undefined;
 
@@ -103,54 +102,6 @@ const GenericOdkForm = (props) => {
     latitude: null,
     longitude: null,
   });
-
-  // Later I will remove it, after testing!
-  // const getFormStatus = async () => {
-  //   const id = user?.userRepresentation?.id;
-  //   const postData = {
-  //     date: new Date().toJSON().slice(0, 10),
-  //     assessor_id: id,
-  //   };
-
-  //   try {
-  //     const response = await getStatusOfForms(postData);
-  //     let formStatus = response?.data?.form_submissions;
-  //     formStatus = formStatus.map((obj) => {
-  //       return obj.form_name;
-  //     });
-  //     let isComplete = false;
-  //     let parent_form_id = Object.values(getCookie("courses_data"))[0];
-  //     if (
-  //       Object.keys(getCookie("courses_data")).length ===
-  //       response?.data?.form_submissions.length
-  //     ) {
-  //       Object.keys(getCookie("courses_data")).forEach((form) => {
-  //         response?.data?.form_submissions.filter((item) => {
-  //           if (item.form_name === form && item.submission_status)
-  //             isComplete = true;
-  //           else isComplete = false;
-  //         });
-  //       });
-  //     }
-
-  //     if (isComplete) {
-  //       // call event
-  //       registerEvent({
-  //         created_date: getLocalTimeInISOFormat(),
-  //         entity_id: `${parent_form_id}`,
-  //         entity_type: "form",
-  //         event_name: "OGA Completed",
-  //         remarks: `${user?.userRepresentation?.firstName} ${user?.userRepresentation?.lasttName} has completed the On Ground Inspection Analysis`,
-  //       });
-  //       updateFormStatus({
-  //         form_id: `${parent_form_id}`,
-  //         form_status: "OGA Completed",
-  //       });
-  //     }
-  //   } catch (error) {
-  //     navigate(ROUTE_MAP.login);
-  //   }
-  // };
 
   const getDataFromLocal = async () => {
     const id = user?.userRepresentation?.id;

@@ -38,6 +38,7 @@ import { applicantService } from "../services";
 import { ContextAPI } from "../utils/contextAPI";
 
 const ENKETO_URL = process.env.REACT_APP_ENKETO_URL;
+let previewFlag = false;
 
 const CreateForm = (props) => {
   const navigate = useNavigate();
@@ -50,7 +51,6 @@ const CreateForm = (props) => {
   let [onFormFailureData, setOnFormFailureData] = useState(undefined);
   let [isDownloading, setIsDownloading] = useState(false);
   let [previewModal, setPreviewModal] = useState(false);
-  let previewFlag = false;
   const { setToast } = useContext(ContextAPI);
 
   // Spinner Element
@@ -138,8 +138,6 @@ const CreateForm = (props) => {
       const { nextForm, formData, onSuccessData, onFailureData } = data;
 
       if (data?.state === "ON_FORM_SUCCESS_COMPLETED") {
-        console.log("Receieved form data", JSON.parse(e.data).formDataXml);
-        // handleSubmit();
         if (!previewFlag) {
           let prevData = await getFromLocalForage(
             `${userId}_${startingForm}_${
@@ -500,8 +498,8 @@ const CreateForm = (props) => {
                 <FaRegTimesCircle
                   className="text-[36px]"
                   onClick={() => {
-                    setPreviewModal(false);
                     previewFlag = false;
+                    setPreviewModal(false);
                   }}
                 />
               </div>
