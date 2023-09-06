@@ -356,14 +356,14 @@ export default function DesktopAnalysisView() {
         }
 
         iframeContent.getElementById("submit-form").style.display = "none";
-        iframeContent.getElementById("save-draft").style.display = "none";
       }
 
       // Need to work on Save draft...
-      var draftButton = iframeContent.getElementById("save-draft");
-      draftButton?.addEventListener("click", function () {
-        alert("Hello world!");
-      });
+      iframeContent.getElementById("save-draft").style.display = "none";
+      // var draftButton = iframeContent.getElementById("save-draft");
+      // draftButton?.addEventListener("click", function () {
+      //   alert("Hello world!");
+      // });
     }
     setSpinner(false);
   };
