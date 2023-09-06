@@ -10,7 +10,7 @@ import { Button } from "../../components";
 import { addAssessmentSchedule } from "../../api";
 import { ContextAPI } from "../../utils/ContextAPI";
 
-function BulkUploadScheduleModal({ setBulkUploadSchduleModal }) {
+function BulkUploadScheduleModal({ setBulkUploadSchduleModal,fetchAllAssessmentSchedule }) {
   const [file, setFile] = useState();
   const { setSpinner, setToast } = useContext(ContextAPI);
 
@@ -245,6 +245,7 @@ function BulkUploadScheduleModal({ setBulkUploadSchduleModal }) {
         toastMsg: "Assessments Scheduled Successfully!!",
         toastType: "success",
       }));
+      fetchAllAssessmentSchedule()
       setBulkUploadSchduleModal(false);
     } catch (error) {
       console.log("error - ", error);
