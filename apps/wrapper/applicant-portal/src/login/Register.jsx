@@ -100,6 +100,24 @@ export default function SelfRegistration() {
         institutePocDetils
       );
       console.log(addInstitutePocRes);
+
+      //applicant notification
+      applicantService.sendPushNotification({
+        title: "Applicant Registration",
+        body: `You are successfully registered as an Applicant`,
+        deviceToken: [`${getCookie("firebase_client_token")}`],
+        userId: keyCloakSignupRes.data,
+      });
+
+      //email notify
+      const emailData = {
+        recipientEmail: [`${userDetails.request.email}`],
+        emailSubject: `${applicantName} Applicant Registration`,
+        emailBody: `<!DOCTYPE html><html><head><meta charset='utf-8'><title>Your Email Title</title><link href='https://fonts.googleapis.com/css2?family=Mulish:wght@400;600&display=swap' rel='stylesheet'></head><body style='font-family: Arial, sans-serif; background-color: #f4f4f4; margin: 0; padding: 0;'><table width='100%' bgcolor='#ffffff' cellpadding='0' cellspacing='0' border='0'><tr><td style='padding: 20px; text-align: center; background-color: #F5F5F5;'><img src='https://regulator.upsmfac.org/images/upsmf.png' alt='Logo' style='max-width: 360px;'></td></tr></table><table width='100%' bgcolor='#ffffff' cellpadding='0' cellspacing='0' border='0'><tr><td style='padding: 36px;'><p style='color: #555555; font-size: 18px; font-family: 'Mulish', Arial, sans-serif;'>Dear ${applicantName},</p><p style='color: #555555; font-size: 18px; line-height: 1.6; font-family: 'Mulish', Arial, sans-serif;'>You are successfully registered as an Applicant.</p></td></tr></table></body></html>`,
+      };
+
+      applicantService.sendEmailNotification(emailData);
+
       navigate(APPLICANT_ROUTE_MAP.dashboardModule.congratulations);
     } catch (error) {
       setToast((prevState) => ({
