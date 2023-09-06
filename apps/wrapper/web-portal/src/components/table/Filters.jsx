@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import Calendar from "react-calendar";
 import { formatDate, readableDate } from "../../utils/common";
 import { Option, Select } from "@material-tailwind/react";
-
+import { UP_DISTRICTS } from "../../utils/constants";
 //Manage Users
 export const ManageUsersFilters = ({
   filterApiCall,
@@ -599,13 +599,9 @@ export const ScheduleManagementFilters = ({
           className="bg-gray-50"
         >
           {/* <Option value="">--Select District--</Option> */}
-          <Option value="New Delhi">New Delhi</Option>
-          <Option value="Lucknow">Lucknow</Option>
-          <Option value="Ballari">Ballari</Option>
-          <Option value="KANPUR DEHAT">KANPUR DEHAT</Option>
-          <Option value="BIJNOR">BIJNOR</Option>
-          <Option value="PRAYAGRAJ">PRAYAGRAJ</Option>
-          <Option value="BHADOHI">BHADOHI</Option>
+          {UP_DISTRICTS.map((item) => (
+            <Option value={item}>{item}</Option>
+          ))}
         </Select>
       </div>
       <div className="flex">
