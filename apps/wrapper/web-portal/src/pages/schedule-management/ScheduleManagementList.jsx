@@ -336,6 +336,7 @@ const ScheduleManagementList = () => {
       {bulkUploadScheduleModal && (
         <BulkUploadScheduleModal
           setBulkUploadSchduleModal={setBulkUploadSchduleModal}
+          fetchAllAssessmentSchedule={fetchAllAssessmentSchedule}
         />
       )}
     </>
