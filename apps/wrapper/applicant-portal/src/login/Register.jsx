@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { Button, Label } from "../components";
@@ -10,6 +10,7 @@ import APPLICANT_ROUTE_MAP from "../routes/ApplicantRoute";
 import { userService, applicantService } from "../services";
 import { forkJoin, lastValueFrom } from "rxjs";
 import { UP_DISTRICTS } from "../utils/constants";
+import { ContextAPI } from "../utils/contextAPI";
 
 export default function SelfRegistration() {
   const navigate = useNavigate();
@@ -18,12 +19,8 @@ export default function SelfRegistration() {
     handleSubmit,
     formState: { errors },
   } = useForm();
+  const { setToast } = useContext(ContextAPI);
 
-  const [toast, setToast] = useState({
-    toastOpen: false,
-    toastMsg: "",
-    toastType: "",
-  });
   const signupHandler = async (data) => {
     const {
       firstName,
@@ -111,16 +108,6 @@ export default function SelfRegistration() {
         toastMsg: "User already registered.",
         toastType: "error",
       }));
-      setTimeout(
-        () =>
-          setToast((prevState) => ({
-            ...prevState,
-            toastOpen: false,
-            toastMsg: "",
-            toastType: "",
-          })),
-        3000
-      );
       console.error("Registration failed due to some error:", error);
     }
   };
@@ -131,9 +118,6 @@ export default function SelfRegistration() {
 
   return (
     <>
-      {toast.toastOpen && (
-        <Toast toastMsg={toast.toastMsg} toastType={toast.toastType} />
-      )}
       <div className="h-[48px] bg-white drop-shadow-sm">
         <div className="container mx-auto px-3 py-3">
           <div className="flex flex-row font-bold gap-2 items-center">
@@ -281,7 +265,7 @@ export default function SelfRegistration() {
                       )}
                       {errors?.mobilePhone?.type === "maxLength" && (
                         <p className="text-red-500 mt-2 text-sm">
-                          Phonenumber cannot exceed 10 characters
+                          Phone number cannot exceed 10 characters
                         </p>
                       )}
                       {errors?.mobilePhone?.type === "pattern" && (
@@ -369,8 +353,10 @@ export default function SelfRegistration() {
                           required: true,
                         })}
                       >
-                        {UP_DISTRICTS.map((district) => (
-                          <option value={district}>{district}</option>
+                        {UP_DISTRICTS.map((district, idx) => (
+                          <option key={idx} value={district}>
+                            {district}
+                          </option>
                         ))}
                       </select>
                       {errors?.applicantType?.type === "required" && (
