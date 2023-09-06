@@ -146,10 +146,14 @@ const CreateForm = (props) => {
         // handleSubmit();
         if (!previewFlag) {
           let prevData = await getFromLocalForage(
-            `${userId}_${startingForm}_${new Date().toISOString().split("T")[0]}`
+            `${userId}_${startingForm}_${
+              new Date().toISOString().split("T")[0]
+            }`
           );
           await setToLocalForage(
-            `${userId}_${startingForm}_${new Date().toISOString().split("T")[0]}`,
+            `${userId}_${startingForm}_${
+              new Date().toISOString().split("T")[0]
+            }`,
             {
               formData: JSON.parse(e.data).formDataXml,
               imageUrls: { ...prevData?.imageUrls },
