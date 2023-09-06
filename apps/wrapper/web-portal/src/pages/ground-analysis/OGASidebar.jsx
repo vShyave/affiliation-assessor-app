@@ -42,7 +42,9 @@ export default function OGASidebar(props) {
               }`}
               onClick={() => postFormSelected(forms)}
             >
-              <div className="flex flex-grow">{forms?.course?.course_name}</div>
+              <div className="flex flex-grow">
+                {forms?.course?.course_name || "NA"}
+              </div>
               <div className="flex items-center">
                 {forms?.noc_recommendation === null && <AiOutlineCheck />}
                 {forms?.noc_recommendation?.toLowerCase() === "recommended" && (

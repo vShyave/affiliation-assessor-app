@@ -43,7 +43,7 @@ export default function ApplicationPage({
   const [openStatusModel, setOpenStatusModel] = useState(false);
   const [openIssueNocModel, setOpenIssueNocModel] = useState(false);
   const [encodedFormURI, setEncodedFormURI] = useState("");
-  let { formName, formId, instituteName, round } = useParams();
+  let { formName, formId, instituteName, round, date } = useParams();
   let [instituteId, setInstituteId] = useState();
   let [selectRound, setSelectRound] = useState(round);
   let [OGAFormsList, setOGAFormsList] = useState([]);
@@ -247,7 +247,7 @@ export default function ApplicationPage({
   };
 
   const getOGAFormsList = async () => {
-    const postData = { applicant_form_id: 338, submitted_on: "2023-09-04" };
+    const postData = { applicant_form_id: formId, submitted_on: date };
     const res = await fetchOGAFormsList(postData);
     setOGAFormsList(res?.data?.form_submissions);
   };
