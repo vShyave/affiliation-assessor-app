@@ -87,6 +87,30 @@ function BulkUploadScheduleModal({ setBulkUploadSchduleModal }) {
 
   const COLUMNS = [
     {
+      Header: "Parent Center Code",
+      accessor: "parent_code",
+
+      Cell: (props) => {
+        return <div>{isDataValid(props.value)}</div>;
+      },
+    },
+    {
+      Header: "Child Center Code",
+      accessor: "child_code",
+
+      Cell: (props) => {
+        return <div>{isDataValid(props.value)}</div>;
+      },
+    },
+    {
+      Header: "Type",
+      accessor: "type",
+
+      Cell: (props) => {
+        return <div>{isDataValid(props.value)}</div>;
+      },
+    },
+    {
       Header: "Assessor Code",
       accessor: "assessor_code",
 
