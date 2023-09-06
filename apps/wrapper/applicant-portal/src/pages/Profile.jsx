@@ -95,6 +95,7 @@ export default function Profile() {
         request: {
           firstName: formData?.first_name,
           lastName: formData?.last_name,
+          email: userData?.userRepresentation?.email,
           enabled: true,
           emailVerified: false,
           credentials: [
@@ -130,6 +131,7 @@ export default function Profile() {
           toastMsg: "User successfully edited",
           toastType: "success",
         }));
+        navigate(APPLICANT_ROUTE_MAP.dashboardModule.my_applications);
       }
       setTimeout(
         () =>
