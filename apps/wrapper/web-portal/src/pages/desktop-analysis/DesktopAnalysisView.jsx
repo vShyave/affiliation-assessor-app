@@ -136,9 +136,7 @@ export default function DesktopAnalysisView() {
     try {
       const { nextForm, formData, onSuccessData, onFailureData } = data;
       if (data?.state === "ON_FORM_SUCCESS_COMPLETED") {
-        // setSpinner(true);
         setOnSubmit(true);
-        handleSubmit();
       }
 
       if (nextForm?.type === "form") {
