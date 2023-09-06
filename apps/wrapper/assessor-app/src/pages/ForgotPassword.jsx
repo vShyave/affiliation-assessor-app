@@ -165,7 +165,7 @@ const ForgotPassword = () => {
     >
       {/* Entering email id for password change */}
       {!otpPage && !changePasswordPage && !passChanged && (
-        <div className="flex flex-col px-10 py-8 h-100 justify-between h-[90%]">
+        <div className="flex flex-col px-3 py-8 h-100 justify-between h-[90%]">
           <div className="w-full">
             <p className="text-secondary text-2xl font-bold">
               Enter a valid email id
@@ -189,10 +189,10 @@ const ForgotPassword = () => {
 
       {/* Entering OTP to change the password  */}
       {otpPage && !passChanged && (
-        <div className="flex flex-col px-10 py-8 h-100 justify-between h-[90%]">
+        <div className="flex flex-col px-3 py-8 h-100 justify-between h-[90%]">
           <div className="w-full">
             <p className="text-secondary text-xl lg:text-2xl font-bold">
-              Enter OTP sent on{" "}
+              Enter OTP sent on
             </p>
             <p className="text-primary text-2xl lg:text-3xl font-bold py-4">
               {email}
@@ -212,8 +212,8 @@ const ForgotPassword = () => {
               inputStyle={{
                 border: "1px solid #9b9b9b",
                 borderRadius: "0.25rem",
-                marginRight: "1rem",
-                height: "4rem",
+                marginRight: "8px",
+                height: "3rem",
                 width: "3rem",
                 fontSize: "1.5rem",
                 color: "rgba(0,0,0,0.5)",
@@ -233,7 +233,7 @@ const ForgotPassword = () => {
 
       {/* Change password page  */}
       {!otpPage && changePasswordPage && !passChanged && (
-        <div className="flex flex-col px-10 py-8 h-100 justify-between h-[90%]">
+        <div className="flex flex-col px-3 py-8 h-100 justify-between h-[90%]">
           <div className="w-full">
             <p className="text-secondary text-xl font-bold">
               Change Password Here
@@ -276,7 +276,7 @@ const ForgotPassword = () => {
 
       {/* Password changed successful page  */}
       {passChanged && (
-        <div className="flex flex-col px-10 py-8 h-100 justify-between h-[90%]">
+        <div className="flex flex-col px-3 py-8 h-100 justify-between h-[90%]">
           <div className="w-full">
             <p className="text-secondary text-xl font-bold">
               Your password has been changed successfully
