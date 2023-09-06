@@ -22,6 +22,7 @@ import {
   sendPushNotification,
   getAllRegulatorDeviceId,
   getApplicantDeviceId,
+  sendEmailNotification,
 } from "../../api";
 import ADMIN_ROUTE_MAP from "../../routes/adminRouteMap";
 import {
@@ -135,7 +136,8 @@ export default function DesktopAnalysisView() {
     try {
       const { nextForm, formData, onSuccessData, onFailureData } = data;
       if (data?.state === "ON_FORM_SUCCESS_COMPLETED") {
-        setSpinner(true);
+        // setSpinner(true);
+        setOnSubmit(true);
         handleSubmit();
       }
 
@@ -182,6 +184,22 @@ export default function DesktopAnalysisView() {
         remarks: `${userDetails?.userRepresentation?.username} has returned application with remarks`,
       });
     }
+
+    //email notify
+    const applicantRes = await getApplicantDeviceId({
+      institute_id: formDataFromApi?.institute?.id,
+    });
+    const emailData = {
+      recipientEmail: [`${applicantRes?.data?.institutes[0]?.email}`],
+      emailSubject: `Granting NOC/Affiliation to ${applicantRes?.data?.institutes[0]?.name}`,
+      emailBody: `<!DOCTYPE html><html><head><meta charset='utf-8'><title>Your Email Title</title><link href='https://fonts.googleapis.com/css2?family=Mulish:wght@400;600&display=swap' rel='stylesheet'></head><body style='font-family: Arial, sans-serif; background-color: #f4f4f4; margin: 0; padding: 0;'><table width='100%' bgcolor='#ffffff' cellpadding='0' cellspacing='0' border='0'><tr><td style='padding: 20px; text-align: center; background-color: #F5F5F5;'><img src='https://regulator.upsmfac.org/images/upsmf.png' alt='Logo' style='max-width: 360px;'></td></tr></table><table width='100%' bgcolor='#ffffff' cellpadding='0' cellspacing='0' border='0'><tr><td style='padding: 36px;'><p style='color: #555555; font-size: 18px; font-family: 'Mulish', Arial, sans-serif;'>Dear ${applicantRes?.data?.institutes[0]?.name},</p><p style='color: #555555; font-size: 18px; line-height: 1.6; font-family: 'Mulish', Arial, sans-serif;'>We hope this email finds you well. We are writing to kindly request the resubmission of your application for the affiliation process. We apologize for any inconvenience caused, but it appears that there was an issue with the initial submission, and we did not receive the full information for proceeding to next steps.</p><p style='color: #555555; font-size: 18px; line-height: 1.6; font-family: 'Mulish', Arial, sans-serif;'>We kindly request that you resubmit your application using the following steps:
+    <p>1. Please find your returned application in the application inbox.</p>
+    <p>2. You can open the returned application to view the returning officer's comment. The comments will help you to understand the gaps and bridge them.</p>
+    <p>3. You can resubmit the returned application after you are done with making the required changes. Please ensure to keep saving the application as draft while you progress.</p></p><p style='color: #555555; font-size: 18px; line-height: 1.6; font-family: 'Mulish', Arial, sans-serif;'>We understand that this may require some additional effort on your part, and we sincerely appreciate your cooperation. Rest assured that we will treat your resubmitted application with the utmost attention and consideration during our evaluation process.</p><p style='color: #555555; font-size: 18px; line-height: 1.6; font-family: 'Mulish', Arial, sans-serif;'>If you have any questions or need further clarification regarding the resubmission process, please do not hesitate to reach out to our support executives at <Contact Details>. We are here to assist you and provide any necessary guidance.</p><p style='color: #555555; font-size: 18px; line-height: 1.6; font-family: 'Mulish', Arial, sans-serif;'></p>Please note that the deadline for resubmitting your application is <deadline date>. Applications received after this date may not be considered for the current affiliation process.<p style='color: #555555; font-size: 18px; line-height: 1.6; font-family: 'Mulish', Arial, sans-serif;'></p>We look forward to receiving your updated application.<p style='color: #555555; font-size: 18px; line-height: 1.6; font-family: 'Mulish', Arial, sans-serif;'>Thank you for your time and continued interest in getting affiliated from our organization.</p></td></tr></table></body></html>`,
+    };
+
+    sendEmailNotification(emailData);
+    setOnSubmit(false);
 
     // Delete the data from the Local Forage
     const key = `${userId}_${formSpec.start}_${
@@ -542,10 +560,10 @@ export default function DesktopAnalysisView() {
         </div>
       </div>
 
-      {/* {onSubmit && (
+      {onSubmit && (
         <CommonModal>
           <p className="text-secondary text-2xl text-semibold font-medium text-center">
-            Are you sure, do you want to submit?
+            Are you sure, do you want to submit with remarks?
           </p>
 
           <div className="flex flex-row justify-center w-full py-4 gap-5">
@@ -563,7 +581,7 @@ export default function DesktopAnalysisView() {
             </div>
           </div>
         </CommonModal>
-      )} */}
+      )}
     </StrictMode>
   );
 }
