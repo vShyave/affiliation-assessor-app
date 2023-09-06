@@ -380,6 +380,7 @@ export default function AdminCreateUser() {
                         placeholder="Type here"
                         name="phonenumber"
                         id="phonenumber"
+                        maxLength={10}
                         defaultValue={user.phonenumber}
                         onChange={(e) =>
                           handleChange("phonenumber", e.target.value)
