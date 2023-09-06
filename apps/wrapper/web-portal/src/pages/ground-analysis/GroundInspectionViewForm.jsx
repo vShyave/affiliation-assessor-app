@@ -12,9 +12,18 @@ import RejectNocModal from "./RejectNocModal";
 import OGASidebar from "./OGASidebar";
 
 import ADMIN_ROUTE_MAP from "../../routes/adminRouteMap";
-import { getFormData, fetchOGAFormsList } from "../../api";
+import {
+  getFormData,
+  fetchOGAFormsList,
+  getRejectApplicant,
+  getAcceptApplicantNoc,
+  getAcceptApplicantCertificate,
+  registerEvent,
+  updateFormStatus,
+} from "../../api";
 import { getPrefillXML } from "./../../api/formApi";
 import { ContextAPI } from "../../utils/ContextAPI";
+import { getCookie, getLocalTimeInISOFormat } from "../../utils";
 
 const ENKETO_URL = process.env.REACT_APP_ENKETO_URL;
 const GCP_URL = process.env.REACT_APP_GCP_AFFILIATION_LINK;
@@ -39,7 +48,10 @@ export default function ApplicationPage({
   let [selectRound, setSelectRound] = useState(round);
   let [OGAFormsList, setOGAFormsList] = useState([]);
   let [formSelected, setFormSelected] = useState();
-  const { setSpinner } = useContext(ContextAPI);
+  const { setSpinner,setToast } = useContext(ContextAPI);
+  const userDetails = getCookie("userData");
+
+  const user_details = userDetails?.userRepresentation;
 
   const userId = "427d473d-d8ea-4bb3-b317-f230f1c9b2f7";
   const formSpec = {
@@ -87,6 +99,121 @@ export default function ApplicationPage({
       console.log(error);
     } finally {
       // setSpinner(false);
+    }
+  };
+
+  const handleRejectOGA = async () => {
+    const postData = {
+      form_id: formSelected.form_id,
+      remarks: "",
+      date: new Date().toISOString().substring(0, 10),
+    };
+    try {
+      setSpinner(true);
+      const res = await getRejectApplicant(postData);
+      const formStatus =
+        res?.data?.update_form_submissions?.returning[0]?.form_status;
+      let tempOGAFormsList = [...OGAFormsList];
+      tempOGAFormsList.forEach((item) => {
+        if (item.form_id === formSelected.form_id) {
+          item.form_status = formStatus;
+          item.noc_recommendation = "Not recommended"
+        }
+      });
+      setOGAFormsList(tempOGAFormsList);
+      registerEvent({
+        created_date: getLocalTimeInISOFormat(),
+        entity_id: formSelected.form_id.toString(),
+        entity_type: "form",
+        event_name: "Rejected",
+        remarks: `${user_details?.firstName} ${user_details?.lastName} has rejected the form!`,
+      });
+
+      updateFormStatus({
+        form_id: formSelected.form_id * 1,
+        form_status: "Rejected",
+      });
+      setToast((prevState) => ({
+        ...prevState,
+        toastOpen: true,
+        toastMsg: "The form is rejected!",
+        toastType: "success",
+      }));
+    } catch (error) {
+      setToast((prevState) => ({
+        ...prevState,
+        toastOpen: true,
+        toastMsg: "The form rejection failed!",
+        toastType: "error",
+      }));
+    } finally {
+      setSpinner(false);
+    }
+  };
+
+  const handleAcceptOGA = async () => {
+    const postData = {
+      form_id: formSelected.form_id,
+      remarks: "",
+      date: new Date().toISOString().substring(0, 10),
+      noc_Path: "",
+      noc_fileName: "",
+    };
+    try {
+      setSpinner(true);
+      let response;
+      if (round == 1) {
+        response = await getAcceptApplicantNoc(postData);
+      }
+      if (round == 2) {
+        response = await getAcceptApplicantCertificate(postData);
+      }
+
+      const formStatus =
+      response?.data?.update_form_submissions?.returning[0]?.form_status;
+      let tempOGAFormsList = [...OGAFormsList];
+      tempOGAFormsList.forEach((item) => {
+        if (item.form_id === formSelected.form_id) {
+          item.form_status = formStatus;
+          item.noc_recommendation = "Recommended"
+        }
+      });
+      setOGAFormsList(tempOGAFormsList);
+      registerEvent({
+        created_date: getLocalTimeInISOFormat(),
+        entity_id: formSelected.form_id.toString(),
+        entity_type: "form",
+        event_name: "Approved",
+        remarks: `${user_details?.firstName} ${user_details?.lastName} has approved the form!`,
+      });
+
+      updateFormStatus({
+        form_id: formSelected.form_id * 1,
+        form_status: "Approved",
+      });
+      setToast((prevState) => ({
+        ...prevState,
+        toastOpen: true,
+        toastMsg: "The form is approved!",
+        toastType: "success",
+      }));
+    } catch (error) {
+      setToast((prevState) => ({
+        ...prevState,
+        toastOpen: true,
+        toastMsg: "The form approval failed!",
+        toastType: "error",
+      }));
+    } finally {
+      setSpinner(false);
+    }
+  };
+
+  const handleVerifyOGA = (action) => {
+    if (!action) {
+      handleRejectOGA();
+    } else {
+      handleAcceptOGA();
     }
   };
 
@@ -240,13 +367,13 @@ export default function ApplicationPage({
                 {formSelected && !formSelected?.noc_recommendation && (
                   <div className="flex grow gap-4 justify-end items-center">
                     <button
-                      onClick={() => setOpenIssueNocModel(true)}
+                      onClick={() => handleVerifyOGA(true)}
                       className="border border-gray-500 text-green-600 w-[140px] h-[40px] font-medium rounded-[4px]"
                     >
                       Approve OGA
                     </button>
                     <button
-                      onClick={() => setRejectModel(true)}
+                      onClick={() => handleVerifyOGA(false)}
                       className="border border-gray-500 text-red-600 w-[140px] h-[40px] font-medium rounded-[4px]"
                     >
                       Reject OGA
