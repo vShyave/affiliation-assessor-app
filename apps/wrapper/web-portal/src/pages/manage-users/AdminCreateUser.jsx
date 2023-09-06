@@ -95,6 +95,20 @@ export default function AdminCreateUser() {
     } else return true;
   };
 
+  const handleAlphaOnly = (value, nameFlag) => {
+    const re = /^[a-zA-Z ]*$/;
+    if (re.test(value)) {
+      handleChange(nameFlag, value)
+    }
+  }
+
+  const handleNumbersOnly =(value, nameFlag) =>{
+const re = /^[0-9\b]+$/;
+if(value === '' || re.test(value)){
+  handleChange(nameFlag,value)
+}
+  }
+
   const submitUserData = async (e) => {
     e.preventDefault();
     let errorFlag = false;
@@ -279,6 +293,7 @@ export default function AdminCreateUser() {
     }
   }, [userId]);
 
+
   return (
     <>
       {/* Breadcrum */}
@@ -324,9 +339,9 @@ export default function AdminCreateUser() {
                         placeholder="Type here"
                         id="firstname"
                         name="firstname"
-                        defaultValue={user.firstname}
+                        value={user.firstname}
                         onChange={(e) =>
-                          handleChange("firstname", e.target.value)
+                          handleAlphaOnly(e.target.value, "firstname")
                         }
                         // disabled={userId?true:false}
                         className="block w-full rounded-md border-0 p-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
@@ -341,9 +356,9 @@ export default function AdminCreateUser() {
                         placeholder="Type here"
                         name="lastname"
                         id="lastname"
-                        defaultValue={user.lastname}
+                        value={user.lastname}
                         onChange={(e) =>
-                          handleChange("lastname", e.target.value)
+                          handleAlphaOnly(e.target.value, "lastname")
                         }
                         className="block w-full rounded-md border-0 p-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                         // disabled={userId?true:false}
@@ -380,11 +395,10 @@ export default function AdminCreateUser() {
                         placeholder="Type here"
                         name="phonenumber"
                         id="phonenumber"
-                        pattern="[0-9]{10}"
                         maxLength={10}
-                        defaultValue={user.phonenumber}
+                        value={user.phonenumber}
                         onChange={(e) =>
-                          handleChange("phonenumber", e.target.value)
+                          handleNumbersOnly(e.target.value, "phonenumber")
                         }
                         className="block w-full rounded-md border-0 p-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                       />
