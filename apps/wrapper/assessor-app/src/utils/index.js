@@ -61,7 +61,6 @@ export const makeDataForPrefill = (prev, xmlDoc, key, finalObj, formName) => {
 
 export const updateFormData = async (startingForm) => {
   try {
-    // TODO: check if formdata has to have value, check line 65 for getcookie connect with Sheela
     let data = await getFromLocalForage(
       `${startingForm}_${new Date().toISOString().split("T")[0]}`
     );
