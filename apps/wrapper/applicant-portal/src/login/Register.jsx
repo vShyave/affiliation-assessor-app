@@ -271,7 +271,7 @@ export default function SelfRegistration() {
                         {...register("mobilePhone", {
                           required: true,
                           maxLength: 10,
-                          pattern: /^([+]\d{2})?\d{10}$/,
+                          pattern: /^(?:(?:\(\s*[\-]\s*)?|[0]?)?[6789]\d{9}$/,
                         })}
                       />
                       {errors?.mobilePhone?.type === "required" && (
