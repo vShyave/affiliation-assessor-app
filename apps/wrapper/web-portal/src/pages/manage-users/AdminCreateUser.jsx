@@ -128,6 +128,7 @@ export default function AdminCreateUser() {
             firstName: user.firstname,
             lastName: user.lastname,
             enabled: true,
+            email: user.email,
             emailVerified: false,
             credentials: [
               {
