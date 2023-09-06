@@ -71,6 +71,7 @@ export default function ManageUsersList({
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [isFilterOpen, setIsFilterOpen] = useState(false);
   const { setSpinner, setToast } = useContext(ContextAPI);
+  const [usersCreated, setUsersCreated] = useState(false);
   let selectedRows = [];
 
   const COLUMNS = [
@@ -775,6 +776,18 @@ export default function ManageUsersList({
     }
   }, [paginationInfo.offsetNo, paginationInfo.limit, state.menu_selected]);
 
+  useEffect(() => {
+    if (usersCreated) {
+      if (state.menu_selected === "Assessor") {
+        fetchAllAssessors();
+      }
+      if (state.menu_selected === "Desktop-Admin") {
+        fetchAllRegulators();
+      }
+    }
+    setUsersCreated(false);
+  }, [usersCreated]);
+
   return (
     <>
       <Nav />
@@ -939,6 +952,7 @@ export default function ManageUsersList({
       {bulkUploadUsersModel && (
         <BulkUploadUsersModal
           closeBulkUploadUsersModal={setBulkUploadUsersModel}
+          setUsersCreated={setUsersCreated}
         />
       )}
 
