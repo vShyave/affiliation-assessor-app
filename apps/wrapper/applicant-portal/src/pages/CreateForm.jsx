@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from "react";
+import React, { useEffect, useState, useRef, useContext } from "react";
 import { Link, useParams, useNavigate } from "react-router-dom";
 import XMLParser from "react-xml-parser";
 
@@ -35,6 +35,7 @@ import {
 } from "../api/formApi";
 import { generate_uuidv4 } from "../utils";
 import { applicantService } from "../services";
+import { ContextAPI } from "../utils/contextAPI";
 
 const ENKETO_URL = process.env.REACT_APP_ENKETO_URL;
 
@@ -50,6 +51,7 @@ const CreateForm = (props) => {
   let [isDownloading, setIsDownloading] = useState(false);
   let [previewModal, setPreviewModal] = useState(false);
   let previewFlag = false;
+  const { setToast } = useContext(ContextAPI);
 
   // Spinner Element
   const spinner = document.getElementById("backdrop");
@@ -92,12 +94,6 @@ const CreateForm = (props) => {
     start: formName,
     formId: formId,
   };
-
-  const [toast, setToast] = useState({
-    toastOpen: false,
-    toastMsg: "",
-    toastType: "",
-  });
 
   const startingForm = formSpec.start;
   const [encodedFormSpec, setEncodedFormSpec] = useState(
@@ -146,10 +142,14 @@ const CreateForm = (props) => {
         // handleSubmit();
         if (!previewFlag) {
           let prevData = await getFromLocalForage(
-            `${userId}_${startingForm}_${new Date().toISOString().split("T")[0]}`
+            `${userId}_${startingForm}_${
+              new Date().toISOString().split("T")[0]
+            }`
           );
           await setToLocalForage(
-            `${userId}_${startingForm}_${new Date().toISOString().split("T")[0]}`,
+            `${userId}_${startingForm}_${
+              new Date().toISOString().split("T")[0]
+            }`,
             {
               formData: JSON.parse(e.data).formDataXml,
               imageUrls: { ...prevData?.imageUrls },
@@ -219,6 +219,8 @@ const CreateForm = (props) => {
       course_id: course_details?.course_id,
     };
 
+    console.log("common_payload - ", common_payload);
+
     if (!applicantStatus) {
       await saveFormSubmission({
         schedule_id: null,
@@ -247,17 +249,6 @@ const CreateForm = (props) => {
       toastMsg: "Form Submitted Successfully!.",
       toastType: "success",
     }));
-
-    setTimeout(
-      () =>
-        setToast((prevState) => ({
-          ...prevState,
-          toastOpen: false,
-          toastMsg: "",
-          toastType: "",
-        })),
-      1500
-    );
 
     setTimeout(
       () => navigate(`${APPLICANT_ROUTE_MAP.dashboardModule.my_applications}`),
@@ -393,9 +384,6 @@ const CreateForm = (props) => {
 
   return (
     <div>
-      {toast.toastOpen && (
-        <Toast toastMsg={toast.toastMsg} toastType={toast.toastType} />
-      )}
       <div className="h-[48px] bg-white drop-shadow-sm">
         <div className="container mx-auto px-3 py-3">
           <div className="flex flex-row font-bold gap-2 items-center">

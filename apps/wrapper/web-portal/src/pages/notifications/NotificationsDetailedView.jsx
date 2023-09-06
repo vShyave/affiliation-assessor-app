@@ -76,12 +76,6 @@ export default function NotificationsDetailedView(props) {
 
   return (
     <>
-      {/* {toast.toastOpen && (
-        <Toast toastMsg={toast.toastMsg} toastType={toast.toastType} />
-      )} */}
-      {/* Breadcrum */}
-      {/* <Breadcrumb data={breadCrumbData} /> */}
-
       <div className="flex bg-white justify-start h-[48px]">
         <div className="container mx-auto flex px-3">
           <div className="flex flex-row font-bold gap-2 items-center">

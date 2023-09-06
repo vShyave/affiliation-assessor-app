@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 
 const Toast = (props) => {
-  const { toastMsg, toastType} = props;
+  const { toastMsg, toastType } = props;
   const types = {
     success: {
       id: "toast-success",
@@ -27,7 +27,7 @@ const Toast = (props) => {
 
   return (
     <>
-      <div className="absolute z-20 right-[12px] top-[12px]">
+      <div className="z-[200] right-[12px] top-[12px] fixed">
         <div
           id={types[toastType]?.id}
           className={`flex items-center w-full min-w-[400px] max-w-[800px] p-4 text-white ${types[toastType]?.bgcolor} rounded-lg shadow dark:text-white dark:bg-gray-800 `}
