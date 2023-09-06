@@ -167,6 +167,7 @@ export default function AdminCreateUser() {
             toastMsg: "User updated successfully!",
             toastType: "success",
           }));
+          navigation(ADMIN_ROUTE_MAP.adminModule.manageUsers.home);
         }
       } catch (error) {
         console.log(error);
