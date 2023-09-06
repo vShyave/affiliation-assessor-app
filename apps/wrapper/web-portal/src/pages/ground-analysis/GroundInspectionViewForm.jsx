@@ -48,7 +48,7 @@ export default function ApplicationPage({
   let [selectRound, setSelectRound] = useState(round);
   let [OGAFormsList, setOGAFormsList] = useState([]);
   let [formSelected, setFormSelected] = useState();
-  const { setSpinner,setToast } = useContext(ContextAPI);
+  const { setSpinner, setToast } = useContext(ContextAPI);
   const userDetails = getCookie("userData");
 
   const user_details = userDetails?.userRepresentation;
@@ -117,7 +117,7 @@ export default function ApplicationPage({
       tempOGAFormsList.forEach((item) => {
         if (item.form_id === formSelected.form_id) {
           item.form_status = formStatus;
-          item.noc_recommendation = "Not recommended"
+          item.noc_recommendation = "Not recommended";
         }
       });
       setOGAFormsList(tempOGAFormsList);
@@ -170,12 +170,12 @@ export default function ApplicationPage({
       }
 
       const formStatus =
-      response?.data?.update_form_submissions?.returning[0]?.form_status;
+        response?.data?.update_form_submissions?.returning[0]?.form_status;
       let tempOGAFormsList = [...OGAFormsList];
       tempOGAFormsList.forEach((item) => {
         if (item.form_id === formSelected.form_id) {
           item.form_status = formStatus;
-          item.noc_recommendation = "Recommended"
+          item.noc_recommendation = "Recommended";
         }
       });
       setOGAFormsList(tempOGAFormsList);
@@ -235,12 +235,6 @@ export default function ApplicationPage({
 
       iframeContent.getElementById("submit-form").style.display = "none";
       iframeContent.getElementById("save-draft").style.display = "none";
-
-      // Need to work on Save draft...
-      var draftButton = iframeContent.getElementById("save-draft");
-      draftButton?.addEventListener("click", function () {
-        alert("Hello world!");
-      });
     }
 
     setSpinner(false);
@@ -255,10 +249,11 @@ export default function ApplicationPage({
   useEffect(() => {
     getOGAFormsList();
     setSpinner(true);
-    fetchFormData();
+    // fetchFormData();
+
     setTimeout(() => {
       checkIframeLoaded();
-    }, 2500);
+    }, 2000);
   }, []);
 
   useEffect(() => {
@@ -267,6 +262,10 @@ export default function ApplicationPage({
     } else {
       fetchFormData();
     }
+
+    setTimeout(() => {
+      checkIframeLoaded();
+    }, 2000);
   }, [formSelected]);
 
   return (
@@ -307,10 +306,10 @@ export default function ApplicationPage({
                   formStatus == "Rejected" ||
                   rejectStatus
                     ? "invisible cursor-not-allowed flex flex-wrap items-center justify-center gap-2 border border-gray-500 text-gray-500 bg-white w-[140px] h-[40px] font-medium rounded-[4px]"
-                    : "flex flex-wrap items-center justify-center gap-2 border border-gray-500 text-gray-500 bg-white w-[140px] h-[40px] font-medium rounded-[4px]"
+                    : "flex flex-wrap items-center justify-center gap-2 border border-gray-500 text-gray-500 bg-white w-[180px] h-[40px] font-medium rounded-[4px]"
                 }
               >
-                Reject
+                Reject Application
                 <span>
                   <AiOutlineClose />
                 </span>
@@ -329,10 +328,10 @@ export default function ApplicationPage({
                   formStatus == "Rejected" ||
                   rejectStatus
                     ? "invisible cursor-not-allowed flex flex-wrap items-center justify-center gap-2 border border-gray-500 text-gray-500 bg-white w-[140px] h-[40px] font-medium rounded-[4px]"
-                    : "flex flex-wrap items-center justify-center gap-2 border border-gray-500 text-gray-500 bg-white w-[140px] h-[40px] font-medium rounded-[4px]"
+                    : "flex flex-wrap items-center justify-center gap-2 border border-gray-500 text-gray-500 bg-white w-[180px] h-[40px] font-medium rounded-[4px]"
                 }
               >
-                Approve
+                Approve Application
                 <span>
                   <AiOutlineCheck />
                 </span>

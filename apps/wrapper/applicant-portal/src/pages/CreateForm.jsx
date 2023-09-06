@@ -38,6 +38,7 @@ import { applicantService } from "../services";
 import { ContextAPI } from "../utils/contextAPI";
 
 const ENKETO_URL = process.env.REACT_APP_ENKETO_URL;
+let previewFlag = false;
 
 const CreateForm = (props) => {
   const navigate = useNavigate();
@@ -50,7 +51,6 @@ const CreateForm = (props) => {
   let [onFormFailureData, setOnFormFailureData] = useState(undefined);
   let [isDownloading, setIsDownloading] = useState(false);
   let [previewModal, setPreviewModal] = useState(false);
-  let previewFlag = false;
   const { setToast } = useContext(ContextAPI);
 
   // Spinner Element
@@ -138,8 +138,6 @@ const CreateForm = (props) => {
       const { nextForm, formData, onSuccessData, onFailureData } = data;
 
       if (data?.state === "ON_FORM_SUCCESS_COMPLETED") {
-        console.log("Receieved form data", JSON.parse(e.data).formDataXml);
-        // handleSubmit();
         if (!previewFlag) {
           let prevData = await getFromLocalForage(
             `${userId}_${startingForm}_${
@@ -351,14 +349,11 @@ const CreateForm = (props) => {
         }
 
         iframeContent.getElementById("submit-form").style.display = "none";
-        iframeContent.getElementById("save-draft").style.display = "none";
       }
 
       // Need to work on Save draft...
-      var draftButton = iframeContent.getElementById("save-draft");
-      draftButton?.addEventListener("click", function () {
-        alert("Hello world!");
-      });
+      iframeContent.getElementById("save-draft").style.display = "none";
+      // var draftButton = iframeContent.getElementById("save-draft");
     }
   };
 
@@ -372,7 +367,7 @@ const CreateForm = (props) => {
 
     setTimeout(() => {
       checkIframeLoaded();
-    }, 2500);
+    }, 1500);
 
     // To clean all variables
     return () => {
@@ -500,8 +495,8 @@ const CreateForm = (props) => {
                 <FaRegTimesCircle
                   className="text-[36px]"
                   onClick={() => {
-                    setPreviewModal(false);
                     previewFlag = false;
+                    setPreviewModal(false);
                   }}
                 />
               </div>

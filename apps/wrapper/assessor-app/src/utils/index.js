@@ -97,7 +97,7 @@ export const logout = () => {
   localStorage.clear();
   sessionStorage.clear();
   localforage.clear();
-  window.location = "/web";
+  window.location = "/web/login";
   removeCookie("userData");
   serviceWorkerRegistration.unregister();
 };
