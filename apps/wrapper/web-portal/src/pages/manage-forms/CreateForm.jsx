@@ -10,6 +10,7 @@ import { convertODKtoXML, createForm, updateForms, viewForm } from "../../api";
 import { Label } from "../../components";
 import ADMIN_ROUTE_MAP from "../../routes/adminRouteMap";
 import { ContextAPI } from "../../utils/ContextAPI";
+import { setCookie, getCookie, removeCookie } from "../../utils/common";
 
 const CreateForm = () => {
   const [formStatus, setFormStatus] = useState("");
@@ -47,8 +48,9 @@ const CreateForm = () => {
   const handleSaveUpdateDraft = async (action) => {
     let postData = new FormData();
     Object.keys(formData).forEach((key) => postData.append(key, formData[key]));
-    // TODO: make user_id dynamic
-    postData.append("user_id", "53c57d13-d33d-439a-bd72-1f56b189642d");
+
+    const user = getCookie("regulator");
+    postData.append("user_id", user?.[0]?.user_id);
     postData.append("form_status", "Draft");
 
     try {
@@ -91,8 +93,7 @@ const CreateForm = () => {
         path: res.data.fileUrl,
         file_name: res.data.fileName,
       }));
-      //TODO: function call to invoke API for uploading xml file and get the remote path
-      //TODO: add remote path to formData (state).
+
       setToast((prevState) => ({
         ...prevState,
         toastOpen: true,
