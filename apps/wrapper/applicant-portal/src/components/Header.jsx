@@ -22,6 +22,7 @@ const Header = () => {
     removeCookie("userData");
     removeCookie("institutes");
     removeCookie("firebase_client_token")
+    removeCookie("formId");
     navigate(APPLICANT_ROUTE_MAP.loginModule.login);
   };
 

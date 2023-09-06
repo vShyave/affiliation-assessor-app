@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { Button, Label } from "../components";
@@ -10,6 +10,7 @@ import APPLICANT_ROUTE_MAP from "../routes/ApplicantRoute";
 import { userService, applicantService } from "../services";
 import { forkJoin, lastValueFrom } from "rxjs";
 import { UP_DISTRICTS } from "../utils/constants";
+import { ContextAPI } from "../utils/contextAPI";
 
 export default function SelfRegistration() {
   const navigate = useNavigate();
@@ -18,12 +19,8 @@ export default function SelfRegistration() {
     handleSubmit,
     formState: { errors },
   } = useForm();
+  const { setToast } = useContext(ContextAPI);
 
-  const [toast, setToast] = useState({
-    toastOpen: false,
-    toastMsg: "",
-    toastType: "",
-  });
   const signupHandler = async (data) => {
     const {
       firstName,
@@ -103,6 +100,24 @@ export default function SelfRegistration() {
         institutePocDetils
       );
       console.log(addInstitutePocRes);
+
+      //applicant notification
+      applicantService.sendPushNotification({
+        title: "Applicant Registration",
+        body: `You are successfully registered as an Applicant`,
+        deviceToken: [`${getCookie("firebase_client_token")}`],
+        userId: keyCloakSignupRes.data,
+      });
+
+      //email notify
+      const emailData = {
+        recipientEmail: [`${userDetails.request.email}`],
+        emailSubject: `${applicantName} Applicant Registration`,
+        emailBody: `<!DOCTYPE html><html><head><meta charset='utf-8'><title>Your Email Title</title><link href='https://fonts.googleapis.com/css2?family=Mulish:wght@400;600&display=swap' rel='stylesheet'></head><body style='font-family: Arial, sans-serif; background-color: #f4f4f4; margin: 0; padding: 0;'><table width='100%' bgcolor='#ffffff' cellpadding='0' cellspacing='0' border='0'><tr><td style='padding: 20px; text-align: center; background-color: #F5F5F5;'><img src='https://regulator.upsmfac.org/images/upsmf.png' alt='Logo' style='max-width: 360px;'></td></tr></table><table width='100%' bgcolor='#ffffff' cellpadding='0' cellspacing='0' border='0'><tr><td style='padding: 36px;'><p style='color: #555555; font-size: 18px; font-family: 'Mulish', Arial, sans-serif;'>Dear ${applicantName},</p><p style='color: #555555; font-size: 18px; line-height: 1.6; font-family: 'Mulish', Arial, sans-serif;'>You are successfully registered as an Applicant.</p></td></tr></table></body></html>`,
+      };
+
+      applicantService.sendEmailNotification(emailData);
+
       navigate(APPLICANT_ROUTE_MAP.dashboardModule.congratulations);
     } catch (error) {
       setToast((prevState) => ({
@@ -111,16 +126,6 @@ export default function SelfRegistration() {
         toastMsg: "User already registered.",
         toastType: "error",
       }));
-      setTimeout(
-        () =>
-          setToast((prevState) => ({
-            ...prevState,
-            toastOpen: false,
-            toastMsg: "",
-            toastType: "",
-          })),
-        3000
-      );
       console.error("Registration failed due to some error:", error);
     }
   };
@@ -131,9 +136,6 @@ export default function SelfRegistration() {
 
   return (
     <>
-      {toast.toastOpen && (
-        <Toast toastMsg={toast.toastMsg} toastType={toast.toastType} />
-      )}
       <div className="h-[48px] bg-white drop-shadow-sm">
         <div className="container mx-auto px-3 py-3">
           <div className="flex flex-row font-bold gap-2 items-center">
@@ -281,7 +283,7 @@ export default function SelfRegistration() {
                       )}
                       {errors?.mobilePhone?.type === "maxLength" && (
                         <p className="text-red-500 mt-2 text-sm">
-                          Phonenumber cannot exceed 10 characters
+                          Phone number cannot exceed 10 characters
                         </p>
                       )}
                       {errors?.mobilePhone?.type === "pattern" && (
@@ -369,8 +371,10 @@ export default function SelfRegistration() {
                           required: true,
                         })}
                       >
-                        {UP_DISTRICTS.map((district) => (
-                          <option value={district}>{district}</option>
+                        {UP_DISTRICTS.map((district, idx) => (
+                          <option key={idx} value={district}>
+                            {district}
+                          </option>
                         ))}
                       </select>
                       {errors?.applicantType?.type === "required" && (

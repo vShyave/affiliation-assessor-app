@@ -17,6 +17,7 @@ import {
   getInitials,
   readableDate,
   getLocalTimeInISOFormat,
+  getCookie,
 } from "../../utils/common";
 import {
   getUsersForScheduling,
@@ -25,6 +26,10 @@ import {
   addInstituteCourse,
   registerEvent,
   updateFormStatus,
+  getApplicantDeviceId,
+  sendPushNotification,
+  sendEmailNotification,
+  getAllRegulatorDeviceId,
 } from "../../api";
 
 // import Toast from "../../components/Toast";
@@ -38,6 +43,7 @@ function ScheduleInspectionModal({ closeSchedule, otherInfo }) {
   const navigate = useNavigate();
   const handleNext = () => !isLastStep && setActiveStep((cur) => cur + 1);
   const handlePrev = () => !isFirstStep && setActiveStep((cur) => cur - 1);
+  const userDetails = getCookie("userData");
 
   // Common state variables...
   let selectInputRef = useRef();
@@ -210,6 +216,59 @@ function ScheduleInspectionModal({ closeSchedule, otherInfo }) {
         form_id: otherInfo?.formId * 1,
         form_status: "Inspection Scheduled",
       });
+
+      //applicant push notification
+      const applicantRes = await getApplicantDeviceId({
+        institute_id: otherInfo?.instituteId,
+      });
+      if (applicantRes?.data) {
+        let tempIds = JSON.parse(
+          applicantRes?.data?.institutes[0]?.institute_pocs[0]?.device_id
+        );
+        let tempIdsFilter = tempIds.filter(function (el) {
+          return el != null;
+        });
+        sendPushNotification({
+          title: "Inspection Schduled",
+          body: `We are glad to inform you that your application has been processed and was found fit for our next step which is on-ground assessment. On-ground assessment for your application have been scheduled.`,
+          deviceToken: tempIdsFilter,
+          userId: applicantRes?.data?.institutes[0]?.institute_pocs[0]?.user_id,
+        });
+      }
+
+      //email notify
+      const emailData = {
+        recipientEmail: [`${applicantRes?.data?.institutes[0]?.email}`],
+        emailSubject: `Granting NOC/Affiliation to ${applicantRes?.data?.institutes[0]?.name}`,
+        emailBody: `<!DOCTYPE html><html><head><meta charset='utf-8'><title>Your Email Title</title><link href='https://fonts.googleapis.com/css2?family=Mulish:wght@400;600&display=swap' rel='stylesheet'></head><body style='font-family: Arial, sans-serif; background-color: #f4f4f4; margin: 0; padding: 0;'><table width='100%' bgcolor='#ffffff' cellpadding='0' cellspacing='0' border='0'><tr><td style='padding: 20px; text-align: center; background-color: #F5F5F5;'><img src='https://regulator.upsmfac.org/images/upsmf.png' alt='Logo' style='max-width: 360px;'></td></tr></table><table width='100%' bgcolor='#ffffff' cellpadding='0' cellspacing='0' border='0'><tr><td style='padding: 36px;'><p style='color: #555555; font-size: 18px; font-family: 'Mulish', Arial, sans-serif;'>Dear ${applicantRes?.data?.institutes[0]?.name},</p><p style='color: #555555; font-size: 18px; line-height: 1.6; font-family: 'Mulish', Arial, sans-serif;'>We hope this email finds you well. We are glad to inform you that your application has been processed and was found fit for our next step which is on-ground assessment. On-ground assessment for your application have been scheduled. Please expect us to visit your institute very soon.</p><p style='color: #555555; font-size: 18px; line-height: 1.6; font-family: 'Mulish', Arial, sans-serif;'>Following information will help you prepare for the scheduled on-ground assessment:
+      <br/>1. A team of assessors will visit your institute for on-ground assessment. To make this process fair and transparent, institutes are not supposed to know the date of on-ground assessment and assessors are not supposed to know the institute they will be assessing till the day of assessment.
+      <br/>2. We expect your institute open and accessible to our on-ground assessment team on any working day.
+      <br/>3. Once on-ground assessment team prove their identity, they should be allowed to enter the institute and given full cooperation to carry out the on-ground assessment.</p><p style='color: #555555; font-size: 18px; line-height: 1.6; font-family: 'Mulish', Arial, sans-serif;'>If you have any questions or need further clarification regarding the resubmission process, please do not hesitate to reach out to our support executives at <Contact Details>. We are here to assist you and provide any necessary guidance.</p><p style='color: #555555; font-size: 18px; line-height: 1.6; font-family: 'Mulish', Arial, sans-serif;'>Thank you for your time and continued interest in getting affiliated from our organization.</p></td></tr></table></body></html>`,
+      };
+
+      sendEmailNotification(emailData);
+
+      //regulator push notification
+      const regAPIRes = await getAllRegulatorDeviceId();
+      let regDeviceIds = [];
+      regAPIRes?.data?.regulator?.forEach((item) => {
+        let tempIds = JSON.parse(item.device_id);
+        let tempIdsFilter = tempIds.filter(function (el) {
+          return el != null;
+        });
+        if (tempIdsFilter.length) {
+          regDeviceIds.push(tempIdsFilter);
+        }
+      });
+
+      console.log("regulator device ids-", regDeviceIds);
+      sendPushNotification({
+        title: "Inspection Schduled",
+        body: `On-ground assessment for ${otherInfo?.instituteName}'s application have been scheduled.`,
+        deviceToken: regDeviceIds.flat(1),
+        userId: userDetails?.userRepresentation?.id,
+      });
+
       setTimeout(
         () => navigate(`${ADMIN_ROUTE_MAP.adminModule.desktopAnalysis.home}`),
         500

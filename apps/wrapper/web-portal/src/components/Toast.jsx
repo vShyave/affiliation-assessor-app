@@ -27,7 +27,7 @@ const Toast = (props) => {
 
   return (
     <>
-      <div className="absolute z-20 right-[12px] top-[12px]">
+      <div className="fixed z-20 right-[12px] top-[12px]">
         <div
           id={types[toastType]?.id}
           className={`flex items-center w-full min-w-[400px] max-w-[800px] p-4 text-white ${types[toastType]?.bgcolor} rounded-lg shadow dark:text-white dark:bg-gray-800 `}

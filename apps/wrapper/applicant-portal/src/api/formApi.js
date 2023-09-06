@@ -9,7 +9,8 @@ const ENKETO_MANAGER_URL = process.env.REACT_APP_ENKETO_MANAGER_URL;
 const HASURA_CLIENT_NAME = process.env.HASURA_CLIENT_NAME || "hasura-console";
 const X_HASURA_ADMIN_SECRET_KEY =
   process.env.X_HASURA_ADMIN_SECRET_KEY || "myadminsecretkey";
-const HASURA_URL = process.env.REACT_APP_HASURA_URL || 'https://hasura.upsmfac.org/v1/graphql';
+const HASURA_URL =
+  process.env.REACT_APP_HASURA_URL || "https://hasura.upsmfac.org/v1/graphql";
 
 export const getPrefillXML = async (
   form,
@@ -85,6 +86,7 @@ const validateResponse = async (response) => {
     remarks: "",
   });
 
+  //applicant notification
   applicantService.sendPushNotification({
     title: "Application Submission",
     body: `Your application has been successfully submitted. Thank you for your interest. You will receive further updates regarding the review process.`,
@@ -92,22 +94,18 @@ const validateResponse = async (response) => {
     userId: getCookie("userData")?.userRepresentation?.id,
   });
 
-//   const regAPIRes = await applicantService.getAllRegulatorDeviceId();
-//   let regDeviceIds = [];
-//   regAPIRes?.data?.regulator?.forEach((item) => {
-//     let tempIds = JSON.parse(item.device_id);
-//     if (tempIds.length) {
-//       regDeviceIds.push();
-//     }
-//   });
-//   console.log("regulator device ids-", regDeviceIds);
+  //email notify
+  const emailData = {
+    recipientEmail: [`${getCookie("userData")?.userRepresentation?.email}`],
+    emailSubject: `${
+      getCookie("institutes")[0]?.name
+    } Application Submission`,
+    emailBody: `<!DOCTYPE html><html><head><meta charset='utf-8'><title>Your Email Title</title><link href='https://fonts.googleapis.com/css2?family=Mulish:wght@400;600&display=swap' rel='stylesheet'></head><body style='font-family: Arial, sans-serif; background-color: #f4f4f4; margin: 0; padding: 0;'><table width='100%' bgcolor='#ffffff' cellpadding='0' cellspacing='0' border='0'><tr><td style='padding: 20px; text-align: center; background-color: #F5F5F5;'><img src='https://regulator.upsmfac.org/images/upsmf.png' alt='Logo' style='max-width: 360px;'></td></tr></table><table width='100%' bgcolor='#ffffff' cellpadding='0' cellspacing='0' border='0'><tr><td style='padding: 36px;'><p style='color: #555555; font-size: 18px; font-family: 'Mulish', Arial, sans-serif;'>Dear ${
+      getCookie("institutes")[0]?.name
+    },</p><p style='color: #555555; font-size: 18px; line-height: 1.6; font-family: 'Mulish', Arial, sans-serif;'>Your application has been successfully submitted. Thank you for your interest. You will receive further updates regarding the review process.</p></td></tr></table></body></html>`,
+  };
 
-//   applicantService.sendPushNotification({
-//     title: "Application Submission",
-//     body: `A new application has been submitted by an applicant. Please review and proceed with the necessary steps.`,
-//     deviceToken: regDeviceIds,
-//     userId: "34061b3d-dc9f-41c4-94da-405306175430",
-//   });
+  applicantService.sendEmailNotification(emailData);
 
   const jsonResponse = {
     ...apiRes,

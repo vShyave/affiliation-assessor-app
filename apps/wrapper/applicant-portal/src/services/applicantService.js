@@ -46,8 +46,16 @@ export const sendPushNotification = async (postData) => {
   return res;
 };
 
+export const sendEmailNotification = async (postData) => {
+  const res = await axiosService.post(APIS.notifications.emailNotify, postData);
+  return res;
+};
+
 export const getAllNotifications = async (postData) => {
-  const res = await axiosService.post(APIS.notifications.getAllNotifications,postData);
+  const res = await axiosService.post(
+    APIS.notifications.getAllNotifications,
+    postData
+  );
   return res;
 };
 
@@ -80,5 +88,6 @@ export const applicantService = {
   getAllRegulatorDeviceId,
   transactionStatus,
   updatePaymentStatus,
-  getAllNotifications
+  getAllNotifications,
+  sendEmailNotification
 };
