@@ -349,14 +349,11 @@ const CreateForm = (props) => {
         }
 
         iframeContent.getElementById("submit-form").style.display = "none";
-        iframeContent.getElementById("save-draft").style.display = "none";
       }
 
       // Need to work on Save draft...
-      var draftButton = iframeContent.getElementById("save-draft");
-      draftButton?.addEventListener("click", function () {
-        alert("Hello world!");
-      });
+      iframeContent.getElementById("save-draft").style.display = "none";
+      // var draftButton = iframeContent.getElementById("save-draft");
     }
   };
 
@@ -370,7 +367,7 @@ const CreateForm = (props) => {
 
     setTimeout(() => {
       checkIframeLoaded();
-    }, 2500);
+    }, 1500);
 
     // To clean all variables
     return () => {
