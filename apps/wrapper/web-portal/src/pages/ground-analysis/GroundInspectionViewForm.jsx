@@ -235,12 +235,6 @@ export default function ApplicationPage({
 
       iframeContent.getElementById("submit-form").style.display = "none";
       iframeContent.getElementById("save-draft").style.display = "none";
-
-      // Need to work on Save draft...
-      var draftButton = iframeContent.getElementById("save-draft");
-      draftButton?.addEventListener("click", function () {
-        alert("Hello world!");
-      });
     }
 
     setSpinner(false);
@@ -255,10 +249,11 @@ export default function ApplicationPage({
   useEffect(() => {
     getOGAFormsList();
     setSpinner(true);
-    fetchFormData();
+    // fetchFormData();
+
     setTimeout(() => {
       checkIframeLoaded();
-    }, 2500);
+    }, 2000);
   }, []);
 
   useEffect(() => {
@@ -267,6 +262,10 @@ export default function ApplicationPage({
     } else {
       fetchFormData();
     }
+
+    setTimeout(() => {
+      checkIframeLoaded();
+    }, 2000);
   }, [formSelected]);
 
   return (
