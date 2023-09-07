@@ -352,9 +352,10 @@ export class AppController {
   async uploadFile(@UploadedFile() filetoUpload: any) {
     console.log("File to Upload", filetoUpload);
     const extension = filetoUpload.originalname.split('.').pop();
-    const fileName = uuidv4() + `.${extension}`;
+    // const fileName = uuidv4() + `.${extension}`;
+    const fileName = uuidv4() + `filetoUpload.originalname`;
     const filePath = filetoUpload.path;
-    return {};
+    // return {};
     try {
       // Upload the file to GCP bucket
       const uploadResponse = await this.uploadToGcpBucket(filePath, fileName);
