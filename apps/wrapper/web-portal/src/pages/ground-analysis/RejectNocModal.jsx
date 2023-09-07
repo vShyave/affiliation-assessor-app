@@ -43,17 +43,18 @@ function RejectNocModal({
       try {
         setSpinner(true);
         const res = await getRejectApplicant(postData);
-        console.log("remarks",res)
-        const rejectedRemarks = res?.data?.update_form_submissions?.returning[0]?.remarks
+        console.log("remarks", res);
+        const rejectedRemarks =
+          res?.data?.update_form_submissions?.returning[0]?.remarks;
         const formStatus =
           res?.data?.update_form_submissions?.returning[0]?.form_status;
-        setRejectStatus(formStatus === "Rejected" ? true : false);
+        // setRejectStatus(formStatus === "Rejected" ? true : false);
         registerEvent({
           created_date: getLocalTimeInISOFormat(),
           entity_id: formId.toString(),
           entity_type: "form",
           event_name: "Rejected",
-          remarks: `${user_details?.firstName} ${user_details?.lastName} has rejected the form because ${rejectedRemarks}!`,
+          remarks: `${user_details?.firstName} ${user_details?.lastName} has rejected the form with the following remarks ${rejectedRemarks}.`,
           // remarks: rejectedRemarks
         });
 

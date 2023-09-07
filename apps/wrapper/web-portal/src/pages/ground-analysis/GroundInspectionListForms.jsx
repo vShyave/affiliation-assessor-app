@@ -25,7 +25,7 @@ export default function OnGroundInspectionAnalysis() {
   const [formsList, setFormsList] = useState();
   const [round, setRound] = useState(1);
   const [state, setState] = useState({
-    menu_selected: "Inspection Scheduled",
+    menu_selected: "OGA Completed",
   });
   const [paginationInfo, setPaginationInfo] = useState({
     offsetNo: 0,
@@ -292,7 +292,7 @@ export default function OnGroundInspectionAnalysis() {
 
           <div className="flex flex-col gap-3">
             <ul className="flex flex-wrap -mb-px">
-              <li
+              {/* <li
                 className="gap-3"
                 onClick={() => handleSelectMenu("Inspection Scheduled")}
               >
@@ -306,7 +306,7 @@ export default function OnGroundInspectionAnalysis() {
                 >
                   New
                 </a>
-              </li>
+              </li> */}
               <li
                 className="gap-3"
                 onClick={() => handleSelectMenu("OGA Completed")}
