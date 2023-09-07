@@ -24,6 +24,7 @@ import {
 import { getPrefillXML } from "./../../api/formApi";
 import { ContextAPI } from "../../utils/ContextAPI";
 import { getCookie, getLocalTimeInISOFormat } from "../../utils";
+import { Fragment } from "react";
 
 const ENKETO_URL = process.env.REACT_APP_ENKETO_URL;
 const GCP_URL = process.env.REACT_APP_GCP_AFFILIATION_LINK;
@@ -46,6 +47,8 @@ export default function ApplicationPage({
   let { formName, formId, instituteName, round, date } = useParams();
   let [instituteId, setInstituteId] = useState();
   let [selectRound, setSelectRound] = useState(round);
+  let [enabler, setEnabler] = useState(0);
+  let [ogaLisCount, setOgaLisCount] = useState(0);
   let [OGAFormsList, setOGAFormsList] = useState([]);
   let [formSelected, setFormSelected] = useState();
   const { setSpinner, setToast } = useContext(ContextAPI);
@@ -139,6 +142,8 @@ export default function ApplicationPage({
         toastMsg: "The form is rejected!",
         toastType: "success",
       }));
+      enabler++;
+      setEnabler(enabler);
     } catch (error) {
       setToast((prevState) => ({
         ...prevState,
@@ -152,21 +157,28 @@ export default function ApplicationPage({
   };
 
   const handleAcceptOGA = async () => {
-    const postData = {
+    const postAccept1Data = {
       form_id: formSelected.form_id,
       remarks: "",
       date: new Date().toISOString().substring(0, 10),
       noc_Path: "",
       noc_fileName: "",
     };
+    const postAccep2Data = {
+      form_id: formSelected.form_id,
+      remarks: "",
+      date: new Date().toISOString().substring(0, 10),
+      certificate_Path: "",
+      certificate_fileName: "",
+    };
     try {
       setSpinner(true);
       let response;
       if (round == 1) {
-        response = await getAcceptApplicantNoc(postData);
+        response = await getAcceptApplicantNoc(postAccept1Data);
       }
       if (round == 2) {
-        response = await getAcceptApplicantCertificate(postData);
+        response = await getAcceptApplicantCertificate(postAccep2Data);
       }
 
       const formStatus =
@@ -183,7 +195,7 @@ export default function ApplicationPage({
         created_date: getLocalTimeInISOFormat(),
         entity_id: formSelected.form_id.toString(),
         entity_type: "form",
-        event_name: "Approved",
+        event_name: "R2 form approved",
         remarks: `${user_details?.firstName} ${user_details?.lastName} has approved the form!`,
       });
 
@@ -197,6 +209,8 @@ export default function ApplicationPage({
         toastMsg: "The form is approved!",
         toastType: "success",
       }));
+      enabler++;
+      setEnabler(enabler);
     } catch (error) {
       setToast((prevState) => ({
         ...prevState,
@@ -244,13 +258,20 @@ export default function ApplicationPage({
     const postData = { applicant_form_id: formId, submitted_on: date };
     const res = await fetchOGAFormsList(postData);
     setOGAFormsList(res?.data?.form_submissions);
+    setOgaLisCount(res?.data?.form_submissions.length);
+    let count = 0;
+    res?.data?.form_submissions.forEach((item) => {
+      if (item.noc_recommendation) {
+        count++;
+      }
+    });
+    console.log("count", count);
+    setEnabler(count);
   };
-
   useEffect(() => {
     getOGAFormsList();
     setSpinner(true);
     // fetchFormData();
-
     setTimeout(() => {
       checkIframeLoaded();
     }, 2000);
@@ -292,50 +313,41 @@ export default function ApplicationPage({
           <div className="flex flex-row">
             <div className="flex grow justify-start items-center"></div>
             <div className="flex grow gap-4 justify-end items-center">
-              <button
-                onClick={() => setRejectModel(true)}
-                disabled={
-                  formStatus == "Approved" ||
-                  formStatus == "Rejected" ||
-                  rejectStatus
-                    ? true
-                    : false
-                }
-                className={
-                  formStatus == "Approved" ||
-                  formStatus == "Rejected" ||
-                  rejectStatus
-                    ? "invisible cursor-not-allowed flex flex-wrap items-center justify-center gap-2 border border-gray-500 text-gray-500 bg-white w-[140px] h-[40px] font-medium rounded-[4px]"
-                    : "flex flex-wrap items-center justify-center gap-2 border border-gray-500 text-gray-500 bg-white w-[180px] h-[40px] font-medium rounded-[4px]"
-                }
-              >
-                Reject Application
-                <span>
-                  <AiOutlineClose />
-                </span>
-              </button>
-              <button
-                onClick={() => setOpenIssueNocModel(true)}
-                disabled={
-                  formStatus == "Approved" ||
-                  formStatus == "Rejected" ||
-                  rejectStatus
-                    ? true
-                    : false
-                }
-                className={
-                  formStatus == "Approved" ||
-                  formStatus == "Rejected" ||
-                  rejectStatus
-                    ? "invisible cursor-not-allowed flex flex-wrap items-center justify-center gap-2 border border-gray-500 text-gray-500 bg-white w-[140px] h-[40px] font-medium rounded-[4px]"
-                    : "flex flex-wrap items-center justify-center gap-2 border border-gray-500 text-gray-500 bg-white w-[180px] h-[40px] font-medium rounded-[4px]"
-                }
-              >
-                Approve Application
-                <span>
-                  <AiOutlineCheck />
-                </span>
-              </button>
+              {ogaLisCount === enabler && (
+                <Fragment>
+                  <button
+                    onClick={() => setRejectModel(true)}
+                    className={
+                      formStatus == "Approved" ||
+                      formStatus == "Rejected" ||
+                      rejectStatus
+                        ? "invisible cursor-not-allowed flex flex-wrap items-center justify-center gap-2 border border-gray-500 text-gray-500 bg-white w-[140px] h-[40px] font-medium rounded-[4px]"
+                        : "flex flex-wrap items-center justify-center gap-2 border border-gray-500 text-gray-500 bg-white w-[180px] h-[40px] font-medium rounded-[4px]"
+                    }
+                  >
+                    Reject Application
+                    <span>
+                      <AiOutlineClose />
+                    </span>
+                  </button>
+                  <button
+                    onClick={() => setOpenIssueNocModel(true)}
+                    className={
+                      formStatus == "Approved" ||
+                      formStatus == "Rejected" ||
+                      rejectStatus
+                        ? "invisible cursor-not-allowed flex flex-wrap items-center justify-center gap-2 border border-gray-500 text-gray-500 bg-white w-[140px] h-[40px] font-medium rounded-[4px]"
+                        : "flex flex-wrap items-center justify-center gap-2 border border-gray-500 text-gray-500 bg-white w-[180px] h-[40px] font-medium rounded-[4px]"
+                    }
+                  >
+                    Approve Application
+                    <span>
+                      <AiOutlineCheck />
+                    </span>
+                  </button>
+                </Fragment>
+              )}
+
               <div
                 className={
                   formStatus == "Approved" ||
