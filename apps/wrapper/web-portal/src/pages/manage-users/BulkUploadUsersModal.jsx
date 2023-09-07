@@ -13,7 +13,7 @@ import { userService } from "../../api/userService";
 import { removeCookie, setCookie } from "../../utils/common";
 import { ContextAPI } from "../../utils/ContextAPI";
 
-function BulkUploadUsersModal({ closeBulkUploadUsersModal }) {
+function BulkUploadUsersModal({ closeBulkUploadUsersModal,setUsersCreated }) {
   const [file, setFile] = useState();
   const { setSpinner, setToast } = useContext(ContextAPI);
   const [tableUserList, setTableUserList] = useState([]);
@@ -162,11 +162,12 @@ function BulkUploadUsersModal({ closeBulkUploadUsersModal }) {
         object[header.trim()] = values[index]?.trim()?.replace("\r", "");
         return object;
       }, {});
-
+      obj["full_name"] = obj?.fname + " " + obj?.lname;
       if (
         !emailExp.test(obj?.email?.toString()) ||
         !mobNumberExp.test(obj?.mobile_number?.toString()) ||
-        obj?.full_name == "" ||
+        obj?.fname == "" ||
+        obj?.lname == "" ||
         obj?.email == "" ||
         obj?.mobile_number == "" ||
         obj?.role == ""
@@ -262,6 +263,7 @@ function BulkUploadUsersModal({ closeBulkUploadUsersModal }) {
         console.log(postDataHasura);
         //Hasura API call
         const hasuraRes = await createBulkUserHasura(postDataHasura);
+        setUsersCreated(true)
         if (hasuraRes.status !== 200) {
           errorFlag = true;
         }
@@ -362,7 +364,7 @@ function BulkUploadUsersModal({ closeBulkUploadUsersModal }) {
                 </div>
               )}
               {tableDataReady && !isFileValid() && (
-                <div className="text-xl flex-row text-blue-500">
+                <div className="text-xl flex-row text-blue-500 text-center">
                   Please upload csv file with supported data format. Kindly
                   refer the template!
                 </div>
