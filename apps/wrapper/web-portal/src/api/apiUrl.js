@@ -14,9 +14,10 @@ const API_URL = {
     //new APIs
     getAllNotifications: `notification/all`,
     sendPushNotification: `notification/send`,
+    readNotification: `notification/update`,
     getAllRegulatorDeviceId: `${rest}getAllRegulatorDeviceId`,
     getApplicantDeviceId: `${rest}getApplicantDeviceId`,
-    emailNotify: `email/notify`
+    emailNotify: `email/notify`,
   },
   groundAnalysis: {
     viewForm: `${rest}getFormData`,
