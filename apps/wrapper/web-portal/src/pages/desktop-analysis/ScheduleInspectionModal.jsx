@@ -229,7 +229,7 @@ function ScheduleInspectionModal({ closeSchedule, otherInfo }) {
           return el != null;
         });
         sendPushNotification({
-          title: "Inspection Schduled",
+          title: "Inspection Scheduled",
           body: `We are glad to inform you that your application has been processed and was found fit for our next step which is on-ground assessment. On-ground assessment for your application have been scheduled.`,
           deviceToken: tempIdsFilter,
           userId: applicantRes?.data?.institutes[0]?.institute_pocs[0]?.user_id,
@@ -239,7 +239,7 @@ function ScheduleInspectionModal({ closeSchedule, otherInfo }) {
       //email notify
       const emailData = {
         recipientEmail: [`${applicantRes?.data?.institutes[0]?.email}`],
-        emailSubject: `Granting NOC/Affiliation to ${applicantRes?.data?.institutes[0]?.name}`,
+        emailSubject: `Inspection scheduled for ${applicantRes?.data?.institutes[0]?.name}`,
         emailBody: `<!DOCTYPE html><html><head><meta charset='utf-8'><title>Your Email Title</title><link href='https://fonts.googleapis.com/css2?family=Mulish:wght@400;600&display=swap' rel='stylesheet'></head><body style='font-family: Arial, sans-serif; background-color: #f4f4f4; margin: 0; padding: 0;'><table width='100%' bgcolor='#ffffff' cellpadding='0' cellspacing='0' border='0'><tr><td style='padding: 20px; text-align: center; background-color: #F5F5F5;'><img src='https://regulator.upsmfac.org/images/upsmf.png' alt='Logo' style='max-width: 360px;'></td></tr></table><table width='100%' bgcolor='#ffffff' cellpadding='0' cellspacing='0' border='0'><tr><td style='padding: 36px;'><p style='color: #555555; font-size: 18px; font-family: 'Mulish', Arial, sans-serif;'>Dear ${applicantRes?.data?.institutes[0]?.name},</p><p style='color: #555555; font-size: 18px; line-height: 1.6; font-family: 'Mulish', Arial, sans-serif;'>We hope this email finds you well. We are glad to inform you that your application has been processed and was found fit for our next step which is on-ground assessment. On-ground assessment for your application have been scheduled. Please expect us to visit your institute very soon.</p><p style='color: #555555; font-size: 18px; line-height: 1.6; font-family: 'Mulish', Arial, sans-serif;'>Following information will help you prepare for the scheduled on-ground assessment:
       <br/>1. A team of assessors will visit your institute for on-ground assessment. To make this process fair and transparent, institutes are not supposed to know the date of on-ground assessment and assessors are not supposed to know the institute they will be assessing till the day of assessment.
       <br/>2. We expect your institute open and accessible to our on-ground assessment team on any working day.

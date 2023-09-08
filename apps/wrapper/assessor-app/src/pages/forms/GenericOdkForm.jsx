@@ -33,6 +33,7 @@ import localforage from "localforage";
 const ENKETO_MANAGER_URL = process.env.REACT_APP_ENKETO_MANAGER_URL;
 const ENKETO_URL = process.env.REACT_APP_ENKETO_URL;
 const GCP_URL = process.env.REACT_APP_GCP_AFFILIATION_LINK;
+let previewFlag = false;
 
 const GenericOdkForm = (props) => {
   const user = getCookie("userData");
@@ -89,7 +90,6 @@ const GenericOdkForm = (props) => {
   const [errorModal, setErrorModal] = useState(false);
   const [previewModal, setPreviewModal] = useState(false);
   const { state } = useContext(StateContext);
-  let previewFlag = false;
   let courseObj = undefined;
 
   const loading = useRef(false);
@@ -349,7 +349,6 @@ const GenericOdkForm = (props) => {
       detachEventBinding();
       setData(null);
       setPrefilledFormData(null);
-      window.removeEventListener("message", handleEventTrigger);
     };
   }, []);
 
