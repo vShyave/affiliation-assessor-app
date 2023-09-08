@@ -46,6 +46,14 @@ export const sendPushNotification = async (postData) => {
   return res;
 };
 
+export const readNotification = async (postData) => {
+  const res = await axiosService.post(
+    APIS.notifications.readNotification,
+    postData
+  );
+  return res;
+};
+
 export const sendEmailNotification = async (postData) => {
   const res = await axiosService.post(APIS.notifications.emailNotify, postData);
   return res;
