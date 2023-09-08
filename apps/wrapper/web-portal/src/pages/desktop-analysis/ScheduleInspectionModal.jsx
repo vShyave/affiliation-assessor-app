@@ -209,7 +209,7 @@ function ScheduleInspectionModal({ closeSchedule, otherInfo }) {
         entity_id: otherInfo?.formId,
         entity_type: "form",
         event_name: "Inspection Scheduled",
-        remarks: "Round 1 inspection scheduled",
+        remarks: `Round ${otherInfo?.round} inspection scheduled`,
       });
 
       updateFormStatus({
