@@ -452,6 +452,21 @@ export const getAllNotifications = async (postData) => {
   return res;
 };
 
+export const readNotification = async (postData) => {
+  const res = await adminCustomPost.post(
+    `${API_URL.notifications.readNotification}`,
+    postData,
+    {
+      headers: {
+        "Content-Type": "application/json",
+        // "Authorization": getCookie("access_token")
+        Authorization: process.env.REACT_APP_AUTH_TOKEN,
+      },
+    }
+  );
+  return res;
+};
+
 export const sendPushNotification = async (postData) => {
   const res = await adminCustomPost.post(
     `${API_URL.notifications.sendPushNotification}`,

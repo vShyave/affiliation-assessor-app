@@ -69,22 +69,6 @@ export default function Profile() {
     };
 
     try {
-      let accessTokenObj = {
-        grant_type: "client_credentials",
-        client_id: "admin-api",
-        client_secret: "edd0e83d-56b9-4c01-8bf8-bad1870a084a",
-      };
-      // Access Token API call
-      const accessTokenResponse = await userService.getAccessToken(
-        accessTokenObj
-      );
-      setCookie(
-        "access_token",
-        "Bearer " + accessTokenResponse?.data?.access_token
-      );
-      if (accessTokenResponse.status !== 200) {
-        errorFlag = true;
-      }
 
       const postDataKeyCloak = {
         userName: userData?.userRepresentation?.id,
