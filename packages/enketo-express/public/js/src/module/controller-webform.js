@@ -519,7 +519,7 @@ function _saveRecord(survey, draft = true, recordName, confirmed, errorMsg) {
         .then(() => {
 
             records.removeAutoSavedRecord();
-            _resetForm(survey, { isOffline: true });
+            // _resetForm(survey, { isOffline: true });
 
             if (draft) {
                 gui.alert(t('alert.recordsavesuccess.draftmsg'), t('alert.savedraftinfo.heading'), 'info', 5);
