@@ -146,8 +146,8 @@ function IssueNocModal({
           return el != null;
         });
         sendPushNotification({
-          title: "On-Ground Schedule Information(round 1)",
-          body: `The on-ground assessment for Round 1  has been scheduled. On Ground Assessor will visit your college soon.`,
+          title: `On-Ground Schedule Information(round ${selectRound})`,
+          body: `The on-ground assessment for Round ${selectRound} has been scheduled. On Ground Assessor will visit your college soon.`,
           deviceToken: tempIdsFilter,
 
           //use this only when testing regulator

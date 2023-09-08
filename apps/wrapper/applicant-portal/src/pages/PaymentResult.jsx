@@ -8,7 +8,7 @@ import { RxCrossCircled } from "react-icons/rx";
 import { FaAngleRight } from "react-icons/fa";
 
 import APPLICANT_ROUTE_MAP from "../routes/ApplicantRoute";
-import { getCookie} from "../utils";
+import { getCookie } from "../utils";
 import Header from "../components/Header";
 import { applicantService } from "../services";
 
@@ -21,15 +21,36 @@ export default function PaymentResult() {
     navigate(APPLICANT_ROUTE_MAP.dashboardModule.my_applications);
   };
 
-  const  applicantTransaction= async () => {
-    const formData = {"transaction_details":[{"id": params.get("transaction_id"),"form_id": formId}]}
+  const applicantTransaction = async () => {
+    const formData = {
+      transaction_details: [
+        { id: params.get("transaction_id"), form_id: formId },
+      ],
+    };
     const formsResponse = await applicantService.transactionStatus(formData);
-   await applicantService.updatePaymentStatus({"form_id":formId,"payment_status":params.get("resp")=== "success" ? "Paid" : "Failed"})
+    await applicantService.updatePaymentStatus({
+      form_id: formId,
+      payment_status: params.get("resp") === "success" ? "Paid" : "Failed",
+    });
+
+    //email notify
+    const emailData = {
+      recipientEmail: [`${getCookie("userData")?.userRepresentation?.email}`],
+      emailSubject: `Payment Details`,
+      emailBody: `<!DOCTYPE html><html><head><meta charset='utf-8'><title>Your Email Title</title><link href='https://fonts.googleapis.com/css2?family=Mulish:wght@400;600&display=swap' rel='stylesheet'></head><body style='font-family: Arial, sans-serif; background-color: #f4f4f4; margin: 0; padding: 0;'><table width='100%' bgcolor='#ffffff' cellpadding='0' cellspacing='0' border='0'><tr><td style='padding: 20px; text-align: center; background-color: #F5F5F5;'><img src='https://regulator.upsmfac.org/images/upsmf.png' alt='Logo' style='max-width: 360px;'></td></tr></table><table width='100%' bgcolor='#ffffff' cellpadding='0' cellspacing='0' border='0'><tr><td style='padding: 36px;'><p style='color: #555555; font-size: 18px; font-family: 'Mulish', Arial, sans-serif;'>Dear ${
+        getCookie("institutes")[0]?.name
+      },</p><p style='color: #555555; font-size: 18px; line-height: 1.6; font-family: 'Mulish', Arial, sans-serif;'>Your payment details: </p><p style='color: #555555; font-size: 18px; line-height: 1.6; font-family: 'Mulish', Arial, sans-serif;'>${params.get("resp") === "success"
+      ? "Payment success"
+      : "Payment failure"}</p><p style='color: #555555; font-size: 18px; line-height: 1.6; font-family: 'Mulish', Arial, sans-serif;'>Transaction amount : ${params.get("transaction_amount")}</p><p style='color: #555555; font-size: 18px; line-height: 1.6; font-family: 'Mulish', Arial, sans-serif;'>Tranction Id : ${params.get("transaction_id")}</p></td></tr></table></body></html>`,
+    };
+
+    applicantService.sendEmailNotification(emailData);
+    
   };
 
   useEffect(() => {
     if (params.get("transaction_id")) {
-     applicantTransaction()
+      applicantTransaction();
     }
   }, []);
   

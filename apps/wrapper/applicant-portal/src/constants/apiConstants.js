@@ -46,7 +46,8 @@ export const APIS = {
     sendPushNotification: `notification/send`,
     getAllRegulatorDeviceId: `rest/getAllRegulatorDeviceId`,
     getAllNotifications: `notification/all`,
-    emailNotify: `email/notify`
+    emailNotify: `email/notify`,
+    readNotification: `notification/update`,
   },
   PAYMENT:{
     GENERATE_LINK: `payment/generatelink`,

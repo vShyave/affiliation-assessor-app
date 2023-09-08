@@ -71,19 +71,6 @@ export default function SelfRegistration() {
     };
 
     try {
-      let accessTokenObj = {
-        grant_type: "client_credentials",
-        client_id: "admin-api",
-        client_secret: "edd0e83d-56b9-4c01-8bf8-bad1870a084a",
-      };
-      const accessTokenResponse = await userService.getAccessToken(
-        accessTokenObj
-      );
-      setCookie(
-        "access_token",
-        "Bearer " + accessTokenResponse.data.access_token
-      );
-      console.log(accessTokenResponse);
 
       const keyCloakSignupRes = await userService.signup(userDetails);
       console.log(keyCloakSignupRes);
