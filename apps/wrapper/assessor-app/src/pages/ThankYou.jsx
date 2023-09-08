@@ -42,11 +42,12 @@ const ThankYou = () => {
           <div className="flex flex-col gap-1 text-center">
             <div className="text-gray-500">You've now completed</div>
             <div className="text-primary font-bold text-[26px]">
-              {form.name
+              {" "}
+              {formName
                 .replace(/^(\d{1,2})\-(\d{1,2})\-(\d{4})-+/g, "")
                 .replace(".xml", "")
-                .toUpperCase()} FORM
-              
+                .toUpperCase()}{" "}
+              FORM
             </div>
             {/* <div className="text-[18px] text-gray-500">(1/8 Applications)</div> */}
           </div>
