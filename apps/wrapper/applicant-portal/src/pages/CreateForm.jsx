@@ -139,21 +139,7 @@ const CreateForm = (props) => {
 
       if (data?.state === "ON_FORM_SUCCESS_COMPLETED") {
         if (!previewFlag) {
-          let prevData = await getFromLocalForage(
-            `${userId}_${startingForm}_${
-              new Date().toISOString().split("T")[0]
-            }`
-          );
-          await setToLocalForage(
-            `${userId}_${startingForm}_${
-              new Date().toISOString().split("T")[0]
-            }`,
-            {
-              formData: JSON.parse(e.data).formDataXml,
-              imageUrls: { ...prevData?.imageUrls },
-            }
-          );
-          fetchFormData();
+          await fetchFormData();
           handleRenderPreview();
         } else {
           handleSubmit();
@@ -268,7 +254,7 @@ const CreateForm = (props) => {
     }
 
     if (
-      ENKETO_URL === e.origin + "/enketo" &&
+      ((ENKETO_URL === `${e.origin}/enketo`) || (ENKETO_URL === `${e.origin}/enketo/`)) &&
       // ENKETO_URL === e.origin  &&
       typeof e?.data === "string" &&
       JSON.parse(e?.data)?.state !== "ON_FORM_SUCCESS_COMPLETED"

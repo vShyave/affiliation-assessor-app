@@ -175,9 +175,10 @@ async function handleNonGetRequests(request, url) {
       const networkResponse = await fetch(request.clone());
       if(networkResponse.redirected){
         await cleanResponse(networkResponse)
-      } else {
-        return await fetch(request.clone());
-      }
+      } 
+      // else {
+      //   return await fetch(request.clone());
+      // }
     
     }
 

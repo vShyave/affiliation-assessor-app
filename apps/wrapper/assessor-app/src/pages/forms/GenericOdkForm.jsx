@@ -178,7 +178,7 @@ const GenericOdkForm = (props) => {
       const { nextForm, formData, onSuccessData, onFailureData } = data;
       if (data?.state === "ON_FORM_SUCCESS_COMPLETED") {
         if (!previewFlag) {
-          getDataFromLocal();
+          await getDataFromLocal();
           handleRenderPreview();
         } else {
           // For read-only forms, it will disable the Submit...
@@ -186,7 +186,6 @@ const GenericOdkForm = (props) => {
             setErrorModal(true);
             return;
           }
-
           const updatedFormData = await updateFormData(formSpec.start);
           const storedData = await getSpecificDataFromForage("required_data");
 
