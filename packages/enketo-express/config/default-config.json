@@ -110,5 +110,5 @@
     "validate page": true,
     "payload limit": "100kb",
     "text field character limit": 2000,
-    "formManagerBaseURI": "https://3006-devendratar-affiliation-rrcqyu1vzg3.ws-us104.gitpod.io/"
+    "formManagerBaseURI": "https://formmanager.upsmfac.org/"
 }
