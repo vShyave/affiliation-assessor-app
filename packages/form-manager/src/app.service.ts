@@ -155,6 +155,7 @@ export class AppService {
     const instanceFromForm = doc.getElementsByTagName('instance')[0].childNodes[0];
 
     if (prefillSpec !== undefined) {
+      prefillSpec = prefillSpec.replace(/\n\s*/g, '');
       let instanceData = this.parser.parseFromString(prefillSpec, 'text/xml');
       if (files) {
         for (const [key, value] of Object.entries(files)) {
@@ -185,6 +186,7 @@ export class AppService {
     console.log({ form, prefillSpec, files });
 
     if (prefillSpec !== undefined) {
+      prefillSpec = prefillSpec.replace(/\n\s*/g, '');
       let instanceData = this.parser.parseFromString(prefillSpec, 'text/xml');
       if (files) {
         for (const [key, value] of Object.entries(files)) {
