@@ -42,6 +42,7 @@ import { StrictMode } from "react";
 import ReturnToInstituteModal from "./ReturnToInstituteModal";
 
 const ENKETO_URL = process.env.REACT_APP_ENKETO_URL;
+let isFormSubmittedForConfiirmation = false;
 
 export default function DesktopAnalysisView() {
   const [returnToInstituteModal, setReturnToInstituteModal] = useState(false);
@@ -136,6 +137,7 @@ export default function DesktopAnalysisView() {
     try {
       const { nextForm, formData, onSuccessData, onFailureData } = data;
       if (data?.state === "ON_FORM_SUCCESS_COMPLETED") {
+        isFormSubmittedForConfiirmation = true;
         setOnSubmit(true);
       }
 
@@ -197,6 +199,7 @@ export default function DesktopAnalysisView() {
     };
 
     sendEmailNotification(emailData);
+    isFormSubmittedForConfiirmation = false;
     setOnSubmit(false);
 
     // Delete the data from the Local Forage
@@ -228,7 +231,7 @@ export default function DesktopAnalysisView() {
     if (
       ENKETO_URL === e.origin + "/enketo" &&
       typeof e?.data === "string" &&
-      JSON.parse(e?.data)?.state !== "ON_FORM_SUCCESS_COMPLETED"
+      JSON.parse(e?.data)?.state !== "ON_FORM_SUCCESS_COMPLETED" && !isFormSubmittedForConfiirmation
     ) {
       var formData = new XMLParser().parseFromString(
         JSON.parse(e.data).formData
@@ -567,7 +570,11 @@ export default function DesktopAnalysisView() {
           <div className="flex flex-row justify-center w-full py-4 gap-5">
             <div
               className="border border-primary bg-primary py-3 px-8 rounded-[4px] cursor-pointer items-center"
-              onClick={() => setOnSubmit(false)}
+              onClick={
+                () => {
+                  isFormSubmittedForConfiirmation = false;
+                  setOnSubmit(false);
+                }}
             >
               No
             </div>

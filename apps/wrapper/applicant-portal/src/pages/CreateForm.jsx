@@ -39,6 +39,7 @@ import { ContextAPI } from "../utils/contextAPI";
 
 const ENKETO_URL = process.env.REACT_APP_ENKETO_URL;
 let previewFlag = false;
+let isFormInPreview= false;
 
 const CreateForm = (props) => {
   const navigate = useNavigate();
@@ -138,6 +139,7 @@ const CreateForm = (props) => {
       const { nextForm, formData, onSuccessData, onFailureData } = data;
 
       if (data?.state === "ON_FORM_SUCCESS_COMPLETED") {
+        isFormInPreview = true;
         if (!previewFlag) {
           await fetchFormData();
           handleRenderPreview();
@@ -225,6 +227,7 @@ const CreateForm = (props) => {
 
     // Delete the form and course details data from the Local Forage
     removeAllFromLocalForage();
+    isFormInPreview = false;
 
     setOnSubmit(false);
     setToast((prevState) => ({
@@ -249,6 +252,7 @@ const CreateForm = (props) => {
   };
 
   const handleFormEvents = async (startingForm, afterFormSubmit, e) => {
+  
     if (typeof e.data === "string" && e.data.includes("webpackHot")) {
       return;
     }
@@ -257,7 +261,7 @@ const CreateForm = (props) => {
       ((ENKETO_URL === `${e.origin}/enketo`) || (ENKETO_URL === `${e.origin}/enketo/`)) &&
       // ENKETO_URL === e.origin  &&
       typeof e?.data === "string" &&
-      JSON.parse(e?.data)?.state !== "ON_FORM_SUCCESS_COMPLETED"
+      JSON.parse(e?.data)?.state !== "ON_FORM_SUCCESS_COMPLETED" && !isFormInPreview
     ) {
       var formData = new XMLParser().parseFromString(
         JSON.parse(e.data).formData
@@ -481,6 +485,7 @@ const CreateForm = (props) => {
                 <FaRegTimesCircle
                   className="text-[36px]"
                   onClick={() => {
+                    isFormInPreview = false;
                     previewFlag = false;
                     setPreviewModal(false);
                   }}

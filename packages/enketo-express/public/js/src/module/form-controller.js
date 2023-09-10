@@ -238,10 +238,12 @@ export class FormController {
 
         // Uploading images to Minio and replacing in formData
         for (let i = 0; i < formFiles.length; i++) {
-            let minioUri = await this.uploadFile(formFiles[i]);
-            console.log(minioUri, formFiles[i].name);
-            if (minioUri) {
-                formData = formData.replace(formFiles[i].name, minioUri);
+            if(typeof formFiles[i] !== "string") {
+                let minioUri = await this.uploadFile(formFiles[i]);
+                console.log(minioUri, formFiles[i].name);
+                if (minioUri) {
+                    formData = formData.replace(formFiles[i].name, minioUri);
+                }
             }
         }
 
