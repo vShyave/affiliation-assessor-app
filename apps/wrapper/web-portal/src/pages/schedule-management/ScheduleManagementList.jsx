@@ -1,7 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 
-// import { MdFileUpload, MdEdit, MdDelete } from "react-icons/md";
 import { RiDeleteBin6Line } from "react-icons/ri";
 
 import FilteringTable from "../../components/table/FilteringTable";
@@ -134,11 +133,11 @@ const ScheduleManagementList = () => {
     status: e?.status,
     more_actions: (
       <div className="flex flex-row text-2xl font-semibold">
-        <Menu>
+        <Menu placement="bottom-end">
           <MenuHandler>
-            <button className="leading-3 position-relative">...</button>
+            <button className="leading-3 relative top-[-8px]">...</button>
           </MenuHandler>
-          <MenuList>
+          <MenuList className="p-2">
             <MenuItem
               onClick={() => {
                 setShowAlert(true);
@@ -161,7 +160,7 @@ const ScheduleManagementList = () => {
                 <div className="text-semibold">
                   <span>Delete</span>
                 </div>
-              </div>{" "}
+              </div>
             </MenuItem>
           </MenuList>
         </Menu>

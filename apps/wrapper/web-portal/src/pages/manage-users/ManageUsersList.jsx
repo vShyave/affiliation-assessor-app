@@ -167,11 +167,11 @@ export default function ManageUsersList({
           item.status = "Inactive";
           item.more_actions = (
             <div className="flex flex-row text-2xl font-semibold">
-              <Menu>
+              <Menu placement="bottom-end">
                 <MenuHandler>
-                  <button className="leading-3 position-relative">...</button>
+                  <button className="leading-3 relative top-[-8px]">...</button>
                 </MenuHandler>
-                <MenuList>
+                <MenuList className="p-2">
                   <MenuItem
                     onClick={() =>
                       navigation(
@@ -195,7 +195,7 @@ export default function ManageUsersList({
                         : handleUsersetInvalid(e)
                     }
                   >
-                    <div className="flex flex-row gap-4 mt-4">
+                    <div className="flex flex-row gap-4">
                       <div>
                         <MdSwapHoriz />
                       </div>
@@ -209,7 +209,7 @@ export default function ManageUsersList({
                     </div>
                   </MenuItem>
                   <MenuItem onClick={() => handleUserDelete(e)}>
-                    <div className="flex flex-row gap-4 mt-4">
+                    <div className="flex flex-row gap-4">
                       <div>
                         <MdDelete />
                       </div>
@@ -258,11 +258,11 @@ export default function ManageUsersList({
           item.status = "Active";
           item.more_actions = (
             <div className="flex flex-row text-2xl font-semibold">
-              <Menu>
+              <Menu placement="bottom-end">
                 <MenuHandler>
-                  <button className="leading-3 position-relative">...</button>
+                  <button className="leading-3 relative top-[-8px]">...</button>
                 </MenuHandler>
-                <MenuList>
+                <MenuList className="p-2">
                   <MenuItem
                     onClick={() =>
                       navigation(
@@ -270,7 +270,7 @@ export default function ManageUsersList({
                       )
                     }
                   >
-                    <div className="flex flex-row gap-4 mt-4">
+                    <div className="flex flex-row gap-4">
                       <div>
                         <MdEdit />
                       </div>
@@ -286,7 +286,7 @@ export default function ManageUsersList({
                         : handleUsersetInvalid(e)
                     }
                   >
-                    <div className="flex flex-row gap-4 mt-4">
+                    <div className="flex flex-row gap-4">
                       <div>
                         <MdSwapHoriz />
                       </div>
@@ -300,7 +300,7 @@ export default function ManageUsersList({
                     </div>{" "}
                   </MenuItem>
                   <MenuItem onClick={() => handleUserDelete(e)}>
-                    <div className="flex flex-row gap-4 mt-4">
+                    <div className="flex flex-row gap-4">
                       <div>
                         <MdDelete />
                       </div>
@@ -358,11 +358,11 @@ export default function ManageUsersList({
       ),
       more_actions: (
         <div className="flex flex-row text-2xl font-semibold">
-          <Menu>
+          <Menu placement="bottom-end">
             <MenuHandler>
-              <button className="leading-3 position-relative">...</button>
+              <button className="leading-3 relative top-[-8px]">...</button>
             </MenuHandler>
-            <MenuList>
+            <MenuList className="p-2">
               <MenuItem
                 onClick={() =>
                   navigation(
@@ -370,11 +370,11 @@ export default function ManageUsersList({
                   )
                 }
               >
-                <div className="flex flex-row gap-4 mt-4">
+                <div className="flex flex-row gap-4 p-1">
                   <div>
                     <MdEdit />
                   </div>
-                  <div className="text-semibold m-">
+                  <div className="text-semibold">
                     <span>Edit</span>
                   </div>
                 </div>{" "}
@@ -386,11 +386,11 @@ export default function ManageUsersList({
                     : handleUsersetInvalid(e)
                 }
               >
-                <div className="flex flex-row gap-4 mt-4">
+                <div className="flex flex-row gap-4 p-1">
                   <div>
                     <MdSwapHoriz />
                   </div>
-                  <div className="text-semibold m-">
+                  <div className="text-semibold">
                     <span>
                       {e?.workingstatus === "Invalid"
                         ? "Activate"
@@ -400,11 +400,11 @@ export default function ManageUsersList({
                 </div>{" "}
               </MenuItem>
               <MenuItem onClick={() => handleUserDelete(e)}>
-                <div className="flex flex-row gap-4 mt-4">
+                <div className="flex flex-row gap-4 p-1">
                   <div>
                     <MdDelete />
                   </div>
-                  <div className="text-semibold m-">
+                  <div className="text-semibold">
                     <span>Delete</span>
                   </div>
                 </div>{" "}
@@ -439,11 +439,11 @@ export default function ManageUsersList({
       ),
       more_actions: (
         <div className="flex flex-row text-2xl font-semibold">
-          <Menu>
+          <Menu placement="bottom-end">
             <MenuHandler>
-              <button className="leading-3 position-relative">...</button>
+              <button className="leading-3 relative top-[-8px]">...</button>
             </MenuHandler>
-            <MenuList>
+            <MenuList className="p-2">
               <MenuItem
                 onClick={() =>
                   navigation(
@@ -451,21 +451,21 @@ export default function ManageUsersList({
                   )
                 }
               >
-                <div className="flex flex-row gap-4 mt-4">
+                <div className="flex flex-row gap-4 p-1">
                   <div>
                     <MdEdit />
                   </div>
-                  <div className="text-semibold m-">
+                  <div className="text-semibold">
                     <span>Edit</span>
                   </div>
                 </div>{" "}
               </MenuItem>
               <MenuItem onClick={() => handleUserDelete(e)}>
-                <div className="flex flex-row gap-4 mt-4">
+                <div className="flex flex-row gap-4 p-1">
                   <div>
                     <MdDelete />
                   </div>
-                  <div className="text-semibold m-">
+                  <div className="text-semibold">
                     <span>Delete</span>
                   </div>
                 </div>{" "}
