@@ -89,12 +89,12 @@ export default function SelfRegistration() {
       console.log(addInstitutePocRes);
 
       //applicant notification
-      applicantService.sendPushNotification({
-        title: "Applicant Registration",
-        body: `You are successfully registered as an Applicant`,
-        deviceToken: [`${getCookie("firebase_client_token")}`],
-        userId: keyCloakSignupRes.data,
-      });
+      setToast((prevState) => ({
+        ...prevState,
+        toastOpen: true,
+        toastMsg: "You are successfully registered.",
+        toastType: "success",
+      }));
 
       //email notify
       const emailData = {

@@ -72,55 +72,65 @@ function ReturnToInstituteModal({
         }));
         closeRejectModal(false);
 
-        //applicant push notification
         const applicantRes = await getApplicantDeviceId({
           institute_id: instituteId,
         });
-        if (applicantRes?.data) {
-          let tempIds = JSON.parse(
-            applicantRes?.data?.institutes[0]?.institute_pocs[0]?.device_id
-          );
-          let tempIdsFilter = tempIds.filter(function (el) {
-            return el != null;
-          });
-          sendPushNotification({
-            title: "Application Termination",
-            body: `We regret to inform you that your application has been terminated. We appreciate your interest and encourage you to consider applying in the future.`,
-            deviceToken: tempIdsFilter,
-            userId:
-              applicantRes?.data?.institutes[0]?.institute_pocs[0]?.user_id,
-          });
-        }
-
-        //regulator push notification
-        const regAPIRes = await getAllRegulatorDeviceId();
-        let regDeviceIds = [];
-        regAPIRes?.data?.regulator?.forEach((item) => {
-          let tempIds = JSON.parse(item.device_id);
-          let tempIdsFilter = tempIds.filter(function (el) {
-            return el != null;
-          });
-          if (tempIdsFilter.length) {
-            regDeviceIds.push(tempIdsFilter);
+        if (
+          getCookie("firebase_client_token") !== undefined ||
+          getCookie("firebase_client_token") !== null
+        ) {
+          //applicant push notification
+          if (applicantRes?.data) {
+            let tempIds = JSON.parse(
+              applicantRes?.data?.institutes[0]?.institute_pocs[0]?.device_id
+            );
+            let tempIdsFilter = tempIds.filter(function (el) {
+              return el != null;
+            });
+            if (tempIdsFilter.length) {
+              sendPushNotification({
+                title: "Application Termination",
+                body: `We regret to inform you that your application has been terminated. We appreciate your interest and encourage you to consider applying in the future.`,
+                deviceToken: tempIdsFilter,
+                userId:
+                  applicantRes?.data?.institutes[0]?.institute_pocs[0]?.user_id,
+              });
+            }
           }
-        });
 
-        console.log("regulator device ids-", regDeviceIds);
-        sendPushNotification({
-          title: "Application Termination",
-          body: `Please be informed that the ${instituteName}'s application form has been terminated. Kindly update the records accordingly.`,
-          deviceToken: regDeviceIds.flat(1),
-          userId: userDetails?.userRepresentation?.id,
-        });
+          //regulator push notification
+          const regAPIRes = await getAllRegulatorDeviceId();
+          let regDeviceIds = [];
+          regAPIRes?.data?.regulator?.forEach((item) => {
+            let tempIds = JSON.parse(item.device_id);
+            let tempIdsFilter = tempIds.filter(function (el) {
+              return el != null;
+            });
+            if (tempIdsFilter.length) {
+              regDeviceIds.push(tempIdsFilter);
+            }
+          });
 
+          console.log("regulator device ids-", regDeviceIds);
+          if (regDeviceIds.flat(1).length) {
+            sendPushNotification({
+              title: "Application Termination",
+              body: `Please be informed that the ${instituteName}'s application form has been terminated. Kindly update the records accordingly.`,
+              deviceToken: regDeviceIds.flat(1),
+              userId: userDetails?.userRepresentation?.id,
+            });
+          }
+        }
         //email notify
-        const emailData = {
-          recipientEmail: [`${applicantRes?.data?.institutes[0]?.email}`],
-          emailSubject: `Application terminated!`,
-          emailBody: `<!DOCTYPE html><html><head><meta charset='utf-8'><title>Your Email Title</title><link href='https://fonts.googleapis.com/css2?family=Mulish:wght@400;600&display=swap' rel='stylesheet'></head><body style='font-family: Arial, sans-serif; background-color: #f4f4f4; margin: 0; padding: 0;'><table width='100%' bgcolor='#ffffff' cellpadding='0' cellspacing='0' border='0'><tr><td style='padding: 20px; text-align: center; background-color: #F5F5F5;'><img src='https://regulator.upsmfac.org/images/upsmf.png' alt='Logo' style='max-width: 360px;'></td></tr></table><table width='100%' bgcolor='#ffffff' cellpadding='0' cellspacing='0' border='0'><tr><td style='padding: 36px;'><p style='color: #555555; font-size: 18px; font-family: 'Mulish', Arial, sans-serif;'>Dear ${applicantRes?.data?.institutes[0]?.name},</p><p style='color: #555555; font-size: 18px; line-height: 1.6; font-family: 'Mulish', Arial, sans-serif;'>We hope this email finds you well. We are writing to kindly request the resubmission of your application for the affiliation process. We apologize for any inconvenience caused, but it appears that there was an issue with the initial submission. Following is the reason for rejection ${rejectedRemarks}</p></td></tr></table></body></html>`,
-        };
+        if (applicantRes?.data?.institutes[0]?.email) {
+          const emailData = {
+            recipientEmail: [`${applicantRes?.data?.institutes[0]?.email}`],
+            emailSubject: `Application terminated!`,
+            emailBody: `<!DOCTYPE html><html><head><meta charset='utf-8'><title>Your Email Title</title><link href='https://fonts.googleapis.com/css2?family=Mulish:wght@400;600&display=swap' rel='stylesheet'></head><body style='font-family: Arial, sans-serif; background-color: #f4f4f4; margin: 0; padding: 0;'><table width='100%' bgcolor='#ffffff' cellpadding='0' cellspacing='0' border='0'><tr><td style='padding: 20px; text-align: center; background-color: #F5F5F5;'><img src='https://regulator.upsmfac.org/images/upsmf.png' alt='Logo' style='max-width: 360px;'></td></tr></table><table width='100%' bgcolor='#ffffff' cellpadding='0' cellspacing='0' border='0'><tr><td style='padding: 36px;'><p style='color: #555555; font-size: 18px; font-family: 'Mulish', Arial, sans-serif;'>Dear ${applicantRes?.data?.institutes[0]?.name},</p><p style='color: #555555; font-size: 18px; line-height: 1.6; font-family: 'Mulish', Arial, sans-serif;'>We hope this email finds you well. We are writing to kindly request the resubmission of your application for the affiliation process. We apologize for any inconvenience caused, but it appears that there was an issue with the initial submission. Following is the reason for rejection ${rejectedRemarks}</p></td></tr></table></body></html>`,
+          };
 
-        sendEmailNotification(emailData);
+          sendEmailNotification(emailData);
+        }
         setTimeout(
           () => navigate(`${ADMIN_ROUTE_MAP.adminModule.desktopAnalysis.home}`),
           1500

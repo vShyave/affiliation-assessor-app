@@ -134,40 +134,43 @@ function IssueNocModal({
         form_status: "Approved",
       });
 
-      //applicant push notification
       const applicantRes = await getApplicantDeviceId({
         institute_id: instituteId,
       });
-      if (applicantRes?.data) {
-        let tempIds = JSON.parse(
-          applicantRes?.data?.institutes[0]?.institute_pocs[0]?.device_id
-        );
-        let tempIdsFilter = tempIds.filter(function (el) {
-          return el != null;
-        });
-        sendPushNotification({
-          title: `On-Ground Schedule Information(round ${selectRound})`,
-          body: `The on-ground assessment for Round ${selectRound} has been scheduled. On Ground Assessor will visit your college soon.`,
-          deviceToken: tempIdsFilter,
-
-          //use this only when testing regulator
-          // deviceToken: [`${getCookie("firebase_client_token")}`],
-
-          // following is for pavana login applicant
-          // deviceToken:[`${dfyBA3tIXcbkTuFcXvlIZB:APA91bGik1lrcpNqI7fE5cIOGetsnX-s-wPQ3X76jwfuf-KfxlVgoG0okb-wub6wNeAsdW_vS8vQGMgTVknGsazTO6Z0hcGqeHKCHiBDyEbZUOhm4NVxueeZCs9oA2qcP2Yp0wWX4ece}`]
-
-          userId: applicantRes?.data?.institutes[0]?.institute_pocs[0]?.user_id,
-        });
+      if (
+        getCookie("firebase_client_token") !== undefined ||
+        getCookie("firebase_client_token") !== null
+      ) {
+        //applicant push notification
+        if (applicantRes?.data) {
+          let tempIds = JSON.parse(
+            applicantRes?.data?.institutes[0]?.institute_pocs[0]?.device_id
+          );
+          let tempIdsFilter = tempIds.filter(function (el) {
+            return el != null;
+          });
+          if (tempIdsFilter.length) {
+            sendPushNotification({
+              title: `On-Ground Schedule Information(round ${selectRound})`,
+              body: `The on-ground assessment for Round ${selectRound} has been scheduled. On Ground Assessor will visit your college soon.`,
+              deviceToken: tempIdsFilter,
+              userId:
+                applicantRes?.data?.institutes[0]?.institute_pocs[0]?.user_id,
+            });
+          }
+        }
       }
 
       //email notify
-      const emailData = {
-        recipientEmail: [`${applicantRes?.data?.institutes[0]?.email}`],
-        emailSubject: `NOC granted for ${applicantRes?.data?.institutes[0]?.name}`,
-        emailBody: `<!DOCTYPE html><html><head><meta charset='utf-8'><title>Your Email Title</title><link href='https://fonts.googleapis.com/css2?family=Mulish:wght@400;600&display=swap' rel='stylesheet'></head><body style='font-family: Arial, sans-serif; background-color: #f4f4f4; margin: 0; padding: 0;'><table width='100%' bgcolor='#ffffff' cellpadding='0' cellspacing='0' border='0'><tr><td style='padding: 20px; text-align: center; background-color: #F5F5F5;'><img src='https://regulator.upsmfac.org/images/upsmf.png' alt='Logo' style='max-width: 360px;'></td></tr></table><table width='100%' bgcolor='#ffffff' cellpadding='0' cellspacing='0' border='0'><tr><td style='padding: 36px;'><p style='color: #555555; font-size: 18px; font-family: 'Mulish', Arial, sans-serif;'>Dear ${applicantRes?.data?.institutes[0]?.name},</p><p style='color: #555555; font-size: 18px; line-height: 1.6; font-family: 'Mulish', Arial, sans-serif;'>We hope this email finds you well. After careful consideration and evaluation, we are delighted to inform you that UTTAR PRADESH SCRUTINTY COMMITTE has granted NOC for affiliation to ${applicantRes?.data?.institutes[0]?.name}.</p><p style='color: #555555; font-size: 18px; line-height: 1.6; font-family: 'Mulish', Arial, sans-serif;'>Forms for round 2 have been enabled for you to fill and submit. Please submit the round 2 application within one year from the issue of this NOC.</p><p style='color: #555555; font-weight: bold; font-size: 18px; line-height: 1.6; font-family: 'Mulish', Arial, sans-serif;'>Note: To download NOC open the form which you have submitted and click on the DOWNLOAD NOC/CERTIFICATE</p></td></tr></table></body></html>`,
-      };
+      if (applicantRes?.data?.institutes[0]?.email) {
+        const emailData = {
+          recipientEmail: [`${applicantRes?.data?.institutes[0]?.email}`],
+          emailSubject: `NOC granted for ${applicantRes?.data?.institutes[0]?.name}`,
+          emailBody: `<!DOCTYPE html><html><head><meta charset='utf-8'><title>Your Email Title</title><link href='https://fonts.googleapis.com/css2?family=Mulish:wght@400;600&display=swap' rel='stylesheet'></head><body style='font-family: Arial, sans-serif; background-color: #f4f4f4; margin: 0; padding: 0;'><table width='100%' bgcolor='#ffffff' cellpadding='0' cellspacing='0' border='0'><tr><td style='padding: 20px; text-align: center; background-color: #F5F5F5;'><img src='https://regulator.upsmfac.org/images/upsmf.png' alt='Logo' style='max-width: 360px;'></td></tr></table><table width='100%' bgcolor='#ffffff' cellpadding='0' cellspacing='0' border='0'><tr><td style='padding: 36px;'><p style='color: #555555; font-size: 18px; font-family: 'Mulish', Arial, sans-serif;'>Dear ${applicantRes?.data?.institutes[0]?.name},</p><p style='color: #555555; font-size: 18px; line-height: 1.6; font-family: 'Mulish', Arial, sans-serif;'>We hope this email finds you well. After careful consideration and evaluation, we are delighted to inform you that UTTAR PRADESH SCRUTINTY COMMITTE has granted NOC for affiliation to ${applicantRes?.data?.institutes[0]?.name}.</p><p style='color: #555555; font-size: 18px; line-height: 1.6; font-family: 'Mulish', Arial, sans-serif;'>Forms for round 2 have been enabled for you to fill and submit. Please submit the round 2 application within one year from the issue of this NOC.</p><p style='color: #555555; font-weight: bold; font-size: 18px; line-height: 1.6; font-family: 'Mulish', Arial, sans-serif;'>Note: To download NOC open the form which you have submitted and click on the DOWNLOAD NOC/CERTIFICATE</p></td></tr></table></body></html>`,
+        };
 
-      sendEmailNotification(emailData);
+        sendEmailNotification(emailData);
+      }
 
       pathName = "";
       nocorCertificateFileName = "";
@@ -207,39 +210,44 @@ function IssueNocModal({
         form_status: "Approved",
       });
 
-      //applicant push notification
       const applicantRes = await getApplicantDeviceId({
         institute_id: instituteId,
       });
-      if (applicantRes?.data) {
-        let tempIds = JSON.parse(
-          applicantRes?.data?.institutes[0]?.institute_pocs[0]?.device_id
-        );
-        let tempIdsFilter = tempIds.filter(function (el) {
-          return el != null;
-        });
-        sendPushNotification({
-          title: "On-Ground Schedule Information(round 2)",
-          body: `The on-ground assessment for Round 2  has been scheduled. On Ground Assessor will visit your college soon.`,
-          deviceToken: tempIdsFilter,
-          //use this only when testing regulator
-          // deviceToken: [`${getCookie("firebase_client_token")}`],
 
-          // following is for pavana login applicant
-          // deviceToken:[`${dfyBA3tIXcbkTuFcXvlIZB:APA91bGik1lrcpNqI7fE5cIOGetsnX-s-wPQ3X76jwfuf-KfxlVgoG0okb-wub6wNeAsdW_vS8vQGMgTVknGsazTO6Z0hcGqeHKCHiBDyEbZUOhm4NVxueeZCs9oA2qcP2Yp0wWX4ece}`]
-
-          userId: applicantRes?.data?.institutes[0]?.institute_pocs[0]?.user_id,
-        });
+      if (
+        getCookie("firebase_client_token") !== undefined ||
+        getCookie("firebase_client_token") !== null
+      ) {
+        //applicant push notification
+        if (applicantRes?.data) {
+          let tempIds = JSON.parse(
+            applicantRes?.data?.institutes[0]?.institute_pocs[0]?.device_id
+          );
+          let tempIdsFilter = tempIds.filter(function (el) {
+            return el != null;
+          });
+          if (tempIdsFilter.length) {
+            sendPushNotification({
+              title: `On-Ground Schedule Information(round ${selectRound})`,
+              body: `The on-ground assessment for Round ${selectRound}  has been scheduled. On Ground Assessor will visit your college soon.`,
+              deviceToken: tempIdsFilter,
+              userId:
+                applicantRes?.data?.institutes[0]?.institute_pocs[0]?.user_id,
+            });
+          }
+        }
       }
 
       //email notify
-      const emailData = {
-        recipientEmail: [`${applicantRes?.data?.institutes[0]?.email}`],
-        emailSubject: `Affiliation certificate granted to ${applicantRes?.data?.institutes[0]?.name}`,
-        emailBody: `<!DOCTYPE html><html><head><meta charset='utf-8'><title>Your Email Title</title><link href='https://fonts.googleapis.com/css2?family=Mulish:wght@400;600&display=swap' rel='stylesheet'></head><body style='font-family: Arial, sans-serif; background-color: #f4f4f4; margin: 0; padding: 0;'><table width='100%' bgcolor='#ffffff' cellpadding='0' cellspacing='0' border='0'><tr><td style='padding: 20px; text-align: center; background-color: #F5F5F5;'><img src='https://regulator.upsmfac.org/images/upsmf.png' alt='Logo' style='max-width: 360px;'></td></tr></table><table width='100%' bgcolor='#ffffff' cellpadding='0' cellspacing='0' border='0'><tr><td style='padding: 36px;'><p style='color: #555555; font-size: 18px; font-family: 'Mulish', Arial, sans-serif;'>Dear ${applicantRes?.data?.institutes[0]?.name},</p><p style='color: #555555; font-size: 18px; line-height: 1.6; font-family: 'Mulish', Arial, sans-serif;'>We hope this email finds you well. After careful consideration and evaluation, we are delighted to inform you that UPSMF has granted affiliation to ${selectInstituteName}. We believe that this partnership will bring significant benefits to both our institutions and contribute to the advancement of healthcare in our state.</p><p style='color: #555555; font-size: 18px; line-height: 1.6; font-family: 'Mulish', Arial, sans-serif;'>Congratulations on becoming an affiliated institute with UPSMF.</p><p style='color: #555555; font-size: 18px; line-height: 1.6; font-family: 'Mulish', Arial, sans-serif;'>Note: To download certificate open the form which you have submitted and click on the DOWNLOAD NOC/CERTIFICATE</p></td></tr></table></body></html>`,
-      };
+      if (applicantRes?.data?.institutes[0]?.email) {
+        const emailData = {
+          recipientEmail: [`${applicantRes?.data?.institutes[0]?.email}`],
+          emailSubject: `Affiliation certificate granted to ${applicantRes?.data?.institutes[0]?.name}`,
+          emailBody: `<!DOCTYPE html><html><head><meta charset='utf-8'><title>Your Email Title</title><link href='https://fonts.googleapis.com/css2?family=Mulish:wght@400;600&display=swap' rel='stylesheet'></head><body style='font-family: Arial, sans-serif; background-color: #f4f4f4; margin: 0; padding: 0;'><table width='100%' bgcolor='#ffffff' cellpadding='0' cellspacing='0' border='0'><tr><td style='padding: 20px; text-align: center; background-color: #F5F5F5;'><img src='https://regulator.upsmfac.org/images/upsmf.png' alt='Logo' style='max-width: 360px;'></td></tr></table><table width='100%' bgcolor='#ffffff' cellpadding='0' cellspacing='0' border='0'><tr><td style='padding: 36px;'><p style='color: #555555; font-size: 18px; font-family: 'Mulish', Arial, sans-serif;'>Dear ${applicantRes?.data?.institutes[0]?.name},</p><p style='color: #555555; font-size: 18px; line-height: 1.6; font-family: 'Mulish', Arial, sans-serif;'>We hope this email finds you well. After careful consideration and evaluation, we are delighted to inform you that UPSMF has granted affiliation to ${selectInstituteName}. We believe that this partnership will bring significant benefits to both our institutions and contribute to the advancement of healthcare in our state.</p><p style='color: #555555; font-size: 18px; line-height: 1.6; font-family: 'Mulish', Arial, sans-serif;'>Congratulations on becoming an affiliated institute with UPSMF.</p><p style='color: #555555; font-size: 18px; line-height: 1.6; font-family: 'Mulish', Arial, sans-serif;'>Note: To download certificate open the form which you have submitted and click on the DOWNLOAD NOC/CERTIFICATE</p></td></tr></table></body></html>`,
+        };
 
-      sendEmailNotification(emailData);
+        sendEmailNotification(emailData);
+      }
 
       pathName = "";
       nocorCertificateFileName = "";
