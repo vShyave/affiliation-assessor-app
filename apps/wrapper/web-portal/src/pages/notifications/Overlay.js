@@ -21,35 +21,20 @@ import { ContextAPI } from "../../utils/ContextAPI";
 export default function Overlay() {
   const navigation = useNavigate();
   const [notificationList, setNotifcationList] = useState([]);
-  const [selectedNotification, setSelectedNotification] = useState({});
   const { setSpinner } = useContext(ContextAPI);
+  const [isUnreadNotif, setIsUnreadNotif] = useState(false);
 
   const handleClick = async (notification) => {
-    setSelectedNotification(notification);
-    setNotificationReadStatus({ notification_id: notification.id });
     const navigationURL = `${ADMIN_ROUTE_MAP.adminModule.notifications.home}/${notification.id}`;
     navigation(navigationURL);
   };
-
-  const setNotificationReadStatus = async (notifId) => {
-    try {
-      setSpinner(true);
-      // const res = readNotification(notifId);
-    } catch (error) {
-      console.log(error);
-    } finally {
-      setSpinner(false);
-    }
-  };
-
-
 
   const getAllNotificationsAPI = async () => {
     const postData = {
       userId: `${getCookie("userData")?.userRepresentation?.id}`,
       page: 0,
       size: 10,
-      sort: { updated_date_ts: "desc" },
+      sort: { created_date_ts: "desc" },
     };
     try {
       const res = await getAllNotifications(postData);
@@ -67,6 +52,11 @@ export default function Overlay() {
         read_status: item?.read,
         id: item?.id,
       }));
+      let unreadNotif = notifList.filter((item) => item.read_status===false).length;
+      setIsUnreadNotif((prevState) => {
+        if (unreadNotif) return true;
+        else return false;
+      });
       setNotifcationList(notifList);
     } catch (error) {
       console.log(error);
@@ -75,7 +65,9 @@ export default function Overlay() {
   };
 
   const handleNavigateToNotification = () => {
-    navigation(`${ADMIN_ROUTE_MAP.adminModule.notifications.home}`);
+    navigation(
+      `${ADMIN_ROUTE_MAP.adminModule.notifications.home}/${notificationList[0].id}`
+    );
   };
 
   useEffect(() => {
@@ -87,7 +79,13 @@ export default function Overlay() {
       <Menu>
         <MenuHandler>
           <IconButton variant="text">
-            <MdNotifications className="text-2xl text-gray-500" />
+            {isUnreadNotif &&
+              <div className="w-[8px] h-[8px] bg-[red] rounded-xl relative top-[8px] left-[20px]"></div>
+            }
+            <MdNotifications
+              className="text-2xl text-gray-500"
+              onClick={getAllNotificationsAPI}
+            />
           </IconButton>
         </MenuHandler>
         <MenuList className="flex flex-col overflow-y-auto max-h-[520px] p-0">
@@ -118,9 +116,7 @@ export default function Overlay() {
                     </div>
                     <div
                       className={`flex flex-grow items-center justify-end text-sm ${
-                        item.read_status === "Read"
-                          ? "font-medium"
-                          : "font-bold"
+                        item.read_status === true ? "font-medium" : "font-bold"
                       }`}
                     >
                       {item.date}
@@ -129,18 +125,14 @@ export default function Overlay() {
                   <div color="gray" className="font-normal flex flex-col gap-1">
                     <div
                       className={`${
-                        item.read_status === "Read"
-                          ? "font-medium"
-                          : "font-bold"
+                        item.read_status === true ? "font-medium" : "font-bold"
                       } text-gray-900`}
                     >
                       {item.title}
                     </div>
                     <div
                       className={`${
-                        item.read_status === "Read"
-                          ? "font-medium"
-                          : "font-bold"
+                        item.read_status === true ? "font-medium" : "font-bold"
                       }`}
                     >
                       {item.subText}

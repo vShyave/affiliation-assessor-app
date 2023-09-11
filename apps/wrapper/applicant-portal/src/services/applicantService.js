@@ -97,5 +97,6 @@ export const applicantService = {
   transactionStatus,
   updatePaymentStatus,
   getAllNotifications,
-  sendEmailNotification
+  sendEmailNotification,
+  readNotification
 };
