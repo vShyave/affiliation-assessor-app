@@ -187,7 +187,7 @@ const CreateForm = (props) => {
         });
       }
       iframeContent.getElementById("save-draft").style.display = "none";
-    }, 1500);
+    }, 3000);
   };
 
   const handleSubmit = async () => {
