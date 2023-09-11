@@ -172,14 +172,14 @@ async function handleNonGetRequests(request, url) {
 
     } else
     {
-      const networkResponse = await fetch(request.clone());
-      if(networkResponse.redirected){
-        await cleanResponse(networkResponse)
-      } 
+      return await fetch(request.clone());
+      // const networkResponse = await fetch(request.clone());
+      // if(networkResponse.redirected){
+      //   await cleanResponse(networkResponse)
+      // } 
       // else {
       //   return await fetch(request.clone());
       // }
-    
     }
 
   }
