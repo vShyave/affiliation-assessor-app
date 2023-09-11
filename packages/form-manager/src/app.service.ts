@@ -292,7 +292,7 @@ export class AppService {
     const fileElements = doc.getElementsByTagName('*');
     for (let i = 0; i < fileElements.length; i++) {
         const element = fileElements[i];
-        if (element.getAttribute('type') === 'file' && element.textContent.trim() === '') {
+        if ((element.getAttribute('type') === 'file' || element.getAttribute('src') !== '') && element.textContent.trim() === '') {
             // Get the sibling url node
             const urlNode = element.nextSibling;
             if (urlNode && urlNode.tagName === 'url' && urlNode.textContent.trim() !== '') {

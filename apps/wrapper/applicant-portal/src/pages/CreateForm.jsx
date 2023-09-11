@@ -219,6 +219,7 @@ const CreateForm = (props) => {
     } else {
       await updateFormSubmission({
         form_id: formId,
+        applicant_id: instituteDetails?.[0]?.id,
         updated_at: getLocalTimeInISOFormat(),
         form_status: "Resubmitted",
         ...common_payload,
