@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { BiArrowBack } from "react-icons/bi";
 import { FaAngleRight } from "react-icons/fa";
 
@@ -17,13 +17,14 @@ import {
 } from "@material-tailwind/react";
 import { getCookie, readableDate } from "../../utils";
 import { ContextAPI } from "../../utils/ContextAPI";
-import { getAllNotifications } from "../../api";
+import { getAllNotifications, readNotification } from "../../api";
 
 export default function NotificationsDetailedView(props) {
   const navigation = useNavigate();
   const [selectedNotification, setselectedNotification] = useState([]);
   const [notificationList, setNotifcationList] = useState([]);
   const { setSpinner } = useContext(ContextAPI);
+  const { notificationId } = useParams();
 
   const navigate = useNavigate();
 
@@ -32,9 +33,34 @@ export default function NotificationsDetailedView(props) {
   };
 
   const handleClick = (notification) => {
+    if (!notification.read_status) {
+      setNotificationReadStatus({
+        userId: `${getCookie("userData")?.userRepresentation?.id}`,
+        status: true,
+        notificationIds: [notification.id],
+      });
+      let notifTempList = [...notificationList];
+      notifTempList.map((item) => {
+        if (item.id === notification.id) {
+          item.read_status = true;
+        }
+      });
+      setNotifcationList((prevState) => notifTempList);
+    }
     const navigationURL = `${ADMIN_ROUTE_MAP.adminModule.notifications.home}/${notification.id}`;
     navigation(navigationURL);
     setselectedNotification(notification);
+  };
+
+  const setNotificationReadStatus = async (postData) => {
+    try {
+      setSpinner(true);
+      const res = await readNotification(postData);
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setSpinner(false);
+    }
   };
 
   const getAllNotificationsAPI = async () => {
@@ -42,7 +68,7 @@ export default function NotificationsDetailedView(props) {
       userId: `${getCookie("userData")?.userRepresentation?.id}`,
       page: 0,
       size: 10,
-      sort: { updated_date_ts: "desc" },
+      sort: { created_date_ts: "desc" },
     };
     try {
       const res = await getAllNotifications(postData);
@@ -60,9 +86,22 @@ export default function NotificationsDetailedView(props) {
         read_status: item?.read,
         id: item?.id,
       }));
-      const navigationURL = `${ADMIN_ROUTE_MAP.adminModule.notifications.home}/${notifList[0].id}`;
-      navigation(navigationURL);
-      setselectedNotification(notifList[0]);
+      let selectedItem = notifList.filter(
+        (item) => item.id === notificationId
+      )[0];
+      setselectedNotification(selectedItem);
+      if (!selectedItem.read_status) {
+        setNotificationReadStatus({
+          userId: `${getCookie("userData")?.userRepresentation?.id}`,
+          status: true,
+          notificationIds: [selectedItem.id],
+        });
+        notifList.map((item)=>{
+          if(item.id===notificationId){
+            item.read_status=true
+          }
+        })
+      }
       setNotifcationList(notifList);
     } catch (error) {
       console.log(error);
@@ -123,7 +162,7 @@ export default function NotificationsDetailedView(props) {
                           </div>
                           <div
                             className={`flex flex-grow items-center justify-end text-sm ${
-                              item.read_status === "Read"
+                              item.read_status === true
                                 ? "font-medium"
                                 : "font-bold"
                             }`}
@@ -134,7 +173,7 @@ export default function NotificationsDetailedView(props) {
                         <div className="flex flex-col text-sm">
                           <div
                             className={`${
-                              item.read_status === "Read"
+                              item.read_status === true
                                 ? "font-medium"
                                 : "font-bold"
                             } text-gray-900`}
@@ -143,7 +182,7 @@ export default function NotificationsDetailedView(props) {
                           </div>
                           <div
                             className={`${
-                              item.read_status === "Read"
+                              item.read_status === true
                                 ? "font-medium"
                                 : "font-bold"
                             }`}
