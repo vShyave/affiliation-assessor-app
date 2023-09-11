@@ -27,6 +27,11 @@ const MedicalAssessor = () => {
       email: email,
     };
 
+    if (!email) {
+      navigate(ROUTE_MAP.login);
+      return;
+    }
+
     try {
       console.log(postData);
       const res = await getAssessor(postData);

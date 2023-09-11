@@ -28,6 +28,13 @@
 
 <body>
   <noscript>You need to enable JavaScript to run this app.</noscript>
+  <script type="text/javascript">
+    (() => {
+      if (location.pathname === '/') {
+        window.location.href = location.origin + '/web';
+      }
+    })();
+  </script>
   <div id="root"></div>
   <!--
       This HTML file is a template.
