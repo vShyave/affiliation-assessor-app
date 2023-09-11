@@ -768,11 +768,11 @@ function _setEventHandlers(survey) {
                                         // Broadcast File Remove
                                         olderFiles = JSON.parse(localStorage.getItem(keyToStorage)) || {};
                                         const arrayOfFileURLsNew = { ...olderFiles, ...arrayOfFileURLs };
-                                        for (const [key, value] of Object.entries(olderFiles)) {
-                                            if (arrayOfFileURLs[key] !== undefined && value.url !== '') {
-                                                arrayOfFileURLsNew[key] = value;
-                                            }
-                                        }
+                                        // for (const [key, value] of Object.entries(olderFiles)) {
+                                        //     if (arrayOfFileURLs[key] !== undefined && value.url !== '') {
+                                        //         arrayOfFileURLsNew[key] = value;
+                                        //     }
+                                        // }
                                         if (olderFiles && olderFiles !== undefined) {
                                             for (const [key, value] of Object.entries(olderFiles)) {
                                                 if (arrayOfFileURLsNew[key] === undefined) {
