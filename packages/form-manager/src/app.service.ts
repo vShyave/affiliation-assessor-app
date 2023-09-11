@@ -166,7 +166,7 @@ export class AppService {
           ).cloneNode(true);
         }
       }
-
+      instanceData = this.removeSiblingUrlTextContent(instanceData).cloneNode(true);
       doc
         .getElementsByTagName('instance')[0]
         .replaceChild(instanceData, instanceFromForm);
@@ -197,6 +197,7 @@ export class AppService {
           ).cloneNode(true);
         }
       }
+      instanceData = this.removeSiblingUrlTextContent(instanceData).cloneNode(true);
       console.log(instanceData.toString());
       doc
         .getElementsByTagName('instance')[0]
@@ -283,6 +284,26 @@ export class AppService {
     console.log('After replace T[1]', tree[1].toString());
     // tree[0].replaceChild(rootNode, tree[1]);
     return rootNode;
+  }
+
+  // Function to remove text content from sibling url tags if input field does not have any file
+  removeSiblingUrlTextContent(doc) {
+    // Get all elements with type="file"
+    const fileElements = doc.getElementsByTagName('*');
+    for (let i = 0; i < fileElements.length; i++) {
+        const element = fileElements[i];
+        if (element.getAttribute('type') === 'file' && element.textContent.trim() === '') {
+            // Get the sibling url node
+            const urlNode = element.nextSibling;
+            if (urlNode && urlNode.tagName === 'url' && urlNode.textContent.trim() !== '') {
+                // Remove text content from the sibling url node
+                urlNode.textContent = '';
+            }
+        }
+    }
+  
+    // Return the updated doc
+    return doc;
   }
 
   walk(node, prefillSpec, key, value) {
