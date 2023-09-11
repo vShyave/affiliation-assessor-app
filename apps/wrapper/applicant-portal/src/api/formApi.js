@@ -87,10 +87,7 @@ const validateResponse = async (response) => {
   });
 
   //applicant notification
-  if (
-    getCookie("firebase_client_token") !== undefined ||
-    getCookie("firebase_client_token") !== null
-  ) {
+  if (getCookie("firebase_client_token") !== undefined) {
     applicantService.sendPushNotification({
       title: "Application Submission",
       body: `Your application has been successfully submitted. Thank you for your interest. You will receive further updates regarding the review process.`,

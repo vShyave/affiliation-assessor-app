@@ -291,10 +291,7 @@ export default function DesktopAnalysisView() {
       form_id: formId * 1,
       form_status: "DA Completed",
     });
-    if (
-      getCookie("firebase_client_token") !== undefined ||
-      getCookie("firebase_client_token") !== null
-    ) {
+    if (getCookie("firebase_client_token") !== undefined) {
       // regulator
       const regAPIRes = await getAllRegulatorDeviceId();
       let regDeviceIds = [];

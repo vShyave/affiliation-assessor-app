@@ -73,10 +73,7 @@ function RejectNocModal({
         const applicantRes = await getApplicantDeviceId({
           institute_id: instituteId,
         });
-        if (
-          getCookie("firebase_client_token") !== undefined ||
-          getCookie("firebase_client_token") !== null
-        ) {
+        if (getCookie("firebase_client_token") !== undefined) {
           //applicant push notification
           if (applicantRes?.data) {
             let tempIds = JSON.parse(
