@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { BiArrowBack } from "react-icons/bi";
 import { FaAngleRight } from "react-icons/fa";
 
@@ -20,6 +20,7 @@ export default function NotificationsDetailedView(props) {
   const navigation = useNavigate();
   const [selectedNotification, setselectedNotification] = useState([]);
   const [notificationList, setNotifcationList] = useState([]);
+  const { notificationId } = useParams();
 
   const navigate = useNavigate();
 
@@ -28,9 +29,32 @@ export default function NotificationsDetailedView(props) {
   };
 
   const handleClick = (notification) => {
+    if (!notification.read_status) {
+      setNotificationReadStatus({
+        userId: `${getCookie("userData")?.userRepresentation?.id}`,
+        status: true,
+        notificationIds: [notification.id],
+      });
+      let notifTempList = [...notificationList];
+      notifTempList.map((item) => {
+        if (item.id === notification.id) {
+          item.read_status = true;
+        }
+      });
+      setNotifcationList((prevState) => notifTempList);
+    }
     const navigationURL = `${APPLICANT_ROUTE_MAP.dashboardModule.notifications}/${notification.id}`;
     navigation(navigationURL);
     setselectedNotification(notification);
+  };
+
+  const setNotificationReadStatus = async (postData) => {
+    try {
+      const res = await applicantService.readNotification(postData);
+      console.log(res);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   const getAllNotifications = async () => {
@@ -38,7 +62,7 @@ export default function NotificationsDetailedView(props) {
       userId: `${getCookie("userData")?.userRepresentation?.id}`,
       page: 0,
       size: 10,
-      sort: { updated_date_ts: "desc" },
+      sort: { created_date_ts: "desc" },
     };
     try {
       const res = await applicantService.getAllNotifications(postData);
@@ -56,9 +80,22 @@ export default function NotificationsDetailedView(props) {
         read_status: item?.read,
         id: item?.id,
       }));
-      const navigationURL = `${APPLICANT_ROUTE_MAP.dashboardModule.notifications}/${notifList[0]?.id}`;
-      navigation(navigationURL);
-      setselectedNotification(notifList[0]);
+      let selectedItem = notifList.filter(
+        (item) => item.id === notificationId
+      )[0];
+      setselectedNotification(selectedItem);
+      if (!selectedItem.read_status) {
+        setNotificationReadStatus({
+          userId: `${getCookie("userData")?.userRepresentation?.id}`,
+          status: true,
+          notificationIds: [selectedItem.id],
+        });
+        notifList.map((item)=>{
+          if(item.id===notificationId){
+            item.read_status=true
+          }
+        })
+      }
       setNotifcationList(notifList);
     } catch (error) {
       console.log(error);
@@ -119,7 +156,7 @@ export default function NotificationsDetailedView(props) {
                           </div>
                           <div
                             className={`flex flex-grow items-center justify-end text-sm ${
-                              item.read_status === "Read"
+                              item.read_status === true
                                 ? "font-medium"
                                 : "font-bold"
                             }`}
@@ -130,7 +167,7 @@ export default function NotificationsDetailedView(props) {
                         <div className="flex flex-col text-sm">
                           <div
                             className={`${
-                              item.read_status === "Read"
+                              item.read_status === true
                                 ? "font-medium"
                                 : "font-bold"
                             } text-gray-900`}
@@ -139,7 +176,7 @@ export default function NotificationsDetailedView(props) {
                           </div>
                           <div
                             className={`${
-                              item.read_status === "Read"
+                              item.read_status === true
                                 ? "font-medium"
                                 : "font-bold"
                             }`}
