@@ -12,6 +12,8 @@ import { ContextAPI } from "../../utils/ContextAPI";
 import { getCookie, getLocalTimeInISOFormat } from "../../utils";
 
 import { Button } from "../../components";
+import { useNavigate } from "react-router-dom";
+import ADMIN_ROUTE_MAP from "../../routes/adminRouteMap";
 
 function ReturnToInstituteModal({
   closeRejectModal,
@@ -21,6 +23,7 @@ function ReturnToInstituteModal({
   instituteName,
 }) {
   const userDetails = getCookie("userData");
+  const navigate = useNavigate();
 
   const user_details = userDetails?.userRepresentation;
 
@@ -118,6 +121,10 @@ function ReturnToInstituteModal({
         };
 
         sendEmailNotification(emailData);
+        setTimeout(
+          () => navigate(`${ADMIN_ROUTE_MAP.adminModule.desktopAnalysis.home}`),
+          1500
+        );
       } catch (error) {
         console.log(error);
       } finally {
