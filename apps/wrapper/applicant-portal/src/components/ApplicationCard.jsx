@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { Card, Button } from "./index";
-import { generate_uuidv4, getCookie, readableDate, setCookie } from "../utils";
+import { generate_uuidv4, getCookie, readableDate, removeCookie, setCookie } from "../utils";
 import { applicantService } from "../services";
 import { useNavigate } from "react-router-dom";
 
@@ -9,6 +9,8 @@ const ApplicationCard = (props) => {
 
   const handlePayment = async () => {
     setCookie("formId", props?.application?.form_id);
+    const refNo = generate_uuidv4()
+    setCookie("payment_ref_no",refNo)
     const instituteDetails = getCookie("institutes");
     const instituteId = instituteDetails?.[0]?.id;
     const postData = {
@@ -18,7 +20,7 @@ const ApplicationCard = (props) => {
       secret: "",
       merchantId: "600547",
       mandatoryFields: {
-        referenceNo: generate_uuidv4(),
+        referenceNo: refNo,
         submerchantId: "45",
         transactionAmount: "2500",
         invoiceId: "x1",
