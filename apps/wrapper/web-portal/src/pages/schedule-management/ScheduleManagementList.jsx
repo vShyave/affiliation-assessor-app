@@ -277,7 +277,7 @@ const ScheduleManagementList = () => {
 
   const fetchAllScheduledList = async () => {
     const items = await getFromLocalForage("scheduleList");
-    if (Object.values(items).length) return;
+    if (items && Object.values(items).length) return;
 
     const postData = {
       today: new Date().toJSON().slice(0, 10),
