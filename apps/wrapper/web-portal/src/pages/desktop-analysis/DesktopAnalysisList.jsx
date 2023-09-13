@@ -478,7 +478,7 @@ const DesktopAnalysisList = () => {
                       : ""
                   }`}
                 >
-                  Retuned to institute
+                  Returned to institute
                 </a>
               </li>
             </ul>
