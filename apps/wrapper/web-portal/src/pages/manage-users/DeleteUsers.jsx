@@ -18,7 +18,7 @@ function DeleteUsersModal({ closeDeleteUsersModal, setDeleteFlags }) {
 
   return (
     <>
-      <div className="flex flex-col justify-center items-center fixed inset-0 bg-opacity-25 backdrop-blur-sm">
+      <div className="flex flex-col justify-center items-center fixed inset-0 bg-opacity-25 backdrop-blur-sm z-[100]">
         <div className="flex bg-white rounded-xl shadow-xl border border-gray-400 w-[760px] h-[270px] p-8">
           <div className="flex flex-col justify-between w-full">
             <div className="flex text-xl font-semibold">

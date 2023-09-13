@@ -13,7 +13,7 @@ import { userService } from "../../api/userService";
 import { removeCookie, setCookie } from "../../utils/common";
 import { ContextAPI } from "../../utils/ContextAPI";
 
-function BulkUploadUsersModal({ closeBulkUploadUsersModal,setUsersCreated }) {
+function BulkUploadUsersModal({ closeBulkUploadUsersModal, setUsersCreated }) {
   const [file, setFile] = useState();
   const { setSpinner, setToast } = useContext(ContextAPI);
   const [tableUserList, setTableUserList] = useState([]);
@@ -263,7 +263,7 @@ function BulkUploadUsersModal({ closeBulkUploadUsersModal,setUsersCreated }) {
         console.log(postDataHasura);
         //Hasura API call
         const hasuraRes = await createBulkUserHasura(postDataHasura);
-        setUsersCreated(true)
+        setUsersCreated(true);
         if (hasuraRes.status !== 200) {
           errorFlag = true;
         }
@@ -318,8 +318,8 @@ function BulkUploadUsersModal({ closeBulkUploadUsersModal,setUsersCreated }) {
 
   return (
     <>
-      <div className="flex flex-col justify-center items-center absolute inset-0 bg-opacity-25 backdrop-blur-sm z-100">
-        <div className="flex bg-white rounded-xl shadow-xl border border-gray-400 w-[960px] h-[560px] p-6 z-50">
+      <div className="flex flex-col justify-center items-center absolute inset-0 bg-opacity-25 backdrop-blur-sm z-[100]">
+        <div className="flex bg-white rounded-xl shadow-xl border border-gray-400 w-[960px] h-[560px] p-6">
           <div className="flex flex-col justify-between w-full">
             <div className="flex text-xl font-semibold">
               <h1>Bulk upload users</h1>

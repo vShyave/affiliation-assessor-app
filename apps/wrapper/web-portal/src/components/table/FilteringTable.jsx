@@ -59,7 +59,7 @@ const FilteringTable = (props) => {
               Cell: ({ row }) => {
                 if (row.original.isRowInvalid === true) {
                   return (
-                    <AiFillExclamationCircle className="text-red-400 text-2xl" />
+                    <AiFillExclamationCircle className="text-red-400 text-2xl ml-[10px]" />
                   );
                 } else {
                   return <Checkbox {...row.getToggleRowSelectedProps()} />;
