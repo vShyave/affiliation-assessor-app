@@ -323,6 +323,7 @@ const ScheduleManagementList = () => {
               onRowSelect={() => {}}
               pagination={true}
               showFilter={true}
+              showSearch={true}
               paginationInfo={paginationInfo}
               setPaginationInfo={setPaginationInfo}
               setIsSearchOpen={setIsSearchOpen}

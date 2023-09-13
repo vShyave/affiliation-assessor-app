@@ -377,6 +377,7 @@ export default function OnGroundInspectionAnalysis() {
                   onRowSelect={() => {}}
                   filterApiCall={filterApiCall}
                   showFilter={true}
+                  showSearch={true}
                   paginationInfo={paginationInfo}
                   setPaginationInfo={setPaginationInfo}
                   searchApiCall={searchApiCall}
@@ -398,6 +399,7 @@ export default function OnGroundInspectionAnalysis() {
                   onRowSelect={() => {}}
                   filterApiCall={filterApiCall}
                   showFilter={true}
+                  showSearch={true}
                   paginationInfo={paginationInfo}
                   setPaginationInfo={setPaginationInfo}
                   searchApiCall={searchApiCall}
@@ -419,6 +421,7 @@ export default function OnGroundInspectionAnalysis() {
                   onRowSelect={() => {}}
                   filterApiCall={filterApiCall}
                   showFilter={true}
+                  showSearch={true}
                   paginationInfo={paginationInfo}
                   setPaginationInfo={setPaginationInfo}
                   searchApiCall={searchApiCall}
@@ -440,6 +443,7 @@ export default function OnGroundInspectionAnalysis() {
                   onRowSelect={() => {}}
                   filterApiCall={filterApiCall}
                   showFilter={true}
+                  showSearch={true}
                   paginationInfo={paginationInfo}
                   setPaginationInfo={setPaginationInfo}
                   searchApiCall={searchApiCall}

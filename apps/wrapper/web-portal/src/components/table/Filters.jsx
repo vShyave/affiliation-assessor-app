@@ -10,7 +10,7 @@ export const ManageUsersFilters = ({
   setIsFilterOpen,
   setPaginationInfo,
 }) => {
-  const [filters, setFilters] = useState({ condition: {} });
+  const [filters, setFilters] = useState({ assessorCondition: {},regulatorCondition:{} });
   const [state, setState] = useState({
     role: null,
     workingstatus: null,
@@ -21,16 +21,17 @@ export const ManageUsersFilters = ({
       [name]: value,
     }));
     if (value === "") {
-      delete filters?.condition[name];
+      delete filters?.assessorCondition[name];
       return;
     }
     setFilters({
-      condition: {
-        ...filters.condition,
+      assessorCondition: {
+        ...filters.assessorCondition,
         [name]: {
           _eq: value,
         },
       },
+      regulatorCondition:{}
     });
     setIsFilterOpen(value ? true : false);
     setPaginationInfo((prevState) => ({
@@ -43,7 +44,7 @@ export const ManageUsersFilters = ({
       role: null,
       workingstatus: null,
     });
-    setFilters({ condition: {} });
+    setFilters({ assessorCondition: {},regulatorCondition:{} });
     setPaginationInfo((prevState) => ({
       ...prevState,
       offsetNo: 0,
