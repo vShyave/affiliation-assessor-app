@@ -13,7 +13,7 @@ function StatusLogModal({ closeStatusModal, formId }) {
       try {
         setSpinner(true);
         const res = await getStatus(postData);
-        console.log("res",res)
+        console.log("res", res);
         setFormStatus(res.events);
       } catch (error) {
         console.log(error);
@@ -26,7 +26,7 @@ function StatusLogModal({ closeStatusModal, formId }) {
 
   return (
     <>
-      <div className="flex flex-col justify-center items-center fixed inset-0 bg-opacity-25 backdrop-blur-sm">
+      <div className="flex flex-col justify-center items-center fixed inset-0 bg-opacity-25 backdrop-blur-sm z-[100]">
         <div className="flex bg-white rounded-xl shadow-xl border border-gray-400 w-[560px] h-[460px] p-8">
           <div className="flex flex-col gap-4 w-full">
             <div className="flex text-xl font-medium">
