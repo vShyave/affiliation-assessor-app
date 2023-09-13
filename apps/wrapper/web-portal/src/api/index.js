@@ -335,6 +335,14 @@ export const deleteSchedule = async (postData) => {
   );
 };
 
+export const getScheduledList = async (postData) => {
+  const res = await adminCustomPost.post(
+    API_URL.scheduleManagement.getAllSchedule,
+    postData
+  );
+  return res;
+}
+
 // Bulk create users keycloak
 export const createBulkUsersKeyCloak = async (postData) => {
   const res = await axios.post(

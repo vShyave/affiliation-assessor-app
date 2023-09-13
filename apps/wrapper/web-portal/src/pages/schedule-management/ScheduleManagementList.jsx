@@ -4,7 +4,6 @@ import { useNavigate, Link } from "react-router-dom";
 import { RiDeleteBin6Line } from "react-icons/ri";
 
 import FilteringTable from "../../components/table/FilteringTable";
-import Card from "../../components/Card";
 import { Button } from "../../components";
 import Nav from "../../components/Nav";
 import { ContextAPI } from "../../utils/ContextAPI";
@@ -15,7 +14,13 @@ import {
   getAssessmentSchedule,
   searchAssessments,
   deleteSchedule,
+  getScheduledList,
 } from "../../api";
+import {
+  setToLocalForage,
+  removeItemFromLocalForage,
+  getFromLocalForage,
+} from "../../forms";
 import ADMIN_ROUTE_MAP from "../../routes/adminRouteMap";
 import BulkUploadScheduleModal from "./BulkUploadScheduleModal";
 import AlertModal from "../../components/AlertModal";
@@ -42,6 +47,7 @@ const ScheduleManagementList = () => {
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [isFilterOpen, setIsFilterOpen] = useState(false);
   const [bulkUploadScheduleModal, setBulkUploadSchduleModal] = useState(false);
+  let [scheduledList, setScheduledList] = useState([]);
 
   const [showAlert, setShowAlert] = useState(false);
 
@@ -269,11 +275,30 @@ const ScheduleManagementList = () => {
     }
   };
 
+  const fetchAllScheduledList = async () => {
+    const items = await getFromLocalForage("scheduleList");
+    if (Object.values(items).length) return;
+
+    const postData = {
+      today: new Date().toJSON().slice(0, 10),
+    };
+
+    const res = await getScheduledList(postData);
+    if (res?.data?.assessment_schedule?.length) {
+      setScheduledList(res?.data?.assessment_schedule);
+      setToLocalForage("scheduleList", res?.data?.assessment_schedule);
+    }
+  };
+
   useEffect(() => {
     if (!isSearchOpen && !isFilterOpen) {
       fetchAllAssessmentSchedule();
     }
   }, [paginationInfo.offsetNo, paginationInfo.limit]);
+
+  useEffect(() => {
+    fetchAllScheduledList();
+  }, []);
 
   return (
     <>
