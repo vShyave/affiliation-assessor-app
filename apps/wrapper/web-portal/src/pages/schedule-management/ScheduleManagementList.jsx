@@ -311,16 +311,16 @@ const ScheduleManagementList = () => {
           <div className="flex flex-col gap-4">
             <div className="flex flex-row">
               <div className="flex flex-grow items-center">
-                <div className="text-xl font-semibold">Schedule Management</div>
+                {/* <div className="text-xl font-semibold">Schedule Management</div> */}
               </div>
               <div className="flex flex-grow justify-end">
-                <span className="flex gap-4">
+                {/* <span className="flex gap-4">
                   <Button
                     onClick={() => setBulkUploadSchduleModal(true)}
                     moreClass="text-white"
                     text="Upload CSV for scheduling"
                   ></Button>
-                </span>
+                </span> */}
               </div>
             </div>
             {/* <div className="flex flex-wrap">
