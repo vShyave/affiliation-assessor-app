@@ -341,7 +341,7 @@ export const getScheduledList = async (postData) => {
     postData
   );
   return res;
-}
+};
 
 // Bulk create users keycloak
 export const createBulkUsersKeyCloak = async (postData) => {
@@ -437,6 +437,14 @@ export const searchForms = async (postData) => {
 export const searchAssessments = async (postData) => {
   const res = await adminCustomPost.post(
     API_URL.GLOBAL_SEARCH.searchAssessments,
+    postData
+  );
+  return res;
+};
+
+export const searchNOC = async (postData) => {
+  const res = await adminCustomPost.post(
+    API_URL.GLOBAL_SEARCH.searchNOC,
     postData
   );
   return res;
