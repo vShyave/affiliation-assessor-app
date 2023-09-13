@@ -292,6 +292,15 @@ export const filterDesktopAnalysis = async (postData) => {
   return res;
 };
 
+//Certificate Management API...
+export const getNOCCertificate = async (postData) => {
+  const res = await adminCustomPost.post(
+    API_URL.certificateManagement.getNOCCertificate,
+    postData
+  );
+  return res;
+};
+
 // Schedule Management APIs...
 export const getAssessmentSchedule = async (postData) => {
   const res = await adminCustomPost.post(

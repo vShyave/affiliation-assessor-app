@@ -280,7 +280,15 @@ export default function OnGroundInspectionAnalysis() {
                   <Select
                     value={round}
                     label="Select round"
-                    onChange={(value) => setRound(value)}
+                    onChange={(value) => {
+                      setRound(value);
+                      setPaginationInfo((prevState) => ({
+                        ...prevState,
+                        offsetNo: 0,
+                      }));
+                      setIsSearchOpen(false);
+                      setIsFilterOpen(false);
+                    }}
                   >
                     <Option value={1}>Round one</Option>
                     <Option value={2}>Round two</Option>

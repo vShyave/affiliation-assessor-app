@@ -8,7 +8,7 @@ const API_URL = {
   common: {
     registerEvent: `${rest}addEvents`,
     updateForm: `${rest}updateForm`,
-    updateRegulatorDeviceId: `${rest}updateRegulatorDeviceId`
+    updateRegulatorDeviceId: `${rest}updateRegulatorDeviceId`,
   },
   notifications: {
     //new APIs
@@ -54,7 +54,7 @@ const API_URL = {
     addUsers: `${rest}addUsers`,
     deleteUser: `${rest}deleteUser`,
     editUser: `${rest}editUser`,
-    viewSchedule: `${rest}viewSchedule`
+    viewSchedule: `${rest}viewSchedule`,
   },
   desktopAnalysis: {
     getUsersForSchedulingAssessment: `${rest}getUsersForSchedulingAssessment`,
@@ -65,7 +65,10 @@ const API_URL = {
     updateFormSubmission: `${rest}updateFormSubmission`,
     addInstituteCourse: `${rest}addInstituteCourse`,
     updatePaymentStatus: `${rest}updatePaymentStatus`,
-    getTransactionDetail: `v1/user/transaction`
+    getTransactionDetail: `v1/user/transaction`,
+  },
+  certificateManagement: {
+    getNOCCertificate: `${rest}getNOCCertificate`
   },
   scheduleManagement: {
     getAssessmentSchedule: `${rest}getAssessmentSchedule`,

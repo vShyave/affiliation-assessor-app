@@ -382,6 +382,12 @@ const DesktopAnalysisList = () => {
                     label="Select round"
                     onChange={(value) => {
                       setSelectedRound(value);
+                      setPaginationInfo((prevState) => ({
+                        ...prevState,
+                        offsetNo: 0,
+                      }));
+                      setIsFilterOpen(false);
+                      setIsSearchOpen(false);
                     }}
                   >
                     <Option value={1}>Round one</Option>
