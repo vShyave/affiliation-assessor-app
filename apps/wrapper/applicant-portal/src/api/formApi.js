@@ -104,8 +104,32 @@ const validateResponse = async (response) => {
       getCookie("institutes")[0]?.name
     },</p><p style='color: #555555; font-size: 18px; line-height: 1.6; font-family: 'Mulish', Arial, sans-serif;'>Your application has been successfully submitted. Thank you for your interest. You will receive further updates regarding the review process.</p></td></tr></table></body></html>`,
   };
-
   applicantService.sendEmailNotification(emailData);
+
+  // regulator
+  const regAPIRes = await applicantService.getAllRegulatorDeviceId();
+  let regDeviceIds = [];
+  regAPIRes?.data?.regulator?.forEach((item) => {
+    let tempIds = JSON.parse(item.device_id);
+    let tempIdsFilter = tempIds.filter(function (el) {
+      return el != null;
+    });
+    if (tempIdsFilter.length) {
+      regDeviceIds.push({ user_id: item.user_id, device_id: tempIdsFilter[0] });
+    }
+  });
+
+  console.log("regulator device ids-", regDeviceIds);
+  if (regDeviceIds.length) {
+    regDeviceIds.forEach((regulator) =>
+      applicantService.sendPushNotification({
+        title: "Application Submission",
+        body: `A new application has been submitted by an applicant. Please review and proceed with the necessary steps.`,
+        deviceToken: [regulator.device_id],
+        userId: regulator.user_id,
+      })
+    );
+  }
 
   const jsonResponse = {
     ...apiRes,
