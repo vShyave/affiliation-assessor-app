@@ -7,6 +7,7 @@ import { Button } from "../../components";
 import { addAssessmentSchedule } from "../../api";
 import { ContextAPI } from "../../utils/ContextAPI";
 import { readableDate, formatDate } from "../../utils";
+import { getFromLocalForage } from "../../forms";
 
 function BulkUploadScheduleModal({
   setBulkUploadSchduleModal,
@@ -25,12 +26,12 @@ function BulkUploadScheduleModal({
   const [selectedAssessmentList, setSelectedAssessmentList] = useState(false);
 
   let selectedRows = [];
+  let listOfSchedules = [];
   const hiddenFileInput = React.useRef(null);
 
-  const emailExp = /[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$/;
-  const mobNumberExp = /^(0|91)?[6-9][0-9]{9}$/;
-
-  const isDateValid = (date) => {
+  const isDateValid = (props) => {
+    let date = props.value;
+    let duplicate = props.row.original.duplicate;
     if (date?.toString().length === 0 || new Date() > new Date(date)) {
       return (
         <span className="text-red-500 mt-2 text-sm">
@@ -38,7 +39,19 @@ function BulkUploadScheduleModal({
         </span>
       );
     } else {
-      return readableDate(date);
+      return (
+        <>
+          <span>{readableDate(date)}</span>
+          {duplicate && (
+            <>
+              <br />
+              <span className="text-red-500 mt-1 text-[11px]">
+                Duplicate date
+              </span>
+            </>
+          )}
+        </>
+      );
     }
   };
 
@@ -47,7 +60,7 @@ function BulkUploadScheduleModal({
       data
     ) : (
       <span className="text-red-500 mt-2 text-sm">
-        - <br></br> <small>Missing Text</small>
+        <small>Missing Text</small>
       </span>
     );
   };
@@ -85,7 +98,7 @@ function BulkUploadScheduleModal({
       Header: "Date",
       accessor: "date",
       Cell: (props) => {
-        return <div>{isDateValid(props.value)}</div>;
+        return <div>{isDateValid(props)}</div>;
       },
     },
     {
@@ -129,8 +142,11 @@ function BulkUploadScheduleModal({
     }
   };
 
-  const csvFileToArray = (string) => {
+  const csvFileToArray = async (string) => {
     let invalidAssessmentData = [];
+    listOfSchedules = await getFromLocalForage("scheduleList");
+    listOfSchedules = Object.values(listOfSchedules);
+    console.log("listOfSchedules - ", listOfSchedules);
     const csvHeader = string.trim().slice(0, string.indexOf("\n")).split(",");
     if (!csvHeader[csvHeader.length - 1]) {
       csvHeader.pop();
@@ -153,11 +169,18 @@ function BulkUploadScheduleModal({
         if ((obj[key] == null || obj[key] == "") && key !== "assisstant_code") {
           obj["isRowInvalid"] = true;
         }
+
+        if (key === "date") {
+          obj["date"] = obj["date"] ? formatDate(obj["date"]) : "";
+        }
       }
+
+      // Check for duplicate assessments...
+      checkAndFilterScheduledAssessment(obj);
+
       if (obj["isRowInvalid"]) {
         invalidAssessmentData.push(obj);
       }
-
       return obj;
     });
 
@@ -171,16 +194,27 @@ function BulkUploadScheduleModal({
     setInvalidAssessmentDataFlag(!invalidAssessmentDataFlag);
   };
 
+  const checkAndFilterScheduledAssessment = (row_obj) => {
+    // filter array with same assessor code...
+    let same_assessors_list = listOfSchedules.filter(
+      (elem) =>
+        elem.assessor_code === row_obj.assessor_code &&
+        row_obj.date === elem.date
+    );
+    if (same_assessors_list.length) {
+      row_obj["isRowInvalid"] = true;
+      row_obj["duplicate"] = true;
+    }
+  };
+
   const handleBulkSchedule = async () => {
     try {
       setSpinner(true);
-      console.log("selectedRows - ", selectedRows);
       const postData = {
         assessment_schedule: selectedRows.map((item) => {
           let tempObj = {
             ...item.original,
             institute_id: +item.original.institute_id,
-            date: formatDate(item.original.date),
           };
           if (tempObj["assisstant_code"] === "") {
             delete tempObj.assisstant_code;
@@ -188,9 +222,6 @@ function BulkUploadScheduleModal({
           return tempObj;
         }),
       };
-
-      console.log("postData = ", postData);
-      return;
 
       const res = await addAssessmentSchedule(postData);
       setToast((prevState) => ({
