@@ -482,6 +482,7 @@ const DesktopAnalysisList = () => {
                   onRowSelect={() => {}}
                   filterApiCall={filterApiCall}
                   showFilter={true}
+                  showSearch={true}
                   paginationInfo={paginationInfo}
                   setPaginationInfo={setPaginationInfo}
                   searchApiCall={searchApiCall}
@@ -500,6 +501,7 @@ const DesktopAnalysisList = () => {
                   onRowSelect={() => {}}
                   filterApiCall={filterApiCall}
                   showFilter={true}
+                  showSearch={true}
                   paginationInfo={paginationInfo}
                   setPaginationInfo={setPaginationInfo}
                   searchApiCall={searchApiCall}
@@ -518,6 +520,7 @@ const DesktopAnalysisList = () => {
                   onRowSelect={() => {}}
                   filterApiCall={filterApiCall}
                   showFilter={true}
+                  showSearch={true}
                   paginationInfo={paginationInfo}
                   setPaginationInfo={setPaginationInfo}
                   searchApiCall={searchApiCall}
@@ -536,6 +539,7 @@ const DesktopAnalysisList = () => {
                   onRowSelect={() => {}}
                   filterApiCall={filterApiCall}
                   showFilter={true}
+                  showSearch={true}
                   paginationInfo={paginationInfo}
                   setPaginationInfo={setPaginationInfo}
                   searchApiCall={searchApiCall}
@@ -554,6 +558,7 @@ const DesktopAnalysisList = () => {
                   onRowSelect={() => {}}
                   filterApiCall={filterApiCall}
                   showFilter={true}
+                  showSearch={true}
                   paginationInfo={paginationInfo}
                   setPaginationInfo={setPaginationInfo}
                   searchApiCall={searchApiCall}

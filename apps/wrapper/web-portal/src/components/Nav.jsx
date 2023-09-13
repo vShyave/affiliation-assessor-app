@@ -47,7 +47,7 @@ export default function Nav() {
                 <NavLink
                   to={ADMIN_ROUTE_MAP.adminModule.certificateManagement.home}
                 >
-                  Certificate Management
+                  Certificates Issued
                 </NavLink>
               </li>
               <li className="flex hover:text-primary-600 hover:cursor-pointer">

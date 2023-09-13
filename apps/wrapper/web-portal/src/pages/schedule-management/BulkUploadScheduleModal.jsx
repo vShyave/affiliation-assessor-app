@@ -307,6 +307,7 @@ function BulkUploadScheduleModal({
                     navigateFunc={() => {}}
                     showCheckbox={true}
                     showFilter={false}
+                    showSearch={false}
                     setSelectedRows={setSelectedRows}
                   />
                 </div>

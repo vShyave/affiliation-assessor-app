@@ -570,7 +570,7 @@ export default function ManageUsersList({
       const res = await filterUsers(postData);
       setPaginationInfo((prevState) => ({
         ...prevState,
-        totalCount: res.data.assessors_aggregate.aggregate.totalCount,
+        totalCount: res?.data?.assessors_aggregate?.aggregate?.totalCount,
       }));
       setUsersList(res?.data?.assessors);
       const data = res?.data?.assessors;
@@ -902,6 +902,7 @@ export default function ManageUsersList({
                     setOnRowSelect={() => {}}
                     setSelectedRows={setSelectedRows}
                     showFilter={true}
+                    showSearch={true}
                     pagination={true}
                     filterApiCall={filterApiCall}
                     searchApiCall={searchApiCall}
@@ -921,7 +922,8 @@ export default function ManageUsersList({
                     setPaginationInfo={setPaginationInfo}
                     setOnRowSelect={() => {}}
                     setSelectedRows={setSelectedRows}
-                    showFilter={true}
+                    showFilter={false}
+                    showSearch={true}
                     pagination={true}
                     filterApiCall={filterApiCall}
                     searchApiCall={searchApiCall}

@@ -384,6 +384,7 @@ function BulkUploadUsersModal({ closeBulkUploadUsersModal, setUsersCreated }) {
                       navigateFunc={() => {}}
                       showCheckbox={true}
                       showFilter={false}
+                      showSearch={false}
                       // rows = {rows}
                       setSelectedRows={setSelectedRows}
                     />

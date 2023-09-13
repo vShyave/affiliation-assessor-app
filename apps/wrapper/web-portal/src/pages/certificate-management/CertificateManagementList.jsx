@@ -110,7 +110,9 @@ const CertificateManagementList = () => {
 
   certificateList?.forEach((e) => {
     var certificateData = {
-      form_title: e?.form_name || "-",
+      form_title:
+        e?.course?.course_name?.charAt(0).toUpperCase() +
+          e?.course?.course_name?.substring(1).toLowerCase() || "-",
       institute:
         e?.institute?.name?.charAt(0).toUpperCase() +
         e?.institute?.name?.substring(1).toLowerCase() +
@@ -125,7 +127,7 @@ const CertificateManagementList = () => {
       certificate_path: e?.certificate_fileName ? (
         <div className={`px-6 text-primary-600 pl-0`}>
           <a href={e?.certificate_Path} target="_blank">
-            {e?.certificate_fileName}
+            View
           </a>
         </div>
       ) : (
@@ -134,7 +136,7 @@ const CertificateManagementList = () => {
       noc_path: e?.noc_Path ? (
         <div className={`px-6 text-primary-600 pl-0`}>
           <a href={e?.noc_Path} target="_blank">
-            {e?.noc_fileName}
+            View
           </a>
         </div>
       ) : (
@@ -192,7 +194,8 @@ const CertificateManagementList = () => {
                   // filterApiCall={filterApiCall}
                   onRowSelect={() => {}}
                   pagination={true}
-                  showFilter={true}
+                  showFilter={false}
+                  showSearch={true}
                   paginationInfo={paginationInfo}
                   setPaginationInfo={setPaginationInfo}
                   searchApiCall={searchApiCall}
@@ -208,7 +211,8 @@ const CertificateManagementList = () => {
                   // filterApiCall={filterApiCall}
                   onRowSelect={() => {}}
                   pagination={true}
-                  showFilter={true}
+                  showFilter={false}
+                  showSearch={true}
                   paginationInfo={paginationInfo}
                   setPaginationInfo={setPaginationInfo}
                   searchApiCall={searchApiCall}

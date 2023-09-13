@@ -144,7 +144,7 @@ const FilteringTable = (props) => {
 
   return (
     <>
-      {props.showFilter && (
+      {(props.showFilter||props.showSearch) && (
         <GlobalFilter
           filter={globalFilter}
           setFilter={setGlobalFilter}
@@ -155,6 +155,8 @@ const FilteringTable = (props) => {
           paginationInfo={props.paginationInfo}
           setPaginationInfo={props.setPaginationInfo}
           selectedRound={props?.selectedRound}
+          showFilter={props?.showFilter}
+          showSearch={props?.showSearch}
         />
       )}
 
