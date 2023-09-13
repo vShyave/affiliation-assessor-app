@@ -22,16 +22,18 @@ export default function PaymentResult() {
   };
 
   const applicantTransaction = async () => {
-    const formData = {
-      transaction_details: [
-        { id: params.get("transaction_id"), form_id: formId },
-      ],
-    };
-    const formsResponse = await applicantService.transactionStatus(formData);
-    await applicantService.updatePaymentStatus({
-      form_id: formId,
-      payment_status: params.get("resp") === "success" ? "Paid" : "Failed",
-    });
+    if (params.get("transaction_id")) {
+      const formData = {
+        transaction_details: [
+          { id: params.get("transaction_id"), form_id: formId },
+        ],
+      };
+      const formsResponse = await applicantService.transactionStatus(formData);
+      await applicantService.updatePaymentStatus({
+        form_id: formId,
+        payment_status: params.get("resp") === "success" ? "Paid" : "Failed",
+      });
+    }
 
     //email notify
     const emailData = {
@@ -113,7 +115,8 @@ export default function PaymentResult() {
               params.get("transaction_id") && (
                 <>
                   <h2 className="text-xl font-semibold text-black">
-                    Transaction amount : <span>&#8377;</span> {params.get("transaction_amount")}
+                    Transaction amount : <span>&#8377;</span>{" "}
+                    {params.get("transaction_amount")}
                   </h2>
                   <h2 className={"text-xl font-semibold text-black"}>
                     Tranction Id : {params.get("transaction_id")}
