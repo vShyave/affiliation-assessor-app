@@ -291,6 +291,7 @@ const DesktopAnalysisList = () => {
   };
 
   formsList?.forEach((e) => {
+    let applicationType = e?.course?.application_type?.replace("_", " ");
     var formsData = {
       form_title: (
         <div
@@ -302,8 +303,8 @@ const DesktopAnalysisList = () => {
       ),
       file_name: e?.form_name,
       application_type:
-        e?.assessment_type?.charAt(0).toUpperCase() +
-        e?.assessment_type?.substring(1).toLowerCase(),
+        applicationType?.charAt(0).toUpperCase() +
+        applicationType?.substring(1).toLowerCase(),
       course_name: e?.course_type || "NA",
       published_on: readableDate(e?.submitted_on),
       id: e.form_id,
@@ -467,6 +468,18 @@ const DesktopAnalysisList = () => {
                 >
                   Rejected
                 </a>
+              </li>{" "}
+              <li className="" onClick={() => handleSelectMenu("Returned")}>
+                <a
+                  href="#"
+                  className={`inline-block p-4 rounded-t-lg dark:text-blue-500 dark:border-blue-600 ${
+                    state.menu_selected === "Returned"
+                      ? "text-blue-600 border-b-2 border-blue-600"
+                      : ""
+                  }`}
+                >
+                  Retuned to institute
+                </a>
               </li>
             </ul>
 
@@ -554,6 +567,25 @@ const DesktopAnalysisList = () => {
                   // navigateFunc={navigateToView}
                   navigateFunc={() => {}}
                   columns={NEWCOLUMNS}
+                  pagination={true}
+                  onRowSelect={() => {}}
+                  filterApiCall={filterApiCall}
+                  showFilter={true}
+                  showSearch={true}
+                  paginationInfo={paginationInfo}
+                  setPaginationInfo={setPaginationInfo}
+                  searchApiCall={searchApiCall}
+                  setIsSearchOpen={setIsSearchOpen}
+                  setIsFilterOpen={setIsFilterOpen}
+                  selectedRound={selectedRound}
+                />
+              )}
+              {state.menu_selected === "Returned" && (
+                <FilteringTable
+                  dataList={formsDataList}
+                  // navigateFunc={navigateToView}
+                  navigateFunc={() => {}}
+                  columns={COLUMNS}
                   pagination={true}
                   onRowSelect={() => {}}
                   filterApiCall={filterApiCall}
