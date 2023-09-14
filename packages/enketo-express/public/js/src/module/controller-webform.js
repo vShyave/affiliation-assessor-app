@@ -749,6 +749,7 @@ function _setEventHandlers(survey) {
         let olderFiles = JSON.parse(localStorage.getItem(keyToStorage)) || {};
         if(e.target.value === '' && olderFiles[e.target.name] !== undefined) {
             delete olderFiles[e.target.name];
+            localStorage.setItem(keyToStorage, JSON.stringify(olderFiles));
         }
         await formController.broadcastFormDataUpdate(form.getDataStr(), {});
         let arrayOfFileURLs = {};
