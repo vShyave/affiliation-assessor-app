@@ -45,9 +45,16 @@ export default function Nav() {
               </li>
               <li className="flex hover:text-primary-600 hover:cursor-pointer">
                 <NavLink
+                  to={ADMIN_ROUTE_MAP.adminModule.certificateManagement.home}
+                >
+                  Certificates Issued
+                </NavLink>
+              </li>
+              <li className="flex hover:text-primary-600 hover:cursor-pointer">
+                <NavLink
                   to={ADMIN_ROUTE_MAP.adminModule.scheduleManagement.home}
                 >
-                  Schedule Management
+                  Inspections Scheduled
                 </NavLink>
               </li>
             </ul>

@@ -765,6 +765,7 @@ const FormsOverview = () => {
                   onRowSelect={() => {}}
                   pagination={true}
                   showFilter={true}
+                  showSearch={true}
                   paginationInfo={paginationInfo}
                   setPaginationInfo={setPaginationInfo}
                   searchApiCall={searchApiCall}
@@ -786,6 +787,7 @@ const FormsOverview = () => {
                   pagination={true}
                   filterApiCall={filterApiCall}
                   showFilter={true}
+                  showSearch={true}
                   paginationInfo={paginationInfo}
                   setPaginationInfo={setPaginationInfo}
                   searchApiCall={searchApiCall}
@@ -807,6 +809,7 @@ const FormsOverview = () => {
                   pagination={true}
                   filterApiCall={filterApiCall}
                   showFilter={true}
+                  showSearch={true}
                   paginationInfo={paginationInfo}
                   setPaginationInfo={setPaginationInfo}
                   searchApiCall={searchApiCall}

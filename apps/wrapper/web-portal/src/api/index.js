@@ -292,6 +292,15 @@ export const filterDesktopAnalysis = async (postData) => {
   return res;
 };
 
+//Certificate Management API...
+export const getNOCCertificate = async (postData) => {
+  const res = await adminCustomPost.post(
+    API_URL.certificateManagement.getNOCCertificate,
+    postData
+  );
+  return res;
+};
+
 // Schedule Management APIs...
 export const getAssessmentSchedule = async (postData) => {
   const res = await adminCustomPost.post(
@@ -324,6 +333,14 @@ export const deleteSchedule = async (postData) => {
       data: postData,
     }
   );
+};
+
+export const getScheduledList = async (postData) => {
+  const res = await adminCustomPost.post(
+    API_URL.scheduleManagement.getAllSchedule,
+    postData
+  );
+  return res;
 };
 
 // Bulk create users keycloak
@@ -420,6 +437,14 @@ export const searchForms = async (postData) => {
 export const searchAssessments = async (postData) => {
   const res = await adminCustomPost.post(
     API_URL.GLOBAL_SEARCH.searchAssessments,
+    postData
+  );
+  return res;
+};
+
+export const searchNOC = async (postData) => {
+  const res = await adminCustomPost.post(
+    API_URL.GLOBAL_SEARCH.searchNOC,
     postData
   );
   return res;

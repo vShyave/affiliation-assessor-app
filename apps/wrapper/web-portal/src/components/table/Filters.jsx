@@ -10,7 +10,10 @@ export const ManageUsersFilters = ({
   setIsFilterOpen,
   setPaginationInfo,
 }) => {
-  const [filters, setFilters] = useState({ condition: {} });
+  const [filters, setFilters] = useState({
+    assessorCondition: {},
+    regulatorCondition: {},
+  });
   const [state, setState] = useState({
     role: null,
     workingstatus: null,
@@ -21,16 +24,17 @@ export const ManageUsersFilters = ({
       [name]: value,
     }));
     if (value === "") {
-      delete filters?.condition[name];
+      delete filters?.assessorCondition[name];
       return;
     }
     setFilters({
-      condition: {
-        ...filters.condition,
+      assessorCondition: {
+        ...filters.assessorCondition,
         [name]: {
           _eq: value,
         },
       },
+      regulatorCondition: {},
     });
     setIsFilterOpen(value ? true : false);
     setPaginationInfo((prevState) => ({
@@ -43,7 +47,7 @@ export const ManageUsersFilters = ({
       role: null,
       workingstatus: null,
     });
-    setFilters({ condition: {} });
+    setFilters({ assessorCondition: {}, regulatorCondition: {} });
     setPaginationInfo((prevState) => ({
       ...prevState,
       offsetNo: 0,
@@ -160,6 +164,7 @@ export const ManageFormsFilters = ({
           {/* <Option value="">Application Type</Option> */}
           <Option value="new_institute">New Institute</Option>
           <Option value="new_course">New Course</Option>
+          <Option value="seat_enhancement">Seat Enhancement</Option>
         </Select>
       </div>
       <div className="flex">
@@ -218,7 +223,7 @@ export const DesktopAnalysisFilters = ({
     },
   });
   const [state, setState] = useState({
-    assessment_type: null,
+    application_type: null,
     course_type: null,
     submitted_on: null,
     review_status: null,
@@ -233,11 +238,12 @@ export const DesktopAnalysisFilters = ({
       delete filters?.condition[name];
       return;
     }
-    if (name === "course_type") {
+    if (name === "course_type" || name === "application_type") {
       setFilters({
         condition: {
           ...filters.condition,
           course: {
+            ...filters.condition.course,
             [name]: {
               _eq: value,
             },
@@ -282,7 +288,7 @@ export const DesktopAnalysisFilters = ({
 
   const handleClearFilter = () => {
     setState({
-      assessment_type: null,
+      application_type: null,
       course_type: null,
       submitted_on: null,
       review_status: null,
@@ -307,16 +313,17 @@ export const DesktopAnalysisFilters = ({
     <div className="flex flex-grow text-gray-700 dark:text-gray-400 gap-8">
       <div className="flex">
         <Select
-          name="assessment_type"
-          id="assessment_type"
+          name="application_type"
+          id="application_type"
           label="Application Type"
-          value={state.assessment_type}
-          onChange={(value) => handleChange("assessment_type", value)}
+          value={state.application_type}
+          onChange={(value) => handleChange("application_type", value)}
           className="bg-gray-50"
         >
           {/* <Option value="">Application Type</Option> */}
-          <Option value="institute">Institute</Option>
-          <Option value="applicant">Applicant</Option>
+          <Option value="new_institute">New Institute</Option>
+          <Option value="new_course">New Course</Option>
+          <Option value="seat_enhancement">Seat Enhancement</Option>
         </Select>
       </div>
       <div className="flex">

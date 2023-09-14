@@ -280,7 +280,15 @@ export default function OnGroundInspectionAnalysis() {
                   <Select
                     value={round}
                     label="Select round"
-                    onChange={(value) => setRound(value)}
+                    onChange={(value) => {
+                      setRound(value);
+                      setPaginationInfo((prevState) => ({
+                        ...prevState,
+                        offsetNo: 0,
+                      }));
+                      setIsSearchOpen(false);
+                      setIsFilterOpen(false);
+                    }}
                   >
                     <Option value={1}>Round one</Option>
                     <Option value={2}>Round two</Option>
@@ -369,6 +377,7 @@ export default function OnGroundInspectionAnalysis() {
                   onRowSelect={() => {}}
                   filterApiCall={filterApiCall}
                   showFilter={true}
+                  showSearch={true}
                   paginationInfo={paginationInfo}
                   setPaginationInfo={setPaginationInfo}
                   searchApiCall={searchApiCall}
@@ -390,6 +399,7 @@ export default function OnGroundInspectionAnalysis() {
                   onRowSelect={() => {}}
                   filterApiCall={filterApiCall}
                   showFilter={true}
+                  showSearch={true}
                   paginationInfo={paginationInfo}
                   setPaginationInfo={setPaginationInfo}
                   searchApiCall={searchApiCall}
@@ -411,6 +421,7 @@ export default function OnGroundInspectionAnalysis() {
                   onRowSelect={() => {}}
                   filterApiCall={filterApiCall}
                   showFilter={true}
+                  showSearch={true}
                   paginationInfo={paginationInfo}
                   setPaginationInfo={setPaginationInfo}
                   searchApiCall={searchApiCall}
@@ -432,6 +443,7 @@ export default function OnGroundInspectionAnalysis() {
                   onRowSelect={() => {}}
                   filterApiCall={filterApiCall}
                   showFilter={true}
+                  showSearch={true}
                   paginationInfo={paginationInfo}
                   setPaginationInfo={setPaginationInfo}
                   searchApiCall={searchApiCall}

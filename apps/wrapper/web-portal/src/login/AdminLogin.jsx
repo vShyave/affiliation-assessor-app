@@ -126,19 +126,10 @@ const AdminLogin = () => {
       }
 
       //setting device ID
-      let deviceIds =
-        JSON.parse(adminDetailsRes.data.regulator[0].device_id) || [];
-      if (!deviceIds.includes(getCookie("firebase_client_token"))) {
-        console.log(deviceIds);
-        console.log(deviceIds.includes(getCookie("firebase_client_token")));
-        deviceIds.push(getCookie("firebase_client_token"));
-        console.log({
-          user_id: loginRes.data.userRepresentation.id,
-          device_id: JSON.stringify(deviceIds),
-        });
+      if (getCookie("firebase_client_token") !== undefined) {
         await updateRegulatorDeviceId({
-          user_id: loginRes.data.userRepresentation.id,
-          device_id: JSON.stringify(deviceIds),
+          user_id: getCookie("userData")?.userRepresentation?.id,
+          device_id: JSON.stringify([getCookie("firebase_client_token")]),
         });
       }
     } catch (error) {

@@ -57,9 +57,12 @@ const FilteringTable = (props) => {
               ),
 
               Cell: ({ row }) => {
-                if (row.original.isRowInvalid === true) {
+                if (
+                  row.original?.isRowInvalid === true ||
+                  row.original?.duplicate
+                ) {
                   return (
-                    <AiFillExclamationCircle className="text-red-400 text-2xl" />
+                    <AiFillExclamationCircle className="text-red-400 text-2xl ml-[10px]" />
                   );
                 } else {
                   return <Checkbox {...row.getToggleRowSelectedProps()} />;
@@ -144,7 +147,7 @@ const FilteringTable = (props) => {
 
   return (
     <>
-      {props.showFilter && (
+      {(props.showFilter || props.showSearch) && (
         <GlobalFilter
           filter={globalFilter}
           setFilter={setGlobalFilter}
@@ -155,6 +158,8 @@ const FilteringTable = (props) => {
           paginationInfo={props.paginationInfo}
           setPaginationInfo={props.setPaginationInfo}
           selectedRound={props?.selectedRound}
+          showFilter={props?.showFilter}
+          showSearch={props?.showSearch}
         />
       )}
 

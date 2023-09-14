@@ -4,7 +4,6 @@ import { useNavigate, Link } from "react-router-dom";
 import { RiDeleteBin6Line } from "react-icons/ri";
 
 import FilteringTable from "../../components/table/FilteringTable";
-import Card from "../../components/Card";
 import { Button } from "../../components";
 import Nav from "../../components/Nav";
 import { ContextAPI } from "../../utils/ContextAPI";
@@ -15,7 +14,13 @@ import {
   getAssessmentSchedule,
   searchAssessments,
   deleteSchedule,
+  getScheduledList,
 } from "../../api";
+import {
+  setToLocalForage,
+  removeItemFromLocalForage,
+  getFromLocalForage,
+} from "../../forms";
 import ADMIN_ROUTE_MAP from "../../routes/adminRouteMap";
 import BulkUploadScheduleModal from "./BulkUploadScheduleModal";
 import AlertModal from "../../components/AlertModal";
@@ -42,6 +47,7 @@ const ScheduleManagementList = () => {
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [isFilterOpen, setIsFilterOpen] = useState(false);
   const [bulkUploadScheduleModal, setBulkUploadSchduleModal] = useState(false);
+  let [scheduledList, setScheduledList] = useState([]);
 
   const [showAlert, setShowAlert] = useState(false);
 
@@ -269,11 +275,30 @@ const ScheduleManagementList = () => {
     }
   };
 
+  const fetchAllScheduledList = async () => {
+    const items = await getFromLocalForage("scheduleList");
+    if (items && Object.values(items).length) return;
+
+    const postData = {
+      today: new Date().toJSON().slice(0, 10),
+    };
+
+    const res = await getScheduledList(postData);
+    if (res?.data?.assessment_schedule?.length) {
+      setScheduledList(res?.data?.assessment_schedule);
+      setToLocalForage("scheduleList", res?.data?.assessment_schedule);
+    }
+  };
+
   useEffect(() => {
     if (!isSearchOpen && !isFilterOpen) {
       fetchAllAssessmentSchedule();
     }
   }, [paginationInfo.offsetNo, paginationInfo.limit]);
+
+  useEffect(() => {
+    fetchAllScheduledList();
+  }, []);
 
   return (
     <>
@@ -286,16 +311,16 @@ const ScheduleManagementList = () => {
           <div className="flex flex-col gap-4">
             <div className="flex flex-row">
               <div className="flex flex-grow items-center">
-                <div className="text-xl font-semibold">Schedule Management</div>
+                {/* <div className="text-xl font-semibold">Schedule Management</div> */}
               </div>
               <div className="flex flex-grow justify-end">
-                <span className="flex gap-4">
+                {/* <span className="flex gap-4">
                   <Button
                     onClick={() => setBulkUploadSchduleModal(true)}
                     moreClass="text-white"
                     text="Upload CSV for scheduling"
                   ></Button>
-                </span>
+                </span> */}
               </div>
             </div>
             {/* <div className="flex flex-wrap">
@@ -323,6 +348,7 @@ const ScheduleManagementList = () => {
               onRowSelect={() => {}}
               pagination={true}
               showFilter={true}
+              showSearch={true}
               paginationInfo={paginationInfo}
               setPaginationInfo={setPaginationInfo}
               setIsSearchOpen={setIsSearchOpen}

@@ -71,7 +71,6 @@ export default function SelfRegistration() {
     };
 
     try {
-
       const keyCloakSignupRes = await userService.signup(userDetails);
       console.log(keyCloakSignupRes);
 
@@ -382,7 +381,6 @@ export default function SelfRegistration() {
                         className="block w-full rounded-md border-0 p-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                         {...register("address", {
                           required: true,
-                          maxLength: 50,
                           pattern: /[A-Za-z0-9'\.\-\s\,]/,
                         })}
                       />
@@ -391,11 +389,7 @@ export default function SelfRegistration() {
                           This field is required
                         </p>
                       )}
-                      {errors?.address?.type === "maxLength" && (
-                        <p className="text-red-500 mt-2 text-sm">
-                          Applicant name cannot exceed 50 characters
-                        </p>
-                      )}
+
                       {errors?.address?.type === "pattern" && (
                         <p className="text-red-500 mt-2 text-sm">
                           Alphabetical characters only

@@ -1,76 +1,56 @@
 import React, { useContext, useState } from "react";
-
-import FilteringTable from "../../components/table/FilteringTable";
-
 import { Switch } from "@material-tailwind/react";
-
 import { Link } from "react-router-dom";
+import FilteringTable from "../../components/table/FilteringTable";
 
 import { Button } from "../../components";
 import { addAssessmentSchedule } from "../../api";
 import { ContextAPI } from "../../utils/ContextAPI";
+import { readableDate, formatDate } from "../../utils";
+import { getFromLocalForage } from "../../forms";
 
-function BulkUploadScheduleModal({ setBulkUploadSchduleModal,fetchAllAssessmentSchedule }) {
+function BulkUploadScheduleModal({
+  setBulkUploadSchduleModal,
+  fetchAllAssessmentSchedule,
+}) {
   const [file, setFile] = useState();
   const { setSpinner, setToast } = useContext(ContextAPI);
-
   const [tableAssessmentList, setTableAssessmentList] = useState([]);
-
-  const hiddenFileInput = React.useRef(null);
-
   const [tableDataReady, setTableDataReady] = useState(false);
-
   const [invalidTableAssessmentList, setInvalidTableAssessmentList] = useState(
     []
   );
-
   const [invalidAssessmentDataFlag, setInvalidAssessmentDataFlag] =
     useState(false);
-
   const [allAssessmentsList, setAllAssessmentsList] = useState([]);
-
   const [selectedAssessmentList, setSelectedAssessmentList] = useState(false);
 
   let selectedRows = [];
+  let listOfSchedules = [];
+  const hiddenFileInput = React.useRef(null);
 
-  const emailExp = /[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$/;
-  const mobNumberExp = /^(0|91)?[6-9][0-9]{9}$/;
-  const isEmailValid = (email) => {
-    if (
-      emailExp.test(email?.trim().toString()) &&
-      email?.trim().toString().length != 0
-    ) {
-      return email;
-    } else {
-      return email?.toString().length === 0 ? (
+  const isDateValid = (props) => {
+    let date = props.value;
+    let duplicate = props.row.original.duplicate;
+    if (date?.toString().length === 0 || new Date() > new Date(date)) {
+      return (
         <span className="text-red-500 mt-2 text-sm">
-          - <br></br> <small>Missing Email ID</small>
-        </span>
-      ) : (
-        <span className="text-red-500 mt-2 text-sm">
-          {email} <br></br>
-          <small>Invalid Email ID</small>
+          <small>Invalid date</small>
         </span>
       );
-    }
-  };
-
-  const ismobileNumberValid = (mobileNumber) => {
-    if (
-      mobNumberExp.test(parseInt(mobileNumber)) &&
-      mobileNumber.toString().length != 0
-    ) {
-      return mobileNumber;
     } else {
-      return mobileNumber?.toString().length === 0 ? (
-        <span className="text-red-500 mt-2 text-sm">
-          - <br></br> <small>Missing mobile number</small>
-        </span>
-      ) : (
-        <span className="text-red-500 mt-2 text-sm">
-          {mobileNumber} <br></br>
-          <small>Invalid mobile number</small>
-        </span>
+      return (
+        <>
+          <span>{readableDate(date)}</span>
+          {duplicate && (
+            <>
+              <br />
+              <span className="text-red-500 mt-1 text-[11px]">
+                Duplicate date
+              </span>
+            </>
+          )}
+        </>
       );
     }
   };
@@ -80,7 +60,7 @@ function BulkUploadScheduleModal({ setBulkUploadSchduleModal,fetchAllAssessmentS
       data
     ) : (
       <span className="text-red-500 mt-2 text-sm">
-        - <br></br> <small>Missing Text</small>
+        <small>Missing Text</small>
       </span>
     );
   };
@@ -89,7 +69,6 @@ function BulkUploadScheduleModal({ setBulkUploadSchduleModal,fetchAllAssessmentS
     {
       Header: "Parent Center Code",
       accessor: "parent_code",
-
       Cell: (props) => {
         return <div>{isDataValid(props.value)}</div>;
       },
@@ -97,7 +76,6 @@ function BulkUploadScheduleModal({ setBulkUploadSchduleModal,fetchAllAssessmentS
     {
       Header: "Child Center Code",
       accessor: "child_code",
-
       Cell: (props) => {
         return <div>{isDataValid(props.value)}</div>;
       },
@@ -105,7 +83,6 @@ function BulkUploadScheduleModal({ setBulkUploadSchduleModal,fetchAllAssessmentS
     {
       Header: "Type",
       accessor: "type",
-
       Cell: (props) => {
         return <div>{isDataValid(props.value)}</div>;
       },
@@ -113,37 +90,30 @@ function BulkUploadScheduleModal({ setBulkUploadSchduleModal,fetchAllAssessmentS
     {
       Header: "Assessor Code",
       accessor: "assessor_code",
-
       Cell: (props) => {
         return <div>{isDataValid(props.value)}</div>;
       },
     },
-
     {
       Header: "Date",
       accessor: "date",
-
       Cell: (props) => {
-        return <div>{isDataValid(props.value)}</div>;
+        return <div>{isDateValid(props)}</div>;
       },
     },
-
     {
       Header: "Institute Id",
       accessor: "institute_id",
-
       Cell: (props) => {
         return <div>{isDataValid(props.value)}</div>;
       },
     },
-
     {
       Header: "Assisstant Code",
       accessor: "assisstant_code",
-
-      // Cell: (props) => {
-      //   return <div>{isDataValid(props.value)}</div>;
-      // },
+      Cell: (props) => {
+        return <div>-</div>;
+      },
     },
   ];
 
@@ -153,23 +123,18 @@ function BulkUploadScheduleModal({ setBulkUploadSchduleModal,fetchAllAssessmentS
 
   const handleChange = (e) => {
     const fileUploaded = e.target.files[0];
-
     setFile(fileUploaded.name.substring(0, fileUploaded.name.lastIndexOf(".")));
-
     handleFile(fileUploaded);
   };
 
   const handleFile = (file) => {
     const formData = new FormData();
-
     const fileReader = new FileReader();
-
     formData.append("file", file);
 
     if (file) {
       fileReader.onload = function (event) {
         const text = event.target.result;
-
         csvFileToArray(text);
       };
 
@@ -177,8 +142,11 @@ function BulkUploadScheduleModal({ setBulkUploadSchduleModal,fetchAllAssessmentS
     }
   };
 
-  const csvFileToArray = (string) => {
+  const csvFileToArray = async (string) => {
     let invalidAssessmentData = [];
+    listOfSchedules = await getFromLocalForage("scheduleList");
+    listOfSchedules = Object.values(listOfSchedules);
+    console.log("listOfSchedules - ", listOfSchedules);
     const csvHeader = string.trim().slice(0, string.indexOf("\n")).split(",");
     if (!csvHeader[csvHeader.length - 1]) {
       csvHeader.pop();
@@ -201,20 +169,24 @@ function BulkUploadScheduleModal({ setBulkUploadSchduleModal,fetchAllAssessmentS
         if ((obj[key] == null || obj[key] == "") && key !== "assisstant_code") {
           obj["isRowInvalid"] = true;
         }
+
+        if (key === "date") {
+          obj["date"] = obj["date"] ? formatDate(obj["date"]) : "";
+        }
       }
+
+      // Check for duplicate assessments...
+      checkAndFilterScheduledAssessment(obj);
+
       if (obj["isRowInvalid"]) {
         invalidAssessmentData.push(obj);
       }
-
       return obj;
     });
 
     setTableAssessmentList(tableAssessmentList);
-
     setAllAssessmentsList(tableAssessmentList); // setting the all user list again to use it in on toggle
-
     setInvalidTableAssessmentList(invalidAssessmentData);
-
     setTableDataReady(true);
   };
 
@@ -222,7 +194,20 @@ function BulkUploadScheduleModal({ setBulkUploadSchduleModal,fetchAllAssessmentS
     setInvalidAssessmentDataFlag(!invalidAssessmentDataFlag);
   };
 
-  const bulkSchedule = async () => {
+  const checkAndFilterScheduledAssessment = (row_obj) => {
+    // filter array with same assessor code...
+    let same_assessors_list = listOfSchedules.filter(
+      (elem) =>
+        elem.assessor_code === row_obj.assessor_code &&
+        row_obj.date === elem.date
+    );
+    if (same_assessors_list.length) {
+      row_obj["isRowInvalid"] = true;
+      row_obj["duplicate"] = true;
+    }
+  };
+
+  const handleBulkSchedule = async () => {
     try {
       setSpinner(true);
       const postData = {
@@ -237,7 +222,7 @@ function BulkUploadScheduleModal({ setBulkUploadSchduleModal,fetchAllAssessmentS
           return tempObj;
         }),
       };
-      console.log(postData);
+
       const res = await addAssessmentSchedule(postData);
       setToast((prevState) => ({
         ...prevState,
@@ -245,7 +230,7 @@ function BulkUploadScheduleModal({ setBulkUploadSchduleModal,fetchAllAssessmentS
         toastMsg: "Assessments Scheduled Successfully!!",
         toastType: "success",
       }));
-      fetchAllAssessmentSchedule()
+      fetchAllAssessmentSchedule();
       setBulkUploadSchduleModal(false);
     } catch (error) {
       console.log("error - ", error);
@@ -282,19 +267,18 @@ function BulkUploadScheduleModal({ setBulkUploadSchduleModal,fetchAllAssessmentS
     } else {
       document.getElementById("create-bulk-users").disabled = true;
     }
-    console.log(selectedRows);
   };
 
   return (
     <>
-      <div className="flex flex-col justify-center items-center fixed inset-0 bg-opacity-25 backdrop-blur-sm">
-        <div className="flex bg-white rounded-xl shadow-xl border border-gray-400 w-[860px] h-[560px] p-8">
+      <div className="flex flex-col justify-center items-center fixed inset-0 bg-opacity-25 backdrop-blur-sm z-[100]">
+        <div className="flex bg-white rounded-xl shadow-xl border border-gray-400 w-[1080px] h-[560px] p-8">
           <div className="flex flex-col justify-between w-full ">
             <div className="flex text-xl font-semibold">
               <h1>Bulk upload assessments</h1>
 
               <div className="flex flex-row m-auto">
-                {(tableAssessmentList.length!==0 && isFileValid()) && (
+                {tableAssessmentList.length !== 0 && isFileValid() && (
                   <Switch
                     id="show-with-errors"
                     label={<span className="text-sm">Show with errors</span>}
@@ -332,12 +316,14 @@ function BulkUploadScheduleModal({ setBulkUploadSchduleModal,fetchAllAssessmentS
                   />
                 </div>
               )}
+
               {tableDataReady && !isFileValid() && (
                 <div className="text-xl flex-row text-blue-500">
                   Please upload csv file with supported data format. Kindly
                   refer the template!
                 </div>
               )}
+
               {tableDataReady && isFileValid() && (
                 <div className="text-2xl w-full font-medium">
                   <FilteringTable
@@ -352,6 +338,7 @@ function BulkUploadScheduleModal({ setBulkUploadSchduleModal,fetchAllAssessmentS
                     navigateFunc={() => {}}
                     showCheckbox={true}
                     showFilter={false}
+                    showSearch={false}
                     setSelectedRows={setSelectedRows}
                   />
                 </div>
@@ -374,7 +361,7 @@ function BulkUploadScheduleModal({ setBulkUploadSchduleModal,fetchAllAssessmentS
                   <Button
                     id="create-bulk-users"
                     onClick={() => {
-                      bulkSchedule();
+                      handleBulkSchedule();
                     }}
                     moreClass="border text-white w-[120px]"
                     text="Schedule"

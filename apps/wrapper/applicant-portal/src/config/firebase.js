@@ -1,6 +1,7 @@
 import { initializeApp } from "firebase/app";
 import { getMessaging, getToken, onMessage } from "firebase/messaging";
-import { setCookie } from "../utils";
+import { getCookie, setCookie } from "../utils";
+import { applicantService } from "../services";
 
 const VAPID_KEY =
   "BHQYJFpVAvAyVm0Gnk2yDT8snQ98N6eVx5VlRAcrFgGbWWK5GBy55AJYupwCkP19OzxsdG1OFHBlPwIvqhazWV8";
@@ -35,6 +36,12 @@ export const getPermissionForToken = () => {
         if (currentToken) {
           console.log("Client Token: ", currentToken);
           setCookie("firebase_client_token", currentToken);
+          if (getCookie("userData") !== undefined) {
+           applicantService.updateApplicantDeviceId({
+              user_id: getCookie("userData")?.userRepresentation?.id,
+              device_id: JSON.stringify([getCookie("firebase_client_token")]),
+            });
+          }
         } else {
           console.log("Failed to generate the app registration token.");
         }
