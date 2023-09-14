@@ -148,8 +148,8 @@ function IssueNocModal({
           });
           if (tempIdsFilter.length) {
             sendPushNotification({
-              title: `On-Ground Schedule Information(round ${selectRound})`,
-              body: `The on-ground assessment for Round ${selectRound} has been scheduled. On Ground Assessor will visit your college soon.`,
+              title: `NOC Approval`,
+              body: `We are pleased to inform you that your application has received the necessary No Objection Certificate (NOC) approval. Your application is proceeding to the next stage of the review process`,
               deviceToken: tempIdsFilter,
               userId:
                 applicantRes?.data?.institutes[0]?.institute_pocs[0]?.user_id,
@@ -187,7 +187,6 @@ function IssueNocModal({
       certificate_fileName: nocorCertificateFileName,
     };
     try {
-      console.log("Hereeee");
       setSpinner(true);
       const responseCertificate = await getAcceptApplicantCertificate(postData);
       const formStatus =
@@ -222,8 +221,10 @@ function IssueNocModal({
           });
           if (tempIdsFilter.length) {
             sendPushNotification({
-              title: `On-Ground Schedule Information(round ${selectRound})`,
-              body: `The on-ground assessment for Round ${selectRound}  has been scheduled. On Ground Assessor will visit your college soon.`,
+              title: `Affiliation Certificate Issued`,
+              body: `Congratulations!
+
+              We are delighted to inform you that an affiliation certificate has been issued to ${applicantRes?.data?.institutes[0]?.name}. Welcome to our esteemed institution!`,
               deviceToken: tempIdsFilter,
               userId:
                 applicantRes?.data?.institutes[0]?.institute_pocs[0]?.user_id,

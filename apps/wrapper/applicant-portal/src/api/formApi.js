@@ -42,8 +42,13 @@ export const saveFormSubmission = (data) => {
     query: `mutation ($object: [form_submissions_insert_input!] = {}) {
             insert_form_submissions(objects: $object) {
                 returning {
-                    form_id
-                    created_at
+                  form_id
+                  created_at
+                  submission_status
+                  course
+                  {
+                    application_type
+                  }
                 }
             }
         }`,
@@ -76,7 +81,28 @@ export const makeHasuraCalls = async (query) => {
 
 const validateResponse = async (response) => {
   const apiRes = await response.json();
+  const application_type =
+    apiRes?.data?.insert_form_submissions?.returning[0]?.course
+      ?.application_type;
+  const form_id = apiRes?.data?.insert_form_submissions?.returning[0]?.form_id;
 
+  switch (application_type) {
+    case "new_institute":
+      await customPost.post(APIS.FORM.UPDATE_CHILD_CODE, {
+        form_id: form_id,
+        child_code: `N${form_id}`,
+      });
+    case "new_course":
+      await customPost.post(APIS.FORM.UPDATE_CHILD_CODE, {
+        form_id: form_id,
+        child_code: `C${form_id}`,
+      });
+    case "seat_enhancement":
+      await customPost.post(APIS.FORM.UPDATE_CHILD_CODE, {
+        form_id: form_id,
+        child_code: `S${form_id}`,
+      });
+  }
   registerEvent({
     created_date: getLocalTimeInISOFormat(),
     entity_id:
