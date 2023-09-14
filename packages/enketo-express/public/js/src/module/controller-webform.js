@@ -711,6 +711,10 @@ function _setEventHandlers(survey) {
         const userId = getMeta('userId');
         const keyToStorage = `${userId}_${form.model.rootElement.id}_${new Date().toISOString().split("T")[0]}`;
         let olderFiles = JSON.parse(localStorage.getItem(keyToStorage)) || {};
+        if(olderFiles) {
+            //clear the previously stored files
+            localStorage.setItem(keyToStorage, JSON.stringify({}));
+        }
         await formController.broadcastFormDataUpdate(form.getDataStr(), {});
     });
 
