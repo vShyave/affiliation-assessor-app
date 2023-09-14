@@ -61,7 +61,7 @@ export default function Profile() {
       institute_id: instituteData[0]?.id,
       institute_name: instituteData[0]?.name,
       // institute_email: instituteDetails.email,
-      institute_course: instituteData[0]?.course_applied,
+      institute_course: formData?.course_type,
       institutePOC_fname: formData?.first_name,
       institutePOC_lname: formData?.last_name,
       institutePOC_name: formData?.name,
@@ -294,7 +294,7 @@ export default function Profile() {
                       ></Label>
                       <div className="mt-2">
                         <select
-                          defaultValue={formData.course_type}
+                          value={formData?.course_type}
                           disabled={isPreview}
                           onChange={handleChange}
                           className="bg-white block w-full rounded-md border-0 p-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
