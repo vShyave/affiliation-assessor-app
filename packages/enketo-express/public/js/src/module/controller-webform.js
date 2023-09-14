@@ -817,11 +817,13 @@ function _setEventHandlers(survey) {
                                         await formController.broadcastFormDataUpdate(form.getDataStr(), arrayOfFileURLsNew);
                                     }
                                 }
+                                await formController.broadcastFormDataUpdate(form.getDataStr(), olderFiles);
                             }
                     }
                 }
             } else if(olderFiles) {
                 localStorage.setItem(keyToStorage, JSON.stringify(olderFiles));
+                await formController.broadcastFormDataUpdate(form.getDataStr(), olderFiles);
             }
             // Broadcast File Remove
             // const arrayOfFileURLsNew = { ...olderFiles, ...arrayOfFileURLs };
