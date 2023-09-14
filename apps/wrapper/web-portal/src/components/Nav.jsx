@@ -54,7 +54,7 @@ export default function Nav() {
                 <NavLink
                   to={ADMIN_ROUTE_MAP.adminModule.scheduleManagement.home}
                 >
-                  Schedule Management
+                  Inspections Scheduled
                 </NavLink>
               </li>
             </ul>
