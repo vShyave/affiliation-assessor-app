@@ -751,7 +751,7 @@ function _setEventHandlers(survey) {
         const userId = getMeta('userId');
         const keyToStorage = `${userId}_${form.model.rootElement.id}_${new Date().toISOString().split("T")[0]}`;
         let olderFiles = JSON.parse(localStorage.getItem(keyToStorage)) || {};
-        await formController.broadcastFormDataUpdate(form.getDataStr(), {});
+        await formController.broadcastFormDataUpdate(form.getDataStr(), olderFiles);
         let arrayOfFileURLs = {};
         if (e.target.nodeName === "INPUT" && e.target.type === "file") {
             if(e.target.value === '' && olderFiles[e.target.name] !== undefined) {
@@ -821,7 +821,7 @@ function _setEventHandlers(survey) {
                                         await formController.broadcastFormDataUpdate(form.getDataStr(), arrayOfFileURLsNew);
                                     }
                                 }
-                                await formController.broadcastFormDataUpdate(form.getDataStr(), olderFiles);
+                                // await formController.broadcastFormDataUpdate(form.getDataStr(), olderFiles);
                             }
                     }
                 }
