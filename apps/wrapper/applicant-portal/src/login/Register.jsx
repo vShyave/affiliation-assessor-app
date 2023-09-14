@@ -87,6 +87,9 @@ export default function SelfRegistration() {
       );
       console.log(addInstitutePocRes);
 
+      //institute update API to add Parent center code
+      const res = await applicantService.updateParentCode({"institute_id": addInstituteRes.data.insert_institutes_one.id,"parent_code": `P${addInstituteRes.data.insert_institutes_one.id}`})
+
       //applicant notification
       applicantService.sendPushNotification({
         title: "Applicant Registration",

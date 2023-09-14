@@ -42,8 +42,13 @@ export const saveFormSubmission = (data) => {
     query: `mutation ($object: [form_submissions_insert_input!] = {}) {
             insert_form_submissions(objects: $object) {
                 returning {
-                    form_id
-                    created_at
+                  form_id
+                  created_at
+                  submission_status
+                  course
+                  {
+                    application_type
+                  }
                 }
             }
         }`,
@@ -54,6 +59,46 @@ export const saveFormSubmission = (data) => {
 
 export const updateFormSubmission = async (data) => {
   const res = await customPost.post(APIS.FORM.UPDATE_FORM, data);
+  if (res) {
+    //applicant notification
+    if (getCookie("firebase_client_token") !== undefined) {
+      applicantService.sendPushNotification({
+        title: "Application Resubmission",
+        body: `Your application has been successfully resubmitted. You will receive further updates regarding the review process.`,
+        deviceToken: [`${getCookie("firebase_client_token")}`],
+        userId: getCookie("userData")?.userRepresentation?.id,
+      });
+    }
+    // regulator
+    const regAPIRes = await applicantService.getAllRegulatorDeviceId();
+    let regDeviceIds = [];
+    regAPIRes?.data?.regulator?.forEach((item) => {
+      let tempIds = JSON.parse(item.device_id);
+      let tempIdsFilter = tempIds.filter(function (el) {
+        return el != null;
+      });
+      if (tempIdsFilter.length) {
+        regDeviceIds.push({
+          user_id: item.user_id,
+          device_id: tempIdsFilter[0],
+        });
+      }
+    });
+
+    console.log("regulator device ids-", regDeviceIds);
+    if (regDeviceIds.length) {
+      regDeviceIds.forEach((regulator) =>
+        applicantService.sendPushNotification({
+          title: "Updates or Changes by Applicant",
+          body: `The applicant ${
+            getCookie("institutes")[0]?.name
+          } has made updates or changes to their application.`,
+          deviceToken: [regulator.device_id],
+          userId: regulator.user_id,
+        })
+      );
+    }
+  }
   return res;
 };
 
@@ -76,7 +121,31 @@ export const makeHasuraCalls = async (query) => {
 
 const validateResponse = async (response) => {
   const apiRes = await response.json();
+  const application_type =
+    apiRes?.data?.insert_form_submissions?.returning[0]?.course
+      ?.application_type;
+  const form_id = apiRes?.data?.insert_form_submissions?.returning[0]?.form_id;
 
+  switch (application_type) {
+    case "new_institute":
+      await customPost.post(APIS.FORM.UPDATE_CHILD_CODE, {
+        form_id: form_id,
+        child_code: `N${form_id}`,
+      });
+      break;
+    case "new_course":
+      await customPost.post(APIS.FORM.UPDATE_CHILD_CODE, {
+        form_id: form_id,
+        child_code: `C${form_id}`,
+      });
+      break;
+    case "seat_enhancement":
+      await customPost.post(APIS.FORM.UPDATE_CHILD_CODE, {
+        form_id: form_id,
+        child_code: `S${form_id}`,
+      });
+      break;
+  }
   registerEvent({
     created_date: getLocalTimeInISOFormat(),
     entity_id:

@@ -231,8 +231,8 @@ function ScheduleInspectionModal({ closeSchedule, otherInfo }) {
           });
           if (tempIdsFilter.length) {
             sendPushNotification({
-              title: "Inspection Scheduled",
-              body: `We are glad to inform you that your application has been processed and was found fit for our next step which is on-ground assessment. On-ground assessment for your application have been scheduled.`,
+              title: `On-Ground Schedule Information(round ${otherInfo?.round})`,
+              body: `The on-ground assessment for Round ${otherInfo?.round}  has been scheduled. On Ground Assessor will visit your college soon.`,
               deviceToken: tempIdsFilter,
               userId:
                 applicantRes?.data?.institutes[0]?.institute_pocs[0]?.user_id,
@@ -249,18 +249,23 @@ function ScheduleInspectionModal({ closeSchedule, otherInfo }) {
             return el != null;
           });
           if (tempIdsFilter.length) {
-            regDeviceIds.push(tempIdsFilter);
+            regDeviceIds.push({
+              user_id: item.user_id,
+              device_id: tempIdsFilter[0],
+            });
           }
         });
 
         console.log("regulator device ids-", regDeviceIds);
-        if (regDeviceIds.flat(1).length) {
-          sendPushNotification({
-            title: "Inspection Schduled",
-            body: `On-ground assessment for ${otherInfo?.instituteName}'s application have been scheduled.`,
-            deviceToken: regDeviceIds.flat(1),
-            userId: userDetails?.userRepresentation?.id,
-          });
+        if (regDeviceIds.length) {
+          regDeviceIds.forEach((regulator) =>
+            sendPushNotification({
+              title: `On-Ground Schedule Information(round ${otherInfo?.round})`,
+              body: `On-ground assessment for ${otherInfo?.instituteName}'s application have been scheduled for Round ${otherInfo?.round}.`,
+              deviceToken: [regulator.device_id],
+              userId: regulator.user_id,
+            })
+          );
         }
       }
       //email notify
@@ -491,7 +496,10 @@ function ScheduleInspectionModal({ closeSchedule, otherInfo }) {
                                   key={aa.phonenumber}
                                 >
                                   <div className="gap-2 flex items-center">
-                                    <span className="border-green-500 w-[36px] h-3/4 items-center bg-green-500 inline-flex justify-center gap-x-1.5 rounded-md px-2 py-2 text-sm font-semibold text-white-500 shadow-sm">
+                                    <span
+                                      className="border-green-500 w-[36px] h-3/4 items-center bg-green-500 inline-flex justify-center gap-x-1.5 
+                                    ed-md px-2 py-2 text-sm font-semibold text-white-500 shadow-sm"
+                                    >
                                       {getInitials(aa.label)}
                                     </span>
                                     <span className="font-semibold">

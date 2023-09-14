@@ -81,13 +81,6 @@ function BulkUploadScheduleModal({
       },
     },
     {
-      Header: "Type",
-      accessor: "type",
-      Cell: (props) => {
-        return <div>{isDataValid(props.value)}</div>;
-      },
-    },
-    {
       Header: "Assessor Code",
       accessor: "assessor_code",
       Cell: (props) => {
