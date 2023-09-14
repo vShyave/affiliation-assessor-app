@@ -747,13 +747,13 @@ function _setEventHandlers(survey) {
         const userId = getMeta('userId');
         const keyToStorage = `${userId}_${form.model.rootElement.id}_${new Date().toISOString().split("T")[0]}`;
         let olderFiles = JSON.parse(localStorage.getItem(keyToStorage)) || {};
-        if(e.target.value === '' && olderFiles[e.target.name] !== undefined) {
-            delete olderFiles[e.target.name];
-            localStorage.setItem(keyToStorage, JSON.stringify(olderFiles));
-        }
         await formController.broadcastFormDataUpdate(form.getDataStr(), {});
         let arrayOfFileURLs = {};
         if (e.target.nodeName === "INPUT" && e.target.type === "file") {
+            if(e.target.value === '' && olderFiles[e.target.name] !== undefined) {
+                delete olderFiles[e.target.name];
+                localStorage.setItem(keyToStorage, JSON.stringify(olderFiles));
+            }
             const formFiles = await fileManager.getCurrentFiles();
             if (formFiles) {
                 // console.log("formFiles: " + formFiles?.length)
@@ -820,6 +820,8 @@ function _setEventHandlers(survey) {
                             }
                     }
                 }
+            } else if(olderFiles) {
+                localStorage.setItem(keyToStorage, JSON.stringify(olderFiles));
             }
             // Broadcast File Remove
             // const arrayOfFileURLsNew = { ...olderFiles, ...arrayOfFileURLs };
