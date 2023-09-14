@@ -12,6 +12,8 @@ import { ContextAPI } from "../../utils/ContextAPI";
 import { getCookie, getLocalTimeInISOFormat } from "../../utils";
 
 import { Button } from "../../components";
+import ADMIN_ROUTE_MAP from "../../routes/adminRouteMap";
+import { useNavigate } from "react-router-dom";
 
 function RejectNocModal({
   closeRejectModal,
@@ -21,6 +23,7 @@ function RejectNocModal({
   instituteName,
 }) {
   const userDetails = getCookie("userData");
+  const navigate = useNavigate();
 
   const user_details = userDetails?.userRepresentation;
 
@@ -69,6 +72,11 @@ function RejectNocModal({
           toastType: "success",
         }));
         closeRejectModal(false);
+
+        setTimeout(
+          () => navigate(`${ADMIN_ROUTE_MAP.adminModule.onGroundInspection.home}`),
+          1500
+        );
 
         const applicantRes = await getApplicantDeviceId({
           institute_id: instituteId,
