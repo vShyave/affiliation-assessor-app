@@ -103,7 +103,7 @@ function RejectNocModal({
           }
 
           //regulator push notification
-          const regAPIRes = await applicantService.getAllRegulatorDeviceId();
+          const regAPIRes = await getAllRegulatorDeviceId();
           let regDeviceIds = [];
           regAPIRes?.data?.regulator?.forEach((item) => {
             let tempIds = JSON.parse(item.device_id);
