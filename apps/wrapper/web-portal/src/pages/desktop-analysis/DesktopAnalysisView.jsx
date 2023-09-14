@@ -301,19 +301,24 @@ export default function DesktopAnalysisView() {
           return el != null;
         });
         if (tempIdsFilter.length) {
-          regDeviceIds.push(tempIdsFilter);
+          regDeviceIds.push({
+            user_id: item.user_id,
+            device_id: tempIdsFilter[0],
+          });
         }
       });
 
       console.log("regulator device ids-", regDeviceIds);
-      if (regDeviceIds.flat(1).length) {
-        sendPushNotification({
-          title: "Desktop Analysis Done",
-          body: `The desktop analysis for ${formDataFromApi?.institute?.name}'s application has been completed. Kindly review the results.`,
-          // deviceToken: [`${getCookie("firebase_client_token")}`],
-          deviceToken: regDeviceIds.flat(1),
-          userId: userDetails?.userRepresentation?.id,
-        });
+      if (regDeviceIds.length) {
+        regDeviceIds.forEach((regulator) =>
+          sendPushNotification({
+            title: "Desktop Analysis Done",
+            body: `The desktop analysis for ${formDataFromApi?.institute?.name}'s application has been completed. Kindly review the results.`,
+            // deviceToken: [`${getCookie("firebase_client_token")}`],
+            deviceToken: [regulator.device_id],
+            userId: regulator.user_id,
+          })
+        );
       }
 
       // applicant

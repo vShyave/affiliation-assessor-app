@@ -74,7 +74,8 @@ function RejectNocModal({
         closeRejectModal(false);
 
         setTimeout(
-          () => navigate(`${ADMIN_ROUTE_MAP.adminModule.onGroundInspection.home}`),
+          () =>
+            navigate(`${ADMIN_ROUTE_MAP.adminModule.onGroundInspection.home}`),
           1500
         );
 
@@ -102,7 +103,7 @@ function RejectNocModal({
           }
 
           //regulator push notification
-          const regAPIRes = await getAllRegulatorDeviceId();
+          const regAPIRes = await applicantService.getAllRegulatorDeviceId();
           let regDeviceIds = [];
           regAPIRes?.data?.regulator?.forEach((item) => {
             let tempIds = JSON.parse(item.device_id);
@@ -110,18 +111,23 @@ function RejectNocModal({
               return el != null;
             });
             if (tempIdsFilter.length) {
-              regDeviceIds.push(tempIdsFilter);
+              regDeviceIds.push({
+                user_id: item.user_id,
+                device_id: tempIdsFilter[0],
+              });
             }
           });
 
           console.log("regulator device ids-", regDeviceIds);
-          if (regDeviceIds.flat(1).length) {
-            sendPushNotification({
-              title: "Application Termination",
-              body: `Please be informed that the ${instituteName}'s application form has been terminated. Kindly update the records accordingly.`,
-              deviceToken: regDeviceIds.flat(1),
-              userId: userDetails?.userRepresentation?.id,
-            });
+          if (regDeviceIds.length) {
+            regDeviceIds.forEach((regulator) =>
+              sendPushNotification({
+                title: "Application Termination",
+                body: `Please be informed that the ${instituteName}'s application form has been terminated. Kindly update the records accordingly.`,
+                deviceToken: [regulator.device_id],
+                userId: regulator.user_id,
+              })
+            );
           }
         }
 
