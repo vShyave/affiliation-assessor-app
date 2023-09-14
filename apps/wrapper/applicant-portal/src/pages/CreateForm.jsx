@@ -270,15 +270,15 @@ const CreateForm = (props) => {
       if (formData) {
         let images = JSON.parse(e.data).fileURLs;
 
-        let prevData = await getFromLocalForage(
-          `${userId}_${startingForm}_${new Date().toISOString().split("T")[0]}`
-        );
+        // let prevData = await getFromLocalForage(
+        //   `${userId}_${startingForm}_${new Date().toISOString().split("T")[0]}`
+        // );
 
         await setToLocalForage(
           `${userId}_${startingForm}_${new Date().toISOString().split("T")[0]}`,
           {
             formData: JSON.parse(e.data).formData,
-            imageUrls: { ...prevData?.imageUrls, ...images },
+            imageUrls: { ...images },
           }
         );
       }
