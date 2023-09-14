@@ -15,6 +15,7 @@ import {
   searchAssessments,
   deleteSchedule,
   getScheduledList,
+  sendEmailNotification,
 } from "../../api";
 import {
   setToLocalForage,
@@ -31,9 +32,12 @@ import {
   MenuList,
   MenuItem,
 } from "@material-tailwind/react";
-import { readableDate } from "../../utils";
+import { formatDate, readableDate } from "../../utils";
 
 const ScheduleManagementList = () => {
+  let today = `${new Date().getFullYear()}-${
+    new Date().getMonth() + 1
+  }-${new Date().getDate()}`;
   const navigation = useNavigate();
   const { setSpinner, setToast, toast } = useContext(ContextAPI);
   var resUserData = [];
@@ -123,58 +127,68 @@ const ScheduleManagementList = () => {
     },
   ];
 
-  const setTableData = (e) => ({
-    scheduled_application_sno: e?.id,
-    district: e?.institute?.district,
-    child_code: e?.Applicant_form?.child_code||"-",
-    parent_code: e?.institute?.parent_code||"-",
-    institute_name: e?.institute?.name,
-    type: e?.type || "-",
-    assessment_date: readableDate(e?.date),
-    assessor_id: e?.assessor_code,
-    status: e?.status,
-    more_actions: (
-      <div className="flex flex-row text-2xl font-semibold">
-        <Menu placement="bottom-end">
-          <MenuHandler>
-            <button className="leading-3 relative top-[-8px]">...</button>
-          </MenuHandler>
-          <MenuList className="p-2">
-            <MenuItem
-              onClick={() => {
-                setShowAlert(true);
-                setState((prevState) => ({
-                  ...prevState,
-                  alertContent: {
-                    alertTitle: "Delete schedule",
-                    alertMsg: "Are you sure,you want to delete this schedule?",
-                    actionButtonLabel: "Delete",
-                    actionFunction: handleDeleteSchedule,
-                    actionProps: [e],
-                  },
-                }));
-              }}
-            >
-              <div className="flex flex-row gap-4">
-                <div>
-                  <RiDeleteBin6Line />
-                </div>
-                <div className="text-semibold">
-                  <span>Delete</span>
-                </div>
-              </div>
-            </MenuItem>
-          </MenuList>
-        </Menu>
-      </div>
-    ),
-  });
+  const setTableData = (e) => {
+    return {
+      scheduled_application_sno: e?.id,
+      district: e?.institute?.district,
+      child_code: e?.Applicant_form?.child_code || "-",
+      parent_code: e?.institute?.parent_code || "-",
+      institute_name: e?.institute?.name,
+      type: e?.type || "-",
+      assessment_date: readableDate(e?.date),
+      assessor_id: e?.assessor_code,
+      status: e?.status,
+      more_actions:
+        new Date(
+          new Date(e?.date).getFullYear(),
+          new Date(e?.date).getMonth(),
+          new Date(e?.date).getDate()
+        ) <= new Date(today) ? (
+          ""
+        ) : (
+          <div className="flex flex-row text-2xl font-semibold">
+            <Menu placement="bottom-end">
+              <MenuHandler>
+                <button className="leading-3 relative top-[-8px]">...</button>
+              </MenuHandler>
+              <MenuList className="p-2">
+                <MenuItem
+                  onClick={() => {
+                    setShowAlert(true);
+                    setState((prevState) => ({
+                      ...prevState,
+                      alertContent: {
+                        alertTitle: "Delete schedule",
+                        alertMsg:
+                          "Are you sure,you want to delete this schedule?",
+                        actionButtonLabel: "Delete",
+                        actionFunction: handleDeleteSchedule,
+                        actionProps: [e],
+                      },
+                    }));
+                  }}
+                >
+                  <div className="flex flex-row gap-4">
+                    <div>
+                      <RiDeleteBin6Line />
+                    </div>
+                    <div className="text-semibold">
+                      <span>Delete</span>
+                    </div>
+                  </div>
+                </MenuItem>
+              </MenuList>
+            </Menu>
+          </div>
+        ),
+    };
+  };
 
-  const handleDeleteSchedule = async (formId) => {
-    console.log("clicked", formId[0]?.id);
-    console.log("clicked2", formId);
+  const handleDeleteSchedule = async (assessment) => {
+    // console.log("clicked", assessment[0]?.id);
+    // console.log("clicked2", assessment);
 
-    const postData = { id: formId[0]?.id };
+    const postData = { id: assessment[0]?.id };
 
     try {
       setSpinner(true);
@@ -186,9 +200,24 @@ const ScheduleManagementList = () => {
           toastMsg: "Schedule successfully Deleted!",
           toastType: "success",
         }));
+        //email notification
+        const emailData = {
+          recipientEmail: [`${assessment[0]?.assessor?.email}`],
+          emailSubject: `Inspection Scheduled for ${assessment[0]?.institute?.name} Cancelled!`,
+          emailBody: `<!DOCTYPE html><html><head><meta charset='utf-8'><title>Your Email Title</title><link href='https://fonts.googleapis.com/css2?family=Mulish:wght@400;600&display=swap' rel='stylesheet'></head><body style='font-family: Arial, sans-serif; background-color: #f4f4f4; margin: 0; padding: 0;'><table width='100%' bgcolor='#ffffff' cellpadding='0' cellspacing='0' border='0'><tr><td style='padding: 20px; text-align: center; background-color: #F5F5F5;'><img src='https://regulator.upsmfac.org/images/upsmf.png' alt='Logo' style='max-width: 360px;'></td></tr></table><table width='100%' bgcolor='#ffffff' cellpadding='0' cellspacing='0' border='0'><tr><td style='padding: 36px;'><p style='color: #555555; font-size: 18px; font-family: 'Mulish', Arial, sans-serif;'>Dear ${
+            assessment[0]?.assessor?.name
+          },</p><p style='color: #555555; font-size: 18px; line-height: 1.6; font-family: 'Mulish', Arial, sans-serif;'>
+          This is to inform you that the inspection scheduled for ${
+            assessment[0]?.institute?.name
+          } on ${readableDate(
+            assessment[0]?.date
+          )} is cancelled. We will keep you posted for the upcoming inspections.
+          </p></td></tr></table></body></html>`,
+        };
+        sendEmailNotification(emailData);
+
         fetchAllAssessmentSchedule();
       }
-      // Notification.sendemail({"body":})
     } catch (error) {
       console.log("error - ", error);
       setToast((prevState) => ({
