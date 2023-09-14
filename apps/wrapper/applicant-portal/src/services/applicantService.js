@@ -9,6 +9,10 @@ const addInstitute = (instituteDetails) => {
   return axiosService.post(APIS.APPLICANT.ADD_INSTITUTE, instituteDetails);
 };
 
+const updateParentCode = (instituteDetails) => {
+  return axiosService.post(APIS.APPLICANT.UPDATE_PARENT_CODE,instituteDetails)
+}
+
 const addInstitutePoc = (institutePocDetails) => {
   return axiosService.post(
     APIS.APPLICANT.ADD_INSTITUTE_POC,
@@ -88,6 +92,7 @@ const updatePaymentStatus = async (postData) => {
 };
 export const applicantService = {
   addInstitute,
+  updateParentCode,
   addInstitutePoc,
   getApplicantDetails,
   initiatePayment,

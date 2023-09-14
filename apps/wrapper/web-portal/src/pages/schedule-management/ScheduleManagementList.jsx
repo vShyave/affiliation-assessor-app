@@ -78,10 +78,6 @@ const ScheduleManagementList = () => {
       accessor: "institute_name",
     },
     {
-      Header: "Type",
-      accessor: "type",
-    },
-    {
       Header: "Assessment date",
       accessor: "assessment_date",
     },
@@ -130,8 +126,8 @@ const ScheduleManagementList = () => {
   const setTableData = (e) => ({
     scheduled_application_sno: e?.id,
     district: e?.institute?.district,
-    parent_code: e?.parent_code || "-",
-    child_code: e?.child_code || "-",
+    child_code: e?.Applicant_form?.child_code||"-",
+    parent_code: e?.institute?.parent_code||"-",
     institute_name: e?.institute?.name,
     type: e?.type || "-",
     assessment_date: readableDate(e?.date),

@@ -36,7 +36,7 @@ export default function OnGroundInspectionAnalysis() {
   const [isFilterOpen, setIsFilterOpen] = useState(false);
   const { setSpinner } = useContext(ContextAPI);
 
-  const COLUMN = [
+  const COLUMN_OGA_COMPLETED = [
     {
       Header: "Form name",
       accessor: "display_form_name",
@@ -58,8 +58,68 @@ export default function OnGroundInspectionAnalysis() {
       accessor: "assessor",
     },
     {
-      Header: "Date",
-      accessor: "published_on",
+      Header: "Submitted on",
+      accessor: "submitted_on",
+    },
+    {
+      Header: "Status",
+      accessor: "status",
+    },
+  ];
+  const COLUMN_APPROVED = [
+    {
+      Header: "Form name",
+      accessor: "display_form_name",
+    },
+    {
+      Header: "Institute",
+      accessor: "applicant",
+    },
+    {
+      Header: "Application type",
+      accessor: "application_type",
+    },
+    {
+      Header: "Course type",
+      accessor: "course_type",
+    },
+    {
+      Header: "Assessor",
+      accessor: "assessor",
+    },
+    {
+      Header: "Approved on",
+      accessor: "reviewed_on",
+    },
+    {
+      Header: "Status",
+      accessor: "status",
+    },
+  ];
+  const COLUMN_REJECTED = [
+    {
+      Header: "Form name",
+      accessor: "display_form_name",
+    },
+    {
+      Header: "Institute",
+      accessor: "applicant",
+    },
+    {
+      Header: "Application type",
+      accessor: "application_type",
+    },
+    {
+      Header: "Course type",
+      accessor: "course_type",
+    },
+    {
+      Header: "Assessor",
+      accessor: "assessor",
+    },
+    {
+      Header: "Rejected on",
+      accessor: "reviewed_on",
     },
     {
       Header: "Status",
@@ -229,6 +289,8 @@ export default function OnGroundInspectionAnalysis() {
       published_on: e?.assessment_schedule_applicant_form?.[0]?.date
         ? readableDate(e?.assessment_schedule_applicant_form?.[0]?.date)
         : "NA",
+      submitted_on: e?.submitted_on? readableDate(e?.submitted_on) : "NA",
+      reviewed_on: readableDate(e?.reviewed_on) || "NA",
       id: e.form_id,
       status: e?.form_status || "NA",
       form_status: e?.form_status,
@@ -365,28 +427,6 @@ export default function OnGroundInspectionAnalysis() {
             </ul>
             {/* <div>create a search bar and filter component here</div> */}
             {/* table creation starts here */}
-            {state.menu_selected === "Inspection Scheduled" && (
-              <div className="flex flex-col gap-4">
-                <FilteringTable
-                  dataList={resData.filter(
-                    (item) => item.form_status === "Inspection Scheduled"
-                  )}
-                  navigateFunc={navigateToView}
-                  columns={COLUMN}
-                  pagination={true}
-                  onRowSelect={() => {}}
-                  filterApiCall={filterApiCall}
-                  showFilter={true}
-                  showSearch={true}
-                  paginationInfo={paginationInfo}
-                  setPaginationInfo={setPaginationInfo}
-                  searchApiCall={searchApiCall}
-                  setIsSearchOpen={setIsSearchOpen}
-                  setIsFilterOpen={setIsFilterOpen}
-                  selectedRound={round}
-                />
-              </div>
-            )}{" "}
             {state.menu_selected === "OGA Completed" && (
               <div className="flex flex-col gap-4">
                 <FilteringTable
@@ -394,7 +434,7 @@ export default function OnGroundInspectionAnalysis() {
                     (item) => item.form_status === "OGA Completed"
                   )}
                   navigateFunc={navigateToView}
-                  columns={COLUMN}
+                  columns={COLUMN_OGA_COMPLETED}
                   pagination={true}
                   onRowSelect={() => {}}
                   filterApiCall={filterApiCall}
@@ -416,7 +456,7 @@ export default function OnGroundInspectionAnalysis() {
                     (item) => item.form_status === "Approved"
                   )}
                   navigateFunc={navigateToView}
-                  columns={COLUMN}
+                  columns={COLUMN_APPROVED}
                   pagination={true}
                   onRowSelect={() => {}}
                   filterApiCall={filterApiCall}
@@ -438,7 +478,7 @@ export default function OnGroundInspectionAnalysis() {
                     (item) => item.form_status === "Rejected"
                   )}
                   navigateFunc={navigateToView}
-                  columns={COLUMN}
+                  columns={COLUMN_REJECTED}
                   pagination={true}
                   onRowSelect={() => {}}
                   filterApiCall={filterApiCall}
