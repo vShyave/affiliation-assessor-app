@@ -89,7 +89,7 @@ export const updateFormSubmission = async (data) => {
     if (regDeviceIds.length) {
       regDeviceIds.forEach((regulator) =>
         applicantService.sendPushNotification({
-          title: "Application Resubmission",
+          title: "Updates or Changes by Applicant",
           body: `The applicant ${
             getCookie("institutes")[0]?.name
           } has made updates or changes to their application.`,
