@@ -9,6 +9,7 @@ import {
   getApplicantDeviceId,
   sendPushNotification,
   sendEmailNotification,
+  getAllRegulatorDeviceId,
 } from "../../api";
 import ADMIN_ROUTE_MAP from "../../routes/adminRouteMap";
 import { getCookie } from "../../utils";
@@ -156,6 +157,33 @@ function IssueNocModal({
             });
           }
         }
+        //regulator push notification
+        const regAPIRes = await getAllRegulatorDeviceId();
+        let regDeviceIds = [];
+        regAPIRes?.data?.regulator?.forEach((item) => {
+          let tempIds = JSON.parse(item.device_id);
+          let tempIdsFilter = tempIds.filter(function (el) {
+            return el != null;
+          });
+          if (tempIdsFilter.length) {
+            regDeviceIds.push({
+              user_id: item.user_id,
+              device_id: tempIdsFilter[0],
+            });
+          }
+        });
+
+        console.log("regulator device ids-", regDeviceIds);
+        if (regDeviceIds.length) {
+          regDeviceIds.forEach((regulator) =>
+            sendPushNotification({
+              title: "NOC Approval",
+              body: `NOC granted for ${applicantRes?.data?.institutes[0]?.name}`,
+              deviceToken: [regulator.device_id],
+              userId: regulator.user_id,
+            })
+          );
+        }
       }
 
       //email notify
@@ -231,6 +259,33 @@ function IssueNocModal({
             });
           }
         }
+        //regulator push notification
+        const regAPIRes = await getAllRegulatorDeviceId();
+        let regDeviceIds = [];
+        regAPIRes?.data?.regulator?.forEach((item) => {
+          let tempIds = JSON.parse(item.device_id);
+          let tempIdsFilter = tempIds.filter(function (el) {
+            return el != null;
+          });
+          if (tempIdsFilter.length) {
+            regDeviceIds.push({
+              user_id: item.user_id,
+              device_id: tempIdsFilter[0],
+            });
+          }
+        });
+
+        console.log("regulator device ids-", regDeviceIds);
+        if (regDeviceIds.length) {
+          regDeviceIds.forEach((regulator) =>
+            sendPushNotification({
+              title: "Affiliation Certificate Issued",
+              body: `Affiliation certificate granted to ${applicantRes?.data?.institutes[0]?.name}`,
+              deviceToken: [regulator.device_id],
+              userId: regulator.user_id,
+            })
+          );
+        }
       }
 
       //email notify
@@ -243,6 +298,8 @@ function IssueNocModal({
 
         sendEmailNotification(emailData);
       }
+
+
 
       pathName = "";
       nocorCertificateFileName = "";
