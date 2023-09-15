@@ -3,7 +3,7 @@ import Nav from "../../components/Nav";
 import { Option, Select } from "@material-tailwind/react";
 import { ContextAPI } from "../../utils/ContextAPI";
 import FilteringTable from "../../components/table/FilteringTable";
-import { getNOCCertificate } from "../../api";
+import { getNOCCertificate, searchNOC } from "../../api";
 import { readableDate } from "../../utils";
 
 const CertificateManagementList = () => {
@@ -74,12 +74,12 @@ const CertificateManagementList = () => {
     };
     try {
       setSpinner(true);
-      // const res = await searchDesktop(postData);
-      // setPaginationInfo((prevState) => ({
-      //   ...prevState,
-      //   totalCount: res.data.form_submissions_aggregate.aggregate.totalCount,
-      // }));
-      // setFormsList(res?.data?.form_submissions);
+      const res = await searchNOC(postData);
+      setPaginationInfo((prevState) => ({
+        ...prevState,
+        totalCount: res.data.form_submissions_aggregate.aggregate.totalCount,
+      }));
+      setCertificateList(res?.data?.form_submissions);
     } catch (error) {
       console.log("error - ", error);
     } finally {

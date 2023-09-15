@@ -25,7 +25,8 @@ export const APIS = {
     ADD_INSTITUTE: "rest/addInstitute",
     ADD_INSTITUTE_POC: "rest/addInstitutePoc",
     GET_APPLICANT_DETAILS: "rest/getApplicant",
-    ADD_TRANSACTION: `rest/addTransaction`
+    ADD_TRANSACTION: `rest/addTransaction`,
+    UPDATE_PARENT_CODE: `rest/updateParentCode`
 
   },
   PROFILE: {
@@ -36,7 +37,8 @@ export const APIS = {
     TOKEN_URL: "realms/sunbird-rc/protocol/openid-connect/token"
   },
   FORM: {
-    UPDATE_FORM: "/rest/updateFormSubmission"
+    UPDATE_FORM: "/rest/updateFormSubmission",
+    UPDATE_CHILD_CODE: "/rest/updateChildCode"
   },
   SEARCH:{
     SEARCH_FORM: "/rest/searchCourses"

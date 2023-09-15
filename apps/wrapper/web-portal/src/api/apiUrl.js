@@ -68,7 +68,7 @@ const API_URL = {
     getTransactionDetail: `v1/user/transaction`,
   },
   certificateManagement: {
-    getNOCCertificate: `${rest}getNOCCertificate`
+    getNOCCertificate: `${rest}getNOCCertificate`,
   },
   scheduleManagement: {
     getAssessmentSchedule: `${rest}getAssessmentSchedule`,
@@ -103,6 +103,7 @@ const API_URL = {
     searchOGA: `${rest}searchOGA`,
     searchForms: `${rest}searchForms`,
     searchAssessments: `${rest}searchAssessments`,
+    searchNOC: `${rest}searchNOC`
   },
   ACCESS_TOKEN: {
     TOKEN_URL: "realms/sunbird-rc/protocol/openid-connect/token",

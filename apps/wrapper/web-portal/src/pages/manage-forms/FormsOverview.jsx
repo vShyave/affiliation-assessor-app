@@ -153,7 +153,7 @@ const FormsOverview = () => {
       accessor: "course_type",
     },
     {
-      Header: "Published on",
+      Header: "Archived on",
       accessor: "updated_at",
     },
     {

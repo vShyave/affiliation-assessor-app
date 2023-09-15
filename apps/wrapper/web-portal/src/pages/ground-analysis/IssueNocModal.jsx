@@ -9,6 +9,7 @@ import {
   getApplicantDeviceId,
   sendPushNotification,
   sendEmailNotification,
+  getAllRegulatorDeviceId,
 } from "../../api";
 import ADMIN_ROUTE_MAP from "../../routes/adminRouteMap";
 import { getCookie } from "../../utils";
@@ -148,13 +149,40 @@ function IssueNocModal({
           });
           if (tempIdsFilter.length) {
             sendPushNotification({
-              title: `On-Ground Schedule Information(round ${selectRound})`,
-              body: `The on-ground assessment for Round ${selectRound} has been scheduled. On Ground Assessor will visit your college soon.`,
+              title: `NOC Approval`,
+              body: `We are pleased to inform you that your application has received the necessary No Objection Certificate (NOC) approval. Your application is proceeding to the next stage of the review process`,
               deviceToken: tempIdsFilter,
               userId:
                 applicantRes?.data?.institutes[0]?.institute_pocs[0]?.user_id,
             });
           }
+        }
+        //regulator push notification
+        const regAPIRes = await getAllRegulatorDeviceId();
+        let regDeviceIds = [];
+        regAPIRes?.data?.regulator?.forEach((item) => {
+          let tempIds = JSON.parse(item.device_id);
+          let tempIdsFilter = tempIds.filter(function (el) {
+            return el != null;
+          });
+          if (tempIdsFilter.length) {
+            regDeviceIds.push({
+              user_id: item.user_id,
+              device_id: tempIdsFilter[0],
+            });
+          }
+        });
+
+        console.log("regulator device ids-", regDeviceIds);
+        if (regDeviceIds.length) {
+          regDeviceIds.forEach((regulator) =>
+            sendPushNotification({
+              title: "NOC Approval",
+              body: `NOC granted for ${applicantRes?.data?.institutes[0]?.name}`,
+              deviceToken: [regulator.device_id],
+              userId: regulator.user_id,
+            })
+          );
         }
       }
 
@@ -187,7 +215,6 @@ function IssueNocModal({
       certificate_fileName: nocorCertificateFileName,
     };
     try {
-      console.log("Hereeee");
       setSpinner(true);
       const responseCertificate = await getAcceptApplicantCertificate(postData);
       const formStatus =
@@ -222,13 +249,42 @@ function IssueNocModal({
           });
           if (tempIdsFilter.length) {
             sendPushNotification({
-              title: `On-Ground Schedule Information(round ${selectRound})`,
-              body: `The on-ground assessment for Round ${selectRound}  has been scheduled. On Ground Assessor will visit your college soon.`,
+              title: `Affiliation Certificate Issued`,
+              body: `Congratulations!
+
+              We are delighted to inform you that an affiliation certificate has been issued to ${applicantRes?.data?.institutes[0]?.name}. Welcome to our esteemed institution!`,
               deviceToken: tempIdsFilter,
               userId:
                 applicantRes?.data?.institutes[0]?.institute_pocs[0]?.user_id,
             });
           }
+        }
+        //regulator push notification
+        const regAPIRes = await getAllRegulatorDeviceId();
+        let regDeviceIds = [];
+        regAPIRes?.data?.regulator?.forEach((item) => {
+          let tempIds = JSON.parse(item.device_id);
+          let tempIdsFilter = tempIds.filter(function (el) {
+            return el != null;
+          });
+          if (tempIdsFilter.length) {
+            regDeviceIds.push({
+              user_id: item.user_id,
+              device_id: tempIdsFilter[0],
+            });
+          }
+        });
+
+        console.log("regulator device ids-", regDeviceIds);
+        if (regDeviceIds.length) {
+          regDeviceIds.forEach((regulator) =>
+            sendPushNotification({
+              title: "Affiliation Certificate Issued",
+              body: `Affiliation certificate granted to ${applicantRes?.data?.institutes[0]?.name}`,
+              deviceToken: [regulator.device_id],
+              userId: regulator.user_id,
+            })
+          );
         }
       }
 
@@ -242,6 +298,8 @@ function IssueNocModal({
 
         sendEmailNotification(emailData);
       }
+
+
 
       pathName = "";
       nocorCertificateFileName = "";
