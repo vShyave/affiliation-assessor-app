@@ -45,9 +45,8 @@ const MyApplications = () => {
     setLoadingForms(true);
     const requestPayload = {
       condition: {
-        assignee: {
-          _eq: "applicant",
-        },
+        _and: { form: {} },
+        assignee: { _eq: "applicant" },
       },
     };
 
@@ -102,8 +101,7 @@ const MyApplications = () => {
                   key={application.form_id}
                   onView={handleViewApplicationHandler}
                 />
-              ))
-          }
+              ))}
             </div>
           )}
         </div>

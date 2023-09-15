@@ -20,9 +20,8 @@ const AllApplications = () => {
   const [isSearchOpen, setIsSearchOpen] = useState("false");
   const [formData, setFormData] = useState({
     condition: {
-      assignee: {
-        _eq: "applicant",
-      },
+      _and: { form: {} },
+      assignee: { _eq: "applicant" },
     },
   });
   const [availableForms, setAvailableForms] = useState([]);

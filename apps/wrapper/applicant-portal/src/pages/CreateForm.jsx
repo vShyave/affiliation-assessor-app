@@ -199,7 +199,7 @@ const CreateForm = (props) => {
       assessment_type: "applicant",
       form_name: formName,
       submission_status: true,
-      round: course_details?.form?.round,
+      round: course_details?.round,
       course_type: course_details?.course_type,
       course_level: course_details?.course_level,
       course_id: course_details?.course_id,
