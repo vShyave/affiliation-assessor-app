@@ -39,7 +39,7 @@ import { ContextAPI } from "../utils/contextAPI";
 
 const ENKETO_URL = process.env.REACT_APP_ENKETO_URL;
 let previewFlag = false;
-let isFormInPreview= false;
+let isFormInPreview = false;
 
 const CreateForm = (props) => {
   const navigate = useNavigate();
@@ -206,7 +206,6 @@ const CreateForm = (props) => {
     };
 
     console.log("common_payload - ", common_payload);
-
     if (!applicantStatus) {
       await saveFormSubmission({
         schedule_id: null,
@@ -253,16 +252,17 @@ const CreateForm = (props) => {
   };
 
   const handleFormEvents = async (startingForm, afterFormSubmit, e) => {
-  
     if (typeof e.data === "string" && e.data.includes("webpackHot")) {
       return;
     }
 
     if (
-      ((ENKETO_URL === `${e.origin}/enketo`) || (ENKETO_URL === `${e.origin}/enketo/`)) &&
+      (ENKETO_URL === `${e.origin}/enketo` ||
+        ENKETO_URL === `${e.origin}/enketo/`) &&
       // ENKETO_URL === e.origin  &&
       typeof e?.data === "string" &&
-      JSON.parse(e?.data)?.state !== "ON_FORM_SUCCESS_COMPLETED" && !isFormInPreview
+      JSON.parse(e?.data)?.state !== "ON_FORM_SUCCESS_COMPLETED" &&
+      !isFormInPreview
     ) {
       var formData = new XMLParser().parseFromString(
         JSON.parse(e.data).formData
